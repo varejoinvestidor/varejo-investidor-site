@@ -1,0 +1,61 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.13.0
+2 info using node@v24.16.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npmrc
+5 silly config load:file:C:\Users\PC\.npmrc
+6 silly config load:file:C:\Users\PC\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm install
+8 verbose argv "install" "--cache" ".\\.npm-cache" "--fetch-timeout" "30000" "--fetch-retries" "1"
+9 verbose logfile logs-max:10 dir:C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npm-cache\_logs\2026-05-25T06_06_09_998Z-
+10 verbose logfile C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npm-cache\_logs\2026-05-25T06_06_09_998Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 silly idealTree buildDeps
+14 silly fetch manifest framer-motion@^11.18.2
+15 silly packumentCache full:https://registry.npmjs.org/framer-motion cache-miss
+16 http fetch GET https://registry.npmjs.org/framer-motion attempt 1 failed with EACCES
+17 http fetch GET https://registry.npmjs.org/framer-motion attempt 2 failed with EACCES
+18 silly fetch manifest next@^14.2.23
+19 silly packumentCache full:https://registry.npmjs.org/next cache-miss
+20 http fetch GET https://registry.npmjs.org/next attempt 1 failed with EACCES
+21 http fetch GET https://registry.npmjs.org/next attempt 2 failed with EACCES
+22 silly fetch manifest react@^18.3.1
+23 silly packumentCache full:https://registry.npmjs.org/react cache-miss
+24 http fetch GET https://registry.npmjs.org/react attempt 1 failed with EACCES
+25 http fetch GET https://registry.npmjs.org/react attempt 2 failed with EACCES
+26 silly fetch manifest react-dom@^18.3.1
+27 silly packumentCache full:https://registry.npmjs.org/react-dom cache-miss
+28 http fetch GET https://registry.npmjs.org/react-dom attempt 1 failed with EACCES
+29 http fetch GET https://registry.npmjs.org/react-dom attempt 2 failed with EACCES
+30 silly fetch manifest @types/node@^20.17.16
+31 silly packumentCache full:https://registry.npmjs.org/@types%2fnode cache-miss
+32 http fetch GET https://registry.npmjs.org/@types%2fnode attempt 1 failed with EACCES
+33 http fetch GET https://registry.npmjs.org/@types%2fnode attempt 2 failed with EACCES
+34 silly fetch manifest @types/react@^18.3.18
+35 silly packumentCache full:https://registry.npmjs.org/@types%2freact cache-miss
+36 http fetch GET https://registry.npmjs.org/@types%2freact attempt 1 failed with EACCES
+37 http fetch GET https://registry.npmjs.org/@types%2freact attempt 2 failed with EACCES
+38 silly fetch manifest @types/react-dom@^18.3.5
+39 silly packumentCache full:https://registry.npmjs.org/@types%2freact-dom cache-miss
+40 http fetch GET https://registry.npmjs.org/@types%2freact-dom attempt 1 failed with EACCES
+41 http fetch GET https://registry.npmjs.org/@types%2freact-dom attempt 2 failed with EACCES
+42 silly fetch manifest autoprefixer@^10.4.20
+43 silly packumentCache full:https://registry.npmjs.org/autoprefixer cache-miss
+44 http fetch GET https://registry.npmjs.org/autoprefixer attempt 1 failed with EACCES
+45 http fetch GET https://registry.npmjs.org/autoprefixer attempt 2 failed with EACCES
+46 silly fetch manifest eslint@^8.57.1
+47 silly packumentCache full:https://registry.npmjs.org/eslint cache-miss
+48 http fetch GET https://registry.npmjs.org/eslint attempt 1 failed with EACCES
+49 http fetch GET https://registry.npmjs.org/eslint attempt 2 failed with EACCES
+50 silly fetch manifest eslint-config-next@^14.2.23
+51 silly packumentCache full:https://registry.npmjs.org/eslint-config-next cache-miss
+52 http fetch GET https://registry.npmjs.org/eslint-config-next attempt 1 failed with EACCES
+53 http fetch GET https://registry.npmjs.org/eslint-config-next attempt 2 failed with EACCES
+54 silly fetch manifest postcss@^8.5.1
+55 silly packumentCache full:https://registry.npmjs.org/postcss cache-miss
+56 http fetch GET https://registry.npmjs.org/postcss attempt 1 failed with EACCES
+57 http fetch GET https://registry.npmjs.org/postcss attempt 2 failed with EACCES
+58 silly fetch manifest tailwindcss@^3.4.17
+59 silly packumentCache full:https://registry.npmjs.org/tailwindcss cache-miss
+60 http fetch GET https://registry.npmjs.org/tailwindcss attempt 1 failed with EACCES

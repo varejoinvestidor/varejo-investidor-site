@@ -1,0 +1,51 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.13.0
+2 info using node@v24.16.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npmrc
+5 silly config load:file:C:\Users\PC\.npmrc
+6 silly config load:file:C:\Users\PC\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm install
+8 verbose argv "install" "--cache" ".\\.npm-cache" "--fetch-timeout" "30000" "--fetch-retries" "1"
+9 verbose logfile logs-max:10 dir:C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npm-cache\_logs\2026-05-25T05_52_45_944Z-
+10 verbose logfile C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npm-cache\_logs\2026-05-25T05_52_45_944Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 silly idealTree buildDeps
+14 silly fetch manifest framer-motion@^11.18.2
+15 silly packumentCache full:https://registry.npmjs.org/framer-motion cache-miss
+16 http fetch GET https://registry.npmjs.org/npm attempt 1 failed with EACCES
+17 http fetch GET https://registry.npmjs.org/framer-motion attempt 1 failed with EACCES
+18 http fetch GET https://registry.npmjs.org/npm attempt 2 failed with EACCES
+19 http fetch GET https://registry.npmjs.org/framer-motion attempt 2 failed with EACCES
+20 silly fetch manifest next@^14.2.23
+21 silly packumentCache full:https://registry.npmjs.org/next cache-miss
+22 http fetch GET https://registry.npmjs.org/next attempt 1 failed with EACCES
+23 http fetch GET https://registry.npmjs.org/next attempt 2 failed with EACCES
+24 silly fetch manifest react@^18.3.1
+25 silly packumentCache full:https://registry.npmjs.org/react cache-miss
+26 http fetch GET https://registry.npmjs.org/react attempt 1 failed with EACCES
+27 http fetch GET https://registry.npmjs.org/react attempt 2 failed with EACCES
+28 silly fetch manifest react-dom@^18.3.1
+29 silly packumentCache full:https://registry.npmjs.org/react-dom cache-miss
+30 http fetch GET https://registry.npmjs.org/react-dom attempt 1 failed with EACCES
+31 http fetch GET https://registry.npmjs.org/react-dom attempt 2 failed with EACCES
+32 silly fetch manifest @types/node@^20.17.16
+33 silly packumentCache full:https://registry.npmjs.org/@types%2fnode cache-miss
+34 http fetch GET https://registry.npmjs.org/@types%2fnode attempt 1 failed with EACCES
+35 http fetch GET https://registry.npmjs.org/@types%2fnode attempt 2 failed with EACCES
+36 silly fetch manifest @types/react@^18.3.18
+37 silly packumentCache full:https://registry.npmjs.org/@types%2freact cache-miss
+38 http fetch GET https://registry.npmjs.org/@types%2freact attempt 1 failed with EACCES
+39 http fetch GET https://registry.npmjs.org/@types%2freact attempt 2 failed with EACCES
+40 silly fetch manifest @types/react-dom@^18.3.5
+41 silly packumentCache full:https://registry.npmjs.org/@types%2freact-dom cache-miss
+42 http fetch GET https://registry.npmjs.org/@types%2freact-dom attempt 1 failed with EACCES
+43 http fetch GET https://registry.npmjs.org/@types%2freact-dom attempt 2 failed with EACCES
+44 silly fetch manifest autoprefixer@^10.4.20
+45 silly packumentCache full:https://registry.npmjs.org/autoprefixer cache-miss
+46 http fetch GET https://registry.npmjs.org/autoprefixer attempt 1 failed with EACCES
+47 http fetch GET https://registry.npmjs.org/autoprefixer attempt 2 failed with EACCES
+48 silly fetch manifest eslint@^8.57.1
+49 silly packumentCache full:https://registry.npmjs.org/eslint cache-miss
+50 http fetch GET https://registry.npmjs.org/eslint attempt 1 failed with EACCES

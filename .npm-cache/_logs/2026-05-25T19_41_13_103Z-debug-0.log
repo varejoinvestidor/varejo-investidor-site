@@ -1,0 +1,24 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.13.0
+2 info using node@v24.16.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npmrc
+5 silly config load:file:C:\Users\PC\.npmrc
+6 silly config load:file:C:\Users\PC\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm install
+8 verbose argv "install" "--cache" ".npm-cache" "--prefer-offline" "--loglevel" "warn"
+9 verbose logfile logs-max:10 dir:C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npm-cache\_logs\2026-05-25T19_41_13_103Z-
+10 verbose logfile C:\Users\PC\OneDrive\Documentos\varejo-investidor-site\.npm-cache\_logs\2026-05-25T19_41_13_103Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 silly idealTree buildDeps
+14 silly fetch manifest fsevents@~2.3.2
+15 silly packumentCache full:https://registry.npmjs.org/fsevents cache-miss
+16 http fetch GET https://registry.npmjs.org/fsevents attempt 1 failed with EACCES
+17 http fetch GET https://registry.npmjs.org/fsevents attempt 2 failed with EACCES
+18 http fetch GET https://registry.npmjs.org/fsevents attempt 3 failed with EACCES
+19 silly placeDep node_modules/chokidar fsevents@ OK for: chokidar@3.6.0 want: ~2.3.2
+20 silly fetch manifest @next/swc-darwin-arm64@14.2.33
+21 silly packumentCache full:https://registry.npmjs.org/@next%2fswc-darwin-arm64 cache-miss
+22 http fetch GET https://registry.npmjs.org/@next%2fswc-darwin-arm64 attempt 1 failed with EACCES
+23 http fetch GET https://registry.npmjs.org/@next%2fswc-darwin-arm64 attempt 2 failed with EACCES

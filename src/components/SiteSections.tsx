@@ -1,0 +1,562 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
+import { translations, type Locale } from "../i18n";
+
+export type SiteTheme = "light" | "dark";
+
+export const ticker = [
+  ["XAU/USD", "+0.74%", "up"],
+  ["EUR/USD", "-0.18%", "down"],
+  ["BTC/USD", "+1.42%", "up"],
+  ["USOIL", "-0.52%", "down"],
+  ["NASDAQ", "+0.91%", "up"],
+  ["DXY", "-0.21%", "down"],
+  ["GBP/JPY", "+0.36%", "up"],
+  ["S&P 500", "+0.82%", "up"],
+];
+
+export const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0 },
+};
+
+export const ELITE_CHECKOUT_URL = "https://lastlink.com/p/CE761BB8E/checkout-payment";
+
+export function getEliteHref(locale: Locale, fallback = "/#planos") {
+  return locale === "pt" ? ELITE_CHECKOUT_URL : fallback;
+}
+
+export function getEliteTargetProps(locale: Locale) {
+  return locale === "pt" ? { target: "_blank", rel: "noopener noreferrer" } : {};
+}
+
+export function eliteLinkProps(locale: Locale, fallback = "/#planos") {
+  return {
+    href: getEliteHref(locale, fallback),
+    ...getEliteTargetProps(locale),
+  };
+}
+
+export function detectLocale(): Locale {
+  if (typeof navigator === "undefined") return "en";
+
+  const languages = navigator.languages?.length ? navigator.languages : [navigator.language];
+  const detected = languages.join(" ").toLowerCase();
+
+  if (detected.includes("pt")) return "pt";
+  if (detected.includes("es")) return "es";
+  if (detected.includes("hi")) return "hi";
+  if (detected.includes("en")) return "en";
+
+  return "en";
+}
+
+export function useSiteLocale() {
+  const [locale, setLocale] = useState<Locale>("en");
+  const t = translations[locale];
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("varejo-investidor-locale") as Locale | null;
+    if (saved && saved in translations) {
+      setLocale(saved);
+      return;
+    }
+
+    setLocale(detectLocale());
+  }, []);
+
+  function changeLocale(nextLocale: Locale) {
+    setLocale(nextLocale);
+    window.localStorage.setItem("varejo-investidor-locale", nextLocale);
+  }
+
+  return { locale, t, changeLocale };
+}
+
+export function useSiteTheme() {
+  const [theme, setTheme] = useState<SiteTheme>("light");
+
+  useEffect(() => {
+    const saved = window.localStorage.getItem("varejo-investidor-theme") as SiteTheme | null;
+    const nextTheme = saved === "dark" || saved === "light" ? saved : "light";
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+  }, []);
+
+  function changeTheme(nextTheme: SiteTheme) {
+    setTheme(nextTheme);
+    document.documentElement.dataset.theme = nextTheme;
+    window.localStorage.setItem("varejo-investidor-theme", nextTheme);
+  }
+
+  return { theme, changeTheme };
+}
+
+export function Sparkline({ tone = "up" }: { tone?: string }) {
+  const color = tone === "up" ? "#0f8f56" : "#c72f2f";
+
+  return (
+    <svg viewBox="0 0 220 70" className="h-16 w-full overflow-visible" aria-hidden="true">
+      <path
+        d="M3 58 C 24 46, 38 50, 54 35 S 82 18, 101 31 131 56, 154 23 181 29 217 8"
+        fill="none"
+        stroke={color}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M3 58 C 24 46, 38 50, 54 35 S 82 18, 101 31 131 56, 154 23 181 29 217 8"
+        fill="none"
+        stroke={color}
+        strokeOpacity="0.15"
+        strokeWidth="14"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title: string; text: string }) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      variants={fadeUp}
+      className="max-w-4xl"
+    >
+      <p className="text-xs font-bold uppercase tracking-[0.32em] text-ink/[0.45]">{eyebrow}</p>
+      <h2 className="mt-4 text-balance font-serif text-4xl leading-[1] tracking-[-0.04em] md:text-6xl">
+        {title}
+      </h2>
+      <p className="mt-5 max-w-2xl text-base leading-8 text-ink/[0.66] md:text-lg">{text}</p>
+    </motion.div>
+  );
+}
+
+export function LanguageSwitcher({
+  locale,
+  onChange,
+}: {
+  locale: Locale;
+  onChange: (locale: Locale) => void;
+}) {
+  return (
+    <div className="flex shrink-0 items-center border border-ink/[0.12] bg-white p-1 shadow-fine">
+      {(["pt", "en", "es", "hi"] as Locale[]).map((item) => (
+        <button
+          key={item}
+          type="button"
+          onClick={() => onChange(item)}
+          className={`px-3 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition ${
+            locale === item ? "bg-ink text-paper" : "text-ink hover:bg-ink/[0.06]"
+          }`}
+          aria-pressed={locale === item}
+        >
+          {item.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export function ThemeSwitcher({
+  theme,
+  onChange,
+}: {
+  theme: SiteTheme;
+  onChange: (theme: SiteTheme) => void;
+}) {
+  return (
+    <div className="flex shrink-0 items-center border border-ink/[0.12] bg-white p-1 shadow-fine">
+      {(["light", "dark"] as SiteTheme[]).map((item) => (
+        <button
+          key={item}
+          type="button"
+          onClick={() => onChange(item)}
+          className={`px-3 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition ${
+            theme === item ? "bg-ink text-paper" : "text-ink hover:bg-ink/[0.06]"
+          }`}
+          aria-pressed={theme === item}
+        >
+          {item === "light" ? "Light" : "Dark"}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export function SiteChrome({
+  locale,
+  t,
+  onLocaleChange,
+  theme,
+  onThemeChange,
+}: {
+  locale: Locale;
+  t: (typeof translations)[Locale];
+  onLocaleChange: (locale: Locale) => void;
+  theme: SiteTheme;
+  onThemeChange: (theme: SiteTheme) => void;
+}) {
+  const navItems = useMemo(
+    () => [
+      { label: t.nav.home, href: "/#home" },
+      { label: t.nav.signals, href: "/signals" },
+      { label: t.nav.education, href: "/#educacao" },
+      { label: t.nav.terminal, href: "/#terminal" },
+      { label: t.nav.plans, href: "/#planos" },
+      { label: t.nav.services, href: "/services" },
+      { label: t.nav.about, href: "/#sobre" },
+    ],
+    [t],
+  );
+
+  return (
+    <div className="fixed left-0 right-0 top-0 z-50">
+      <div className="hidden border-b border-ink/[0.08] bg-ink px-5 text-paper md:block">
+        <div className="mx-auto flex max-w-7xl items-center gap-7 overflow-hidden py-2 text-[11px] uppercase tracking-[0.2em]">
+          <span className="shrink-0 text-paper/[0.5]">{t.tickerLabel}</span>
+          <div className="ticker-track flex min-w-max gap-7">
+            {[...ticker, ...ticker].map(([asset, move, tone], index) => (
+              <span key={`${asset}-${index}`} className="flex items-center gap-2">
+                <span className="text-paper/75">{asset}</span>
+                <span className={tone === "up" ? "text-rise" : "text-fall"}>{move}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <header className="border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+          <a href="/#home" className="group flex min-w-0 items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
+              VI
+            </span>
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate font-serif text-xl">Varejo Investidor</span>
+              <span className="hidden text-[10px] uppercase tracking-[0.24em] text-ink/[0.45] sm:block">
+                Elite Signal Desk
+              </span>
+            </span>
+          </a>
+
+          <div className="hidden items-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
+            {navItems.map((item) => (
+              <a key={item.label} href={item.href} className="px-3 py-2 text-ink transition hover:bg-ink hover:text-paper">
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
+            <ThemeSwitcher theme={theme} onChange={onThemeChange} />
+          </div>
+        </nav>
+        <div className="border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden">
+          <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pt-3 text-sm">
+            {navItems.map((item) => (
+              <a key={item.label} href={item.href} className="shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-ink">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </header>
+    </div>
+  );
+}
+
+export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
+  const rows = [
+    [t.signalBlock.example.asset, t.signalBlock.example.values.asset],
+    [t.signalBlock.example.direction, t.signalBlock.example.values.direction],
+    [t.signalBlock.example.entry, t.signalBlock.example.values.entry],
+    [t.signalBlock.example.target, t.signalBlock.example.values.target],
+    [t.signalBlock.example.stop, t.signalBlock.example.values.stop],
+    [t.signalBlock.example.status, t.signalBlock.example.values.status],
+  ];
+
+  return (
+    <div className="terminal-shell border border-ink bg-ink p-4 text-paper shadow-premium">
+      <div className="flex items-center justify-between border-b border-paper/[0.12] pb-4">
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">Live Signal</p>
+          <h3 className="mt-1 font-serif text-3xl tracking-[-0.04em]">{t.signalBlock.example.title}</h3>
+        </div>
+        <span className="h-3 w-3 rounded-full bg-rise shadow-[0_0_24px_rgba(15,143,86,0.8)]" />
+      </div>
+
+      <div className="mt-5 grid gap-2">
+        {rows.map(([label, value]) => (
+          <div key={label} className="grid grid-cols-[110px_1fr] border border-paper/[0.09] bg-paper/[0.035]">
+            <p className="border-r border-paper/[0.09] px-3 py-3 text-[10px] uppercase tracking-[0.2em] text-paper/[0.42]">
+              {label}
+            </p>
+            <p
+              className={`px-3 py-3 font-mono text-sm font-bold ${
+                value === t.signalBlock.example.values.direction || value === t.signalBlock.example.values.status
+                  ? "text-rise"
+                  : "text-paper"
+              }`}
+            >
+              {value}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 border border-rise/[0.35] bg-rise/[0.1] p-3 text-center text-xs font-bold uppercase tracking-[0.18em] text-rise">
+        Copy ready
+      </div>
+    </div>
+  );
+}
+
+export function WhatsAppIcon({ dark = false }: { dark?: boolean }) {
+  return (
+    <span
+      className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border ${
+        dark ? "border-paper/[0.16] bg-paper text-ink" : "border-ink/[0.12] bg-ink text-paper"
+      }`}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+        <path
+          d="M7.3 20.1 4 21l.9-3.2A8.4 8.4 0 1 1 7.3 20.1Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M8.7 8.4c.2-.5.4-.6.8-.6h.6c.2 0 .4.1.5.4l.7 1.6c.1.3.1.5-.1.7l-.4.5c-.1.1-.2.3 0 .5.5 1 1.4 1.8 2.5 2.3.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.7-.1l1.5.7c.3.1.4.3.4.6 0 .6-.4 1.4-.9 1.7-.6.4-1.8.4-3.4-.4-2.6-1.2-4.4-3.2-5.2-5.1-.4-.9-.2-1.6.2-2Z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+  );
+}
+
+export function FreeChannelCTA({
+  t,
+  variant = "light",
+  compact = false,
+}: {
+  t: (typeof translations)[Locale];
+  variant?: "light" | "dark";
+  compact?: boolean;
+}) {
+  const dark = variant === "dark";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className={`relative overflow-hidden border shadow-fine ${
+        dark ? "border-paper/[0.14] bg-paper/[0.045] text-paper" : "border-ink/[0.1] bg-white text-ink"
+      } ${compact ? "p-4" : "p-5 md:p-6"}`}
+    >
+      <div className={dark ? "absolute inset-0 terminal-grid opacity-35" : "absolute inset-0 luxury-grid opacity-45"} />
+      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex gap-4">
+          <WhatsAppIcon dark={dark} />
+          <div>
+            <p className={`text-[10px] font-bold uppercase tracking-[0.26em] ${dark ? "text-gold" : "text-rise"}`}>
+              {t.freeChannel.eyebrow}
+            </p>
+            <h3 className="mt-2 font-serif text-3xl tracking-[-0.04em]">{t.freeChannel.title}</h3>
+            <p className={`mt-2 max-w-2xl leading-7 ${dark ? "text-paper/[0.68]" : "text-ink/[0.64]"}`}>
+              {t.freeChannel.text}
+            </p>
+          </div>
+        </div>
+        <a
+          href={t.freeChannel.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`shrink-0 border px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] transition hover:-translate-y-0.5 ${
+            dark
+              ? "border-gold bg-gold text-ink hover:border-paper hover:bg-paper"
+              : "border-ink bg-ink text-paper hover:bg-paper hover:text-ink"
+          }`}
+        >
+          {t.freeChannel.button}
+        </a>
+      </div>
+    </motion.div>
+  );
+}
+
+export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof translations)[Locale]; locale?: Locale }) {
+  const fields = [
+    t.signalExample.signal,
+    t.signalExample.asset,
+    t.signalExample.takeProfit,
+    t.signalExample.stopLoss,
+  ];
+
+  return (
+    <section className="border-y border-ink/[0.08] bg-white px-5 py-20 md:px-8 md:py-24">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
+        <div>
+          <SectionHeader eyebrow={t.signalExample.eyebrow} title={t.signalExample.title} text={t.signalExample.text} />
+          <a
+            {...eliteLinkProps(locale)}
+            className="mt-8 inline-block border border-ink bg-ink px-6 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition hover:-translate-y-0.5 hover:bg-paper hover:text-ink"
+          >
+            {t.signalExample.cta}
+          </a>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+          className="glass-panel p-3"
+        >
+          <div className="overflow-hidden border border-ink bg-[#efe7dc] p-4 shadow-premium">
+            <div className="border border-ink/[0.08] bg-[#f7f4ef]">
+              <div className="flex items-center gap-3 border-b border-ink/[0.08] bg-[#0f8f56] px-4 py-3 text-white">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-white/18 font-bold">VI</span>
+                <div>
+                  <p className="font-semibold">Varejo Investidor</p>
+                  <p className="text-xs text-white/70">Canal Elite | WhatsApp</p>
+                </div>
+              </div>
+
+              <div className="p-4 md:p-6">
+                <div className="ml-auto max-w-xl rounded-sm border border-ink/[0.08] bg-white p-4 shadow-fine">
+                  <div className="space-y-2 font-mono text-sm">
+                    {fields.map((field) => (
+                      <p key={field} className="border-b border-ink/[0.06] pb-2 last:border-b-0">
+                        {field}
+                      </p>
+                    ))}
+                  </div>
+                  <div className="mt-5 border border-ink/[0.08] bg-ink p-4 text-paper">
+                    <div className="flex items-center justify-between">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/[0.48]">4H chart</p>
+                      <p className="text-xs text-rise">Live</p>
+                    </div>
+                    <div className="mt-5">
+                      <Sparkline />
+                    </div>
+                  </div>
+                  <div className="mt-5 border-l-2 border-rise bg-rise/[0.08] p-4">
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">
+                      {t.signalExample.analysisTitle}
+                    </p>
+                    <p className="mt-2 leading-7 text-ink/[0.7]">{t.signalExample.analysis}</p>
+                  </div>
+                  <p className="mt-4 text-right text-[11px] text-ink/[0.45]">09:42</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
+  const brokers = [
+    { ...t.brokers.forex, tone: "forex" },
+    { ...t.brokers.crypto, tone: "crypto" },
+  ];
+
+  return (
+    <section className="px-5 py-14 md:px-8 md:py-16">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeader eyebrow={t.brokers.eyebrow} title={t.brokers.title} text={t.brokers.text} />
+        <div className="mt-8 grid gap-4 lg:grid-cols-2">
+          {brokers.map((broker) => (
+            <motion.article
+              key={broker.label}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              className="relative overflow-hidden border border-ink/[0.1] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:shadow-premium md:p-8"
+            >
+              <div className={broker.tone === "forex" ? "absolute inset-0 luxury-grid opacity-45" : "absolute inset-0 signal-grid opacity-50"} />
+              <div className="relative">
+                <p className={`text-xs font-bold uppercase tracking-[0.26em] ${broker.tone === "forex" ? "text-rise" : "text-ink/[0.45]"}`}>
+                  {broker.label}
+                </p>
+                <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.04em]">{broker.title}</h3>
+                <p className="mt-5 max-w-xl leading-8 text-ink/[0.66]">{broker.text}</p>
+                <a
+                  href={broker.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-8 inline-block border border-ink bg-ink px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition hover:-translate-y-0.5 hover:bg-paper hover:text-ink"
+                >
+                  {broker.button}
+                </a>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function SupportFooter({ t }: { t: (typeof translations)[Locale] }) {
+  return (
+    <div className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="font-serif text-3xl tracking-[-0.04em] text-ink">{t.support.title}</p>
+          <p className="mt-2 text-sm text-ink/[0.58]">{t.support.text}</p>
+        </div>
+        <a
+          href={t.support.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="border border-ink bg-ink px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-paper transition hover:bg-paper hover:text-ink"
+        >
+          {t.support.button}
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export function ContactSection({ t }: { t: (typeof translations)[Locale] }) {
+  return (
+    <section id="contato" className="px-5 py-16 md:px-8 md:py-20">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.55 }}
+        className="relative mx-auto max-w-7xl overflow-hidden border border-ink bg-ink px-6 py-14 text-center text-paper shadow-premium md:px-12 md:py-20"
+      >
+        <div className="absolute inset-0 terminal-grid opacity-30" />
+        <div className="relative">
+          <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">{t.contact.eyebrow}</p>
+          <h2 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-5xl leading-[1] tracking-[-0.05em] md:text-7xl">
+            {t.contact.title}
+          </h2>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-paper/[0.68]">{t.contact.text}</p>
+          <a
+            href="#contato"
+            className="mt-8 inline-block border border-gold bg-gold px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition hover:bg-paper hover:border-paper"
+          >
+            {t.contact.button}
+          </a>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
