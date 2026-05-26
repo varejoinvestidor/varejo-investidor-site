@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
@@ -38,6 +39,38 @@ const reports = [
   ["MAR/2024", "Relatório Elite", "137 sinais", "+22.7%", "Disponível"],
 ];
 
+const reportSignals = {
+  "AGO/2018": [
+    { number: "4169", date: "22/05/2026", asset: "GBP/USD", direction: "Compra", entry: "1.34497", target: "1.34766", stop: "1.34123", result: "-19", status: "Fechado" },
+    { number: "4168", date: "21/05/2026", asset: "XAU/USD", direction: "Compra", entry: "4528.87", target: "4538.13", stop: "4518.57", result: "+89", status: "Fechado" },
+    { number: "4167", date: "20/05/2026", asset: "EUR/USD", direction: "Venda", entry: "1.16363", target: "1.16272", stop: "1.16565", result: "+92", status: "Fechado" },
+    { number: "4166", date: "20/05/2026", asset: "USOIL", direction: "Compra", entry: "94.833", target: "95.544", stop: "93.590", result: "+713", status: "Fechado" },
+  ],
+  "JAN/2021": [
+    { number: "4137", date: "15/01/2021", asset: "XAU/USD", direction: "Compra", entry: "4638.15", target: "4667.73", stop: "4608.15", result: "+124", status: "Fechado" },
+    { number: "4136", date: "14/01/2021", asset: "EUR/USD", direction: "Venda", entry: "1.21640", target: "1.21180", stop: "1.21920", result: "-31", status: "Fechado" },
+    { number: "4135", date: "13/01/2021", asset: "GBP/USD", direction: "Compra", entry: "1.36320", target: "1.37110", stop: "1.35840", result: "+78", status: "Fechado" },
+    { number: "4134", date: "12/01/2021", asset: "BTC/USD", direction: "Compra", entry: "33580", target: "34840", stop: "32910", result: "+1260", status: "Fechado" },
+  ],
+  "MAR/2024": [
+    { number: "4098", date: "19/03/2024", asset: "NAS100", direction: "Compra", entry: "18120.5", target: "18284.0", stop: "18042.0", result: "+163.5", status: "Fechado" },
+    { number: "4097", date: "18/03/2024", asset: "XAU/USD", direction: "Compra", entry: "2148.20", target: "2162.90", stop: "2139.40", result: "+147", status: "Fechado" },
+    { number: "4096", date: "15/03/2024", asset: "USD/JPY", direction: "Venda", entry: "149.320", target: "148.760", stop: "149.680", result: "-36", status: "Fechado" },
+    { number: "4095", date: "14/03/2024", asset: "USOIL", direction: "Compra", entry: "80.42", target: "82.10", stop: "79.70", result: "+168", status: "Fechado" },
+  ],
+};
+
+const signalTableLabels = {
+  title: "Sinais do relatório",
+  search: "Buscar número do sinal",
+  allAssets: "Todos os ativos",
+  allResults: "Todos os resultados",
+  positive: "Positivos",
+  negative: "Negativos",
+  columns: ["Número do sinal", "Data", "Ativo", "Direção", "Entrada", "Alvo", "Stop", "Resultado", "Status"],
+  empty: "Nenhum sinal encontrado para os filtros selecionados.",
+};
+
 const formigaBullets = [
   "gratuito",
   "conteúdos educacionais",
@@ -72,9 +105,102 @@ const prices = [
   ["ANUAL", "R$ 1.197,90", "US$ 240"],
 ];
 
+const eliteBenefits = [
+  "100% dos sinais",
+  "Grupo exclusivo",
+  "Análises de mercado",
+  "Aulas gravadas",
+  "Conteúdo nível Harpia",
+  "Estrutura completa de mercado",
+];
+
+const whatsappPrints = [
+  { label: "WhatsApp print 01", src: "/signals/whatsapp-print-01.jpg" },
+  { label: "WhatsApp print 02", src: "/signals/whatsapp-print-02.jpg" },
+  { label: "WhatsApp print 03", src: "/signals/whatsapp-print-03.jpg" },
+];
+
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const eliteCta = eliteLinkProps(locale, "/sinais");
+  const [selectedReport, setSelectedReport] = useState("AGO/2018");
+  const [signalSearch, setSignalSearch] = useState("");
+  const [assetFilter, setAssetFilter] = useState("all");
+  const [resultFilter, setResultFilter] = useState("all");
+  const isHi = locale === "hi";
+  const signalPageCopy = isHi
+    ? {
+        howEyebrow: "एलीट चैनल",
+        howTitle: "एलीट चैनल कैसे काम करता है",
+        howText: "एलीट चैनल जोखिम प्रबंधन और ऑपरेशनल संदर्भ के साथ लाइव संरचित ऑपरेशन सीधे WhatsApp पर भेजता है।",
+        howItems: ["दिन में 2 से 5 सिग्नल", "सीधे WhatsApp पर भेजना", "एंट्री, लक्ष्य और स्टॉप निर्धारित", "ऑपरेशनल संदर्भ और बाजार-पठन"],
+        scheduleEyebrow: "ऑपरेशनल समय",
+        scheduleTitle: "ऑपरेशनल समय",
+        scheduleText: "सिग्नल आम तौर पर बाजार की मुख्य लिक्विडिटी अवधि में भेजे जाते हैं: ब्राज़ीलिया समयानुसार 8h से 15h और 21h से 00h के बीच।",
+        scheduleNote: "समय बाजार की वोलैटिलिटी, लिक्विडिटी और वास्तविक अवसरों के अनुसार बदल सकता है।",
+        scheduleCards: [["सुबह और दोपहर", "8h से 15h"], ["रात", "21h से 00h"]],
+        methodEyebrow: "ऑपरेशनल पद्धति",
+        methodTitle: "Ichimoku पर आधारित सिग्नल",
+        methodText: "Varejo Investidor के सभी सिग्नल Ichimoku इंडिकेटर की पढ़ाई पर आधारित होते हैं, विशेष रूप से क्लाउड, औसत रेखाएँ, कीमत की स्थिति, सपोर्ट, रेजिस्टेंस और एसेट संदर्भ पर ध्यान देकर।",
+        ichimokuItems: ["क्लाउड रीडिंग", "Ichimoku औसत रेखाएँ", "कीमत की दिशा", "लक्ष्य और स्टॉप", "एसेट संदर्भ", "जोखिम प्रबंधन"],
+        historyEyebrow: "इतिहास",
+        historyTitle: "अगस्त 2018 से एलीट रिपोर्ट",
+        historyText: "अगस्त 2018 से भेजी गई ऐतिहासिक रिपोर्टों के माध्यम से एलीट चैनल की ऑपरेशनल यात्रा देखें।",
+        tableHeadings: ["तारीख", "एलीट रिपोर्ट", "सिग्नल", "परिणाम", "स्थिति", "देखें"],
+        reports: [["अग/2018", "एलीट रिपोर्ट", "124 सिग्नल", "+18.4%", "उपलब्ध"], ["जन/2021", "एलीट रिपोर्ट", "98 सिग्नल", "+11.2%", "उपलब्ध"], ["मार्च/2024", "एलीट रिपोर्ट", "137 सिग्नल", "+22.7%", "उपलब्ध"]],
+        view: "देखें",
+        docsEyebrow: "दस्तावेजी संरचना",
+        docsTitle: "भेजने की वास्तविक संरचना",
+        docsText: "2018 से WhatsApp पर सीधे लाइव भेजे गए सिग्नल।",
+        levelsEyebrow: "स्तर",
+        levelsTitle: "अपना स्तर चुनें",
+        levelsText: "मुफ्त चींटी चैनल से शुरू करें या पूर्ण ऑपरेशनल संरचना के लिए एलीट गरुड़ में प्रवेश करें।",
+        freeTitle: "चींटी चैनल",
+        freePrice: "मुफ्त",
+        freeButton: "मुफ्त में प्रवेश करें",
+        formigaItems: ["मुफ्त", "शैक्षिक सामग्री", "बुनियादी विश्लेषण", "प्रारंभिक दृष्टि", "आधार निर्माण", "सीमित सिग्नल"],
+        eliteTitle: "एलीट गरुड़ चैनल",
+        eliteStructure: "एलीट संरचना",
+        eliteButton: "एलीट में प्रवेश करें",
+        eliteItems: ["पूर्ण सिग्नल", "दिन में 2 से 5 सिग्नल", "संरचित ऑपरेशन", "ऑपरेशनल संदर्भ", "Forex", "सोना", "तेल", "सूचकांक", "क्रिप्टो", "संस्थागत पठन", "बंद समुदाय", "चींटी स्तर की रिकॉर्डेड कक्षाएँ", "भेड़िया स्तर की रिकॉर्डेड कक्षाएँ", "गरुड़ स्तर की रिकॉर्डेड कक्षाएँ", "एलीट संरचना"],
+        packagesEyebrow: "पैकेज",
+        packagesTitle: "एलीट एक्सेस",
+        packagesText: "लाइव सिग्नल, विश्लेषण, रिकॉर्डेड कक्षाएँ और पूर्ण बाजार संरचना प्राप्त करने के लिए एलीट गरुड़ चैनल का पैकेज चुनें।",
+        best: "सबसे अधिक बचत",
+        now: "अभी प्रवेश करें",
+      }
+    : null;
+  const howItems = signalPageCopy?.howItems ?? howItWorks;
+  const ichimokuItems = signalPageCopy?.ichimokuItems ?? ichimokuPoints;
+  const reportRows = signalPageCopy?.reports ?? reports;
+  const freeItems = signalPageCopy?.formigaItems ?? formigaBullets;
+  const eliteItems = signalPageCopy?.eliteItems ?? eliteBullets;
+  const reportKeys = Object.keys(reportSignals) as Array<keyof typeof reportSignals>;
+  const selectedSignals = reportSignals[selectedReport as keyof typeof reportSignals] ?? reportSignals["AGO/2018"];
+  const availableAssets = useMemo(() => Array.from(new Set(selectedSignals.map((signal) => signal.asset))), [selectedSignals]);
+  const filteredSignals = useMemo(
+    () =>
+      selectedSignals.filter((signal) => {
+        const matchesSearch = signal.number.includes(signalSearch.trim());
+        const matchesAsset = assetFilter === "all" || signal.asset === assetFilter;
+        const numericResult = Number(signal.result.replace(/[^\d.-]/g, ""));
+        const matchesResult =
+          resultFilter === "all" ||
+          (resultFilter === "positive" && numericResult >= 0) ||
+          (resultFilter === "negative" && numericResult < 0);
+
+        return matchesSearch && matchesAsset && matchesResult;
+      }),
+    [assetFilter, resultFilter, selectedSignals, signalSearch],
+  );
+  const displayPrices = isHi
+    ? [
+        ["मासिक", "US$ 30", ""],
+        ["3 महीने", "US$ 80", ""],
+        ["6 महीने", "US$ 145", ""],
+        ["वार्षिक", "US$ 240", ""],
+      ]
+    : prices;
 
   return (
     <main lang={locale === "hi" ?"hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -116,12 +242,12 @@ export default function SignalsPage() {
       <section className="px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Canal Elite"
-            title="Como funciona o Canal Elite"
-            text="O canal Elite entrega operações estruturadas ao vivo diretamente no WhatsApp com contexto operacional e gestão de risco."
+            eyebrow={signalPageCopy?.howEyebrow ?? "Canal Elite"}
+            title={signalPageCopy?.howTitle ?? "Como funciona o Canal Elite"}
+            text={signalPageCopy?.howText ?? "O canal Elite entrega operações estruturadas ao vivo diretamente no WhatsApp com contexto operacional e gestão de risco."}
           />
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {howItWorks.map((item, index) => (
+            {howItems.map((item, index) => (
               <motion.article
                 key={item}
                 initial="hidden"
@@ -141,21 +267,20 @@ export default function SignalsPage() {
           <div className="mt-8 border border-rise/[0.18] bg-white p-6 shadow-fine md:p-8">
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Horários operacionais</p>
-                <h3 className="mt-4 font-serif text-4xl tracking-[-0.04em]">Horários operacionais</h3>
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{signalPageCopy?.scheduleEyebrow ?? "Horários operacionais"}</p>
+                <h3 className="mt-4 font-serif text-4xl tracking-[-0.04em]">{signalPageCopy?.scheduleTitle ?? "Horários operacionais"}</h3>
                 <p className="mt-4 max-w-2xl leading-8 text-ink/[0.66]">
-                  Os sinais são enviados geralmente nos principais períodos de liquidez do mercado, entre 8h e 15h, e
-                  também entre 21h e 00h, no horário de Brasília.
+                  {signalPageCopy?.scheduleText ?? "Os sinais são enviados geralmente nos principais períodos de liquidez do mercado, entre 8h e 15h, e também entre 21h e 00h, no horário de Brasília."}
                 </p>
                 <p className="mt-4 text-xs uppercase tracking-[0.16em] text-ink/[0.48]">
-                  Os horários podem variar conforme volatilidade, liquidez e oportunidades reais do mercado.
+                  {signalPageCopy?.scheduleNote ?? "Os horários podem variar conforme volatilidade, liquidez e oportunidades reais do mercado."}
                 </p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                {[
+                {(signalPageCopy?.scheduleCards ?? [
                   ["MANHÃ E TARDE", "8h às 15h"],
                   ["NOITE", "21h às 00h"],
-                ].map(([label, time]) => (
+                ]).map(([label, time]) => (
                   <div key={label} className="terminal-module border border-ink/[0.1] bg-paper p-5">
                     <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">{label}</p>
                     <p className="mt-4 font-mono text-3xl text-ink">{time}</p>
@@ -170,27 +295,27 @@ export default function SignalsPage() {
       <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Método operacional"
-            title="Sinais baseados no Ichimoku"
-            text="Todos os sinais do Varejo Investidor são enviados com base na leitura do indicador Ichimoku, observando principalmente a nuvem, as médias, o posicionamento do preço, zonas de suporte, resistência e contexto do ativo."
+            eyebrow={signalPageCopy?.methodEyebrow ?? "Método operacional"}
+            title={signalPageCopy?.methodTitle ?? "Sinais baseados no Ichimoku"}
+            text={signalPageCopy?.methodText ?? "Todos os sinais do Varejo Investidor são enviados com base na leitura do indicador Ichimoku, observando principalmente a nuvem, as médias, o posicionamento do preço, zonas de suporte, resistência e contexto do ativo."}
           />
-          <div className="mt-8 grid gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {ichimokuPoints.map((item) => (
-                <div key={item} className="terminal-module border border-rise/[0.14] bg-paper p-5">
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink/[0.72]">{item}</p>
+          <div className="mt-8 grid gap-6 xl:grid-cols-[0.58fr_1.42fr] xl:items-center">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+              {ichimokuItems.map((item) => (
+                <div key={item} className="terminal-module border border-rise/[0.14] bg-paper p-5 xl:p-6">
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink/[0.72] xl:text-base">{item}</p>
                 </div>
               ))}
             </div>
-            <div className="terminal-module relative overflow-hidden border border-rise/[0.22] bg-ink p-3 shadow-premium md:p-4">
+            <div className="terminal-module ichimoku-board relative overflow-hidden border border-rise/[0.22] bg-ink p-3 shadow-premium md:p-4">
               <div className="absolute inset-0 terminal-grid opacity-30" />
-              <div className="relative overflow-hidden border border-rise/[0.16] bg-paper/[0.035]">
+              <div className="relative overflow-hidden rounded-[6px] border border-rise/[0.16] bg-paper/[0.035]">
                 <Image
                   src="/signals/ichimoku-operacional.jpeg"
                   alt="Print operacional do indicador Ichimoku"
                   width={1599}
                   height={748}
-                  sizes="(max-width: 768px) 100vw, 58vw"
+                  sizes="(max-width: 768px) 100vw, 72vw"
                   className="block h-auto w-full object-contain"
                 />
               </div>
@@ -204,15 +329,15 @@ export default function SignalsPage() {
       <section className="px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Histórico"
-            title="Relatório Elite desde agosto de 2018"
-            text="Acompanhe a evolução operacional do Canal Elite através dos relatórios históricos enviados desde agosto de 2018."
+            eyebrow={signalPageCopy?.historyEyebrow ?? "Histórico"}
+            title={signalPageCopy?.historyTitle ?? "Relatório Elite desde agosto de 2018"}
+            text={signalPageCopy?.historyText ?? "Acompanhe a evolução operacional do Canal Elite através dos relatórios históricos enviados desde agosto de 2018."}
           />
           <div className="mt-8 overflow-x-auto border border-ink/[0.12] bg-white shadow-fine">
             <table className="w-full min-w-[760px] border-collapse text-left">
               <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.22em] text-gold">
                 <tr>
-                  {["DATA", "RELATÓRIO ELITE", "SINAIS", "RESULTADO", "STATUS", "DOWNLOAD"].map((heading) => (
+                  {(signalPageCopy?.tableHeadings ?? ["DATA", "RELATÓRIO ELITE", "SINAIS", "RESULTADO", "STATUS", "VER"]).map((heading) => (
                     <th key={heading} className="px-5 py-4 font-bold">
                       {heading}
                     </th>
@@ -220,7 +345,7 @@ export default function SignalsPage() {
                 </tr>
               </thead>
               <tbody>
-                {reports.map((row) => (
+                {reportRows.map((row, rowIndex) => (
                   <tr key={row[0]} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
                     {row.map((cell, index) => (
                       <td
@@ -233,9 +358,15 @@ export default function SignalsPage() {
                     <td className="px-5 py-5">
                       <button
                         type="button"
+                        onClick={() => {
+                          setSelectedReport(reportKeys[rowIndex] ?? "AGO/2018");
+                          setSignalSearch("");
+                          setAssetFilter("all");
+                          setResultFilter("all");
+                        }}
                         className="border border-ink/[0.18] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-ink transition hover:border-gold hover:text-gold"
                       >
-                        VER
+                        {signalPageCopy?.view ?? "VER"}
                       </button>
                     </td>
                   </tr>
@@ -243,34 +374,126 @@ export default function SignalsPage() {
               </tbody>
             </table>
           </div>
+
+          <motion.div
+            key={selectedReport}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className="terminal-module mt-6 overflow-hidden border border-rise/[0.18] bg-white p-4 shadow-fine md:p-6"
+          >
+            <div className="flex flex-col gap-4 border-b border-ink/[0.08] pb-5 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="font-mono text-xs uppercase tracking-[0.24em] text-rise">{selectedReport}</p>
+                <h3 className="mt-2 font-serif text-3xl tracking-[-0.04em] md:text-4xl">
+                  {signalTableLabels.title}
+                </h3>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[680px]">
+                <input
+                  value={signalSearch}
+                  onChange={(event) => setSignalSearch(event.target.value)}
+                  placeholder={signalTableLabels.search}
+                  className="border border-ink/[0.14] bg-ink px-4 py-3 text-sm text-paper outline-none transition placeholder:text-paper/[0.45] focus:border-rise"
+                />
+                <select
+                  value={assetFilter}
+                  onChange={(event) => setAssetFilter(event.target.value)}
+                  className="border border-ink/[0.14] bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-rise"
+                >
+                  <option value="all">{signalTableLabels.allAssets}</option>
+                  {availableAssets.map((asset) => (
+                    <option key={asset} value={asset}>
+                      {asset}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={resultFilter}
+                  onChange={(event) => setResultFilter(event.target.value)}
+                  className="border border-ink/[0.14] bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-rise"
+                >
+                  <option value="all">{signalTableLabels.allResults}</option>
+                  <option value="positive">{signalTableLabels.positive}</option>
+                  <option value="negative">{signalTableLabels.negative}</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="mt-5 overflow-x-auto">
+              <table className="w-full min-w-[980px] border-collapse text-left">
+                <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.18em] text-gold">
+                  <tr>
+                    {signalTableLabels.columns.map((heading) => (
+                      <th key={heading} className="px-4 py-4 font-bold">
+                        {heading}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredSignals.map((signal) => {
+                    const isPositive = Number(signal.result.replace(/[^\d.-]/g, "")) >= 0;
+
+                    return (
+                      <tr key={signal.number} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
+                        <td className="px-4 py-4 font-mono text-sm font-bold text-ink">Sinal {signal.number}</td>
+                        <td className="px-4 py-4 text-sm text-ink/[0.68]">{signal.date}</td>
+                        <td className="px-4 py-4 font-mono text-sm text-ink">{signal.asset}</td>
+                        <td className="px-4 py-4 text-sm text-ink/[0.72]">{signal.direction}</td>
+                        <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.entry}</td>
+                        <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.target}</td>
+                        <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.stop}</td>
+                        <td className={`px-4 py-4 font-mono text-sm font-bold ${isPositive ? "text-rise" : "text-fall"}`}>
+                          {signal.result}
+                        </td>
+                        <td className="px-4 py-4 text-sm uppercase tracking-[0.14em] text-ink/[0.58]">{signal.status}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              {filteredSignals.length === 0 ? (
+                <p className="border border-ink/[0.1] px-4 py-6 text-center text-sm text-ink/[0.62]">{signalTableLabels.empty}</p>
+              ) : null}
+            </div>
+          </motion.div>
         </div>
       </section>
 
       <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Documental"
-            title="Estrutura real de envio"
-            text="Sinais enviados ao vivo diretamente no WhatsApp desde 2018."
+            eyebrow={signalPageCopy?.docsEyebrow ?? "Documental"}
+            title={signalPageCopy?.docsTitle ?? "Estrutura real de envio"}
+            text={signalPageCopy?.docsText ?? "Sinais enviados ao vivo diretamente no WhatsApp desde 2018."}
           />
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {[1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className="terminal-module relative min-h-[320px] overflow-hidden border border-rise/[0.16] bg-paper p-5"
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {whatsappPrints.map((print, index) => (
+              <motion.article
+                key={print.src}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                variants={fadeUp}
+                className="terminal-module whatsapp-print-card group relative min-h-[560px] overflow-hidden border border-rise/[0.16] bg-paper p-4"
               >
                 <div className="absolute inset-0 terminal-grid opacity-30" />
                 <div className="relative flex items-center justify-between border-b border-ink/[0.08] pb-4">
-                  <p className="font-mono text-xs uppercase tracking-[0.22em] text-rise">WhatsApp print 0{item}</p>
+                  <p className="font-mono text-xs uppercase tracking-[0.22em] text-rise">{print.label}</p>
                   <span className="h-2 w-2 rounded-full bg-rise" />
                 </div>
-                <div className="relative mt-6 grid gap-3">
-                  <div className="h-4 w-2/3 bg-paper/[0.08]" />
-                  <div className="h-4 w-5/6 bg-paper/[0.08]" />
-                  <div className="h-28 border border-ink/[0.08] bg-ink/[0.24]" />
-                  <div className="h-4 w-1/2 bg-paper/[0.08]" />
+                <div className="whatsapp-print-frame relative mt-5 h-[500px] overflow-hidden rounded-[6px] border border-rise/[0.18] bg-ink md:h-[570px]">
+                  <Image
+                    src={print.src}
+                    alt={`${print.label} do Canal Elite Varejo Investidor`}
+                    fill
+                    sizes="(min-width: 768px) 31vw, 92vw"
+                    className="whatsapp-print-image object-contain object-top transition duration-500 group-hover:scale-[1.025]"
+                  />
                 </div>
-              </div>
+              </motion.article>
             ))}
           </div>
         </div>
@@ -279,16 +502,16 @@ export default function SignalsPage() {
       <section className="px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Níveis"
-            title="Escolha seu nível"
-            text="Comece gratuitamente no Canal Formiga ou entre no Elite Harpia para acesso completo à estrutura operacional."
+            eyebrow={signalPageCopy?.levelsEyebrow ?? "Níveis"}
+            title={signalPageCopy?.levelsTitle ?? "Escolha seu nível"}
+            text={signalPageCopy?.levelsText ?? "Comece gratuitamente no Canal Formiga ou entre no Elite Harpia para acesso completo à estrutura operacional."}
           />
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
             <article className="terminal-module border border-rise/[0.22] bg-white p-6 md:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-rise">Canal Formiga</p>
-              <h3 className="mt-5 font-serif text-5xl tracking-[-0.05em]">Gratuito</h3>
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-rise">{signalPageCopy?.freeTitle ?? "Canal Formiga"}</p>
+              <h3 className="mt-5 font-serif text-5xl tracking-[-0.05em]">{signalPageCopy?.freePrice ?? "Gratuito"}</h3>
               <div className="mt-6 grid gap-3">
-                {formigaBullets.map((item) => (
+                {freeItems.map((item) => (
                   <p key={item} className="border-l border-rise pl-4 text-sm uppercase tracking-[0.12em] text-ink/[0.66]">
                     {item}
                   </p>
@@ -300,17 +523,17 @@ export default function SignalsPage() {
                 rel="noopener noreferrer"
                 className="mt-8 block border border-rise bg-rise px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-paper"
               >
-                Entrar gratuitamente
+                {signalPageCopy?.freeButton ?? "Entrar gratuitamente"}
               </a>
             </article>
 
             <article className="terminal-module relative overflow-hidden border border-gold bg-ink p-6 text-paper shadow-premium md:p-8">
               <div className="absolute inset-0 terminal-grid opacity-25" />
               <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Canal Elite Harpia</p>
-                <h3 className="mt-5 font-serif text-5xl tracking-[-0.05em]">Estrutura Elite</h3>
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{signalPageCopy?.eliteTitle ?? "Canal Elite Harpia"}</p>
+                <h3 className="mt-5 font-serif text-5xl tracking-[-0.05em]">{signalPageCopy?.eliteStructure ?? "Estrutura Elite"}</h3>
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {eliteBullets.map((item) => (
+                  {eliteItems.map((item) => (
                     <p key={item} className="border-l border-gold pl-4 text-sm uppercase tracking-[0.12em] text-paper/[0.72]">
                       {item}
                     </p>
@@ -320,7 +543,7 @@ export default function SignalsPage() {
                   {...eliteCta}
                   className="premium-button-gold mt-8 block border border-gold bg-gold px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-ink"
                 >
-                  Entrar no Elite
+                  {signalPageCopy?.eliteButton ?? "Entrar no Elite"}
                 </a>
               </div>
             </article>
@@ -331,29 +554,54 @@ export default function SignalsPage() {
       <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Pacotes"
-            title="Acesso ao Elite"
-            text="Escolha o pacote do Canal Elite Harpia para receber sinais ao vivo, análises, aulas gravadas e estrutura completa de mercado."
+            eyebrow={signalPageCopy?.packagesEyebrow ?? "Pacotes"}
+            title={signalPageCopy?.packagesTitle ?? "Acesso ao Elite"}
+            text={
+              signalPageCopy?.packagesText ??
+              "Escolha seu pacote para acessar 100% dos sinais, grupo exclusivo, análises, aulas gravadas e conteúdo nível Harpia dentro do Varejo Investidor."
+            }
           />
+          {!isHi ? (
+            <div className="mt-8 border border-gold/[0.22] bg-ink p-5 shadow-premium md:p-6">
+              <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Canal Elite Harpia</p>
+                  <h3 className="mt-3 font-serif text-3xl tracking-[-0.04em] text-paper md:text-4xl">
+                    O que você recebe no Canal Elite
+                  </h3>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {eliteBenefits.map((benefit, index) => (
+                    <div key={benefit} className="border border-rise/[0.16] bg-paper px-4 py-3">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-rise">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em] text-ink/[0.72]">{benefit}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : null}
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {prices.map(([period, price, usd], index) => (
+            {displayPrices.map(([period, price, usd], index) => (
               <article
                 key={period}
                 className={`terminal-module border p-6 ${index === 3 ?"border-gold bg-ink text-paper shadow-premium" : "border-ink/[0.1] bg-paper"}`}
               >
                 {index === 3 ?(
                   <span className="mb-5 inline-block border border-gold bg-gold px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-ink">
-                    Maior economia
+                    {signalPageCopy?.best ?? "Maior economia"}
                   </span>
                 ) : null}
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold">{period}</p>
                 <p className="mt-5 font-serif text-4xl tracking-[-0.05em]">{price}</p>
-                <p className="mt-2 font-mono text-sm uppercase tracking-[0.16em] text-ink/[0.48]">{usd}</p>
+                {usd ? <p className="mt-2 font-mono text-sm uppercase tracking-[0.16em] text-ink/[0.48]">{usd}</p> : null}
                 <a
                   {...eliteCta}
                   className={`mt-8 block border px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] ${index === 3 ?"border-gold bg-gold text-ink" : "border-ink bg-ink text-paper"}`}
                 >
-                  Entrar agora
+                  {signalPageCopy?.now ?? "Entrar agora"}
                 </a>
               </article>
             ))}

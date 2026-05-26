@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   FreeChannelCTA,
   SectionHeader,
@@ -13,6 +14,16 @@ import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWid
 
 export default function EducationPage() {
   const { locale, t, changeLocale } = useSiteLocale();
+  const soonCopy =
+    locale === "hi"
+      ? {
+          title: "जल्द आ रहा है",
+          text: "चींटी, भेड़िया और गरुड़ की पूरी शैक्षिक यात्रा जल्द ही Varejo Investidor इकोसिस्टम में उपलब्ध होगी।",
+        }
+      : {
+          title: "EM BREVE",
+          text: "A trilha educacional completa Formiga, Lobo e Harpia será liberada em breve dentro do ecossistema Varejo Investidor.",
+        };
 
   return (
     <main lang={locale === "hi" ?"hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -28,6 +39,25 @@ export default function EducationPage() {
       </section>
 
       <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="education-levels-visual relative mx-auto mb-12 flex max-w-[900px] justify-center md:mb-16"
+        >
+          <div className="education-levels-glow" />
+          <div className="education-levels-floor" />
+          <Image
+            src="/characters/education-levels-team.png"
+            alt="Personagens Formiga, Lobo e Harpia do Varejo Investidor"
+            width={1236}
+            height={463}
+            sizes="(min-width: 1024px) 900px, 94vw"
+            className="education-levels-image relative z-10 h-auto w-full object-contain object-center"
+          />
+        </motion.div>
+
         <div className="mx-auto grid max-w-7xl gap-4 lg:grid-cols-3">
           {t.education.levels.map((level, index) => (
             <motion.article
@@ -66,9 +96,9 @@ export default function EducationPage() {
             <div className="mx-auto grid h-11 w-11 place-items-center border border-gold/[0.55] font-mono text-lg font-bold text-gold">
               X
             </div>
-            <h2 className="mt-5 font-serif text-5xl tracking-[-0.05em] text-gold md:text-6xl">EM BREVE</h2>
+            <h2 className="mt-5 font-serif text-5xl tracking-[-0.05em] text-gold md:text-6xl">{soonCopy.title}</h2>
             <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
-              A trilha educacional completa Formiga, Lobo e Harpia será liberada em breve dentro do ecossistema Varejo Investidor.
+              {soonCopy.text}
             </p>
           </div>
         </div>

@@ -88,7 +88,30 @@ const internationalServicesIntro = {
   pt: "",
   en: "Explore Varejo Investidor channels for signals, education, and global market reading.",
   es: "Conoce los canales de Varejo Investidor para señales, educación y lectura de mercado global.",
-  hi: "Varejo Investidor ?? ??????, ?????? ?? ??????? ?????-??? ???? ?????.",
+  hi: "Varejo Investidor की सेवाएँ देखें: सिग्नल, शिक्षा और वैश्विक बाजार-पठन।",
+};
+
+const servicesPanelCopy = {
+  pt: {
+    eyebrow: "Estrutura estratégica",
+    title: "Serviços para evolução financeira em camadas.",
+    pillars: ["Sinais", "Educação", "Consultoria"],
+  },
+  en: {
+    eyebrow: "Strategic structure",
+    title: "Services for layered financial evolution.",
+    pillars: ["Signals", "Education", "Advisory"],
+  },
+  es: {
+    eyebrow: "Estructura estratégica",
+    title: "Servicios para evolución financiera por capas.",
+    pillars: ["Señales", "Educación", "Consultoría"],
+  },
+  hi: {
+    eyebrow: "रणनीतिक संरचना",
+    title: "वित्तीय विकास के लिए सेवाएँ।",
+    pillars: ["सिग्नल", "शिक्षा", "परामर्श"],
+  },
 };
 
 function compactCardTone(kind: string) {
@@ -114,6 +137,7 @@ export default function ServicesPage() {
   const isPt = locale === "pt";
   const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale];
   const compactServices = isPt ? compactPtServices : t.servicesPage.items.slice(0, 2);
+  const panelCopy = servicesPanelCopy[locale];
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -129,12 +153,12 @@ export default function ServicesPage() {
             <div className="absolute inset-0 terminal-grid opacity-20" />
             <div className="absolute right-6 top-6 h-28 w-28 rounded-full bg-gold/[0.12] blur-3xl" />
             <div className="relative">
-              <p className="font-mono text-xs uppercase tracking-[0.28em] text-gold">Estrutura estratégica</p>
+              <p className="font-mono text-xs uppercase tracking-[0.28em] text-gold">{panelCopy.eyebrow}</p>
               <h2 className="mt-5 font-serif text-5xl leading-[0.98] tracking-[-0.05em] md:text-6xl">
-                Serviços para evolução financeira em camadas.
+                {panelCopy.title}
               </h2>
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {["Sinais", "Educação", "Consultoria"].map((item, index) => (
+                {panelCopy.pillars.map((item, index) => (
                   <div key={item} className="border border-paper/[0.1] bg-paper/[0.04] p-4">
                     <p className="font-mono text-xs text-gold">0{index + 1}</p>
                     <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.72]">{item}</p>

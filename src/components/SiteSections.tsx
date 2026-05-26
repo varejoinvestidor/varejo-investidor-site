@@ -236,16 +236,36 @@ export function SiteChrome({
 }
 
 export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
+  const extraLabels =
+    t.locale === "HI"
+      ? {
+          timeframe: "टाइमफ्रेम",
+          risk: "जोखिम",
+          riskValue: "मध्यम",
+          signal: "सिग्नल",
+          time: "समय",
+          live: "लाइव",
+          copy: "कॉपी के लिए तैयार",
+        }
+      : {
+          timeframe: "TIMEFRAME",
+          risk: "RISCO",
+          riskValue: "MODERADO",
+          signal: "SINAL",
+          time: "HORÁRIO",
+          live: "LIVE",
+          copy: "Copy ready",
+        };
   const rows = [
     [t.signalBlock.example.asset, t.signalBlock.example.values.asset],
     [t.signalBlock.example.direction, t.signalBlock.example.values.direction],
     [t.signalBlock.example.entry, t.signalBlock.example.values.entry],
     [t.signalBlock.example.target, t.signalBlock.example.values.target],
     [t.signalBlock.example.stop, t.signalBlock.example.values.stop],
-    ["TIMEFRAME", "4H"],
-    ["RISCO", "MODERADO"],
-    ["SINAL", "#4169"],
-    ["HORÁRIO", "09:42 UTC"],
+    [extraLabels.timeframe, "4H"],
+    [extraLabels.risk, extraLabels.riskValue],
+    [extraLabels.signal, "#4169"],
+    [extraLabels.time, "09:42 UTC"],
     [t.signalBlock.example.status, t.signalBlock.example.values.status],
   ];
 
@@ -259,7 +279,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
         </div>
         <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise">
           <span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />
-          LIVE
+          {extraLabels.live}
         </div>
       </div>
 
@@ -283,7 +303,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
       </div>
 
       <div className="relative mt-5 border border-rise/[0.35] bg-rise/[0.1] p-3 text-center text-xs font-bold uppercase tracking-[0.18em] text-rise">
-        Copy ready
+        {extraLabels.copy}
       </div>
     </div>
   );
@@ -440,7 +460,10 @@ export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
     { ...t.brokers.forex, tone: "forex", symbol: "$" },
     { ...t.brokers.crypto, tone: "crypto", symbol: "₿" },
   ];
-  const indicators = ["Corretora número 1 do mundo", "Execução", "Proteção", "Plataforma utilizada"];
+  const indicators =
+    t.locale === "HI"
+      ? ["विश्व स्तर का ब्रोकर", "निष्पादन", "सुरक्षा", "उपयोग किया गया प्लेटफॉर्म"]
+      : ["Corretora número 1 do mundo", "Execução", "Proteção", "Plataforma utilizada"];
 
   return (
     <section className="px-5 py-14 md:px-8 md:py-16">
@@ -504,6 +527,10 @@ export function SupportFooter({
   locale: Locale;
   onLocaleChange: (locale: Locale) => void;
 }) {
+  const footerLabels =
+    locale === "hi"
+      ? { social: "सोशल", language: "भाषा", marketLine: "Forex • Crypto • Commodities • Global Markets" }
+      : { social: "Social", language: "Idioma", marketLine: "Forex • Crypto • Commodities • Global Markets" };
   const socials = [
     {
       label: "Instagram",
@@ -562,7 +589,7 @@ export function SupportFooter({
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">Social</p>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.social}</p>
             <div className="mt-4 flex gap-2">
               {socials.map((social) => (
                 <a
@@ -580,7 +607,7 @@ export function SupportFooter({
           </div>
 
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">Idioma</p>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.language}</p>
             <div className="mt-4">
               <LanguageSwitcher locale={locale} onChange={onLocaleChange} variant="footer" />
             </div>
@@ -602,7 +629,7 @@ export function SupportFooter({
 
         <div className="mx-auto mt-8 flex max-w-7xl flex-col gap-2 border-t border-ink/[0.08] pt-5 text-xs uppercase tracking-[0.18em] text-ink/[0.45] md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Varejo Investidor</p>
-          <p>Forex • Crypto • Commodities • Global Markets</p>
+          <p>{footerLabels.marketLine}</p>
         </div>
       </footer>
     </>

@@ -9,108 +9,272 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 
-const sections = [
-  {
-    eyebrow: "A estrutura",
-    title: "Uma estrutura financeira global para o investidor de varejo.",
-    paragraphs: [
-      "O Varejo Investidor nasceu para construir algo que praticamente não existe no varejo financeiro global: uma estrutura capaz de transformar investidores comuns em participantes ativos do mercado internacional.",
-      "Não somos apenas um canal, uma sala de sinais, um curso ou uma comunidade.",
-      "O Varejo Investidor é uma estrutura financeira global criada para ensinar leitura de mercado, operação, risco, patrimônio, posicionamento estratégico e construção financeira em camadas.",
-      "Tudo isso usando uma visão real do funcionamento do mercado global.",
+const aboutCopy = {
+  pt: {
+    heroEyebrow: "Sobre o Varejo Investidor",
+    heroTitle:
+      "Tudo o que o investidor comum precisa para entender, operar e construir patrimônio no mercado global.",
+    heroText:
+      "Do básico ao avançado. Educação, sinais ao vivo, leitura de mercado e construção financeira em camadas.",
+    indicators: ["Desde 2018", "+4.200 sinais ao vivo", "Forex • Ouro • Índices • Cripto", "Conteúdo em múltiplos idiomas"],
+    pillars: [
+      ["Leitura de mercado", "Entender movimentos globais"],
+      ["Operação", "Forex, ouro, índices e cripto"],
+      ["Risco", "Proteção e gestão operacional"],
+      ["Patrimônio", "Construção financeira de longo prazo"],
+      ["Posicionamento", "Visão estratégica e expansão"],
+      ["Construção em camadas", "Do básico ao patrimônio global"],
     ],
-  },
-  {
-    eyebrow: "Desde 2018",
-    title: "Acompanhando diariamente o mercado internacional.",
-    paragraphs: [
-      "Desde 2018, o projeto acompanha diariamente Forex, ouro, petróleo, índices globais, criptomoedas, ciclos econômicos e moedas internacionais.",
-      "Ao longo dessa trajetória, mais de 4.200 sinais ao vivo foram enviados, milhares de análises foram produzidas, conteúdos foram distribuídos em múltiplos idiomas e uma estrutura própria começou a ser construída.",
-      "A visão sempre foi global.",
+    whatTitle: "O que é o Varejo Investidor",
+    whatParagraphs: [
+      "O Varejo Investidor foi criado para ensinar investidores comuns a entender o mercado internacional, operar com mais clareza e construir estrutura financeira de longo prazo.",
+      "A proposta sempre foi desenvolver uma estrutura financeira global acessível ao varejo, unindo educação, leitura de mercado, sinais ao vivo e visão patrimonial.",
+      "Desde 2018, o projeto acompanha diariamente Forex, ouro, petróleo, índices globais, criptomoedas e ciclos internacionais.",
     ],
-  },
-  {
-    eyebrow: "A filosofia",
-    title: "O mercado financeiro não é apenas operação.",
-    paragraphs: [
-      "Ele é posicionamento, leitura de cenário, proteção, estratégia e expansão de visão.",
-      "A maior parte das pessoas entra no mercado buscando apenas dinheiro rápido. O Varejo Investidor foi criado para ensinar algo diferente: como construir estrutura.",
-      "Porque sem estrutura, o capital desaparece, a emoção domina, o risco destrói e o crescimento não sustenta.",
+    foundTitle: "O que você encontra aqui",
+    found: [
+      "Sinais ao vivo",
+      "Educação financeira",
+      "Leitura de mercado",
+      "Estrutura operacional",
+      "Conteúdo multilíngue",
+      "Gestão de risco",
+      "Construção patrimonial",
+      "Visão internacional",
     ],
-  },
-  {
-    eyebrow: "Formiga • Lobo • Harpia",
-    title: "Três níveis para enxergar o mercado e a vida financeira.",
-    paragraphs: [
-      "Formiga é a base: organização financeira, primeiros investimentos, disciplina, construção do primeiro capital e entendimento do sistema.",
-      "Lobo é estratégia: leitura de mercado, operação, risco, posicionamento, expansão financeira e visão operacional.",
-      "Harpia é visão global: patrimônio, proteção, sucessão, estrutura internacional, moedas fortes, preservação de capital e construção geracional.",
-      "Esses níveis representam diferentes formas de enxergar o mercado e a própria vida financeira.",
+    notOnlyTitle: "Não somos apenas um canal",
+    notOnlyLeftTitle: "Não somos",
+    notOnlyLeft: ["apenas sinais", "apenas um curso", "apenas conteúdo motivacional", "apenas operações rápidas"],
+    notOnlyRightTitle: "Somos",
+    notOnlyRight: [
+      "educação financeira",
+      "leitura institucional",
+      "operação estruturada",
+      "visão patrimonial",
+      "estrutura financeira global",
     ],
-  },
-  {
-    eyebrow: "O criador",
-    title: "Uma visão diferente do mercado financeiro tradicional.",
-    paragraphs: [
-      "Vinicius criou o Varejo Investidor com uma visão diferente da maior parte do mercado financeiro tradicional.",
-      "Enquanto grande parte do setor focava em promessas, marketing agressivo, ostentação e operações irreais, a proposta aqui sempre foi leitura real de mercado, desenvolvimento em longo prazo, estrutura financeira, construção patrimonial e visão internacional.",
-      "O projeto começou de forma independente e evoluiu acompanhando diariamente os ciclos globais do mercado.",
-      "Com o tempo, o Varejo Investidor expandiu sinais ao vivo, educação financeira, conteúdos multilíngues, estrutura institucional, desenvolvimento de plataforma própria e visão de terminal global para o varejo.",
+    levelsTitle: "Formiga • Lobo • Harpia",
+    levelsText: "A evolução dentro do Varejo Investidor acontece por níveis de consciência, operação e patrimônio.",
+    levels: [
+      ["Formiga", "Base financeira.", "Organização, primeiros investimentos e construção da disciplina."],
+      ["Lobo", "Estratégia e expansão.", "Leitura de mercado, operação, risco e posicionamento."],
+      ["Harpia", "Visão global.", "Patrimônio, proteção, sucessão e estrutura internacional."],
     ],
-  },
-  {
-    eyebrow: "Visão de futuro",
-    title: "A visão é construir uma estrutura própria para o varejo global.",
-    paragraphs: [
-      "O objetivo nunca foi apenas operar.",
-      "A visão é construir uma estrutura financeira própria, um ecossistema global, uma plataforma institucional para o varejo e uma nova forma do investidor comum acessar o mercado internacional.",
-      "O varejo global ainda opera muito abaixo do potencial que possui. O Varejo Investidor existe para mudar isso.",
+    visionTitle: "Uma visão diferente",
+    visionParagraphs: [
+      "O mercado financeiro tradicional vende velocidade.",
+      "O Varejo Investidor foi criado para ensinar estrutura.",
+      "Enquanto grande parte do mercado busca promessas rápidas, aqui o foco sempre foi leitura de mercado, construção financeira, visão internacional e crescimento em camadas.",
     ],
+    futureTitle: "Visão de futuro",
+    futureText:
+      "O objetivo nunca foi apenas operar. A visão é construir uma estrutura financeira própria para o varejo global: uma plataforma institucional, uma estrutura educacional e um ambiente operacional acessível ao investidor comum.",
+    futureIndicators: ["Plataforma própria", "Estrutura global", "Conteúdo multilíngue", "Visão institucional", "Expansão internacional"],
+    finalTitle: "Da organização financeira ao patrimônio global.",
+    finalText:
+      "Da primeira operação à construção de uma estrutura geracional. Essa é a jornada do Varejo Investidor.",
+    freeCta: "Começar pelo Canal Formiga",
+    eliteCta: "Conhecer o Elite",
   },
-  {
-    eyebrow: "A direção",
-    title: "Do básico ao avançado. Da primeira operação à estrutura geracional.",
-    paragraphs: [
-      "Da organização financeira ao patrimônio global. Da primeira operação até a construção de estrutura geracional.",
-      "Essa é a jornada. E ela está apenas começando.",
+  en: {
+    heroEyebrow: "About Varejo Investidor",
+    heroTitle: "Everything retail investors need to understand, operate, and build wealth in global markets.",
+    heroText: "From basics to advanced vision. Education, live signals, market reading, and layered financial construction.",
+    indicators: ["Since 2018", "+4,200 live signals", "Forex • Gold • Indices • Crypto", "Content in multiple languages"],
+    pillars: [
+      ["Market reading", "Understand global movements"],
+      ["Trading", "Forex, gold, indices, and crypto"],
+      ["Risk", "Protection and operational management"],
+      ["Wealth", "Long-term financial construction"],
+      ["Positioning", "Strategic vision and expansion"],
+      ["Layered construction", "From basics to global wealth"],
     ],
+    whatTitle: "What is Varejo Investidor",
+    whatParagraphs: [
+      "Varejo Investidor was created to teach retail investors how to understand international markets, operate with more clarity, and build long-term financial structure.",
+      "The proposal has always been to develop a global financial structure accessible to retail investors, combining education, market reading, live signals, and wealth vision.",
+      "Since 2018, the project has followed Forex, gold, oil, global indices, cryptocurrencies, and international cycles daily.",
+    ],
+    foundTitle: "What you find here",
+    found: ["Live signals", "Financial education", "Market reading", "Operational structure", "Multilingual content", "Risk management", "Wealth construction", "International vision"],
+    notOnlyTitle: "We are not just a channel",
+    notOnlyLeftTitle: "We are not",
+    notOnlyLeft: ["just signals", "just a course", "motivational content only", "quick trades only"],
+    notOnlyRightTitle: "We are",
+    notOnlyRight: ["financial education", "institutional reading", "structured operation", "wealth vision", "global financial structure"],
+    levelsTitle: "Ant • Wolf • Harpy",
+    levelsText: "Evolution inside Varejo Investidor happens through levels of awareness, operation, and wealth.",
+    levels: [
+      ["Ant", "Financial foundation.", "Organization, first investments, and discipline building."],
+      ["Wolf", "Strategy and expansion.", "Market reading, operation, risk, and positioning."],
+      ["Harpy", "Global vision.", "Wealth, protection, succession, and international structure."],
+    ],
+    visionTitle: "A different vision",
+    visionParagraphs: [
+      "The traditional financial market sells speed.",
+      "Varejo Investidor was created to teach structure.",
+      "While much of the market seeks quick promises, the focus here has always been market reading, financial construction, international vision, and layered growth.",
+    ],
+    futureTitle: "Future vision",
+    futureText:
+      "The goal was never just to trade. The vision is to build a proprietary financial structure for global retail: an institutional platform, an educational structure, and an operational environment accessible to ordinary investors.",
+    futureIndicators: ["Own platform", "Global structure", "Multilingual content", "Institutional vision", "International expansion"],
+    finalTitle: "From financial organization to global wealth.",
+    finalText: "From the first operation to building a generational structure. This is the Varejo Investidor journey.",
+    freeCta: "Start with the Ant Channel",
+    eliteCta: "Explore Elite",
   },
-];
+  es: {
+    heroEyebrow: "Sobre Varejo Investidor",
+    heroTitle: "Todo lo que el inversor común necesita para entender, operar y construir patrimonio en el mercado global.",
+    heroText: "De lo básico a lo avanzado. Educación, señales en vivo, lectura de mercado y construcción financiera por capas.",
+    indicators: ["Desde 2018", "+4.200 señales en vivo", "Forex • Oro • Índices • Cripto", "Contenido en múltiples idiomas"],
+    pillars: [
+      ["Lectura de mercado", "Entender movimientos globales"],
+      ["Operación", "Forex, oro, índices y cripto"],
+      ["Riesgo", "Protección y gestión operacional"],
+      ["Patrimonio", "Construcción financiera de largo plazo"],
+      ["Posicionamiento", "Visión estratégica y expansión"],
+      ["Construcción por capas", "De lo básico al patrimonio global"],
+    ],
+    whatTitle: "Qué es Varejo Investidor",
+    whatParagraphs: [
+      "Varejo Investidor fue creado para enseñar a inversores comunes a entender el mercado internacional, operar con más claridad y construir estructura financiera de largo plazo.",
+      "La propuesta siempre fue desarrollar una estructura financiera global accesible al inversor minorista, uniendo educación, lectura de mercado, señales en vivo y visión patrimonial.",
+      "Desde 2018, el proyecto acompaña diariamente Forex, oro, petróleo, índices globales, criptomonedas y ciclos internacionales.",
+    ],
+    foundTitle: "Qué encuentras aquí",
+    found: ["Señales en vivo", "Educación financiera", "Lectura de mercado", "Estructura operacional", "Contenido multilingüe", "Gestión de riesgo", "Construcción patrimonial", "Visión internacional"],
+    notOnlyTitle: "No somos solo un canal",
+    notOnlyLeftTitle: "No somos",
+    notOnlyLeft: ["solo señales", "solo un curso", "solo contenido motivacional", "solo operaciones rápidas"],
+    notOnlyRightTitle: "Somos",
+    notOnlyRight: ["educación financiera", "lectura institucional", "operación estructurada", "visión patrimonial", "estructura financiera global"],
+    levelsTitle: "Hormiga • Lobo • Harpía",
+    levelsText: "La evolución dentro de Varejo Investidor ocurre por niveles de conciencia, operación y patrimonio.",
+    levels: [
+      ["Hormiga", "Base financiera.", "Organización, primeras inversiones y construcción de disciplina."],
+      ["Lobo", "Estrategia y expansión.", "Lectura de mercado, operación, riesgo y posicionamiento."],
+      ["Harpía", "Visión global.", "Patrimonio, protección, sucesión y estructura internacional."],
+    ],
+    visionTitle: "Una visión diferente",
+    visionParagraphs: [
+      "El mercado financiero tradicional vende velocidad.",
+      "Varejo Investidor fue creado para enseñar estructura.",
+      "Mientras gran parte del mercado busca promesas rápidas, aquí el foco siempre fue lectura de mercado, construcción financiera, visión internacional y crecimiento por capas.",
+    ],
+    futureTitle: "Visión de futuro",
+    futureText:
+      "El objetivo nunca fue solo operar. La visión es construir una estructura financiera propia para el retail global: una plataforma institucional, una estructura educativa y un ambiente operacional accesible al inversor común.",
+    futureIndicators: ["Plataforma propia", "Estructura global", "Contenido multilingüe", "Visión institucional", "Expansión internacional"],
+    finalTitle: "De la organización financiera al patrimonio global.",
+    finalText: "De la primera operación a la construcción de una estructura generacional. Esa es la jornada de Varejo Investidor.",
+    freeCta: "Empezar por el Canal Hormiga",
+    eliteCta: "Conocer Elite",
+  },
+  hi: {
+    heroEyebrow: "Varejo Investidor का परिचय",
+    heroTitle: "सामान्य निवेशक को वैश्विक बाजार समझने, ऑपरेट करने और संपत्ति बनाने के लिए पूरी संरचना।",
+    heroText: "बुनियादी से उन्नत तक। शिक्षा, लाइव सिग्नल, बाजार-पठन और चरणों में वित्तीय निर्माण।",
+    indicators: ["2018 से", "4,200+ लाइव सिग्नल", "Forex • सोना • सूचकांक • क्रिप्टो", "कई भाषाओं में सामग्री"],
+    pillars: [
+      ["बाजार-पठन", "वैश्विक चालों को समझना"],
+      ["ऑपरेशन", "Forex, सोना, सूचकांक और क्रिप्टो"],
+      ["जोखिम", "सुरक्षा और ऑपरेशनल प्रबंधन"],
+      ["संपत्ति", "दीर्घकालिक वित्तीय निर्माण"],
+      ["पोजिशनिंग", "रणनीतिक दृष्टि और विस्तार"],
+      ["चरणों में निर्माण", "बुनियादी स्तर से वैश्विक संपत्ति तक"],
+    ],
+    whatTitle: "Varejo Investidor क्या है",
+    whatParagraphs: [
+      "Varejo Investidor सामान्य निवेशकों को अंतरराष्ट्रीय बाजार समझना, अधिक स्पष्टता से ऑपरेट करना और दीर्घकालिक वित्तीय संरचना बनाना सिखाने के लिए बनाया गया था।",
+      "प्रस्ताव हमेशा रिटेल निवेशक के लिए एक सुलभ वैश्विक वित्तीय संरचना विकसित करना रहा है, जिसमें शिक्षा, बाजार-पठन, लाइव सिग्नल और संपत्ति दृष्टि जुड़ते हैं।",
+      "2018 से यह प्रोजेक्ट Forex, सोना, तेल, वैश्विक सूचकांक, क्रिप्टोकरेंसी और अंतरराष्ट्रीय चक्रों का दैनिक अनुसरण करता है।",
+    ],
+    foundTitle: "यहाँ आपको क्या मिलता है",
+    found: ["लाइव सिग्नल", "वित्तीय शिक्षा", "बाजार-पठन", "ऑपरेशनल संरचना", "बहुभाषी सामग्री", "जोखिम प्रबंधन", "संपत्ति निर्माण", "अंतरराष्ट्रीय दृष्टि"],
+    notOnlyTitle: "हम केवल एक चैनल नहीं हैं",
+    notOnlyLeftTitle: "हम नहीं हैं",
+    notOnlyLeft: ["केवल सिग्नल", "केवल एक कोर्स", "केवल प्रेरक सामग्री", "केवल तेज ऑपरेशन"],
+    notOnlyRightTitle: "हम हैं",
+    notOnlyRight: ["वित्तीय शिक्षा", "संस्थागत पठन", "संरचित ऑपरेशन", "संपत्ति दृष्टि", "वैश्विक वित्तीय संरचना"],
+    levelsTitle: "चींटी • भेड़िया • गरुड़",
+    levelsText: "Varejo Investidor के भीतर विकास जागरूकता, ऑपरेशन और संपत्ति के स्तरों से होता है।",
+    levels: [
+      ["चींटी", "वित्तीय आधार।", "संगठन, शुरुआती निवेश और अनुशासन निर्माण।"],
+      ["भेड़िया", "रणनीति और विस्तार।", "बाजार-पठन, ऑपरेशन, जोखिम और पोजिशनिंग।"],
+      ["गरुड़", "वैश्विक दृष्टि।", "संपत्ति, सुरक्षा, उत्तराधिकार और अंतरराष्ट्रीय संरचना।"],
+    ],
+    visionTitle: "एक अलग दृष्टि",
+    visionParagraphs: [
+      "पारंपरिक वित्तीय बाजार गति बेचता है।",
+      "Varejo Investidor संरचना सिखाने के लिए बनाया गया था।",
+      "जहाँ बाजार का बड़ा हिस्सा तेज वादों की तलाश करता है, यहाँ ध्यान हमेशा बाजार-पठन, वित्तीय निर्माण, अंतरराष्ट्रीय दृष्टि और चरणों में विकास पर रहा है।",
+    ],
+    futureTitle: "भविष्य की दृष्टि",
+    futureText:
+      "उद्देश्य कभी केवल ऑपरेट करना नहीं था। दृष्टि है वैश्विक रिटेल के लिए अपनी वित्तीय संरचना बनाना: एक संस्थागत प्लेटफॉर्म, एक शैक्षिक संरचना और सामान्य निवेशक के लिए सुलभ ऑपरेशनल वातावरण।",
+    futureIndicators: ["अपना प्लेटफॉर्म", "वैश्विक संरचना", "बहुभाषी सामग्री", "संस्थागत दृष्टि", "अंतरराष्ट्रीय विस्तार"],
+    finalTitle: "वित्तीय संगठन से वैश्विक संपत्ति तक।",
+    finalText: "पहले ऑपरेशन से पीढ़ीगत संरचना के निर्माण तक। यही Varejo Investidor की यात्रा है।",
+    freeCta: "चींटी चैनल से शुरू करें",
+    eliteCta: "एलीट देखें",
+  },
+};
 
-const highlights = [
-  "Leitura de mercado",
-  "Operação",
-  "Risco",
-  "Patrimônio",
-  "Posicionamento estratégico",
-  "Construção em camadas",
-];
+function InfoCard({ title, text, index }: { title: string; text: string; index: number }) {
+  return (
+    <motion.article
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.45, delay: index * 0.035 }}
+      variants={fadeUp}
+      className="terminal-module relative overflow-hidden border border-ink/[0.1] bg-white p-5 shadow-fine"
+    >
+      <div className="absolute inset-0 luxury-grid opacity-25" />
+      <div className="relative">
+        <p className="font-mono text-xs text-gold">0{index + 1}</p>
+        <h3 className="mt-5 font-serif text-3xl leading-[1.04] tracking-[-0.04em]">{title}</h3>
+        <p className="mt-3 text-sm leading-7 text-ink/[0.66]">{text}</p>
+      </div>
+    </motion.article>
+  );
+}
 
 export default function SobrePage() {
   const { locale, t, changeLocale } = useSiteLocale();
+  const copy = aboutCopy[locale];
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="premium-stage relative px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-44">
+      <section className="premium-stage relative px-5 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
         <div className="finance-particles" />
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-gold/[0.08] blur-3xl" />
         <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-rise/[0.08] blur-3xl" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_0.82fr] lg:items-end">
           <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>
             <motion.p variants={fadeUp} className="text-xs font-bold uppercase tracking-[0.36em] text-gold">
-              Sobre o Varejo Investidor
+              {copy.heroEyebrow}
             </motion.p>
             <motion.h1
               variants={fadeUp}
-              className="mt-6 max-w-5xl text-balance font-serif text-5xl leading-[1.02] tracking-[-0.05em] md:text-7xl"
+              className="mt-6 max-w-6xl text-balance font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl xl:text-7xl"
             >
-              Uma estrutura para o varejo participar do mercado global.
+              {copy.heroTitle}
             </motion.h1>
             <motion.p variants={fadeUp} className="mt-7 max-w-3xl text-lg font-light leading-9 text-ink/[0.7] md:text-xl">
-              Do básico ao avançado. Da organização financeira ao patrimônio global. Da primeira operação até a construção de estrutura geracional.
+              {copy.heroText}
             </motion.p>
+            <motion.div variants={fadeUp} className="mt-9 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {copy.indicators.map((item) => (
+                <div key={item} className="border border-gold/[0.22] bg-paper/[0.035] px-4 py-4 text-sm font-bold uppercase tracking-[0.13em] text-gold">
+                  {item}
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -119,12 +283,12 @@ export default function SobrePage() {
             transition={{ duration: 0.6 }}
             className="terminal-module border border-gold/[0.22] bg-white p-6 shadow-premium"
           >
-            <p className="font-mono text-xs uppercase tracking-[0.28em] text-gold">Global retail structure</p>
-            <div className="mt-6 grid gap-3">
-              {highlights.map((item) => (
-                <p key={item} className="border-l border-gold pl-4 text-sm uppercase tracking-[0.14em] text-ink/[0.68]">
-                  {item}
-                </p>
+            <div className="grid gap-4">
+              {copy.pillars.map(([title, text], index) => (
+                <div key={title} className="border-l border-gold pl-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">{title}</p>
+                  <p className="mt-1 text-sm leading-6 text-ink/[0.68]">{text}</p>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -132,34 +296,191 @@ export default function SobrePage() {
       </section>
 
       <section className="px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-5">
-          {sections.map((section, index) => (
-            <motion.article
-              key={section.eyebrow}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: index * 0.03 }}
-              variants={fadeUp}
-              className="terminal-module relative overflow-hidden border border-ink/[0.1] bg-white p-6 md:p-9"
-            >
-              <div className="absolute inset-0 luxury-grid opacity-30" />
-              <div className="relative grid gap-7 lg:grid-cols-[0.42fr_1fr]">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{section.eyebrow}</p>
-                  <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-5xl">
-                    {section.title}
-                  </h2>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55 }}
+          variants={fadeUp}
+          className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.42fr_1fr]"
+        >
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">01</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.whatTitle}</h2>
+          </div>
+          <div className="grid gap-5 text-lg leading-9 text-ink/[0.68]">
+            {copy.whatParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">02</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.foundTitle}</h2>
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {copy.found.map((item, index) => (
+              <InfoCard key={item} title={item} text={copy.pillars[index % copy.pillars.length][1]} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={fadeUp}
+            className="terminal-module relative overflow-hidden border border-gold/[0.22] bg-ink p-6 text-paper shadow-premium md:p-10"
+          >
+            <div className="absolute inset-0 terminal-grid opacity-25" />
+            <div className="relative">
+              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">03</p>
+              <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.notOnlyTitle}</h2>
+              <div className="mt-10 grid gap-5 lg:grid-cols-2">
+                <div className="border border-paper/[0.12] bg-paper/[0.035] p-6">
+                  <p className="text-xs font-bold uppercase tracking-[0.26em] text-fall">{copy.notOnlyLeftTitle}</p>
+                  <div className="mt-6 grid gap-3">
+                    {copy.notOnlyLeft.map((item) => (
+                      <p key={item} className="border-l border-fall pl-4 text-sm uppercase tracking-[0.12em] text-paper/[0.72]">
+                        {item}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-                <div className="grid gap-4 text-base leading-8 text-ink/[0.68] md:text-lg md:leading-9">
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
+                <div className="border border-gold/[0.34] bg-gold/[0.07] p-6">
+                  <p className="text-xs font-bold uppercase tracking-[0.26em] text-gold">{copy.notOnlyRightTitle}</p>
+                  <div className="mt-6 grid gap-3">
+                    {copy.notOnlyRight.map((item) => (
+                      <p key={item} className="border-l border-gold pl-4 text-sm uppercase tracking-[0.12em] text-paper/[0.82]">
+                        {item}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </motion.article>
-          ))}
+            </div>
+          </motion.div>
         </div>
+      </section>
+
+      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-4xl">
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">04</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.levelsTitle}</h2>
+            <p className="mt-5 text-lg leading-8 text-ink/[0.66]">{copy.levelsText}</p>
+          </div>
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {copy.levels.map(([name, title, text], index) => (
+              <motion.article
+                key={name}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                variants={fadeUp}
+                className="terminal-module relative overflow-hidden border border-gold/[0.2] bg-paper p-6 shadow-fine md:p-8"
+              >
+                <div className="absolute right-5 top-5 h-20 w-20 rounded-full bg-gold/[0.08] blur-2xl" />
+                <div className="relative">
+                  <p className="font-mono text-xs text-gold">0{index + 1}</p>
+                  <h3 className="mt-7 font-serif text-5xl tracking-[-0.05em]">{name}</h3>
+                  <p className="mt-5 text-lg font-bold text-gold">{title}</p>
+                  <p className="mt-3 leading-8 text-ink/[0.68]">{text}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 md:px-8 md:py-24">
+        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
+          <motion.article
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="terminal-module relative overflow-hidden border border-ink/[0.1] bg-white p-6 md:p-9"
+          >
+            <div className="absolute inset-0 luxury-grid opacity-25" />
+            <div className="relative">
+              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">05</p>
+              <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-5xl">{copy.visionTitle}</h2>
+              <div className="mt-7 grid gap-4 text-base leading-8 text-ink/[0.68] md:text-lg">
+                {copy.visionParagraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </motion.article>
+
+          <motion.article
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.08 }}
+            variants={fadeUp}
+            className="terminal-module relative overflow-hidden border border-gold/[0.22] bg-white p-6 md:p-9"
+          >
+            <div className="absolute inset-0 terminal-grid opacity-20" />
+            <div className="relative">
+              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">06</p>
+              <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-5xl">{copy.futureTitle}</h2>
+              <p className="mt-7 text-base leading-8 text-ink/[0.68] md:text-lg">{copy.futureText}</p>
+              <div className="mt-7 flex flex-wrap gap-2">
+                {copy.futureIndicators.map((item) => (
+                  <span key={item} className="border border-gold/[0.24] bg-gold/[0.06] px-3 py-2 text-xs font-bold uppercase tracking-[0.13em] text-gold">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.article>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 md:px-8 md:py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.55 }}
+          className="relative mx-auto max-w-7xl overflow-hidden border border-ink bg-ink px-6 py-16 text-center text-paper shadow-premium md:px-12 md:py-24"
+        >
+          <div className="absolute inset-0 terminal-grid opacity-25" />
+          <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/[0.1] blur-3xl" />
+          <div className="relative">
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">07</p>
+            <h2 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-4xl leading-[1.05] tracking-[-0.045em] md:text-7xl">
+              {copy.finalTitle}
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-paper/[0.72]">{copy.finalText}</p>
+            <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+              <a
+                href={t.freeChannel.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+              >
+                {copy.freeCta}
+              </a>
+              <a
+                href="/sinais"
+                className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-paper transition hover:-translate-y-0.5"
+              >
+                {copy.eliteCta}
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       <section className="px-5 py-10 md:px-8 md:py-12">
