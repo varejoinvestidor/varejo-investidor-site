@@ -1,4 +1,4 @@
-export const es = {
+﻿export const es = {
   locale: "ES",
   nav: {
     home: "Inicio",
@@ -58,7 +58,7 @@ export const es = {
   terminal: {
     eyebrow: "Terminal financiero",
     title: "Una experiencia de producto real para seguir senales, mercados y riesgo.",
-    text: "El Canal Elite centraliza lectura global, señales y clases en una experiencia con estructura profesional de lectura de mercado.",
+    text: "El Canal Elite centraliza lectura global, seÃ±ales y clases en una experiencia con estructura profesional de lectura de mercado.",
     cards: [
       ["Senales", "Operaciones con activo, direccion, entrada, objetivo y stop."],
       ["Analisis", "Contexto macro, tecnico y lectura de mercado global."],
@@ -89,16 +89,16 @@ export const es = {
     ],
   },
   signalExample: {
-    eyebrow: "Ejemplo de señal recibida en WhatsApp",
-    title: "La señal llega estructurada para lectura rápida.",
-    text: "Cada envío organiza activo, dirección, entrada, take profit, stop loss y un análisis corto del escenario.",
-    cta: "Recibir señales en el Canal Elite",
-    signal: "Señal: 4.169",
+    eyebrow: "Ejemplo de seÃ±al recibida en WhatsApp",
+    title: "La seÃ±al llega estructurada para lectura rÃ¡pida.",
+    text: "Cada envÃ­o organiza activo, direcciÃ³n, entrada, take profit, stop loss y un anÃ¡lisis corto del escenario.",
+    cta: "Recibir seÃ±ales en el Canal Elite",
+    signal: "SeÃ±al: 4.169",
     asset: "GBP/USD COMPRA 1.34497",
     takeProfit: "Take Profit: 1.34766",
     stopLoss: "Stop Loss: 1.34123",
-    analysisTitle: "Análisis",
-    analysis: "GBP/USD, gráfico de 4 horas. El activo se encuentra dentro de la nube, con objetivo en el límite de la nube.",
+    analysisTitle: "AnÃ¡lisis",
+    analysis: "GBP/USD, grÃ¡fico de 4 horas. El activo se encuentra dentro de la nube, con objetivo en el lÃ­mite de la nube.",
   },
   brokers: {
     eyebrow: "Estructura operacional",
@@ -107,7 +107,7 @@ export const es = {
     forex: {
       label: "Corredora de Forex",
       title: "Opera Forex con la corredora que utilizamos",
-      text: "Accede a la corredora usada por Varejo Investidor para operar Forex, oro, petróleo, índices y monedas globales.",
+      text: "Accede a la corredora usada por Varejo Investidor para operar Forex, oro, petrÃ³leo, Ã­ndices y monedas globales.",
       button: "Abrir cuenta Forex",
       link: "https://direct.fxpro.group/pt/partner/77014650",
     },
@@ -155,27 +155,28 @@ export const es = {
     button: "Entrar al Canal Elite",
   },
   contact: {
-    eyebrow: "Contacto estratégico",
+    eyebrow: "Contacto estratÃ©gico",
     title: "Habla con Varejo Investidor",
-    text: "Elige el servicio ideal para tu momento y solicita orientación para entrar en el producto correcto.",
-    button: "Solicitar contacto estratégico",
+    text: "Elige el servicio ideal para tu momento y solicita orientaciÃ³n para entrar en el producto correcto.",
+    button: "Solicitar contacto estratÃ©gico",
   },
   servicesPage: {
     eyebrow: "Servicios",
     title: "Servicios Varejo Investidor",
-    text: "Conoce los canales, mentorías y consultorías de Varejo Investidor para señales, educación, visión de mercado y desarrollo patrimonial.",
+    text: "Conoce los canales, mentorÃ­as y consultorÃ­as de Varejo Investidor para seÃ±ales, educaciÃ³n, visiÃ³n de mercado y desarrollo patrimonial.",
     items: [
-      { title: "Canal Elite", description: "Producto principal con 100% de las señales, análisis, clases grabadas y lectura global de mercado.", bullets: ["Señales en vivo desde 2018", "Más de 4.200 señales enviadas", "Activo, dirección, entrada, objetivo, stop y contexto", "Forex, oro, petróleo, cripto, índices y monedas globales", "Educación por niveles Formiga, Lobo y Harpia"], cta: "Conocer el Canal Elite", href: "/#planos", kind: "paid" },
-      { title: "Canal Gratuito Formiga", description: "Canal gratuito en WhatsApp para recibir señales gratuitas, análisis y contenidos diarios.", bullets: ["Señales gratuitas", "Análisis de mercado", "Contenidos diarios", "Entrada gratuita por WhatsApp"], cta: "Entrar al Canal Gratuito", href: "free", kind: "free" },
-      { title: "Mentoría Individual 4 horas", description: "Sesión individual para análisis de perfil, visión de mercado, estructura operacional, riesgo y direccionamiento estratégico.", bullets: ["Análisis de perfil", "Visión de mercado", "Estructura operacional", "Riesgo y direccionamiento estratégico"], cta: "Solicitar mentoría", href: "#contato", kind: "paid" },
-      { title: "Mentoría Individual 10 horas", description: "Acompañamiento individual más profundo para construcción de método, organización operacional, lectura de escenario y evolución en el mercado global.", bullets: ["Construcción de método", "Organización operacional", "Lectura de escenario", "Evolución en el mercado global"], cta: "Solicitar mentoría", href: "#contato", kind: "paid" },
-      { title: "Consultoría Gold", description: "Consultoría de 6 meses con 30 horas de acompañamiento para estructuración financiera, lectura institucional, gestión de riesgo, evolución operacional y claridad estratégica.", bullets: ["6 meses", "30 horas", "Estructuración financiera", "Gestión de riesgo y claridad estratégica"], cta: "Solicitar consultoría Gold", href: "#contato", kind: "gold" },
-      { title: "Consultoría Platinum", description: "Consultoría anual con 58 horas de acompañamiento enfocada en visión patrimonial, estructura global, sucesión, protección de capital, expansión estratégica y posicionamiento de elite.", bullets: ["Anual", "58 horas", "Visión patrimonial y estructura global", "Sucesión, protección y expansión estratégica"], cta: "Solicitar consultoría Platinum", href: "#contato", kind: "platinum" },
+      { title: "Canal Elite", description: "Producto principal con 100% de las seÃ±ales, anÃ¡lisis, clases grabadas y lectura global de mercado.", bullets: ["SeÃ±ales en vivo desde 2018", "MÃ¡s de 4.200 seÃ±ales enviadas", "Activo, direcciÃ³n, entrada, objetivo, stop y contexto", "Forex, oro, petrÃ³leo, cripto, Ã­ndices y monedas globales", "EducaciÃ³n por niveles Formiga, Lobo y Harpia"], cta: "Conocer el Canal Elite", href: "/sinais", kind: "paid" },
+      { title: "Canal Gratuito Formiga", description: "Canal gratuito en WhatsApp para recibir seÃ±ales gratuitas, anÃ¡lisis y contenidos diarios.", bullets: ["SeÃ±ales gratuitas", "AnÃ¡lisis de mercado", "Contenidos diarios", "Entrada gratuita por WhatsApp"], cta: "Entrar al Canal Gratuito", href: "free", kind: "free" },
+      { title: "MentorÃ­a Individual 4 horas", description: "SesiÃ³n individual para anÃ¡lisis de perfil, visiÃ³n de mercado, estructura operacional, riesgo y direccionamiento estratÃ©gico.", bullets: ["AnÃ¡lisis de perfil", "VisiÃ³n de mercado", "Estructura operacional", "Riesgo y direccionamiento estratÃ©gico"], cta: "Solicitar mentorÃ­a", href: "#contato", kind: "paid" },
+      { title: "MentorÃ­a Individual 10 horas", description: "AcompaÃ±amiento individual mÃ¡s profundo para construcciÃ³n de mÃ©todo, organizaciÃ³n operacional, lectura de escenario y evoluciÃ³n en el mercado global.", bullets: ["ConstrucciÃ³n de mÃ©todo", "OrganizaciÃ³n operacional", "Lectura de escenario", "EvoluciÃ³n en el mercado global"], cta: "Solicitar mentorÃ­a", href: "#contato", kind: "paid" },
+      { title: "ConsultorÃ­a Gold", description: "ConsultorÃ­a de 6 meses con 30 horas de acompaÃ±amiento para estructuraciÃ³n financiera, lectura institucional, gestiÃ³n de riesgo, evoluciÃ³n operacional y claridad estratÃ©gica.", bullets: ["6 meses", "30 horas", "EstructuraciÃ³n financiera", "GestiÃ³n de riesgo y claridad estratÃ©gica"], cta: "Solicitar consultorÃ­a Gold", href: "#contato", kind: "gold" },
+      { title: "ConsultorÃ­a Platinum", description: "ConsultorÃ­a anual con 58 horas de acompaÃ±amiento enfocada en visiÃ³n patrimonial, estructura global, sucesiÃ³n, protecciÃ³n de capital, expansiÃ³n estratÃ©gica y posicionamiento de elite.", bullets: ["Anual", "58 horas", "VisiÃ³n patrimonial y estructura global", "SucesiÃ³n, protecciÃ³n y expansiÃ³n estratÃ©gica"], cta: "Solicitar consultorÃ­a Platinum", href: "#contato", kind: "platinum" },
     ],
   },
   disclaimer: {
     title: "Disclaimer",
-    text: "El contenido de Varejo Investidor tiene finalidad educativa e informativa. Los análisis, señales, ejemplos, mentorías, consultorías y materiales presentados no constituyen recomendación individual de inversión, consultoría financiera personalizada, promesa de rentabilidad ni garantía de resultado. Las operaciones en Forex, criptoactivos, commodities, índices y otros mercados implican riesgo y pueden generar pérdidas. Cada usuario es responsable de sus propias decisiones financieras y debe evaluar su realidad, objetivos y tolerancia al riesgo antes de operar o invertir.",
+    text: "El contenido de Varejo Investidor tiene finalidad educativa e informativa. Los anÃ¡lisis, seÃ±ales, ejemplos, mentorÃ­as, consultorÃ­as y materiales presentados no constituyen recomendaciÃ³n individual de inversiÃ³n, consultorÃ­a financiera personalizada, promesa de rentabilidad ni garantÃ­a de resultado. Las operaciones en Forex, criptoactivos, commodities, Ã­ndices y otros mercados implican riesgo y pueden generar pÃ©rdidas. Cada usuario es responsable de sus propias decisiones financieras y debe evaluar su realidad, objetivos y tolerancia al riesgo antes de operar o invertir.",
   },
-  footer: "Ecosistema global de educación, señales, lectura de mercado y estructura estratégica para inversores minoristas.",
+  footer: "Ecosistema global de educaciÃ³n, seÃ±ales, lectura de mercado y estructura estratÃ©gica para inversores minoristas.",
 };
+

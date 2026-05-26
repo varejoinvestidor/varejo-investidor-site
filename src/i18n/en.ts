@@ -1,4 +1,4 @@
-export const en = {
+﻿export const en = {
   locale: "EN",
   nav: {
     home: "Home",
@@ -165,7 +165,7 @@ export const en = {
     title: "Varejo Investidor Services",
     text: "Explore Varejo Investidor channels, mentorships, and consulting programs for signals, education, market vision, and wealth development.",
     items: [
-      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,200 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/#planos", kind: "paid" },
+      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,200 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
       { title: "Ant Free Channel", description: "Free WhatsApp channel for signals, analysis, and daily content.", bullets: ["Free signals", "Market analysis", "Daily content", "Free WhatsApp entry"], cta: "Join Free Channel", href: "free", kind: "free" },
       { title: "Individual Mentorship 4 hours", description: "Individual session for profile analysis, market vision, operational structure, risk, and strategic direction.", bullets: ["Profile analysis", "Market vision", "Operational structure", "Risk and strategic direction"], cta: "Request mentorship", href: "#contato", kind: "paid" },
       { title: "Individual Mentorship 10 hours", description: "Deeper individual guidance for building method, operational organization, scenario reading, and global market evolution.", bullets: ["Method building", "Operational organization", "Scenario reading", "Global market evolution"], cta: "Request mentorship", href: "#contato", kind: "paid" },
@@ -179,3 +179,4 @@ export const en = {
   },
   footer: "Global ecosystem for education, signals, market reading, and strategic structure for retail investors.",
 };
+

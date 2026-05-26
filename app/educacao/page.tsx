@@ -6,7 +6,6 @@ import {
   SectionHeader,
   SiteChrome,
   SupportFooter,
-  eliteLinkProps,
   fadeUp,
   useSiteLocale,
 } from "../../src/components/SiteSections";
@@ -14,10 +13,9 @@ import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWid
 
 export default function EducationPage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const eliteCta = eliteLinkProps(locale, "/planos");
 
   return (
-    <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "hi" ?"hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="premium-stage px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">
@@ -61,12 +59,18 @@ export default function EducationPage() {
           ))}
         </div>
         <div className="mx-auto mt-8 max-w-7xl">
-          <a
-            {...eliteCta}
-            className="inline-block border border-ink bg-ink px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-paper shadow-fine transition hover:-translate-y-0.5 hover:bg-paper hover:text-ink"
+          <div
+            aria-disabled="true"
+            className="cursor-not-allowed border border-gold/[0.45] bg-ink/[0.88] px-6 py-8 text-center shadow-premium md:px-10 md:py-10"
           >
-            {t.education.cta}
-          </a>
+            <div className="mx-auto grid h-11 w-11 place-items-center border border-gold/[0.55] font-mono text-lg font-bold text-gold">
+              X
+            </div>
+            <h2 className="mt-5 font-serif text-5xl tracking-[-0.05em] text-gold md:text-6xl">EM BREVE</h2>
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+              A trilha educacional completa Formiga, Lobo e Harpia será liberada em breve dentro do ecossistema Varejo Investidor.
+            </p>
+          </div>
         </div>
       </section>
 

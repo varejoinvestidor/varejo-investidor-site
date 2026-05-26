@@ -22,15 +22,15 @@ export const fadeUp = {
 
 export const ELITE_CHECKOUT_URL = "https://lastlink.com/p/CE761BB8E/checkout-payment";
 
-export function getEliteHref(locale: Locale, fallback = "/#planos") {
-  return locale === "pt" ? ELITE_CHECKOUT_URL : fallback;
+export function getEliteHref(locale: Locale, fallback = "/sinais") {
+  return locale === "pt" ?ELITE_CHECKOUT_URL : fallback;
 }
 
 export function getEliteTargetProps(locale: Locale) {
-  return locale === "pt" ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  return locale === "pt" ?{ target: "_blank", rel: "noopener noreferrer" } : {};
 }
 
-export function eliteLinkProps(locale: Locale, fallback = "/#planos") {
+export function eliteLinkProps(locale: Locale, fallback = "/sinais") {
   return {
     href: getEliteHref(locale, fallback),
     ...getEliteTargetProps(locale),
@@ -40,7 +40,7 @@ export function eliteLinkProps(locale: Locale, fallback = "/#planos") {
 export function detectLocale(): Locale {
   if (typeof navigator === "undefined") return "en";
 
-  const languages = navigator.languages?.length ? navigator.languages : [navigator.language];
+  const languages = navigator.languages?.length ?navigator.languages : [navigator.language];
   const detected = languages.join(" ").toLowerCase();
 
   if (detected.includes("pt")) return "pt";
@@ -74,7 +74,7 @@ export function useSiteLocale() {
 }
 
 export function Sparkline({ tone = "up" }: { tone?: string }) {
-  const color = tone === "up" ? "#0f8f56" : "#c72f2f";
+  const color = tone === "up" ?"#0f8f56" : "#c72f2f";
 
   return (
     <svg viewBox="0 0 220 70" className="h-16 w-full overflow-visible" aria-hidden="true">
@@ -135,7 +135,7 @@ export function LanguageSwitcher({
   return (
     <div
       className={`flex shrink-0 items-center border border-ink/[0.12] bg-paper p-1 shadow-fine ${
-        variant === "footer" ? "flex-wrap gap-1" : ""
+        variant === "footer" ?"flex-wrap gap-1" : ""
       }`}
     >
       {(["pt", "en", "es", "hi"] as Locale[]).map((item) => (
@@ -144,15 +144,15 @@ export function LanguageSwitcher({
           type="button"
           onClick={() => onChange(item)}
           className={`px-3 py-2 text-[11px] font-bold transition ${
-            variant === "footer" ? "tracking-[0.08em]" : "uppercase tracking-[0.18em]"
+            variant === "footer" ?"tracking-[0.08em]" : "uppercase tracking-[0.18em]"
           } ${
             locale === item
-              ? "bg-gold text-ink"
+              ?"bg-gold text-ink"
               : "text-ink/[0.72] hover:bg-paper/[0.06] hover:text-ink"
           }`}
           aria-pressed={locale === item}
         >
-          {variant === "footer" ? languageLabels[item] : item.toUpperCase()}
+          {variant === "footer" ?languageLabels[item] : item.toUpperCase()}
         </button>
       ))}
     </div>
@@ -173,23 +173,22 @@ export function SiteChrome({
       { label: t.nav.home, href: "/#home" },
       { label: t.nav.signals, href: "/sinais" },
       { label: t.nav.education, href: "/educacao" },
-      { label: t.nav.plans, href: "/planos" },
       { label: t.nav.services, href: "/servicos" },
-      { label: t.nav.about, href: "/#sobre" },
+      { label: t.nav.about, href: "/sobre" },
     ],
     [t],
   );
 
   return (
     <div className="fixed left-0 right-0 top-0 z-50">
-      <div className="hidden border-b border-ink/[0.08] bg-ink px-5 text-paper md:block">
-        <div className="mx-auto flex max-w-7xl items-center gap-7 overflow-hidden py-2 text-[11px] uppercase tracking-[0.2em]">
-          <span className="shrink-0 text-paper/[0.5]">{t.tickerLabel}</span>
-          <div className="ticker-track flex min-w-max gap-7">
+      <div className="global-ticker hidden border-b border-ink/[0.08] bg-ink px-5 text-paper md:block">
+        <div className="mx-auto flex max-w-7xl items-center gap-7 overflow-hidden py-2 text-[11px] uppercase tracking-[0.22em]">
+          <span className="shrink-0 text-gold">{t.tickerLabel}</span>
+          <div className="ticker-track flex min-w-max gap-6">
             {[...ticker, ...ticker].map(([asset, move, tone], index) => (
-              <span key={`${asset}-${index}`} className="flex items-center gap-2">
+              <span key={`${asset}-${index}`} className="ticker-item flex items-center gap-2">
                 <span className="text-paper/75">{asset}</span>
-                <span className={tone === "up" ? "text-rise" : "text-fall"}>{move}</span>
+                <span className={`ticker-value ${tone === "up" ?"text-rise" : "text-fall"}`}>{move}</span>
               </span>
             ))}
           </div>
@@ -243,20 +242,28 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
     [t.signalBlock.example.entry, t.signalBlock.example.values.entry],
     [t.signalBlock.example.target, t.signalBlock.example.values.target],
     [t.signalBlock.example.stop, t.signalBlock.example.values.stop],
+    ["TIMEFRAME", "4H"],
+    ["RISCO", "MODERADO"],
+    ["SINAL", "#4169"],
+    ["HORÁRIO", "09:42 UTC"],
     [t.signalBlock.example.status, t.signalBlock.example.values.status],
   ];
 
   return (
-    <div className="terminal-shell border border-ink bg-ink p-4 text-paper shadow-premium">
+    <div className="signal-terminal terminal-shell relative overflow-hidden border border-rise/[0.28] bg-ink p-4 text-paper shadow-premium">
+      <div className="absolute inset-0 terminal-grid opacity-25" />
       <div className="flex items-center justify-between border-b border-paper/[0.12] pb-4">
-        <div>
+        <div className="relative">
           <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">Live Signal</p>
           <h3 className="mt-1 font-serif text-3xl tracking-[-0.04em]">{t.signalBlock.example.title}</h3>
         </div>
-        <span className="h-3 w-3 rounded-full bg-rise shadow-[0_0_24px_rgba(15,143,86,0.8)]" />
+        <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise">
+          <span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />
+          LIVE
+        </div>
       </div>
 
-      <div className="mt-5 grid gap-2">
+      <div className="relative mt-5 grid gap-2 sm:grid-cols-2">
         {rows.map(([label, value]) => (
           <div key={label} className="grid grid-cols-[110px_1fr] border border-paper/[0.09] bg-paper/[0.035]">
             <p className="border-r border-paper/[0.09] px-3 py-3 text-[10px] uppercase tracking-[0.2em] text-paper/[0.42]">
@@ -265,7 +272,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
             <p
               className={`px-3 py-3 font-mono text-sm font-bold ${
                 value === t.signalBlock.example.values.direction || value === t.signalBlock.example.values.status
-                  ? "text-rise"
+                  ?"text-rise"
                   : "text-paper"
               }`}
             >
@@ -275,7 +282,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
         ))}
       </div>
 
-      <div className="mt-5 border border-rise/[0.35] bg-rise/[0.1] p-3 text-center text-xs font-bold uppercase tracking-[0.18em] text-rise">
+      <div className="relative mt-5 border border-rise/[0.35] bg-rise/[0.1] p-3 text-center text-xs font-bold uppercase tracking-[0.18em] text-rise">
         Copy ready
       </div>
     </div>
@@ -286,7 +293,7 @@ export function WhatsAppIcon({ dark = false }: { dark?: boolean }) {
   return (
     <span
       className={`whatsapp-pulse grid h-12 w-12 shrink-0 place-items-center rounded-full border ${
-        dark ? "border-rise/[0.38] bg-rise text-paper" : "border-rise/[0.38] bg-rise text-paper"
+        dark ?"border-rise/[0.38] bg-rise text-paper" : "border-rise/[0.38] bg-rise text-paper"
       }`}
       aria-hidden="true"
     >
@@ -324,8 +331,8 @@ export function FreeChannelCTA({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={`relative overflow-hidden border shadow-fine ${
-        dark ? "border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]" : "border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]"
-      } ${compact ? "p-4" : "p-5 md:p-7"}`}
+        dark ?"border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]" : "border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]"
+      } ${compact ?"p-4" : "p-5 md:p-7"}`}
     >
       <div className="absolute inset-0 terminal-grid opacity-35" />
       <div className="absolute -right-24 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-rise/[0.18] blur-3xl" />
@@ -430,9 +437,10 @@ export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof transla
 
 export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
   const brokers = [
-    { ...t.brokers.forex, tone: "forex" },
-    { ...t.brokers.crypto, tone: "crypto" },
+    { ...t.brokers.forex, tone: "forex", symbol: "$" },
+    { ...t.brokers.crypto, tone: "crypto", symbol: "₿" },
   ];
+  const indicators = ["Corretora número 1 do mundo", "Execução", "Proteção", "Plataforma utilizada"];
 
   return (
     <section className="px-5 py-14 md:px-8 md:py-16">
@@ -446,15 +454,30 @@ export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45 }}
-              className="relative overflow-hidden border border-ink/[0.1] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:shadow-premium md:p-8"
+              className="terminal-module relative overflow-hidden border border-ink/[0.1] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:shadow-premium md:p-8"
             >
-              <div className={broker.tone === "forex" ? "absolute inset-0 luxury-grid opacity-45" : "absolute inset-0 signal-grid opacity-50"} />
+              <div className={broker.tone === "forex" ?"absolute inset-0 luxury-grid opacity-45" : "absolute inset-0 signal-grid opacity-50"} />
               <div className="relative">
-                <p className={`text-xs font-bold uppercase tracking-[0.26em] ${broker.tone === "forex" ? "text-rise" : "text-ink/[0.45]"}`}>
-                  {broker.label}
+                <div
+                  className={`mb-6 grid h-14 w-14 place-items-center border font-mono text-2xl font-bold ${
+                    broker.tone === "forex" ?"border-rise/[0.35] text-rise" : "border-gold/[0.45] text-gold"
+                  }`}
+                  aria-hidden="true"
+                >
+                  {broker.symbol}
+                </div>
+                <p className={`text-xs font-bold uppercase tracking-[0.26em] ${broker.tone === "forex" ?"text-rise" : "text-ink/[0.45]"}`}>
+                  {broker.label.toUpperCase()}
                 </p>
                 <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.04em]">{broker.title}</h3>
                 <p className="mt-5 max-w-xl leading-8 text-ink/[0.66]">{broker.text}</p>
+                <div className="mt-6 grid gap-2 sm:grid-cols-2">
+                  {indicators.map((indicator) => (
+                    <span key={`${broker.label}-${indicator}`} className="border border-ink/[0.1] bg-paper/[0.035] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-ink/[0.58]">
+                      {indicator}
+                    </span>
+                  ))}
+                </div>
                 <a
                   href={broker.link}
                   target="_blank"

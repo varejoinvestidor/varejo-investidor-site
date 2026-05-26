@@ -25,10 +25,44 @@ export function ForexBrokerBannerWide({ language }: { language: Locale }) {
   };
 
   const banner = banners[language];
+  const cta = {
+    pt: {
+      before: "ABRA SUA CONTA E ",
+      highlight: "COMECE A NEGOCIAR",
+      after: " AGORA.",
+      second: "CLIQUE NO BANNER.",
+    },
+    en: {
+      before: "OPEN YOUR ACCOUNT AND ",
+      highlight: "START TRADING",
+      after: " NOW.",
+      second: "CLICK THE BANNER.",
+    },
+    es: {
+      before: "ABRE TU CUENTA Y ",
+      highlight: "EMPIEZA A NEGOCIAR",
+      after: " AHORA.",
+      second: "HAZ CLIC EN EL BANNER.",
+    },
+    hi: {
+      before: "अपना खाता खोलें और ",
+      highlight: "अभी ट्रेडिंग शुरू करें",
+      after: ".",
+      second: "बैनर पर क्लिक करें.",
+    },
+  }[language];
 
   return (
     <section className="px-5 py-10 md:px-8 md:py-12">
-      <div className="mx-auto flex max-w-7xl justify-center">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-5 text-center">
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-ink md:text-base">
+            {cta.before}
+            <span className="text-gold">{cta.highlight}</span>
+            {cta.after}
+          </p>
+          <p className="mt-2 text-xs font-bold uppercase tracking-[0.22em] text-ink/[0.58]">{cta.second}</p>
+        </div>
         <a
           rel="noopener"
           target="_blank"

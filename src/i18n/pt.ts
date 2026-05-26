@@ -1,4 +1,4 @@
-export const pt = {
+﻿export const pt = {
   locale: "PT",
   nav: {
     home: "Home",
@@ -198,7 +198,7 @@ export const pt = {
     title: "Serviços Varejo Investidor",
     text: "Conheça os canais, mentorias e consultorias do Varejo Investidor para sinais, educação, visão de mercado e desenvolvimento patrimonial.",
     items: [
-      { title: "Canal Elite", description: "Produto principal com 100% dos sinais, análises, aulas gravadas e leitura global de mercado.", bullets: ["Sinais ao vivo desde 2018", "Mais de 4.200 sinais enviados", "Ativo, direção, entrada, alvo, stop e contexto", "Forex, ouro, petróleo, cripto, índices e moedas globais", "Educação por níveis Formiga, Lobo e Harpia"], cta: "Conhecer o Canal Elite", href: "/#planos", kind: "paid" },
+      { title: "Canal Elite", description: "Produto principal com 100% dos sinais, análises, aulas gravadas e leitura global de mercado.", bullets: ["Sinais ao vivo desde 2018", "Mais de 4.200 sinais enviados", "Ativo, direção, entrada, alvo, stop e contexto", "Forex, ouro, petróleo, cripto, índices e moedas globais", "Educação por níveis Formiga, Lobo e Harpia"], cta: "Conhecer o Canal Elite", href: "/sinais", kind: "paid" },
       { title: "Canal Gratuito Formiga", description: "Canal gratuito no WhatsApp para receber sinais gratuitos, análises e conteúdos diários.", bullets: ["Sinais gratuitos", "Análises de mercado", "Conteúdos diários", "Entrada gratuita pelo WhatsApp"], cta: "Entrar no Canal Gratuito", href: "free", kind: "free" },
       { title: "Mentoria Individual 4 horas", description: "Sessão individual para análise de perfil, visão de mercado, estrutura operacional, risco e direcionamento estratégico.", bullets: ["Análise de perfil", "Visão de mercado", "Estrutura operacional", "Risco e direcionamento estratégico"], cta: "Solicitar mentoria", href: "#contato", kind: "paid" },
       { title: "Mentoria Individual 10 horas", description: "Acompanhamento individual mais profundo para construção de método, organização operacional, leitura de cenário e evolução no mercado global.", bullets: ["Construção de método", "Organização operacional", "Leitura de cenário", "Evolução no mercado global"], cta: "Solicitar mentoria", href: "#contato", kind: "paid" },
@@ -212,3 +212,4 @@ export const pt = {
   },
   footer: "Ecossistema global de educação, sinais, leitura de mercado e estrutura estratégica para investidores de varejo.",
 };
+
