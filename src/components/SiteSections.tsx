@@ -205,11 +205,10 @@ export function SiteChrome({
   const navItems = useMemo(
     () => [
       { label: t.nav.home, href: "/#home" },
-      { label: t.nav.signals, href: "/signals" },
-      { label: t.nav.education, href: "/#educacao" },
-      { label: t.nav.terminal, href: "/#terminal" },
-      { label: t.nav.plans, href: "/#planos" },
-      { label: t.nav.services, href: "/services" },
+      { label: t.nav.signals, href: "/sinais" },
+      { label: t.nav.education, href: "/educacao" },
+      { label: t.nav.plans, href: "/planos" },
+      { label: t.nav.services, href: "/servicos" },
       { label: t.nav.about, href: "/#sobre" },
     ],
     [t],
@@ -240,7 +239,7 @@ export function SiteChrome({
             <span className="min-w-0 leading-tight">
               <span className="block truncate font-serif text-xl">Varejo Investidor</span>
               <span className="hidden text-[10px] uppercase tracking-[0.24em] text-ink/[0.45] sm:block">
-                Elite Signal Desk
+                Mercado Global para o Investidor de Varejo
               </span>
             </span>
           </a>
@@ -512,23 +511,101 @@ export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
 }
 
 export function SupportFooter({ t }: { t: (typeof translations)[Locale] }) {
+  const socials = [
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/varejoinvestidor/",
+      icon: (
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
+          <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" strokeWidth="1.8" />
+          <circle cx="12" cy="12" r="3.4" stroke="currentColor" strokeWidth="1.8" />
+          <circle cx="16.8" cy="7.2" r="1" fill="currentColor" />
+        </svg>
+      ),
+    },
+    {
+      label: "YouTube",
+      href: "https://www.youtube.com/@Varejoinvestidor",
+      icon: (
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
+          <path
+            d="M21 12c0 2.1-.2 4.1-.6 5-.3.7-.9 1.2-1.6 1.4-1.3.4-6.8.4-6.8.4s-5.5 0-6.8-.4c-.7-.2-1.3-.7-1.6-1.4-.4-.9-.6-2.9-.6-5s.2-4.1.6-5c.3-.7.9-1.2 1.6-1.4 1.3-.4 6.8-.4 6.8-.4s5.5 0 6.8.4c.7.2 1.3.7 1.6 1.4.4.9.6 2.9.6 5Z"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path d="m10.4 9 4.6 3-4.6 3V9Z" fill="currentColor" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <div className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p className="font-serif text-3xl tracking-[-0.04em] text-ink">{t.support.title}</p>
-          <p className="mt-2 text-sm text-ink/[0.58]">{t.support.text}</p>
+    <>
+      <section className="border-t border-ink/[0.08] bg-paper px-5 py-10 md:px-8 md:py-12">
+        <div className="mx-auto max-w-7xl border border-ink/[0.1] bg-white p-6 shadow-fine md:p-8">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-ink/[0.45]">{t.disclaimer.title}</p>
+          <p className="mt-4 max-w-5xl text-sm leading-7 text-ink/[0.62] md:text-base md:leading-8">
+            {t.disclaimer.text}
+          </p>
         </div>
-        <a
-          href={t.support.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="border border-ink bg-ink px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-paper transition hover:bg-paper hover:text-ink"
-        >
-          {t.support.button}
-        </a>
-      </div>
-    </div>
+      </section>
+
+      <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:items-start">
+          <div>
+            <a href="/#home" className="inline-flex items-center gap-3">
+              <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
+                VI
+              </span>
+              <span>
+                <span className="block font-serif text-3xl tracking-[-0.04em] text-ink">Varejo Investidor</span>
+                <span className="text-[10px] uppercase tracking-[0.24em] text-ink/[0.45]">
+                  Mercado Global para o Investidor de Varejo
+                </span>
+              </span>
+            </a>
+            <p className="mt-4 max-w-md text-sm leading-7 text-ink/[0.6]">{t.footer}</p>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">Social</p>
+            <div className="mt-4 flex gap-2">
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="grid h-11 w-11 place-items-center border border-ink/[0.12] bg-paper text-ink transition hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-paper"
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="md:text-right">
+            <p className="font-serif text-2xl tracking-[-0.04em] text-ink">{t.support.title}</p>
+            <p className="mt-2 text-sm text-ink/[0.58]">{t.support.text}</p>
+            <a
+              href={t.support.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block border border-ink bg-ink px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper transition hover:bg-paper hover:text-ink"
+            >
+              {t.support.button}
+            </a>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-8 flex max-w-7xl flex-col gap-2 border-t border-ink/[0.08] pt-5 text-xs uppercase tracking-[0.18em] text-ink/[0.45] md:flex-row md:items-center md:justify-between">
+          <p>© {new Date().getFullYear()} Varejo Investidor</p>
+          <p>Forex • Crypto • Commodities • Global Markets</p>
+        </div>
+      </footer>
+    </>
   );
 }
 

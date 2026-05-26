@@ -1,5 +1,7 @@
 node_modules/
 .next/
+.next-build/
+.next-varejo/
 .vscode/
 .next-dev-job.txt
 .DS_Store

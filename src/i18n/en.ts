@@ -173,5 +173,9 @@ export const en = {
       { title: "Platinum Consulting", description: "Annual consulting with 58 hours of guidance focused on wealth vision, global structure, succession, capital protection, strategic expansion, and elite positioning.", bullets: ["Annual", "58 hours", "Wealth vision and global structure", "Succession, protection, and strategic expansion"], cta: "Request Platinum consulting", href: "#contato", kind: "platinum" },
     ],
   },
-  footer: "8 years in global markets, since 2018, with more than 4,200 live signals sent.",
+  disclaimer: {
+    title: "Disclaimer",
+    text: "Varejo Investidor content is provided for educational and informational purposes only. The analyses, signals, examples, mentorships, consulting services, and materials presented do not constitute individualized investment advice, personalized financial consulting, a promise of profitability, or a guarantee of results. Operations in Forex, crypto assets, commodities, indices, and other markets involve risk and may result in losses. Each user is responsible for their own financial decisions and should evaluate their reality, goals, and risk tolerance before trading or investing.",
+  },
+  footer: "Global ecosystem for education, signals, market reading, and strategic structure for retail investors.",
 };

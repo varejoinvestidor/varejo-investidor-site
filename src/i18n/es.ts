@@ -173,5 +173,9 @@ export const es = {
       { title: "Consultoría Platinum", description: "Consultoría anual con 58 horas de acompañamiento enfocada en visión patrimonial, estructura global, sucesión, protección de capital, expansión estratégica y posicionamiento de elite.", bullets: ["Anual", "58 horas", "Visión patrimonial y estructura global", "Sucesión, protección y expansión estratégica"], cta: "Solicitar consultoría Platinum", href: "#contato", kind: "platinum" },
     ],
   },
-  footer: "8 anos en mercados globales, desde 2018, con mas de 4.200 senales en vivo enviadas.",
+  disclaimer: {
+    title: "Disclaimer",
+    text: "El contenido de Varejo Investidor tiene finalidad educativa e informativa. Los análisis, señales, ejemplos, mentorías, consultorías y materiales presentados no constituyen recomendación individual de inversión, consultoría financiera personalizada, promesa de rentabilidad ni garantía de resultado. Las operaciones en Forex, criptoactivos, commodities, índices y otros mercados implican riesgo y pueden generar pérdidas. Cada usuario es responsable de sus propias decisiones financieras y debe evaluar su realidad, objetivos y tolerancia al riesgo antes de operar o invertir.",
+  },
+  footer: "Ecosistema global de educación, señales, lectura de mercado y estructura estratégica para inversores minoristas.",
 };

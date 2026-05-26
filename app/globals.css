@@ -130,12 +130,87 @@ main {
   background-size: auto, auto, 72px 72px;
 }
 
+.hero-mascot-stage {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.hero-mascot-depth {
+  display: none;
+  background:
+    radial-gradient(circle at 54% 36%, rgba(184, 137, 45, 0.16), transparent 23rem),
+    radial-gradient(circle at 46% 62%, rgba(5, 5, 5, 0.08), transparent 24rem);
+  mask-image: radial-gradient(ellipse at center, #000 0 50%, transparent 74%);
+  opacity: 0.68;
+}
+
+.hero-mascot-floor {
+  display: none;
+  background: radial-gradient(ellipse at center, rgba(5, 5, 5, 0.12), transparent 70%);
+  filter: blur(24px);
+}
+
+.hero-mascot-image {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  object-fit: contain;
+  object-position: center center;
+  filter: none;
+}
+
 :root[data-theme="dark"] .premium-stage {
   background:
     linear-gradient(180deg, rgba(5, 5, 5, 0.55), rgba(3, 3, 3, 0.9)),
     radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.09), transparent 42rem),
     linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
   background-size: auto, auto, 72px 72px;
+}
+
+:root[data-theme="dark"] .hero-mascot-depth {
+  background:
+    radial-gradient(circle at 54% 38%, rgba(184, 137, 45, 0.1), transparent 24rem),
+    radial-gradient(circle at 45% 64%, rgba(255, 255, 255, 0.055), transparent 24rem);
+  mask-image: radial-gradient(ellipse at center, #000 0 46%, transparent 74%);
+  opacity: 0.42;
+}
+
+:root[data-theme="dark"] .hero-mascot-floor {
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.62), transparent 68%);
+}
+
+:root[data-theme="dark"] .hero-mascot-image {
+  filter: none;
+}
+
+.section-team-stage {
+  overflow: visible;
+}
+
+.section-team-depth {
+  background:
+    radial-gradient(circle at 48% 42%, rgba(184, 137, 45, 0.13), transparent 22rem),
+    radial-gradient(circle at 48% 70%, rgba(5, 5, 5, 0.1), transparent 24rem);
+  mask-image: radial-gradient(ellipse at center, #000 0 48%, transparent 74%);
+}
+
+.section-team-image {
+  object-fit: contain;
+  object-position: center center;
+  filter: drop-shadow(0 26px 34px rgba(5, 5, 5, 0.18));
+}
+
+:root[data-theme="dark"] .section-team-depth {
+  background:
+    radial-gradient(circle at 48% 42%, rgba(184, 137, 45, 0.08), transparent 22rem),
+    radial-gradient(circle at 48% 70%, rgba(255, 255, 255, 0.055), transparent 24rem);
+  opacity: 0.62;
+}
+
+:root[data-theme="dark"] .section-team-image {
+  filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.48));
 }
 
 .luxury-grid {

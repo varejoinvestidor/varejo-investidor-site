@@ -15,6 +15,7 @@ import {
   useSiteLocale,
   useSiteTheme,
 } from "../../src/components/SiteSections";
+import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
@@ -91,6 +92,8 @@ export default function SignalsPage() {
       </section>
 
       <BrokerBanners t={t} />
+
+      <ForexBrokerBannerWide language={locale} />
 
       <SupportFooter t={t} />
     </main>

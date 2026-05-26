@@ -13,6 +13,7 @@ import {
   useSiteLocale,
   useSiteTheme,
 } from "../../src/components/SiteSections";
+import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 const paidPtServiceLinks: Record<string, string> = {
   "Mentoria Individual 4 horas": "https://lastlink.com/p/CD2963C67/checkout-payment",
@@ -188,6 +189,8 @@ export default function ServicesPage() {
       <BrokerBanners t={t} />
 
       <ContactSection t={t} />
+
+      <ForexBrokerBannerWide language={locale} />
 
       <SupportFooter t={t} />
     </main>
