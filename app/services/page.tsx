@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   BrokerBanners,
   ContactSection,
@@ -91,29 +92,6 @@ const internationalServicesIntro = {
   hi: "Varejo Investidor की सेवाएँ देखें: सिग्नल, शिक्षा और वैश्विक बाजार-पठन।",
 };
 
-const servicesPanelCopy = {
-  pt: {
-    eyebrow: "Estrutura estratégica",
-    title: "Serviços para evolução financeira em camadas.",
-    pillars: ["Sinais", "Educação", "Consultoria"],
-  },
-  en: {
-    eyebrow: "Strategic structure",
-    title: "Services for layered financial evolution.",
-    pillars: ["Signals", "Education", "Advisory"],
-  },
-  es: {
-    eyebrow: "Estructura estratégica",
-    title: "Servicios para evolución financiera por capas.",
-    pillars: ["Señales", "Educación", "Consultoría"],
-  },
-  hi: {
-    eyebrow: "रणनीतिक संरचना",
-    title: "वित्तीय विकास के लिए सेवाएँ।",
-    pillars: ["सिग्नल", "शिक्षा", "परामर्श"],
-  },
-};
-
 function compactCardTone(kind: string) {
   return kind === "free"
     ? "border-rise/[0.38] bg-rise/[0.06]"
@@ -137,7 +115,6 @@ export default function ServicesPage() {
   const isPt = locale === "pt";
   const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale];
   const compactServices = isPt ? compactPtServices : t.servicesPage.items.slice(0, 2);
-  const panelCopy = servicesPanelCopy[locale];
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -146,27 +123,28 @@ export default function ServicesPage() {
       <section className="premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.08] blur-3xl" />
         <div className="absolute left-0 top-36 h-80 w-80 rounded-full bg-gold/[0.08] blur-3xl" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+        <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-end">
           <SectionHeader eyebrow={t.servicesPage.eyebrow} title={t.servicesPage.title} text={servicesIntro} />
 
-          <div className="relative overflow-hidden border border-gold/[0.22] bg-ink p-6 text-paper shadow-premium md:p-8">
-            <div className="absolute inset-0 terminal-grid opacity-20" />
-            <div className="absolute right-6 top-6 h-28 w-28 rounded-full bg-gold/[0.12] blur-3xl" />
-            <div className="relative">
-              <p className="font-mono text-xs uppercase tracking-[0.28em] text-gold">{panelCopy.eyebrow}</p>
-              <h2 className="mt-5 font-serif text-5xl leading-[0.98] tracking-[-0.05em] md:text-6xl">
-                {panelCopy.title}
-              </h2>
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {panelCopy.pillars.map((item, index) => (
-                  <div key={item} className="border border-paper/[0.1] bg-paper/[0.04] p-4">
-                    <p className="font-mono text-xs text-gold">0{index + 1}</p>
-                    <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.72]">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="services-hero-visual relative min-h-[360px] lg:min-h-[520px]"
+          >
+            <div className="services-hero-grid" />
+            <div className="services-hero-glow" />
+            <div className="services-hero-floor" />
+            <Image
+              src="/characters/services-hero-team.png"
+              alt="Personagens Formiga, Lobo e Harpia em mesa institucional"
+              width={1080}
+              height={1350}
+              sizes="(min-width: 1024px) 58vw, 96vw"
+              priority
+              className="services-hero-image"
+            />
+          </motion.div>
         </div>
       </section>
 

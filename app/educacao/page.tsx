@@ -49,12 +49,12 @@ export default function EducationPage() {
           <div className="education-levels-glow" />
           <div className="education-levels-floor" />
           <Image
-            src="/characters/education-levels-team.png"
+            src="/characters/services-hero-team.png"
             alt="Personagens Formiga, Lobo e Harpia do Varejo Investidor"
-            width={1236}
-            height={463}
-            sizes="(min-width: 1024px) 900px, 94vw"
-            className="education-levels-image relative z-10 h-auto w-full object-contain object-center"
+            width={1080}
+            height={1350}
+            sizes="(min-width: 1024px) 980px, 94vw"
+            className="education-levels-image education-levels-image-portrait relative z-10"
           />
         </motion.div>
 

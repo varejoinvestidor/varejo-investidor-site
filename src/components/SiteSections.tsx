@@ -236,6 +236,7 @@ export function SiteChrome({
 }
 
 export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
+  const isPortuguese = t.locale === "PT";
   const extraLabels =
     t.locale === "HI"
       ? {
@@ -254,7 +255,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
           signal: "SINAL",
           time: "HORÁRIO",
           live: "LIVE",
-          copy: "Copy ready",
+          copy: isPortuguese ? "COPIE AGORA NO WHATSAPP" : "Copy ready",
         };
   const rows = [
     [t.signalBlock.example.asset, t.signalBlock.example.values.asset],
@@ -274,7 +275,9 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
       <div className="absolute inset-0 terminal-grid opacity-25" />
       <div className="flex items-center justify-between border-b border-paper/[0.12] pb-4">
         <div className="relative">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">Live Signal</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">
+            {isPortuguese ? "SINAL AO VIVO" : "Live Signal"}
+          </p>
           <h3 className="mt-1 font-serif text-3xl tracking-[-0.04em]">{t.signalBlock.example.title}</h3>
         </div>
         <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise">

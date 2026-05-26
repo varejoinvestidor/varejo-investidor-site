@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import {
@@ -38,38 +37,6 @@ const reports = [
   ["JAN/2021", "Relatório Elite", "98 sinais", "+11.2%", "Disponível"],
   ["MAR/2024", "Relatório Elite", "137 sinais", "+22.7%", "Disponível"],
 ];
-
-const reportSignals = {
-  "AGO/2018": [
-    { number: "4169", date: "22/05/2026", asset: "GBP/USD", direction: "Compra", entry: "1.34497", target: "1.34766", stop: "1.34123", result: "-19", status: "Fechado" },
-    { number: "4168", date: "21/05/2026", asset: "XAU/USD", direction: "Compra", entry: "4528.87", target: "4538.13", stop: "4518.57", result: "+89", status: "Fechado" },
-    { number: "4167", date: "20/05/2026", asset: "EUR/USD", direction: "Venda", entry: "1.16363", target: "1.16272", stop: "1.16565", result: "+92", status: "Fechado" },
-    { number: "4166", date: "20/05/2026", asset: "USOIL", direction: "Compra", entry: "94.833", target: "95.544", stop: "93.590", result: "+713", status: "Fechado" },
-  ],
-  "JAN/2021": [
-    { number: "4137", date: "15/01/2021", asset: "XAU/USD", direction: "Compra", entry: "4638.15", target: "4667.73", stop: "4608.15", result: "+124", status: "Fechado" },
-    { number: "4136", date: "14/01/2021", asset: "EUR/USD", direction: "Venda", entry: "1.21640", target: "1.21180", stop: "1.21920", result: "-31", status: "Fechado" },
-    { number: "4135", date: "13/01/2021", asset: "GBP/USD", direction: "Compra", entry: "1.36320", target: "1.37110", stop: "1.35840", result: "+78", status: "Fechado" },
-    { number: "4134", date: "12/01/2021", asset: "BTC/USD", direction: "Compra", entry: "33580", target: "34840", stop: "32910", result: "+1260", status: "Fechado" },
-  ],
-  "MAR/2024": [
-    { number: "4098", date: "19/03/2024", asset: "NAS100", direction: "Compra", entry: "18120.5", target: "18284.0", stop: "18042.0", result: "+163.5", status: "Fechado" },
-    { number: "4097", date: "18/03/2024", asset: "XAU/USD", direction: "Compra", entry: "2148.20", target: "2162.90", stop: "2139.40", result: "+147", status: "Fechado" },
-    { number: "4096", date: "15/03/2024", asset: "USD/JPY", direction: "Venda", entry: "149.320", target: "148.760", stop: "149.680", result: "-36", status: "Fechado" },
-    { number: "4095", date: "14/03/2024", asset: "USOIL", direction: "Compra", entry: "80.42", target: "82.10", stop: "79.70", result: "+168", status: "Fechado" },
-  ],
-};
-
-const signalTableLabels = {
-  title: "Sinais do relatório",
-  search: "Buscar número do sinal",
-  allAssets: "Todos os ativos",
-  allResults: "Todos os resultados",
-  positive: "Positivos",
-  negative: "Negativos",
-  columns: ["Número do sinal", "Data", "Ativo", "Direção", "Entrada", "Alvo", "Stop", "Resultado", "Status"],
-  empty: "Nenhum sinal encontrado para os filtros selecionados.",
-};
 
 const formigaBullets = [
   "gratuito",
@@ -123,10 +90,6 @@ const whatsappPrints = [
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const eliteCta = eliteLinkProps(locale, "/sinais");
-  const [selectedReport, setSelectedReport] = useState("AGO/2018");
-  const [signalSearch, setSignalSearch] = useState("");
-  const [assetFilter, setAssetFilter] = useState("all");
-  const [resultFilter, setResultFilter] = useState("all");
   const isHi = locale === "hi";
   const signalPageCopy = isHi
     ? {
@@ -175,24 +138,7 @@ export default function SignalsPage() {
   const reportRows = signalPageCopy?.reports ?? reports;
   const freeItems = signalPageCopy?.formigaItems ?? formigaBullets;
   const eliteItems = signalPageCopy?.eliteItems ?? eliteBullets;
-  const reportKeys = Object.keys(reportSignals) as Array<keyof typeof reportSignals>;
-  const selectedSignals = reportSignals[selectedReport as keyof typeof reportSignals] ?? reportSignals["AGO/2018"];
-  const availableAssets = useMemo(() => Array.from(new Set(selectedSignals.map((signal) => signal.asset))), [selectedSignals]);
-  const filteredSignals = useMemo(
-    () =>
-      selectedSignals.filter((signal) => {
-        const matchesSearch = signal.number.includes(signalSearch.trim());
-        const matchesAsset = assetFilter === "all" || signal.asset === assetFilter;
-        const numericResult = Number(signal.result.replace(/[^\d.-]/g, ""));
-        const matchesResult =
-          resultFilter === "all" ||
-          (resultFilter === "positive" && numericResult >= 0) ||
-          (resultFilter === "negative" && numericResult < 0);
-
-        return matchesSearch && matchesAsset && matchesResult;
-      }),
-    [assetFilter, resultFilter, selectedSignals, signalSearch],
-  );
+  const reportYears = ["2018", "2021", "2024"];
   const displayPrices = isHi
     ? [
         ["मासिक", "US$ 30", ""],
@@ -356,108 +302,18 @@ export default function SignalsPage() {
                       </td>
                     ))}
                     <td className="px-5 py-5">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedReport(reportKeys[rowIndex] ?? "AGO/2018");
-                          setSignalSearch("");
-                          setAssetFilter("all");
-                          setResultFilter("all");
-                        }}
-                        className="border border-ink/[0.18] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-ink transition hover:border-gold hover:text-gold"
+                      <a
+                        href={`/historico/${reportYears[rowIndex] ?? "2018"}`}
+                        className="inline-block border border-ink/[0.18] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-ink transition hover:border-gold hover:text-gold"
                       >
                         {signalPageCopy?.view ?? "VER"}
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-
-          <motion.div
-            key={selectedReport}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="terminal-module mt-6 overflow-hidden border border-rise/[0.18] bg-white p-4 shadow-fine md:p-6"
-          >
-            <div className="flex flex-col gap-4 border-b border-ink/[0.08] pb-5 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-[0.24em] text-rise">{selectedReport}</p>
-                <h3 className="mt-2 font-serif text-3xl tracking-[-0.04em] md:text-4xl">
-                  {signalTableLabels.title}
-                </h3>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[680px]">
-                <input
-                  value={signalSearch}
-                  onChange={(event) => setSignalSearch(event.target.value)}
-                  placeholder={signalTableLabels.search}
-                  className="border border-ink/[0.14] bg-ink px-4 py-3 text-sm text-paper outline-none transition placeholder:text-paper/[0.45] focus:border-rise"
-                />
-                <select
-                  value={assetFilter}
-                  onChange={(event) => setAssetFilter(event.target.value)}
-                  className="border border-ink/[0.14] bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-rise"
-                >
-                  <option value="all">{signalTableLabels.allAssets}</option>
-                  {availableAssets.map((asset) => (
-                    <option key={asset} value={asset}>
-                      {asset}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={resultFilter}
-                  onChange={(event) => setResultFilter(event.target.value)}
-                  className="border border-ink/[0.14] bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-rise"
-                >
-                  <option value="all">{signalTableLabels.allResults}</option>
-                  <option value="positive">{signalTableLabels.positive}</option>
-                  <option value="negative">{signalTableLabels.negative}</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="mt-5 overflow-x-auto">
-              <table className="w-full min-w-[980px] border-collapse text-left">
-                <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.18em] text-gold">
-                  <tr>
-                    {signalTableLabels.columns.map((heading) => (
-                      <th key={heading} className="px-4 py-4 font-bold">
-                        {heading}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredSignals.map((signal) => {
-                    const isPositive = Number(signal.result.replace(/[^\d.-]/g, "")) >= 0;
-
-                    return (
-                      <tr key={signal.number} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
-                        <td className="px-4 py-4 font-mono text-sm font-bold text-ink">Sinal {signal.number}</td>
-                        <td className="px-4 py-4 text-sm text-ink/[0.68]">{signal.date}</td>
-                        <td className="px-4 py-4 font-mono text-sm text-ink">{signal.asset}</td>
-                        <td className="px-4 py-4 text-sm text-ink/[0.72]">{signal.direction}</td>
-                        <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.entry}</td>
-                        <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.target}</td>
-                        <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.stop}</td>
-                        <td className={`px-4 py-4 font-mono text-sm font-bold ${isPositive ? "text-rise" : "text-fall"}`}>
-                          {signal.result}
-                        </td>
-                        <td className="px-4 py-4 text-sm uppercase tracking-[0.14em] text-ink/[0.58]">{signal.status}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              {filteredSignals.length === 0 ? (
-                <p className="border border-ink/[0.1] px-4 py-6 text-center text-sm text-ink/[0.62]">{signalTableLabels.empty}</p>
-              ) : null}
-            </div>
-          </motion.div>
         </div>
       </section>
 
