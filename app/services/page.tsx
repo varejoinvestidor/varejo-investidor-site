@@ -11,7 +11,6 @@ import {
   eliteLinkProps,
   fadeUp,
   useSiteLocale,
-  useSiteTheme,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
@@ -70,7 +69,6 @@ function serviceTone(kind: string) {
 
 export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const { theme, changeTheme } = useSiteTheme();
   const visibleServices = locale === "pt" ? t.servicesPage.items : t.servicesPage.items.slice(0, 2);
   const servicesIntro =
     locale === "pt"
@@ -79,7 +77,7 @@ export default function ServicesPage() {
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
-      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} theme={theme} onThemeChange={changeTheme} />
+      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.08] blur-3xl" />
@@ -192,7 +190,7 @@ export default function ServicesPage() {
 
       <ForexBrokerBannerWide language={locale} />
 
-      <SupportFooter t={t} />
+      <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
     </main>
   );
 }

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale, useSiteTheme } from "../src/components/SiteSections";
+import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../src/components/SiteSections";
 import type { Locale } from "../src/i18n";
 
 const homeLiteCopy = {
@@ -191,12 +191,11 @@ const homeLiteCopy = {
 
 export default function Home() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const { theme, changeTheme } = useSiteTheme();
   const copy = homeLiteCopy[locale];
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
-      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} theme={theme} onThemeChange={changeTheme} />
+      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section id="home" className="premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.08] blur-3xl" />
@@ -384,7 +383,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <SupportFooter t={t} />
+      <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
     </main>
   );
 }

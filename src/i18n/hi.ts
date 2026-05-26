@@ -165,8 +165,8 @@ export const hi = {
     badge: "सबसे बेहतर मूल्य",
     plans: [
       { period: "मासिक", brl: "R$ 149.90", usd: "US$ 30", featured: false },
-      { period: "त्रैमासिक", brl: "R$ 397.90", usd: "US$ 80", featured: false },
-      { period: "अर्धवार्षिक", brl: "R$ 719.90", usd: "US$ 145", featured: false },
+      { period: "3 महीने", brl: "R$ 397.90", usd: "US$ 80", featured: false },
+      { period: "6 महीने", brl: "R$ 719.90", usd: "US$ 145", featured: false },
       { period: "वार्षिक", brl: "R$ 1,197.90", usd: "US$ 240", featured: true },
     ],
     featuresTitle: "एलीट में शामिल",
@@ -179,7 +179,7 @@ export const hi = {
       "फॉर्मिगा, लोबो और हार्पिया विकास के लिए सामग्री",
       "Varejo Investidor के मुख्य इकोसिस्टम तक पहुंच",
     ],
-    cta: "एलीट चैनल में प्रवेश करें",
+    cta: "अभी शुरू करें",
   },
   cta: {
     eyebrow: "एलीट चैनल",

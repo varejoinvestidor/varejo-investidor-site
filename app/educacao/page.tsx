@@ -9,18 +9,16 @@ import {
   eliteLinkProps,
   fadeUp,
   useSiteLocale,
-  useSiteTheme,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 export default function EducationPage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const { theme, changeTheme } = useSiteTheme();
   const eliteCta = eliteLinkProps(locale, "/planos");
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
-      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} theme={theme} onThemeChange={changeTheme} />
+      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="premium-stage px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">
         <div className="mx-auto max-w-7xl">
@@ -74,7 +72,7 @@ export default function EducationPage() {
 
       <ForexBrokerBannerWide language={locale} />
 
-      <SupportFooter t={t} />
+      <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
     </main>
   );
 }

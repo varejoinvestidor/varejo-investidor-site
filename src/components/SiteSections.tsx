@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { translations, type Locale } from "../i18n";
 
-export type SiteTheme = "light" | "dark";
-
 export const ticker = [
   ["XAU/USD", "+0.74%", "up"],
   ["EUR/USD", "-0.18%", "down"],
@@ -75,25 +73,6 @@ export function useSiteLocale() {
   return { locale, t, changeLocale };
 }
 
-export function useSiteTheme() {
-  const [theme, setTheme] = useState<SiteTheme>("light");
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem("varejo-investidor-theme") as SiteTheme | null;
-    const nextTheme = saved === "dark" || saved === "light" ? saved : "light";
-    setTheme(nextTheme);
-    document.documentElement.dataset.theme = nextTheme;
-  }, []);
-
-  function changeTheme(nextTheme: SiteTheme) {
-    setTheme(nextTheme);
-    document.documentElement.dataset.theme = nextTheme;
-    window.localStorage.setItem("varejo-investidor-theme", nextTheme);
-  }
-
-  return { theme, changeTheme };
-}
-
 export function Sparkline({ tone = "up" }: { tone?: string }) {
   const color = tone === "up" ? "#0f8f56" : "#c72f2f";
 
@@ -140,49 +119,40 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
 export function LanguageSwitcher({
   locale,
   onChange,
+  variant = "compact",
 }: {
   locale: Locale;
   onChange: (locale: Locale) => void;
+  variant?: "compact" | "footer";
 }) {
+  const languageLabels: Record<Locale, string> = {
+    pt: "🇧🇷 Português",
+    en: "🇺🇸 English",
+    es: "🇪🇸 Español",
+    hi: "🇮🇳 हिन्दी",
+  };
+
   return (
-    <div className="flex shrink-0 items-center border border-ink/[0.12] bg-white p-1 shadow-fine">
+    <div
+      className={`flex shrink-0 items-center border border-ink/[0.12] bg-paper p-1 shadow-fine ${
+        variant === "footer" ? "flex-wrap gap-1" : ""
+      }`}
+    >
       {(["pt", "en", "es", "hi"] as Locale[]).map((item) => (
         <button
           key={item}
           type="button"
           onClick={() => onChange(item)}
-          className={`px-3 py-2 text-[11px] font-bold uppercase tracking-[0.18em] transition ${
-            locale === item ? "bg-ink text-paper" : "text-ink hover:bg-ink/[0.06]"
+          className={`px-3 py-2 text-[11px] font-bold transition ${
+            variant === "footer" ? "tracking-[0.08em]" : "uppercase tracking-[0.18em]"
+          } ${
+            locale === item
+              ? "bg-gold text-ink"
+              : "text-ink/[0.72] hover:bg-paper/[0.06] hover:text-ink"
           }`}
           aria-pressed={locale === item}
         >
-          {item.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-export function ThemeSwitcher({
-  theme,
-  onChange,
-}: {
-  theme: SiteTheme;
-  onChange: (theme: SiteTheme) => void;
-}) {
-  return (
-    <div className="flex shrink-0 items-center border border-ink/[0.12] bg-white p-1 shadow-fine">
-      {(["light", "dark"] as SiteTheme[]).map((item) => (
-        <button
-          key={item}
-          type="button"
-          onClick={() => onChange(item)}
-          className={`px-3 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition ${
-            theme === item ? "bg-ink text-paper" : "text-ink hover:bg-ink/[0.06]"
-          }`}
-          aria-pressed={theme === item}
-        >
-          {item === "light" ? "Light" : "Dark"}
+          {variant === "footer" ? languageLabels[item] : item.toUpperCase()}
         </button>
       ))}
     </div>
@@ -193,14 +163,10 @@ export function SiteChrome({
   locale,
   t,
   onLocaleChange,
-  theme,
-  onThemeChange,
 }: {
   locale: Locale;
   t: (typeof translations)[Locale];
   onLocaleChange: (locale: Locale) => void;
-  theme: SiteTheme;
-  onThemeChange: (theme: SiteTheme) => void;
 }) {
   const navItems = useMemo(
     () => [
@@ -254,7 +220,6 @@ export function SiteChrome({
 
           <div className="flex items-center gap-2">
             <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
-            <ThemeSwitcher theme={theme} onChange={onThemeChange} />
           </div>
         </nav>
         <div className="border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden">
@@ -320,8 +285,8 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
 export function WhatsAppIcon({ dark = false }: { dark?: boolean }) {
   return (
     <span
-      className={`grid h-11 w-11 shrink-0 place-items-center rounded-full border ${
-        dark ? "border-paper/[0.16] bg-paper text-ink" : "border-ink/[0.12] bg-ink text-paper"
+      className={`whatsapp-pulse grid h-12 w-12 shrink-0 place-items-center rounded-full border ${
+        dark ? "border-rise/[0.38] bg-rise text-paper" : "border-rise/[0.38] bg-rise text-paper"
       }`}
       aria-hidden="true"
     >
@@ -343,7 +308,7 @@ export function WhatsAppIcon({ dark = false }: { dark?: boolean }) {
 
 export function FreeChannelCTA({
   t,
-  variant = "light",
+  variant = "dark",
   compact = false,
 }: {
   t: (typeof translations)[Locale];
@@ -359,19 +324,20 @@ export function FreeChannelCTA({
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={`relative overflow-hidden border shadow-fine ${
-        dark ? "border-paper/[0.14] bg-paper/[0.045] text-paper" : "border-ink/[0.1] bg-white text-ink"
-      } ${compact ? "p-4" : "p-5 md:p-6"}`}
+        dark ? "border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]" : "border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]"
+      } ${compact ? "p-4" : "p-5 md:p-7"}`}
     >
-      <div className={dark ? "absolute inset-0 terminal-grid opacity-35" : "absolute inset-0 luxury-grid opacity-45"} />
-      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="absolute inset-0 terminal-grid opacity-35" />
+      <div className="absolute -right-24 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-rise/[0.18] blur-3xl" />
+      <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex gap-4">
-          <WhatsAppIcon dark={dark} />
+          <WhatsAppIcon dark />
           <div>
-            <p className={`text-[10px] font-bold uppercase tracking-[0.26em] ${dark ? "text-gold" : "text-rise"}`}>
+            <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-rise">
               {t.freeChannel.eyebrow}
             </p>
-            <h3 className="mt-2 font-serif text-3xl tracking-[-0.04em]">{t.freeChannel.title}</h3>
-            <p className={`mt-2 max-w-2xl leading-7 ${dark ? "text-paper/[0.68]" : "text-ink/[0.64]"}`}>
+            <h3 className="mt-2 font-serif text-3xl uppercase tracking-[-0.03em]">{t.freeChannel.title}</h3>
+            <p className="mt-2 max-w-2xl leading-7 text-paper/[0.72]">
               {t.freeChannel.text}
             </p>
           </div>
@@ -380,11 +346,7 @@ export function FreeChannelCTA({
           href={t.freeChannel.link}
           target="_blank"
           rel="noopener noreferrer"
-          className={`shrink-0 border px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] transition hover:-translate-y-0.5 ${
-            dark
-              ? "border-gold bg-gold text-ink hover:border-paper hover:bg-paper"
-              : "border-ink bg-ink text-paper hover:bg-paper hover:text-ink"
-          }`}
+          className="shrink-0 border border-rise bg-rise px-6 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper shadow-[0_18px_40px_rgba(15,143,86,0.25)] transition hover:-translate-y-0.5 hover:border-gold hover:bg-gold hover:text-ink sm:min-w-[260px]"
         >
           {t.freeChannel.button}
         </a>
@@ -421,8 +383,8 @@ export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof transla
           transition={{ duration: 0.55 }}
           className="glass-panel p-3"
         >
-          <div className="overflow-hidden border border-ink bg-[#efe7dc] p-4 shadow-premium">
-            <div className="border border-ink/[0.08] bg-[#f7f4ef]">
+          <div className="overflow-hidden border border-ink bg-paper p-4 shadow-premium">
+            <div className="border border-ink/[0.08] bg-white">
               <div className="flex items-center gap-3 border-b border-ink/[0.08] bg-[#0f8f56] px-4 py-3 text-white">
                 <span className="grid h-9 w-9 place-items-center rounded-full bg-white/18 font-bold">VI</span>
                 <div>
@@ -432,7 +394,7 @@ export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof transla
               </div>
 
               <div className="p-4 md:p-6">
-                <div className="ml-auto max-w-xl rounded-sm border border-ink/[0.08] bg-white p-4 shadow-fine">
+                <div className="ml-auto max-w-xl rounded-sm border border-ink/[0.08] bg-paper p-4 shadow-fine">
                   <div className="space-y-2 font-mono text-sm">
                     {fields.map((field) => (
                       <p key={field} className="border-b border-ink/[0.06] pb-2 last:border-b-0">
@@ -510,7 +472,15 @@ export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
   );
 }
 
-export function SupportFooter({ t }: { t: (typeof translations)[Locale] }) {
+export function SupportFooter({
+  t,
+  locale,
+  onLocaleChange,
+}: {
+  t: (typeof translations)[Locale];
+  locale: Locale;
+  onLocaleChange: (locale: Locale) => void;
+}) {
   const socials = [
     {
       label: "Instagram",
@@ -542,17 +512,17 @@ export function SupportFooter({ t }: { t: (typeof translations)[Locale] }) {
 
   return (
     <>
-      <section className="border-t border-ink/[0.08] bg-paper px-5 py-10 md:px-8 md:py-12">
-        <div className="mx-auto max-w-7xl border border-ink/[0.1] bg-white p-6 shadow-fine md:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-ink/[0.45]">{t.disclaimer.title}</p>
-          <p className="mt-4 max-w-5xl text-sm leading-7 text-ink/[0.62] md:text-base md:leading-8">
+      <section className="border-t border-ink/[0.08] bg-paper px-5 py-6 md:px-8 md:py-7">
+        <div className="mx-auto max-w-7xl border border-ink/[0.1] bg-white p-4 shadow-fine md:p-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-gold">{t.disclaimer.title}</p>
+          <p className="mt-3 max-w-6xl text-xs leading-6 text-ink/[0.62] md:text-sm md:leading-7">
             {t.disclaimer.text}
           </p>
         </div>
       </section>
 
       <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:items-start">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.15fr_0.78fr_0.82fr_0.82fr] lg:items-start">
           <div>
             <a href="/#home" className="inline-flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
@@ -583,6 +553,13 @@ export function SupportFooter({ t }: { t: (typeof translations)[Locale] }) {
                   {social.icon}
                 </a>
               ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">Idioma</p>
+            <div className="mt-4">
+              <LanguageSwitcher locale={locale} onChange={onLocaleChange} variant="footer" />
             </div>
           </div>
 

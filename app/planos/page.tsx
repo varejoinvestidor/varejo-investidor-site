@@ -9,18 +9,23 @@ import {
   eliteLinkProps,
   fadeUp,
   useSiteLocale,
-  useSiteTheme,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
+const stripeEliteLinks = [
+  "https://buy.stripe.com/28E3cuccK1dEaub26QdfG01",
+  "https://buy.stripe.com/aFa5kC7Wu6xY1XF9zidfG02",
+  "https://buy.stripe.com/fZubJ00u28G631J26QdfG03",
+  "https://buy.stripe.com/3cI4gy2Ca1dE59Rh1KdfG04",
+];
+
 export default function PlansPage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const { theme, changeTheme } = useSiteTheme();
   const eliteCta = eliteLinkProps(locale, "/planos");
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
-      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} theme={theme} onThemeChange={changeTheme} />
+      <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="premium-stage px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">
         <div className="mx-auto max-w-7xl">
@@ -71,7 +76,17 @@ export default function PlansPage() {
             </motion.article>
           ) : (
             <div className="grid gap-4 lg:grid-cols-4">
-              {t.pricing.plans.map((plan) => (
+              {t.pricing.plans.map((plan, index) => {
+                const stripeCta =
+                  locale === "en" || locale === "hi"
+                    ? {
+                        href: stripeEliteLinks[index],
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                      }
+                    : eliteCta;
+
+                return (
                 <motion.article
                   key={plan.period}
                   initial="hidden"
@@ -92,13 +107,14 @@ export default function PlansPage() {
                   <h2 className="mt-6 font-serif text-4xl tracking-[-0.05em]">{plan.period}</h2>
                   <p className="mt-5 font-serif text-4xl tracking-[-0.05em]">{plan.usd}</p>
                   <a
-                    {...eliteCta}
+                    {...stripeCta}
                     className={plan.featured ? "mt-8 block border border-gold bg-gold px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-ink" : "mt-8 block border border-ink bg-ink px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper"}
                   >
                     {t.pricing.cta}
                   </a>
                 </motion.article>
-              ))}
+                );
+              })}
             </div>
           )}
 
@@ -114,7 +130,7 @@ export default function PlansPage() {
 
       <ForexBrokerBannerWide language={locale} />
 
-      <SupportFooter t={t} />
+      <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
     </main>
   );
 }

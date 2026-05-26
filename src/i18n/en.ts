@@ -132,8 +132,8 @@ export const en = {
     badge: "Best value",
     plans: [
       { period: "Monthly", brl: "R$ 149.90", usd: "US$ 30", featured: false },
-      { period: "Quarterly", brl: "R$ 397.90", usd: "US$ 80", featured: false },
-      { period: "Semiannual", brl: "R$ 719.90", usd: "US$ 145", featured: false },
+      { period: "3 Months", brl: "R$ 397.90", usd: "US$ 80", featured: false },
+      { period: "6 Months", brl: "R$ 719.90", usd: "US$ 145", featured: false },
       { period: "Annual", brl: "R$ 1,197.90", usd: "US$ 240", featured: true },
     ],
     featuresTitle: "Included in Elite",
@@ -146,7 +146,7 @@ export const en = {
       "Content for Ant, Wolf, and Harpy evolution",
       "Access to the core Varejo Investidor ecosystem",
     ],
-    cta: "Join Elite Channel",
+    cta: "Subscribe Now",
   },
   cta: {
     eyebrow: "Elite Channel",

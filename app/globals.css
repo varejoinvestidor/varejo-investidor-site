@@ -1,14 +1,8 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color: #050505;
-  background: #fbfaf7;
-  color-scheme: light;
-}
-
-:root[data-theme="dark"] {
   color: #f7f3eb;
   background: #030303;
   color-scheme: dark;
@@ -20,22 +14,6 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  isolation: isolate;
-  background:
-    radial-gradient(circle at 14% 4%, rgba(184, 137, 45, 0.12), transparent 30rem),
-    radial-gradient(circle at 86% 0%, rgba(15, 143, 86, 0.1), transparent 32rem),
-    radial-gradient(circle at 70% 46%, rgba(5, 5, 5, 0.055), transparent 34rem),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.94), rgba(245, 243, 238, 0.96)),
-    linear-gradient(90deg, rgba(5, 5, 5, 0.04) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(5, 5, 5, 0.032) 1px, transparent 1px),
-    #fbfaf7;
-  background-size: auto, auto, auto, auto, 86px 86px, 86px 86px;
-  color: #050505;
 }
 
 [lang="hi"] {
@@ -63,7 +41,10 @@ body {
   letter-spacing: 0.04em;
 }
 
-:root[data-theme="dark"] body {
+body {
+  margin: 0;
+  min-height: 100vh;
+  isolation: isolate;
   background:
     radial-gradient(circle at 12% 4%, rgba(184, 137, 45, 0.1), transparent 28rem),
     radial-gradient(circle at 86% 0%, rgba(15, 143, 86, 0.12), transparent 30rem),
@@ -82,17 +63,10 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(115deg, transparent 0 42%, rgba(5, 5, 5, 0.035) 42.1% 42.4%, transparent 42.5%),
-    repeating-linear-gradient(90deg, transparent 0 118px, rgba(5, 5, 5, 0.025) 119px, transparent 120px),
-    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.72), transparent 30rem);
-  opacity: 0.86;
-}
-
-:root[data-theme="dark"] body::before {
-  background:
     linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.04) 42.1% 42.4%, transparent 42.5%),
     repeating-linear-gradient(90deg, transparent 0 118px, rgba(255, 255, 255, 0.025) 119px, transparent 120px),
     radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.06), transparent 30rem);
+  opacity: 0.86;
 }
 
 main {
@@ -101,8 +75,8 @@ main {
 }
 
 ::selection {
-  background: #050505;
-  color: #fbfaf7;
+  background: #b8892d;
+  color: #050505;
 }
 
 .editorial-rule {
@@ -133,6 +107,7 @@ main {
 .hero-mascot-stage {
   background: transparent;
   border: none;
+  outline: none;
   box-shadow: none;
   overflow: visible;
 }
@@ -153,15 +128,19 @@ main {
 }
 
 .hero-mascot-image {
+  display: block;
+  width: 100%;
+  height: auto;
   background: transparent;
   border: none;
+  outline: none;
   box-shadow: none;
   object-fit: contain;
-  object-position: center center;
+  object-position: center;
   filter: none;
 }
 
-:root[data-theme="dark"] .premium-stage {
+.premium-stage {
   background:
     linear-gradient(180deg, rgba(5, 5, 5, 0.55), rgba(3, 3, 3, 0.9)),
     radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.09), transparent 42rem),
@@ -169,7 +148,7 @@ main {
   background-size: auto, auto, 72px 72px;
 }
 
-:root[data-theme="dark"] .hero-mascot-depth {
+.hero-mascot-depth {
   background:
     radial-gradient(circle at 54% 38%, rgba(184, 137, 45, 0.1), transparent 24rem),
     radial-gradient(circle at 45% 64%, rgba(255, 255, 255, 0.055), transparent 24rem);
@@ -177,11 +156,11 @@ main {
   opacity: 0.42;
 }
 
-:root[data-theme="dark"] .hero-mascot-floor {
+.hero-mascot-floor {
   background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.62), transparent 68%);
 }
 
-:root[data-theme="dark"] .hero-mascot-image {
+.hero-mascot-image {
   filter: none;
 }
 
@@ -202,14 +181,14 @@ main {
   filter: drop-shadow(0 26px 34px rgba(5, 5, 5, 0.18));
 }
 
-:root[data-theme="dark"] .section-team-depth {
+.section-team-depth {
   background:
     radial-gradient(circle at 48% 42%, rgba(184, 137, 45, 0.08), transparent 22rem),
     radial-gradient(circle at 48% 70%, rgba(255, 255, 255, 0.055), transparent 24rem);
   opacity: 0.62;
 }
 
-:root[data-theme="dark"] .section-team-image {
+.section-team-image {
   filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.48));
 }
 
@@ -234,7 +213,7 @@ main {
   backdrop-filter: blur(24px);
 }
 
-:root[data-theme="dark"] .glass-panel {
+.glass-panel {
   border-color: rgba(255, 255, 255, 0.12);
   background: rgba(12, 12, 12, 0.72);
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
@@ -260,6 +239,24 @@ main {
   }
 }
 
+.whatsapp-pulse {
+  animation: whatsapp-pulse 2.8s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(15, 143, 86, 0.28), 0 18px 38px rgba(15, 143, 86, 0.18);
+}
+
+@keyframes whatsapp-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(15, 143, 86, 0.24), 0 18px 38px rgba(15, 143, 86, 0.18);
+    transform: translateY(0);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(15, 143, 86, 0), 0 22px 46px rgba(15, 143, 86, 0.26);
+    transform: translateY(-1px);
+  }
+}
+
 .woodcut {
   background:
     radial-gradient(circle at 50% 16%, rgba(251, 250, 247, 0.94) 0 8%, transparent 8.5%),
@@ -267,67 +264,69 @@ main {
     linear-gradient(145deg, rgba(15, 143, 86, 0.12), rgba(199, 47, 47, 0.1));
 }
 
-:root[data-theme="dark"] .luxury-grid,
-:root[data-theme="dark"] .signal-grid {
+.luxury-grid,
+.signal-grid {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
 }
 
-:root[data-theme="dark"] .bg-paper,
-:root[data-theme="dark"] .bg-white,
-:root[data-theme="dark"] .bg-white\/80,
-:root[data-theme="dark"] .bg-white\/90,
-:root[data-theme="dark"] .bg-paper\/\[0\.84\] {
+.bg-paper,
+.bg-white,
+.bg-white\/80,
+.bg-white\/90,
+.bg-paper\/\[0\.84\] {
   background-color: #080808 !important;
 }
 
-:root[data-theme="dark"] .bg-paper\/\[0\.04\],
-:root[data-theme="dark"] .bg-paper\/\[0\.035\],
-:root[data-theme="dark"] .bg-paper\/\[0\.045\] {
+.bg-paper\/\[0\.04\],
+.bg-paper\/\[0\.035\],
+.bg-paper\/\[0\.045\] {
   background-color: rgba(255, 255, 255, 0.055) !important;
 }
 
-:root[data-theme="dark"] .bg-ink,
-:root[data-theme="dark"] .terminal-shell {
+.bg-ink,
+.terminal-shell {
   background-color: #030303 !important;
 }
 
-:root[data-theme="dark"] .text-ink,
-:root[data-theme="dark"] .text-ink\/\[0\.42\],
-:root[data-theme="dark"] .text-ink\/\[0\.45\],
-:root[data-theme="dark"] .text-ink\/\[0\.48\],
-:root[data-theme="dark"] .text-ink\/\[0\.58\],
-:root[data-theme="dark"] .text-ink\/\[0\.62\],
-:root[data-theme="dark"] .text-ink\/\[0\.64\],
-:root[data-theme="dark"] .text-ink\/\[0\.65\],
-:root[data-theme="dark"] .text-ink\/\[0\.66\],
-:root[data-theme="dark"] .text-ink\/\[0\.68\],
-:root[data-theme="dark"] .text-ink\/\[0\.7\],
-:root[data-theme="dark"] .text-ink\/\[0\.72\],
-:root[data-theme="dark"] .text-paper,
-:root[data-theme="dark"] .text-paper\/75,
-:root[data-theme="dark"] .text-paper\/\[0\.42\],
-:root[data-theme="dark"] .text-paper\/\[0\.48\],
-:root[data-theme="dark"] .text-paper\/\[0\.5\],
-:root[data-theme="dark"] .text-paper\/\[0\.55\],
-:root[data-theme="dark"] .text-paper\/\[0\.66\],
-:root[data-theme="dark"] .text-paper\/\[0\.68\],
-:root[data-theme="dark"] .text-paper\/\[0\.72\],
-:root[data-theme="dark"] .text-paper\/\[0\.76\] {
+.text-ink,
+.text-ink\/\[0\.42\],
+.text-ink\/\[0\.45\],
+.text-ink\/\[0\.48\],
+.text-ink\/\[0\.58\],
+.text-ink\/\[0\.62\],
+.text-ink\/\[0\.64\],
+.text-ink\/\[0\.65\],
+.text-ink\/\[0\.66\],
+.text-ink\/\[0\.68\],
+.text-ink\/\[0\.7\],
+.text-ink\/\[0\.72\],
+.text-paper,
+.text-paper\/75,
+.text-paper\/\[0\.42\],
+.text-paper\/\[0\.48\],
+.text-paper\/\[0\.5\],
+.text-paper\/\[0\.55\],
+.text-paper\/\[0\.66\],
+.text-paper\/\[0\.68\],
+.text-paper\/\[0\.72\],
+.text-paper\/\[0\.76\] {
   color: #f7f3eb !important;
 }
 
-:root[data-theme="dark"] .border-ink,
-:root[data-theme="dark"] .border-ink\/\[0\.08\],
-:root[data-theme="dark"] .border-ink\/\[0\.09\],
-:root[data-theme="dark"] .border-ink\/\[0\.1\],
-:root[data-theme="dark"] .border-ink\/\[0\.12\] {
+.border-ink,
+.border-ink\/\[0\.08\],
+.border-ink\/\[0\.09\],
+.border-ink\/\[0\.1\],
+.border-ink\/\[0\.12\] {
   border-color: rgba(255, 255, 255, 0.14) !important;
 }
 
-:root[data-theme="dark"] .shadow-fine,
-:root[data-theme="dark"] .shadow-glass,
-:root[data-theme="dark"] .shadow-premium {
+.shadow-fine,
+.shadow-glass,
+.shadow-premium {
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35) !important;
 }
+
+
