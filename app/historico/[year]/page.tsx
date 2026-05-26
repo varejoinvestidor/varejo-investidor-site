@@ -10,7 +10,7 @@ import {
   fadeUp,
   useSiteLocale,
 } from "../../../src/components/SiteSections";
-import { eliteReports, getEliteReport, getSignalResultValue } from "../../../src/data/eliteReports";
+import { getEliteReport, getSignalResultValue, normalizedEliteReports } from "../../../src/data/eliteReports";
 
 const columns = ["Número", "Data", "Ativo", "Direção", "Entrada", "Alvo", "Stop", "Resultado", "Status"];
 const pageSize = 50;
@@ -25,7 +25,7 @@ export default function HistoricalReportPage({ params }: { params: { year: strin
   const [periodFilter, setPeriodFilter] = useState(currentReport.year);
   const [page, setPage] = useState(1);
 
-  const scopedReports = periodFilter === "all" ? eliteReports : eliteReports.filter((report) => report.year === periodFilter);
+  const scopedReports = periodFilter === "all" ? normalizedEliteReports : normalizedEliteReports.filter((report) => report.year === periodFilter);
   const allSignals = scopedReports.flatMap((report) =>
     report.signals.map((signal) => ({
       ...signal,
@@ -34,18 +34,18 @@ export default function HistoricalReportPage({ params }: { params: { year: strin
     })),
   );
 
-  const availableAssets = useMemo(() => Array.from(new Set(allSignals.map((signal) => signal.asset))), [allSignals]);
+  const availableAssets = useMemo(() => Array.from(new Set(allSignals.map((signal) => signal.ativo))), [allSignals]);
   const filteredSignals = useMemo(
     () =>
       allSignals.filter((signal) => {
-        const resultValue = getSignalResultValue(signal.result);
-        const matchesSearch = signal.number.includes(search.trim());
-        const matchesAsset = assetFilter === "all" || signal.asset === assetFilter;
+        const resultValue = getSignalResultValue(signal.resultado);
+        const matchesSearch = String(signal.sinal).includes(search.trim());
+        const matchesAsset = assetFilter === "all" || signal.ativo === assetFilter;
         const matchesResult =
           resultFilter === "all" ||
           (resultFilter === "win" && resultValue >= 0) ||
           (resultFilter === "loss" && resultValue < 0);
-        const matchesDirection = directionFilter === "all" || signal.direction === directionFilter;
+        const matchesDirection = directionFilter === "all" || signal.direcao === directionFilter;
 
         return matchesSearch && matchesAsset && matchesResult && matchesDirection;
       }),
@@ -194,7 +194,7 @@ export default function HistoricalReportPage({ params }: { params: { year: strin
                 className="border border-ink/[0.14] bg-ink px-4 py-3 text-sm text-paper outline-none transition focus:border-rise"
               >
                 <option value="all">Todos os períodos</option>
-                {eliteReports.map((report) => (
+                {normalizedEliteReports.map((report) => (
                   <option key={report.year} value={report.year}>
                     {report.period}
                   </option>
@@ -216,21 +216,21 @@ export default function HistoricalReportPage({ params }: { params: { year: strin
               </thead>
               <tbody>
                 {pageSignals.map((signal) => {
-                  const isPositive = getSignalResultValue(signal.result) >= 0;
+                  const isPositive = getSignalResultValue(signal.resultado) >= 0;
 
                   return (
-                    <tr key={`${signal.year}-${signal.number}`} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
-                      <td className="px-4 py-4 font-mono text-sm font-bold text-ink">#{signal.number}</td>
-                      <td className="px-4 py-4 text-sm text-ink/[0.68]">{signal.date}</td>
-                      <td className="px-4 py-4 font-mono text-sm text-ink">{signal.asset}</td>
-                      <td className={`px-4 py-4 text-sm font-bold ${signal.direction === "Compra" ? "text-rise" : "text-fall"}`}>
-                        {signal.direction}
+                    <tr key={`${signal.year}-${signal.sinal}`} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
+                      <td className="px-4 py-4 font-mono text-sm font-bold text-ink">#{signal.sinal}</td>
+                      <td className="px-4 py-4 text-sm text-ink/[0.68]">{signal.data}</td>
+                      <td className="px-4 py-4 font-mono text-sm text-ink">{signal.ativo}</td>
+                      <td className={`px-4 py-4 text-sm font-bold ${signal.direcao === "Compra" ? "text-rise" : "text-fall"}`}>
+                        {signal.direcao}
                       </td>
-                      <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.entry}</td>
-                      <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.target}</td>
+                      <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.entrada}</td>
+                      <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.alvo}</td>
                       <td className="px-4 py-4 font-mono text-sm text-ink/[0.72]">{signal.stop}</td>
                       <td className={`px-4 py-4 font-mono text-sm font-bold ${isPositive ? "text-rise" : "text-fall"}`}>
-                        {signal.result}
+                        {signal.resultado}
                       </td>
                       <td className="px-4 py-4 text-sm uppercase tracking-[0.14em] text-ink/[0.58]">{signal.status}</td>
                     </tr>

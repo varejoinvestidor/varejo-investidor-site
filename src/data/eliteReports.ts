@@ -1,13 +1,15 @@
+import { eliteSignals2018 } from "./eliteSignals2018";
+
 export type EliteSignal = {
-  number: string;
-  date: string;
-  asset: string;
-  direction: "Compra" | "Venda";
-  entry: string;
-  target: string;
+  sinal: number;
+  data: string;
+  ativo: string;
+  direcao: "Compra" | "Venda";
+  entrada: string;
   stop: string;
-  result: string;
-  status: "Fechado" | "Aberto";
+  alvo: string;
+  resultado: string;
+  status: string;
 };
 
 export type EliteReport = {
@@ -40,12 +42,7 @@ export const eliteReports: EliteReport[] = [
     worstSequence: "3 perdas",
     bestSequence: "9 vitórias",
     performanceImage: "/signals/whatsapp-print-01.jpg",
-    signals: [
-      { number: "4169", date: "22/05/2026", asset: "GBP/USD", direction: "Compra", entry: "1.34497", target: "1.34766", stop: "1.34123", result: "-19", status: "Fechado" },
-      { number: "4168", date: "21/05/2026", asset: "XAU/USD", direction: "Compra", entry: "4528.87", target: "4538.13", stop: "4518.57", result: "+89", status: "Fechado" },
-      { number: "4167", date: "20/05/2026", asset: "EUR/USD", direction: "Venda", entry: "1.16363", target: "1.16272", stop: "1.16565", result: "+92", status: "Fechado" },
-      { number: "4166", date: "20/05/2026", asset: "USOIL", direction: "Compra", entry: "94.833", target: "95.544", stop: "93.590", result: "+713", status: "Fechado" },
-    ],
+    signals: eliteSignals2018,
   },
   {
     year: "2021",
@@ -61,10 +58,10 @@ export const eliteReports: EliteReport[] = [
     bestSequence: "7 vitórias",
     performanceImage: "/signals/whatsapp-print-02.jpg",
     signals: [
-      { number: "4137", date: "15/01/2021", asset: "XAU/USD", direction: "Compra", entry: "4638.15", target: "4667.73", stop: "4608.15", result: "+124", status: "Fechado" },
-      { number: "4136", date: "14/01/2021", asset: "EUR/USD", direction: "Venda", entry: "1.21640", target: "1.21180", stop: "1.21920", result: "-31", status: "Fechado" },
-      { number: "4135", date: "13/01/2021", asset: "GBP/USD", direction: "Compra", entry: "1.36320", target: "1.37110", stop: "1.35840", result: "+78", status: "Fechado" },
-      { number: "4134", date: "12/01/2021", asset: "BTC/USD", direction: "Compra", entry: "33580", target: "34840", stop: "32910", result: "+1260", status: "Fechado" },
+      { sinal: 4137, data: "15/01/2021", ativo: "XAU/USD", direcao: "Compra", entrada: "4638.15", stop: "4608.15", alvo: "4667.73", resultado: "+124", status: "Fechado" },
+      { sinal: 4136, data: "14/01/2021", ativo: "EUR/USD", direcao: "Venda", entrada: "1.21640", stop: "1.21920", alvo: "1.21180", resultado: "-31", status: "Fechado" },
+      { sinal: 4135, data: "13/01/2021", ativo: "GBP/USD", direcao: "Compra", entrada: "1.36320", stop: "1.35840", alvo: "1.37110", resultado: "+78", status: "Fechado" },
+      { sinal: 4134, data: "12/01/2021", ativo: "BTC/USD", direcao: "Compra", entrada: "33580", stop: "32910", alvo: "34840", resultado: "+1260", status: "Fechado" },
     ],
   },
   {
@@ -81,16 +78,42 @@ export const eliteReports: EliteReport[] = [
     bestSequence: "11 vitórias",
     performanceImage: "/signals/whatsapp-print-03.jpg",
     signals: [
-      { number: "4098", date: "19/03/2024", asset: "NAS100", direction: "Compra", entry: "18120.5", target: "18284.0", stop: "18042.0", result: "+163.5", status: "Fechado" },
-      { number: "4097", date: "18/03/2024", asset: "XAU/USD", direction: "Compra", entry: "2148.20", target: "2162.90", stop: "2139.40", result: "+147", status: "Fechado" },
-      { number: "4096", date: "15/03/2024", asset: "USD/JPY", direction: "Venda", entry: "149.320", target: "148.760", stop: "149.680", result: "-36", status: "Fechado" },
-      { number: "4095", date: "14/03/2024", asset: "USOIL", direction: "Compra", entry: "80.42", target: "82.10", stop: "79.70", result: "+168", status: "Fechado" },
+      { sinal: 4098, data: "19/03/2024", ativo: "NAS100", direcao: "Compra", entrada: "18120.5", stop: "18042.0", alvo: "18284.0", resultado: "+163.5", status: "Fechado" },
+      { sinal: 4097, data: "18/03/2024", ativo: "XAU/USD", direcao: "Compra", entrada: "2148.20", stop: "2139.40", alvo: "2162.90", resultado: "+147", status: "Fechado" },
+      { sinal: 4096, data: "15/03/2024", ativo: "USD/JPY", direcao: "Venda", entrada: "149.320", stop: "149.680", alvo: "148.760", resultado: "-36", status: "Fechado" },
+      { sinal: 4095, data: "14/03/2024", ativo: "USOIL", direcao: "Compra", entrada: "80.42", stop: "79.70", alvo: "82.10", resultado: "+168", status: "Fechado" },
     ],
   },
 ];
 
+export function dedupeSignals(signals: EliteSignal[]) {
+  const map = new Map<number, EliteSignal>();
+
+  for (const signal of signals) {
+    if (!map.has(signal.sinal)) {
+      map.set(signal.sinal, signal);
+    } else {
+      const atual = map.get(signal.sinal)!;
+      const novoMaisCompleto =
+        Object.values(signal).filter(Boolean).length >
+        Object.values(atual).filter(Boolean).length;
+
+      if (novoMaisCompleto) {
+        map.set(signal.sinal, signal);
+      }
+    }
+  }
+
+  return Array.from(map.values()).sort((a, b) => a.sinal - b.sinal);
+}
+
+export const normalizedEliteReports = eliteReports.map((report) => ({
+  ...report,
+  signals: dedupeSignals(report.signals),
+}));
+
 export function getEliteReport(year: string) {
-  return eliteReports.find((report) => report.year === year) ?? eliteReports[0];
+  return normalizedEliteReports.find((report) => report.year === year) ?? normalizedEliteReports[0];
 }
 
 export function getSignalResultValue(result: string) {
