@@ -112,6 +112,14 @@ main {
   overflow: visible;
 }
 
+.hero-mascot-wrap {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
 .hero-mascot-stage::after {
   content: "";
   position: absolute;
