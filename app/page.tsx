@@ -207,20 +207,17 @@ export default function Home() {
               scale: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
               y: { duration: 7, repeat: Infinity, ease: "easeInOut" },
             }}
-            className="hero-mascot-wrap order-1 mx-auto w-full max-w-[38rem] lg:order-2 lg:max-w-none"
+            className="hero-mascot-wrap order-1 mx-auto w-full max-w-[340px] sm:max-w-[520px] lg:order-2 lg:max-w-[640px] 2xl:max-w-[720px]"
           >
-            <div className="hero-mascot-stage relative mx-auto flex min-h-[21rem] items-center justify-center sm:min-h-[26rem] lg:min-h-[40rem] xl:min-h-[44rem]">
-              <div className="hero-character-glow" />
-              <div className="hero-smoke" />
-              <div className="hero-mascot-floor" />
+            <div className="hero-image-wrapper relative mx-auto flex min-h-[24rem] items-center justify-center sm:min-h-[34rem] lg:min-h-[44rem] xl:min-h-[48rem]">
               <Image
-                src="/characters/hero-official-transparent.png"
+                src="/characters/home-hero-official-20260527.png"
                 alt="Personagens oficiais Formiga, Lobo e Harpia do Varejo Investidor"
                 width={1536}
                 height={1024}
                 priority
-                sizes="(min-width: 1536px) 48vw, (min-width: 1280px) 48vw, (min-width: 1024px) 47vw, 94vw"
-                className="hero-mascot-image relative z-10 h-auto w-full max-w-[40rem] object-contain object-center lg:max-w-[46rem] xl:max-w-[50rem]"
+                sizes="(min-width: 1536px) 720px, (min-width: 1024px) 640px, (min-width: 640px) 520px, 340px"
+                className="hero-main-image hero-mascot-image relative z-10 h-auto w-full object-contain"
               />
             </div>
           </motion.div>
@@ -278,7 +275,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="section-team-stage relative mx-auto flex w-full max-w-[34rem] justify-center lg:max-w-none">
             <div className="section-team-depth absolute inset-0" />
-            <Image src="/characters/section-team.png" alt="Personagens Formiga, Lobo e Harpia ao lado dos serviços do Varejo Investidor" width={894} height={1044} sizes="(min-width: 1024px) 43vw, 92vw" className="section-team-image relative z-10 h-auto w-full max-w-[38rem] object-contain object-center" />
+            <Image src="/characters/home-structure-horizontal-cutout.png" alt="Personagens Formiga, Lobo e Harpia ao lado dos serviços do Varejo Investidor" width={1536} height={1024} sizes="(min-width: 1024px) 46vw, 92vw" className="home-structure-image relative z-10 h-auto w-full object-contain" />
           </motion.div>
 
           <div className="grid gap-5">

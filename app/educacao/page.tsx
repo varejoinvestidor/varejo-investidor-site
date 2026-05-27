@@ -103,34 +103,15 @@ export default function EducationPage() {
           <div className="mt-6 inline-flex border border-gold/[0.32] bg-gold/[0.08] px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-gold">
             FORMIGA 1-5 • LOBO 1-5 • HARPIA 1-5
           </div>
-          <div className="mt-8">
-            <FreeChannelCTA t={t} />
-          </div>
         </div>
       </section>
-
-      <nav className="education-sticky-nav sticky top-[74px] z-40 border-y border-ink/[0.08] bg-paper/[0.9] px-5 py-3 backdrop-blur-xl md:px-8">
-        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto text-xs font-bold uppercase tracking-[0.16em]">
-          {[
-            ["#matriz", "Matriz"],
-            ["#formacao", "Formação"],
-            ["#grade", "Grade completa"],
-            ["#expansao", "Expansão"],
-          ].map(([href, label]) => (
-            <a key={href} href={href} className="shrink-0 border border-ink/[0.1] px-4 py-2 text-ink/[0.62] transition hover:border-gold hover:text-gold">
-              {label}
-            </a>
-          ))}
-        </div>
-      </nav>
-
-      <section id="matriz" className="education-campus-section border-y border-ink/[0.08] bg-white px-5 pb-16 pt-0 md:px-8 md:pb-24">
+      <section id="matriz" className="education-campus-section border-y border-gold/[0.08] bg-ink px-5 pb-16 pt-0 md:px-8 md:pb-24">
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="education-levels-visual relative mx-auto -mt-20 mb-6 flex max-w-[1120px] justify-center md:-mt-32 md:mb-8"
+          className="education-levels-visual relative mx-auto -mt-10 mb-8 flex max-w-[1280px] justify-center md:-mt-16 md:mb-10"
         >
           <div className="education-levels-glow" />
           <div className="education-levels-floor" />
@@ -264,6 +245,12 @@ export default function EducationPage() {
       </section>
 
       <ForexBrokerBannerWide language={locale} />
+
+      <section className="px-5 py-12 md:px-8 md:py-16">
+        <div className="mx-auto max-w-7xl">
+          <FreeChannelCTA t={t} />
+        </div>
+      </section>
 
       <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
     </main>

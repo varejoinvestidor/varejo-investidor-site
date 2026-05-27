@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   FreeChannelCTA,
   SiteChrome,
@@ -254,7 +255,7 @@ export default function SobrePage() {
         <div className="finance-particles" />
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-gold/[0.08] blur-3xl" />
         <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-rise/[0.08] blur-3xl" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_0.82fr] lg:items-end">
+        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
           <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>
             <motion.p variants={fadeUp} className="text-xs font-bold uppercase tracking-[0.36em] text-gold">
               {copy.heroEyebrow}
@@ -281,16 +282,17 @@ export default function SobrePage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="terminal-module border border-gold/[0.22] bg-white p-6 shadow-premium"
+            className="about-hero-visual relative mx-auto flex min-h-[24rem] w-full items-center justify-center sm:min-h-[32rem] lg:min-h-[44rem]"
           >
-            <div className="grid gap-4">
-              {copy.pillars.map(([title, text], index) => (
-                <div key={title} className="border-l border-gold pl-4">
-                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">{title}</p>
-                  <p className="mt-1 text-sm leading-6 text-ink/[0.68]">{text}</p>
-                </div>
-              ))}
-            </div>
+            <Image
+              src="/characters/about-hero-official-20260527.png"
+              alt="Personagens Formiga, Lobo e Harpia representando a estrutura global do Varejo Investidor"
+              width={1536}
+              height={1024}
+              priority
+              sizes="(min-width: 1280px) 50vw, (min-width: 1024px) 48vw, 94vw"
+              className="hero-about-image about-hero-image relative z-10 h-auto w-full object-contain object-center"
+            />
           </motion.div>
         </div>
       </section>

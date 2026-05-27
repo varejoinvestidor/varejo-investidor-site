@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { translations, type Locale } from "../i18n";
 
@@ -168,13 +169,14 @@ export function SiteChrome({
   t: (typeof translations)[Locale];
   onLocaleChange: (locale: Locale) => void;
 }) {
+  const pathname = usePathname();
   const navItems = useMemo(
     () => [
-      { label: t.nav.home, href: "/#home" },
-      { label: t.nav.signals, href: "/sinais" },
-      { label: t.nav.education, href: "/educacao" },
-      { label: t.nav.services, href: "/servicos" },
-      { label: t.nav.about, href: "/sobre" },
+      { label: t.nav.home, href: "/#home", activePaths: ["/"] },
+      { label: t.nav.signals, href: "/sinais", activePaths: ["/sinais", "/signals"] },
+      { label: t.nav.education, href: "/educacao", activePaths: ["/educacao"] },
+      { label: t.nav.services, href: "/servicos", activePaths: ["/servicos", "/services"] },
+      { label: t.nav.about, href: "/sobre", activePaths: ["/sobre", "/about"] },
     ],
     [t],
   );
@@ -210,11 +212,15 @@ export function SiteChrome({
           </a>
 
           <div className="hidden items-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
-            {navItems.map((item) => (
-              <a key={item.label} href={item.href} className="px-3 py-2 text-ink transition hover:bg-ink hover:text-paper">
+            {navItems.map((item) => {
+              const isActive = item.activePaths.includes(pathname || "/");
+
+              return (
+              <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>
                 {item.label}
               </a>
-            ))}
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-2">
@@ -223,11 +229,15 @@ export function SiteChrome({
         </nav>
         <div className="border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden">
           <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pt-3 text-sm">
-            {navItems.map((item) => (
-              <a key={item.label} href={item.href} className="shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-ink">
+            {navItems.map((item) => {
+              const isActive = item.activePaths.includes(pathname || "/");
+
+              return (
+              <a key={item.label} href={item.href} className={`nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-ink ${isActive ? "active" : ""}`}>
                 {item.label}
               </a>
-            ))}
+              );
+            })}
           </div>
         </div>
       </header>
