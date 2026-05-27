@@ -136,11 +136,11 @@ export default function ServicesPage() {
             <div className="services-hero-glow" />
             <div className="services-hero-floor" />
             <Image
-              src="/characters/services-hero-team.png"
+              src="/characters/services-hero-institutional.png"
               alt="Personagens Formiga, Lobo e Harpia em mesa institucional"
-              width={1080}
-              height={1350}
-              sizes="(min-width: 1024px) 58vw, 96vw"
+              width={1536}
+              height={1024}
+              sizes="(min-width: 1280px) 50vw, (min-width: 1024px) 48vw, 96vw"
               priority
               className="services-hero-image"
             />

@@ -214,13 +214,13 @@ export default function Home() {
               <div className="hero-smoke" />
               <div className="hero-mascot-floor" />
               <Image
-                src="/characters/hero-main.png"
+                src="/characters/hero-official-transparent.png"
                 alt="Personagens oficiais Formiga, Lobo e Harpia do Varejo Investidor"
-                width={1080}
-                height={1350}
+                width={1536}
+                height={1024}
                 priority
-                sizes="(min-width: 1536px) 54vw, (min-width: 1280px) 50vw, (min-width: 1024px) 47vw, 94vw"
-                className="hero-mascot-image relative z-10 h-auto w-full max-w-[46rem] object-contain object-center lg:max-w-[54rem] xl:max-w-[60rem]"
+                sizes="(min-width: 1536px) 48vw, (min-width: 1280px) 48vw, (min-width: 1024px) 47vw, 94vw"
+                className="hero-mascot-image relative z-10 h-auto w-full max-w-[40rem] object-contain object-center lg:max-w-[46rem] xl:max-w-[50rem]"
               />
             </div>
           </motion.div>

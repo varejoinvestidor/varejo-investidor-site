@@ -246,7 +246,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
           signal: "सिग्नल",
           time: "समय",
           live: "लाइव",
-          copy: "कॉपी के लिए तैयार",
+          copy: "एलीट चैनल में सीधे भेजा गया",
         }
       : {
           timeframe: "TIMEFRAME",
@@ -255,7 +255,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
           signal: "SINAL",
           time: "HORÁRIO",
           live: "LIVE",
-          copy: isPortuguese ? "COPIE AGORA NO WHATSAPP" : "Copy ready",
+          copy: isPortuguese ? "ENVIADO DIRETAMENTE NO CANAL ELITE" : "Delivered inside Elite Channel",
         };
   const rows = [
     [t.signalBlock.example.asset, t.signalBlock.example.values.asset],
@@ -305,7 +305,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
         ))}
       </div>
 
-      <div className="relative mt-5 border border-rise/[0.35] bg-rise/[0.1] p-3 text-center text-xs font-bold uppercase tracking-[0.18em] text-rise">
+      <div className="signal-delivery-badge relative mt-5 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-rise">
         {extraLabels.copy}
       </div>
     </div>
@@ -400,7 +400,7 @@ export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof transla
           <SectionHeader eyebrow={t.signalExample.eyebrow} title={t.signalExample.title} text={t.signalExample.text} />
           <a
             {...eliteLinkProps(locale)}
-            className="mt-8 inline-block border border-ink bg-ink px-6 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition hover:-translate-y-0.5 hover:bg-paper hover:text-ink"
+            className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
           >
             {t.signalExample.cta}
           </a>
@@ -480,7 +480,7 @@ export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45 }}
-              className="terminal-module relative overflow-hidden border border-ink/[0.1] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:shadow-premium md:p-8"
+              className={`broker-card broker-card-${broker.tone} terminal-module relative overflow-hidden border border-ink/[0.1] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:shadow-premium md:p-8`}
             >
               <div className={broker.tone === "forex" ?"absolute inset-0 luxury-grid opacity-45" : "absolute inset-0 signal-grid opacity-50"} />
               <div className="relative">
@@ -508,7 +508,7 @@ export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
                   href={broker.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-8 inline-block border border-ink bg-ink px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition hover:-translate-y-0.5 hover:bg-paper hover:text-ink"
+                  className={`broker-action broker-action-${broker.tone} mt-8 inline-block px-5 py-4 text-sm font-bold uppercase tracking-[0.16em] transition`}
                 >
                   {broker.button}
                 </a>

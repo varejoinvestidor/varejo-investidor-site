@@ -1,0 +1,48 @@
+import type { EliteSignal } from "./eliteReports";
+
+export const eliteSignals2018: EliteSignal[] = [
+  {
+    sinal: 4166,
+    data: "20/05/2026",
+    ativo: "USOIL",
+    direcao: "Compra",
+    entrada: "94.833",
+    stop: "93.590",
+    alvo: "95.544",
+    resultado: "+713",
+    status: "Fechado",
+  },
+  {
+    sinal: 4167,
+    data: "20/05/2026",
+    ativo: "EUR/USD",
+    direcao: "Venda",
+    entrada: "1.16363",
+    stop: "1.16565",
+    alvo: "1.16272",
+    resultado: "+92",
+    status: "Fechado",
+  },
+  {
+    sinal: 4168,
+    data: "21/05/2026",
+    ativo: "XAU/USD",
+    direcao: "Compra",
+    entrada: "4528.87",
+    stop: "4518.57",
+    alvo: "4538.13",
+    resultado: "+89",
+    status: "Fechado",
+  },
+  {
+    sinal: 4169,
+    data: "22/05/2026",
+    ativo: "GBP/USD",
+    direcao: "Compra",
+    entrada: "1.34497",
+    stop: "1.34123",
+    alvo: "1.34766",
+    resultado: "-19",
+    status: "Fechado",
+  },
+];

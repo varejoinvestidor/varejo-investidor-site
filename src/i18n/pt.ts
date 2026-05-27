@@ -35,7 +35,7 @@
     eyebrow: "Sinais ao vivo desde 2018",
     title: "Operações estruturadas, enviadas com contexto e regra clara.",
     text: "O Varejo Investidor entrega operações estruturadas com ativo, direção, entrada, alvo, stop e contexto de mercado. Você recebe o sinal pronto e executa na sua própria conta, com clareza e disciplina.",
-    cta: "Entrar no Canal Elite",
+    cta: "RECEBER SINAIS NO ELITE",
     stats: ["8 anos de mercado", "Desde 2018", "+4.200 sinais ao vivo", "Forex, ouro, petróleo, cripto, índices e moedas globais"],
     example: {
       title: "Sinal enviado ao vivo",
@@ -125,7 +125,7 @@
     eyebrow: "Exemplo de sinal recebido no WhatsApp",
     title: "O sinal chega estruturado para leitura rápida.",
     text: "Cada envio organiza ativo, direção, entrada, take profit, stop loss e uma análise curta do cenário.",
-    cta: "Receber sinais no Canal Elite",
+    cta: "RECEBER SINAIS NO ELITE",
     signal: "Sinal: 4.169",
     asset: "GBP/USD COMPRA 1.34497",
     takeProfit: "Take Profit: 1.34766",
