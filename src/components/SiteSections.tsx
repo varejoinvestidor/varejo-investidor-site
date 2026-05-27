@@ -21,36 +21,29 @@ export const fadeUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-export const ELITE_PLAN_IDS = ["monthly", "quarterly", "semiannual", "annual"] as const;
-export type ElitePlanId = (typeof ELITE_PLAN_IDS)[number];
+export const ELITE_LASTLINK_URL = "https://lastlink.com/p/CE761BB8E/checkout-payment/";
 
-export const ELITE_CHECKOUT_URL = "/sinais#elite-packages";
+export const ELITE_STRIPE_LINKS = [
+  "https://buy.stripe.com/28E3cuccK1dEaub26QdfG01",
+  "https://buy.stripe.com/aFa5kC7Wu6xY1XF9zidfG02",
+  "https://buy.stripe.com/fZubJ00u28G631J26QdfG03",
+  "https://buy.stripe.com/3cI4gy2Ca1dE59Rh1KdfG04",
+] as const;
 
-export async function startEliteCheckout(planId: ElitePlanId) {
-  const response = await fetch("/api/stripe/checkout", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ planId }),
-  });
+export const ELITE_CHECKOUT_URL = ELITE_LASTLINK_URL;
 
-  const data = (await response.json()) as { url?: string; error?: string };
-
-  if (!response.ok || !data.url) {
-    throw new Error(data.error ?? "Não foi possível iniciar o checkout.");
-  }
-
-  window.location.href = data.url;
+export function getElitePlanHref(locale: Locale, planIndex: number) {
+  return locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[planIndex] ?? ELITE_STRIPE_LINKS[3];
 }
 
 export function getEliteHref(locale: Locale, fallback = "/sinais") {
-  void locale;
   void fallback;
-  return ELITE_CHECKOUT_URL;
+  return locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[3];
 }
 
 export function getEliteTargetProps(locale: Locale) {
   void locale;
-  return {};
+  return { target: "_blank", rel: "noopener noreferrer" };
 }
 
 export function eliteLinkProps(locale: Locale, fallback = "/sinais") {

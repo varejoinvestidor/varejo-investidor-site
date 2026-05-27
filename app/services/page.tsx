@@ -2,18 +2,15 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
 import {
   BrokerBanners,
   ContactSection,
-  ELITE_PLAN_IDS,
   FreeChannelCTA,
   SectionHeader,
   SiteChrome,
   SupportFooter,
   fadeUp,
-  startEliteCheckout,
-  type ElitePlanId,
+  getElitePlanHref,
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
@@ -223,7 +220,6 @@ function highTicketTone(kind: string) {
 
 export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const [checkoutPlan, setCheckoutPlan] = useState<ElitePlanId | null>(null);
   const isPt = locale === "pt";
   const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale];
   const compactServices = compactServicesByLocale[locale as keyof typeof compactServicesByLocale] ?? compactServicesByLocale.en;
@@ -236,18 +232,6 @@ export default function ServicesPage() {
         : locale === "hi"
           ? "\u0938\u0947\u0935\u093E"
           : "Produto";
-  const handleCheckout = async (planId: ElitePlanId) => {
-    setCheckoutPlan(planId);
-
-    try {
-      await startEliteCheckout(planId);
-    } catch (error) {
-      console.error(error);
-      setCheckoutPlan(null);
-      window.alert("Não foi possível iniciar o checkout. Tente novamente em instantes.");
-    }
-  };
-
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
@@ -351,14 +335,14 @@ export default function ServicesPage() {
                                 ) : null}
                                 <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/[0.58]">{period}</p>
                                 <p className="mt-1 font-serif text-2xl tracking-[-0.04em] text-gold">{price}</p>
-                                <button
-                                  type="button"
-                                  onClick={() => handleCheckout(ELITE_PLAN_IDS[packageIndex] ?? "annual")}
-                                  disabled={checkoutPlan === (ELITE_PLAN_IDS[packageIndex] ?? "annual")}
+                                <a
+                                  href={getElitePlanHref(locale, packageIndex)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
                                   className="mt-3 inline-block border border-gold/[0.35] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
                                 >
                                   {packageCopy.cta}
-                                </button>
+                                </a>
                               </div>
                             ))}
                           </div>

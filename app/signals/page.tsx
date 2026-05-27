@@ -2,11 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
 import {
   BrokerBanners,
   FreeChannelCTA,
-  ELITE_PLAN_IDS,
   SectionHeader,
   SignalTicket,
   SiteChrome,
@@ -14,8 +12,7 @@ import {
   WhatsAppSignalExample,
   eliteLinkProps,
   fadeUp,
-  startEliteCheckout,
-  type ElitePlanId,
+  getElitePlanHref,
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
@@ -222,7 +219,6 @@ const whatsappPrints = [
 
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const [checkoutPlan, setCheckoutPlan] = useState<ElitePlanId | null>(null);
   const eliteCta = eliteLinkProps(locale, "/sinais");
   const isHi = locale === "hi";
   const signalPageCopy: any = isHi
@@ -301,18 +297,6 @@ export default function SignalsPage() {
         ["वार्षिक", "US$ 240", ""],
       ]
     : prices;
-  const handleCheckout = async (planId: ElitePlanId) => {
-    setCheckoutPlan(planId);
-
-    try {
-      await startEliteCheckout(planId);
-    } catch (error) {
-      console.error(error);
-      setCheckoutPlan(null);
-      window.alert("Não foi possível iniciar o checkout. Tente novamente em instantes.");
-    }
-  };
-
   return (
     <main lang={locale === "hi" ?"hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
@@ -615,14 +599,14 @@ export default function SignalsPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold">{period}</p>
                 <p className="mt-5 font-serif text-4xl tracking-[-0.05em]">{price}</p>
                 {usd ? <p className="mt-2 font-mono text-sm uppercase tracking-[0.16em] text-ink/[0.48]">{usd}</p> : null}
-                <button
-                  type="button"
-                  onClick={() => handleCheckout(ELITE_PLAN_IDS[index] ?? "annual")}
-                  disabled={checkoutPlan === (ELITE_PLAN_IDS[index] ?? "annual")}
+                <a
+                  href={getElitePlanHref(locale, index)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`mt-8 block border px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] ${index === 3 ?"border-gold bg-gold text-ink" : "border-ink bg-ink text-paper"}`}
                 >
                   {signalPageCopy?.now ?? "Entrar agora"}
-                </button>
+                </a>
               </article>
             ))}
           </div>
