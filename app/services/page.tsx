@@ -2,15 +2,18 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useState } from "react";
 import {
   BrokerBanners,
   ContactSection,
+  ELITE_PLAN_IDS,
   FreeChannelCTA,
   SectionHeader,
   SiteChrome,
   SupportFooter,
-  eliteLinkProps,
   fadeUp,
+  startEliteCheckout,
+  type ElitePlanId,
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
@@ -26,13 +29,121 @@ const compactPtServices = [
   },
   {
     title: "Canal Gratuito Formiga",
-    description: "Canal gratuito no WhatsApp para sinais gratuitos, análises e conteúdos diários.",
+    subtitle: "Entrada inicial para o ecossistema Varejo Investidor",
+    description: "Receba sinais gratuitos, análises de mercado, leitura global e conteúdos financeiros diários diretamente no WhatsApp.",
+    details: [
+      "Comece seus primeiros passos no mercado internacional entendendo Forex, ouro, petróleo, índices, moedas globais e estrutura financeira.",
+      "O Canal Formiga foi criado para ajudar investidores comuns a saírem da base financeira, desenvolver disciplina, leitura de mercado e evoluir em direção ao nível Lobo e Harpia.",
+    ],
     bullets: ["Entrada gratuita", "Conteúdo diário", "Base Formiga", "WhatsApp"],
+    highlights: ["Sinais gratuitos", "Conteúdo diário", "Mercado internacional", "Evolução financeira", "Estrutura de longo prazo"],
     cta: "Entrar no Canal Gratuito",
     href: "free",
     kind: "free",
   },
 ];
+
+const elitePtPackages = [
+  ["Mensal", "R$149,90", ""],
+  ["Trimestral", "R$397,90", ""],
+  ["Semestral", "R$697,90", ""],
+  ["Anual", "R$1.197,90", "MAIOR ECONOMIA"],
+];
+
+const elitePackagesByLocale = {
+  pt: { title: "Pacotes disponíveis", cta: "Assinar agora", items: elitePtPackages },
+  en: {
+    title: "Available packages",
+    cta: "Subscribe now",
+    items: [["Monthly", "US$ 30", ""], ["3 Months", "US$ 80", ""], ["6 Months", "US$ 145", ""], ["Annual", "US$ 240", "BEST VALUE"]],
+  },
+  es: {
+    title: "Paquetes disponibles",
+    cta: "Suscribirse ahora",
+    items: [["Mensual", "US$ 30", ""], ["Trimestral", "US$ 80", ""], ["Semestral", "US$ 145", ""], ["Anual", "US$ 240", "MAYOR AHORRO"]],
+  },
+  hi: {
+    title: "\u0909\u092A\u0932\u092C\u094D\u0927 \u092A\u0948\u0915\u0947\u091C",
+    cta: "\u0905\u092D\u0940 \u0938\u0926\u0938\u094D\u092F\u0924\u093E \u0932\u0947\u0902",
+    items: [["\u092E\u093E\u0938\u093F\u0915", "US$ 30", ""], ["3 \u092E\u0939\u0940\u0928\u0947", "US$ 80", ""], ["6 \u092E\u0939\u0940\u0928\u0947", "US$ 145", ""], ["\u0935\u093E\u0930\u094D\u0937\u093F\u0915", "US$ 240", "\u0938\u092C\u0938\u0947 \u0905\u091A\u094D\u091B\u093E \u092E\u0942\u0932\u094D\u092F"]],
+  },
+};
+
+const compactServicesByLocale = {
+  pt: compactPtServices,
+  en: [
+    {
+      title: "Elite Channel",
+      description: "Main product with live signals, market analysis, recorded classes, and global market reading.",
+      bullets: ["100% of signals", "Complete analysis", "Level-based education", "Global markets"],
+      cta: "Explore Elite Channel",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "Free Formiga Channel",
+      subtitle: "Entry point into the Varejo Investidor ecosystem",
+      description: "Receive free signals, market analysis, global insights and daily financial content directly on WhatsApp.",
+      details: [
+        "Take your first steps into the international market by understanding Forex, gold, oil, indices, global currencies and financial structure.",
+        "The Formiga Channel was created to help regular investors leave the financial base level, develop discipline, market reading skills and evolve toward the Lobo and Harpia levels.",
+      ],
+      bullets: ["Free access", "Daily content", "Formiga base", "WhatsApp"],
+      highlights: ["Free signals", "Daily content", "International markets", "Financial growth", "Long-term structure"],
+      cta: "JOIN FREE CHANNEL",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  es: [
+    {
+      title: "Canal Elite",
+      description: "Producto principal con señales en vivo, análisis de mercado, clases grabadas y lectura global de mercado.",
+      bullets: ["100% de las señales", "Análisis completos", "Educación por niveles", "Mercado global"],
+      cta: "Conocer el Canal Elite",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "Canal Gratuito Formiga",
+      subtitle: "Entrada inicial al ecosistema Varejo Investidor",
+      description: "Reciba señales gratuitas, análisis de mercado, lectura global y contenidos financieros diarios directamente en WhatsApp.",
+      details: [
+        "Comience sus primeros pasos en el mercado internacional entendiendo Forex, oro, petróleo, índices, monedas globales y estructura financiera.",
+        "El Canal Formiga fue creado para ayudar a inversores comunes a salir de la base financiera, desarrollar disciplina, lectura de mercado y evolucionar hacia el nivel Lobo y Harpia.",
+      ],
+      bullets: ["Acceso gratuito", "Contenido diario", "Base Formiga", "WhatsApp"],
+      highlights: ["Señales gratuitas", "Contenido diario", "Mercado internacional", "Evolución financiera", "Estructura a largo plazo"],
+      cta: "ENTRAR AL CANAL GRATUITO",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  hi: [
+    {
+      title: "\u090F\u0932\u0940\u091F \u091A\u0948\u0928\u0932",
+      description: "\u0932\u093E\u0907\u0935 \u0938\u093F\u0917\u094D\u0928\u0932, \u092E\u093E\u0930\u094D\u0915\u0947\u091F \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923, \u0930\u093F\u0915\u0949\u0930\u094D\u0921\u0947\u0921 \u0915\u094D\u0932\u093E\u0938 \u0914\u0930 \u0917\u094D\u0932\u094B\u092C\u0932 \u092E\u093E\u0930\u094D\u0915\u0947\u091F \u0930\u0940\u0921\u093F\u0902\u0917 \u0935\u093E\u0932\u093E \u092E\u0941\u0916\u094D\u092F \u092A\u094D\u0930\u094B\u0921\u0915\u094D\u091F\u0964",
+      bullets: ["100% \u0938\u093F\u0917\u094D\u0928\u0932", "\u092A\u0942\u0930\u094D\u0923 \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923", "\u0938\u094D\u0924\u0930-\u0906\u0927\u093E\u0930\u093F\u0924 \u0936\u093F\u0915\u094D\u0937\u093E", "\u0917\u094D\u0932\u094B\u092C\u0932 \u092E\u093E\u0930\u094D\u0915\u0947\u091F"],
+      cta: "\u090F\u0932\u0940\u091F \u091A\u0948\u0928\u0932 \u0926\u0947\u0916\u0947\u0902",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "\u092B\u0949\u0930\u094D\u092E\u093F\u0917\u093E \u092B\u094D\u0930\u0940 \u091A\u0948\u0928\u0932",
+      subtitle: "Varejo Investidor \u0907\u0915\u094B\u0938\u093F\u0938\u094D\u091F\u092E \u0915\u093E \u0936\u0941\u0930\u0941\u0906\u0924\u0940 \u092A\u094D\u0930\u0935\u0947\u0936",
+      description: "WhatsApp \u092A\u0930 \u0938\u0940\u0927\u0947 \u092E\u0941\u092B\u094D\u0924 \u0938\u093F\u0917\u094D\u0928\u0932, \u092E\u093E\u0930\u094D\u0915\u0947\u091F \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923, \u0917\u094D\u0932\u094B\u092C\u0932 \u0930\u0940\u0921\u093F\u0902\u0917 \u0914\u0930 \u0926\u0948\u0928\u093F\u0915 \u0935\u093F\u0924\u094D\u0924\u0940\u092F \u0915\u0902\u091F\u0947\u0902\u091F \u092A\u094D\u0930\u093E\u092A\u094D\u0924 \u0915\u0930\u0947\u0902\u0964",
+      details: [
+        "Forex, \u0917\u094B\u0932\u094D\u0921, \u0911\u092F\u0932, \u0907\u0902\u0921\u093F\u0938\u0947\u0938, \u0917\u094D\u0932\u094B\u092C\u0932 \u0915\u0930\u0947\u0902\u0938\u0940 \u0914\u0930 \u0935\u093F\u0924\u094D\u0924\u0940\u092F \u0938\u0902\u0930\u091A\u0928\u093E \u0915\u094B \u0938\u092E\u091D\u0924\u0947 \u0939\u0941\u090F \u0905\u0902\u0924\u0930\u0930\u093E\u0937\u094D\u091F\u094D\u0930\u0940\u092F \u092C\u093E\u091C\u093E\u0930 \u092E\u0947\u0902 \u0905\u092A\u0928\u0947 \u092A\u0939\u0932\u0947 \u0915\u0926\u092E \u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902\u0964",
+        "Formiga Channel \u0938\u093E\u092E\u093E\u0928\u094D\u092F \u0928\u093F\u0935\u0947\u0936\u0915\u094B\u0902 \u0915\u094B \u0935\u093F\u0924\u094D\u0924\u0940\u092F \u0906\u0927\u093E\u0930 \u0938\u094D\u0924\u0930 \u0938\u0947 \u092C\u093E\u0939\u0930 \u0928\u093F\u0915\u0932\u0928\u0947, \u0905\u0928\u0941\u0936\u093E\u0938\u0928 \u0935\u093F\u0915\u0938\u093F\u0924 \u0915\u0930\u0928\u0947, \u092E\u093E\u0930\u094D\u0915\u0947\u091F \u0938\u092E\u091D \u092C\u0922\u093C\u093E\u0928\u0947 \u0914\u0930 Lobo \u0924\u0925\u093E Harpia \u0938\u094D\u0924\u0930 \u0924\u0915 \u0935\u093F\u0915\u0938\u093F\u0924 \u0939\u094B\u0928\u0947 \u092E\u0947\u0902 \u092E\u0926\u0926 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F \u092C\u0928\u093E\u092F\u093E \u0917\u092F\u093E \u0939\u0948\u0964",
+      ],
+      bullets: ["\u092E\u0941\u092B\u094D\u0924 \u092A\u094D\u0930\u0935\u0947\u0936", "\u0926\u0948\u0928\u093F\u0915 \u0915\u0902\u091F\u0947\u0902\u091F", "Formiga \u0906\u0927\u093E\u0930", "WhatsApp"],
+      highlights: ["\u092E\u0941\u092B\u094D\u0924 \u0938\u093F\u0917\u094D\u0928\u0932", "\u0926\u0948\u0928\u093F\u0915 \u0915\u0902\u091F\u0947\u0902\u091F", "\u0905\u0902\u0924\u0930\u0930\u093E\u0937\u094D\u091F\u094D\u0930\u0940\u092F \u092C\u093E\u091C\u093E\u0930", "\u0935\u093F\u0924\u094D\u0924\u0940\u092F \u0935\u093F\u0915\u093E\u0938", "\u0926\u0940\u0930\u094D\u0918\u0915\u093E\u0932\u093F\u0915 \u0938\u0902\u0930\u091A\u0928\u093E"],
+      cta: "\u092B\u094D\u0930\u0940 \u091A\u0948\u0928\u0932 \u092E\u0947\u0902 \u092A\u094D\u0930\u0935\u0947\u0936 \u0915\u0930\u0947\u0902",
+      href: "free",
+      kind: "free",
+    },
+  ],
+};
 
 const highTicketServices = [
   {
@@ -112,9 +223,30 @@ function highTicketTone(kind: string) {
 
 export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
+  const [checkoutPlan, setCheckoutPlan] = useState<ElitePlanId | null>(null);
   const isPt = locale === "pt";
   const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale];
-  const compactServices = isPt ? compactPtServices : t.servicesPage.items.slice(0, 2);
+  const compactServices = compactServicesByLocale[locale as keyof typeof compactServicesByLocale] ?? compactServicesByLocale.en;
+  const packageCopy = elitePackagesByLocale[locale as keyof typeof elitePackagesByLocale] ?? elitePackagesByLocale.en;
+  const productLabel =
+    locale === "en"
+      ? "Product"
+      : locale === "es"
+        ? "Producto"
+        : locale === "hi"
+          ? "\u0938\u0947\u0935\u093E"
+          : "Produto";
+  const handleCheckout = async (planId: ElitePlanId) => {
+    setCheckoutPlan(planId);
+
+    try {
+      await startEliteCheckout(planId);
+    } catch (error) {
+      console.error(error);
+      setCheckoutPlan(null);
+      window.alert("Não foi possível iniciar o checkout. Tente novamente em instantes.");
+    }
+  };
 
   return (
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -152,10 +284,12 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-4 lg:grid-cols-2">
             {compactServices.map((service, index) => {
-              const eliteProps = index === 0 ? eliteLinkProps(locale, service.href) : undefined;
               const href = service.href === "free" ? t.freeChannel.link : service.href;
               const external = service.href === "free";
-              const linkProps = eliteProps ?? {
+              const subtitle = "subtitle" in service ? String(service.subtitle) : "";
+              const details = "details" in service ? (service.details as string[]) : [];
+              const highlights = "highlights" in service ? (service.highlights as string[]) : [];
+              const linkProps = {
                 href,
                 target: external ? "_blank" : undefined,
                 rel: external ? "noopener noreferrer" : undefined,
@@ -169,14 +303,24 @@ export default function ServicesPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: index * 0.05 }}
                   variants={fadeUp}
-                  className={`relative overflow-hidden border p-5 shadow-fine md:p-6 ${compactCardTone(service.kind)}`}
+                  className={`service-channel-card service-channel-${service.kind} relative overflow-hidden border p-6 shadow-fine md:p-7 ${compactCardTone(service.kind)}`}
                 >
                   <div className="absolute inset-0 luxury-grid opacity-30" />
-                  <div className="relative flex h-full flex-col gap-5 md:flex-row md:items-end md:justify-between">
+                  <div className="relative flex h-full flex-col gap-6">
                     <div>
-                      <p className="font-mono text-xs uppercase tracking-[0.22em] text-gold">Produto 0{index + 1}</p>
+                      <p className="font-mono text-xs uppercase tracking-[0.22em] text-gold">{productLabel} 0{index + 1}</p>
                       <h2 className="mt-4 font-serif text-4xl tracking-[-0.04em]">{service.title}</h2>
+                      {subtitle ? (
+                        <p className="mt-3 text-xs font-bold uppercase tracking-[0.18em] text-rise">{subtitle}</p>
+                      ) : null}
                       <p className="mt-4 max-w-2xl leading-7 text-ink/[0.66]">{service.description}</p>
+                      {details.length ? (
+                        <div className="mt-4 grid gap-3 text-sm leading-7 text-ink/[0.62]">
+                          {details.map((paragraph) => (
+                            <p key={paragraph}>{paragraph}</p>
+                          ))}
+                        </div>
+                      ) : null}
                       <div className="mt-5 flex flex-wrap gap-2">
                         {service.bullets.map((bullet) => (
                           <span key={bullet} className="border border-ink/[0.1] px-3 py-2 text-xs uppercase tracking-[0.14em] text-ink/[0.62]">
@@ -184,10 +328,46 @@ export default function ServicesPage() {
                           </span>
                         ))}
                       </div>
+                      {highlights.length ? (
+                        <div className="free-channel-highlights mt-6 grid gap-2">
+                          {highlights.map((item) => (
+                            <p key={item} className="flex items-center gap-3 border border-rise/[0.16] bg-rise/[0.055] px-3 py-2 text-xs font-bold uppercase tracking-[0.13em] text-ink/[0.72]">
+                              <span className="text-rise">✓</span>
+                              {item}
+                            </p>
+                          ))}
+                        </div>
+                      ) : null}
+                      {index === 0 ? (
+                        <div className="elite-package-table mt-6 border border-gold/[0.24] bg-ink/[0.82] p-4">
+                          <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">{packageCopy.title}</p>
+                          <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                            {packageCopy.items.map(([period, price, badge], packageIndex) => (
+                              <div key={period} className="relative border border-gold/[0.16] bg-paper/[0.05] p-3">
+                                {badge ? (
+                                  <span className="mb-2 inline-block bg-gold px-2 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-ink">
+                                    {badge}
+                                  </span>
+                                ) : null}
+                                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/[0.58]">{period}</p>
+                                <p className="mt-1 font-serif text-2xl tracking-[-0.04em] text-gold">{price}</p>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCheckout(ELITE_PLAN_IDS[packageIndex] ?? "annual")}
+                                  disabled={checkoutPlan === (ELITE_PLAN_IDS[packageIndex] ?? "annual")}
+                                  className="mt-3 inline-block border border-gold/[0.35] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
+                                >
+                                  {packageCopy.cta}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
                     <a
                       {...linkProps}
-                      className="block shrink-0 border border-gold bg-gold px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 hover:bg-paper md:min-w-56"
+                      className={`service-channel-cta service-channel-cta-${service.kind} block shrink-0 px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] transition md:min-w-64`}
                     >
                       {service.cta}
                     </a>

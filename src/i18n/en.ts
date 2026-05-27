@@ -25,9 +25,9 @@
     ],
   },
   freeChannel: {
-    title: "Ant Channel",
-    text: "Receive free signals, market analysis and global financial content directly on WhatsApp.",
-    button: "Join Free Channel",
+    title: "Free Formiga Channel",
+    text: "Receive free signals, market analysis, global insights and daily financial content directly on WhatsApp.",
+    button: "JOIN FREE CHANNEL",
     link: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
     eyebrow: "Free entry",
   },
@@ -72,8 +72,8 @@
     cta: "Join Elite Channel",
     levels: [
       { name: "Ant", range: "Level 1 to 5", text: "Foundation, organization, first capital, risk, and fundamentals.", lessons: ["Level 1: Financial foundation, reality, organization, and first capital.", "Level 2: Planning, income, emotional control, and discipline.", "Level 3: Introduction to Forex, crypto, stocks, fixed income, and real estate funds.", "Level 4: Risk management, capital protection, and market reading.", "Level 5: Building the base to leave the Ant level."] },
-      { name: "Wolf", range: "Level 1 to 5", text: "Strategy, market reading, trading, cycles, and positioning.", lessons: ["Level 1: Operational strategy, flow reading, and decision-making.", "Level 2: Forex, crypto, and international markets with practical vision.", "Level 3: Economic cycles, asset correlation, and global scenario.", "Level 4: Portfolio management, advanced risk, and positioning.", "Level 5: Preparation for patrimonial vision and the Harpy level."] },
-      { name: "Harpy", range: "Level 1 to 5", text: "Global vision, wealth, protection, succession, and structure.", lessons: ["Level 1: Global macro vision and institutional reading.", "Level 2: Wealth, capital protection, and strategic allocation.", "Level 3: Succession, family structure, and generational vision.", "Level 4: International expansion, strong currencies, and global assets.", "Level 5: Elite structure, preservation, and patrimonial decision-making."] },
+      { name: "Wolf", range: "Level 1 to 5", text: "Strategy, market reading, trading, cycles, and positioning.", lessons: ["Level 1: Operational strategy, flow reading, and decision-making.", "Level 2: Forex, crypto, and international markets with practical vision.", "Level 3: Economic cycles, asset correlation, and global scenario.", "Level 4: Portfolio management, advanced risk, and positioning.", "Level 5: Preparation for wealth vision and the Harpy level."] },
+      { name: "Harpy", range: "Level 1 to 5", text: "Global vision, wealth, protection, succession, and structure.", lessons: ["Level 1: Global macro vision and institutional reading.", "Level 2: Wealth, capital protection, and strategic allocation.", "Level 3: Succession, family structure, and generational vision.", "Level 4: International expansion, strong currencies, and global assets.", "Level 5: Elite structure, preservation, and wealth decision-making."] },
     ],
   },
   strategic: {

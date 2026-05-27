@@ -280,10 +280,10 @@ export default function Home() {
 
           <div className="grid gap-5">
             {copy.cards.map((card, index) => (
-              <motion.article key={card.title} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.45, delay: index * 0.06 }} variants={fadeUp} className="system-module group relative overflow-hidden border border-ink/[0.1] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:shadow-premium md:p-7">
-                <div className="absolute inset-0 luxury-grid opacity-45" />
-                <div className="relative grid gap-5 sm:grid-cols-[72px_1fr_auto] sm:items-center">
-                  <span className="grid h-14 w-14 place-items-center border border-gold/[0.5] bg-paper/[0.05] font-mono text-sm text-gold">
+              <motion.article key={card.title} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.45, delay: index * 0.06 }} variants={fadeUp} className="level-card system-module group relative overflow-hidden p-7 shadow-fine md:p-8">
+                <div className="absolute inset-0 luxury-grid opacity-30" />
+                <div className="relative grid gap-5 sm:grid-cols-[76px_1fr_auto] sm:items-center">
+                  <span className="grid h-16 w-16 place-items-center border border-gold/[0.5] bg-paper/[0.05] font-mono text-sm text-gold transition group-hover:border-gold group-hover:bg-gold/[0.08]">
                     0{index + 1}
                   </span>
                   <div>
@@ -291,7 +291,7 @@ export default function Home() {
                     <h3 className="mt-2 font-serif text-3xl leading-[1.04] tracking-[-0.035em] md:text-4xl">{card.title}</h3>
                     <p className="mt-3 leading-7 text-ink/[0.64]">{card.text}</p>
                   </div>
-                  <a href={card.href} className="premium-button-ghost block border border-ink/[0.18] bg-paper/[0.035] px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
+                  <a href={card.href} className="learn-more block min-w-[150px] px-5 py-4 text-center text-xs uppercase transition">
                     {copy.cardCta}
                   </a>
                 </div>

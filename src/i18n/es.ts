@@ -25,9 +25,9 @@ export const es = {
     ],
   },
   freeChannel: {
-    title: "Canal gratuito Hormiga",
-    text: "Recibe señales gratuitas, análisis de mercado y contenido financiero global directamente en WhatsApp.",
-    button: "Entrar al Canal Gratuito",
+    title: "Canal Gratuito Formiga",
+    text: "Recibe señales gratuitas, análisis de mercado, lectura global y contenidos financieros diarios directamente en WhatsApp.",
+    button: "ENTRAR AL CANAL GRATUITO",
     link: "https://whatsapp.com/channel/0029Vb7ZJmPDeONG2GlkRb2Z",
     eyebrow: "Acceso gratuito",
   },

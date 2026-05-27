@@ -21,14 +21,36 @@ export const fadeUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-export const ELITE_CHECKOUT_URL = "https://lastlink.com/p/CE761BB8E/checkout-payment";
+export const ELITE_PLAN_IDS = ["monthly", "quarterly", "semiannual", "annual"] as const;
+export type ElitePlanId = (typeof ELITE_PLAN_IDS)[number];
+
+export const ELITE_CHECKOUT_URL = "/sinais#elite-packages";
+
+export async function startEliteCheckout(planId: ElitePlanId) {
+  const response = await fetch("/api/stripe/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ planId }),
+  });
+
+  const data = (await response.json()) as { url?: string; error?: string };
+
+  if (!response.ok || !data.url) {
+    throw new Error(data.error ?? "Não foi possível iniciar o checkout.");
+  }
+
+  window.location.href = data.url;
+}
 
 export function getEliteHref(locale: Locale, fallback = "/sinais") {
-  return locale === "pt" ?ELITE_CHECKOUT_URL : fallback;
+  void locale;
+  void fallback;
+  return ELITE_CHECKOUT_URL;
 }
 
 export function getEliteTargetProps(locale: Locale) {
-  return locale === "pt" ?{ target: "_blank", rel: "noopener noreferrer" } : {};
+  void locale;
+  return {};
 }
 
 export function eliteLinkProps(locale: Locale, fallback = "/sinais") {
@@ -127,10 +149,10 @@ export function LanguageSwitcher({
   variant?: "compact" | "footer";
 }) {
   const languageLabels: Record<Locale, string> = {
-    pt: "🇧🇷 Português",
-    en: "🇺🇸 English",
-    es: "🇪🇸 Español",
-    hi: "🇮🇳 हिन्दी",
+    pt: "\uD83C\uDDE7\uD83C\uDDF7 Portugu\u00EAs",
+    en: "\uD83C\uDDFA\uD83C\uDDF8 English",
+    es: "\uD83C\uDDEA\uD83C\uDDF8 Espa\u00F1ol",
+    hi: "\uD83C\uDDEE\uD83C\uDDF3 \u0939\u093F\u0928\u094D\u0926\u0940",
   };
 
   return (
@@ -144,8 +166,8 @@ export function LanguageSwitcher({
           key={item}
           type="button"
           onClick={() => onChange(item)}
-          className={`px-3 py-2 text-[11px] font-bold transition ${
-            variant === "footer" ?"tracking-[0.08em]" : "uppercase tracking-[0.18em]"
+          className={`px-2.5 py-2 text-[10px] font-bold transition sm:px-3 sm:text-[11px] ${
+            variant === "footer" ?"tracking-[0.08em]" : "uppercase tracking-[0.14em] sm:tracking-[0.18em]"
           } ${
             locale === item
               ?"bg-gold text-ink"
@@ -170,6 +192,15 @@ export function SiteChrome({
   onLocaleChange: (locale: Locale) => void;
 }) {
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const brandTagline =
+    locale === "en"
+      ? "Global Markets for Retail Investors"
+      : locale === "es"
+        ? "Mercado Global para el Inversor Minorista"
+        : locale === "hi"
+          ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
+          : "Mercado Global para o Investidor de Varejo";
   const navItems = useMemo(
     () => [
       { label: t.nav.home, href: "/#home", activePaths: ["/"] },
@@ -183,8 +214,8 @@ export function SiteChrome({
 
   return (
     <div className="fixed left-0 right-0 top-0 z-50">
-      <div className="global-ticker hidden border-b border-ink/[0.08] bg-ink px-5 text-paper md:block">
-        <div className="mx-auto flex max-w-7xl items-center gap-7 overflow-hidden py-2 text-[11px] uppercase tracking-[0.22em]">
+      <div className="global-ticker border-b border-ink/[0.08] bg-ink px-3 text-paper md:px-5">
+        <div className="mx-auto flex max-w-7xl items-center gap-4 overflow-hidden py-1.5 text-[9px] uppercase tracking-[0.16em] sm:gap-7 sm:py-2 sm:text-[11px] sm:tracking-[0.22em]">
           <span className="shrink-0 text-gold">{t.tickerLabel}</span>
           <div className="ticker-track flex min-w-max gap-6">
             {[...ticker, ...ticker].map(([asset, move, tone], index) => (
@@ -198,45 +229,35 @@ export function SiteChrome({
       </div>
 
       <header className="border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8 md:py-4">
           <a href="/#home" className="group flex min-w-0 items-center gap-3">
-            <span className="grid h-10 w-10 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
-              VI
-            </span>
+            <span className="grid h-9 w-9 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper sm:h-10 sm:w-10">VI</span>
             <span className="min-w-0 leading-tight">
-              <span className="block truncate font-serif text-xl">Varejo Investidor</span>
-              <span className="hidden text-[10px] uppercase tracking-[0.24em] text-ink/[0.45] sm:block">
-                Mercado Global para o Investidor de Varejo
-              </span>
+              <span className="block truncate font-serif text-lg sm:text-xl">Varejo Investidor</span>
+              <span className="hidden text-[10px] uppercase tracking-[0.24em] text-ink/[0.45] sm:block">{brandTagline}</span>
             </span>
           </a>
 
           <div className="hidden items-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
             {navItems.map((item) => {
               const isActive = item.activePaths.includes(pathname || "/");
-
-              return (
-              <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>
-                {item.label}
-              </a>
-              );
+              return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-2 sm:flex">
             <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
           </div>
+          <button type="button" className="grid h-10 w-10 place-items-center border border-ink/[0.12] text-ink xl:hidden" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label="Menu">
+            <span className="flex flex-col gap-1.5"><span className="block h-px w-5 bg-current" /><span className="block h-px w-5 bg-current" /><span className="block h-px w-5 bg-current" /></span>
+          </button>
         </nav>
-        <div className="border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden">
-          <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pt-3 text-sm">
+        <div className="border-t border-ink/[0.08] px-4 pb-3 sm:hidden"><LanguageSwitcher locale={locale} onChange={onLocaleChange} /></div>
+        <div className={`border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden ${mobileMenuOpen ? "block" : "hidden"}`}>
+          <div className="mx-auto grid max-w-7xl gap-2 pt-3 text-sm sm:flex sm:overflow-x-auto">
             {navItems.map((item) => {
               const isActive = item.activePaths.includes(pathname || "/");
-
-              return (
-              <a key={item.label} href={item.href} className={`nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-ink ${isActive ? "active" : ""}`}>
-                {item.label}
-              </a>
-              );
+              return <a key={item.label} href={item.href} className={`nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-center text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
           </div>
         </div>
@@ -247,77 +268,36 @@ export function SiteChrome({
 
 export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
   const isPortuguese = t.locale === "PT";
+  const isSpanish = t.locale === "ES";
   const extraLabels =
     t.locale === "HI"
-      ? {
-          timeframe: "टाइमफ्रेम",
-          risk: "जोखिम",
-          riskValue: "मध्यम",
-          signal: "सिग्नल",
-          time: "समय",
-          live: "लाइव",
-          copy: "एलीट चैनल में सीधे भेजा गया",
-        }
-      : {
-          timeframe: "TIMEFRAME",
-          risk: "RISCO",
-          riskValue: "MODERADO",
-          signal: "SINAL",
-          time: "HORÁRIO",
-          live: "LIVE",
-          copy: isPortuguese ? "ENVIADO DIRETAMENTE NO CANAL ELITE" : "Delivered inside Elite Channel",
-        };
+      ? { timeframe: "\u0938\u092E\u092F \u0905\u0935\u0927\u093F", risk: "\u091C\u094B\u0916\u093F\u092E", riskValue: "\u092E\u0927\u094D\u092F\u092E", signal: "\u0938\u093F\u0917\u094D\u0928\u0932", time: "\u0938\u092E\u092F", live: "\u0932\u093E\u0907\u0935", copy: "\u0938\u0940\u0927\u0947 \u090F\u0932\u0940\u091F \u091A\u0948\u0928\u0932 \u092E\u0947\u0902 \u092D\u0947\u091C\u093E \u0917\u092F\u093E" }
+      : isSpanish
+        ? { timeframe: "TEMPORALIDAD", risk: "RIESGO", riskValue: "MODERADO", signal: "SE\u00D1AL", time: "HORARIO", live: "EN VIVO", copy: "ENVIADA DIRECTAMENTE EN EL CANAL ELITE" }
+        : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO CANAL ELITE" : "DELIVERED DIRECTLY INSIDE ELITE CHANNEL" };
   const rows = [
-    [t.signalBlock.example.asset, t.signalBlock.example.values.asset],
-    [t.signalBlock.example.direction, t.signalBlock.example.values.direction],
-    [t.signalBlock.example.entry, t.signalBlock.example.values.entry],
-    [t.signalBlock.example.target, t.signalBlock.example.values.target],
-    [t.signalBlock.example.stop, t.signalBlock.example.values.stop],
-    [extraLabels.timeframe, "4H"],
-    [extraLabels.risk, extraLabels.riskValue],
-    [extraLabels.signal, "#4169"],
-    [extraLabels.time, "09:42 UTC"],
-    [t.signalBlock.example.status, t.signalBlock.example.values.status],
+    [t.signalBlock.example.asset, t.signalBlock.example.values.asset], [t.signalBlock.example.direction, t.signalBlock.example.values.direction], [t.signalBlock.example.entry, t.signalBlock.example.values.entry], [t.signalBlock.example.target, t.signalBlock.example.values.target], [t.signalBlock.example.stop, t.signalBlock.example.values.stop], [extraLabels.timeframe, "4H"], [extraLabels.risk, extraLabels.riskValue], [extraLabels.signal, "#4169"], [extraLabels.time, "09:42 UTC"], [t.signalBlock.example.status, t.signalBlock.example.values.status],
   ];
 
   return (
     <div className="signal-terminal terminal-shell relative overflow-hidden border border-rise/[0.28] bg-ink p-4 text-paper shadow-premium">
       <div className="absolute inset-0 terminal-grid opacity-25" />
-      <div className="flex items-center justify-between border-b border-paper/[0.12] pb-4">
+      <div className="flex items-center justify-between gap-3 border-b border-paper/[0.12] pb-4">
         <div className="relative">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">
-            {isPortuguese ? "SINAL AO VIVO" : "Live Signal"}
-          </p>
-          <h3 className="mt-1 font-serif text-3xl tracking-[-0.04em]">{t.signalBlock.example.title}</h3>
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{isPortuguese ? "SINAL AO VIVO" : isSpanish ? "SE\u00D1AL EN VIVO" : "LIVE SIGNAL SENT"}</p>
+          <h3 className="mt-1 font-serif text-2xl tracking-[-0.04em] sm:text-3xl">{t.signalBlock.example.title}</h3>
         </div>
-        <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise">
-          <span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />
-          {extraLabels.live}
-        </div>
+        <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise"><span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />{extraLabels.live}</div>
       </div>
-
       <div className="relative mt-5 grid gap-2 sm:grid-cols-2">
         {rows.map(([label, value]) => (
-          <div key={label} className="grid grid-cols-[110px_1fr] border border-paper/[0.09] bg-paper/[0.035]">
-            <p className="border-r border-paper/[0.09] px-3 py-3 text-[10px] uppercase tracking-[0.2em] text-paper/[0.42]">
-              {label}
-            </p>
-            <p
-              className={`px-3 py-3 font-mono text-sm font-bold ${
-                value === t.signalBlock.example.values.direction || value === t.signalBlock.example.values.status
-                  ?"text-rise"
-                  : "text-paper"
-              }`}
-            >
-              {value}
-            </p>
+          <div key={label} className="grid grid-cols-[96px_1fr] border border-paper/[0.09] bg-paper/[0.035] sm:grid-cols-[110px_1fr]">
+            <p className="border-r border-paper/[0.09] px-3 py-3 text-[10px] uppercase tracking-[0.16em] text-paper/[0.42] sm:tracking-[0.2em]">{label}</p>
+            <p className={`px-3 py-3 font-mono text-sm font-bold ${value === t.signalBlock.example.values.direction || value === t.signalBlock.example.values.status ?"text-rise" : "text-paper"}`}>{value}</p>
           </div>
         ))}
       </div>
-
-      <div className="signal-delivery-badge relative mt-5 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-rise">
-        {extraLabels.copy}
-      </div>
+      <div className="signal-delivery-badge relative mt-5 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-rise sm:tracking-[0.2em]">{extraLabels.copy}</div>
     </div>
   );
 }
@@ -396,6 +376,8 @@ export function FreeChannelCTA({
 }
 
 export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof translations)[Locale]; locale?: Locale }) {
+  const chartLabel = locale === "es" ? "Gr\u00E1fico 4H" : locale === "pt" ? "Gr\u00E1fico 4H" : "4H chart";
+  const liveLabel = locale === "es" ? "En vivo" : locale === "pt" ? "Ao vivo" : "Live";
   const fields = [
     t.signalExample.signal,
     t.signalExample.asset,
@@ -444,8 +426,8 @@ export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof transla
                   </div>
                   <div className="mt-5 border border-ink/[0.08] bg-ink p-4 text-paper">
                     <div className="flex items-center justify-between">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/[0.48]">4H chart</p>
-                      <p className="text-xs text-rise">Live</p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/[0.48]">{chartLabel}</p>
+                      <p className="text-xs text-rise">{liveLabel}</p>
                     </div>
                     <div className="mt-5">
                       <Sparkline />
@@ -475,8 +457,12 @@ export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
   ];
   const indicators =
     t.locale === "HI"
-      ? ["विश्व स्तर का ब्रोकर", "निष्पादन", "सुरक्षा", "उपयोग किया गया प्लेटफॉर्म"]
-      : ["Corretora número 1 do mundo", "Execução", "Proteção", "Plataforma utilizada"];
+      ? ["\u0935\u093F\u0936\u094D\u0935 \u0938\u094D\u0924\u0930\u0940\u092F \u092C\u094D\u0930\u094B\u0915\u0930", "\u0928\u093F\u0937\u094D\u092A\u093E\u0926\u0928", "\u0938\u0941\u0930\u0915\u094D\u0937\u093E", "\u0909\u092A\u092F\u094B\u0917 \u0915\u093F\u092F\u093E \u0917\u092F\u093E \u092A\u094D\u0932\u0947\u091F\u092B\u0949\u0930\u094D\u092E"]
+      : t.locale === "ES"
+        ? ["Corredor l\u00EDder global", "Ejecuci\u00F3n", "Protecci\u00F3n", "Plataforma utilizada"]
+        : t.locale === "EN"
+          ? ["World-leading broker", "Execution", "Protection", "Platform used"]
+          : ["Corretora n\u00FAmero 1 do mundo", "Execu\u00E7\u00E3o", "Prote\u00E7\u00E3o", "Plataforma utilizada"];
 
   return (
     <section className="px-5 py-14 md:px-8 md:py-16">
@@ -540,10 +526,22 @@ export function SupportFooter({
   locale: Locale;
   onLocaleChange: (locale: Locale) => void;
 }) {
+  const brandTagline =
+    locale === "en"
+      ? "Global Markets for Retail Investors"
+      : locale === "es"
+        ? "Mercado Global para el Inversor Minorista"
+        : locale === "hi"
+          ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
+          : "Mercado Global para o Investidor de Varejo";
   const footerLabels =
     locale === "hi"
-      ? { social: "सोशल", language: "भाषा", marketLine: "Forex • Crypto • Commodities • Global Markets" }
-      : { social: "Social", language: "Idioma", marketLine: "Forex • Crypto • Commodities • Global Markets" };
+      ? { social: "\u0938\u094B\u0936\u0932", language: "\u092D\u093E\u0937\u093E", marketLine: "Forex | Crypto | Commodities | Global Markets" }
+      : locale === "es"
+        ? { social: "Redes", language: "Idioma", marketLine: "Forex | Cripto | Commodities | Mercados Globales" }
+        : locale === "pt"
+          ? { social: "Redes", language: "Idioma", marketLine: "Forex | Cripto | Commodities | Mercados Globais" }
+          : { social: "Social", language: "Language", marketLine: "Forex | Crypto | Commodities | Global Markets" };
   const socials = [
     {
       label: "Instagram",
@@ -594,7 +592,7 @@ export function SupportFooter({
               <span>
                 <span className="block font-serif text-3xl tracking-[-0.04em] text-ink">Varejo Investidor</span>
                 <span className="text-[10px] uppercase tracking-[0.24em] text-ink/[0.45]">
-                  Mercado Global para o Investidor de Varejo
+                  {brandTagline}
                 </span>
               </span>
             </a>

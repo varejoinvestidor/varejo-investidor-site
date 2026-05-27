@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useState } from "react";
 import {
   BrokerBanners,
   FreeChannelCTA,
+  ELITE_PLAN_IDS,
   SectionHeader,
   SignalTicket,
   SiteChrome,
@@ -12,6 +14,8 @@ import {
   WhatsAppSignalExample,
   eliteLinkProps,
   fadeUp,
+  startEliteCheckout,
+  type ElitePlanId,
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
@@ -81,6 +85,135 @@ const eliteBenefits = [
   "Estrutura completa de mercado",
 ];
 
+const signalCopyByLocale = {
+  pt: {
+    howEyebrow: "Canal Elite",
+    howTitle: "Como funciona o Canal Elite",
+    howText: "O canal Elite entrega operações estruturadas ao vivo diretamente no WhatsApp com contexto operacional e gestão de risco.",
+    howItems: howItWorks,
+    scheduleEyebrow: "Horários operacionais",
+    scheduleTitle: "Horários operacionais",
+    scheduleText: "Os sinais são enviados geralmente nos principais períodos de liquidez do mercado, entre 8h e 15h, e também entre 21h e 00h, no horário de Brasília.",
+    scheduleNote: "Os horários podem variar conforme volatilidade, liquidez e oportunidades reais do mercado.",
+    scheduleCards: [["MANHÃ E TARDE", "8h às 15h"], ["NOITE", "21h às 00h"]],
+    methodEyebrow: "Método operacional",
+    methodTitle: "Sinais baseados no Ichimoku",
+    methodText: "Todos os sinais do Varejo Investidor são enviados com base na leitura do indicador Ichimoku, observando principalmente a nuvem, as médias, o posicionamento do preço, zonas de suporte, resistência e contexto do ativo.",
+    ichimokuItems: ["leitura da nuvem", "médias do Ichimoku", "direção do preço", "alvo e stop", "contexto do ativo", "gerenciamento de risco"],
+    historyEyebrow: "Histórico",
+    historyTitle: "Relatório Elite desde agosto de 2018",
+    historyText: "Acompanhe a evolução operacional do Canal Elite através dos relatórios históricos enviados desde agosto de 2018.",
+    tableHeadings: ["DATA", "RELATÓRIO ELITE", "SINAIS", "RESULTADO", "STATUS", "VER"],
+    reports: [["AGO/2018", "Relatório Elite", "124 sinais", "+18.4%", "Disponível"], ["JAN/2021", "Relatório Elite", "98 sinais", "+11.2%", "Disponível"], ["MAR/2024", "Relatório Elite", "137 sinais", "+22.7%", "Disponível"]],
+    view: "VER",
+    docsEyebrow: "Documental",
+    docsTitle: "Estrutura real de envio",
+    docsText: "Sinais enviados ao vivo diretamente no WhatsApp desde 2018.",
+    levelsEyebrow: "Níveis",
+    levelsTitle: "Escolha seu nível",
+    levelsText: "Comece gratuitamente no Canal Formiga ou entre no Elite Harpia para acesso completo à estrutura operacional.",
+    freeTitle: "Canal Formiga",
+    freePrice: "Gratuito",
+    freeButton: "Entrar gratuitamente",
+    formigaItems: formigaBullets,
+    eliteTitle: "Canal Elite Harpia",
+    eliteStructure: "Estrutura Elite",
+    eliteButton: "Entrar no Elite",
+    eliteItems: eliteBullets,
+    packagesEyebrow: "Pacotes",
+    packagesTitle: "Acesso ao Elite",
+    packagesText: "Escolha seu pacote para acessar 100% dos sinais, grupo exclusivo, análises, aulas gravadas e conteúdo nível Harpia dentro do Varejo Investidor.",
+    benefitsTitle: "O que você recebe no Canal Elite",
+    benefits: eliteBenefits,
+    best: "Maior economia",
+    now: "Assinar agora",
+  },
+  en: {
+    howEyebrow: "Elite Channel",
+    howTitle: "How the Elite Channel Works",
+    howText: "The Elite Channel delivers structured live trades directly on WhatsApp with operational context and risk management.",
+    howItems: ["2 to 5 signals per day", "Direct WhatsApp delivery", "Entry, target, and stop defined", "Operational context and market reading"],
+    scheduleEyebrow: "Trading hours",
+    scheduleTitle: "Trading Hours",
+    scheduleText: "Signals are usually sent during the main liquidity windows of the market, from 8 AM to 3 PM and also from 9 PM to midnight, Brasília time.",
+    scheduleNote: "Timing may vary according to volatility, liquidity, and real market opportunities.",
+    scheduleCards: [["MORNING AND AFTERNOON", "8 AM to 3 PM"], ["NIGHT", "9 PM to 12 AM"]],
+    methodEyebrow: "Operational method",
+    methodTitle: "Signals based on Ichimoku",
+    methodText: "All Varejo Investidor signals are based on Ichimoku reading, mainly observing the cloud, averages, price position, support and resistance zones, and asset context.",
+    ichimokuItems: ["cloud reading", "Ichimoku averages", "price direction", "target and stop", "asset context", "risk management"],
+    historyEyebrow: "History",
+    historyTitle: "Elite Report since August 2018",
+    historyText: "Follow the operational evolution of the Elite Channel through historical reports sent since August 2018.",
+    tableHeadings: ["DATE", "ELITE REPORT", "SIGNALS", "RESULT", "STATUS", "VIEW"],
+    reports: [["AUG/2018", "Elite Report", "124 signals", "+18.4%", "Available"], ["JAN/2021", "Elite Report", "98 signals", "+11.2%", "Available"], ["MAR/2024", "Elite Report", "137 signals", "+22.7%", "Available"]],
+    view: "VIEW",
+    docsEyebrow: "Documentary structure",
+    docsTitle: "Real Sending Structure",
+    docsText: "Live signals sent directly on WhatsApp since 2018.",
+    levelsEyebrow: "Levels",
+    levelsTitle: "Choose Your Level",
+    levelsText: "Start with the free Ant Channel or enter Elite Harpy for full access to the operational structure.",
+    freeTitle: "Ant Channel",
+    freePrice: "Free",
+    freeButton: "Enter for free",
+    formigaItems: ["free", "educational content", "basic analysis", "introductory vision", "foundation building", "limited signals"],
+    eliteTitle: "Elite Harpy Channel",
+    eliteStructure: "Elite Structure",
+    eliteButton: "Join Elite",
+    eliteItems: ["complete signals", "2 to 5 signals per day", "structured trades", "operational context", "Forex", "gold", "oil", "indices", "crypto", "institutional reading", "closed community", "recorded Ant-level classes", "recorded Wolf-level classes", "recorded Harpy-level classes", "Elite structure"],
+    packagesEyebrow: "Packages",
+    packagesTitle: "Elite Access",
+    packagesText: "Choose your package to access 100% of signals, the exclusive group, market analysis, recorded classes, and Harpy-level content inside Varejo Investidor.",
+    benefitsTitle: "What you receive in the Elite Channel",
+    benefits: ["100% of signals", "Exclusive group", "Market analysis", "Recorded classes", "Harpy-level content", "Complete market structure"],
+    best: "Best value",
+    now: "Subscribe now",
+  },
+  es: {
+    howEyebrow: "Canal Elite",
+    howTitle: "Cómo funciona el Canal Elite",
+    howText: "El Canal Elite entrega operaciones estructuradas en vivo directamente por WhatsApp con contexto operativo y gestión de riesgo.",
+    howItems: ["2 a 5 señales por día", "Envío directo por WhatsApp", "Entrada, objetivo y stop definidos", "Contexto operativo y lectura de mercado"],
+    scheduleEyebrow: "Horarios operativos",
+    scheduleTitle: "Horarios operativos",
+    scheduleText: "Las señales suelen enviarse durante los principales períodos de liquidez del mercado, entre las 8h y las 15h, y también entre las 21h y las 00h, horario de Brasilia.",
+    scheduleNote: "Los horarios pueden variar según volatilidad, liquidez y oportunidades reales del mercado.",
+    scheduleCards: [["MAÑANA Y TARDE", "8h a 15h"], ["NOCHE", "21h a 00h"]],
+    methodEyebrow: "Método operativo",
+    methodTitle: "Señales basadas en Ichimoku",
+    methodText: "Todas las señales de Varejo Investidor se envían con base en la lectura del indicador Ichimoku, observando principalmente la nube, las medias, el posicionamiento del precio, zonas de soporte, resistencia y contexto del activo.",
+    ichimokuItems: ["lectura de la nube", "medias del Ichimoku", "dirección del precio", "objetivo y stop", "contexto del activo", "gestión de riesgo"],
+    historyEyebrow: "Histórico",
+    historyTitle: "Reporte Elite desde agosto de 2018",
+    historyText: "Acompaña la evolución operativa del Canal Elite a través de reportes históricos enviados desde agosto de 2018.",
+    tableHeadings: ["FECHA", "REPORTE ELITE", "SEÑALES", "RESULTADO", "ESTADO", "VER"],
+    reports: [["AGO/2018", "Reporte Elite", "124 señales", "+18.4%", "Disponible"], ["ENE/2021", "Reporte Elite", "98 señales", "+11.2%", "Disponible"], ["MAR/2024", "Reporte Elite", "137 señales", "+22.7%", "Disponible"]],
+    view: "VER",
+    docsEyebrow: "Estructura documental",
+    docsTitle: "Estructura real de envío",
+    docsText: "Señales enviadas en vivo directamente por WhatsApp desde 2018.",
+    levelsEyebrow: "Niveles",
+    levelsTitle: "Elige tu nivel",
+    levelsText: "Comienza gratis en el Canal Hormiga o entra al Elite Harpía para acceder a la estructura operativa completa.",
+    freeTitle: "Canal Hormiga",
+    freePrice: "Gratis",
+    freeButton: "Entrar gratis",
+    formigaItems: ["gratuito", "contenidos educativos", "análisis básicos", "visión introductoria", "construcción de la base", "señales limitadas"],
+    eliteTitle: "Canal Elite Harpía",
+    eliteStructure: "Estructura Elite",
+    eliteButton: "Entrar al Elite",
+    eliteItems: ["señales completas", "2 a 5 señales por día", "operaciones estructuradas", "contexto operativo", "Forex", "oro", "petróleo", "índices", "cripto", "lectura institucional", "comunidad cerrada", "clases grabadas nivel Hormiga", "clases grabadas nivel Lobo", "clases grabadas nivel Harpía", "estructura Elite"],
+    packagesEyebrow: "Paquetes",
+    packagesTitle: "Acceso al Elite",
+    packagesText: "Elige tu paquete para acceder al 100% de las señales, grupo exclusivo, análisis, clases grabadas y contenido nivel Harpía dentro de Varejo Investidor.",
+    benefitsTitle: "Lo que recibes en el Canal Elite",
+    benefits: ["100% de las señales", "Grupo exclusivo", "Análisis de mercado", "Clases grabadas", "Contenido nivel Harpía", "Estructura completa de mercado"],
+    best: "Mayor ahorro",
+    now: "Suscribirse ahora",
+  },
+} as const;
+
 const whatsappPrints = [
   { label: "WhatsApp print 01", src: "/signals/whatsapp-print-01.jpg" },
   { label: "WhatsApp print 02", src: "/signals/whatsapp-print-02.jpg" },
@@ -89,9 +222,10 @@ const whatsappPrints = [
 
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
+  const [checkoutPlan, setCheckoutPlan] = useState<ElitePlanId | null>(null);
   const eliteCta = eliteLinkProps(locale, "/sinais");
   const isHi = locale === "hi";
-  const signalPageCopy = isHi
+  const signalPageCopy: any = isHi
     ? {
         howEyebrow: "एलीट चैनल",
         howTitle: "एलीट चैनल कैसे काम करता है",
@@ -130,16 +264,36 @@ export default function SignalsPage() {
         packagesTitle: "एलीट एक्सेस",
         packagesText: "लाइव सिग्नल, विश्लेषण, रिकॉर्डेड कक्षाएँ और पूर्ण बाजार संरचना प्राप्त करने के लिए एलीट गरुड़ चैनल का पैकेज चुनें।",
         best: "सबसे अधिक बचत",
-        now: "अभी प्रवेश करें",
+        now: "\u0905\u092D\u0940 \u0938\u0926\u0938\u094D\u092F\u0924\u093E \u0932\u0947\u0902",
       }
-    : null;
-  const howItems = signalPageCopy?.howItems ?? howItWorks;
-  const ichimokuItems = signalPageCopy?.ichimokuItems ?? ichimokuPoints;
-  const reportRows = signalPageCopy?.reports ?? reports;
-  const freeItems = signalPageCopy?.formigaItems ?? formigaBullets;
-  const eliteItems = signalPageCopy?.eliteItems ?? eliteBullets;
+    : signalCopyByLocale[locale as "pt" | "en" | "es"];
+  const howItems: string[] = signalPageCopy?.howItems ?? howItWorks;
+  const ichimokuItems: string[] = signalPageCopy?.ichimokuItems ?? ichimokuPoints;
+  const reportRows: readonly (readonly string[])[] = signalPageCopy?.reports ?? reports;
+  const freeItems: string[] = signalPageCopy?.formigaItems ?? formigaBullets;
+  const eliteItems: string[] = signalPageCopy?.eliteItems ?? eliteBullets;
+  const tableHeadings: string[] = signalPageCopy?.tableHeadings ?? ["DATA", "RELATÓRIO ELITE", "SINAIS", "RESULTADO", "STATUS", "VER"];
+  const benefitsList: string[] = signalPageCopy?.benefits ?? eliteBenefits;
+  const scheduleCards: string[][] = signalPageCopy?.scheduleCards ?? [
+    ["MANHÃ E TARDE", "8h às 15h"],
+    ["NOITE", "21h às 00h"],
+  ];
   const reportYears = ["2018", "2021", "2024"];
-  const displayPrices = isHi
+  const displayPrices: string[][] = locale === "en"
+    ? [
+        ["MONTHLY", "US$ 30", ""],
+        ["3 MONTHS", "US$ 80", ""],
+        ["6 MONTHS", "US$ 145", ""],
+        ["ANNUAL", "US$ 240", ""],
+      ]
+    : locale === "es"
+      ? [
+          ["MENSUAL", "US$ 30", ""],
+          ["TRIMESTRAL", "US$ 80", ""],
+          ["SEMESTRAL", "US$ 145", ""],
+          ["ANUAL", "US$ 240", ""],
+        ]
+      : isHi
     ? [
         ["मासिक", "US$ 30", ""],
         ["3 महीने", "US$ 80", ""],
@@ -147,6 +301,17 @@ export default function SignalsPage() {
         ["वार्षिक", "US$ 240", ""],
       ]
     : prices;
+  const handleCheckout = async (planId: ElitePlanId) => {
+    setCheckoutPlan(planId);
+
+    try {
+      await startEliteCheckout(planId);
+    } catch (error) {
+      console.error(error);
+      setCheckoutPlan(null);
+      window.alert("Não foi possível iniciar o checkout. Tente novamente em instantes.");
+    }
+  };
 
   return (
     <main lang={locale === "hi" ?"hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -223,10 +388,7 @@ export default function SignalsPage() {
                 </p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                {(signalPageCopy?.scheduleCards ?? [
-                  ["MANHÃ E TARDE", "8h às 15h"],
-                  ["NOITE", "21h às 00h"],
-                ]).map(([label, time]) => (
+                {scheduleCards.map(([label, time]) => (
                   <div key={label} className="terminal-module border border-ink/[0.1] bg-paper p-5">
                     <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">{label}</p>
                     <p className="mt-4 font-mono text-3xl text-ink">{time}</p>
@@ -238,7 +400,7 @@ export default function SignalsPage() {
         </div>
       </section>
 
-      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
+      <section id="elite-packages" className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow={signalPageCopy?.methodEyebrow ?? "Método operacional"}
@@ -283,7 +445,7 @@ export default function SignalsPage() {
             <table className="w-full min-w-[760px] border-collapse text-left">
               <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.22em] text-gold">
                 <tr>
-                  {(signalPageCopy?.tableHeadings ?? ["DATA", "RELATÓRIO ELITE", "SINAIS", "RESULTADO", "STATUS", "VER"]).map((heading) => (
+                  {tableHeadings.map((heading) => (
                     <th key={heading} className="px-5 py-4 font-bold">
                       {heading}
                     </th>
@@ -421,13 +583,13 @@ export default function SignalsPage() {
             <div className="mt-8 border border-gold/[0.22] bg-ink p-5 shadow-premium md:p-6">
               <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Canal Elite Harpia</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{signalPageCopy?.eliteTitle ?? "Canal Elite Harpia"}</p>
                   <h3 className="mt-3 font-serif text-3xl tracking-[-0.04em] text-paper md:text-4xl">
-                    O que você recebe no Canal Elite
+                    {signalPageCopy?.benefitsTitle ?? "O que você recebe no Canal Elite"}
                   </h3>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {eliteBenefits.map((benefit, index) => (
+                  {benefitsList.map((benefit, index) => (
                     <div key={benefit} className="border border-rise/[0.16] bg-paper px-4 py-3">
                       <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-rise">
                         {String(index + 1).padStart(2, "0")}
@@ -453,12 +615,14 @@ export default function SignalsPage() {
                 <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold">{period}</p>
                 <p className="mt-5 font-serif text-4xl tracking-[-0.05em]">{price}</p>
                 {usd ? <p className="mt-2 font-mono text-sm uppercase tracking-[0.16em] text-ink/[0.48]">{usd}</p> : null}
-                <a
-                  {...eliteCta}
+                <button
+                  type="button"
+                  onClick={() => handleCheckout(ELITE_PLAN_IDS[index] ?? "annual")}
+                  disabled={checkoutPlan === (ELITE_PLAN_IDS[index] ?? "annual")}
                   className={`mt-8 block border px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] ${index === 3 ?"border-gold bg-gold text-ink" : "border-ink bg-ink text-paper"}`}
                 >
                   {signalPageCopy?.now ?? "Entrar agora"}
-                </a>
+                </button>
               </article>
             ))}
           </div>
