@@ -1715,4 +1715,422 @@ main {
   }
 }
 
+/* Final mobile polish: compact chrome, safer media, and tighter premium rhythm. */
+@media (max-width: 1279px) {
+  .site-header-nav {
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.55rem !important;
+  }
+
+  .site-brand span:first-child {
+    height: 2.25rem !important;
+    width: 2.25rem !important;
+  }
+
+  .site-menu-button {
+    height: 2.35rem !important;
+    width: 2.35rem !important;
+  }
+
+  .mobile-language-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mobile-language-row > div {
+    width: min(100%, 24rem);
+    justify-content: center;
+    padding: 0.18rem !important;
+  }
+
+  .mobile-language-row button {
+    min-height: 2rem !important;
+    flex: 1 1 0;
+    padding: 0.45rem 0.45rem !important;
+  }
+
+  .mobile-nav-panel > div {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.45rem !important;
+    padding-top: 0.65rem !important;
+  }
+
+  .mobile-nav-panel .nav-link {
+    min-height: 2.35rem;
+    padding: 0.62rem 0.4rem !important;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  body::before {
+    opacity: 0.64;
+  }
+
+  .global-ticker {
+    height: 1.75rem;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .global-ticker > div {
+    gap: 0.8rem !important;
+    padding-top: 0.32rem !important;
+    padding-bottom: 0.32rem !important;
+    font-size: 0.58rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .ticker-track {
+    gap: 1.75rem !important;
+    min-width: max-content;
+  }
+
+  .ticker-item {
+    gap: 0.45rem !important;
+    white-space: nowrap;
+  }
+
+  .ticker-item::after {
+    height: 0.55rem;
+    margin-left: 0.9rem;
+  }
+
+  .site-brand {
+    max-width: calc(100vw - 5rem);
+  }
+
+  .site-brand .font-serif {
+    font-size: 1rem !important;
+  }
+
+  .site-header .border-t {
+    border-color: rgba(184, 137, 45, 0.12) !important;
+  }
+
+  .mobile-nav-panel {
+    padding-left: 0.9rem !important;
+    padding-right: 0.9rem !important;
+  }
+
+  .mobile-nav-panel > div {
+    grid-template-columns: 1fr;
+    max-height: 16.5rem;
+    overflow-y: auto;
+  }
+
+  .mobile-nav-panel .nav-link {
+    background: rgba(8, 8, 8, 0.92) !important;
+  }
+
+  .home-hero,
+  .signals-hero,
+  .education-hero,
+  .premium-stage {
+    min-height: auto !important;
+    padding-top: 7.05rem !important;
+    padding-bottom: 3.25rem !important;
+  }
+
+  section[class] {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .home-hero .grid,
+  .signals-hero .grid,
+  .services-hero-visual,
+  .about-hero-visual {
+    gap: 2rem !important;
+  }
+
+  .hero-headline,
+  h1 {
+    font-size: clamp(2.65rem, 11vw, 3.55rem) !important;
+    line-height: 0.98 !important;
+    letter-spacing: -0.035em !important;
+  }
+
+  h2,
+  .section-title,
+  .font-serif.text-5xl,
+  .font-serif.text-6xl,
+  .font-serif.text-7xl {
+    font-size: clamp(2.1rem, 8.8vw, 2.75rem) !important;
+    line-height: 1.04 !important;
+  }
+
+  p {
+    line-height: 1.58;
+  }
+
+  .hero-image-wrapper,
+  .hero-mascot-wrap,
+  .section-team-stage,
+  .services-hero-visual,
+  .about-hero-visual,
+  .education-levels-visual,
+  .image-wrapper,
+  .character-wrapper {
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .hero-image-wrapper {
+    max-width: min(100%, 24.5rem) !important;
+    min-height: 21rem !important;
+  }
+
+  .hero-main-image,
+  .hero-mascot-image,
+  .home-structure-image,
+  .services-hero-image,
+  .about-hero-image,
+  .education-levels-image,
+  .education-levels-image-portrait,
+  .section-team-image,
+  .character-image {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: center bottom !important;
+    background: transparent !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .hero-main-image,
+  .hero-mascot-image {
+    max-height: 26rem !important;
+  }
+
+  .home-structure-image {
+    max-height: 23rem !important;
+  }
+
+  .services-hero-visual,
+  .about-hero-visual {
+    min-height: 23rem !important;
+    width: 100%;
+  }
+
+  .services-hero-image,
+  .about-hero-image {
+    left: 50% !important;
+    right: auto !important;
+    bottom: 0 !important;
+    width: min(100%, 25rem) !important;
+    max-height: 24rem !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .education-campus-section {
+    padding-top: 0 !important;
+  }
+
+  .education-levels-visual {
+    margin-top: -1rem !important;
+    margin-bottom: 1.5rem !important;
+    min-height: 20rem !important;
+  }
+
+  .education-levels-image,
+  .education-levels-image-portrait {
+    max-height: 22rem !important;
+  }
+
+  .education-matrix {
+    margin-bottom: 2rem !important;
+    padding: 1.15rem !important;
+  }
+
+  .education-step-grid {
+    min-width: 43rem !important;
+    padding-bottom: 0.45rem;
+  }
+
+  .education-academic-card,
+  .level-card,
+  .service-channel-card,
+  .terminal-module,
+  .glass-panel {
+    padding: 1.45rem !important;
+  }
+
+  .level-card {
+    margin-bottom: 0 !important;
+  }
+
+  .level-card .relative.grid {
+    gap: 1.15rem !important;
+  }
+
+  .level-card span.grid {
+    height: 3.4rem !important;
+    width: 3.4rem !important;
+  }
+
+  .level-card .learn-more,
+  .level-card .btn-more,
+  .service-channel-cta,
+  .premium-button-gold,
+  .premium-button-ghost,
+  .broker-action,
+  a[class*="bg-gold"],
+  a[class*="bg-rise"],
+  button[class*="bg-gold"],
+  button[class*="bg-rise"] {
+    width: 100%;
+    min-height: 3rem !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .free-channel-highlights,
+  .benefits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.65rem !important;
+  }
+
+  .formiga-card,
+  .service-channel-free {
+    padding: 1.45rem !important;
+  }
+
+  .signal-terminal-wrap,
+  .signal-terminal,
+  .ichimoku-board,
+  .education-table,
+  .table-wrapper,
+  [class*="overflow-x-auto"] {
+    max-width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .signal-terminal {
+    padding: 1rem !important;
+  }
+
+  .signal-terminal [class*="grid-cols-"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .whatsapp-print-card {
+    min-height: auto !important;
+  }
+
+  .whatsapp-print-frame {
+    height: min(31rem, 132vw) !important;
+  }
+
+  .education-expansion {
+    padding: 1.75rem 1.2rem !important;
+  }
+
+  .education-expansion .font-serif {
+    margin-top: 1rem !important;
+  }
+
+  .expansion-badge {
+    padding: 0.5rem 0.8rem !important;
+    font-size: 0.66rem !important;
+  }
+
+  footer {
+    padding: 2.5rem 1.25rem 1.75rem !important;
+  }
+
+  footer .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.75rem !important;
+  }
+
+  footer .font-serif.text-3xl {
+    font-size: 1.6rem !important;
+  }
+
+  footer p,
+  footer a,
+  footer span {
+    overflow-wrap: anywhere;
+  }
+
+  footer .mt-8 {
+    margin-top: 1.75rem !important;
+  }
+
+  footer .pt-5 {
+    padding-top: 1.05rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-hero,
+  .signals-hero,
+  .education-hero,
+  .premium-stage {
+    padding-top: 6.75rem !important;
+    padding-bottom: 2.8rem !important;
+  }
+
+  section[class] {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-headline,
+  h1 {
+    font-size: clamp(2.45rem, 12vw, 3.15rem) !important;
+  }
+
+  .hero-image-wrapper {
+    max-width: min(100%, 21.5rem) !important;
+    min-height: 18.5rem !important;
+  }
+
+  .hero-main-image,
+  .hero-mascot-image,
+  .home-structure-image,
+  .services-hero-image,
+  .about-hero-image,
+  .education-levels-image {
+    max-height: 20.5rem !important;
+  }
+
+  .services-hero-visual,
+  .about-hero-visual,
+  .education-levels-visual {
+    min-height: 18rem !important;
+  }
+
+  .free-channel-highlights,
+  .benefits-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mobile-language-row button {
+    font-size: 0.6rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .education-step-grid {
+    min-width: 38rem !important;
+  }
+}
+
 

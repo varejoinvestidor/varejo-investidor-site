@@ -221,9 +221,9 @@ export function SiteChrome({
         </div>
       </div>
 
-      <header className="border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8 md:py-4">
-          <a href="/#home" className="group flex min-w-0 items-center gap-3">
+      <header className="site-header border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
+        <nav className="site-header-nav mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8 md:py-4">
+          <a href="/#home" className="site-brand group flex min-w-0 items-center gap-3">
             <span className="grid h-9 w-9 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper sm:h-10 sm:w-10">VI</span>
             <span className="min-w-0 leading-tight">
               <span className="block truncate font-serif text-lg sm:text-xl">Varejo Investidor</span>
@@ -238,15 +238,17 @@ export function SiteChrome({
             })}
           </div>
 
-          <div className="hidden items-center gap-2 sm:flex">
+          <div className="hidden items-center gap-2 xl:flex">
             <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
           </div>
-          <button type="button" className="grid h-10 w-10 place-items-center border border-ink/[0.12] text-ink xl:hidden" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label="Menu">
+          <button type="button" className="site-menu-button grid h-10 w-10 place-items-center border border-ink/[0.12] text-ink xl:hidden" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label="Menu">
             <span className="flex flex-col gap-1.5"><span className="block h-px w-5 bg-current" /><span className="block h-px w-5 bg-current" /><span className="block h-px w-5 bg-current" /></span>
           </button>
         </nav>
-        <div className="border-t border-ink/[0.08] px-4 pb-3 sm:hidden"><LanguageSwitcher locale={locale} onChange={onLocaleChange} /></div>
-        <div className={`border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden ${mobileMenuOpen ? "block" : "hidden"}`}>
+        <div className="mobile-language-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
+          <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
+        </div>
+        <div className={`mobile-nav-panel border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden ${mobileMenuOpen ? "block" : "hidden"}`}>
           <div className="mx-auto grid max-w-7xl gap-2 pt-3 text-sm sm:flex sm:overflow-x-auto">
             {navItems.map((item) => {
               const isActive = item.activePaths.includes(pathname || "/");
@@ -368,7 +370,15 @@ export function FreeChannelCTA({
   );
 }
 
-export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof translations)[Locale]; locale?: Locale }) {
+export function WhatsAppSignalExample({
+  t,
+  locale = "en",
+  onEliteClick,
+}: {
+  t: (typeof translations)[Locale];
+  locale?: Locale;
+  onEliteClick?: () => void;
+}) {
   const chartLabel = locale === "es" ? "Gr\u00E1fico 4H" : locale === "pt" ? "Gr\u00E1fico 4H" : "4H chart";
   const liveLabel = locale === "es" ? "En vivo" : locale === "pt" ? "Ao vivo" : "Live";
   const fields = [
@@ -383,12 +393,22 @@ export function WhatsAppSignalExample({ t, locale = "en" }: { t: (typeof transla
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
         <div>
           <SectionHeader eyebrow={t.signalExample.eyebrow} title={t.signalExample.title} text={t.signalExample.text} />
-          <a
-            {...eliteLinkProps(locale)}
-            className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
-          >
-            {t.signalExample.cta}
-          </a>
+          {onEliteClick ? (
+            <button
+              type="button"
+              onClick={onEliteClick}
+              className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+            >
+              {t.signalExample.cta}
+            </button>
+          ) : (
+            <a
+              {...eliteLinkProps(locale)}
+              className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+            >
+              {t.signalExample.cta}
+            </a>
+          )}
         </div>
 
         <motion.div

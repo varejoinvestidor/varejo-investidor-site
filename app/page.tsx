@@ -207,7 +207,7 @@ export default function Home() {
               scale: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
               y: { duration: 7, repeat: Infinity, ease: "easeInOut" },
             }}
-            className="hero-mascot-wrap order-1 mx-auto w-full max-w-[340px] sm:max-w-[520px] lg:order-2 lg:max-w-[640px] 2xl:max-w-[720px]"
+            className="hero-mascot-wrap order-2 mx-auto w-full max-w-[340px] sm:max-w-[520px] lg:order-2 lg:max-w-[640px] 2xl:max-w-[720px]"
           >
             <div className="hero-image-wrapper relative mx-auto flex min-h-[24rem] items-center justify-center sm:min-h-[34rem] lg:min-h-[44rem] xl:min-h-[48rem]">
               <Image
@@ -222,7 +222,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <motion.div className="order-2 lg:order-1" initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>
+          <motion.div className="order-1 lg:order-1" initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>
             <motion.p variants={fadeUp} className="inline-flex border border-gold/[0.28] bg-paper/[0.04] px-4 py-2 text-xs font-bold uppercase tracking-[0.34em] text-gold">
               {copy.hero.eyebrow}
             </motion.p>

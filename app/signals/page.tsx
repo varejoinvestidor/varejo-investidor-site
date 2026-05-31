@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import {
   BrokerBanners,
+  ELITE_LASTLINK_URL,
+  ELITE_STRIPE_LINKS,
   FreeChannelCTA,
   SectionHeader,
   SignalTicket,
@@ -220,6 +222,16 @@ const whatsappPrints = [
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const eliteCta = eliteLinkProps(locale, "/sinais");
+  const shouldScrollToPackages = locale !== "pt";
+  const scrollToPackages = () => {
+    const section = document.getElementById("elite-packages");
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
   const isHi = locale === "hi";
   const signalPageCopy: any = isHi
     ? {
@@ -275,6 +287,19 @@ export default function SignalsPage() {
     ["NOITE", "21h às 00h"],
   ];
   const reportYears = ["2018", "2021", "2024"];
+  const isPt = locale === "pt";
+  const brazilElitePrices = [
+    ["Mensal", "R$ 149,90"],
+    ["Trimestral", "R$ 397,90"],
+    ["Semestral", "R$ 697,90"],
+    ["Anual", "R$ 1.197,90"],
+  ];
+  const internationalElitePrices = [
+    ["Monthly", "US$ 30"],
+    ["3 Months", "US$ 80"],
+    ["6 Months", "US$ 145"],
+    ["Annual", "US$ 240"],
+  ];
   const displayPrices: string[][] = locale === "en"
     ? [
         ["MONTHLY", "US$ 30", ""],
@@ -315,12 +340,22 @@ export default function SignalsPage() {
                 </div>
               ))}
             </div>
-            <a
-              {...eliteCta}
-              className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
-            >
-              {t.signalBlock.cta}
-            </a>
+            {shouldScrollToPackages ? (
+              <button
+                type="button"
+                onClick={scrollToPackages}
+                className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+              >
+                {t.signalBlock.cta}
+              </button>
+            ) : (
+              <a
+                {...eliteCta}
+                className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+              >
+                {t.signalBlock.cta}
+              </a>
+            )}
           </div>
 
           <motion.div
@@ -384,7 +419,7 @@ export default function SignalsPage() {
         </div>
       </section>
 
-      <section id="elite-packages" className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
+      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow={signalPageCopy?.methodEyebrow ?? "Método operacional"}
@@ -416,7 +451,11 @@ export default function SignalsPage() {
         </div>
       </section>
 
-      <WhatsAppSignalExample t={t} locale={locale} />
+      <WhatsAppSignalExample
+        t={t}
+        locale={locale}
+        onEliteClick={shouldScrollToPackages ? scrollToPackages : undefined}
+      />
 
       <section className="px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
@@ -541,25 +580,37 @@ export default function SignalsPage() {
                     </p>
                   ))}
                 </div>
-                <a
-                  {...eliteCta}
-                  className="premium-button-gold mt-8 block border border-gold bg-gold px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-ink"
-                >
-                  {signalPageCopy?.eliteButton ?? "Entrar no Elite"}
-                </a>
+                {shouldScrollToPackages ? (
+                  <button
+                    type="button"
+                    onClick={scrollToPackages}
+                    className="premium-button-gold mt-8 block w-full border border-gold bg-gold px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-ink"
+                  >
+                    {signalPageCopy?.eliteButton ?? "Entrar no Elite"}
+                  </button>
+                ) : (
+                  <a
+                    {...eliteCta}
+                    className="premium-button-gold mt-8 block border border-gold bg-gold px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-ink"
+                  >
+                    {signalPageCopy?.eliteButton ?? "Entrar no Elite"}
+                  </a>
+                )}
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
+      <section id="elite-packages" className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow={signalPageCopy?.packagesEyebrow ?? "Pacotes"}
-            title={signalPageCopy?.packagesTitle ?? "Acesso ao Elite"}
+            title={isPt ? "Escolha sua forma de pagamento" : (signalPageCopy?.packagesTitle ?? "Acesso ao Elite")}
             text={
-              signalPageCopy?.packagesText ??
+              isPt
+                ? "Clientes no Brasil podem pagar em reais via Lastlink. Clientes internacionais podem assinar em dólar via Stripe."
+                : signalPageCopy?.packagesText ??
               "Escolha seu pacote para acessar 100% dos sinais, grupo exclusivo, análises, aulas gravadas e conteúdo nível Harpia dentro do Varejo Investidor."
             }
           />
@@ -585,31 +636,109 @@ export default function SignalsPage() {
               </div>
             </div>
           ) : null}
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {displayPrices.map(([period, price, usd], index) => (
-              <article
-                key={period}
-                className={`terminal-module border p-6 ${index === 3 ?"border-gold bg-ink text-paper shadow-premium" : "border-ink/[0.1] bg-paper"}`}
-              >
-                {index === 3 ?(
-                  <span className="mb-5 inline-block border border-gold bg-gold px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-ink">
-                    {signalPageCopy?.best ?? "Maior economia"}
+          {isPt ? (
+            <div className="mt-8 grid gap-5 lg:grid-cols-[0.92fr_1.08fr]">
+              <article className="terminal-module relative overflow-hidden border border-gold bg-ink p-6 text-paper shadow-premium md:p-8">
+                <div className="absolute inset-0 terminal-grid opacity-20" />
+                <div className="relative">
+                  <span className="inline-block border border-gold bg-gold px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-ink">
+                    Brasil
                   </span>
-                ) : null}
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold">{period}</p>
-                <p className="mt-5 font-serif text-4xl tracking-[-0.05em]">{price}</p>
-                {usd ? <p className="mt-2 font-mono text-sm uppercase tracking-[0.16em] text-ink/[0.48]">{usd}</p> : null}
-                <a
-                  href={getElitePlanHref(locale, index)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`mt-8 block border px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] ${index === 3 ?"border-gold bg-gold text-ink" : "border-ink bg-ink text-paper"}`}
-                >
-                  {signalPageCopy?.now ?? "Entrar agora"}
-                </a>
+                  <p className="mt-6 text-xs font-bold uppercase tracking-[0.26em] text-gold">Lastlink</p>
+                  <h3 className="mt-3 font-serif text-4xl tracking-[-0.05em] text-paper">Pagamento Brasil</h3>
+                  <p className="mt-4 leading-8 text-paper/[0.68]">
+                    Assine o Canal Elite em reais, com checkout nacional seguro pela Lastlink.
+                  </p>
+                  <p className="mt-6 font-serif text-3xl tracking-[-0.04em] text-gold">A partir de R$149,90/mês</p>
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    {brazilElitePrices.map(([period, price], index) => (
+                      <div key={period} className="border border-gold/[0.22] bg-paper/[0.04] p-4">
+                        <div className="flex items-start justify-between gap-3">
+                          <p className="text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.62]">{period}</p>
+                          {index === 3 ? (
+                            <span className="shrink-0 border border-gold/[0.42] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-gold">
+                              Maior economia
+                            </span>
+                          ) : null}
+                        </div>
+                        <p className="mt-3 font-mono text-xl font-bold text-paper">{price}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <a
+                    href={ELITE_LASTLINK_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="premium-button-gold mt-8 flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-center text-sm font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+                  >
+                    Pagar em reais
+                  </a>
+                </div>
               </article>
-            ))}
-          </div>
+
+              <article className="terminal-module relative overflow-hidden border border-[#31547a] bg-ink p-6 text-paper shadow-premium md:p-8">
+                <div className="absolute inset-0 terminal-grid opacity-20" />
+                <div className="absolute right-0 top-0 h-56 w-56 rounded-full bg-gold/[0.08] blur-3xl" />
+                <div className="relative">
+                  <span className="inline-block border border-[#31547a] bg-[#132437] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-gold">
+                    Internacional
+                  </span>
+                  <p className="mt-6 text-xs font-bold uppercase tracking-[0.26em] text-gold">Stripe</p>
+                  <h3 className="mt-3 font-serif text-4xl tracking-[-0.05em] text-paper">Pagamento Internacional</h3>
+                  <p className="mt-4 leading-8 text-paper/[0.68]">
+                    Assine o Canal Elite em dólar via Stripe, ideal para clientes fora do Brasil.
+                  </p>
+                  <div className="mt-6 grid gap-3">
+                    {internationalElitePrices.map(([period, price], index) => (
+                      <div key={period} className="grid gap-3 border border-[#31547a]/70 bg-paper/[0.035] p-4 sm:grid-cols-[1fr_auto_auto] sm:items-center">
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.62]">{period}</p>
+                          {index === 3 ? (
+                            <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-gold">Maior economia</p>
+                          ) : null}
+                        </div>
+                        <p className="font-mono text-xl font-bold text-paper">{price}</p>
+                        <a
+                          href={ELITE_STRIPE_LINKS[index]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="border border-gold bg-gold px-4 py-3 text-center text-[11px] font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 hover:bg-paper"
+                        >
+                          Assinar
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </div>
+          ) : (
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {displayPrices.map(([period, price, usd], index) => (
+                <article
+                  key={period}
+                  className={`terminal-module border p-6 ${index === 3 ?"border-gold bg-ink text-paper shadow-premium" : "border-ink/[0.1] bg-paper"}`}
+                >
+                  {index === 3 ?(
+                    <span className="mb-5 inline-block border border-gold bg-gold px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-ink">
+                      {signalPageCopy?.best ?? "Maior economia"}
+                    </span>
+                  ) : null}
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold">{period}</p>
+                  <p className="mt-5 font-serif text-4xl tracking-[-0.05em]">{price}</p>
+                  {usd ? <p className="mt-2 font-mono text-sm uppercase tracking-[0.16em] text-ink/[0.48]">{usd}</p> : null}
+                  <a
+                    href={getElitePlanHref(locale, index)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`mt-8 block border px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] ${index === 3 ?"border-gold bg-gold text-ink" : "border-ink bg-ink text-paper"}`}
+                  >
+                    {signalPageCopy?.now ?? "Entrar agora"}
+                  </a>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
