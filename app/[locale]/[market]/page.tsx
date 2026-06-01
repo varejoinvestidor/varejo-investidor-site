@@ -60,10 +60,38 @@ const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
     oil: "petroleo",
     commodities: "commodities",
   },
+  id: {
+    forex: "forex",
+    stocks: "acoes",
+    saham: "acoes",
+    crypto: "cripto",
+    kripto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    emas: "ouro",
+    oil: "petroleo",
+    minyak: "petroleo",
+    commodities: "commodities",
+    komoditas: "commodities",
+  },
+  vi: {
+    forex: "forex",
+    stocks: "acoes",
+    "co-phieu": "acoes",
+    crypto: "cripto",
+    "tien-dien-tu": "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    vang: "ouro",
+    oil: "petroleo",
+    "dau-mo": "petroleo",
+    commodities: "commodities",
+    "hang-hoa": "commodities",
+  },
 };
 
 function isLocale(value: string): value is Locale {
-  return value === "pt" || value === "en" || value === "es" || value === "hi" || value === "ar" || value === "tr";
+  return value === "pt" || value === "en" || value === "es" || value === "hi" || value === "ar" || value === "tr" || value === "id" || value === "vi";
 }
 
 function getMarketSlug(locale: string, market: string): MarketSlug | null {

@@ -1,7 +1,8 @@
 import type { Locale } from "../i18n";
+import { fxproLinks } from "../data/fxproLinks";
 
 export function ForexBrokerBannerWide({ language }: { language: Locale }) {
-  if (language !== "pt" && language !== "en" && language !== "hi" && language !== "es" && language !== "ar" && language !== "tr") {
+  if (language !== "pt" && language !== "en" && language !== "hi" && language !== "es" && language !== "ar" && language !== "tr" && language !== "id" && language !== "vi") {
     return null;
   }
 
@@ -29,6 +30,14 @@ export function ForexBrokerBannerWide({ language }: { language: Locale }) {
     es: {
       src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-es-fscm-1324x150.png",
       alt: "FxPro Banner ES",
+    },
+    id: {
+      src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+      alt: "FxPro Banner ID",
+    },
+    vi: {
+      src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+      alt: "FxPro Banner VI",
     },
   };
 
@@ -70,6 +79,18 @@ export function ForexBrokerBannerWide({ language }: { language: Locale }) {
       after: ".",
       second: "BANNERA TIKLA.",
     },
+    id: {
+      before: "BUKA AKUN ANDA DAN ",
+      highlight: "MULAI TRADING",
+      after: " SEKARANG.",
+      second: "KLIK BANNER.",
+    },
+    vi: {
+      before: "MỞ TÀI KHOẢN VÀ ",
+      highlight: "BẮT ĐẦU GIAO DỊCH",
+      after: " NGAY.",
+      second: "NHẤP VÀO BANNER.",
+    },
   }[language];
 
   return (
@@ -86,7 +107,7 @@ export function ForexBrokerBannerWide({ language }: { language: Locale }) {
         <a
           rel="noopener"
           target="_blank"
-          href="https://direct.fxpro.group/pt/partner/77014650"
+          href={fxproLinks[language]}
           className="group block w-full max-w-[1324px] overflow-hidden rounded-xl transition duration-300 hover:-translate-y-0.5 hover:shadow-premium"
           aria-label="Abrir conta Forex na FxPro"
         >

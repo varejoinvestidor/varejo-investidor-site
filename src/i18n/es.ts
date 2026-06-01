@@ -141,8 +141,8 @@ export const es = {
       label: "Corredora de Forex",
       title: "Opera Forex con la corredora que utilizamos",
       text: "Accede a la corredora utilizada por Varejo Investidor para operar Forex, oro, petróleo, índices y divisas globales.",
-      button: "Abrir cuenta Forex",
-      link: "https://direct.fxpro.group/pt/partner/77014650",
+      button: "Abrir Cuenta FXPro",
+      link: "https://direct.fxpro.group/es/partner/77014650?platform=web",
     },
     crypto: {
       label: "Corredora de Cripto",

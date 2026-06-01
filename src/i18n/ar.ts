@@ -61,7 +61,8 @@ export const ar = {
       label: "وسيط فوركس",
       title: "تداول الفوركس مع الوسيط الذي نستخدمه",
       text: "ادخل إلى الوسيط المستخدم لدى Varejo Investidor لتداول الفوركس والذهب والنفط والمؤشرات والعملات العالمية.",
-      button: "افتح حساب فوركس",
+      button: "فتح حساب FXPro",
+      link: "https://direct.fxpro.group/ar/partner/77014650?platform=web",
     },
     crypto: {
       ...en.brokers.crypto,

@@ -96,6 +96,32 @@ const pageLabels: Record<Locale, {
     faq: "SSS",
     internalLinks: "Çalışmaya devam et",
   },
+  id: {
+    eyebrow: "Perpustakaan Pasar",
+    levelsTitle: "Bagaimana setiap level memakai pasar ini",
+    formigaTitle: "Semut: apa yang dipelajari",
+    loboTitle: "Serigala: cara mengoperasikan",
+    harpiaTitle: "Elang Harpy: cara membangun kekayaan",
+    characteristics: "Karakteristik utama",
+    educationTitle: "Berkembang dalam metodologi Varejo Investidor",
+    educationText: "Perdalam pandangan Anda dalam Edukasi dan hubungkan pasar ini dengan perjalanan Semut, Serigala, dan Elang Harpy.",
+    educationButton: "Lihat Edukasi",
+    faq: "FAQ",
+    internalLinks: "Lanjutkan belajar",
+  },
+  vi: {
+    eyebrow: "Thư viện Thị trường",
+    levelsTitle: "Mỗi cấp độ sử dụng thị trường này như thế nào",
+    formigaTitle: "Kiến: học gì",
+    loboTitle: "Sói: vận hành ra sao",
+    harpiaTitle: "Đại Bàng Harpy: cấu trúc tài sản thế nào",
+    characteristics: "Đặc điểm chính",
+    educationTitle: "Phát triển trong phương pháp Varejo Investidor",
+    educationText: "Đào sâu góc nhìn trong Giáo dục và kết nối thị trường này với hành trình Kiến, Sói và Đại Bàng Harpy.",
+    educationButton: "Xem Giáo dục",
+    faq: "FAQ",
+    internalLinks: "Tiếp tục học",
+  },
 };
 
 function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {

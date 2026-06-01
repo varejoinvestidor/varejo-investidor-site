@@ -95,6 +95,26 @@ const localizedMarketPaths: Record<Locale, Record<MarketSlug, string | null>> = 
     commodities: "/tr/commodities",
     "fundos-imobiliarios": null,
   },
+  id: {
+    forex: "/id/forex",
+    acoes: "/id/stocks",
+    cripto: "/id/crypto",
+    etfs: "/id/etfs",
+    ouro: "/id/gold",
+    petroleo: "/id/oil",
+    commodities: "/id/commodities",
+    "fundos-imobiliarios": null,
+  },
+  vi: {
+    forex: "/vi/forex",
+    acoes: "/vi/stocks",
+    cripto: "/vi/crypto",
+    etfs: "/vi/etfs",
+    ouro: "/vi/gold",
+    petroleo: "/vi/oil",
+    commodities: "/vi/commodities",
+    "fundos-imobiliarios": null,
+  },
 };
 
 function identifyMarketSlug(market: LevelMarket, locale: Locale): MarketSlug | null {
@@ -102,11 +122,16 @@ function identifyMarketSlug(market: LevelMarket, locale: Locale): MarketSlug | n
 
   if (value.includes("forex")) return "forex";
   if (value.includes("etf")) return "etfs";
+  if (value.includes("komoditas") || value.includes("hàng hóa") || value.includes("hang hoa")) return "commodities";
+  if (value.includes("minyak") || value.includes("dầu") || value.includes("dau")) return "petroleo";
+  if (value.includes("emas") || value.includes("vàng") || value.includes("vang")) return "ouro";
+  if (value.includes("kripto") || value.includes("tiền điện tử") || value.includes("tien dien tu")) return "cripto";
   if (value.includes("commod") || value.includes("emtia") || value.includes("السلع") || value.includes("कमोड")) return "commodities";
   if (value.includes("petr") || value.includes("oil") || value.includes("petrol") || value.includes("तेल") || value.includes("النفط")) return "petroleo";
   if (value.includes("ouro") || value.includes("gold") || value.includes("oro") || value.includes("altın") || value.includes("altin") || value.includes("सोना") || value.includes("الذهب")) return "ouro";
   if (value.includes("cripto") || value.includes("crypto") || value.includes("kripto") || value.includes("क्रिप्टो") || value.includes("الكريبتو") || value.includes("bitcoin")) return "cripto";
   if (locale === "pt" && value.includes("fundos imobili")) return "fundos-imobiliarios";
+  if (value.includes("saham") || value.includes("cổ phiếu") || value.includes("co phieu")) return "acoes";
   if (
     value.includes("ações") ||
     value.includes("acoes") ||
@@ -134,6 +159,8 @@ function getMarketAriaLabel(locale: Locale, title: string) {
   if (locale === "hi") return `${title} पेज देखें`;
   if (locale === "ar") return `عرض صفحة ${title}`;
   if (locale === "tr") return `${title} sayfasini gor`;
+  if (locale === "id") return `Lihat halaman ${title}`;
+  if (locale === "vi") return `Xem trang ${title}`;
   return `View ${title} page`;
 }
 
@@ -143,10 +170,12 @@ function getMarketActionLabel(locale: Locale) {
   if (locale === "hi") return "बाजार देखें";
   if (locale === "ar") return "عرض السوق";
   if (locale === "tr") return "Piyasayi gor";
+  if (locale === "id") return "Lihat pasar";
+  if (locale === "vi") return "Xem thị trường";
   return "View market";
 }
 
-const levelCopies: Record<Level, Record<Locale, LevelCopy>> = {
+const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
   formiga: {
     pt: {
       eyebrow: "Nível Formiga",
@@ -782,7 +811,7 @@ function MarketCard({ market, index, locale }: { market: LinkedLevelMarket; inde
 
 export function LevelPage({ level }: { level: Level }) {
   const { locale, t, changeLocale } = useSiteLocale();
-  const copy = levelCopies[level][locale] ?? levelCopies[level].en;
+  const copy = (levelCopies[level][locale] ?? levelCopies[level].en) as LevelCopy;
   const primaryHref = copy.primaryHref === "free" ? t.freeChannel.link : copy.primaryHref;
   const primaryExternal = copy.primaryHref === "free";
   const linkedMarkets = copy.markets

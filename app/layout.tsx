@@ -14,6 +14,8 @@ export const metadata: Metadata = {
       hi: "/hi",
       ar: "/ar",
       tr: "/tr",
+      id: "/id",
+      vi: "/vi",
     },
   },
 };

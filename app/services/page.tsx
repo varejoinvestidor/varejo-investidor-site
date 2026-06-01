@@ -76,6 +76,16 @@ const elitePackagesByLocale = {
     cta: "Şimdi abone ol",
     items: [["Aylık", "US$ 30", ""], ["3 Ay", "US$ 80", ""], ["6 Ay", "US$ 145", ""], ["Yıllık", "US$ 240", "EN İYİ DEĞER"]],
   },
+  id: {
+    title: "Paket tersedia",
+    cta: "Berlangganan sekarang",
+    items: [["Bulanan", "US$ 30", ""], ["3 Bulan", "US$ 80", ""], ["6 Bulan", "US$ 145", ""], ["Tahunan", "US$ 240", "NILAI TERBAIK"]],
+  },
+  vi: {
+    title: "Gói hiện có",
+    cta: "Đăng ký ngay",
+    items: [["Hàng tháng", "US$ 30", ""], ["3 tháng", "US$ 80", ""], ["6 tháng", "US$ 145", ""], ["Hàng năm", "US$ 240", "GIÁ TRỊ TỐT NHẤT"]],
+  },
 };
 
 const compactServicesByLocale = {
@@ -200,6 +210,54 @@ const compactServicesByLocale = {
       kind: "free",
     },
   ],
+  id: [
+    {
+      title: "Kanal Elite",
+      description: "Produk utama dengan sinyal live, analisis pasar, kelas rekaman, dan pembacaan pasar global.",
+      bullets: ["100% sinyal", "Analisis lengkap", "Edukasi bertahap", "Pasar global"],
+      cta: "Lihat Kanal Elite",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "Kanal Gratis Semut",
+      subtitle: "Pintu masuk ke ekosistem Varejo Investidor",
+      description: "Terima sinyal gratis, analisis pasar, wawasan global, dan konten finansial harian langsung di WhatsApp.",
+      details: [
+        "Mulai langkah pertama di pasar internasional dengan memahami Forex, emas, minyak, indeks, mata uang global, dan struktur finansial.",
+        "Kanal Semut dibuat untuk membantu investor umum keluar dari level dasar, membangun disiplin, membaca pasar, dan berkembang menuju level Serigala dan Elang Harpy.",
+      ],
+      bullets: ["Akses gratis", "Konten harian", "Dasar Semut", "WhatsApp"],
+      highlights: ["Sinyal gratis", "Konten harian", "Pasar internasional", "Pertumbuhan finansial", "Struktur jangka panjang"],
+      cta: "MASUK KANAL GRATIS",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  vi: [
+    {
+      title: "Kênh Elite",
+      description: "Sản phẩm chính với tín hiệu trực tiếp, phân tích thị trường, lớp học ghi sẵn và đọc thị trường toàn cầu.",
+      bullets: ["100% tín hiệu", "Phân tích đầy đủ", "Giáo dục theo cấp độ", "Thị trường toàn cầu"],
+      cta: "Tìm hiểu Kênh Elite",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "Kênh Kiến miễn phí",
+      subtitle: "Điểm vào đầu tiên của hệ sinh thái Varejo Investidor",
+      description: "Nhận tín hiệu miễn phí, phân tích thị trường, góc nhìn toàn cầu và nội dung tài chính hằng ngày trực tiếp trên WhatsApp.",
+      details: [
+        "Bắt đầu những bước đầu trong thị trường quốc tế bằng cách hiểu Forex, vàng, dầu, chỉ số, tiền tệ toàn cầu và cấu trúc tài chính.",
+        "Kênh Kiến được tạo ra để giúp nhà đầu tư phổ thông rời khỏi nền tảng cơ bản, phát triển kỷ luật, kỹ năng đọc thị trường và tiến tới cấp độ Sói và Đại Bàng Harpy.",
+      ],
+      bullets: ["Truy cập miễn phí", "Nội dung hằng ngày", "Nền tảng Kiến", "WhatsApp"],
+      highlights: ["Tín hiệu miễn phí", "Nội dung hằng ngày", "Thị trường quốc tế", "Phát triển tài chính", "Cấu trúc dài hạn"],
+      cta: "VÀO KÊNH MIỄN PHÍ",
+      href: "free",
+      kind: "free",
+    },
+  ],
 };
 
 const highTicketServices = [
@@ -260,6 +318,8 @@ const internationalServicesIntro = {
   hi: "Varejo Investidor की सेवाएँ देखें: सिग्नल, शिक्षा और वैश्विक बाजार-पठन।",
   ar: "تعرّف إلى قنوات Varejo Investidor للإشارات والتعليم وقراءة السوق العالمية.",
   tr: "Sinyaller, eğitim ve küresel piyasa okuma için Varejo Investidor kanallarını keşfedin.",
+  id: "Jelajahi kanal Varejo Investidor untuk sinyal, edukasi, dan pembacaan pasar global.",
+  vi: "Khám phá các kênh của Varejo Investidor dành cho tín hiệu, giáo dục và đọc thị trường toàn cầu.",
 };
 
 function compactCardTone(kind: string) {
@@ -299,7 +359,11 @@ export default function ServicesPage() {
         ? "Producto"
         : locale === "hi"
           ? "\u0938\u0947\u0935\u093E"
-          : "Produto";
+          : locale === "id"
+            ? "Produk"
+            : locale === "vi"
+              ? "Sản phẩm"
+              : "Produto";
   return (
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />

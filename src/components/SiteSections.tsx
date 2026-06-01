@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { translations, type Locale } from "../i18n";
+import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/insightsContent";
+import { getPlatformPath, platformSlugs } from "../data/platformContent";
 
 export const ticker = [
   ["XAU/USD", "+0.74%", "up"],
@@ -33,7 +35,7 @@ export const ELITE_STRIPE_LINKS = [
 ] as const;
 
 export const ELITE_CHECKOUT_URL = ELITE_LASTLINK_URL;
-export const LOCALES = ["pt", "en", "es", "hi", "ar", "tr"] as const;
+export const LOCALES = ["pt", "en", "es", "hi", "ar", "tr", "id", "vi"] as const;
 
 export function getElitePlanHref(locale: Locale, planIndex: number) {
   return locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[planIndex] ?? ELITE_STRIPE_LINKS[3];
@@ -67,6 +69,8 @@ export function detectLocale(): Locale {
   if (detected.includes("hi")) return "hi";
   if (detected.includes("ar")) return "ar";
   if (detected.includes("tr")) return "tr";
+  if (detected.includes("id") || detected.includes("id-id")) return "id";
+  if (detected.includes("vi") || detected.includes("vi-vn")) return "vi";
   if (detected.includes("en")) return "en";
 
   return "en";
@@ -215,6 +219,24 @@ function FlagIcon({ locale }: { locale: Locale }) {
     );
   }
 
+  if (locale === "id") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="6" fill="#ce1126" />
+        <rect y="6" width="16" height="6" fill="#f7f3eb" />
+      </svg>
+    );
+  }
+
+  if (locale === "vi") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#da251d" />
+        <path d="M8 2.05 8.9 4.85h2.95L9.45 6.55l.92 2.8L8 7.62 5.63 9.35l.92-2.8-2.4-1.7H7.1Z" fill="#ffdd00" />
+      </svg>
+    );
+  }
+
   return (
     <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
       <rect width="16" height="12" fill="#c8232c" />
@@ -231,6 +253,8 @@ const languageMeta: Record<Locale, { code: string; name: string }> = {
   hi: { code: "HI", name: "\u0939\u093F\u0928\u094D\u0926\u0940" },
   ar: { code: "AR", name: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" },
   tr: { code: "TR", name: "T\u00FCrk\u00E7e" },
+  id: { code: "ID", name: "Bahasa Indonesia" },
+  vi: { code: "VI", name: "Ti\u1EBFng Vi\u1EC7t" },
 };
 
 export function LanguageSwitcher({
@@ -321,17 +345,27 @@ export function SiteChrome({
               : "Mercado Global para o Investidor de Varejo";
   const navItems = useMemo(
     () => [
-      { label: t.nav.home, href: "/#home", activePaths: ["/", "/pt", "/en", "/es", "/hi", "/ar", "/tr"] },
+      { label: t.nav.home, href: "/#home", activePaths: ["/", "/pt", "/en", "/es", "/hi", "/ar", "/tr", "/id", "/vi"] },
       {
         label: insightLabels[locale].nav,
         href: getInsightsPath(locale),
         activePaths: [
+          "/artigos-globais",
+          "/global-articles",
+          "/articulos-globales",
+          "/global-articles-hi",
+          "/ar/global-articles",
+          "/tr/global-articles",
+          "/id/articles",
+          "/vi/articles",
           "/insights-globais",
           "/global-insights",
           "/insights-globales",
           "/global-insights-hi",
           "/ar/global-insights",
           "/tr/global-insights",
+          "/id/insights",
+          "/vi/insights",
         ],
       },
       { label: t.nav.signals, href: "/sinais", activePaths: ["/sinais", "/signals"] },
@@ -617,8 +651,9 @@ export function WhatsAppSignalExample({
 }
 
 export function BrokerBanners({ t }: { t: (typeof translations)[Locale] }) {
+  const locale = t.locale.toLowerCase() as Locale;
   const brokers = [
-    { ...t.brokers.forex, tone: "forex", symbol: "$" },
+    { ...t.brokers.forex, button: fxproButtonLabels[locale], link: fxproLinks[locale], tone: "forex", symbol: "$" },
     { ...t.brokers.crypto, tone: "crypto", symbol: "₿" },
   ];
   const indicators =
@@ -710,7 +745,8 @@ export function SupportFooter({
           social: "\u0938\u094B\u0936\u0932",
           levels: "\u0938\u094D\u0924\u0930",
           markets: "\u092C\u093E\u091C\u093E\u0930",
-          content: "\u0915\u0902\u091F\u0947\u0902\u091F",
+          content: "\u092C\u093E\u091C\u093E\u0930",
+          platforms: "\u092A\u094D\u0932\u0947\u091F\u092B\u093C\u0949\u0930\u094D\u092E",
           language: "\u092D\u093E\u0937\u093E",
           marketLine: "Forex | Crypto | Commodities | Global Markets",
           levelLinks: ["Formiga \u0938\u094D\u0924\u0930", "Lobo \u0938\u094D\u0924\u0930", "Harpia \u0938\u094D\u0924\u0930"],
@@ -720,7 +756,8 @@ export function SupportFooter({
             social: "Redes",
             levels: "Niveles",
             markets: "Mercados",
-            content: "Contenido",
+            content: "Mercados",
+            platforms: "Plataformas",
             language: "Idioma",
             marketLine: "Forex | Cripto | Commodities | Mercados Globales",
             levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia"],
@@ -730,7 +767,8 @@ export function SupportFooter({
               social: "Redes",
               levels: "N\u00EDveis",
               markets: "Mercados",
-              content: "Conte\u00FAdo",
+              content: "Mercados",
+              platforms: "Plataformas",
               language: "Idioma",
               marketLine: "Forex | Cripto | Commodities | Mercados Globais",
               levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
@@ -740,7 +778,8 @@ export function SupportFooter({
                 social: "\u0627\u0644\u0634\u0628\u0643\u0627\u062A",
                 levels: "\u0627\u0644\u0645\u0633\u062A\u0648\u064A\u0627\u062A",
                 markets: "\u0627\u0644\u0623\u0633\u0648\u0627\u0642",
-                content: "\u0627\u0644\u0645\u062D\u062A\u0648\u0649",
+                content: "\u0627\u0644\u0623\u0633\u0648\u0627\u0642",
+                platforms: "\u0627\u0644\u0645\u0646\u0635\u0627\u062A",
                 language: "\u0627\u0644\u0644\u063A\u0629",
                 marketLine: "Forex | Crypto | Commodities | Global Markets",
                 levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia"],
@@ -750,7 +789,8 @@ export function SupportFooter({
                   social: "Sosyal",
                   levels: "Seviyeler",
                   markets: "Piyasalar",
-                  content: "Icerik",
+                  content: "Piyasalar",
+                  platforms: "Platformlar",
                   language: "Dil",
                   marketLine: "Forex | Kripto | Emtialar | K\u00FCresel Piyasalar",
                   levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi"],
@@ -759,7 +799,8 @@ export function SupportFooter({
                   social: "Social",
                   levels: "Levels",
                   markets: "Markets",
-                  content: "Content",
+                  content: "Markets",
+                  platforms: locale === "id" ? "Platform" : locale === "vi" ? "N\u1EC1n t\u1EA3ng" : "Platforms",
                   language: "Language",
                   marketLine: "Forex | Crypto | Commodities | Global Markets",
                   levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level"],
@@ -771,14 +812,24 @@ export function SupportFooter({
   ];
   const marketFooterSlugs: MarketSlug[] =
     locale === "pt" ? [...publicMarketSlugs, "fundos-imobiliarios"] : publicMarketSlugs;
+  const marketAliases: Record<Locale, Partial<Record<MarketSlug, string>>> = {
+    pt: { forex: "forex", acoes: "acoes", cripto: "cripto", etfs: "etfs", ouro: "ouro", petroleo: "petroleo", commodities: "commodities", "fundos-imobiliarios": "fundos-imobiliarios" },
+    en: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    es: { forex: "forex", acoes: "acciones", cripto: "cripto", etfs: "etfs", ouro: "oro", petroleo: "petroleo", commodities: "commodities" },
+    hi: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ar: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    tr: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    id: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    vi: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+  };
   const marketFooterLinks = marketFooterSlugs.map((slug) => ({
-    href: `/${slug}`,
+    href: locale === "pt" ? `/${marketAliases.pt[slug] ?? slug}` : `/${locale}/${marketAliases[locale][slug] ?? slug}`,
     label: getMarketLabel(slug, locale),
   }));
-  const contentFooterLinks = [
-    { href: getInsightsPath(locale), label: insightLabels[locale].nav },
-    ...marketFooterLinks,
-  ];
+  const platformFooterLinks = platformSlugs.map((slug) => ({
+    href: getPlatformPath(locale, slug),
+    label: slug === "metatrader-5" ? "MetaTrader 5" : slug === "ctrader" ? "cTrader" : "TradingView",
+  }));
   const socials = [
     {
       label: "Instagram",
@@ -820,7 +871,7 @@ export function SupportFooter({
       </section>
 
       <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.64fr_0.78fr_0.64fr_0.72fr_0.82fr] lg:items-start">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.55fr_0.66fr_0.72fr_0.72fr_0.62fr_0.82fr] lg:items-start">
           <div>
             <a href="/#home" className="inline-flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
@@ -872,7 +923,22 @@ export function SupportFooter({
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.content}</p>
             <div className="mt-4 flex flex-col gap-2">
-              {contentFooterLinks.map((link) => (
+              {marketFooterLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.platforms}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              {platformFooterLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}

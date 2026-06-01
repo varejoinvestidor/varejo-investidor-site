@@ -199,6 +199,70 @@ const homeLiteCopy = {
       elite: "Elite Kanalını keşfet",
     },
   },
+  id: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Semua yang Anda butuhkan untuk bermain di pasar keuangan tingkat global.",
+      text: "Edukasi, sinyal live, pembacaan pasar, dan struktur strategis untuk membangun kehidupan finansial secara bertahap.",
+      free: "Mulai gratis",
+      services: "Lihat layanan",
+    },
+    intro: {
+      eyebrow: "Apa itu",
+      title: "Apa itu Varejo Investidor",
+      manifesto:
+        "Varejo Investidor adalah struktur finansial global untuk orang yang ingin keluar dari dasar, memahami pasar internasional, dan membangun kehidupan finansial secara bertahap.",
+      text: [
+        "Sejak 2018, kami telah mengirim lebih dari 4.200 sinyal live sambil mengikuti Forex, emas, minyak, kripto, indeks, dan mata uang global.",
+        "Perjalanan ini dibagi menjadi level: Semut, Serigala, dan Elang Harpy.",
+        "Level Semut membangun fondasi. Level Serigala mengembangkan strategi dan pembacaan pasar. Level Elang Harpy memperluas visi menuju kekayaan, perlindungan, dan struktur global.",
+      ],
+      stats: ["Sejak 2018", "sinyal live", "Semut / Serigala / Elang Harpy"],
+    },
+    cards: [
+      { code: "SEMUT", title: "Fondasi finansial", text: "Edukasi bertahap untuk membangun dasar, mengatur risiko, dan menciptakan pilar pertama.", href: "/formiga" },
+      { code: "SERIGALA", title: "Strategi dan ekspansi", text: "Sinyal live, pembacaan pasar, dan keputusan terstruktur untuk eksekusi yang disiplin.", href: "/lobo" },
+      { code: "ELANG HARPY", title: "Kekayaan global", text: "Konsultasi strategis untuk perlindungan, posisi, kekayaan, dan visi internasional.", href: "/harpia" },
+    ],
+    cardCta: "Pelajari",
+    final: {
+      title: "Mulai gratis dan pilih level berikutnya.",
+      free: "Masuk kanal gratis",
+      elite: "Lihat Kanal Elite",
+    },
+  },
+  vi: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Tất cả những gì bạn cần để bước vào cuộc chơi tài chính ở cấp độ toàn cầu.",
+      text: "Giáo dục, tín hiệu trực tiếp, đọc thị trường và cấu trúc chiến lược để xây dựng đời sống tài chính theo từng lớp.",
+      free: "Bắt đầu miễn phí",
+      services: "Xem dịch vụ",
+    },
+    intro: {
+      eyebrow: "Giới thiệu",
+      title: "Varejo Investidor là gì",
+      manifesto:
+        "Varejo Investidor là một cấu trúc tài chính toàn cầu dành cho người muốn vượt qua nền tảng cơ bản, hiểu thị trường quốc tế và xây dựng đời sống tài chính theo từng lớp.",
+      text: [
+        "Từ năm 2018, chúng tôi đã gửi hơn 4.200 tín hiệu trực tiếp, theo dõi Forex, vàng, dầu, crypto, chỉ số và tiền tệ toàn cầu.",
+        "Hành trình được chia thành các cấp độ: Kiến, Sói và Đại Bàng Harpy.",
+        "Cấp độ Kiến xây dựng nền tảng. Cấp độ Sói phát triển chiến lược và khả năng đọc thị trường. Cấp độ Đại Bàng Harpy mở rộng tầm nhìn về tài sản, bảo vệ vốn và cấu trúc toàn cầu.",
+      ],
+      stats: ["Từ năm 2018", "tín hiệu trực tiếp", "Kiến / Sói / Đại Bàng Harpy"],
+    },
+    cards: [
+      { code: "KIẾN", title: "Nền tảng tài chính", text: "Giáo dục theo cấp độ để xây nền móng, tổ chức rủi ro và tạo các trụ cột đầu tiên.", href: "/formiga" },
+      { code: "SÓI", title: "Chiến lược và mở rộng", text: "Tín hiệu trực tiếp, đọc thị trường và quyết định có cấu trúc để vận hành kỷ luật.", href: "/lobo" },
+      { code: "ĐẠI BÀNG HARPY", title: "Tài sản toàn cầu", text: "Tư vấn chiến lược về bảo vệ, định vị, tài sản và tầm nhìn quốc tế.", href: "/harpia" },
+    ],
+    cardCta: "Tìm hiểu thêm",
+    final: {
+      title: "Bắt đầu miễn phí và chọn cấp độ tiếp theo.",
+      free: "Vào kênh miễn phí",
+      elite: "Tìm hiểu Kênh Elite",
+    },
+  },
 } satisfies Record<
   Locale,
   {
@@ -210,7 +274,18 @@ const homeLiteCopy = {
   }
 >;
 
-function AnimatedCounter() {
+const signalCounterLabels: Record<Locale, string> = {
+  pt: "SINAIS AO VIVO NO WHATSAPP",
+  en: "LIVE SIGNALS ON WHATSAPP",
+  es: "SE\u00D1ALES EN VIVO EN WHATSAPP",
+  hi: "\u0935\u094D\u0939\u093E\u091F\u094D\u0938\u0910\u092A \u092A\u0930 \u0932\u093E\u0907\u0935 \u0938\u093F\u0917\u094D\u0928\u0932",
+  ar: "\u0625\u0634\u0627\u0631\u0627\u062A \u0645\u0628\u0627\u0634\u0631\u0629 \u0639\u0644\u0649 \u0648\u0627\u062A\u0633\u0627\u0628",
+  tr: "WHATSAPP'TA CANLI S\u0130NYALLER",
+  id: "SINYAL LIVE DI WHATSAPP",
+  vi: "T\u00CDN HI\u1EC6U TR\u1EF0C TI\u1EBEP TR\u00CAN WHATSAPP",
+};
+
+function AnimatedCounter({ label }: { label: string }) {
   const ref = useRef<HTMLSpanElement | null>(null);
   const [value, setValue] = useState(0);
 
@@ -243,8 +318,13 @@ function AnimatedCounter() {
   }, []);
 
   return (
-    <span ref={ref} className="font-mono text-2xl text-gold md:text-3xl">
-      {value.toLocaleString("pt-BR")}+
+    <span className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 lg:flex-col lg:items-start lg:gap-1">
+      <span ref={ref} className="font-mono text-2xl text-gold md:text-3xl">
+        {value.toLocaleString("pt-BR")}+
+      </span>
+      <span className="signal-counter-label text-[10px] font-bold uppercase tracking-[0.16em] text-ink/[0.62]">
+        {label}
+      </span>
     </span>
   );
 }
@@ -315,7 +395,7 @@ export default function Home() {
             <div className="home-stats mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {copy.intro.stats.map((stat, index) => (
                 <div key={stat} className="strategic-stat border-l-2 border-gold/[0.68] bg-paper px-4 py-4 shadow-fine">
-                  {index === 1 ?<AnimatedCounter /> : <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>}
+                  {index === 1 ?<AnimatedCounter label={signalCounterLabels[locale]} /> : <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>}
                 </div>
               ))}
             </div>

@@ -141,8 +141,8 @@
       label: "Corretora de Forex",
       title: "Opere Forex com a corretora que utilizamos",
       text: "Acesse a corretora usada pelo Varejo Investidor para operar Forex, ouro, petróleo, índices e moedas globais.",
-      button: "Abrir conta Forex",
-      link: "https://direct.fxpro.group/pt/partner/77014650",
+      button: "Abrir Conta FXPro",
+      link: "https://direct.fxpro.group/pt/partner/77014650?platform=web",
     },
     crypto: {
       label: "Corretora de Cripto",

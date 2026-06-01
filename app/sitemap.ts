@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { insightPosts, getInsightsPath, insightsBasePath } from "../src/data/insightsContent";
+import { getPlatformPath, platformSlugs } from "../src/data/platformContent";
+import type { Locale } from "../src/i18n";
 
 const siteUrl = "https://varejo-investidor-site.vercel.app";
 
@@ -11,6 +13,8 @@ const staticPaths = [
   "/hi",
   "/ar",
   "/tr",
+  "/id",
+  "/vi",
   "/sinais",
   "/signals",
   "/educacao",
@@ -72,8 +76,38 @@ const staticPaths = [
   "/tr/gold",
   "/tr/oil",
   "/tr/commodities",
+  "/id/education",
+  "/id/signals",
+  "/id/services",
+  "/id/about",
+  "/id/formiga",
+  "/id/lobo",
+  "/id/harpia",
+  "/id/forex",
+  "/id/stocks",
+  "/id/crypto",
+  "/id/etfs",
+  "/id/gold",
+  "/id/oil",
+  "/id/commodities",
+  "/vi/education",
+  "/vi/signals",
+  "/vi/services",
+  "/vi/about",
+  "/vi/formiga",
+  "/vi/lobo",
+  "/vi/harpia",
+  "/vi/forex",
+  "/vi/stocks",
+  "/vi/crypto",
+  "/vi/etfs",
+  "/vi/gold",
+  "/vi/oil",
+  "/vi/commodities",
   ...Object.values(insightsBasePath),
 ];
+
+const sitemapLocales: Locale[] = ["pt", "en", "es", "hi", "ar", "tr", "id", "vi"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = staticPaths.map((path) => ({
@@ -90,5 +124,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticEntries, ...insightEntries];
+  const platformEntries = sitemapLocales.flatMap((locale) =>
+    platformSlugs.map((slug) => ({
+      url: `${siteUrl}${getPlatformPath(locale, slug)}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.72,
+    })),
+  );
+
+  return [...staticEntries, ...insightEntries, ...platformEntries];
 }

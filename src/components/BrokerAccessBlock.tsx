@@ -2,18 +2,10 @@
 
 import { motion } from "framer-motion";
 import type { Locale } from "../i18n";
+import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { fadeUp } from "./SiteSections";
 
 const cryptoLink = "https://accounts.binance.com/register?ref=453580362";
-
-const forexLinks: Record<Locale, string> = {
-  pt: "https://direct.fxpro.group/pt/partner/77014650",
-  en: "https://direct.fxpro.group/en/partner/77014650",
-  es: "https://direct.fxpro.group/es/partner/77014650",
-  hi: "https://direct.fxpro.group/en/partner/77014650",
-  ar: "https://direct.fxpro.group/ar/partner/77014650",
-  tr: "https://direct.fxpro.group/tr/partner/77014650",
-};
 
 const fxproBanners: Record<Locale, { src: string; alt: string }> = {
   pt: {
@@ -39,6 +31,14 @@ const fxproBanners: Record<Locale, { src: string; alt: string }> = {
   tr: {
     src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-tr-fscm-1324x150.png",
     alt: "Türkçe FxPro bannerı",
+  },
+  id: {
+    src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+    alt: "FxPro banner Bahasa Indonesia",
+  },
+  vi: {
+    src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+    alt: "FxPro banner tiếng Việt",
   },
 };
 
@@ -67,7 +67,7 @@ const copy: Record<
     forexLabel: "Corretora Forex",
     forexTitle: "Forex com estrutura global",
     forexText: "Acesse a plataforma de Forex utilizada pelo Varejo Investidor para acompanhar moedas, ouro, petróleo, índices e mercado global.",
-    forexButton: "Abrir conta Forex",
+    forexButton: "Abrir Conta FXPro",
     cryptoLabel: "Corretora Cripto",
     cryptoTitle: "Criptoativos com acesso internacional",
     cryptoText: "Acesse a plataforma utilizada para negociar criptoativos dentro de uma estrutura operacional global.",
@@ -82,7 +82,7 @@ const copy: Record<
     forexLabel: "Forex broker",
     forexTitle: "Forex with global structure",
     forexText: "Access the Forex platform used by Varejo Investidor to follow currencies, gold, oil, indices, and global markets.",
-    forexButton: "Open Forex account",
+    forexButton: "Open FXPro Account",
     cryptoLabel: "Crypto broker",
     cryptoTitle: "Crypto assets with international access",
     cryptoText: "Access the platform used to trade crypto assets inside a global operational structure.",
@@ -97,7 +97,7 @@ const copy: Record<
     forexLabel: "Broker Forex",
     forexTitle: "Forex con estructura global",
     forexText: "Accede a la plataforma Forex utilizada por Varejo Investidor para seguir divisas, oro, petróleo, índices y mercados globales.",
-    forexButton: "Abrir cuenta Forex",
+    forexButton: "Abrir Cuenta FXPro",
     cryptoLabel: "Broker Cripto",
     cryptoTitle: "Criptoactivos con acceso internacional",
     cryptoText: "Accede a la plataforma utilizada para operar criptoactivos dentro de una estructura operativa global.",
@@ -112,7 +112,7 @@ const copy: Record<
     forexLabel: "Forex ब्रोकर",
     forexTitle: "ग्लोबल संरचना के साथ Forex",
     forexText: "करेंसी, गोल्ड, ऑयल, इंडेक्स और ग्लोबल मार्केट को देखने के लिए Varejo Investidor द्वारा उपयोग किए जाने वाले Forex प्लेटफॉर्म तक पहुँचें।",
-    forexButton: "Forex खाता खोलें",
+    forexButton: "FXPro Account खोलें",
     cryptoLabel: "क्रिप्टो ब्रोकर",
     cryptoTitle: "अंतरराष्ट्रीय पहुँच के साथ क्रिप्टो एसेट्स",
     cryptoText: "ग्लोबल ऑपरेशनल संरचना के भीतर क्रिप्टो एसेट्स ट्रेड करने के लिए उपयोग किए जाने वाले प्लेटफॉर्म तक पहुँचें।",
@@ -127,7 +127,7 @@ const copy: Record<
     forexLabel: "وسيط الفوركس",
     forexTitle: "فوركس ضمن هيكل عالمي",
     forexText: "ادخل إلى منصة الفوركس التي يستخدمها Varejo Investidor لمتابعة العملات والذهب والنفط والمؤشرات والأسواق العالمية.",
-    forexButton: "افتح حساب فوركس",
+    forexButton: "فتح حساب FXPro",
     cryptoLabel: "وسيط الكريبتو",
     cryptoTitle: "أصول رقمية بوصول دولي",
     cryptoText: "ادخل إلى المنصة المستخدمة لتداول الأصول الرقمية ضمن هيكل تشغيلي عالمي.",
@@ -142,7 +142,7 @@ const copy: Record<
     forexLabel: "Forex aracı kurumu",
     forexTitle: "Küresel yapı ile Forex",
     forexText: "Döviz, altın, petrol, endeksler ve küresel piyasaları takip etmek için Varejo Investidor tarafından kullanılan Forex platformuna erişin.",
-    forexButton: "Forex hesabı aç",
+    forexButton: "FXPro Hesabı Aç",
     cryptoLabel: "Kripto aracı kurumu",
     cryptoTitle: "Uluslararası erişimle kripto varlıklar",
     cryptoText: "Küresel operasyonel yapı içinde kripto varlık işlemleri için kullanılan platforma erişin.",
@@ -150,19 +150,49 @@ const copy: Record<
     bannerCta: "Forex hesabınızı açın",
     bannerHelp: "Doğru dilde aracı kuruma erişmek için bannera tıklayın.",
   },
+  id: {
+    eyebrow: "Struktur operasional",
+    title: "Broker yang digunakan Varejo Investidor",
+    text: "Akses platform yang digunakan dalam struktur operasional kami untuk Forex dan aset kripto.",
+    forexLabel: "Broker Forex",
+    forexTitle: "Forex dengan struktur global",
+    forexText: "Akses platform Forex yang digunakan Varejo Investidor untuk mengikuti mata uang, emas, minyak, indeks dan pasar global.",
+    forexButton: "Buka Akun FXPro",
+    cryptoLabel: "Broker Kripto",
+    cryptoTitle: "Aset kripto dengan akses internasional",
+    cryptoText: "Akses platform yang digunakan untuk memperdagangkan aset kripto dalam struktur operasional global.",
+    cryptoButton: "Buka akun Kripto",
+    bannerCta: "Buka akun Forex Anda",
+    bannerHelp: "Klik banner untuk mengakses broker.",
+  },
+  vi: {
+    eyebrow: "Cấu trúc vận hành",
+    title: "Broker được Varejo Investidor sử dụng",
+    text: "Truy cập các nền tảng dùng trong cấu trúc vận hành của chúng tôi cho Forex và tài sản crypto.",
+    forexLabel: "Broker Forex",
+    forexTitle: "Forex với cấu trúc toàn cầu",
+    forexText: "Truy cập nền tảng Forex được Varejo Investidor sử dụng để theo dõi tiền tệ, vàng, dầu, chỉ số và thị trường toàn cầu.",
+    forexButton: "Mở Tài Khoản FXPro",
+    cryptoLabel: "Broker Crypto",
+    cryptoTitle: "Tài sản crypto với truy cập quốc tế",
+    cryptoText: "Truy cập nền tảng dùng để giao dịch tài sản crypto trong một cấu trúc vận hành toàn cầu.",
+    cryptoButton: "Mở tài khoản Crypto",
+    bannerCta: "Mở tài khoản Forex",
+    bannerHelp: "Nhấp vào banner để truy cập broker.",
+  },
 };
 
 export function BrokerAccessBlock({ locale }: { locale: Locale }) {
   const data = copy[locale];
   const banner = fxproBanners[locale];
-  const forexLink = forexLinks[locale];
+  const forexLink = fxproLinks[locale];
   const isRtl = locale === "ar";
   const cards = [
     {
       label: data.forexLabel,
       title: data.forexTitle,
       text: data.forexText,
-      button: data.forexButton,
+      button: fxproButtonLabels[locale] ?? data.forexButton,
       link: forexLink,
       symbol: "$",
       tone: "forex",

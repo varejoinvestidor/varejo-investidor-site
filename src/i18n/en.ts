@@ -108,8 +108,8 @@
       label: "Forex broker",
       title: "Trade Forex with the broker we use",
       text: "Access the broker used by Varejo Investidor to trade Forex, gold, oil, indices, and global currencies.",
-      button: "Open Forex account",
-      link: "https://direct.fxpro.group/pt/partner/77014650",
+      button: "Open FXPro Account",
+      link: "https://direct.fxpro.group/en/partner/77014650?platform=web",
     },
     crypto: {
       label: "Crypto broker",

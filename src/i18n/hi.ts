@@ -141,8 +141,8 @@ export const hi = {
       label: "Forex ब्रोकर",
       title: "हम जिस ब्रोकर का उपयोग करते हैं, उसके साथ Forex ऑपरेट करें",
       text: "Forex, सोना, तेल, सूचकांक और वैश्विक मुद्राओं में ऑपरेशन के लिए Varejo Investidor द्वारा उपयोग किए जाने वाले ब्रोकर तक पहुँचें।",
-      button: "Forex खाता खोलें",
-      link: "https://direct.fxpro.group/pt/partner/77014650",
+      button: "FXPro Account खोलें",
+      link: "https://direct.fxpro.group/en/partner/77014650?platform=web",
     },
     crypto: {
       label: "क्रिप्टो ब्रोकर",

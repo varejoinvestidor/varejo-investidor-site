@@ -22,6 +22,8 @@ export function createMarketMetadata(slug: MarketSlug): Metadata {
             hi: path,
             ar: path,
             tr: path,
+            id: path,
+            vi: path,
           },
     },
     openGraph: {

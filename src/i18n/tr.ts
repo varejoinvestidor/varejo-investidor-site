@@ -61,7 +61,8 @@ export const tr = {
       label: "Forex aracı kurumu",
       title: "Forex'i kullandığımız aracı kurumla işlem yapın",
       text: "Forex, altın, petrol, endeksler ve küresel para birimlerinde işlem yapmak için Varejo Investidor'un kullandığı aracı kuruma erişin.",
-      button: "Forex hesabı aç",
+      button: "FXPro Hesabı Aç",
+      link: "https://direct.fxpro.group/tr/partner/77014650?platform=web",
     },
     crypto: {
       ...en.brokers.crypto,

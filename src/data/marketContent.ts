@@ -338,6 +338,26 @@ export function getMarketLabel(slug: MarketSlug, locale: Locale): string {
       commodities: "Emtialar",
       "fundos-imobiliarios": "Gayrimenkul Fonları",
     },
+    id: {
+      forex: "Forex",
+      acoes: "Saham",
+      cripto: "Kripto",
+      etfs: "ETF",
+      ouro: "Emas",
+      petroleo: "Minyak",
+      commodities: "Komoditas",
+      "fundos-imobiliarios": "Dana Properti",
+    },
+    vi: {
+      forex: "Forex",
+      acoes: "C? Phi?u",
+      cripto: "Ti?n ?i?n T?",
+      etfs: "ETF",
+      ouro: "V?ng",
+      petroleo: "D?u M?",
+      commodities: "H?ng H?a",
+      "fundos-imobiliarios": "Qu? B?t ??ng S?n",
+    },
   };
 
   return labels[locale]?.[slug] ?? labels.en[slug];
