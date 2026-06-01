@@ -211,6 +211,90 @@ const signalCopyByLocale = {
     best: "Mayor ahorro",
     now: "Suscribirse ahora",
   },
+  ar: {
+    howEyebrow: "قناة النخبة",
+    howTitle: "كيف تعمل قناة النخبة",
+    howText: "تقدم قناة النخبة عمليات مباشرة منظمة عبر واتساب مع سياق تشغيلي وإدارة مخاطر.",
+    howItems: ["2 إلى 5 إشارات يوميا", "إرسال مباشر عبر واتساب", "دخول وهدف ووقف محددة", "سياق تشغيلي وقراءة للسوق"],
+    scheduleEyebrow: "أوقات التشغيل",
+    scheduleTitle: "أوقات التشغيل",
+    scheduleText: "ترسل الإشارات غالبا خلال فترات السيولة الرئيسية في السوق، من 8 صباحا إلى 3 مساء، وكذلك من 9 مساء إلى منتصف الليل بتوقيت برازيليا.",
+    scheduleNote: "قد تختلف الأوقات حسب التقلبات والسيولة والفرص الحقيقية في السوق.",
+    scheduleCards: [["الصباح وبعد الظهر", "8 صباحا إلى 3 مساء"], ["الليل", "9 مساء إلى 12 صباحا"]],
+    methodEyebrow: "المنهج التشغيلي",
+    methodTitle: "إشارات مبنية على Ichimoku",
+    methodText: "تعتمد إشارات Varejo Investidor على قراءة مؤشر Ichimoku مع مراقبة السحابة والمتوسطات وموقع السعر ومناطق الدعم والمقاومة وسياق الأصل.",
+    ichimokuItems: ["قراءة السحابة", "متوسطات Ichimoku", "اتجاه السعر", "الهدف ووقف الخسارة", "سياق الأصل", "إدارة المخاطر"],
+    historyEyebrow: "السجل",
+    historyTitle: "تقرير النخبة منذ أغسطس 2018",
+    historyText: "تابع التطور التشغيلي لقناة النخبة عبر التقارير التاريخية منذ أغسطس 2018.",
+    tableHeadings: ["التاريخ", "تقرير النخبة", "الإشارات", "النتيجة", "الحالة", "عرض"],
+    reports: [["أغسطس/2018", "تقرير النخبة", "124 إشارة", "+18.4%", "متاح"], ["يناير/2021", "تقرير النخبة", "98 إشارة", "+11.2%", "متاح"], ["مارس/2024", "تقرير النخبة", "137 إشارة", "+22.7%", "متاح"]],
+    view: "عرض",
+    docsEyebrow: "توثيق",
+    docsTitle: "هيكل الإرسال الحقيقي",
+    docsText: "إشارات مباشرة ترسل عبر واتساب منذ 2018.",
+    levelsEyebrow: "المستويات",
+    levelsTitle: "اختر مستواك",
+    levelsText: "ابدأ مجانا في قناة النملة أو ادخل Elite Harpy للوصول الكامل إلى الهيكل التشغيلي.",
+    freeTitle: "قناة النملة",
+    freePrice: "مجاني",
+    freeButton: "ادخل مجانا",
+    formigaItems: ["مجاني", "محتوى تعليمي", "تحليل أساسي", "رؤية تمهيدية", "بناء الأساس", "إشارات محدودة"],
+    eliteTitle: "قناة Elite Harpy",
+    eliteStructure: "هيكل النخبة",
+    eliteButton: "انضم إلى النخبة",
+    eliteItems: ["إشارات كاملة", "2 إلى 5 إشارات يوميا", "عمليات منظمة", "سياق تشغيلي", "Forex", "ذهب", "نفط", "مؤشرات", "كريبتو", "قراءة مؤسسية", "مجتمع مغلق", "دروس النملة المسجلة", "دروس الذئب المسجلة", "دروس الهاربي المسجلة", "هيكل النخبة"],
+    packagesEyebrow: "الباقات",
+    packagesTitle: "وصول النخبة",
+    packagesText: "اختر باقتك للوصول إلى 100% من الإشارات، المجموعة الحصرية، التحليلات، الدروس المسجلة ومحتوى مستوى الهاربي.",
+    benefitsTitle: "ما تحصل عليه في قناة النخبة",
+    benefits: ["100% من الإشارات", "مجموعة حصرية", "تحليلات السوق", "دروس مسجلة", "محتوى مستوى الهاربي", "هيكل كامل للسوق"],
+    best: "أفضل قيمة",
+    now: "اشترك الآن",
+  },
+  tr: {
+    howEyebrow: "Elite Kanalı",
+    howTitle: "Elite Kanalı nasıl çalışır",
+    howText: "Elite Kanalı, operasyonel bağlam ve risk yönetimiyle yapılandırılmış canlı işlemleri doğrudan WhatsApp üzerinden gönderir.",
+    howItems: ["Günde 2 ila 5 sinyal", "Doğrudan WhatsApp gönderimi", "Giriş, hedef ve stop belirlenmiş", "Operasyonel bağlam ve piyasa okuma"],
+    scheduleEyebrow: "İşlem saatleri",
+    scheduleTitle: "İşlem saatleri",
+    scheduleText: "Sinyaller genellikle piyasanın ana likidite dönemlerinde, Brasília saatine göre 08:00-15:00 ve 21:00-00:00 arasında gönderilir.",
+    scheduleNote: "Saatler volatilite, likidite ve gerçek piyasa fırsatlarına göre değişebilir.",
+    scheduleCards: [["SABAH VE ÖĞLEDEN SONRA", "08:00 - 15:00"], ["GECE", "21:00 - 00:00"]],
+    methodEyebrow: "Operasyonel yöntem",
+    methodTitle: "Ichimoku temelli sinyaller",
+    methodText: "Varejo Investidor sinyalleri; bulut, ortalamalar, fiyat konumu, destek ve direnç bölgeleri ve varlık bağlamı izlenerek Ichimoku okumasına dayanır.",
+    ichimokuItems: ["bulut okuma", "Ichimoku ortalamaları", "fiyat yönü", "hedef ve stop", "varlık bağlamı", "risk yönetimi"],
+    historyEyebrow: "Geçmiş",
+    historyTitle: "Ağustos 2018'den beri Elite Raporu",
+    historyText: "Ağustos 2018'den bu yana gönderilen geçmiş raporlarla Elite Kanalı'nın operasyonel gelişimini izleyin.",
+    tableHeadings: ["TARİH", "ELITE RAPORU", "SİNYALLER", "SONUÇ", "DURUM", "GÖR"],
+    reports: [["AĞU/2018", "Elite Raporu", "124 sinyal", "+18.4%", "Mevcut"], ["OCA/2021", "Elite Raporu", "98 sinyal", "+11.2%", "Mevcut"], ["MAR/2024", "Elite Raporu", "137 sinyal", "+22.7%", "Mevcut"]],
+    view: "GÖR",
+    docsEyebrow: "Belgesel yapı",
+    docsTitle: "Gerçek gönderim yapısı",
+    docsText: "2018'den beri doğrudan WhatsApp üzerinden gönderilen canlı sinyaller.",
+    levelsEyebrow: "Seviyeler",
+    levelsTitle: "Seviyeni seç",
+    levelsText: "Ücretsiz Karınca Kanalı ile başla veya operasyonel yapıya tam erişim için Elite Harpia'ya gir.",
+    freeTitle: "Karınca Kanalı",
+    freePrice: "Ücretsiz",
+    freeButton: "Ücretsiz gir",
+    formigaItems: ["ücretsiz", "eğitim içeriği", "temel analiz", "giriş vizyonu", "temel inşası", "sınırlı sinyaller"],
+    eliteTitle: "Elite Harpia Kanalı",
+    eliteStructure: "Elite Yapı",
+    eliteButton: "Elite'e katıl",
+    eliteItems: ["tam sinyaller", "günde 2 ila 5 sinyal", "yapılandırılmış işlemler", "operasyonel bağlam", "Forex", "altın", "petrol", "endeksler", "kripto", "kurumsal okuma", "kapalı topluluk", "Karınca seviyesi kayıtlı dersler", "Kurt seviyesi kayıtlı dersler", "Harpia seviyesi kayıtlı dersler", "Elite yapı"],
+    packagesEyebrow: "Paketler",
+    packagesTitle: "Elite Erişim",
+    packagesText: "Sinyallerin %100'üne, özel gruba, piyasa analizlerine, kayıtlı derslere ve Harpia seviyesi içeriğe erişmek için paketini seç.",
+    benefitsTitle: "Elite Kanalında aldıkların",
+    benefits: ["Sinyallerin %100'ü", "Özel grup", "Piyasa analizleri", "Kayıtlı dersler", "Harpia seviyesi içerik", "Tam piyasa yapısı"],
+    best: "En iyi değer",
+    now: "Şimdi abone ol",
+  },
 } as const;
 
 const whatsappPrints = [
@@ -274,7 +358,7 @@ export default function SignalsPage() {
         best: "सबसे अधिक बचत",
         now: "\u0905\u092D\u0940 \u0938\u0926\u0938\u094D\u092F\u0924\u093E \u0932\u0947\u0902",
       }
-    : signalCopyByLocale[locale as "pt" | "en" | "es"];
+    : signalCopyByLocale[locale as keyof typeof signalCopyByLocale] ?? signalCopyByLocale.en;
   const howItems: string[] = signalPageCopy?.howItems ?? howItWorks;
   const ichimokuItems: string[] = signalPageCopy?.ichimokuItems ?? ichimokuPoints;
   const reportRows: readonly (readonly string[])[] = signalPageCopy?.reports ?? reports;
@@ -321,9 +405,23 @@ export default function SignalsPage() {
         ["6 महीने", "US$ 145", ""],
         ["वार्षिक", "US$ 240", ""],
       ]
+    : locale === "ar"
+      ? [
+          ["شهري", "US$ 30", ""],
+          ["3 أشهر", "US$ 80", ""],
+          ["6 أشهر", "US$ 145", ""],
+          ["سنوي", "US$ 240", ""],
+        ]
+    : locale === "tr"
+      ? [
+          ["AYLIK", "US$ 30", ""],
+          ["3 AY", "US$ 80", ""],
+          ["6 AY", "US$ 145", ""],
+          ["YILLIK", "US$ 240", ""],
+        ]
     : prices;
   return (
-    <main lang={locale === "hi" ?"hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="signals-hero premium-stage relative px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-44">

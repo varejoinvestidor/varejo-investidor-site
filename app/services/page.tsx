@@ -66,6 +66,16 @@ const elitePackagesByLocale = {
     cta: "\u0905\u092D\u0940 \u0938\u0926\u0938\u094D\u092F\u0924\u093E \u0932\u0947\u0902",
     items: [["\u092E\u093E\u0938\u093F\u0915", "US$ 30", ""], ["3 \u092E\u0939\u0940\u0928\u0947", "US$ 80", ""], ["6 \u092E\u0939\u0940\u0928\u0947", "US$ 145", ""], ["\u0935\u093E\u0930\u094D\u0937\u093F\u0915", "US$ 240", "\u0938\u092C\u0938\u0947 \u0905\u091A\u094D\u091B\u093E \u092E\u0942\u0932\u094D\u092F"]],
   },
+  ar: {
+    title: "الباقات المتاحة",
+    cta: "اشترك الآن",
+    items: [["شهري", "US$ 30", ""], ["3 أشهر", "US$ 80", ""], ["6 أشهر", "US$ 145", ""], ["سنوي", "US$ 240", "أفضل قيمة"]],
+  },
+  tr: {
+    title: "Mevcut paketler",
+    cta: "Şimdi abone ol",
+    items: [["Aylık", "US$ 30", ""], ["3 Ay", "US$ 80", ""], ["6 Ay", "US$ 145", ""], ["Yıllık", "US$ 240", "EN İYİ DEĞER"]],
+  },
 };
 
 const compactServicesByLocale = {
@@ -142,6 +152,54 @@ const compactServicesByLocale = {
       kind: "free",
     },
   ],
+  ar: [
+    {
+      title: "قناة النخبة",
+      description: "المنتج الرئيسي مع إشارات مباشرة وتحليلات ودروس مسجلة وقراءة عالمية للسوق.",
+      bullets: ["100% من الإشارات", "تحليلات كاملة", "تعليم بالمستويات", "أسواق عالمية"],
+      cta: "تعرف إلى قناة النخبة",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "قناة فورميغا المجانية",
+      subtitle: "نقطة الدخول إلى نظام Varejo Investidor",
+      description: "استقبل إشارات مجانية وتحليلات للسوق وقراءة عالمية ومحتوى مالي يومي مباشرة عبر واتساب.",
+      details: [
+        "ابدأ خطواتك الأولى في السوق الدولية بفهم الفوركس والذهب والنفط والمؤشرات والعملات العالمية والهيكل المالي.",
+        "تم إنشاء قناة فورميغا لمساعدة المستثمرين الأفراد على الخروج من المستوى الأساسي وتطوير الانضباط وقراءة السوق والتقدم نحو مستويات الذئب والهاربي.",
+      ],
+      bullets: ["دخول مجاني", "محتوى يومي", "أساس فورميغا", "واتساب"],
+      highlights: ["إشارات مجانية", "محتوى يومي", "أسواق دولية", "تطور مالي", "هيكل طويل المدى"],
+      cta: "ادخل القناة المجانية",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  tr: [
+    {
+      title: "Elite Kanalı",
+      description: "Canlı sinyaller, piyasa analizi, kayıtlı dersler ve küresel piyasa okuma sunan ana ürün.",
+      bullets: ["Sinyallerin %100'ü", "Tam analiz", "Seviyeli eğitim", "Küresel piyasalar"],
+      cta: "Elite Kanalını keşfet",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "Ücretsiz Formiga Kanalı",
+      subtitle: "Varejo Investidor ekosistemine giriş noktası",
+      description: "Ücretsiz sinyaller, piyasa analizleri, küresel okuma ve günlük finans içeriklerini doğrudan WhatsApp üzerinden alın.",
+      details: [
+        "Forex, altın, petrol, endeksler, küresel para birimleri ve finansal yapıyı anlayarak uluslararası piyasadaki ilk adımlarınızı atın.",
+        "Formiga Kanalı, sıradan yatırımcıların finansal temel seviyeden çıkmasına, disiplin ve piyasa okuma geliştirmesine, Kurt ve Harpia seviyelerine ilerlemesine yardımcı olmak için oluşturuldu.",
+      ],
+      bullets: ["Ücretsiz giriş", "Günlük içerik", "Formiga temeli", "WhatsApp"],
+      highlights: ["Ücretsiz sinyaller", "Günlük içerik", "Uluslararası piyasalar", "Finansal gelişim", "Uzun vadeli yapı"],
+      cta: "ÜCRETSİZ KANALA GİR",
+      href: "free",
+      kind: "free",
+    },
+  ],
 };
 
 const highTicketServices = [
@@ -200,6 +258,8 @@ const internationalServicesIntro = {
   en: "Explore Varejo Investidor channels for signals, education, and global market reading.",
   es: "Conoce los canales de Varejo Investidor para señales, educación y lectura de mercado global.",
   hi: "Varejo Investidor की सेवाएँ देखें: सिग्नल, शिक्षा और वैश्विक बाजार-पठन।",
+  ar: "تعرّف إلى قنوات Varejo Investidor للإشارات والتعليم وقراءة السوق العالمية.",
+  tr: "Sinyaller, eğitim ve küresel piyasa okuma için Varejo Investidor kanallarını keşfedin.",
 };
 
 function compactCardTone(kind: string) {
@@ -241,7 +301,7 @@ export default function ServicesPage() {
           ? "\u0938\u0947\u0935\u093E"
           : "Produto";
   return (
-    <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="services-hero premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">

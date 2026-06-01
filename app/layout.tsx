@@ -5,6 +5,17 @@ export const metadata: Metadata = {
   title: "Varejo Investidor | Sinais, Educação e Mercado Global",
   description:
     "Ecossistema global com sinais ao vivo, educação por níveis, análises de mercado e estrutura estratégica para investidores de varejo.",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "pt-BR": "/pt",
+      en: "/en",
+      es: "/es",
+      hi: "/hi",
+      ar: "/ar",
+      tr: "/tr",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -13,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="en" dir="ltr">
       <head>
         <meta charSet="UTF-8" />
       </head>

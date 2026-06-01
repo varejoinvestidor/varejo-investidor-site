@@ -31,6 +31,7 @@ export const ELITE_STRIPE_LINKS = [
 ] as const;
 
 export const ELITE_CHECKOUT_URL = ELITE_LASTLINK_URL;
+export const LOCALES = ["pt", "en", "es", "hi", "ar", "tr"] as const;
 
 export function getElitePlanHref(locale: Locale, planIndex: number) {
   return locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[planIndex] ?? ELITE_STRIPE_LINKS[3];
@@ -62,27 +63,47 @@ export function detectLocale(): Locale {
   if (detected.includes("pt")) return "pt";
   if (detected.includes("es")) return "es";
   if (detected.includes("hi")) return "hi";
+  if (detected.includes("ar")) return "ar";
+  if (detected.includes("tr")) return "tr";
   if (detected.includes("en")) return "en";
 
   return "en";
 }
 
+function isLocale(value: string | null): value is Locale {
+  return Boolean(value && value in translations);
+}
+
+function localeFromPath(pathname: string | null): Locale | null {
+  const firstSegment = pathname?.split("/").filter(Boolean)[0] ?? null;
+  return isLocale(firstSegment) ? firstSegment : null;
+}
+
+function applyDocumentLocale(nextLocale: Locale) {
+  document.documentElement.lang =
+    nextLocale === "pt" ? "pt-BR" : nextLocale === "ar" ? "ar" : nextLocale;
+  document.documentElement.dir = nextLocale === "ar" ? "rtl" : "ltr";
+}
+
 export function useSiteLocale() {
+  const pathname = usePathname();
   const [locale, setLocale] = useState<Locale>("en");
   const t = translations[locale];
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("varejo-investidor-locale") as Locale | null;
-    if (saved && saved in translations) {
-      setLocale(saved);
-      return;
-    }
-
-    setLocale(detectLocale());
-  }, []);
+    const routedLocale = localeFromPath(pathname);
+    const saved =
+      window.localStorage.getItem("language") ??
+      window.localStorage.getItem("varejo-investidor-locale");
+    const nextLocale = routedLocale ?? (isLocale(saved) ? saved : detectLocale());
+    setLocale(nextLocale);
+    applyDocumentLocale(nextLocale);
+  }, [pathname]);
 
   function changeLocale(nextLocale: Locale) {
     setLocale(nextLocale);
+    applyDocumentLocale(nextLocale);
+    window.localStorage.setItem("language", nextLocale);
     window.localStorage.setItem("varejo-investidor-locale", nextLocale);
   }
 
@@ -146,6 +167,8 @@ export function LanguageSwitcher({
     en: "\uD83C\uDDFA\uD83C\uDDF8 English",
     es: "\uD83C\uDDEA\uD83C\uDDF8 Espa\u00F1ol",
     hi: "\uD83C\uDDEE\uD83C\uDDF3 \u0939\u093F\u0928\u094D\u0926\u0940",
+    ar: "\uD83C\uDDF8\uD83C\uDDE6 العربية",
+    tr: "\uD83C\uDDF9\uD83C\uDDF7 T\u00FCrk\u00E7e",
   };
 
   return (
@@ -154,7 +177,7 @@ export function LanguageSwitcher({
         variant === "footer" ?"flex-wrap gap-1" : ""
       }`}
     >
-      {(["pt", "en", "es", "hi"] as Locale[]).map((item) => (
+      {LOCALES.map((item) => (
         <button
           key={item}
           type="button"
@@ -192,10 +215,14 @@ export function SiteChrome({
         ? "Mercado Global para el Inversor Minorista"
         : locale === "hi"
           ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
-          : "Mercado Global para o Investidor de Varejo";
+          : locale === "ar"
+            ? "الأسواق العالمية للمستثمر الفردي"
+            : locale === "tr"
+              ? "Bireysel Yatırımcı için Küresel Piyasalar"
+              : "Mercado Global para o Investidor de Varejo";
   const navItems = useMemo(
     () => [
-      { label: t.nav.home, href: "/#home", activePaths: ["/"] },
+      { label: t.nav.home, href: "/#home", activePaths: ["/", "/pt", "/en", "/es", "/hi", "/ar", "/tr"] },
       { label: t.nav.signals, href: "/sinais", activePaths: ["/sinais", "/signals"] },
       { label: t.nav.education, href: "/educacao", activePaths: ["/educacao"] },
       { label: t.nav.services, href: "/servicos", activePaths: ["/servicos", "/services"] },
@@ -260,12 +287,18 @@ export function SiteChrome({
 export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
   const isPortuguese = t.locale === "PT";
   const isSpanish = t.locale === "ES";
+  const isArabic = t.locale === "AR";
+  const isTurkish = t.locale === "TR";
   const extraLabels =
     t.locale === "HI"
       ? { timeframe: "\u0938\u092E\u092F \u0905\u0935\u0927\u093F", risk: "\u091C\u094B\u0916\u093F\u092E", riskValue: "\u092E\u0927\u094D\u092F\u092E", signal: "\u0938\u093F\u0917\u094D\u0928\u0932", time: "\u0938\u092E\u092F", live: "\u0932\u093E\u0907\u0935", copy: "\u0938\u0940\u0927\u0947 \u090F\u0932\u0940\u091F \u091A\u0948\u0928\u0932 \u092E\u0947\u0902 \u092D\u0947\u091C\u093E \u0917\u092F\u093E" }
       : isSpanish
         ? { timeframe: "TEMPORALIDAD", risk: "RIESGO", riskValue: "MODERADO", signal: "SE\u00D1AL", time: "HORARIO", live: "EN VIVO", copy: "ENVIADA DIRECTAMENTE EN EL CANAL ELITE" }
-        : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO CANAL ELITE" : "DELIVERED DIRECTLY INSIDE ELITE CHANNEL" };
+        : isArabic
+          ? { timeframe: "الإطار الزمني", risk: "المخاطر", riskValue: "متوسطة", signal: "الإشارة", time: "الوقت", live: "مباشر", copy: "أرسلت مباشرة داخل قناة النخبة" }
+          : isTurkish
+            ? { timeframe: "ZAMAN DİLİMİ", risk: "RİSK", riskValue: "ORTA", signal: "SİNYAL", time: "SAAT", live: "CANLI", copy: "DOĞRUDAN ELITE KANALINDA GÖNDERİLDİ" }
+            : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO CANAL ELITE" : "DELIVERED DIRECTLY INSIDE ELITE CHANNEL" };
   const rows = [
     [t.signalBlock.example.asset, t.signalBlock.example.values.asset], [t.signalBlock.example.direction, t.signalBlock.example.values.direction], [t.signalBlock.example.entry, t.signalBlock.example.values.entry], [t.signalBlock.example.target, t.signalBlock.example.values.target], [t.signalBlock.example.stop, t.signalBlock.example.values.stop], [extraLabels.timeframe, "4H"], [extraLabels.risk, extraLabels.riskValue], [extraLabels.signal, "#4169"], [extraLabels.time, "09:42 UTC"], [t.signalBlock.example.status, t.signalBlock.example.values.status],
   ];
@@ -275,7 +308,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
       <div className="absolute inset-0 terminal-grid opacity-25" />
       <div className="flex items-center justify-between gap-3 border-b border-paper/[0.12] pb-4">
         <div className="relative">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{isPortuguese ? "SINAL AO VIVO" : isSpanish ? "SE\u00D1AL EN VIVO" : "LIVE SIGNAL SENT"}</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{isPortuguese ? "SINAL AO VIVO" : isSpanish ? "SE\u00D1AL EN VIVO" : isArabic ? "إشارة مباشرة" : isTurkish ? "CANLI SİNYAL" : "LIVE SIGNAL SENT"}</p>
           <h3 className="mt-1 font-serif text-2xl tracking-[-0.04em] sm:text-3xl">{t.signalBlock.example.title}</h3>
         </div>
         <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise"><span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />{extraLabels.live}</div>

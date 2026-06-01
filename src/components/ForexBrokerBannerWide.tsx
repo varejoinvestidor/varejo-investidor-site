@@ -1,7 +1,7 @@
 import type { Locale } from "../i18n";
 
 export function ForexBrokerBannerWide({ language }: { language: Locale }) {
-  if (language !== "pt" && language !== "en" && language !== "hi" && language !== "es") {
+  if (language !== "pt" && language !== "en" && language !== "hi" && language !== "es" && language !== "ar" && language !== "tr") {
     return null;
   }
 
@@ -17,6 +17,14 @@ export function ForexBrokerBannerWide({ language }: { language: Locale }) {
     hi: {
       src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
       alt: "FxPro Banner EN/HI",
+    },
+    ar: {
+      src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+      alt: "FxPro Banner AR",
+    },
+    tr: {
+      src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+      alt: "FxPro Banner TR",
     },
     es: {
       src: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-es-fscm-1324x150.png",
@@ -49,6 +57,18 @@ export function ForexBrokerBannerWide({ language }: { language: Locale }) {
       highlight: "अभी ट्रेडिंग शुरू करें",
       after: ".",
       second: "बैनर पर क्लिक करें.",
+    },
+    ar: {
+      before: "افتح حسابك و",
+      highlight: "ابدأ التداول",
+      after: " الآن.",
+      second: "اضغط على البانر.",
+    },
+    tr: {
+      before: "HESABINI AÇ VE ",
+      highlight: "İŞLEM YAPMAYA BAŞLA",
+      after: ".",
+      second: "BANNERA TIKLA.",
     },
   }[language];
 

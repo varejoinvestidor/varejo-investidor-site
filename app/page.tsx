@@ -135,6 +135,70 @@ const homeLiteCopy = {
       elite: "एलीट चैनल देखें",
     },
   },
+  ar: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "كل ما تحتاجه لخوض اللعبة المالية على المستوى العالمي.",
+      text: "تعليم، إشارات مباشرة، قراءة للأسواق وهيكل استراتيجي لبناء حياتك المالية على طبقات.",
+      free: "ابدأ مجانا",
+      services: "شاهد الخدمات",
+    },
+    intro: {
+      eyebrow: "ما هو",
+      title: "ما هو Varejo Investidor",
+      manifesto:
+        "Varejo Investidor هو هيكل مالي عالمي لمن يريد تجاوز الأساسيات وفهم الأسواق الدولية وبناء حياته المالية على طبقات.",
+      text: [
+        "منذ 2018، أرسلنا أكثر من 4,200 إشارة مباشرة مع متابعة الفوركس والذهب والنفط والكريبتو والمؤشرات والعملات العالمية.",
+        "تنقسم الرحلة إلى مستويات: النملة، الذئب، والهاربي.",
+        "مستوى النملة يبني الأساس. مستوى الذئب يطور الاستراتيجية وقراءة السوق. مستوى الهاربي يوسع الرؤية نحو الثروة والحماية والهيكل العالمي.",
+      ],
+      stats: ["منذ 2018", "إشارات مباشرة", "النملة / الذئب / الهاربي"],
+    },
+    cards: [
+      { code: "النملة", title: "الأساس المالي", text: "تعليم بالمستويات لبناء القاعدة وتنظيم المخاطر وإنشاء الأعمدة الأولى.", href: "/educacao" },
+      { code: "الذئب", title: "الاستراتيجية والتوسع", text: "إشارات مباشرة وقراءة للسوق وقرارات منظمة للتنفيذ بانضباط.", href: "/sinais" },
+      { code: "الهاربي", title: "الثروة العالمية", text: "خدمات استراتيجية للحماية والتموضع وبناء الثروة والرؤية الدولية.", href: "/servicos" },
+    ],
+    cardCta: "اعرف المزيد",
+    final: {
+      title: "ابدأ مجانا واختر مستواك التالي.",
+      free: "ادخل القناة المجانية",
+      elite: "تعرف إلى قناة النخبة",
+    },
+  },
+  tr: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Finans oyununu küresel seviyede oynamak için ihtiyacın olan her şey.",
+      text: "Finansal hayatını katmanlar halinde inşa etmek için eğitim, canlı sinyaller, piyasa okuma ve stratejik yapı.",
+      free: "Ücretsiz başla",
+      services: "Hizmetleri gör",
+    },
+    intro: {
+      eyebrow: "Nedir",
+      title: "Varejo Investidor nedir",
+      manifesto:
+        "Varejo Investidor, temel seviyeyi aşmak, uluslararası piyasaları anlamak ve finansal hayatını katmanlar halinde kurmak isteyenler için küresel bir finansal yapıdır.",
+      text: [
+        "2018'den beri Forex, altın, petrol, kripto, endeksler ve küresel para birimlerini takip ederek 4.200'den fazla canlı sinyal gönderdik.",
+        "Yolculuk üç seviyeye ayrılır: Karınca, Kurt ve Harpia.",
+        "Karınca seviyesi temeli kurar. Kurt seviyesi strateji ve piyasa okuma geliştirir. Harpia seviyesi varlık, koruma ve küresel yapı vizyonunu genişletir.",
+      ],
+      stats: ["2018'den beri", "canlı sinyaller", "Karınca / Kurt / Harpia"],
+    },
+    cards: [
+      { code: "KARINCA", title: "Finansal temel", text: "Temel oluşturmak, riski düzenlemek ve ilk sütunları kurmak için seviyeli eğitim.", href: "/educacao" },
+      { code: "KURT", title: "Strateji ve genişleme", text: "Disiplinli işlem için canlı sinyaller, piyasa okuma ve yapılandırılmış kararlar.", href: "/sinais" },
+      { code: "HARPIA", title: "Küresel varlık", text: "Koruma, konumlanma, varlık ve uluslararası vizyon için stratejik hizmetler.", href: "/servicos" },
+    ],
+    cardCta: "Daha fazla bilgi",
+    final: {
+      title: "Ücretsiz başla ve bir sonraki seviyeni seç.",
+      free: "Ücretsiz kanala gir",
+      elite: "Elite Kanalını keşfet",
+    },
+  },
 } satisfies Record<
   Locale,
   {
@@ -190,7 +254,7 @@ export default function Home() {
   const copy = homeLiteCopy[locale];
 
   return (
-    <main lang={locale === "hi" ?"hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section id="home" className="home-hero premium-stage relative px-5 pb-20 pt-36 md:px-8 md:pb-28 md:pt-48 lg:px-12 xl:px-16">
@@ -223,10 +287,7 @@ export default function Home() {
           </motion.div>
 
           <motion.div className="order-1 lg:order-1" initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>
-            <motion.p variants={fadeUp} className="inline-flex border border-gold/[0.28] bg-paper/[0.04] px-4 py-2 text-xs font-bold uppercase tracking-[0.34em] text-gold">
-              {copy.hero.eyebrow}
-            </motion.p>
-            <motion.h1 variants={fadeUp} className="hero-headline mt-9 max-w-5xl text-balance font-serif text-[2.55rem] leading-[1.04] tracking-[-0.045em] text-ink md:text-[4.55rem] xl:text-[5.4rem]">
+            <motion.h1 variants={fadeUp} className="hero-headline max-w-5xl text-balance font-serif text-[2.55rem] leading-[1.04] tracking-[-0.045em] text-ink md:text-[4.55rem] xl:text-[5.4rem]">
               {copy.hero.title}
             </motion.h1>
             <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg font-light leading-9 text-ink/[0.7] md:text-xl">

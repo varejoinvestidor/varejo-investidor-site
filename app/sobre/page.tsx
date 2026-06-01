@@ -223,6 +223,98 @@ const aboutCopy = {
   },
 };
 
+const localizedAboutCopy = {
+  ...aboutCopy,
+  ar: {
+    ...aboutCopy.en,
+    heroEyebrow: "من نحن",
+    heroTitle: "كل ما يحتاجه المستثمر الفردي لفهم الأسواق العالمية والتشغيل وبناء الثروة.",
+    heroText: "من الأساسيات إلى الرؤية المتقدمة. تعليم، إشارات مباشرة، قراءة سوق وبناء مالي على طبقات.",
+    indicators: ["منذ 2018", "+4,200 إشارة مباشرة", "Forex • ذهب • مؤشرات • كريبتو", "محتوى متعدد اللغات"],
+    pillars: [
+      ["قراءة السوق", "فهم الحركات العالمية"],
+      ["التشغيل", "فوركس، ذهب، مؤشرات وكريبتو"],
+      ["المخاطر", "حماية وإدارة تشغيلية"],
+      ["الثروة", "بناء مالي طويل المدى"],
+      ["التموضع", "رؤية استراتيجية وتوسع"],
+      ["البناء على طبقات", "من الأساسيات إلى الثروة العالمية"],
+    ],
+    whatTitle: "ما هو Varejo Investidor",
+    whatParagraphs: [
+      "تم إنشاء Varejo Investidor لتعليم المستثمرين الأفراد فهم الأسواق الدولية والتشغيل بوضوح أكبر وبناء هيكل مالي طويل المدى.",
+      "الهدف هو تطوير هيكل مالي عالمي متاح للمستثمر الفردي يجمع التعليم وقراءة السوق والإشارات المباشرة ورؤية الثروة.",
+      "منذ 2018، يتابع المشروع يوميا الفوركس والذهب والنفط والمؤشرات العالمية والكريبتو والدورات الدولية.",
+    ],
+    foundTitle: "ما الذي تجده هنا",
+    found: ["إشارات مباشرة", "تعليم مالي", "قراءة السوق", "هيكل تشغيلي", "محتوى متعدد اللغات", "إدارة المخاطر", "بناء الثروة", "رؤية دولية"],
+    notOnlyTitle: "لسنا مجرد قناة",
+    notOnlyLeftTitle: "لسنا",
+    notOnlyLeft: ["مجرد إشارات", "مجرد دورة", "مجرد محتوى تحفيزي", "مجرد عمليات سريعة"],
+    notOnlyRightTitle: "نحن",
+    notOnlyRight: ["تعليم مالي", "قراءة مؤسسية", "تشغيل منظم", "رؤية ثروة", "هيكل مالي عالمي"],
+    levelsTitle: "النملة • الذئب • الهاربي",
+    levelsText: "التطور داخل Varejo Investidor يحدث عبر مستويات الوعي والتشغيل والثروة.",
+    levels: [
+      ["النملة", "الأساس المالي.", "تنظيم، استثمارات أولى وبناء الانضباط."],
+      ["الذئب", "استراتيجية وتوسع.", "قراءة السوق، التشغيل، المخاطر والتموضع."],
+      ["الهاربي", "رؤية عالمية.", "ثروة، حماية، تعاقب وهيكل دولي."],
+    ],
+    visionTitle: "رؤية مختلفة",
+    visionParagraphs: ["السوق المالي التقليدي يبيع السرعة.", "Varejo Investidor تم إنشاؤه لتعليم الهيكل.", "بينما يبحث جزء كبير من السوق عن وعود سريعة، يركز هذا المشروع على قراءة السوق والبناء المالي والرؤية الدولية والنمو على طبقات."],
+    futureTitle: "رؤية المستقبل",
+    futureText: "الهدف لم يكن التشغيل فقط. الرؤية هي بناء هيكل مالي خاص للمستثمر الفردي العالمي: منصة مؤسسية، هيكل تعليمي وبيئة تشغيلية متاحة للمستثمر العادي.",
+    futureIndicators: ["منصة خاصة", "هيكل عالمي", "محتوى متعدد اللغات", "رؤية مؤسسية", "توسع دولي"],
+    finalTitle: "من التنظيم المالي إلى الثروة العالمية.",
+    finalText: "من أول عملية إلى بناء هيكل للأجيال. هذه هي رحلة Varejo Investidor.",
+    freeCta: "ابدأ بقناة النملة",
+    eliteCta: "تعرف إلى النخبة",
+  },
+  tr: {
+    ...aboutCopy.en,
+    heroEyebrow: "Varejo Investidor Hakkında",
+    heroTitle: "Bireysel yatırımcının küresel piyasaları anlamak, işlem yapmak ve varlık inşa etmek için ihtiyaç duyduğu her şey.",
+    heroText: "Temelden ileri vizyona. Eğitim, canlı sinyaller, piyasa okuma ve katmanlı finansal inşa.",
+    indicators: ["2018'den beri", "+4.200 canlı sinyal", "Forex • Altın • Endeksler • Kripto", "Çok dilli içerik"],
+    pillars: [
+      ["Piyasa okuma", "Küresel hareketleri anlamak"],
+      ["İşlem", "Forex, altın, endeksler ve kripto"],
+      ["Risk", "Koruma ve operasyonel yönetim"],
+      ["Varlık", "Uzun vadeli finansal inşa"],
+      ["Konumlanma", "Stratejik vizyon ve genişleme"],
+      ["Katmanlı inşa", "Temelden küresel varlığa"],
+    ],
+    whatTitle: "Varejo Investidor nedir",
+    whatParagraphs: [
+      "Varejo Investidor, bireysel yatırımcılara uluslararası piyasaları anlamayı, daha net işlem yapmayı ve uzun vadeli finansal yapı kurmayı öğretmek için oluşturuldu.",
+      "Amaç; eğitim, piyasa okuma, canlı sinyaller ve varlık vizyonunu birleştiren, bireysel yatırımcıya erişilebilir küresel bir finansal yapı geliştirmektir.",
+      "2018'den beri proje Forex, altın, petrol, küresel endeksler, kripto paralar ve uluslararası döngüleri günlük olarak takip eder.",
+    ],
+    foundTitle: "Burada ne bulursun",
+    found: ["Canlı sinyaller", "Finansal eğitim", "Piyasa okuma", "Operasyonel yapı", "Çok dilli içerik", "Risk yönetimi", "Varlık inşası", "Uluslararası vizyon"],
+    notOnlyTitle: "Sadece bir kanal değiliz",
+    notOnlyLeftTitle: "Değiliz",
+    notOnlyLeft: ["sadece sinyaller", "sadece bir kurs", "sadece motivasyon içeriği", "sadece hızlı işlemler"],
+    notOnlyRightTitle: "Biz",
+    notOnlyRight: ["finansal eğitim", "kurumsal okuma", "yapılandırılmış operasyon", "varlık vizyonu", "küresel finansal yapı"],
+    levelsTitle: "Karınca • Kurt • Harpia",
+    levelsText: "Varejo Investidor içindeki gelişim farkındalık, operasyon ve varlık seviyeleriyle ilerler.",
+    levels: [
+      ["Karınca", "Finansal temel.", "Organizasyon, ilk yatırımlar ve disiplin inşası."],
+      ["Kurt", "Strateji ve genişleme.", "Piyasa okuma, işlem, risk ve konumlanma."],
+      ["Harpia", "Küresel vizyon.", "Varlık, koruma, devir ve uluslararası yapı."],
+    ],
+    visionTitle: "Farklı bir vizyon",
+    visionParagraphs: ["Geleneksel finans piyasası hız satar.", "Varejo Investidor yapı öğretmek için oluşturuldu.", "Piyasanın büyük kısmı hızlı vaatler ararken burada odak piyasa okuma, finansal inşa, uluslararası vizyon ve katmanlı büyümedir."],
+    futureTitle: "Gelecek vizyonu",
+    futureText: "Amaç hiçbir zaman sadece işlem yapmak değildi. Vizyon, küresel bireysel yatırımcı için kendi finansal yapısını kurmaktır: kurumsal bir platform, eğitim yapısı ve sıradan yatırımcıya erişilebilir operasyonel ortam.",
+    futureIndicators: ["Kendi platformu", "Küresel yapı", "Çok dilli içerik", "Kurumsal vizyon", "Uluslararası genişleme"],
+    finalTitle: "Finansal organizasyondan küresel varlığa.",
+    finalText: "İlk işlemden kuşaklar arası yapı inşasına. Varejo Investidor yolculuğu budur.",
+    freeCta: "Karınca Kanalı ile başla",
+    eliteCta: "Elite'i keşfet",
+  },
+};
+
 function InfoCard({ title, text, index }: { title: string; text: string; index: number }) {
   return (
     <motion.article
@@ -245,10 +337,10 @@ function InfoCard({ title, text, index }: { title: string; text: string; index: 
 
 export default function SobrePage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const copy = aboutCopy[locale];
+  const copy = localizedAboutCopy[locale] ?? localizedAboutCopy.en;
 
   return (
-    <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="about-hero premium-stage relative px-5 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">

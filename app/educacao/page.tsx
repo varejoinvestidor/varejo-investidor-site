@@ -215,6 +215,131 @@ const educationCopy = {
 };
 
 const formationSteps = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3", "L4", "L5", "H1", "H2", "H3", "H4", "H5"];
+const localizedEducationCopy = {
+  ...educationCopy,
+  ar: {
+    ...educationCopy.en,
+    eyebrow: "التعليم",
+    title: "تكوين Varejo Investidor",
+    text: "مسار تعليمي من 15 مستوى لتطوير الرؤية المالية وقراءة السوق والتشغيل والمخاطر وبناء الثروة والهيكل العالمي.",
+    seal: "النملة 1-5 • الذئب 1-5 • الهاربي 1-5",
+    matrixEyebrow: "مصفوفة التطور",
+    matrixTitle: "النملة → الذئب → الهاربي",
+    tableEyebrow: "المنهج الأكاديمي",
+    tableTitle: "المنهج الكامل للتكوين",
+    tableText: "مصفوفة التطور منظمة حسب المستوى والمرحلة والهدف والمحتوى الأساسي والتقدم.",
+    tableHeaders: ["المستوى", "المرحلة", "الهدف", "المحتوى الأساسي", "التطور"],
+    expansionTitle: "التكوين قيد التوسع",
+    expansionText: "سيتم إطلاق مسار النملة والذئب والهاربي تدريجيا داخل نظام Varejo Investidor.",
+    expansionNote: "ستضاف دروس ووحدات ومواد جديدة حسب كل مرحلة.",
+    expansionUpdate: "تحديثات مستمرة للهيكل التعليمي العالمي.",
+    tracks: [
+      {
+        ...educationCopy.en.tracks[0],
+        name: "النملة - الأساس المالي",
+        subtitle: "تنظيم، استثمارات أولى، انضباط، مخاطر وأساسيات.",
+        seal: "الأساس المالي",
+        difficulty: "★☆☆☆☆ إلى ★★★★★",
+        levels: [
+          ["F1", "الواقع المالي", "تنظيم الدخل والمصاريف والديون ورأس المال الأول.", 1],
+          ["F2", "التخطيط والانضباط", "التحكم العاطفي والروتين المالي وبناء السيولة.", 2],
+          ["F3", "الأسواق الأولى", "مقدمة إلى الفوركس والكريبتو والأسهم والدخل الثابت.", 3],
+          ["F4", "المخاطر والحماية", "إدارة المخاطر وحماية رأس المال وقراءة السوق الأساسية.", 4],
+          ["F5", "الخروج من القاعدة", "التحضير للتشغيل بوضوح أكبر والانتقال إلى مستوى الذئب.", 5],
+        ],
+      },
+      {
+        ...educationCopy.en.tracks[1],
+        name: "الذئب - الاستراتيجية والتوسع",
+        subtitle: "قراءة السوق، التشغيل، الدورات، المخاطر المتقدمة والتموضع.",
+        seal: "استراتيجية تشغيلية",
+        difficulty: "★★★☆☆ إلى ★★★★★",
+        levels: [
+          ["L1", "القرار التشغيلي", "قراءة التدفق والسيناريو واتخاذ القرار.", 3],
+          ["L2", "السوق الدولية", "فوركس، كريبتو، ذهب، نفط، مؤشرات وعملات عالمية.", 4],
+          ["L3", "الدورات والارتباطات", "العلاقة بين الأصول والسيولة والاقتصاد الكلي والسيناريو العالمي.", 5],
+          ["L4", "إدارة المحفظة", "مخاطر متقدمة، حماية، توزيع وتموضع.", 5],
+          ["L5", "رؤية الثروة", "التحضير للثروة والهيكل ومستوى الهاربي.", 5],
+        ],
+      },
+      {
+        ...educationCopy.en.tracks[2],
+        name: "الهاربي - الثروة العالمية",
+        subtitle: "ثروة، حماية، تعاقب، عملات قوية وهيكل دولي.",
+        seal: "ثروة عالمية",
+        difficulty: "★★★★★",
+        levels: [
+          ["H1", "رؤية ماكرو عالمية", "قراءة مؤسسية، جغرافيا سياسية، فوائد، عملات وتدفقات عالمية.", 5],
+          ["H2", "حماية الثروة", "حفظ رأس المال والتنويع والتوزيع الاستراتيجي.", 5],
+          ["H3", "الهيكل العائلي", "تعاقب وثروة أجيال وبناء طويل المدى.", 5],
+          ["H4", "التوسع الدولي", "عملات قوية وأصول عالمية وحسابات دولية وحماية.", 5],
+          ["H5", "هيكل النخبة", "حفظ وقرار ثروة ورؤية فوق السوق.", 5],
+        ],
+      },
+    ] satisfies Track[],
+  },
+  tr: {
+    ...educationCopy.en,
+    eyebrow: "Eğitim",
+    title: "Varejo Investidor Eğitimi",
+    text: "Finansal vizyon, piyasa okuma, işlem, risk, varlık inşası ve küresel yapı geliştirmek için 15 seviyelik eğitim yolu.",
+    seal: "KARINCA 1-5 • KURT 1-5 • HARPIA 1-5",
+    matrixEyebrow: "Evrim matrisi",
+    matrixTitle: "KARINCA → KURT → HARPIA",
+    tableEyebrow: "Akademik plan",
+    tableTitle: "TAM EĞİTİM PLANI",
+    tableText: "Gelişim matrisi seviye, aşama, hedef, ana içerik ve ilerlemeye göre düzenlenmiştir.",
+    tableHeaders: ["Seviye", "Aşama", "Hedef", "Ana içerik", "Evrim"],
+    expansionTitle: "EĞİTİM GENİŞLİYOR",
+    expansionText: "Karınca, Kurt ve Harpia eğitim yolu Varejo Investidor ekosistemi içinde kademeli olarak yayınlanacak.",
+    expansionNote: "Yeni dersler, modüller ve materyaller aşamalara göre eklenecek.",
+    expansionUpdate: "Küresel eğitim yapısına sürekli güncellemeler.",
+    tracks: [
+      {
+        ...educationCopy.en.tracks[0],
+        name: "KARINCA - FİNANSAL TEMEL",
+        subtitle: "Organizasyon, ilk yatırımlar, disiplin, risk ve temeller.",
+        seal: "Finansal temel",
+        difficulty: "★☆☆☆☆ ile ★★★★★ arası",
+        levels: [
+          ["F1", "Finansal gerçeklik", "Organizasyon, gelir, faturalar, borç ve ilk sermaye.", 1],
+          ["F2", "Planlama ve disiplin", "Duygusal kontrol, finansal rutin ve nakit oluşturma.", 2],
+          ["F3", "İlk piyasalar", "Forex, kripto, hisse, sabit getiri ve fonlara giriş.", 3],
+          ["F4", "Risk ve koruma", "Risk yönetimi, sermaye koruması ve temel piyasa okuma.", 4],
+          ["F5", "Temelden çıkış", "Daha net işlem yapmak ve Kurt seviyesine geçmek için hazırlık.", 5],
+        ],
+      },
+      {
+        ...educationCopy.en.tracks[1],
+        name: "KURT - STRATEJİ VE GENİŞLEME",
+        subtitle: "Piyasa okuma, işlem, döngüler, ileri risk ve konumlanma.",
+        seal: "Operasyonel strateji",
+        difficulty: "★★★☆☆ ile ★★★★★ arası",
+        levels: [
+          ["L1", "Operasyonel karar", "Akış okuma, senaryo analizi ve karar alma.", 3],
+          ["L2", "Uluslararası piyasa", "Forex, kripto, altın, petrol, endeksler ve küresel para birimleri.", 4],
+          ["L3", "Döngüler ve korelasyonlar", "Varlıklar, likidite, makroekonomi ve küresel senaryo ilişkileri.", 5],
+          ["L4", "Portföy yönetimi", "İleri risk, koruma, tahsis ve konumlanma.", 5],
+          ["L5", "Varlık vizyonu", "Varlık, yapı ve Harpia seviyesine hazırlık.", 5],
+        ],
+      },
+      {
+        ...educationCopy.en.tracks[2],
+        name: "HARPIA - KÜRESEL VARLIK",
+        subtitle: "Varlık, koruma, devir, güçlü para birimleri ve uluslararası yapı.",
+        seal: "Küresel varlık",
+        difficulty: "★★★★★",
+        levels: [
+          ["H1", "Küresel makro vizyon", "Kurumsal okuma, jeopolitik, faizler, para birimleri ve uluslararası akış.", 5],
+          ["H2", "Varlık koruması", "Sermaye koruma, çeşitlendirme ve stratejik tahsis.", 5],
+          ["H3", "Aile yapısı", "Devir, kuşaklar arası varlık ve uzun vadeli inşa.", 5],
+          ["H4", "Uluslararası genişleme", "Güçlü para birimleri, küresel varlıklar, uluslararası hesaplar ve koruma.", 5],
+          ["H5", "Elite yapı", "Koruma, varlık kararı ve piyasanın üstünde vizyon.", 5],
+        ],
+      },
+    ] satisfies Track[],
+  },
+};
 
 function ProgressMarks({ value }: { value: number }) {
   return (
@@ -232,7 +357,7 @@ function ProgressMarks({ value }: { value: number }) {
 
 export default function EducationPage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const copy = educationCopy[locale as "pt" | "en" | "es"] ?? educationCopy.en;
+  const copy = localizedEducationCopy[locale as keyof typeof localizedEducationCopy] ?? localizedEducationCopy.en;
   const formationRows = copy.tracks.flatMap((track) =>
     track.levels.map(([code, title, objective, progress]) => ({
       code,
@@ -244,7 +369,7 @@ export default function EducationPage() {
   );
 
   return (
-    <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section id="topo" className="education-hero premium-stage px-5 pb-8 pt-32 md:px-8 md:pb-10 md:pt-40">
