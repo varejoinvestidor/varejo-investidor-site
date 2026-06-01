@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { translations, type Locale } from "../i18n";
+import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
+import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/insightsContent";
 
 export const ticker = [
   ["XAU/USD", "+0.74%", "up"],
@@ -75,6 +77,8 @@ function isLocale(value: string | null): value is Locale {
 }
 
 function localeFromPath(pathname: string | null): Locale | null {
+  const insightsLocale = localeFromInsightsPath(pathname);
+  if (insightsLocale) return insightsLocale;
   const firstSegment = pathname?.split("/").filter(Boolean)[0] ?? null;
   return isLocale(firstSegment) ? firstSegment : null;
 }
@@ -153,6 +157,70 @@ export function SectionHeader({ eyebrow, title, text }: { eyebrow: string; title
   );
 }
 
+function FlagIcon({ locale }: { locale: Locale }) {
+  const common = "h-3 w-4 shrink-0 overflow-hidden rounded-[2px] shadow-[0_0_0_1px_rgba(255,255,255,0.14)]";
+
+  if (locale === "pt") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#159447" />
+        <path d="M8 1.6 14 6 8 10.4 2 6Z" fill="#f2c230" />
+        <circle cx="8" cy="6" r="2.25" fill="#183a8f" />
+      </svg>
+    );
+  }
+
+  if (locale === "en") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#f7f3eb" />
+        {[0, 2, 4, 6, 8, 10].map((y) => (
+          <rect key={y} y={y} width="16" height="1" fill="#b92735" />
+        ))}
+        <rect width="7" height="6" fill="#1f3f82" />
+      </svg>
+    );
+  }
+
+  if (locale === "es") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#c4212e" />
+        <rect y="3" width="16" height="6" fill="#f1c232" />
+      </svg>
+    );
+  }
+
+  if (locale === "hi") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="4" fill="#ff9933" />
+        <rect y="4" width="16" height="4" fill="#f7f3eb" />
+        <rect y="8" width="16" height="4" fill="#138808" />
+        <circle cx="8" cy="6" r="1.3" fill="none" stroke="#1a3c8f" strokeWidth="0.55" />
+      </svg>
+    );
+  }
+
+  if (locale === "ar") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#0f6f42" />
+        <path d="M4.4 6.2a2 2 0 1 0 0-.4 1.45 1.45 0 1 1 0 .4Z" fill="#f7f3eb" />
+        <rect x="6.8" y="5.75" width="5.3" height="0.55" fill="#f7f3eb" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+      <rect width="16" height="12" fill="#c8232c" />
+      <path d="M7.2 6a2.45 2.45 0 1 0 0 .1 1.72 1.72 0 1 1 0-.1Z" fill="#f7f3eb" />
+      <path d="M9.2 6 10.8 5.5 9.8 6.9V5.1l1 1.4Z" fill="#f7f3eb" />
+    </svg>
+  );
+}
+
 export function LanguageSwitcher({
   locale,
   onChange,
@@ -171,9 +239,18 @@ export function LanguageSwitcher({
     tr: "\uD83C\uDDF9\uD83C\uDDF7 T\u00FCrk\u00E7e",
   };
 
+  const languageMeta: Record<Locale, { code: string; name: string }> = {
+    pt: { code: "PT", name: "Português" },
+    en: { code: "EN", name: "English" },
+    es: { code: "ES", name: "Español" },
+    hi: { code: "HI", name: "हिन्दी" },
+    ar: { code: "AR", name: "العربية" },
+    tr: { code: "TR", name: "Türkçe" },
+  };
+
   return (
     <div
-      className={`flex shrink-0 items-center border border-ink/[0.12] bg-paper p-1 shadow-fine ${
+      className={`language-switcher flex shrink-0 items-center border border-ink/[0.12] bg-paper p-1 shadow-fine ${
         variant === "footer" ?"flex-wrap gap-1" : ""
       }`}
     >
@@ -182,7 +259,7 @@ export function LanguageSwitcher({
           key={item}
           type="button"
           onClick={() => onChange(item)}
-          className={`px-2.5 py-2 text-[10px] font-bold transition sm:px-3 sm:text-[11px] ${
+          className={`language-option px-2.5 py-2 text-[10px] font-bold transition sm:px-3 sm:text-[11px] ${
             variant === "footer" ?"tracking-[0.08em]" : "uppercase tracking-[0.14em] sm:tracking-[0.18em]"
           } ${
             locale === item
@@ -191,7 +268,10 @@ export function LanguageSwitcher({
           }`}
           aria-pressed={locale === item}
         >
-          {variant === "footer" ?languageLabels[item] : item.toUpperCase()}
+          <span className="language-button-inner inline-flex items-center justify-center gap-1.5">
+            <FlagIcon locale={item} />
+            <span>{variant === "footer" ? languageMeta[item].name : languageMeta[item].code}</span>
+          </span>
         </button>
       ))}
     </div>
@@ -223,12 +303,24 @@ export function SiteChrome({
   const navItems = useMemo(
     () => [
       { label: t.nav.home, href: "/#home", activePaths: ["/", "/pt", "/en", "/es", "/hi", "/ar", "/tr"] },
+      {
+        label: insightLabels[locale].nav,
+        href: getInsightsPath(locale),
+        activePaths: [
+          "/insights-globais",
+          "/global-insights",
+          "/insights-globales",
+          "/global-insights-hi",
+          "/ar/global-insights",
+          "/tr/global-insights",
+        ],
+      },
       { label: t.nav.signals, href: "/sinais", activePaths: ["/sinais", "/signals"] },
       { label: t.nav.education, href: "/educacao", activePaths: ["/educacao"] },
       { label: t.nav.services, href: "/servicos", activePaths: ["/servicos", "/services"] },
       { label: t.nav.about, href: "/sobre", activePaths: ["/sobre", "/about"] },
     ],
-    [t],
+    [locale, t],
   );
 
   return (
@@ -259,7 +351,7 @@ export function SiteChrome({
 
           <div className="hidden items-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
             {navItems.map((item) => {
-              const isActive = item.activePaths.includes(pathname || "/");
+              const isActive = item.activePaths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
               return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
           </div>
@@ -269,9 +361,9 @@ export function SiteChrome({
           </div>
         </nav>
         <div className="mobile-nav-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
-          <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pt-2 text-sm">
+          <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-2 pt-2 text-sm">
             {navItems.map((item) => {
-              const isActive = item.activePaths.includes(pathname || "/");
+              const isActive = item.activePaths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
               return <a key={item.label} href={item.href} className={`mobile-nav-link nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-center text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
           </div>
@@ -418,7 +510,7 @@ export function WhatsAppSignalExample({
   ];
 
   return (
-    <section className="border-y border-ink/[0.08] bg-white px-5 py-20 md:px-8 md:py-24">
+    <section className="signal-example-box border-y border-ink/[0.08] bg-white px-5 py-20 md:px-8 md:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
         <div>
           <SectionHeader eyebrow={t.signalExample.eyebrow} title={t.signalExample.title} text={t.signalExample.text} />
@@ -575,15 +667,86 @@ export function SupportFooter({
         ? "Mercado Global para el Inversor Minorista"
         : locale === "hi"
           ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
+          : locale === "ar"
+            ? "\u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u0639\u0627\u0644\u0645\u064A\u0629 \u0644\u0644\u0645\u0633\u062A\u062B\u0645\u0631 \u0627\u0644\u0641\u0631\u062F\u064A"
+            : locale === "tr"
+              ? "Bireysel Yat\u0131r\u0131mc\u0131 \u0130\u00E7in K\u00FCresel Piyasa"
           : "Mercado Global para o Investidor de Varejo";
   const footerLabels =
     locale === "hi"
-      ? { social: "\u0938\u094B\u0936\u0932", language: "\u092D\u093E\u0937\u093E", marketLine: "Forex | Crypto | Commodities | Global Markets" }
+      ? {
+          social: "\u0938\u094B\u0936\u0932",
+          levels: "\u0938\u094D\u0924\u0930",
+          markets: "\u092C\u093E\u091C\u093E\u0930",
+          content: "\u0915\u0902\u091F\u0947\u0902\u091F",
+          language: "\u092D\u093E\u0937\u093E",
+          marketLine: "Forex | Crypto | Commodities | Global Markets",
+          levelLinks: ["Formiga \u0938\u094D\u0924\u0930", "Lobo \u0938\u094D\u0924\u0930", "Harpia \u0938\u094D\u0924\u0930"],
+        }
       : locale === "es"
-        ? { social: "Redes", language: "Idioma", marketLine: "Forex | Cripto | Commodities | Mercados Globales" }
+        ? {
+            social: "Redes",
+            levels: "Niveles",
+            markets: "Mercados",
+            content: "Contenido",
+            language: "Idioma",
+            marketLine: "Forex | Cripto | Commodities | Mercados Globales",
+            levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia"],
+          }
         : locale === "pt"
-          ? { social: "Redes", language: "Idioma", marketLine: "Forex | Cripto | Commodities | Mercados Globais" }
-          : { social: "Social", language: "Language", marketLine: "Forex | Crypto | Commodities | Global Markets" };
+          ? {
+              social: "Redes",
+              levels: "N\u00EDveis",
+              markets: "Mercados",
+              content: "Conte\u00FAdo",
+              language: "Idioma",
+              marketLine: "Forex | Cripto | Commodities | Mercados Globais",
+              levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
+            }
+          : locale === "ar"
+            ? {
+                social: "\u0627\u0644\u0634\u0628\u0643\u0627\u062A",
+                levels: "\u0627\u0644\u0645\u0633\u062A\u0648\u064A\u0627\u062A",
+                markets: "\u0627\u0644\u0623\u0633\u0648\u0627\u0642",
+                content: "\u0627\u0644\u0645\u062D\u062A\u0648\u0649",
+                language: "\u0627\u0644\u0644\u063A\u0629",
+                marketLine: "Forex | Crypto | Commodities | Global Markets",
+                levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia"],
+              }
+            : locale === "tr"
+              ? {
+                  social: "Sosyal",
+                  levels: "Seviyeler",
+                  markets: "Piyasalar",
+                  content: "Icerik",
+                  language: "Dil",
+                  marketLine: "Forex | Kripto | Emtialar | K\u00FCresel Piyasalar",
+                  levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi"],
+                }
+              : {
+                  social: "Social",
+                  levels: "Levels",
+                  markets: "Markets",
+                  content: "Content",
+                  language: "Language",
+                  marketLine: "Forex | Crypto | Commodities | Global Markets",
+                  levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level"],
+                };
+  const levelFooterLinks = [
+    { href: "/formiga", label: footerLabels.levelLinks[0] },
+    { href: "/lobo", label: footerLabels.levelLinks[1] },
+    { href: "/harpia", label: footerLabels.levelLinks[2] },
+  ];
+  const marketFooterSlugs: MarketSlug[] =
+    locale === "pt" ? [...publicMarketSlugs, "fundos-imobiliarios"] : publicMarketSlugs;
+  const marketFooterLinks = marketFooterSlugs.map((slug) => ({
+    href: `/${slug}`,
+    label: getMarketLabel(slug, locale),
+  }));
+  const contentFooterLinks = [
+    { href: getInsightsPath(locale), label: insightLabels[locale].nav },
+    ...marketFooterLinks,
+  ];
   const socials = [
     {
       label: "Instagram",
@@ -625,7 +788,7 @@ export function SupportFooter({
       </section>
 
       <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.15fr_0.78fr_0.82fr_0.82fr] lg:items-start">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.64fr_0.78fr_0.64fr_0.72fr_0.82fr] lg:items-start">
           <div>
             <a href="/#home" className="inline-flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
@@ -654,6 +817,36 @@ export function SupportFooter({
                   className="grid h-11 w-11 place-items-center border border-ink/[0.12] bg-paper text-ink transition hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-paper"
                 >
                   {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.levels}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              {levelFooterLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.content}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              {contentFooterLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+                >
+                  {link.label}
                 </a>
               ))}
             </div>

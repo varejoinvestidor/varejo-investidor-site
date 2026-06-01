@@ -28,9 +28,9 @@ const homeLiteCopy = {
       stats: ["Desde 2018", "sinais ao vivo", "Formiga / Lobo / Harpia"],
     },
     cards: [
-      { code: "FORMIGA", title: "Base financeira", text: "Educação por níveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/educacao" },
-      { code: "LOBO", title: "Estratégia e expansão", text: "Sinais ao vivo, leitura de mercado e decisões estruturadas para operar com disciplina.", href: "/sinais" },
-      { code: "HARPIA", title: "Patrimônio global", text: "Consultorias estratégicas para proteção, posicionamento, patrimônio e visão internacional.", href: "/servicos" },
+      { code: "FORMIGA", title: "Base financeira", text: "Educação por níveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/formiga" },
+      { code: "LOBO", title: "Estratégia e expansão", text: "Sinais ao vivo, leitura de mercado e decisões estruturadas para operar com disciplina.", href: "/lobo" },
+      { code: "HARPIA", title: "Patrimônio global", text: "Consultorias estratégicas para proteção, posicionamento, patrimônio e visão internacional.", href: "/harpia" },
     ],
     cardCta: "Saiba mais",
     final: {
@@ -60,9 +60,9 @@ const homeLiteCopy = {
       stats: ["Since 2018", "live signals", "Ant / Wolf / Harpy"],
     },
     cards: [
-      { code: "ANT", title: "Financial foundation", text: "Level-based education to build foundation, organize risk, and create the first pillars.", href: "/educacao" },
-      { code: "WOLF", title: "Strategy and expansion", text: "Live signals, market reading, and structured decisions for disciplined execution.", href: "/sinais" },
-      { code: "HARPY", title: "Global wealth", text: "Strategic consulting for protection, positioning, wealth, and international vision.", href: "/servicos" },
+      { code: "ANT", title: "Financial foundation", text: "Level-based education to build foundation, organize risk, and create the first pillars.", href: "/formiga" },
+      { code: "WOLF", title: "Strategy and expansion", text: "Live signals, market reading, and structured decisions for disciplined execution.", href: "/lobo" },
+      { code: "HARPY", title: "Global wealth", text: "Strategic consulting for protection, positioning, wealth, and international vision.", href: "/harpia" },
     ],
     cardCta: "Learn more",
     final: {
@@ -92,9 +92,9 @@ const homeLiteCopy = {
       stats: ["Desde 2018", "señales en vivo", "Hormiga / Lobo / Harpía"],
     },
     cards: [
-      { code: "HORMIGA", title: "Base financiera", text: "Educación por niveles para construir base, organizar riesgo y crear los primeros pilares.", href: "/educacao" },
-      { code: "LOBO", title: "Estrategia y expansión", text: "Señales en vivo, lectura de mercado y decisiones estructuradas para operar con disciplina.", href: "/sinais" },
-      { code: "HARPÍA", title: "Patrimonio global", text: "Consultorías estratégicas para protección, posicionamiento, patrimonio y visión internacional.", href: "/servicos" },
+      { code: "HORMIGA", title: "Base financiera", text: "Educación por niveles para construir base, organizar riesgo y crear los primeros pilares.", href: "/formiga" },
+      { code: "LOBO", title: "Estrategia y expansión", text: "Señales en vivo, lectura de mercado y decisiones estructuradas para operar con disciplina.", href: "/lobo" },
+      { code: "HARPÍA", title: "Patrimonio global", text: "Consultorías estratégicas para protección, posicionamiento, patrimonio y visión internacional.", href: "/harpia" },
     ],
     cardCta: "Saber más",
     final: {
@@ -124,9 +124,9 @@ const homeLiteCopy = {
       stats: ["2018 से", "लाइव सिग्नल", "चींटी / भेड़िया / गरुड़"],
     },
     cards: [
-      { code: "चींटी", title: "वित्तीय आधार", text: "आधार बनाने, जोखिम व्यवस्थित करने और पहले स्तंभ तैयार करने के लिए स्तर-आधारित शिक्षा।", href: "/educacao" },
-      { code: "भेड़िया", title: "रणनीति और विस्तार", text: "अनुशासित ऑपरेशन के लिए लाइव सिग्नल, बाजार-पठन और संरचित निर्णय।", href: "/sinais" },
-      { code: "गरुड़", title: "वैश्विक संपत्ति", text: "सुरक्षा, पोजिशनिंग, संपत्ति और अंतरराष्ट्रीय दृष्टि के लिए रणनीतिक सेवाएँ।", href: "/servicos" },
+      { code: "चींटी", title: "वित्तीय आधार", text: "आधार बनाने, जोखिम व्यवस्थित करने और पहले स्तंभ तैयार करने के लिए स्तर-आधारित शिक्षा।", href: "/formiga" },
+      { code: "भेड़िया", title: "रणनीति और विस्तार", text: "अनुशासित ऑपरेशन के लिए लाइव सिग्नल, बाजार-पठन और संरचित निर्णय।", href: "/lobo" },
+      { code: "गरुड़", title: "वैश्विक संपत्ति", text: "सुरक्षा, पोजिशनिंग, संपत्ति और अंतरराष्ट्रीय दृष्टि के लिए रणनीतिक सेवाएँ।", href: "/harpia" },
     ],
     cardCta: "और जानें",
     final: {
@@ -156,9 +156,9 @@ const homeLiteCopy = {
       stats: ["منذ 2018", "إشارات مباشرة", "النملة / الذئب / الهاربي"],
     },
     cards: [
-      { code: "النملة", title: "الأساس المالي", text: "تعليم بالمستويات لبناء القاعدة وتنظيم المخاطر وإنشاء الأعمدة الأولى.", href: "/educacao" },
-      { code: "الذئب", title: "الاستراتيجية والتوسع", text: "إشارات مباشرة وقراءة للسوق وقرارات منظمة للتنفيذ بانضباط.", href: "/sinais" },
-      { code: "الهاربي", title: "الثروة العالمية", text: "خدمات استراتيجية للحماية والتموضع وبناء الثروة والرؤية الدولية.", href: "/servicos" },
+      { code: "النملة", title: "الأساس المالي", text: "تعليم بالمستويات لبناء القاعدة وتنظيم المخاطر وإنشاء الأعمدة الأولى.", href: "/formiga" },
+      { code: "الذئب", title: "الاستراتيجية والتوسع", text: "إشارات مباشرة وقراءة للسوق وقرارات منظمة للتنفيذ بانضباط.", href: "/lobo" },
+      { code: "الهاربي", title: "الثروة العالمية", text: "خدمات استراتيجية للحماية والتموضع وبناء الثروة والرؤية الدولية.", href: "/harpia" },
     ],
     cardCta: "اعرف المزيد",
     final: {
@@ -188,9 +188,9 @@ const homeLiteCopy = {
       stats: ["2018'den beri", "canlı sinyaller", "Karınca / Kurt / Harpia"],
     },
     cards: [
-      { code: "KARINCA", title: "Finansal temel", text: "Temel oluşturmak, riski düzenlemek ve ilk sütunları kurmak için seviyeli eğitim.", href: "/educacao" },
-      { code: "KURT", title: "Strateji ve genişleme", text: "Disiplinli işlem için canlı sinyaller, piyasa okuma ve yapılandırılmış kararlar.", href: "/sinais" },
-      { code: "HARPIA", title: "Küresel varlık", text: "Koruma, konumlanma, varlık ve uluslararası vizyon için stratejik hizmetler.", href: "/servicos" },
+      { code: "KARINCA", title: "Finansal temel", text: "Temel oluşturmak, riski düzenlemek ve ilk sütunları kurmak için seviyeli eğitim.", href: "/formiga" },
+      { code: "KURT", title: "Strateji ve genişleme", text: "Disiplinli işlem için canlı sinyaller, piyasa okuma ve yapılandırılmış kararlar.", href: "/lobo" },
+      { code: "HARPIA", title: "Küresel varlık", text: "Koruma, konumlanma, varlık ve uluslararası vizyon için stratejik hizmetler.", href: "/harpia" },
     ],
     cardCta: "Daha fazla bilgi",
     final: {
@@ -312,7 +312,7 @@ export default function Home() {
             <h2 className="mt-5 text-balance font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-6xl">
               {copy.intro.title}
             </h2>
-            <div className="mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="home-stats mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {copy.intro.stats.map((stat, index) => (
                 <div key={stat} className="strategic-stat border-l-2 border-gold/[0.68] bg-paper px-4 py-4 shadow-fine">
                   {index === 1 ?<AnimatedCounter /> : <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>}
@@ -331,7 +331,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section className="px-5 py-20 md:px-8 md:py-24 lg:px-12 xl:px-16">
+      <section className="home-levels-section px-5 py-20 md:px-8 md:py-24 lg:px-12 xl:px-16">
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="section-team-stage relative mx-auto flex w-full max-w-[34rem] justify-center lg:max-w-none">
             <div className="section-team-depth absolute inset-0" />

@@ -2148,7 +2148,7 @@ main {
 }
 
 :root {
-  --mobile-header-height: 224px;
+  --mobile-header-height: 242px;
 }
 
 @media (max-width: 768px) {
@@ -2241,6 +2241,261 @@ main {
   .section-inner {
     margin-top: 0 !important;
     transform: none !important;
+  }
+}
+
+@media (max-width: 1279px) {
+  .mobile-nav-row > div {
+    overflow-x: visible !important;
+    scrollbar-width: auto !important;
+  }
+
+  .mobile-nav-row .mobile-nav-link {
+    flex: 0 1 calc(33.333% - 0.45rem);
+    min-width: 6.25rem;
+    max-width: 9rem;
+  }
+
+  .mobile-language-row > .language-switcher {
+    width: min(100%, 22rem);
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .mobile-language-row .language-option {
+    flex: 0 1 calc(33.333% - 0.25rem);
+    min-width: 0;
+  }
+
+  .language-button-inner {
+    width: 100%;
+  }
+
+  .language-flag {
+    font-size: 0.92em !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .signal-terminal-wrap,
+  .signal-terminal,
+  .signal-example-box,
+  .live-signal-card {
+    display: none !important;
+  }
+
+  .home-stats,
+  .stats-cards,
+  .numbers-section,
+  .home-metrics,
+  .about-metrics,
+  .since2018-card,
+  .signals-counter,
+  .levels-card,
+  .home-levels-section {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --mobile-header-height: 252px;
+  }
+
+  .mobile-nav-row .mobile-nav-link {
+    min-width: 5.8rem;
+    font-size: 0.72rem;
+  }
+
+  .mobile-language-row > .language-switcher {
+    width: min(100%, 20rem);
+  }
+}
+
+/* Premium mobile parity: keep the small-screen visual language as black, sharp, and institutional as desktop. */
+@media (max-width: 768px) {
+  html,
+  body {
+    background: #000000 !important;
+    color: #f4f0e8 !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 52% 0%, rgba(198, 153, 74, 0.04), transparent 22rem),
+      #000000 !important;
+  }
+
+  body::before {
+    background-image:
+      linear-gradient(rgba(244, 240, 232, 0.075) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244, 240, 232, 0.075) 1px, transparent 1px) !important;
+    background-size: 28px 28px !important;
+    filter: none !important;
+    opacity: 0.72 !important;
+  }
+
+  main,
+  section,
+  .home-hero,
+  .signals-hero,
+  .education-hero,
+  .services-hero,
+  .about-hero,
+  .page-hero,
+  .premium-stage,
+  .bg-paper,
+  .bg-white,
+  .bg-white\/80,
+  .bg-white\/90 {
+    background-color: #000000 !important;
+  }
+
+  .home-hero::after,
+  .signals-hero::after,
+  .education-hero::after,
+  .services-hero::after,
+  .about-hero::after,
+  .page-hero::after,
+  .education-levels-visual::before,
+  .hero-character-glow,
+  .services-hero-glow,
+  .about-hero-visual::before,
+  .education-levels-glow,
+  .section-team-depth,
+  .hero-mascot-depth {
+    background:
+      radial-gradient(circle at 50% 42%, rgba(198, 153, 74, 0.04), transparent 22rem) !important;
+    filter: none !important;
+    opacity: 0.78 !important;
+  }
+
+  .terminal-grid,
+  .luxury-grid,
+  .signal-grid,
+  .services-hero-grid {
+    background-image:
+      linear-gradient(rgba(244, 240, 232, 0.075) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244, 240, 232, 0.075) 1px, transparent 1px) !important;
+    background-size: 28px 28px !important;
+    opacity: 0.82 !important;
+    filter: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  .hero-headline,
+  .hero-title,
+  .page-title,
+  .font-serif {
+    color: #f4f0e8 !important;
+    text-shadow: none !important;
+  }
+
+  p,
+  li,
+  .text-ink,
+  .text-ink\/\[0\.42\],
+  .text-ink\/\[0\.45\],
+  .text-ink\/\[0\.48\],
+  .text-ink\/\[0\.58\],
+  .text-ink\/\[0\.62\],
+  .text-ink\/\[0\.64\],
+  .text-ink\/\[0\.65\],
+  .text-ink\/\[0\.66\],
+  .text-ink\/\[0\.68\],
+  .text-ink\/\[0\.7\],
+  .text-ink\/\[0\.72\],
+  .text-paper\/\[0\.42\],
+  .text-paper\/\[0\.48\],
+  .text-paper\/\[0\.5\],
+  .text-paper\/\[0\.55\],
+  .text-paper\/\[0\.66\],
+  .text-paper\/\[0\.68\],
+  .text-paper\/\[0\.72\],
+  .text-paper\/\[0\.76\] {
+    color: #b8b8b8 !important;
+    text-shadow: none !important;
+  }
+
+  .hero-subtitle,
+  .section-text,
+  .section-description,
+  .lead,
+  p.text-lg,
+  p.text-xl {
+    color: #d0d0d0 !important;
+  }
+
+  .glass-panel,
+  .terminal-module,
+  .education-academic-card,
+  .education-matrix,
+  .education-expansion,
+  .level-card,
+  .service-channel-card,
+  .broker-card,
+  .stat-card,
+  .strategic-stat,
+  article[class*="border"],
+  div[class*="border"][class*="bg-white"],
+  div[class*="border"][class*="bg-paper"] {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.01)),
+      #050505 !important;
+    border-color: rgba(198, 153, 74, 0.25) !important;
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .level-card:hover,
+  .service-channel-card:hover,
+  .education-academic-card:hover,
+  .broker-card:hover {
+    border-color: rgba(198, 153, 74, 0.45) !important;
+    box-shadow: 0 24px 60px rgba(198, 153, 74, 0.08), 0 22px 58px rgba(0, 0, 0, 0.56) !important;
+  }
+
+  .premium-button-gold,
+  .level-card .learn-more,
+  .level-card .btn-more,
+  a[class*="bg-gold"],
+  button[class*="bg-gold"] {
+    background: #c6994a !important;
+    border-color: #c6994a !important;
+    color: #000000 !important;
+    box-shadow: 0 16px 34px rgba(198, 153, 74, 0.16) !important;
+  }
+
+  .premium-button-gold:hover,
+  .level-card .learn-more:hover,
+  .level-card .btn-more:hover,
+  a[class*="bg-gold"]:hover,
+  button[class*="bg-gold"]:hover {
+    background: #d4a858 !important;
+    border-color: #d4a858 !important;
+    box-shadow: 0 18px 42px rgba(198, 153, 74, 0.22) !important;
+  }
+
+  .premium-button-ghost,
+  a[class*="border-ink"]:not([class*="bg-gold"]):not([class*="bg-rise"]),
+  button[class*="border-ink"]:not([class*="bg-gold"]):not([class*="bg-rise"]) {
+    background: #0b0b0b !important;
+    border-color: rgba(198, 153, 74, 0.35) !important;
+    color: #f4f0e8 !important;
+  }
+
+  a[class*="bg-rise"],
+  button[class*="bg-rise"] {
+    box-shadow: none !important;
+  }
+
+  img,
+  svg {
+    image-rendering: auto;
   }
 }
 
