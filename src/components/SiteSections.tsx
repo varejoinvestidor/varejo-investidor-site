@@ -97,6 +97,7 @@ export function useSiteLocale() {
   useEffect(() => {
     const routedLocale = localeFromPath(pathname);
     const saved =
+      window.localStorage.getItem("varejo_language") ??
       window.localStorage.getItem("language") ??
       window.localStorage.getItem("varejo-investidor-locale");
     const nextLocale = routedLocale ?? (isLocale(saved) ? saved : detectLocale());
@@ -107,6 +108,8 @@ export function useSiteLocale() {
   function changeLocale(nextLocale: Locale) {
     setLocale(nextLocale);
     applyDocumentLocale(nextLocale);
+    window.localStorage.setItem("varejo_language", nextLocale);
+    window.localStorage.setItem("varejo_language_selected", "true");
     window.localStorage.setItem("language", nextLocale);
     window.localStorage.setItem("varejo-investidor-locale", nextLocale);
   }
@@ -221,6 +224,15 @@ function FlagIcon({ locale }: { locale: Locale }) {
   );
 }
 
+const languageMeta: Record<Locale, { code: string; name: string }> = {
+  pt: { code: "PT", name: "Portugu\u00EAs" },
+  en: { code: "EN", name: "English" },
+  es: { code: "ES", name: "Espa\u00F1ol" },
+  hi: { code: "HI", name: "\u0939\u093F\u0928\u094D\u0926\u0940" },
+  ar: { code: "AR", name: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" },
+  tr: { code: "TR", name: "T\u00FCrk\u00E7e" },
+};
+
 export function LanguageSwitcher({
   locale,
   onChange,
@@ -228,31 +240,13 @@ export function LanguageSwitcher({
 }: {
   locale: Locale;
   onChange: (locale: Locale) => void;
-  variant?: "compact" | "footer";
+  variant?: "compact" | "footer" | "mobile";
 }) {
-  const languageLabels: Record<Locale, string> = {
-    pt: "\uD83C\uDDE7\uD83C\uDDF7 Portugu\u00EAs",
-    en: "\uD83C\uDDFA\uD83C\uDDF8 English",
-    es: "\uD83C\uDDEA\uD83C\uDDF8 Espa\u00F1ol",
-    hi: "\uD83C\uDDEE\uD83C\uDDF3 \u0939\u093F\u0928\u094D\u0926\u0940",
-    ar: "\uD83C\uDDF8\uD83C\uDDE6 العربية",
-    tr: "\uD83C\uDDF9\uD83C\uDDF7 T\u00FCrk\u00E7e",
-  };
-
-  const languageMeta: Record<Locale, { code: string; name: string }> = {
-    pt: { code: "PT", name: "Português" },
-    en: { code: "EN", name: "English" },
-    es: { code: "ES", name: "Español" },
-    hi: { code: "HI", name: "हिन्दी" },
-    ar: { code: "AR", name: "العربية" },
-    tr: { code: "TR", name: "Türkçe" },
-  };
-
   return (
     <div
-      className={`language-switcher flex shrink-0 items-center border border-ink/[0.12] bg-paper p-1 shadow-fine ${
-        variant === "footer" ?"flex-wrap gap-1" : ""
-      }`}
+      className={`language-switcher shrink-0 border border-ink/[0.12] bg-paper p-1 shadow-fine ${
+        variant === "mobile" ? "mobile-language-grid" : "flex items-center"
+      } ${variant === "footer" ? "flex-wrap gap-1" : ""}`}
     >
       {LOCALES.map((item) => (
         <button
@@ -260,10 +254,10 @@ export function LanguageSwitcher({
           type="button"
           onClick={() => onChange(item)}
           className={`language-option px-2.5 py-2 text-[10px] font-bold transition sm:px-3 sm:text-[11px] ${
-            variant === "footer" ?"tracking-[0.08em]" : "uppercase tracking-[0.14em] sm:tracking-[0.18em]"
+            variant === "footer" ? "tracking-[0.08em]" : "uppercase tracking-[0.14em] sm:tracking-[0.18em]"
           } ${
             locale === item
-              ?"bg-gold text-ink"
+              ? "bg-gold text-ink"
               : "text-ink/[0.72] hover:bg-paper/[0.06] hover:text-ink"
           }`}
           aria-pressed={locale === item}
@@ -288,6 +282,31 @@ export function SiteChrome({
   onLocaleChange: (locale: Locale) => void;
 }) {
   const pathname = usePathname();
+  const [mobileLanguageOpen, setMobileLanguageOpen] = useState(true);
+
+  useEffect(() => {
+    const hasSelectedLanguage = window.localStorage.getItem("varejo_language_selected") === "true";
+    setMobileLanguageOpen(!hasSelectedLanguage);
+    document.documentElement.style.setProperty(
+      "--mobile-header-height",
+      hasSelectedLanguage ? "210px" : "300px",
+    );
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--mobile-header-height",
+      mobileLanguageOpen ? "300px" : "210px",
+    );
+  }, [mobileLanguageOpen]);
+
+  function handleMobileLocaleChange(nextLocale: Locale) {
+    onLocaleChange(nextLocale);
+    window.localStorage.setItem("varejo_language", nextLocale);
+    window.localStorage.setItem("varejo_language_selected", "true");
+    setMobileLanguageOpen(false);
+  }
+
   const brandTagline =
     locale === "en"
       ? "Global Markets for Retail Investors"
@@ -369,7 +388,20 @@ export function SiteChrome({
           </div>
         </div>
         <div className="mobile-language-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
-          <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
+          {mobileLanguageOpen ? (
+            <LanguageSwitcher locale={locale} onChange={handleMobileLocaleChange} variant="mobile" />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setMobileLanguageOpen(true)}
+              className="mobile-language-compact"
+              aria-expanded={mobileLanguageOpen}
+            >
+              <span aria-hidden="true">🌐</span>
+              <FlagIcon locale={locale} />
+              <span>{languageMeta[locale].code}</span>
+            </button>
+          )}
         </div>
       </header>
     </div>
