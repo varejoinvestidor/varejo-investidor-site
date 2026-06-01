@@ -185,7 +185,6 @@ export function SiteChrome({
   onLocaleChange: (locale: Locale) => void;
 }) {
   const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const brandTagline =
     locale === "en"
       ? "Global Markets for Retail Investors"
@@ -241,20 +240,17 @@ export function SiteChrome({
           <div className="hidden items-center gap-2 xl:flex">
             <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
           </div>
-          <button type="button" className="site-menu-button grid h-10 w-10 place-items-center border border-ink/[0.12] text-ink xl:hidden" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label="Menu">
-            <span className="flex flex-col gap-1.5"><span className="block h-px w-5 bg-current" /><span className="block h-px w-5 bg-current" /><span className="block h-px w-5 bg-current" /></span>
-          </button>
         </nav>
-        <div className="mobile-language-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
-          <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
-        </div>
-        <div className={`mobile-nav-panel border-t border-ink/[0.08] px-5 pb-3 md:px-8 xl:hidden ${mobileMenuOpen ? "block" : "hidden"}`}>
-          <div className="mx-auto grid max-w-7xl gap-2 pt-3 text-sm sm:flex sm:overflow-x-auto">
+        <div className="mobile-nav-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
+          <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pt-2 text-sm">
             {navItems.map((item) => {
               const isActive = item.activePaths.includes(pathname || "/");
-              return <a key={item.label} href={item.href} className={`nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-center text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
+              return <a key={item.label} href={item.href} className={`mobile-nav-link nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-center text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
           </div>
+        </div>
+        <div className="mobile-language-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
+          <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
         </div>
       </header>
     </div>

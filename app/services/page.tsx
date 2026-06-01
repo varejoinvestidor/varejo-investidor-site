@@ -5,6 +5,8 @@ import Image from "next/image";
 import {
   BrokerBanners,
   ContactSection,
+  ELITE_LASTLINK_URL,
+  ELITE_STRIPE_LINKS,
   FreeChannelCTA,
   SectionHeader,
   SiteChrome,
@@ -224,6 +226,12 @@ export default function ServicesPage() {
   const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale];
   const compactServices = compactServicesByLocale[locale as keyof typeof compactServicesByLocale] ?? compactServicesByLocale.en;
   const packageCopy = elitePackagesByLocale[locale as keyof typeof elitePackagesByLocale] ?? elitePackagesByLocale.en;
+  const internationalElitePrices = [
+    ["Monthly", "US$30"],
+    ["3 Months", "US$80"],
+    ["6 Months", "US$145"],
+    ["Annual", "US$240"],
+  ];
   const productLabel =
     locale === "en"
       ? "Product"
@@ -324,28 +332,87 @@ export default function ServicesPage() {
                       ) : null}
                       {index === 0 ? (
                         <div className="elite-package-table mt-6 border border-gold/[0.24] bg-ink/[0.82] p-4">
-                          <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">{packageCopy.title}</p>
-                          <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                            {packageCopy.items.map(([period, price, badge], packageIndex) => (
-                              <div key={period} className="relative border border-gold/[0.16] bg-paper/[0.05] p-3">
-                                {badge ? (
-                                  <span className="mb-2 inline-block bg-gold px-2 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-ink">
-                                    {badge}
+                          {isPt ? (
+                            <>
+                              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">Escolha sua forma de pagamento</p>
+                              <p className="mt-3 text-sm leading-6 text-paper/[0.64]">
+                                Clientes no Brasil podem pagar em reais via Lastlink. Clientes internacionais podem assinar em dólar via Stripe.
+                              </p>
+                              <div className="mt-5 grid gap-4">
+                                <div className="border border-gold/[0.32] bg-paper/[0.05] p-4">
+                                  <span className="inline-block bg-gold px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-ink">
+                                    Brasil
                                   </span>
-                                ) : null}
-                                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/[0.58]">{period}</p>
-                                <p className="mt-1 font-serif text-2xl tracking-[-0.04em] text-gold">{price}</p>
-                                <a
-                                  href={getElitePlanHref(locale, packageIndex)}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="mt-3 inline-block border border-gold/[0.35] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
-                                >
-                                  {packageCopy.cta}
-                                </a>
+                                  <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em] text-paper">Pagamento Brasil</h3>
+                                  <p className="mt-3 text-sm leading-6 text-paper/[0.66]">
+                                    Assine o Canal Elite em reais com checkout nacional seguro pela Lastlink.
+                                  </p>
+                                  <p className="mt-4 font-serif text-2xl tracking-[-0.04em] text-gold">A partir de R$149,90/mês</p>
+                                  <a
+                                    href={ELITE_LASTLINK_URL}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-4 flex w-full items-center justify-center border border-gold bg-gold px-4 py-3 text-center text-[10px] font-black uppercase tracking-[0.14em] text-ink transition hover:-translate-y-0.5"
+                                  >
+                                    Pagar em reais
+                                  </a>
+                                </div>
+
+                                <div className="border border-gold/[0.2] bg-paper/[0.035] p-4">
+                                  <span className="inline-block border border-gold/[0.45] px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-gold">
+                                    Internacional
+                                  </span>
+                                  <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em] text-paper">Pagamento Internacional</h3>
+                                  <p className="mt-3 text-sm leading-6 text-paper/[0.66]">
+                                    Para clientes fora do Brasil, assine em dólar via Stripe.
+                                  </p>
+                                  <div className="mt-4 grid gap-2">
+                                    {internationalElitePrices.map(([period, price], packageIndex) => (
+                                      <div key={period} className="grid gap-2 border border-gold/[0.14] bg-ink/[0.62] p-3 sm:grid-cols-[1fr_auto] sm:items-center">
+                                        <div>
+                                          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-paper/[0.58]">{period}</p>
+                                          <p className="mt-1 font-mono text-base font-bold text-gold">{price}</p>
+                                        </div>
+                                        <a
+                                          href={ELITE_STRIPE_LINKS[packageIndex]}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="border border-gold/[0.45] px-3 py-2 text-center text-[9px] font-black uppercase tracking-[0.12em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
+                                        >
+                                          Assinar em dólar
+                                        </a>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
                               </div>
-                            ))}
-                          </div>
+                            </>
+                          ) : (
+                            <>
+                              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">{packageCopy.title}</p>
+                              <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                                {packageCopy.items.map(([period, price, badge], packageIndex) => (
+                                  <div key={period} className="relative border border-gold/[0.16] bg-paper/[0.05] p-3">
+                                    {badge ? (
+                                      <span className="mb-2 inline-block bg-gold px-2 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-ink">
+                                        {badge}
+                                      </span>
+                                    ) : null}
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/[0.58]">{period}</p>
+                                    <p className="mt-1 font-serif text-2xl tracking-[-0.04em] text-gold">{price}</p>
+                                    <a
+                                      href={getElitePlanHref(locale, packageIndex)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="mt-3 inline-block border border-gold/[0.35] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
+                                    >
+                                      {packageCopy.cta}
+                                    </a>
+                                  </div>
+                                ))}
+                              </div>
+                            </>
+                          )}
                         </div>
                       ) : null}
                     </div>

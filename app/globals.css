@@ -1720,6 +1720,7 @@ main {
   .site-header-nav {
     padding-top: 0.6rem !important;
     padding-bottom: 0.55rem !important;
+    justify-content: flex-start !important;
   }
 
   .site-brand span:first-child {
@@ -1727,9 +1728,15 @@ main {
     width: 2.25rem !important;
   }
 
-  .site-menu-button {
-    height: 2.35rem !important;
-    width: 2.35rem !important;
+  .site-brand .truncate {
+    overflow: visible !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+  }
+
+  .site-brand .font-serif,
+  .site-brand span.block {
+    white-space: nowrap !important;
   }
 
   .mobile-language-row {
@@ -1749,17 +1756,27 @@ main {
     padding: 0.45rem 0.45rem !important;
   }
 
-  .mobile-nav-panel > div {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.45rem !important;
-    padding-top: 0.65rem !important;
+  .mobile-nav-row > div {
+    scrollbar-width: none;
   }
 
-  .mobile-nav-panel .nav-link {
-    min-height: 2.35rem;
-    padding: 0.62rem 0.4rem !important;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
+  .mobile-nav-row > div::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-nav-row .mobile-nav-link {
+    min-height: 2.45rem;
+    padding: 0.66rem 0.8rem !important;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    background: rgba(8, 8, 8, 0.92) !important;
+    color: #f7f3eb !important;
+  }
+
+  .mobile-nav-row .mobile-nav-link.active {
+    background: #b8892d !important;
+    border-color: #b8892d !important;
+    color: #050505 !important;
   }
 }
 
@@ -1803,7 +1820,7 @@ main {
   }
 
   .site-brand {
-    max-width: calc(100vw - 5rem);
+    max-width: 100%;
   }
 
   .site-brand .font-serif {
@@ -1814,19 +1831,16 @@ main {
     border-color: rgba(184, 137, 45, 0.12) !important;
   }
 
-  .mobile-nav-panel {
+  .mobile-nav-row {
     padding-left: 0.9rem !important;
     padding-right: 0.9rem !important;
+    padding-bottom: 0.45rem !important;
   }
 
-  .mobile-nav-panel > div {
-    grid-template-columns: 1fr;
-    max-height: 16.5rem;
-    overflow-y: auto;
-  }
-
-  .mobile-nav-panel .nav-link {
-    background: rgba(8, 8, 8, 0.92) !important;
+  .mobile-nav-row > div {
+    gap: 0.45rem !important;
+    overflow-x: auto;
+    padding-top: 0.45rem !important;
   }
 
   .home-hero,
