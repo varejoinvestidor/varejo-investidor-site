@@ -2147,4 +2147,101 @@ main {
   }
 }
 
+:root {
+  --mobile-header-height: 224px;
+}
+
+@media (max-width: 768px) {
+  .site-chrome {
+    position: fixed !important;
+    inset: 0 0 auto 0 !important;
+    z-index: 9999 !important;
+  }
+
+  .mobile-header,
+  header.site-header {
+    position: relative !important;
+    inset: auto !important;
+    z-index: auto !important;
+  }
+
+  main,
+  .main-content,
+  .page-content {
+    padding-top: var(--mobile-header-height) !important;
+  }
+
+  .home-hero,
+  .signals-hero,
+  .education-hero,
+  .services-hero,
+  .about-hero,
+  .page-hero,
+  main > section:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 28px !important;
+    overflow: visible !important;
+  }
+
+  h1,
+  .hero-title,
+  .page-title,
+  .hero-headline {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    overflow: visible !important;
+    font-size: clamp(42px, 10vw, 56px) !important;
+    line-height: 1 !important;
+  }
+
+  .global-ticker {
+    height: 28px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+  }
+
+  .ticker-track {
+    display: flex !important;
+    min-width: max-content !important;
+    gap: 28px !important;
+    white-space: nowrap !important;
+  }
+
+  .ticker-item {
+    flex: 0 0 auto !important;
+    font-size: 10px !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .stats-grid,
+  .hero-stats,
+  .mt-9.grid:has(.strategic-stat) {
+    margin-top: 28px !important;
+    gap: 14px !important;
+  }
+
+  .stat-card,
+  .strategic-stat {
+    min-height: 96px !important;
+    padding: 24px 22px !important;
+  }
+
+  .home-hero .grid,
+  .signals-hero .grid,
+  .education-hero .grid,
+  .services-hero .grid,
+  .about-hero .grid,
+  .page-hero .grid {
+    overflow: visible !important;
+  }
+
+  .education-campus-section,
+  .education-levels-visual,
+  .hero-content,
+  .section-inner {
+    margin-top: 0 !important;
+    transform: none !important;
+  }
+}
+
 

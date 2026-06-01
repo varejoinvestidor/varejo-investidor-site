@@ -255,7 +255,6 @@ export default function Home() {
               {copy.intro.stats.map((stat, index) => (
                 <div key={stat} className="strategic-stat border-l-2 border-gold/[0.68] bg-paper px-4 py-4 shadow-fine">
                   {index === 1 ?<AnimatedCounter /> : <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>}
-                  {index === 1 ?<p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-ink/[0.5]">{stat}</p> : null}
                 </div>
               ))}
             </div>

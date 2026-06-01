@@ -251,7 +251,7 @@ export default function SobrePage() {
     <main lang={locale === "hi" ? "hi" : undefined} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="premium-stage relative px-5 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
+      <section className="about-hero premium-stage relative px-5 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">
         <div className="finance-particles" />
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-gold/[0.08] blur-3xl" />
         <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-rise/[0.08] blur-3xl" />

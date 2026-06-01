@@ -205,7 +205,7 @@ export function SiteChrome({
   );
 
   return (
-    <div className="fixed left-0 right-0 top-0 z-50">
+    <div className="site-chrome fixed left-0 right-0 top-0 z-50">
       <div className="global-ticker border-b border-ink/[0.08] bg-ink px-3 text-paper md:px-5">
         <div className="mx-auto flex max-w-7xl items-center gap-4 overflow-hidden py-1.5 text-[9px] uppercase tracking-[0.16em] sm:gap-7 sm:py-2 sm:text-[11px] sm:tracking-[0.22em]">
           <span className="shrink-0 text-gold">{t.tickerLabel}</span>
