@@ -35,7 +35,7 @@
     eyebrow: "Análises e sinais desde 2018",
     title: "Receba análises e sinais diretamente no seu WhatsApp.",
     text: "Deixe a análise conosco. Receba sinais diretamente no WhatsApp com entrada, alvo e stop definidos. Basta copiar e inserir a operação na sua própria conta.",
-    cta: "RECEBER SINAIS NO WHATSAPP",
+    cta: "TESTE OS SINAIS GRATUITAMENTE",
     stats: ["8 anos de mercado", "Desde 2018", "+4.200 sinais enviados", "Forex, ouro, petróleo, índices, criptomoedas e moedas globais"],
     example: {
       title: "Exemplo de sinal enviado no WhatsApp",
@@ -125,7 +125,7 @@
     eyebrow: "Exemplo de sinal recebido no WhatsApp",
     title: "O sinal chega estruturado para leitura rápida.",
     text: "Cada envio organiza ativo, direção, entrada, take profit, stop loss e uma análise curta do cenário.",
-    cta: "RECEBER SINAIS NO WHATSAPP",
+    cta: "TESTE OS SINAIS GRATUITAMENTE",
     signal: "Sinal: 4.169",
     asset: "GBP/USD COMPRA 1.34497",
     takeProfit: "Take Profit: 1.34766",

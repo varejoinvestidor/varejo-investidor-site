@@ -508,6 +508,26 @@ export default function EducationPage() {
             <p className="relative mx-auto mt-4 max-w-3xl text-xs font-bold uppercase tracking-[0.18em] text-gold">{copy.expansionUpdate}</p>
           </div>
         </div>
+
+        {locale === "pt" ? (
+          <div className="mx-auto mt-6 max-w-7xl">
+            <a
+              href="/calculadora-de-risco"
+              className="group grid gap-4 border border-gold/[0.22] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:border-gold hover:shadow-premium md:grid-cols-[1fr_auto] md:items-center md:p-7"
+            >
+              <span>
+                <span className="block text-xs font-black uppercase tracking-[0.26em] text-gold">Ferramenta educacional</span>
+                <span className="mt-3 block font-serif text-3xl tracking-[-0.04em] text-ink">Calculadora de Risco</span>
+                <span className="mt-2 block max-w-3xl text-sm leading-7 text-ink/[0.64]">
+                  Calcule lote, stop, risco por operação e sobrevivência da conta antes de operar.
+                </span>
+              </span>
+              <span className="inline-flex items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink transition group-hover:bg-ink group-hover:text-gold">
+                Abrir calculadora
+              </span>
+            </a>
+          </div>
+        ) : null}
       </section>
 
       <ForexBrokerBannerWide language={locale} />

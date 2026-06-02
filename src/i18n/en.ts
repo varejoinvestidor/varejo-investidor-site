@@ -32,13 +32,13 @@
     eyebrow: "Free entry",
   },
   signalBlock: {
-    eyebrow: "Live signals since 2018",
-    title: "Structured trades delivered with context and clear rules.",
-    text: "Varejo Investidor delivers structured trades with asset, direction, entry, target, stop, and market context. You receive the signal ready to execute in your own account with clarity and discipline.",
-    cta: "Join Elite Channel",
+    eyebrow: "Analysis and signals since 2018",
+    title: "Receive analysis and trading signals directly on WhatsApp.",
+    text: "Leave the analysis to us. Receive signals directly on WhatsApp with entry, target and stop defined. Just copy the information and place the trade in your own account.",
+    cta: "TEST SIGNALS FOR FREE",
     stats: ["8 years in market", "Since 2018", "+4,200 live signals", "Forex, gold, oil, crypto, indices, and global currencies"],
     example: {
-      title: "Live signal example",
+      title: "Signal example sent on WhatsApp",
       asset: "Asset",
       direction: "Direction",
       entry: "Entry",

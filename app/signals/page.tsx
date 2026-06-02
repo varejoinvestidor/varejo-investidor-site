@@ -18,6 +18,7 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
+import { eliteReportPaths } from "../../src/components/EliteReportHub";
 
 const howItWorks = [
   "2 a 5 sinais por dia",
@@ -33,12 +34,6 @@ const ichimokuPoints = [
   "alvo e stop",
   "informações do ativo",
   "gerenciamento de risco",
-];
-
-const reports = [
-  ["AGO/2018", "Relatório Elite", "124 sinais", "+18.4%", "Disponível"],
-  ["JAN/2021", "Relatório Elite", "98 sinais", "+11.2%", "Disponível"],
-  ["MAR/2024", "Relatório Elite", "137 sinais", "+22.7%", "Disponível"],
 ];
 
 const formigaBullets = [
@@ -128,10 +123,10 @@ const signalCopyByLocale = {
     now: "Assinar agora",
   },
   en: {
-    howEyebrow: "Elite Channel",
-    howTitle: "How the Elite Channel Works",
-    howText: "The Elite Channel delivers structured live trades directly on WhatsApp with operational context and risk management.",
-    howItems: ["2 to 5 signals per day", "Direct WhatsApp delivery", "Entry, target, and stop defined", "Operational context and market reading"],
+    howEyebrow: "WhatsApp",
+    howTitle: "How signals sent on WhatsApp work",
+    howText: "Our team follows global markets and sends analysis and signals directly on WhatsApp. You receive the trade information and execute it in your own account.",
+    howItems: ["2 to 5 signals per day", "Direct WhatsApp delivery", "Entry, target, and stop defined", "Market analysis and context"],
     scheduleEyebrow: "Trading hours",
     scheduleTitle: "Trading Hours",
     scheduleText: "Signals are usually sent during the main liquidity windows of the market, from 8 AM to 3 PM and also from 9 PM to midnight, Brasília time.",
@@ -160,7 +155,7 @@ const signalCopyByLocale = {
     eliteTitle: "Elite Harpy Channel",
     eliteStructure: "Elite Structure",
     eliteButton: "Join Elite",
-    eliteItems: ["complete signals", "2 to 5 signals per day", "structured trades", "operational context", "Forex", "gold", "oil", "indices", "crypto", "institutional reading", "closed community", "recorded Ant-level classes", "recorded Wolf-level classes", "recorded Harpy-level classes", "Elite structure"],
+    eliteItems: ["complete signals", "2 to 5 signals per day", "entry, target, and stop defined", "market analysis", "Forex", "gold", "oil", "indices", "crypto", "institutional reading", "closed community", "recorded Ant-level classes", "recorded Wolf-level classes", "recorded Harpy-level classes", "Elite structure"],
     packagesEyebrow: "Packages",
     packagesTitle: "Elite Access",
     packagesText: "Choose your package to access 100% of signals, the exclusive group, market analysis, recorded classes, and Harpy-level content inside Varejo Investidor.",
@@ -170,10 +165,10 @@ const signalCopyByLocale = {
     now: "Subscribe now",
   },
   es: {
-    howEyebrow: "Canal Elite",
-    howTitle: "Cómo funciona el Canal Elite",
-    howText: "El Canal Elite entrega operaciones estructuradas en vivo directamente por WhatsApp con contexto operativo y gestión de riesgo.",
-    howItems: ["2 a 5 señales por día", "Envío directo por WhatsApp", "Entrada, objetivo y stop definidos", "Contexto operativo y lectura de mercado"],
+    howEyebrow: "WhatsApp",
+    howTitle: "Cómo funcionan las señales enviadas por WhatsApp",
+    howText: "Nuestro equipo acompaña los mercados globales y envía análisis y señales directamente por WhatsApp. Recibes la información de la operación y la ejecutas en tu propia cuenta.",
+    howItems: ["2 a 5 señales por día", "Envío directo por WhatsApp", "Entrada, objetivo y stop definidos", "Análisis y contexto de mercado"],
     scheduleEyebrow: "Horarios operativos",
     scheduleTitle: "Horarios operativos",
     scheduleText: "Las señales suelen enviarse durante los principales períodos de liquidez del mercado, entre las 8h y las 15h, y también entre las 21h y las 00h, horario de Brasilia.",
@@ -202,7 +197,7 @@ const signalCopyByLocale = {
     eliteTitle: "Canal Elite Harpía",
     eliteStructure: "Estructura Elite",
     eliteButton: "Entrar al Elite",
-    eliteItems: ["señales completas", "2 a 5 señales por día", "operaciones estructuradas", "contexto operativo", "Forex", "oro", "petróleo", "índices", "cripto", "lectura institucional", "comunidad cerrada", "clases grabadas nivel Hormiga", "clases grabadas nivel Lobo", "clases grabadas nivel Harpía", "estructura Elite"],
+    eliteItems: ["señales completas", "2 a 5 señales por día", "entrada, objetivo y stop definidos", "análisis de mercado", "Forex", "oro", "petróleo", "índices", "cripto", "lectura institucional", "comunidad cerrada", "clases grabadas nivel Hormiga", "clases grabadas nivel Lobo", "clases grabadas nivel Harpía", "estructura Elite"],
     packagesEyebrow: "Paquetes",
     packagesTitle: "Acceso al Elite",
     packagesText: "Elige tu paquete para acceder al 100% de las señales, grupo exclusivo, análisis, clases grabadas y contenido nivel Harpía dentro de Varejo Investidor.",
@@ -254,10 +249,10 @@ const signalCopyByLocale = {
     now: "اشترك الآن",
   },
   tr: {
-    howEyebrow: "Elite Kanalı",
-    howTitle: "Elite Kanalı nasıl çalışır",
-    howText: "Elite Kanalı, operasyonel bağlam ve risk yönetimiyle yapılandırılmış canlı işlemleri doğrudan WhatsApp üzerinden gönderir.",
-    howItems: ["Günde 2 ila 5 sinyal", "Doğrudan WhatsApp gönderimi", "Giriş, hedef ve stop belirlenmiş", "Operasyonel bağlam ve piyasa okuma"],
+    howEyebrow: "WhatsApp",
+    howTitle: "WhatsApp üzerinden gönderilen sinyaller nasıl çalışır",
+    howText: "Ekibimiz küresel piyasaları takip eder ve analizleri ve sinyalleri doğrudan WhatsApp üzerinden gönderir. İşlem bilgilerini alır ve kendi hesabınızda uygularsınız.",
+    howItems: ["Günde 2 ila 5 sinyal", "Doğrudan WhatsApp gönderimi", "Giriş, hedef ve stop belirlenmiş", "Piyasa analizi ve bağlamı"],
     scheduleEyebrow: "İşlem saatleri",
     scheduleTitle: "İşlem saatleri",
     scheduleText: "Sinyaller genellikle piyasanın ana likidite dönemlerinde, Brasília saatine göre 08:00-15:00 ve 21:00-00:00 arasında gönderilir.",
@@ -286,7 +281,7 @@ const signalCopyByLocale = {
     eliteTitle: "Elite Harpia Kanalı",
     eliteStructure: "Elite Yapı",
     eliteButton: "Elite'e katıl",
-    eliteItems: ["tam sinyaller", "günde 2 ila 5 sinyal", "yapılandırılmış işlemler", "operasyonel bağlam", "Forex", "altın", "petrol", "endeksler", "kripto", "kurumsal okuma", "kapalı topluluk", "Karınca seviyesi kayıtlı dersler", "Kurt seviyesi kayıtlı dersler", "Harpia seviyesi kayıtlı dersler", "Elite yapı"],
+    eliteItems: ["tam sinyaller", "günde 2 ila 5 sinyal", "giriş, hedef ve stop belirlenmiş", "piyasa analizi", "Forex", "altın", "petrol", "endeksler", "kripto", "kurumsal okuma", "kapalı topluluk", "Karınca seviyesi kayıtlı dersler", "Kurt seviyesi kayıtlı dersler", "Harpia seviyesi kayıtlı dersler", "Elite yapı"],
     packagesEyebrow: "Paketler",
     packagesTitle: "Elite Erişim",
     packagesText: "Sinyallerin %100'üne, özel gruba, piyasa analizlerine, kayıtlı derslere ve Harpia seviyesi içeriğe erişmek için paketini seç.",
@@ -302,6 +297,19 @@ const whatsappPrints = [
   { label: "WhatsApp print 02", src: "/signals/whatsapp-print-02.jpg" },
   { label: "WhatsApp print 03", src: "/signals/whatsapp-print-03.jpg" },
 ];
+
+const PT_FREE_SIGNAL_TEST_URL = "https://whatsapp.com/channel/0029VasGTTE6RGJD46g47c1h";
+
+const reportCtaLabels = {
+  pt: "VER RELATÓRIOS E RESULTADOS",
+  en: "VIEW REPORTS AND RESULTS",
+  es: "VER REPORTES Y RESULTADOS",
+  hi: "REPORTS और RESULTS देखें",
+  ar: "عرض التقارير والنتائج",
+  tr: "RAPORLARI VE SONUÇLARI GÖR",
+  id: "LIHAT LAPORAN DAN HASIL",
+  vi: "XEM BÁO CÁO VÀ KẾT QUẢ",
+} as const;
 
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
@@ -361,16 +369,13 @@ export default function SignalsPage() {
     : signalCopyByLocale[locale as keyof typeof signalCopyByLocale] ?? signalCopyByLocale.en;
   const howItems: string[] = signalPageCopy?.howItems ?? howItWorks;
   const ichimokuItems: string[] = signalPageCopy?.ichimokuItems ?? ichimokuPoints;
-  const reportRows: readonly (readonly string[])[] = signalPageCopy?.reports ?? reports;
   const freeItems: string[] = signalPageCopy?.formigaItems ?? formigaBullets;
   const eliteItems: string[] = signalPageCopy?.eliteItems ?? eliteBullets;
-  const tableHeadings: string[] = signalPageCopy?.tableHeadings ?? ["DATA", "RELATÓRIO ELITE", "SINAIS", "RESULTADO", "STATUS", "VER"];
   const benefitsList: string[] = signalPageCopy?.benefits ?? eliteBenefits;
   const scheduleCards: string[][] = signalPageCopy?.scheduleCards ?? [
     ["MANHÃ E TARDE", "8h às 15h"],
     ["NOITE", "21h às 00h"],
   ];
-  const reportYears = ["2018", "2021", "2024"];
   const isPt = locale === "pt";
   const ptHeroSubtitle =
     "Nossa equipe acompanha os mercados globais diariamente para identificar oportunidades em Forex, ouro, petróleo, índices, criptomoedas e moedas globais. Você recebe as análises e sinais diretamente no WhatsApp com todas as informações necessárias para execução na sua própria conta.";
@@ -434,7 +439,7 @@ export default function SignalsPage() {
           <div>
             <SectionHeader eyebrow={t.signalBlock.eyebrow} title={t.signalBlock.title} text={t.signalBlock.text} />
             {isPt ? (
-              <p className="mt-5 max-w-2xl border-l border-gold/[0.45] bg-white/[0.04] px-5 py-4 text-base font-semibold leading-8 text-ink/[0.78] shadow-fine md:text-lg">
+              <p className="mt-5 max-w-2xl border-l border-gold/[0.45] bg-paper/[0.06] px-5 py-4 text-base font-semibold leading-8 text-paper/[0.88] shadow-fine md:text-lg">
                 {ptHeroSubtitle}
               </p>
             ) : null}
@@ -455,7 +460,9 @@ export default function SignalsPage() {
               </button>
             ) : (
               <a
-                {...eliteCta}
+                href={PT_FREE_SIGNAL_TEST_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
               >
                 {t.signalBlock.cta}
@@ -564,45 +571,25 @@ export default function SignalsPage() {
 
       <section className="px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow={signalPageCopy?.historyEyebrow ?? "Histórico"}
-            title={signalPageCopy?.historyTitle ?? "Relatório Elite desde agosto de 2018"}
-            text={signalPageCopy?.historyText ?? "Acompanhe a evolução operacional do Canal Elite através dos relatórios históricos enviados desde agosto de 2018."}
-          />
-          <div className="mt-8 overflow-x-auto border border-ink/[0.12] bg-white shadow-fine">
-            <table className="w-full min-w-[760px] border-collapse text-left">
-              <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.22em] text-gold">
-                <tr>
-                  {tableHeadings.map((heading) => (
-                    <th key={heading} className="px-5 py-4 font-bold">
-                      {heading}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {reportRows.map((row, rowIndex) => (
-                  <tr key={row[0]} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
-                    {row.map((cell, index) => (
-                      <td
-                        key={cell}
-                        className={`px-5 py-5 text-sm ${index === 3 ?"font-mono font-bold text-rise" : "text-ink/[0.72]"}`}
-                      >
-                        {cell}
-                      </td>
-                    ))}
-                    <td className="px-5 py-5">
-                      <a
-                        href={`/historico/${reportYears[rowIndex] ?? "2018"}`}
-                        className="inline-block border border-ink/[0.18] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-ink transition hover:border-gold hover:text-gold"
-                      >
-                        {signalPageCopy?.view ?? "VER"}
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="terminal-module relative overflow-hidden border border-gold/[0.22] bg-white p-6 shadow-fine md:p-8">
+            <div className="absolute inset-0 terminal-grid opacity-25" />
+            <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+              <SectionHeader
+                eyebrow={signalPageCopy?.historyEyebrow ?? "Histórico"}
+                title={signalPageCopy?.historyTitle ?? "Relatório Elite desde agosto de 2018"}
+                text={
+                  isPt
+                    ? "Acompanhe o histórico do Canal Elite, operações ativas, relatórios enviados e resultados consolidados desde agosto de 2018."
+                    : signalPageCopy?.historyText ?? "Follow the Elite Channel history, active operations, sent reports, and consolidated results since August 2018."
+                }
+              />
+              <a
+                href={eliteReportPaths[locale] ?? eliteReportPaths.en}
+                className="premium-button-gold inline-block border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 lg:min-w-[260px]"
+              >
+                {reportCtaLabels[locale] ?? reportCtaLabels.en}
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -869,10 +856,12 @@ export default function SignalsPage() {
               </p>
               <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
                 <a
-                  {...eliteCta}
+                  href={PT_FREE_SIGNAL_TEST_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
                 >
-                  RECEBER SINAIS NO WHATSAPP
+                  TESTE OS SINAIS GRATUITAMENTE
                 </a>
                 <a
                   href={t.freeChannel.link}

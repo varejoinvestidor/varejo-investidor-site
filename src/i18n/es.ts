@@ -32,13 +32,13 @@ export const es = {
     eyebrow: "Acceso gratuito",
   },
   signalBlock: {
-    eyebrow: "Señales en vivo desde 2018",
-    title: "Operaciones estructuradas, enviadas con contexto y reglas claras.",
-    text: "Varejo Investidor entrega operaciones estructuradas con activo, dirección, entrada, objetivo, stop y contexto de mercado. Recibes la señal organizada y la ejecutas en tu propia cuenta con claridad y disciplina.",
-    cta: "Entrar al Canal Elite",
+    eyebrow: "Análisis y señales desde 2018",
+    title: "Recibe análisis y señales directamente en tu WhatsApp.",
+    text: "Deja el análisis con nosotros. Recibe señales directamente en WhatsApp con entrada, objetivo y stop definidos. Solo copia la información e inserta la operación en tu propia cuenta.",
+    cta: "PRUEBA LAS SEÑALES GRATIS",
     stats: ["8 años de mercado", "Desde 2018", "+4.200 señales en vivo", "Forex, oro, petróleo, cripto, índices y divisas globales"],
     example: {
-      title: "Señal enviada en vivo",
+      title: "Ejemplo de señal enviada por WhatsApp",
       asset: "Activo",
       direction: "Dirección",
       entry: "Entrada",

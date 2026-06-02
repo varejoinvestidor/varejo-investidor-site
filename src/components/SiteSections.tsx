@@ -447,26 +447,59 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
   const isSpanish = t.locale === "ES";
   const isArabic = t.locale === "AR";
   const isTurkish = t.locale === "TR";
+  const isHindi = t.locale === "HI";
+  const isIndonesian = t.locale === "ID";
+  const isVietnamese = t.locale === "VI";
   const extraLabels =
-    t.locale === "HI"
-      ? { timeframe: "\u0938\u092E\u092F \u0905\u0935\u0927\u093F", risk: "\u091C\u094B\u0916\u093F\u092E", riskValue: "\u092E\u0927\u094D\u092F\u092E", signal: "\u0938\u093F\u0917\u094D\u0928\u0932", time: "\u0938\u092E\u092F", live: "\u0932\u093E\u0907\u0935", copy: "\u0938\u0940\u0927\u0947 \u090F\u0932\u0940\u091F \u091A\u0948\u0928\u0932 \u092E\u0947\u0902 \u092D\u0947\u091C\u093E \u0917\u092F\u093E" }
+    isHindi
+      ? { timeframe: "\u0938\u092E\u092F \u0905\u0935\u0927\u093F", risk: "\u091C\u094B\u0916\u093F\u092E", riskValue: "\u092E\u0927\u094D\u092F\u092E", signal: "\u0938\u093F\u0917\u094D\u0928\u0932", time: "\u0938\u092E\u092F", live: "\u0932\u093E\u0907\u0935", copy: "\u0938\u0940\u0927\u0947 WHATSAPP \u092A\u0930 \u092D\u0947\u091C\u093E \u0917\u092F\u093E" }
       : isSpanish
-        ? { timeframe: "TEMPORALIDAD", risk: "RIESGO", riskValue: "MODERADO", signal: "SE\u00D1AL", time: "HORARIO", live: "EN VIVO", copy: "ENVIADA DIRECTAMENTE EN EL CANAL ELITE" }
+        ? { timeframe: "TEMPORALIDAD", risk: "RIESGO", riskValue: "MODERADO", signal: "SE\u00D1AL", time: "HORARIO", live: "EN VIVO", copy: "ENVIADA DIRECTAMENTE EN WHATSAPP" }
         : isArabic
           ? { timeframe: "الإطار الزمني", risk: "المخاطر", riskValue: "متوسطة", signal: "الإشارة", time: "الوقت", live: "مباشر", copy: "أرسلت مباشرة داخل قناة النخبة" }
           : isTurkish
             ? { timeframe: "ZAMAN DİLİMİ", risk: "RİSK", riskValue: "ORTA", signal: "SİNYAL", time: "SAAT", live: "CANLI", copy: "DOĞRUDAN ELITE KANALINDA GÖNDERİLDİ" }
-            : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO WHATSAPP" : "DELIVERED DIRECTLY INSIDE ELITE CHANNEL" };
+            : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO WHATSAPP" : "SENT DIRECTLY ON WHATSAPP" };
   const rows = [
     [t.signalBlock.example.asset, t.signalBlock.example.values.asset], [t.signalBlock.example.direction, t.signalBlock.example.values.direction], [t.signalBlock.example.entry, t.signalBlock.example.values.entry], [t.signalBlock.example.target, t.signalBlock.example.values.target], [t.signalBlock.example.stop, t.signalBlock.example.values.stop], [extraLabels.timeframe, "4H"], [extraLabels.risk, extraLabels.riskValue], [extraLabels.signal, "#4169"], [extraLabels.time, "09:42 UTC"], [t.signalBlock.example.status, t.signalBlock.example.values.status],
   ];
+  const exampleEyebrow = isPortuguese
+    ? "EXEMPLO NO WHATSAPP"
+    : isSpanish
+      ? "EJEMPLO EN WHATSAPP"
+      : isHindi
+        ? "WHATSAPP \u092A\u0930 \u0938\u093F\u0917\u094D\u0928\u0932 \u0909\u0926\u093E\u0939\u0930\u0923"
+        : isArabic
+          ? "مثال عبر واتساب"
+          : isTurkish
+            ? "WHATSAPP SİNYAL ÖRNEĞİ"
+            : isIndonesian
+              ? "CONTOH DI WHATSAPP"
+              : isVietnamese
+                ? "VÍ DỤ TRÊN WHATSAPP"
+                : "SIGNAL EXAMPLE ON WHATSAPP";
+  const deliveryCopy = isPortuguese
+    ? "ENVIADO DIRETAMENTE NO WHATSAPP"
+    : isSpanish
+      ? "ENVIADA DIRECTAMENTE EN WHATSAPP"
+      : isHindi
+        ? "\u0938\u0940\u0927\u0947 WHATSAPP \u092A\u0930 \u092D\u0947\u091C\u093E \u0917\u092F\u093E"
+        : isArabic
+          ? "مرسلة مباشرة عبر واتساب"
+          : isTurkish
+            ? "DOĞRUDAN WHATSAPP ÜZERİNDEN GÖNDERİLDİ"
+            : isIndonesian
+              ? "DIKIRIM LANGSUNG DI WHATSAPP"
+              : isVietnamese
+                ? "GỬI TRỰC TIẾP TRÊN WHATSAPP"
+                : "SENT DIRECTLY ON WHATSAPP";
 
   return (
     <div className="signal-terminal terminal-shell relative overflow-hidden border border-rise/[0.28] bg-ink p-4 text-paper shadow-premium">
       <div className="absolute inset-0 terminal-grid opacity-25" />
       <div className="flex items-center justify-between gap-3 border-b border-paper/[0.12] pb-4">
         <div className="relative">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{isPortuguese ? "EXEMPLO NO WHATSAPP" : isSpanish ? "SE\u00D1AL EN VIVO" : isArabic ? "إشارة مباشرة" : isTurkish ? "CANLI SİNYAL" : "LIVE SIGNAL SENT"}</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{exampleEyebrow}</p>
           <h3 className="mt-1 font-serif text-2xl tracking-[-0.04em] sm:text-3xl">{t.signalBlock.example.title}</h3>
         </div>
         <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise"><span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />{extraLabels.live}</div>
@@ -479,7 +512,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
           </div>
         ))}
       </div>
-      <div className="signal-delivery-badge relative mt-5 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-rise sm:tracking-[0.2em]">{extraLabels.copy}</div>
+      <div className="signal-delivery-badge relative mt-5 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-rise sm:tracking-[0.2em]">{deliveryCopy}</div>
     </div>
   );
 }
@@ -747,9 +780,11 @@ export function SupportFooter({
           markets: "\u092C\u093E\u091C\u093E\u0930",
           content: "\u092C\u093E\u091C\u093E\u0930",
           platforms: "\u092A\u094D\u0932\u0947\u091F\u092B\u093C\u0949\u0930\u094D\u092E",
+          tools: "\u091F\u0942\u0932\u094D\u0938",
           language: "\u092D\u093E\u0937\u093E",
           marketLine: "Forex | Crypto | Commodities | Global Markets",
           levelLinks: ["Formiga \u0938\u094D\u0924\u0930", "Lobo \u0938\u094D\u0924\u0930", "Harpia \u0938\u094D\u0924\u0930"],
+          riskCalculator: "\u0930\u093F\u0938\u094D\u0915 \u0915\u0948\u0932\u0915\u0941\u0932\u0947\u091F\u0930",
         }
       : locale === "es"
         ? {
@@ -758,9 +793,11 @@ export function SupportFooter({
             markets: "Mercados",
             content: "Mercados",
             platforms: "Plataformas",
+            tools: "Herramientas",
             language: "Idioma",
             marketLine: "Forex | Cripto | Commodities | Mercados Globales",
             levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia"],
+            riskCalculator: "Calculadora de riesgo",
           }
         : locale === "pt"
           ? {
@@ -769,9 +806,11 @@ export function SupportFooter({
               markets: "Mercados",
               content: "Mercados",
               platforms: "Plataformas",
+              tools: "Ferramentas",
               language: "Idioma",
               marketLine: "Forex | Cripto | Commodities | Mercados Globais",
               levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
+              riskCalculator: "Calculadora de Risco",
             }
           : locale === "ar"
             ? {
@@ -780,9 +819,11 @@ export function SupportFooter({
                 markets: "\u0627\u0644\u0623\u0633\u0648\u0627\u0642",
                 content: "\u0627\u0644\u0623\u0633\u0648\u0627\u0642",
                 platforms: "\u0627\u0644\u0645\u0646\u0635\u0627\u062A",
+                tools: "\u0627\u0644\u0623\u062F\u0648\u0627\u062A",
                 language: "\u0627\u0644\u0644\u063A\u0629",
                 marketLine: "Forex | Crypto | Commodities | Global Markets",
                 levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia"],
+                riskCalculator: "\u062D\u0627\u0633\u0628\u0629 \u0627\u0644\u0645\u062E\u0627\u0637\u0631",
               }
             : locale === "tr"
               ? {
@@ -791,9 +832,11 @@ export function SupportFooter({
                   markets: "Piyasalar",
                   content: "Piyasalar",
                   platforms: "Platformlar",
+                  tools: "Ara\u00E7lar",
                   language: "Dil",
                   marketLine: "Forex | Kripto | Emtialar | K\u00FCresel Piyasalar",
                   levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi"],
+                  riskCalculator: "Risk Hesaplay\u0131c\u0131",
                 }
               : {
                   social: "Social",
@@ -801,9 +844,11 @@ export function SupportFooter({
                   markets: "Markets",
                   content: "Markets",
                   platforms: locale === "id" ? "Platform" : locale === "vi" ? "N\u1EC1n t\u1EA3ng" : "Platforms",
+                  tools: locale === "id" ? "Alat" : locale === "vi" ? "C\u00F4ng c\u1EE5" : "Tools",
                   language: "Language",
                   marketLine: "Forex | Crypto | Commodities | Global Markets",
                   levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level"],
+                  riskCalculator: locale === "id" ? "Kalkulator Risiko" : locale === "vi" ? "M\u00E1y T\u00EDnh R\u1EE7i Ro" : "Risk Calculator",
                 };
   const levelFooterLinks = [
     { href: "/formiga", label: footerLabels.levelLinks[0] },
@@ -871,7 +916,7 @@ export function SupportFooter({
       </section>
 
       <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.55fr_0.66fr_0.72fr_0.72fr_0.62fr_0.82fr] lg:items-start">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.55fr_0.66fr_0.72fr_0.72fr_0.62fr_0.62fr_0.82fr] lg:items-start">
           <div>
             <a href="/#home" className="inline-flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
@@ -947,6 +992,18 @@ export function SupportFooter({
                   {link.label}
                 </a>
               ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.tools}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              <a
+                href="/calculadora-de-risco"
+                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+              >
+                {footerLabels.riskCalculator}
+              </a>
             </div>
           </div>
 
