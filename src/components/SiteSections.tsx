@@ -785,6 +785,7 @@ export function SupportFooter({
           marketLine: "Forex | Crypto | Commodities | Global Markets",
           levelLinks: ["Formiga \u0938\u094D\u0924\u0930", "Lobo \u0938\u094D\u0924\u0930", "Harpia \u0938\u094D\u0924\u0930"],
           riskCalculator: "\u0930\u093F\u0938\u094D\u0915 \u0915\u0948\u0932\u0915\u0941\u0932\u0947\u091F\u0930",
+          forexLotTool: "Forex lot tool",
         }
       : locale === "es"
         ? {
@@ -798,6 +799,7 @@ export function SupportFooter({
             marketLine: "Forex | Cripto | Commodities | Mercados Globales",
             levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia"],
             riskCalculator: "Calculadora de riesgo",
+            forexLotTool: "Lote correcto en Forex",
           }
         : locale === "pt"
           ? {
@@ -811,6 +813,7 @@ export function SupportFooter({
               marketLine: "Forex | Cripto | Commodities | Mercados Globais",
               levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
               riskCalculator: "Calculadora de Risco",
+              forexLotTool: "Lote Correto no Forex",
             }
           : locale === "ar"
             ? {
@@ -824,6 +827,7 @@ export function SupportFooter({
                 marketLine: "Forex | Crypto | Commodities | Global Markets",
                 levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia"],
                 riskCalculator: "\u062D\u0627\u0633\u0628\u0629 \u0627\u0644\u0645\u062E\u0627\u0637\u0631",
+                forexLotTool: "Forex lot tool",
               }
             : locale === "tr"
               ? {
@@ -837,6 +841,7 @@ export function SupportFooter({
                   marketLine: "Forex | Kripto | Emtialar | K\u00FCresel Piyasalar",
                   levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi"],
                   riskCalculator: "Risk Hesaplay\u0131c\u0131",
+                  forexLotTool: "Forex lot araci",
                 }
               : {
                   social: "Social",
@@ -849,6 +854,7 @@ export function SupportFooter({
                   marketLine: "Forex | Crypto | Commodities | Global Markets",
                   levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level"],
                   riskCalculator: locale === "id" ? "Kalkulator Risiko" : locale === "vi" ? "M\u00E1y T\u00EDnh R\u1EE7i Ro" : "Risk Calculator",
+                  forexLotTool: locale === "id" ? "Alat Lot Forex" : locale === "vi" ? "C\u00F4ng C\u1EE5 Lot Forex" : "Correct Forex Lot",
                 };
   const levelFooterLinks = [
     { href: "/formiga", label: footerLabels.levelLinks[0] },
@@ -1003,6 +1009,12 @@ export function SupportFooter({
                 className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
               >
                 {footerLabels.riskCalculator}
+              </a>
+              <a
+                href="/ferramentas/lote-correto-forex"
+                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+              >
+                {footerLabels.forexLotTool}
               </a>
             </div>
           </div>

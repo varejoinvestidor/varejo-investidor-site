@@ -18,6 +18,7 @@ const staticPaths = [
   "/sinais",
   "/signals",
   "/calculadora-de-risco",
+  "/ferramentas/lote-correto-forex",
   "/relatorio-elite",
   "/elite-report",
   "/reporte-elite",
