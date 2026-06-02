@@ -2291,8 +2291,7 @@ main {
   .about-metrics,
   .since2018-card,
   .signals-counter,
-  .levels-card,
-  .home-levels-section {
+  .levels-card {
     display: none !important;
   }
 }

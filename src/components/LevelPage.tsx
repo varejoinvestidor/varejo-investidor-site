@@ -204,7 +204,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
         { title: "Disciplina", text: "Rotina financeira, controle emocional e consistência para evoluir." },
         { title: "Primeiros mercados", text: "Introdução a Forex, cripto, ações, renda fixa e fundos imobiliários." },
       ],
-      primary: "Começar no Canal Formiga",
+      primary: "Entrar no Canal Formiga",
       primaryHref: "free",
       secondary: "Ver Educação",
       secondaryHref: educationHref,

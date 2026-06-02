@@ -4,16 +4,17 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../src/components/SiteSections";
+import { getInsightsPath } from "../src/data/insightsContent";
 import type { Locale } from "../src/i18n";
 
 const homeLiteCopy = {
   pt: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Tudo o que você precisa para jogar o jogo financeiro em nível global.",
-      text: "Educação, sinais ao vivo, leitura de mercado e estrutura estratégica para construir sua vida financeira em camadas.",
-      free: "Começar pelo gratuito",
-      services: "Ver serviços",
+      title: "Tudo o que você precisa para investir e construir patrimônio em nível global.",
+      text: "Entenda os mercados globais, acompanhe análises econômicas e desenvolva uma estratégia para construir patrimônio além das fronteiras do seu país.",
+      free: "ENTRAR NO CANAL FORMIGA",
+      services: "CONHECER NOSSOS SERVIÇOS",
     },
     intro: {
       eyebrow: "O que é",
@@ -28,22 +29,23 @@ const homeLiteCopy = {
       stats: ["Desde 2018", "sinais ao vivo", "Formiga / Lobo / Harpia"],
     },
     cards: [
-      { code: "FORMIGA", title: "Base financeira", text: "Educação por níveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/formiga" },
-      { code: "LOBO", title: "Estratégia e expansão", text: "Sinais ao vivo, leitura de mercado e decisões estruturadas para operar com disciplina.", href: "/lobo" },
-      { code: "HARPIA", title: "Patrimônio global", text: "Consultorias estratégicas para proteção, posicionamento, patrimônio e visão internacional.", href: "/harpia" },
+      { code: "FORMIGA", title: "Base financeira", text: "Educação por níveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/nivel-formiga" },
+      { code: "LOBO", title: "Estratégia e expansão", text: "Sinais ao vivo, leitura de mercado e decisões estruturadas para operar com disciplina.", href: "/nivel-lobo" },
+      { code: "HARPIA", title: "Patrimônio global", text: "Consultorias estratégicas para proteção, posicionamento, patrimônio e visão internacional.", href: "/nivel-harpia" },
     ],
     cardCta: "Saiba mais",
     final: {
-      title: "Comece gratuitamente e escolha seu próximo nível.",
-      free: "Entrar no canal gratuito",
-      elite: "Conhecer Canal Elite",
+      title: "Sua jornada começa no Nível Formiga.",
+      text: "Comece gratuitamente, acompanhe os mercados globais e desenvolva sua evolução financeira através dos níveis Formiga, Lobo e Harpia.",
+      free: "ENTRAR NO CANAL FORMIGA",
+      elite: "CONHECER CANAL ELITE HARPIA",
     },
   },
   en: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Everything you need to play the financial game at a global level.",
-      text: "Education, live signals, market reading, and strategic structure to build your financial life in layers.",
+      title: "Everything you need to invest and build wealth on a global level.",
+      text: "Understand global markets, follow economic analysis, and develop a strategy to build wealth beyond the borders of your country.",
       free: "Start free",
       services: "View services",
     },
@@ -60,9 +62,9 @@ const homeLiteCopy = {
       stats: ["Since 2018", "live signals", "Ant / Wolf / Harpy"],
     },
     cards: [
-      { code: "ANT", title: "Financial foundation", text: "Level-based education to build foundation, organize risk, and create the first pillars.", href: "/formiga" },
-      { code: "WOLF", title: "Strategy and expansion", text: "Live signals, market reading, and structured decisions for disciplined execution.", href: "/lobo" },
-      { code: "HARPY", title: "Global wealth", text: "Strategic consulting for protection, positioning, wealth, and international vision.", href: "/harpia" },
+      { code: "ANT", title: "Financial foundation", text: "Level-based education to build foundation, organize risk, and create the first pillars.", href: "/nivel-formiga" },
+      { code: "WOLF", title: "Strategy and expansion", text: "Live signals, market reading, and structured decisions for disciplined execution.", href: "/nivel-lobo" },
+      { code: "HARPY", title: "Global wealth", text: "Strategic consulting for protection, positioning, wealth, and international vision.", href: "/nivel-harpia" },
     ],
     cardCta: "Learn more",
     final: {
@@ -74,8 +76,8 @@ const homeLiteCopy = {
   es: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Todo lo que necesitas para jugar el juego financiero a nivel global.",
-      text: "Educación, señales en vivo, lectura de mercado y estructura estratégica para construir tu vida financiera por capas.",
+      title: "Todo lo que necesitas para invertir y construir patrimonio a nivel global.",
+      text: "Comprende los mercados globales, sigue análisis económicos y desarrolla una estrategia para construir patrimonio más allá de las fronteras de tu país.",
       free: "Empezar gratis",
       services: "Ver servicios",
     },
@@ -92,9 +94,9 @@ const homeLiteCopy = {
       stats: ["Desde 2018", "señales en vivo", "Hormiga / Lobo / Harpía"],
     },
     cards: [
-      { code: "HORMIGA", title: "Base financiera", text: "Educación por niveles para construir base, organizar riesgo y crear los primeros pilares.", href: "/formiga" },
-      { code: "LOBO", title: "Estrategia y expansión", text: "Señales en vivo, lectura de mercado y decisiones estructuradas para operar con disciplina.", href: "/lobo" },
-      { code: "HARPÍA", title: "Patrimonio global", text: "Consultorías estratégicas para protección, posicionamiento, patrimonio y visión internacional.", href: "/harpia" },
+      { code: "HORMIGA", title: "Base financiera", text: "Educación por niveles para construir base, organizar riesgo y crear los primeros pilares.", href: "/nivel-formiga" },
+      { code: "LOBO", title: "Estrategia y expansión", text: "Señales en vivo, lectura de mercado y decisiones estructuradas para operar con disciplina.", href: "/nivel-lobo" },
+      { code: "HARPÍA", title: "Patrimonio global", text: "Consultorías estratégicas para protección, posicionamiento, patrimonio y visión internacional.", href: "/nivel-harpia" },
     ],
     cardCta: "Saber más",
     final: {
@@ -106,8 +108,8 @@ const homeLiteCopy = {
   hi: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "वैश्विक स्तर पर वित्तीय खेल समझने के लिए आपकी पूरी संरचना।",
-      text: "शिक्षा, लाइव सिग्नल, बाजार-पठन और रणनीतिक संरचना ताकि आप अपनी वित्तीय जिंदगी को चरणों में बना सकें।",
+      title: "वैश्विक स्तर पर निवेश करने और संपत्ति बनाने के लिए आपको जो कुछ भी चाहिए।",
+      text: "वैश्विक बाजारों को समझें, आर्थिक विश्लेषणों का अनुसरण करें और अपने देश की सीमाओं से परे संपत्ति बनाने की रणनीति विकसित करें।",
       free: "मुफ्त चैनल से शुरू करें",
       services: "सेवाएँ देखें",
     },
@@ -124,9 +126,9 @@ const homeLiteCopy = {
       stats: ["2018 से", "लाइव सिग्नल", "चींटी / भेड़िया / गरुड़"],
     },
     cards: [
-      { code: "चींटी", title: "वित्तीय आधार", text: "आधार बनाने, जोखिम व्यवस्थित करने और पहले स्तंभ तैयार करने के लिए स्तर-आधारित शिक्षा।", href: "/formiga" },
-      { code: "भेड़िया", title: "रणनीति और विस्तार", text: "अनुशासित ऑपरेशन के लिए लाइव सिग्नल, बाजार-पठन और संरचित निर्णय।", href: "/lobo" },
-      { code: "गरुड़", title: "वैश्विक संपत्ति", text: "सुरक्षा, पोजिशनिंग, संपत्ति और अंतरराष्ट्रीय दृष्टि के लिए रणनीतिक सेवाएँ।", href: "/harpia" },
+      { code: "चींटी", title: "वित्तीय आधार", text: "आधार बनाने, जोखिम व्यवस्थित करने और पहले स्तंभ तैयार करने के लिए स्तर-आधारित शिक्षा।", href: "/nivel-formiga" },
+      { code: "भेड़िया", title: "रणनीति और विस्तार", text: "अनुशासित ऑपरेशन के लिए लाइव सिग्नल, बाजार-पठन और संरचित निर्णय।", href: "/nivel-lobo" },
+      { code: "गरुड़", title: "वैश्विक संपत्ति", text: "सुरक्षा, पोजिशनिंग, संपत्ति और अंतरराष्ट्रीय दृष्टि के लिए रणनीतिक सेवाएँ।", href: "/nivel-harpia" },
     ],
     cardCta: "और जानें",
     final: {
@@ -138,8 +140,8 @@ const homeLiteCopy = {
   ar: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "كل ما تحتاجه لخوض اللعبة المالية على المستوى العالمي.",
-      text: "تعليم، إشارات مباشرة، قراءة للأسواق وهيكل استراتيجي لبناء حياتك المالية على طبقات.",
+      title: "كل ما تحتاجه للاستثمار وبناء الثروة على المستوى العالمي.",
+      text: "افهم الأسواق العالمية، تابع التحليلات الاقتصادية، وطور استراتيجية لبناء الثروة خارج حدود بلدك.",
       free: "ابدأ مجانا",
       services: "شاهد الخدمات",
     },
@@ -156,9 +158,9 @@ const homeLiteCopy = {
       stats: ["منذ 2018", "إشارات مباشرة", "النملة / الذئب / الهاربي"],
     },
     cards: [
-      { code: "النملة", title: "الأساس المالي", text: "تعليم بالمستويات لبناء القاعدة وتنظيم المخاطر وإنشاء الأعمدة الأولى.", href: "/formiga" },
-      { code: "الذئب", title: "الاستراتيجية والتوسع", text: "إشارات مباشرة وقراءة للسوق وقرارات منظمة للتنفيذ بانضباط.", href: "/lobo" },
-      { code: "الهاربي", title: "الثروة العالمية", text: "خدمات استراتيجية للحماية والتموضع وبناء الثروة والرؤية الدولية.", href: "/harpia" },
+      { code: "النملة", title: "الأساس المالي", text: "تعليم بالمستويات لبناء القاعدة وتنظيم المخاطر وإنشاء الأعمدة الأولى.", href: "/nivel-formiga" },
+      { code: "الذئب", title: "الاستراتيجية والتوسع", text: "إشارات مباشرة وقراءة للسوق وقرارات منظمة للتنفيذ بانضباط.", href: "/nivel-lobo" },
+      { code: "الهاربي", title: "الثروة العالمية", text: "خدمات استراتيجية للحماية والتموضع وبناء الثروة والرؤية الدولية.", href: "/nivel-harpia" },
     ],
     cardCta: "اعرف المزيد",
     final: {
@@ -170,8 +172,8 @@ const homeLiteCopy = {
   tr: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Finans oyununu küresel seviyede oynamak için ihtiyacın olan her şey.",
-      text: "Finansal hayatını katmanlar halinde inşa etmek için eğitim, canlı sinyaller, piyasa okuma ve stratejik yapı.",
+      title: "Küresel ölçekte yatırım yapmak ve servet oluşturmak için ihtiyacınız olan her şey.",
+      text: "Küresel piyasaları anlayın, ekonomik analizleri takip edin ve ülkenizin sınırlarının ötesinde servet oluşturacak bir strateji geliştirin.",
       free: "Ücretsiz başla",
       services: "Hizmetleri gör",
     },
@@ -188,9 +190,9 @@ const homeLiteCopy = {
       stats: ["2018'den beri", "canlı sinyaller", "Karınca / Kurt / Harpia"],
     },
     cards: [
-      { code: "KARINCA", title: "Finansal temel", text: "Temel oluşturmak, riski düzenlemek ve ilk sütunları kurmak için seviyeli eğitim.", href: "/formiga" },
-      { code: "KURT", title: "Strateji ve genişleme", text: "Disiplinli işlem için canlı sinyaller, piyasa okuma ve yapılandırılmış kararlar.", href: "/lobo" },
-      { code: "HARPIA", title: "Küresel varlık", text: "Koruma, konumlanma, varlık ve uluslararası vizyon için stratejik hizmetler.", href: "/harpia" },
+      { code: "KARINCA", title: "Finansal temel", text: "Temel oluşturmak, riski düzenlemek ve ilk sütunları kurmak için seviyeli eğitim.", href: "/nivel-formiga" },
+      { code: "KURT", title: "Strateji ve genişleme", text: "Disiplinli işlem için canlı sinyaller, piyasa okuma ve yapılandırılmış kararlar.", href: "/nivel-lobo" },
+      { code: "HARPIA", title: "Küresel varlık", text: "Koruma, konumlanma, varlık ve uluslararası vizyon için stratejik hizmetler.", href: "/nivel-harpia" },
     ],
     cardCta: "Daha fazla bilgi",
     final: {
@@ -202,8 +204,8 @@ const homeLiteCopy = {
   id: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Semua yang Anda butuhkan untuk bermain di pasar keuangan tingkat global.",
-      text: "Edukasi, sinyal live, pembacaan pasar, dan struktur strategis untuk membangun kehidupan finansial secara bertahap.",
+      title: "Semua yang Anda butuhkan untuk berinvestasi dan membangun kekayaan di tingkat global.",
+      text: "Pahami pasar global, ikuti analisis ekonomi, dan kembangkan strategi untuk membangun kekayaan melampaui batas negara Anda.",
       free: "Mulai gratis",
       services: "Lihat layanan",
     },
@@ -220,9 +222,9 @@ const homeLiteCopy = {
       stats: ["Sejak 2018", "sinyal live", "Semut / Serigala / Elang Harpy"],
     },
     cards: [
-      { code: "SEMUT", title: "Fondasi finansial", text: "Edukasi bertahap untuk membangun dasar, mengatur risiko, dan menciptakan pilar pertama.", href: "/formiga" },
-      { code: "SERIGALA", title: "Strategi dan ekspansi", text: "Sinyal live, pembacaan pasar, dan keputusan terstruktur untuk eksekusi yang disiplin.", href: "/lobo" },
-      { code: "ELANG HARPY", title: "Kekayaan global", text: "Konsultasi strategis untuk perlindungan, posisi, kekayaan, dan visi internasional.", href: "/harpia" },
+      { code: "SEMUT", title: "Fondasi finansial", text: "Edukasi bertahap untuk membangun dasar, mengatur risiko, dan menciptakan pilar pertama.", href: "/nivel-formiga" },
+      { code: "SERIGALA", title: "Strategi dan ekspansi", text: "Sinyal live, pembacaan pasar, dan keputusan terstruktur untuk eksekusi yang disiplin.", href: "/nivel-lobo" },
+      { code: "ELANG HARPY", title: "Kekayaan global", text: "Konsultasi strategis untuk perlindungan, posisi, kekayaan, dan visi internasional.", href: "/nivel-harpia" },
     ],
     cardCta: "Pelajari",
     final: {
@@ -234,8 +236,8 @@ const homeLiteCopy = {
   vi: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Tất cả những gì bạn cần để bước vào cuộc chơi tài chính ở cấp độ toàn cầu.",
-      text: "Giáo dục, tín hiệu trực tiếp, đọc thị trường và cấu trúc chiến lược để xây dựng đời sống tài chính theo từng lớp.",
+      title: "Mọi thứ bạn cần để đầu tư và xây dựng tài sản ở quy mô toàn cầu.",
+      text: "Hiểu các thị trường toàn cầu, theo dõi các phân tích kinh tế và xây dựng chiến lược để phát triển tài sản vượt ra ngoài biên giới quốc gia của bạn.",
       free: "Bắt đầu miễn phí",
       services: "Xem dịch vụ",
     },
@@ -252,9 +254,9 @@ const homeLiteCopy = {
       stats: ["Từ năm 2018", "tín hiệu trực tiếp", "Kiến / Sói / Đại Bàng Harpy"],
     },
     cards: [
-      { code: "KIẾN", title: "Nền tảng tài chính", text: "Giáo dục theo cấp độ để xây nền móng, tổ chức rủi ro và tạo các trụ cột đầu tiên.", href: "/formiga" },
-      { code: "SÓI", title: "Chiến lược và mở rộng", text: "Tín hiệu trực tiếp, đọc thị trường và quyết định có cấu trúc để vận hành kỷ luật.", href: "/lobo" },
-      { code: "ĐẠI BÀNG HARPY", title: "Tài sản toàn cầu", text: "Tư vấn chiến lược về bảo vệ, định vị, tài sản và tầm nhìn quốc tế.", href: "/harpia" },
+      { code: "KIẾN", title: "Nền tảng tài chính", text: "Giáo dục theo cấp độ để xây nền móng, tổ chức rủi ro và tạo các trụ cột đầu tiên.", href: "/nivel-formiga" },
+      { code: "SÓI", title: "Chiến lược và mở rộng", text: "Tín hiệu trực tiếp, đọc thị trường và quyết định có cấu trúc để vận hành kỷ luật.", href: "/nivel-lobo" },
+      { code: "ĐẠI BÀNG HARPY", title: "Tài sản toàn cầu", text: "Tư vấn chiến lược về bảo vệ, định vị, tài sản và tầm nhìn quốc tế.", href: "/nivel-harpia" },
     ],
     cardCta: "Tìm hiểu thêm",
     final: {
@@ -270,7 +272,7 @@ const homeLiteCopy = {
     intro: { eyebrow: string; title: string; manifesto: string; text: string[]; stats: string[] };
     cards: { code: string; title: string; text: string; href: string }[];
     cardCta: string;
-    final: { title: string; free: string; elite: string };
+    final: { title: string; text?: string; free: string; elite: string };
   }
 >;
 
@@ -284,6 +286,220 @@ const signalCounterLabels: Record<Locale, string> = {
   id: "SINYAL LIVE DI WHATSAPP",
   vi: "T\u00CDN HI\u1EC6U TR\u1EF0C TI\u1EBEP TR\u00CAN WHATSAPP",
 };
+
+const homeFxproLinks: Record<Locale, string> = {
+  pt: "https://direct.fxpro.group/pt/partner/77014650?platform=web",
+  en: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  es: "https://direct.fxpro.group/es/partner/77014650?platform=web",
+  hi: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  ar: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  tr: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  id: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  vi: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+};
+
+const homeFxproBanners: Record<Locale, string> = {
+  pt: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-pt-fscm-1324x150.png",
+  en: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  es: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-es-fscm-1324x150.png",
+  hi: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  ar: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  tr: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  id: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  vi: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+};
+
+const binanceLink = "https://accounts.binance.com/register?ref=453580362";
+
+const homeAccountCopy: Record<
+  Locale,
+  {
+    eyebrow: string;
+    title: string;
+    text: string;
+    fxproLabel: string;
+    fxproTitle: string;
+    fxproText: string;
+    fxproCta: string;
+    binanceLabel: string;
+    binanceTitle: string;
+    binanceText: string;
+    binanceCta: string;
+    bannerLabel: string;
+    bannerText: string;
+    ecosystemLabel: string;
+  }
+> = {
+  pt: {
+    eyebrow: "CONTA GLOBAL",
+    title: "Abra sua conta e acesse os mercados globais.",
+    text: "Acesse Forex, ouro, petr\u00F3leo, \u00EDndices, a\u00E7\u00F5es, ETFs e criptomoedas atrav\u00E9s das principais plataformas do mercado internacional.",
+    fxproLabel: "CORRETORA FOREX",
+    fxproTitle: "Forex com acesso aos mercados globais",
+    fxproText: "Acesse a corretora utilizada pelo Varejo Investidor para acompanhar moedas, ouro, petr\u00F3leo, \u00EDndices e mercados internacionais.",
+    fxproCta: "ABRIR CONTA FXPRO",
+    binanceLabel: "CORRETORA CRIPTO",
+    binanceTitle: "Criptoativos com acesso internacional",
+    binanceText: "Compre, venda e acompanhe criptomoedas atrav\u00E9s de uma das maiores exchanges do mundo.",
+    binanceCta: "ABRIR CONTA BINANCE",
+    bannerLabel: "ABRA SUA CONTA FOREX",
+    bannerText: "Clique no banner para acessar a corretora no idioma correto.",
+    ecosystemLabel: "Explore o ecossistema",
+  },
+  en: {
+    eyebrow: "Global account",
+    title: "Open your account and access global markets",
+    text: "Forex, gold, oil, indices, stocks, ETFs, and cryptocurrencies through leading international market platforms.",
+    fxproLabel: "FOREX BROKER",
+    fxproTitle: "Global markets with FXPro",
+    fxproText: "Access Forex, gold, oil, and indices through the broker used in the Varejo Investidor operational structure.",
+    fxproCta: "Open FXPro Account",
+    binanceLabel: "CRYPTO BROKER",
+    binanceTitle: "Global cryptocurrency market",
+    binanceText: "Buy, sell, and follow cryptocurrencies through one of the world's largest exchanges.",
+    binanceCta: "Open Binance Account",
+    bannerLabel: "OPEN YOUR FOREX ACCOUNT",
+    bannerText: "Click the banner to access the broker in the correct language.",
+    ecosystemLabel: "Explore the ecosystem",
+  },
+  es: {
+    eyebrow: "Cuenta global",
+    title: "Abre tu cuenta y accede a los mercados globales",
+    text: "Forex, oro, petr\u00F3leo, \u00EDndices, acciones, ETFs y criptomonedas a trav\u00E9s de las principales plataformas del mercado internacional.",
+    fxproLabel: "BROKER FOREX",
+    fxproTitle: "Mercados globales con FXPro",
+    fxproText: "Accede a Forex, oro, petr\u00F3leo e \u00EDndices a trav\u00E9s del broker utilizado en la estructura operativa de Varejo Investidor.",
+    fxproCta: "Abrir Cuenta FXPro",
+    binanceLabel: "BROKER CRIPTO",
+    binanceTitle: "Mercado global de criptomonedas",
+    binanceText: "Compra, vende y acompa\u00F1a criptomonedas a trav\u00E9s de una de las mayores exchanges del mundo.",
+    binanceCta: "Abrir Cuenta Binance",
+    bannerLabel: "ABRE TU CUENTA FOREX",
+    bannerText: "Haz clic en el banner para acceder al broker en el idioma correcto.",
+    ecosystemLabel: "Explora el ecosistema",
+  },
+  hi: {
+    eyebrow: "\u0917\u094D\u0932\u094B\u092C\u0932 \u0905\u0915\u093E\u0909\u0902\u091F",
+    title: "\u0905\u092A\u0928\u093E \u0905\u0915\u093E\u0909\u0902\u091F \u0916\u094B\u0932\u0947\u0902 \u0914\u0930 \u0917\u094D\u0932\u094B\u092C\u0932 \u092E\u093E\u0930\u094D\u0915\u0947\u091F\u094D\u0938 \u0924\u0915 \u092A\u0939\u0941\u0901\u091A \u092C\u0928\u093E\u090F\u0901",
+    text: "Forex, \u0917\u094B\u0932\u094D\u0921, \u0911\u092F\u0932, \u0907\u0902\u0921\u093F\u0938\u0947\u0938, \u0936\u0947\u092F\u0930, ETFs \u0914\u0930 \u0915\u094D\u0930\u093F\u092A\u094D\u091F\u094B\u0915\u0930\u0947\u0902\u0938\u0940 \u0915\u094B \u0905\u0902\u0924\u0930\u0930\u093E\u0937\u094D\u091F\u094D\u0930\u0940\u092F \u092C\u093E\u091C\u093E\u0930 \u0915\u0940 \u092A\u094D\u0930\u092E\u0941\u0916 \u092A\u094D\u0932\u0947\u091F\u092B\u0949\u0930\u094D\u092E\u094D\u0938 \u0915\u0947 \u092E\u093E\u0927\u094D\u092F\u092E \u0938\u0947 \u090F\u0915\u094D\u0938\u0947\u0938 \u0915\u0930\u0947\u0902\u0964",
+    fxproLabel: "FOREX BROKER",
+    fxproTitle: "FXPro \u0915\u0947 \u0938\u093E\u0925 \u0917\u094D\u0932\u094B\u092C\u0932 \u092E\u093E\u0930\u094D\u0915\u0947\u091F\u094D\u0938",
+    fxproText: "Varejo Investidor \u0915\u0940 \u0911\u092A\u0930\u0947\u0936\u0928\u0932 \u0938\u0902\u0930\u091A\u0928\u093E \u092E\u0947\u0902 \u0909\u092A\u092F\u094B\u0917 \u0915\u093F\u090F \u091C\u093E\u0928\u0947 \u0935\u093E\u0932\u0947 \u092C\u094D\u0930\u094B\u0915\u0930 \u0915\u0947 \u092E\u093E\u0927\u094D\u092F\u092E \u0938\u0947 Forex, \u0917\u094B\u0932\u094D\u0921, \u0911\u092F\u0932 \u0914\u0930 \u0907\u0902\u0921\u093F\u0938\u0947\u0938 \u0924\u0915 \u092A\u0939\u0941\u0901\u091A\u0947\u0902\u0964",
+    fxproCta: "FXPro Account \u0916\u094B\u0932\u0947\u0902",
+    binanceLabel: "CRYPTO BROKER",
+    binanceTitle: "\u0917\u094D\u0932\u094B\u092C\u0932 \u0915\u094D\u0930\u093F\u092A\u094D\u091F\u094B\u0915\u0930\u0947\u0902\u0938\u0940 \u092E\u093E\u0930\u094D\u0915\u0947\u091F",
+    binanceText: "\u0926\u0941\u0928\u093F\u092F\u093E \u0915\u0940 \u0938\u092C\u0938\u0947 \u092C\u0921\u093C\u0940 exchanges \u092E\u0947\u0902 \u0938\u0947 \u090F\u0915 \u0915\u0947 \u092E\u093E\u0927\u094D\u092F\u092E \u0938\u0947 \u0915\u094D\u0930\u093F\u092A\u094D\u091F\u094B\u0915\u0930\u0947\u0902\u0938\u0940 \u0916\u0930\u0940\u0926\u0947\u0902, \u092C\u0947\u091A\u0947\u0902 \u0914\u0930 \u091F\u094D\u0930\u0948\u0915 \u0915\u0930\u0947\u0902\u0964",
+    binanceCta: "Binance Account \u0916\u094B\u0932\u0947\u0902",
+    bannerLabel: "FOREX ACCOUNT \u0916\u094B\u0932\u0947\u0902",
+    bannerText: "\u0938\u0939\u0940 \u092D\u093E\u0937\u093E \u092E\u0947\u0902 broker \u0924\u0915 \u092A\u0939\u0941\u0901\u091A\u0928\u0947 \u0915\u0947 \u0932\u093F\u090F banner \u092A\u0930 \u0915\u094D\u0932\u093F\u0915 \u0915\u0930\u0947\u0902\u0964",
+    ecosystemLabel: "\u0907\u0915\u094B\u0938\u093F\u0938\u094D\u091F\u092E \u0926\u0947\u0916\u0947\u0902",
+  },
+  ar: {
+    eyebrow: "\u062D\u0633\u0627\u0628 \u0639\u0627\u0644\u0645\u064A",
+    title: "\u0627\u0641\u062A\u062D \u062D\u0633\u0627\u0628\u0643 \u0648\u0627\u0635\u0644 \u0625\u0644\u0649 \u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u0639\u0627\u0644\u0645\u064A\u0629",
+    text: "\u0627\u0644\u0641\u0648\u0631\u0643\u0633 \u0648\u0627\u0644\u0630\u0647\u0628 \u0648\u0627\u0644\u0646\u0641\u0637 \u0648\u0627\u0644\u0645\u0624\u0634\u0631\u0627\u062A \u0648\u0627\u0644\u0623\u0633\u0647\u0645 \u0648\u0635\u0646\u0627\u062F\u064A\u0642 ETF \u0648\u0627\u0644\u0639\u0645\u0644\u0627\u062A \u0627\u0644\u0631\u0642\u0645\u064A\u0629 \u0639\u0628\u0631 \u0623\u0647\u0645 \u0645\u0646\u0635\u0627\u062A \u0627\u0644\u0633\u0648\u0642 \u0627\u0644\u062F\u0648\u0644\u064A.",
+    fxproLabel: "\u0648\u0633\u064A\u0637 \u0641\u0648\u0631\u0643\u0633",
+    fxproTitle: "\u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u0639\u0627\u0644\u0645\u064A\u0629 \u0645\u0639 FXPro",
+    fxproText: "\u0627\u0635\u0644 \u0625\u0644\u0649 \u0627\u0644\u0641\u0648\u0631\u0643\u0633 \u0648\u0627\u0644\u0630\u0647\u0628 \u0648\u0627\u0644\u0646\u0641\u0637 \u0648\u0627\u0644\u0645\u0624\u0634\u0631\u0627\u062A \u0639\u0628\u0631 \u0627\u0644\u0648\u0633\u064A\u0637 \u0627\u0644\u0645\u0633\u062A\u062E\u062F\u0645 \u0641\u064A \u0627\u0644\u0647\u064A\u0643\u0644 \u0627\u0644\u062A\u0634\u063A\u064A\u0644\u064A \u0644\u0640 Varejo Investidor.",
+    fxproCta: "\u0641\u062A\u062D \u062D\u0633\u0627\u0628 FXPro",
+    binanceLabel: "\u0648\u0633\u064A\u0637 \u0643\u0631\u064A\u0628\u062A\u0648",
+    binanceTitle: "\u0633\u0648\u0642 \u0627\u0644\u0639\u0645\u0644\u0627\u062A \u0627\u0644\u0631\u0642\u0645\u064A\u0629 \u0627\u0644\u0639\u0627\u0644\u0645\u064A",
+    binanceText: "\u0627\u0634\u062A\u0631\u0650 \u0648\u0628\u0650\u0639 \u0648\u062A\u0627\u0628\u0639 \u0627\u0644\u0639\u0645\u0644\u0627\u062A \u0627\u0644\u0631\u0642\u0645\u064A\u0629 \u0639\u0628\u0631 \u0648\u0627\u062D\u062F\u0629 \u0645\u0646 \u0623\u0643\u0628\u0631 \u0627\u0644\u0645\u0646\u0635\u0627\u062A \u0641\u064A \u0627\u0644\u0639\u0627\u0644\u0645.",
+    binanceCta: "\u0641\u062A\u062D \u062D\u0633\u0627\u0628 Binance",
+    bannerLabel: "\u0627\u0641\u062A\u062D \u062D\u0633\u0627\u0628 \u0641\u0648\u0631\u0643\u0633",
+    bannerText: "\u0627\u0646\u0642\u0631 \u0639\u0644\u0649 \u0627\u0644\u0628\u0627\u0646\u0631 \u0644\u0644\u0648\u0635\u0648\u0644 \u0625\u0644\u0649 \u0627\u0644\u0648\u0633\u064A\u0637 \u0628\u0627\u0644\u0644\u063A\u0629 \u0627\u0644\u0635\u062D\u064A\u062D\u0629.",
+    ecosystemLabel: "\u0627\u0633\u062A\u0643\u0634\u0641 \u0627\u0644\u0645\u0646\u0638\u0648\u0645\u0629",
+  },
+  tr: {
+    eyebrow: "Global hesap",
+    title: "Hesab\u0131n\u0131z\u0131 a\u00E7\u0131n ve k\u00FCresel piyasalara eri\u015Fin",
+    text: "Forex, alt\u0131n, petrol, endeksler, hisseler, ETF'ler ve kripto paralar; uluslararas\u0131 piyasan\u0131n \u00F6nde gelen platformlar\u0131 \u00FCzerinden.",
+    fxproLabel: "FOREX ARACI KURUMU",
+    fxproTitle: "FXPro ile k\u00FCresel piyasalar",
+    fxproText: "Varejo Investidor operasyonel yap\u0131s\u0131nda kullan\u0131lan broker arac\u0131l\u0131\u011F\u0131yla Forex, alt\u0131n, petrol ve endekslere eri\u015Fin.",
+    fxproCta: "FXPro Hesab\u0131 A\u00E7",
+    binanceLabel: "KR\u0130PTO ARACI KURUMU",
+    binanceTitle: "K\u00FCresel kripto para piyasas\u0131",
+    binanceText: "D\u00FCnyan\u0131n en b\u00FCy\u00FCk borsalar\u0131ndan biri \u00FCzerinden kripto para al\u0131n, sat\u0131n ve takip edin.",
+    binanceCta: "Binance Hesab\u0131 A\u00E7",
+    bannerLabel: "FOREX HESABINIZI A\u00C7IN",
+    bannerText: "Do\u011Fru dilde araci kuruma eri\u015Fmek i\u00E7in bannera t\u0131klay\u0131n.",
+    ecosystemLabel: "Ekosistemi ke\u015Ffet",
+  },
+  id: {
+    eyebrow: "Akun global",
+    title: "Buka akun Anda dan akses pasar global",
+    text: "Forex, emas, minyak, indeks, saham, ETF, dan kripto melalui platform utama pasar internasional.",
+    fxproLabel: "BROKER FOREX",
+    fxproTitle: "Pasar global bersama FXPro",
+    fxproText: "Akses Forex, emas, minyak, dan indeks melalui broker yang digunakan dalam struktur operasional Varejo Investidor.",
+    fxproCta: "Buka Akun FXPro",
+    binanceLabel: "BROKER KRIPTO",
+    binanceTitle: "Pasar kripto global",
+    binanceText: "Beli, jual, dan pantau kripto melalui salah satu exchange terbesar di dunia.",
+    binanceCta: "Buka Akun Binance",
+    bannerLabel: "BUKA AKUN FOREX",
+    bannerText: "Klik banner untuk mengakses broker dalam bahasa yang tepat.",
+    ecosystemLabel: "Jelajahi ekosistem",
+  },
+  vi: {
+    eyebrow: "T\u00E0i kho\u1EA3n to\u00E0n c\u1EA7u",
+    title: "M\u1EDF t\u00E0i kho\u1EA3n v\u00E0 ti\u1EBFp c\u1EADn c\u00E1c th\u1ECB tr\u01B0\u1EDDng to\u00E0n c\u1EA7u",
+    text: "Forex, v\u00E0ng, d\u1EA7u, ch\u1EC9 s\u1ED1, c\u1ED5 phi\u1EBFu, ETF v\u00E0 ti\u1EC1n \u0111i\u1EC7n t\u1EED th\u00F4ng qua c\u00E1c n\u1EC1n t\u1EA3ng h\u00E0ng \u0111\u1EA7u c\u1EE7a th\u1ECB tr\u01B0\u1EDDng qu\u1ED1c t\u1EBF.",
+    fxproLabel: "NH\u00C0 M\u00D4I GI\u1EDAI FOREX",
+    fxproTitle: "Th\u1ECB tr\u01B0\u1EDDng to\u00E0n c\u1EA7u c\u00F9ng FXPro",
+    fxproText: "Ti\u1EBFp c\u1EADn Forex, v\u00E0ng, d\u1EA7u v\u00E0 ch\u1EC9 s\u1ED1 th\u00F4ng qua broker \u0111\u01B0\u1EE3c s\u1EED d\u1EE5ng trong c\u1EA5u tr\u00FAc v\u1EADn h\u00E0nh c\u1EE7a Varejo Investidor.",
+    fxproCta: "M\u1EDF T\u00E0i Kho\u1EA3n FXPro",
+    binanceLabel: "NH\u00C0 M\u00D4I GI\u1EDAI CRYPTO",
+    binanceTitle: "Th\u1ECB tr\u01B0\u1EDDng ti\u1EC1n \u0111i\u1EC7n t\u1EED to\u00E0n c\u1EA7u",
+    binanceText: "Mua, b\u00E1n v\u00E0 theo d\u00F5i ti\u1EC1n \u0111i\u1EC7n t\u1EED th\u00F4ng qua m\u1ED9t trong nh\u1EEFng s\u00E0n giao d\u1ECBch l\u1EDBn nh\u1EA5t th\u1EBF gi\u1EDBi.",
+    binanceCta: "M\u1EDF T\u00E0i Kho\u1EA3n Binance",
+    bannerLabel: "M\u1EDE T\u00C0I KHO\u1EA2N FOREX",
+    bannerText: "Nh\u1EA5p v\u00E0o banner \u0111\u1EC3 truy c\u1EADp broker \u0111\u00FAng ng\u00F4n ng\u1EEF.",
+    ecosystemLabel: "Kh\u00E1m ph\u00E1 h\u1EC7 sinh th\u00E1i",
+  },
+};
+
+const homeSeoLabels: Record<Locale, Record<"forex" | "stocks" | "crypto" | "etfs" | "formiga" | "lobo" | "harpia" | "articles", string>> = {
+  pt: { forex: "Forex", stocks: "A\u00E7\u00F5es", crypto: "Criptomoedas", etfs: "ETFs", formiga: "N\u00EDvel Formiga", lobo: "N\u00EDvel Lobo", harpia: "N\u00EDvel Harpia", articles: "Artigos" },
+  en: { forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", formiga: "Ant Level", lobo: "Wolf Level", harpia: "Harpy Level", articles: "Articles" },
+  es: { forex: "Forex", stocks: "Acciones", crypto: "Cripto", etfs: "ETFs", formiga: "Nivel Formiga", lobo: "Nivel Lobo", harpia: "Nivel Harpia", articles: "Art\u00EDculos" },
+  hi: { forex: "Forex", stocks: "\u0936\u0947\u092F\u0930", crypto: "\u0915\u094D\u0930\u093F\u092A\u094D\u091F\u094B", etfs: "ETFs", formiga: "\u091A\u0940\u0902\u091F\u0940 \u0938\u094D\u0924\u0930", lobo: "\u092D\u0947\u0921\u093C\u093F\u092F\u093E \u0938\u094D\u0924\u0930", harpia: "\u0917\u0930\u0941\u0921\u093C \u0938\u094D\u0924\u0930", articles: "\u0932\u0947\u0916" },
+  ar: { forex: "\u0627\u0644\u0641\u0648\u0631\u0643\u0633", stocks: "\u0627\u0644\u0623\u0633\u0647\u0645", crypto: "\u0627\u0644\u0643\u0631\u064A\u0628\u062A\u0648", etfs: "ETFs", formiga: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0646\u0645\u0644\u0629", lobo: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0630\u0626\u0628", harpia: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0647\u0627\u0631\u0628\u064A", articles: "\u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062A" },
+  tr: { forex: "Forex", stocks: "Hisseler", crypto: "Kripto", etfs: "ETF'ler", formiga: "Kar\u0131nca Seviyesi", lobo: "Kurt Seviyesi", harpia: "Harpia Seviyesi", articles: "Makaleler" },
+  id: { forex: "Forex", stocks: "Saham", crypto: "Kripto", etfs: "ETF", formiga: "Level Semut", lobo: "Level Serigala", harpia: "Level Elang Harpy", articles: "Artikel" },
+  vi: { forex: "Forex", stocks: "C\u1ED5 Phi\u1EBFu", crypto: "Ti\u1EC1n \u0110i\u1EC7n T\u1EED", etfs: "ETF", formiga: "C\u1EA5p Ki\u1EBFn", lobo: "C\u1EA5p S\u00F3i", harpia: "C\u1EA5p \u0110\u1EA1i B\u00E0ng Harpy", articles: "B\u00E0i vi\u1EBFt" },
+};
+
+function localizedMarketPath(locale: Locale, market: "forex" | "stocks" | "crypto" | "etfs") {
+  const slugs: Record<Locale, Record<typeof market, string>> = {
+    pt: { forex: "forex", stocks: "acoes", crypto: "cripto", etfs: "etfs" },
+    en: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    es: { forex: "forex", stocks: "acciones", crypto: "cripto", etfs: "etfs" },
+    hi: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    ar: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    tr: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    id: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    vi: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+  };
+
+  const slug = slugs[locale][market];
+  return locale === "pt" ? `/${slug}` : `/${locale}/${slug}`;
+}
+
+function homeSeoLinks(locale: Locale) {
+  const labels = homeSeoLabels[locale];
+  return [
+    { href: localizedMarketPath(locale, "forex"), label: labels.forex },
+    { href: localizedMarketPath(locale, "stocks"), label: labels.stocks },
+    { href: localizedMarketPath(locale, "crypto"), label: labels.crypto },
+    { href: localizedMarketPath(locale, "etfs"), label: labels.etfs },
+    { href: "/nivel-formiga", label: labels.formiga },
+    { href: "/nivel-lobo", label: labels.lobo },
+    { href: "/nivel-harpia", label: labels.harpia },
+    { href: getInsightsPath(locale), label: labels.articles },
+  ];
+}
 
 function AnimatedCounter({ label }: { label: string }) {
   const ref = useRef<HTMLSpanElement | null>(null);
@@ -332,6 +548,8 @@ function AnimatedCounter({ label }: { label: string }) {
 export default function Home() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = homeLiteCopy[locale];
+  const account = homeAccountCopy[locale];
+  const finalText = "text" in copy.final ? copy.final.text : undefined;
 
   return (
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -441,6 +659,83 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="home-global-account px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="mx-auto max-w-[1280px]">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.38em] text-gold">{account.eyebrow}</p>
+            <h2 className="mt-5 text-balance font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-6xl">
+              {account.title}
+            </h2>
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-ink/[0.68] md:text-lg md:leading-9">
+              {account.text}
+            </p>
+          </div>
+
+          <div className="mt-10 grid items-stretch gap-5 lg:grid-cols-2">
+            <article className="broker-home-card broker-home-card-forex group relative flex h-full min-h-[360px] flex-col overflow-hidden border border-gold/[0.22] bg-white/[0.035] p-6 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:p-8">
+              <div className="absolute inset-0 terminal-grid opacity-20" />
+              <div className="relative flex h-full flex-col">
+                <div className="mb-8 flex items-center justify-between gap-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{account.fxproLabel}</p>
+                  <span className="grid h-12 w-12 shrink-0 place-items-center border border-gold/[0.28] bg-ink font-mono text-sm font-black text-gold shadow-fine">FX</span>
+                </div>
+                <div className="flex flex-1 flex-col">
+                  <h3 className="font-serif text-3xl leading-[1.05] tracking-[-0.035em] md:text-4xl">{account.fxproTitle}</h3>
+                  <p className="mt-5 max-w-xl flex-1 leading-8 text-ink/[0.64]">{account.fxproText}</p>
+                </div>
+                <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" className="premium-button-gold mt-8 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
+                  {account.fxproCta}
+                </a>
+              </div>
+            </article>
+
+            <article className="broker-home-card broker-home-card-crypto group relative flex h-full min-h-[360px] flex-col overflow-hidden border border-gold/[0.22] bg-white/[0.035] p-6 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:p-8">
+              <div className="absolute inset-0 terminal-grid opacity-20" />
+              <div className="relative flex h-full flex-col">
+                <div className="mb-8 flex items-center justify-between gap-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{account.binanceLabel}</p>
+                  <span className="grid h-12 w-12 shrink-0 place-items-center border border-gold/[0.28] bg-ink font-mono text-sm font-black text-gold shadow-fine">BTC</span>
+                </div>
+                <div className="flex flex-1 flex-col">
+                  <h3 className="font-serif text-3xl leading-[1.05] tracking-[-0.035em] md:text-4xl">{account.binanceTitle}</h3>
+                  <p className="mt-5 max-w-xl flex-1 leading-8 text-ink/[0.64]">{account.binanceText}</p>
+                </div>
+                <a href={binanceLink} target="_blank" rel="noopener noreferrer" className="premium-button-gold mt-8 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
+                  {account.binanceCta}
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <div className="mt-10">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">{account.bannerLabel}</p>
+              <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-ink/[0.62] md:text-base">
+                {account.bannerText}
+              </p>
+            </div>
+            <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" className="group mx-auto mt-6 block w-full max-w-[1324px] overflow-hidden rounded-sm transition duration-300 hover:-translate-y-0.5">
+              <img
+                src={homeFxproBanners[locale]}
+                alt="FxPro Banner"
+                width={1324}
+                height={150}
+                loading="lazy"
+                className="block h-auto w-full transition duration-300 group-hover:scale-[1.006]"
+              />
+            </a>
+          </div>
+
+          <nav aria-label={account.ecosystemLabel} className="mt-8 flex flex-wrap justify-center gap-2">
+            {homeSeoLinks(locale).map((link) => (
+              <a key={link.href} href={link.href} className="border border-gold/[0.18] bg-white/[0.03] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] text-ink/[0.72] transition hover:border-gold/[0.5] hover:text-gold">
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </motion.div>
+      </section>
+
       <section className="px-5 py-12 md:px-8 md:py-14 lg:px-12 xl:px-16">
         <div className="mx-auto max-w-[1280px]">
           <FreeChannelCTA t={t} />
@@ -456,6 +751,11 @@ export default function Home() {
             <h2 className="mx-auto mt-6 max-w-4xl text-balance font-serif text-4xl leading-[1.05] tracking-[-0.045em] md:text-7xl">
               {copy.final.title}
             </h2>
+            {finalText ? (
+              <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+                {finalText}
+              </p>
+            ) : null}
             <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
               <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" className="premium-button-gold border border-gold bg-gold px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition">
                 {copy.final.free}

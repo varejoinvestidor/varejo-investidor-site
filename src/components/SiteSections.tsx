@@ -456,7 +456,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
           ? { timeframe: "الإطار الزمني", risk: "المخاطر", riskValue: "متوسطة", signal: "الإشارة", time: "الوقت", live: "مباشر", copy: "أرسلت مباشرة داخل قناة النخبة" }
           : isTurkish
             ? { timeframe: "ZAMAN DİLİMİ", risk: "RİSK", riskValue: "ORTA", signal: "SİNYAL", time: "SAAT", live: "CANLI", copy: "DOĞRUDAN ELITE KANALINDA GÖNDERİLDİ" }
-            : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO CANAL ELITE" : "DELIVERED DIRECTLY INSIDE ELITE CHANNEL" };
+            : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO WHATSAPP" : "DELIVERED DIRECTLY INSIDE ELITE CHANNEL" };
   const rows = [
     [t.signalBlock.example.asset, t.signalBlock.example.values.asset], [t.signalBlock.example.direction, t.signalBlock.example.values.direction], [t.signalBlock.example.entry, t.signalBlock.example.values.entry], [t.signalBlock.example.target, t.signalBlock.example.values.target], [t.signalBlock.example.stop, t.signalBlock.example.values.stop], [extraLabels.timeframe, "4H"], [extraLabels.risk, extraLabels.riskValue], [extraLabels.signal, "#4169"], [extraLabels.time, "09:42 UTC"], [t.signalBlock.example.status, t.signalBlock.example.values.status],
   ];
@@ -466,7 +466,7 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
       <div className="absolute inset-0 terminal-grid opacity-25" />
       <div className="flex items-center justify-between gap-3 border-b border-paper/[0.12] pb-4">
         <div className="relative">
-          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{isPortuguese ? "SINAL AO VIVO" : isSpanish ? "SE\u00D1AL EN VIVO" : isArabic ? "إشارة مباشرة" : isTurkish ? "CANLI SİNYAL" : "LIVE SIGNAL SENT"}</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{isPortuguese ? "EXEMPLO NO WHATSAPP" : isSpanish ? "SE\u00D1AL EN VIVO" : isArabic ? "إشارة مباشرة" : isTurkish ? "CANLI SİNYAL" : "LIVE SIGNAL SENT"}</p>
           <h3 className="mt-1 font-serif text-2xl tracking-[-0.04em] sm:text-3xl">{t.signalBlock.example.title}</h3>
         </div>
         <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise"><span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />{extraLabels.live}</div>

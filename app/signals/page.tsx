@@ -21,9 +21,9 @@ import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWid
 
 const howItWorks = [
   "2 a 5 sinais por dia",
-  "Envio direto no WhatsApp",
+  "Recebimento direto no WhatsApp",
   "Entrada, alvo e stop definidos",
-  "Contexto operacional e leitura de mercado",
+  "Análises de mercado",
 ];
 
 const ichimokuPoints = [
@@ -31,7 +31,7 @@ const ichimokuPoints = [
   "médias do Ichimoku",
   "direção do preço",
   "alvo e stop",
-  "contexto do ativo",
+  "informações do ativo",
   "gerenciamento de risco",
 ];
 
@@ -53,19 +53,19 @@ const formigaBullets = [
 const eliteBullets = [
   "sinais completos",
   "2 a 5 sinais dia",
-  "operações estruturadas",
-  "contexto operacional",
+  "entrada, alvo e stop definidos",
+  "análises de mercado",
   "Forex",
   "ouro",
   "petróleo",
   "índices",
   "cripto",
-  "leitura institucional",
+  "análises de mercado",
   "comunidade fechada",
   "aulas gravadas nível Formiga",
   "aulas gravadas nível Lobo",
   "aulas gravadas nível Harpia",
-  "estrutura Elite",
+  "acesso ao Elite",
 ];
 
 const prices = [
@@ -81,27 +81,27 @@ const eliteBenefits = [
   "Análises de mercado",
   "Aulas gravadas",
   "Conteúdo nível Harpia",
-  "Estrutura completa de mercado",
+  "Mercados globais acompanhados",
 ];
 
 const signalCopyByLocale = {
   pt: {
-    howEyebrow: "Canal Elite",
-    howTitle: "Como funciona o Canal Elite",
-    howText: "O canal Elite entrega operações estruturadas ao vivo diretamente no WhatsApp com contexto operacional e gestão de risco.",
+    howEyebrow: "WhatsApp",
+    howTitle: "Como funcionam os sinais enviados no WhatsApp",
+    howText: "Nossa equipe acompanha os mercados globais e envia análises e sinais diretamente no WhatsApp. Você recebe todas as informações da operação e executa na sua própria conta.",
     howItems: howItWorks,
-    scheduleEyebrow: "Horários operacionais",
-    scheduleTitle: "Horários operacionais",
-    scheduleText: "Os sinais são enviados geralmente nos principais períodos de liquidez do mercado, entre 8h e 15h, e também entre 21h e 00h, no horário de Brasília.",
-    scheduleNote: "Os horários podem variar conforme volatilidade, liquidez e oportunidades reais do mercado.",
+    scheduleEyebrow: "Envio no WhatsApp",
+    scheduleTitle: "Horários de envio",
+    scheduleText: "Os sinais são enviados normalmente nos períodos de maior liquidez do mercado. Os horários podem variar conforme as oportunidades identificadas ao longo do dia.",
+    scheduleNote: "Não existe promessa de lucro. O cliente recebe entrada, alvo e stop, mas executa as operações na própria conta e mantém o dinheiro na sua própria corretora.",
     scheduleCards: [["MANHÃ E TARDE", "8h às 15h"], ["NOITE", "21h às 00h"]],
-    methodEyebrow: "Método operacional",
+    methodEyebrow: "Método de análise",
     methodTitle: "Sinais baseados no Ichimoku",
-    methodText: "Todos os sinais do Varejo Investidor são enviados com base na leitura do indicador Ichimoku, observando principalmente a nuvem, as médias, o posicionamento do preço, zonas de suporte, resistência e contexto do ativo.",
-    ichimokuItems: ["leitura da nuvem", "médias do Ichimoku", "direção do preço", "alvo e stop", "contexto do ativo", "gerenciamento de risco"],
+    methodText: "Todos os sinais do Varejo Investidor são enviados com base na leitura do indicador Ichimoku, observando principalmente a nuvem, as médias, o posicionamento do preço, zonas de suporte, resistência e informações do ativo.",
+    ichimokuItems: ["leitura da nuvem", "médias do Ichimoku", "direção do preço", "alvo e stop", "informações do ativo", "gerenciamento de risco"],
     historyEyebrow: "Histórico",
     historyTitle: "Relatório Elite desde agosto de 2018",
-    historyText: "Acompanhe a evolução operacional do Canal Elite através dos relatórios históricos enviados desde agosto de 2018.",
+    historyText: "Acompanhe o histórico do Canal Elite através dos relatórios enviados desde agosto de 2018.",
     tableHeadings: ["DATA", "RELATÓRIO ELITE", "SINAIS", "RESULTADO", "STATUS", "VER"],
     reports: [["AGO/2018", "Relatório Elite", "124 sinais", "+18.4%", "Disponível"], ["JAN/2021", "Relatório Elite", "98 sinais", "+11.2%", "Disponível"], ["MAR/2024", "Relatório Elite", "137 sinais", "+22.7%", "Disponível"]],
     view: "VER",
@@ -110,13 +110,13 @@ const signalCopyByLocale = {
     docsText: "Sinais enviados ao vivo diretamente no WhatsApp desde 2018.",
     levelsEyebrow: "Níveis",
     levelsTitle: "Escolha seu nível",
-    levelsText: "Comece gratuitamente no Canal Formiga ou entre no Elite Harpia para acesso completo à estrutura operacional.",
+    levelsText: "O Canal Formiga é a entrada gratuita do ecossistema. Comece por ele para acompanhar análises econômicas, educação financeira e atualizações de mercado antes de evoluir para o Elite Harpia.",
     freeTitle: "Canal Formiga",
     freePrice: "Gratuito",
-    freeButton: "Entrar gratuitamente",
+    freeButton: "Entrar no Canal Formiga",
     formigaItems: formigaBullets,
     eliteTitle: "Canal Elite Harpia",
-    eliteStructure: "Estrutura Elite",
+    eliteStructure: "Acesso Elite",
     eliteButton: "Entrar no Elite",
     eliteItems: eliteBullets,
     packagesEyebrow: "Pacotes",
@@ -372,6 +372,8 @@ export default function SignalsPage() {
   ];
   const reportYears = ["2018", "2021", "2024"];
   const isPt = locale === "pt";
+  const ptHeroSubtitle =
+    "Nossa equipe acompanha os mercados globais diariamente para identificar oportunidades em Forex, ouro, petróleo, índices, criptomoedas e moedas globais. Você recebe as análises e sinais diretamente no WhatsApp com todas as informações necessárias para execução na sua própria conta.";
   const brazilElitePrices = [
     ["Mensal", "R$ 149,90"],
     ["Trimestral", "R$ 397,90"],
@@ -431,6 +433,11 @@ export default function SignalsPage() {
         <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <SectionHeader eyebrow={t.signalBlock.eyebrow} title={t.signalBlock.title} text={t.signalBlock.text} />
+            {isPt ? (
+              <p className="mt-5 max-w-2xl border-l border-gold/[0.45] bg-white/[0.04] px-5 py-4 text-base font-semibold leading-8 text-ink/[0.78] shadow-fine md:text-lg">
+                {ptHeroSubtitle}
+              </p>
+            ) : null}
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {t.signalBlock.stats.map((item) => (
                 <div key={item} className="operational-chip border-l-2 border-rise bg-white p-4 shadow-fine">
@@ -471,8 +478,8 @@ export default function SignalsPage() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow={signalPageCopy?.howEyebrow ?? "Canal Elite"}
-            title={signalPageCopy?.howTitle ?? "Como funciona o Canal Elite"}
-            text={signalPageCopy?.howText ?? "O canal Elite entrega operações estruturadas ao vivo diretamente no WhatsApp com contexto operacional e gestão de risco."}
+            title={signalPageCopy?.howTitle ?? "Como funcionam os sinais enviados no WhatsApp"}
+            text={signalPageCopy?.howText ?? "Nossa equipe acompanha os mercados globais e envia análises e sinais diretamente no WhatsApp. Você recebe todas as informações da operação e executa na sua própria conta."}
           />
           <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {howItems.map((item, index) => (
@@ -495,8 +502,8 @@ export default function SignalsPage() {
           <div className="mt-8 border border-rise/[0.18] bg-white p-6 shadow-fine md:p-8">
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{signalPageCopy?.scheduleEyebrow ?? "Horários operacionais"}</p>
-                <h3 className="mt-4 font-serif text-4xl tracking-[-0.04em]">{signalPageCopy?.scheduleTitle ?? "Horários operacionais"}</h3>
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{signalPageCopy?.scheduleEyebrow ?? "Envio no WhatsApp"}</p>
+                <h3 className="mt-4 font-serif text-4xl tracking-[-0.04em]">{signalPageCopy?.scheduleTitle ?? "Horários de envio"}</h3>
                 <p className="mt-4 max-w-2xl leading-8 text-ink/[0.66]">
                   {signalPageCopy?.scheduleText ?? "Os sinais são enviados geralmente nos principais períodos de liquidez do mercado, entre 8h e 15h, e também entre 21h e 00h, no horário de Brasília."}
                 </p>
@@ -520,9 +527,9 @@ export default function SignalsPage() {
       <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow={signalPageCopy?.methodEyebrow ?? "Método operacional"}
+            eyebrow={signalPageCopy?.methodEyebrow ?? "Método de análise"}
             title={signalPageCopy?.methodTitle ?? "Sinais baseados no Ichimoku"}
-            text={signalPageCopy?.methodText ?? "Todos os sinais do Varejo Investidor são enviados com base na leitura do indicador Ichimoku, observando principalmente a nuvem, as médias, o posicionamento do preço, zonas de suporte, resistência e contexto do ativo."}
+            text={signalPageCopy?.methodText ?? "Todos os sinais do Varejo Investidor são enviados com base na leitura do indicador Ichimoku, observando principalmente a nuvem, as médias, o posicionamento do preço, zonas de suporte, resistência e informações do ativo."}
           />
           <div className="mt-8 grid gap-6 xl:grid-cols-[0.58fr_1.42fr] xl:items-center">
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
@@ -643,7 +650,7 @@ export default function SignalsPage() {
           <SectionHeader
             eyebrow={signalPageCopy?.levelsEyebrow ?? "Níveis"}
             title={signalPageCopy?.levelsTitle ?? "Escolha seu nível"}
-            text={signalPageCopy?.levelsText ?? "Comece gratuitamente no Canal Formiga ou entre no Elite Harpia para acesso completo à estrutura operacional."}
+            text={signalPageCopy?.levelsText ?? "O Canal Formiga é a entrada gratuita do ecossistema. Comece por ele para acompanhar análises econômicas, educação financeira e atualizações de mercado antes de evoluir para o Elite Harpia."}
           />
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
             <article className="terminal-module border border-rise/[0.22] bg-white p-6 md:p-8">
@@ -662,7 +669,7 @@ export default function SignalsPage() {
                 rel="noopener noreferrer"
                 className="mt-8 block border border-rise bg-rise px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-paper"
               >
-                {signalPageCopy?.freeButton ?? "Entrar gratuitamente"}
+                {signalPageCopy?.freeButton ?? "Entrar no Canal Formiga"}
               </a>
             </article>
 
@@ -839,6 +846,47 @@ export default function SignalsPage() {
           )}
         </div>
       </section>
+
+      {isPt ? (
+        <section className="px-5 py-16 md:px-8 md:py-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            variants={fadeUp}
+            className="relative mx-auto max-w-7xl overflow-hidden border border-gold/[0.24] bg-ink px-6 py-14 text-center text-paper shadow-premium md:px-10 md:py-18"
+          >
+            <div className="absolute inset-0 terminal-grid opacity-25" />
+            <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/[0.08] blur-3xl" />
+            <div className="relative mx-auto max-w-4xl">
+              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">WhatsApp</p>
+              <h2 className="mt-5 font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-6xl">
+                Deixe a análise conosco e receba os sinais diretamente no WhatsApp.
+              </h2>
+              <p className="mx-auto mt-6 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+                Receba análises e sinais de Forex, ouro, petróleo, índices, criptomoedas e moedas globais. Você recebe todas as informações diretamente no WhatsApp e executa na sua própria conta.
+              </p>
+              <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+                <a
+                  {...eliteCta}
+                  className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+                >
+                  RECEBER SINAIS NO WHATSAPP
+                </a>
+                <a
+                  href={t.freeChannel.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="premium-button-ghost border border-paper/[0.22] bg-paper/[0.04] px-7 py-4 text-center text-sm font-black uppercase tracking-[0.16em] text-paper transition hover:-translate-y-0.5 hover:border-rise hover:text-rise"
+                >
+                  CONHECER CANAL FORMIGA
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+      ) : null}
 
       <section className="border-y border-ink/[0.08] bg-white px-5 py-14 md:px-8">
         <div className="mx-auto max-w-7xl">

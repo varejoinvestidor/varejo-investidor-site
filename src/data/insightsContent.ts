@@ -120,7 +120,7 @@ export const insightLabels: Record<
     categories: "Categorias",
     all: "Todos",
     read: "Ler an\u00E1lise",
-    whatsappTitle: "Comece pelo Canal Formiga",
+    whatsappTitle: "Entre no Canal Formiga",
     newsletterTitle: "Receba Artigos Globais",
     newsletterText: "An\u00E1lises, ciclos e conte\u00FAdos estrat\u00E9gicos do Varejo Investidor por e-mail ou WhatsApp.",
     email: "E-mail",

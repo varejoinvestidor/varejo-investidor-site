@@ -74,7 +74,7 @@ const aboutCopy = {
     finalTitle: "Da organização financeira ao patrimônio global.",
     finalText:
       "Da primeira operação à construção de uma estrutura geracional. Essa é a jornada do Varejo Investidor.",
-    freeCta: "Começar pelo Canal Formiga",
+    freeCta: "Entrar no Canal Formiga",
     eliteCta: "Conhecer o Elite",
   },
   en: {
