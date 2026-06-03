@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { BrokerAccessBlock } from "./BrokerAccessBlock";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "./SiteSections";
 import type { Locale } from "../i18n";
+import { getForexLibraryContent, type ForexLibraryContent } from "../data/forexLibraryContent";
 import { getMarketContent, getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 
 const pageLabels: Record<Locale, {
@@ -124,14 +126,33 @@ const pageLabels: Record<Locale, {
   },
 };
 
+const forexUiLabels: Record<Locale, {
+  baseCurrency: string;
+  quoteCurrency: string;
+  capital: string;
+  lot: string;
+  move: string;
+  result: string;
+}> = {
+  pt: { baseCurrency: "Moeda base", quoteCurrency: "Moeda de cotação", capital: "Capital", lot: "Lote", move: "Movimento", result: "Resultado" },
+  en: { baseCurrency: "Base currency", quoteCurrency: "Quote currency", capital: "Capital", lot: "Lot", move: "Move", result: "Result" },
+  es: { baseCurrency: "Moneda base", quoteCurrency: "Moneda cotizada", capital: "Capital", lot: "Lote", move: "Movimiento", result: "Resultado" },
+  hi: { baseCurrency: "बेस करेंसी", quoteCurrency: "कोट करेंसी", capital: "Capital", lot: "Lot", move: "Move", result: "Result" },
+  ar: { baseCurrency: "عملة الأساس", quoteCurrency: "عملة التسعير", capital: "رأس المال", lot: "العقد", move: "الحركة", result: "النتيجة" },
+  tr: { baseCurrency: "Baz para birimi", quoteCurrency: "Karşı para birimi", capital: "Sermaye", lot: "Lot", move: "Hareket", result: "Sonuç" },
+  id: { baseCurrency: "Mata uang dasar", quoteCurrency: "Mata uang kutipan", capital: "Modal", lot: "Lot", move: "Pergerakan", result: "Hasil" },
+  vi: { baseCurrency: "Đồng tiền cơ sở", quoteCurrency: "Đồng tiền định giá", capital: "Vốn", lot: "Lot", move: "Biến động", result: "Kết quả" },
+};
+
 function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {
   const content = getMarketContent(slug, locale);
+  const forexContent = slug === "forex" ? getForexLibraryContent(locale) : null;
   const url = `https://varejo-investidor-site.vercel.app/${slug}`;
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: content.title,
-    description: content.metaDescription,
+    headline: forexContent?.title ?? content.title,
+    description: forexContent?.metaDescription ?? content.metaDescription,
     inLanguage: locale === "pt" ? "pt-BR" : locale,
     mainEntityOfPage: url,
     publisher: {
@@ -167,10 +188,259 @@ function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {
   );
 }
 
+function ForexLibrarySections({
+  content,
+  locale,
+  freeChannelLink,
+}: {
+  content: ForexLibraryContent;
+  locale: Locale;
+  freeChannelLink: string;
+}) {
+  const sections = content.sections;
+  const isRtl = locale === "ar";
+  const ui = forexUiLabels[locale] ?? forexUiLabels.en;
+
+  return (
+    <>
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+          <motion.article
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="terminal-module relative overflow-hidden border border-gold/[0.18] bg-white p-7 shadow-fine md:p-10"
+          >
+            <div className="absolute inset-0 luxury-grid opacity-35" />
+            <div className="relative">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{content.eyebrow}</p>
+              <h2 className="mt-4 font-serif text-4xl leading-none tracking-[-0.04em] md:text-5xl">{sections.whatTitle}</h2>
+              <div className="mt-6 space-y-4 text-base leading-8 text-paper/[0.7]">
+                {sections.whatText.map((text) => (
+                  <p key={text}>{text}</p>
+                ))}
+              </div>
+            </div>
+          </motion.article>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {sections.whatCards.map((card, index) => (
+              <motion.div
+                key={card}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="border border-gold/[0.18] bg-white p-6 shadow-fine"
+              >
+                <p className="text-xs font-bold text-gold">{String(index + 1).padStart(2, "0")}</p>
+                <p className="mt-4 font-serif text-2xl tracking-[-0.04em] text-paper">{card}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{sections.pairsTitle}</p>
+            <h2 className="mt-4 font-serif text-4xl leading-none tracking-[-0.04em] md:text-6xl">{sections.structureTitle}</h2>
+            <p className="mt-6 text-base leading-8 text-paper/[0.68]">{sections.pairsText}</p>
+            <div className="mt-8 rounded-sm border border-gold/[0.22] bg-black/40 p-6 shadow-premium">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">EUR/USD = 1.1000</p>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                <div className="border border-paper/[0.1] bg-white p-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.45]">EUR</p>
+                  <p className="mt-2 text-lg font-semibold text-paper">{ui.baseCurrency}</p>
+                </div>
+                <div className="border border-paper/[0.1] bg-white p-4">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.45]">USD</p>
+                  <p className="mt-2 text-lg font-semibold text-paper">{ui.quoteCurrency}</p>
+                </div>
+              </div>
+              <p className="mt-5 text-sm leading-7 text-paper/[0.62]">{sections.structureText}</p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {sections.pairs.map((pair) => (
+              <article key={pair.pair} className="border border-gold/[0.16] bg-white p-5 transition hover:-translate-y-1 hover:border-gold/[0.5]">
+                <h3 className="font-serif text-3xl tracking-[-0.04em] text-paper">{pair.pair}</h3>
+                <p className="mt-3 text-sm leading-6 text-paper/[0.66]">{pair.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
+          {[
+            { title: sections.pipsTitle, text: sections.pipsText, marker: "1.1000 -> 1.1001" },
+            { title: sections.lotTitle, text: sections.lotText, marker: "0.01 / 0.10 / 1.00" },
+            { title: sections.leverageTitle, text: sections.leverageText, marker: "US$ 1,000 x 1:100" },
+          ].map((item) => (
+            <motion.article
+              key={item.title}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="terminal-module relative overflow-hidden border border-gold/[0.18] bg-white p-7 shadow-fine"
+            >
+              <div className="absolute inset-0 terminal-grid opacity-30" />
+              <div className="relative">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold">{item.marker}</p>
+                <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em]">{item.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-paper/[0.66]">{item.text}</p>
+                {item.title === sections.leverageTitle ? (
+                  <p className="mt-5 border-l-2 border-bear pl-4 text-sm font-semibold leading-6 text-bear">{sections.leverageWarning}</p>
+                ) : null}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{sections.examplesTitle}</p>
+            <h2 className="mt-4 font-serif text-4xl leading-none tracking-[-0.04em] md:text-6xl">{sections.lotTitle}</h2>
+            <p className="mt-6 text-base leading-8 text-paper/[0.68]">{sections.examplesText}</p>
+            <div className="mt-8 grid gap-3">
+              {sections.lotRows.map((row) => (
+                <div key={row.value} className="flex items-center justify-between border border-paper/[0.1] bg-white px-5 py-4">
+                  <span className="font-mono text-lg font-bold text-gold">{row.value}</span>
+                  <span className="text-sm font-semibold text-paper/[0.72]">{row.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="overflow-x-auto rounded-sm border border-gold/[0.18] bg-black/40">
+            <table className="w-full min-w-[620px] text-left text-sm">
+              <thead className="border-b border-gold/[0.18] text-xs uppercase tracking-[0.18em] text-gold">
+                <tr>
+                  <th className="px-5 py-4">{ui.capital}</th>
+                  <th className="px-5 py-4">{ui.lot}</th>
+                  <th className="px-5 py-4">{ui.move}</th>
+                  <th className="px-5 py-4">{ui.result}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sections.examples.map((example) => (
+                  <tr key={`${example.lot}-${example.result}`} className="border-b border-paper/[0.08] last:border-b-0">
+                    <td className="px-5 py-5 text-paper/[0.72]">{example.capital}</td>
+                    <td className="px-5 py-5 font-mono font-bold text-gold">{example.lot}</td>
+                    <td className="px-5 py-5 text-paper/[0.72]">{example.move}</td>
+                    <td className="px-5 py-5 font-bold text-rise">{example.result}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{sections.pairsMainTitle}</p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              {sections.mainPairs.map((pair) => (
+                <div key={pair.pair} className="border border-gold/[0.16] bg-white p-5">
+                  <p className="font-mono text-xl font-bold text-paper">{pair.pair}</p>
+                  <p className="mt-2 text-sm leading-6 text-paper/[0.62]">{pair.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{sections.sessionsTitle}</p>
+            <p className="mt-5 text-base leading-8 text-paper/[0.68]">{sections.sessionsText}</p>
+            <div className="mt-7 grid gap-3">
+              {sections.sessions.map((session, index) => (
+                <div key={session} className="flex items-center gap-4 border border-paper/[0.1] bg-white p-5">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-gold/[0.35] text-xs font-bold text-gold">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-serif text-2xl tracking-[-0.04em]">{session}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{sections.levelsTitle}</p>
+          <div className="mt-8 grid gap-5 lg:grid-cols-3">
+            {sections.levels.map((level) => (
+              <article key={level.title} className="terminal-module relative overflow-hidden border border-gold/[0.2] bg-white p-7 shadow-fine transition hover:-translate-y-1 hover:border-gold/[0.55] md:p-8">
+                <div className="absolute inset-0 terminal-grid opacity-35" />
+                <div className="relative">
+                  <h3 className="font-serif text-3xl tracking-[-0.04em]">{level.title}</h3>
+                  <ul className="mt-6 space-y-3">
+                    {level.items.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-6 text-paper/[0.72]">
+                        <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${level.tone === "rise" ? "bg-rise" : "bg-gold"}`} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{sections.toolsTitle}</p>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {sections.tools.map((tool) => (
+              <a key={tool.href} href={tool.href} className="group border border-gold/[0.2] bg-white p-7 transition hover:-translate-y-1 hover:border-gold/[0.55]">
+                <h3 className="font-serif text-3xl tracking-[-0.04em]">{tool.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-paper/[0.66]">{tool.text}</p>
+                <span className="mt-6 inline-flex border border-gold bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.16em] text-ink transition group-hover:bg-[#d8ad52]">
+                  {tool.button}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <BrokerAccessBlock locale={locale} />
+
+      <section className="px-5 py-14 md:px-8 md:py-20">
+        <div className="mx-auto max-w-7xl border border-gold/[0.22] bg-white p-7 text-center shadow-premium md:p-12">
+          <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{content.eyebrow}</p>
+          <h2 className="mt-4 font-serif text-4xl leading-none tracking-[-0.04em] md:text-6xl">{sections.finalTitle}</h2>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-paper/[0.68]">{sections.finalText}</p>
+          <div className={`mt-8 flex flex-col justify-center gap-3 sm:flex-row ${isRtl ? "sm:flex-row-reverse" : ""}`}>
+            <a href="/educacao" className="premium-button-gold inline-flex min-h-12 items-center justify-center border border-gold bg-gold px-7 py-4 text-xs font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
+              {sections.educationButton}
+            </a>
+            <a href={freeChannelLink} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center border border-rise/[0.45] bg-rise/[0.12] px-7 py-4 text-xs font-bold uppercase tracking-[0.16em] text-rise transition hover:-translate-y-0.5 hover:bg-rise hover:text-ink">
+              {sections.freeButton}
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 export function MarketPage({ slug }: { slug: MarketSlug }) {
   const { locale, t, changeLocale } = useSiteLocale();
   const pageLocale = slug === "fundos-imobiliarios" ? "pt" : locale;
   const content = getMarketContent(slug, pageLocale);
+  const forexContent = slug === "forex" ? getForexLibraryContent(pageLocale) : null;
   const labels = pageLabels[pageLocale];
   const direction = pageLocale === "ar" ? "rtl" : "ltr";
   const relatedMarkets = content.related.filter((market) => market !== "fundos-imobiliarios" || pageLocale === "pt");
@@ -196,14 +466,18 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
             transition={{ duration: 0.55 }}
             className="relative mx-auto max-w-7xl"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold">{labels.eyebrow}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold">{forexContent?.eyebrow ?? labels.eyebrow}</p>
             <h1 className="mt-5 max-w-5xl font-serif text-5xl leading-[0.96] tracking-[-0.05em] text-paper md:text-7xl">
-              {content.title}
+              {forexContent?.title ?? content.title}
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-paper/[0.68] md:text-xl">{content.subtitle}</p>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-paper/[0.68] md:text-xl">{forexContent?.subtitle ?? content.subtitle}</p>
           </motion.div>
         </section>
 
+        {forexContent ? (
+          <ForexLibrarySections content={forexContent} locale={pageLocale} freeChannelLink={t.freeChannel.link} />
+        ) : (
+          <>
         <section className="px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-2">
             {[{ title: content.explanationTitle, text: content.explanation }, { title: content.howItWorksTitle, text: content.howItWorks }].map((block) => (
@@ -324,6 +598,8 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
             </div>
           </div>
         </section>
+          </>
+        )}
 
         <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
       </main>
