@@ -25,6 +25,11 @@ const localePrefix: Partial<Record<Locale, string>> = {
   tr: "/tr/platforms",
   id: "/id/platforms",
   vi: "/vi/platforms",
+  ru: "/ru/platforms",
+  ur: "/ur/platforms",
+  bn: "/bn/platforms",
+  ja: "/ja/platforms",
+  ko: "/ko/platforms",
 };
 
 export function getPlatformPath(locale: Locale, slug: PlatformSlug) {
@@ -41,6 +46,8 @@ const sharedPlatformLabels: Record<Locale, { eyebrow: string; related: string; a
   tr: { eyebrow: "Platformlar", related: "Piyasalarla ba\u011Flan", articles: "K\u00FCresel Makaleleri Oku" },
   id: { eyebrow: "Platform", related: "Hubungkan dengan pasar", articles: "Baca Artikel Global" },
   vi: { eyebrow: "N\u1EC1n t\u1EA3ng", related: "K\u1EBFt n\u1ED1i v\u1EDBi th\u1ECB tr\u01B0\u1EDDng", articles: "\u0110\u1ECDc B\u00E0i vi\u1EBFt To\u00E0n c\u1EA7u" },
+  ja: { eyebrow: "プラットフォーム", related: "市場とつながる", articles: "グローバル記事を読む" },
+  ko: { eyebrow: "플랫폼", related: "시장과 연결", articles: "글로벌 기사 읽기" },
 };
 
 const freeLabels: Record<Locale, string> = {
@@ -52,6 +59,8 @@ const freeLabels: Record<Locale, string> = {
   tr: "\u00DCcretsiz ba\u015Fla",
   id: "Mulai gratis",
   vi: "B\u1EAFt \u0111\u1EA7u mi\u1EC5n ph\u00ED",
+  ja: "無料で始める",
+  ko: "무료로 시작하기",
 };
 
 const mt5: Record<Locale, Omit<PlatformContent, "slug" | "label" | "ctaLabel" | "ctaHref">> = {
@@ -113,11 +122,11 @@ const mt5: Record<Locale, Omit<PlatformContent, "slug" | "label" | "ctaLabel" | 
   tr: {
     title: "K\u00FCresel i\u015Flem i\u00E7in MetaTrader 5",
     subtitle: "Forex, endeksler, alt\u0131n, petrol ve emir iletimi i\u00E7in desktop, mobile ve web terminali.",
-    metaDescription: "MetaTrader 5, emir iletimi, Forex, endeksler, alt\u0131n, petrol ve aracı kurum ba\u011Flant\u0131s\u0131n\u0131 anlay\u0131n.",
-    intro: "MetaTrader 5, k\u00FCresel trader'lar\u0131n grafikleri izlemesi, emir g\u00F6ndermesi, pozisyon y\u00F6netmesi ve aracı kurum hesaplar\u0131n\u0131 ba\u011Flamas\u0131 i\u00E7in kullan\u0131lan bir platformdur.",
+    metaDescription: "MetaTrader 5, emir iletimi, Forex, endeksler, alt\u0131n, petrol ve arac\u0131 kurum ba\u011Flant\u0131s\u0131n\u0131 anlay\u0131n.",
+    intro: "MetaTrader 5, k\u00FCresel trader'lar\u0131n grafikleri izlemesi, emir g\u00F6ndermesi, pozisyon y\u00F6netmesi ve arac\u0131 kurum hesaplar\u0131n\u0131 ba\u011Flamas\u0131 i\u00E7in kullan\u0131lan bir platformdur.",
     sections: [
       { title: "Nedir", text: "Forex, endeksler, alt\u0131n ve petrolde piyasa okuma ve i\u015Flem y\u00FCr\u00FCtme i\u00E7in operasyonel terminal.", bullets: ["Forex", "Endeksler", "Alt\u0131n", "Petrol"] },
-      { title: "Nas\u0131l \u00E7al\u0131\u015F\u0131r", text: "Platform, aracı kurum hesab\u0131n\u0131z\u0131 i\u015Flem ortam\u0131na ba\u011Flar ve emir/pozisyon y\u00F6netimi sa\u011Flar.", bullets: ["Emir iletimi", "Desktop", "Mobile", "Web"] },
+      { title: "Nas\u0131l \u00E7al\u0131\u015F\u0131r", text: "Platform, arac\u0131 kurum hesab\u0131n\u0131z\u0131 i\u015Flem ortam\u0131na ba\u011Flar ve emir/pozisyon y\u00F6netimi sa\u011Flar.", bullets: ["Emir iletimi", "Desktop", "Mobile", "Web"] },
       { title: "Avantajlar", text: "Grafikler, ge\u00E7mi\u015F veriler, indikat\u00F6rler ve risk kontrol\u00FCn\u00FC disiplinli bir s\u00FCre\u00E7te birle\u015Ftirir.", bullets: ["\u0130ndikat\u00F6rler", "Ge\u00E7mi\u015F", "Risk", "Arac\u0131 kurumlar"] },
     ],
   },
@@ -154,7 +163,7 @@ function adaptPlatform(
   introTerm: string,
   cta: { label: string; href: string },
 ): PlatformContent {
-  const source = base[locale];
+  const source = base[locale] ?? base.en;
   return {
     slug,
     label,
@@ -175,16 +184,16 @@ export const platformContent = Object.fromEntries(
       "metatrader-5": {
         slug: "metatrader-5",
         label: "MetaTrader 5",
-        ...mt5[locale],
-        ctaLabel: fxproButtonLabels[locale],
-        ctaHref: fxproLinks[locale],
+        ...(mt5[locale] ?? mt5.en),
+        ctaLabel: fxproButtonLabels[locale] ?? fxproButtonLabels.en,
+        ctaHref: fxproLinks[locale] ?? fxproLinks.en,
       },
       ctrader: adaptPlatform(mt5, locale, "ctrader", "cTrader", "cTrader", "cTrader", {
-        label: fxproButtonLabels[locale],
-        href: fxproLinks[locale],
+        label: fxproButtonLabels[locale] ?? fxproButtonLabels.en,
+        href: fxproLinks[locale] ?? fxproLinks.en,
       }),
       tradingview: adaptPlatform(mt5, locale, "tradingview", "TradingView", "TradingView", "TradingView", {
-        label: freeLabels[locale],
+        label: freeLabels[locale] ?? freeLabels.en,
         href: "https://www.tradingview.com/",
       }),
     },
@@ -193,13 +202,13 @@ export const platformContent = Object.fromEntries(
 
 export function getPlatformContent(locale: Locale, slug: string): PlatformContent | null {
   if (!platformSlugs.includes(slug as PlatformSlug)) return null;
-  return platformContent[locale][slug as PlatformSlug] ?? platformContent.en[slug as PlatformSlug];
+  return (platformContent[locale] ?? platformContent.en)[slug as PlatformSlug] ?? platformContent.en[slug as PlatformSlug];
 }
 
 export function getPlatformLabels(locale: Locale) {
   return {
-    ...sharedPlatformLabels[locale],
+    ...(sharedPlatformLabels[locale] ?? sharedPlatformLabels.en),
     articlesHref: getInsightsPath(locale),
-    articlesLabel: insightLabels[locale].nav,
+    articlesLabel: (insightLabels[locale] ?? insightLabels.en).nav,
   };
 }

@@ -59,6 +59,19 @@ const pageLabels: Record<Locale, {
     faq: "FAQ",
     internalLinks: "Seguir estudiando",
   },
+  fr: {
+    eyebrow: "Bibliotheque de marches",
+    levelsTitle: "Comment chaque niveau utilise ce marche",
+    formigaTitle: "Fourmi : ce qu'elle apprend",
+    loboTitle: "Loup : comment il opere",
+    harpiaTitle: "Harpie : comment elle structure le patrimoine",
+    characteristics: "Caracteristiques principales",
+    educationTitle: "Evoluez dans la methodologie Varejo Investidor",
+    educationText: "Approfondissez votre vision dans l'education et reliez ce marche au parcours Fourmi, Loup et Harpie.",
+    educationButton: "Voir Education",
+    faq: "FAQ",
+    internalLinks: "Continuer a etudier",
+  },
   hi: {
     eyebrow: "मार्केट लाइब्रेरी",
     levelsTitle: "हर स्तर इस बाजार का उपयोग कैसे करता है",
@@ -124,6 +137,19 @@ const pageLabels: Record<Locale, {
     faq: "FAQ",
     internalLinks: "Tiếp tục học",
   },
+  th: {
+    eyebrow: "คลังตลาด",
+    levelsTitle: "แต่ละระดับใช้ตลาดนี้อย่างไร",
+    formigaTitle: "Formiga: สิ่งที่เรียนรู้",
+    loboTitle: "Lobo: วิธีดำเนินการ",
+    harpiaTitle: "Harpia: วิธีสร้างโครงสร้างความมั่งคั่ง",
+    characteristics: "คุณลักษณะสำคัญ",
+    educationTitle: "พัฒนาในแนวทาง Varejo Investidor",
+    educationText: "เพิ่มมุมมองผ่านการศึกษาและเชื่อมตลาดนี้กับเส้นทาง Formiga, Lobo และ Harpia",
+    educationButton: "ดูการศึกษา",
+    faq: "FAQ",
+    internalLinks: "ศึกษาต่อ",
+  },
 };
 
 const forexUiLabels: Record<Locale, {
@@ -134,14 +160,16 @@ const forexUiLabels: Record<Locale, {
   move: string;
   result: string;
 }> = {
-  pt: { baseCurrency: "Moeda base", quoteCurrency: "Moeda de cotação", capital: "Capital", lot: "Lote", move: "Movimento", result: "Resultado" },
+  pt: { baseCurrency: "Moeda base", quoteCurrency: "Moeda de cotacao", capital: "Capital", lot: "Lote", move: "Movimento", result: "Resultado" },
   en: { baseCurrency: "Base currency", quoteCurrency: "Quote currency", capital: "Capital", lot: "Lot", move: "Move", result: "Result" },
   es: { baseCurrency: "Moneda base", quoteCurrency: "Moneda cotizada", capital: "Capital", lot: "Lote", move: "Movimiento", result: "Resultado" },
-  hi: { baseCurrency: "बेस करेंसी", quoteCurrency: "कोट करेंसी", capital: "Capital", lot: "Lot", move: "Move", result: "Result" },
-  ar: { baseCurrency: "عملة الأساس", quoteCurrency: "عملة التسعير", capital: "رأس المال", lot: "العقد", move: "الحركة", result: "النتيجة" },
-  tr: { baseCurrency: "Baz para birimi", quoteCurrency: "Karşı para birimi", capital: "Sermaye", lot: "Lot", move: "Hareket", result: "Sonuç" },
+  fr: { baseCurrency: "Devise de base", quoteCurrency: "Devise cotee", capital: "Capital", lot: "Lot", move: "Mouvement", result: "Resultat" },
+  hi: { baseCurrency: "Base currency", quoteCurrency: "Quote currency", capital: "Capital", lot: "Lot", move: "Move", result: "Result" },
+  ar: { baseCurrency: "Base currency", quoteCurrency: "Quote currency", capital: "Capital", lot: "Lot", move: "Move", result: "Result" },
+  tr: { baseCurrency: "Baz para birimi", quoteCurrency: "Karsi para birimi", capital: "Sermaye", lot: "Lot", move: "Hareket", result: "Sonuc" },
   id: { baseCurrency: "Mata uang dasar", quoteCurrency: "Mata uang kutipan", capital: "Modal", lot: "Lot", move: "Pergerakan", result: "Hasil" },
-  vi: { baseCurrency: "Đồng tiền cơ sở", quoteCurrency: "Đồng tiền định giá", capital: "Vốn", lot: "Lot", move: "Biến động", result: "Kết quả" },
+  vi: { baseCurrency: "Dong tien co so", quoteCurrency: "Dong tien dinh gia", capital: "Von", lot: "Lot", move: "Bien dong", result: "Ket qua" },
+  th: { baseCurrency: "???????????", quoteCurrency: "???????????????", capital: "???", lot: "????", move: "?????????????", result: "???????" },
 };
 
 function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {

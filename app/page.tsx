@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../src/components/SiteSections";
+import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, trackVarejoClick, useSiteLocale } from "../src/components/SiteSections";
 import { getInsightsPath } from "../src/data/insightsContent";
 import type { Locale } from "../src/i18n";
 
@@ -11,32 +11,32 @@ const homeLiteCopy = {
   pt: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Tudo o que você precisa para investir e construir patrimônio em nível global.",
-      text: "Entenda os mercados globais, acompanhe análises econômicas e desenvolva uma estratégia para construir patrimônio além das fronteiras do seu país.",
+      title: "Tudo o que voc\u00ea precisa para investir e construir patrim\u00f4nio em n\u00edvel global.",
+      text: "Entenda os mercados globais, acompanhe an\u00e1lises econ\u00f4micas e desenvolva uma estrat\u00e9gia para construir patrim\u00f4nio al\u00e9m das fronteiras do seu pa\u00eds.",
       free: "ENTRAR NO CANAL FORMIGA",
-      services: "CONHECER NOSSOS SERVIÇOS",
+      services: "CONHECER A EDUCA\u00c7\u00c3O",
     },
     intro: {
-      eyebrow: "O que é",
-      title: "O que é o Varejo Investidor",
+      eyebrow: "O que \u00e9",
+      title: "O que \u00e9 o Varejo Investidor",
       manifesto:
-        "O Varejo Investidor é uma estrutura financeira global para quem deseja sair do básico, entender o mercado internacional e construir sua vida financeira em camadas.",
+        "O Varejo Investidor \u00e9 uma estrutura financeira global para quem deseja sair do b\u00e1sico, entender o mercado internacional e construir sua vida financeira em camadas.",
       text: [
-        "Desde 2018, entregamos mais de 4.200 sinais ao vivo, acompanhando Forex, ouro, petróleo, cripto, índices e moedas globais.",
-        "A jornada é dividida em níveis: Formiga, Lobo e Harpia.",
-        "O nível Formiga constrói a base. O nível Lobo desenvolve estratégia e leitura de mercado. O nível Harpia amplia a visão para patrimônio, proteção e estrutura global.",
+        "Desde 2018, entregamos mais de 4.200 sinais ao vivo, acompanhando Forex, ouro, petr\u00f3leo, cripto, \u00edndices e moedas globais.",
+        "A jornada \u00e9 dividida em n\u00edveis: Formiga, Lobo e Harpia.",
+        "O n\u00edvel Formiga constr\u00f3i a base. O n\u00edvel Lobo desenvolve estrat\u00e9gia e leitura de mercado. O n\u00edvel Harpia amplia a vis\u00e3o para patrim\u00f4nio, prote\u00e7\u00e3o e estrutura global.",
       ],
       stats: ["Desde 2018", "sinais ao vivo", "Formiga / Lobo / Harpia"],
     },
     cards: [
-      { code: "FORMIGA", title: "Base financeira", text: "Educação por níveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/nivel-formiga" },
-      { code: "LOBO", title: "Estratégia e expansão", text: "Sinais ao vivo, leitura de mercado e decisões estruturadas para operar com disciplina.", href: "/nivel-lobo" },
-      { code: "HARPIA", title: "Patrimônio global", text: "Consultorias estratégicas para proteção, posicionamento, patrimônio e visão internacional.", href: "/nivel-harpia" },
+      { code: "FORMIGA", title: "Base financeira", text: "Educa\u00e7\u00e3o por n\u00edveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/nivel-formiga" },
+      { code: "LOBO", title: "Estrat\u00e9gia e expans\u00e3o", text: "Sinais ao vivo, leitura de mercado e decis\u00f5es estruturadas para operar com disciplina.", href: "/nivel-lobo" },
+      { code: "HARPIA", title: "Patrim\u00f4nio global", text: "Consultorias estrat\u00e9gicas para prote\u00e7\u00e3o, posicionamento, patrim\u00f4nio e vis\u00e3o internacional.", href: "/nivel-harpia" },
     ],
     cardCta: "Saiba mais",
     final: {
-      title: "Sua jornada começa no Nível Formiga.",
-      text: "Comece gratuitamente, acompanhe os mercados globais e desenvolva sua evolução financeira através dos níveis Formiga, Lobo e Harpia.",
+      title: "Sua jornada come\u00e7a no N\u00edvel Formiga.",
+      text: "Comece gratuitamente, acompanhe os mercados globais e desenvolva sua evolu\u00e7\u00e3o financeira atrav\u00e9s dos n\u00edveis Formiga, Lobo e Harpia.",
       free: "ENTRAR NO CANAL FORMIGA",
       elite: "CONHECER CANAL ELITE HARPIA",
     },
@@ -47,7 +47,7 @@ const homeLiteCopy = {
       title: "Everything you need to invest and build wealth on a global level.",
       text: "Understand global markets, follow economic analysis, and develop a strategy to build wealth beyond the borders of your country.",
       free: "Start free",
-      services: "View services",
+      services: "View education",
     },
     intro: {
       eyebrow: "What it is",
@@ -77,128 +77,161 @@ const homeLiteCopy = {
     hero: {
       eyebrow: "Varejo Investidor",
       title: "Todo lo que necesitas para invertir y construir patrimonio a nivel global.",
-      text: "Comprende los mercados globales, sigue análisis económicos y desarrolla una estrategia para construir patrimonio más allá de las fronteras de tu país.",
+      text: "Comprende los mercados globales, sigue an\u00e1lisis econ\u00f3micos y desarrolla una estrategia para construir patrimonio m\u00e1s all\u00e1 de las fronteras de tu pa\u00eds.",
       free: "Empezar gratis",
-      services: "Ver servicios",
+      services: "Ver educaci\u00f3n",
     },
     intro: {
-      eyebrow: "Qué es",
-      title: "Qué es Varejo Investidor",
+      eyebrow: "Qu\u00e9 es",
+      title: "Qu\u00e9 es Varejo Investidor",
       manifesto:
-        "Varejo Investidor es una estructura financiera global para quien desea salir de lo básico, entender el mercado internacional y construir su vida financiera por capas.",
+        "Varejo Investidor es una estructura financiera global para quien desea salir de lo b\u00e1sico, entender el mercado internacional y construir su vida financiera por capas.",
       text: [
-        "Desde 2018, entregamos más de 4.200 señales en vivo, acompañando Forex, oro, petróleo, cripto, índices y monedas globales.",
-        "La jornada se divide en niveles: Hormiga, Lobo y Harpía.",
-        "El nivel Hormiga construye la base. El nivel Lobo desarrolla estrategia y lectura de mercado. El nivel Harpía amplía la visión hacia patrimonio, protección y estructura global.",
+        "Desde 2018, entregamos m\u00e1s de 4.200 se\u00f1ales en vivo, acompa\u00f1ando Forex, oro, petr\u00f3leo, cripto, \u00edndices y monedas globales.",
+        "La jornada se divide en niveles: Hormiga, Lobo y Harp\u00eda.",
+        "El nivel Hormiga construye la base. El nivel Lobo desarrolla estrategia y lectura de mercado. El nivel Harp\u00eda ampl\u00eda la visi\u00f3n hacia patrimonio, protecci\u00f3n y estructura global.",
       ],
-      stats: ["Desde 2018", "señales en vivo", "Hormiga / Lobo / Harpía"],
+      stats: ["Desde 2018", "se\u00f1ales en vivo", "Hormiga / Lobo / Harp\u00eda"],
     },
     cards: [
-      { code: "HORMIGA", title: "Base financiera", text: "Educación por niveles para construir base, organizar riesgo y crear los primeros pilares.", href: "/nivel-formiga" },
-      { code: "LOBO", title: "Estrategia y expansión", text: "Señales en vivo, lectura de mercado y decisiones estructuradas para operar con disciplina.", href: "/nivel-lobo" },
-      { code: "HARPÍA", title: "Patrimonio global", text: "Consultorías estratégicas para protección, posicionamiento, patrimonio y visión internacional.", href: "/nivel-harpia" },
+      { code: "HORMIGA", title: "Base financiera", text: "Educaci\u00f3n por niveles para construir base, organizar riesgo y crear los primeros pilares.", href: "/nivel-formiga" },
+      { code: "LOBO", title: "Estrategia y expansi\u00f3n", text: "Se\u00f1ales en vivo, lectura de mercado y decisiones estructuradas para operar con disciplina.", href: "/nivel-lobo" },
+      { code: "HARP\u00cdA", title: "Patrimonio global", text: "Consultor\u00edas estrat\u00e9gicas para protecci\u00f3n, posicionamiento, patrimonio y visi\u00f3n internacional.", href: "/nivel-harpia" },
     ],
-    cardCta: "Saber más",
+    cardCta: "Saber m\u00e1s",
     final: {
-      title: "Empieza gratis y elige tu próximo nivel.",
+      title: "Empieza gratis y elige tu pr\u00f3ximo nivel.",
       free: "Entrar al canal gratuito",
       elite: "Conocer Canal Elite",
+    },
+  },
+  fr: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Tout ce dont vous avez besoin pour investir et construire un patrimoine a l'echelle mondiale.",
+      text: "Comprenez les marches mondiaux, suivez les analyses economiques et developpez une strategie pour construire un patrimoine au-dela des frontieres de votre pays.",
+      free: "ENTRER DANS LE CANAL FORMIGA",
+      services: "DECOUVRIR NOS SERVICES",
+    },
+    intro: {
+      eyebrow: "Ce que c'est",
+      title: "Qu'est-ce que Varejo Investidor",
+      manifesto:
+        "Varejo Investidor est une structure financiere mondiale pour ceux qui veulent sortir des bases, comprendre les marches internationaux et construire leur vie financiere par etapes.",
+      text: [
+        "Depuis 2018, nous avons envoye plus de 4 200 signaux en direct en suivant le Forex, l'or, le petrole, les cryptos, les indices et les devises mondiales.",
+        "Le parcours est divise en niveaux : Fourmi, Loup et Harpie.",
+        "Le niveau Fourmi construit la base. Le niveau Loup developpe la strategie et la lecture de marche. Le niveau Harpie elargit la vision vers le patrimoine, la protection et la structure globale.",
+      ],
+      stats: ["Depuis 2018", "signaux en direct", "Fourmi / Loup / Harpie"],
+    },
+    cards: [
+      { code: "FOURMI", title: "Base financiere", text: "Education par niveaux pour construire la base, organiser le risque et creer les premiers piliers.", href: "/nivel-formiga" },
+      { code: "LOUP", title: "Strategie et expansion", text: "Signaux en direct, lecture de marche et decisions structurees pour operer avec discipline.", href: "/nivel-lobo" },
+      { code: "HARPIE", title: "Patrimoine mondial", text: "Services strategiques pour protection, positionnement, patrimoine et vision internationale.", href: "/nivel-harpia" },
+    ],
+    cardCta: "En savoir plus",
+    final: {
+      title: "Votre parcours commence au Niveau Fourmi.",
+      text: "Commencez gratuitement, suivez les marches mondiaux et developpez votre evolution financiere a travers les niveaux Fourmi, Loup et Harpie.",
+      free: "ENTRER DANS LE CANAL FORMIGA",
+      elite: "DECOUVRIR LE CANAL ELITE HARPIA",
     },
   },
   hi: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "वैश्विक स्तर पर निवेश करने और संपत्ति बनाने के लिए आपको जो कुछ भी चाहिए।",
-      text: "वैश्विक बाजारों को समझें, आर्थिक विश्लेषणों का अनुसरण करें और अपने देश की सीमाओं से परे संपत्ति बनाने की रणनीति विकसित करें।",
-      free: "मुफ्त चैनल से शुरू करें",
-      services: "सेवाएँ देखें",
+      title: "\u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u0938\u094d\u0924\u0930 \u092a\u0930 \u0928\u093f\u0935\u0947\u0936 \u0915\u0930\u0928\u0947 \u0914\u0930 \u0938\u0902\u092a\u0924\u094d\u0924\u093f \u092c\u0928\u093e\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0906\u092a\u0915\u094b \u091c\u094b \u0915\u0941\u091b \u092d\u0940 \u091a\u093e\u0939\u093f\u090f\u0964",
+      text: "\u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u092c\u093e\u091c\u093e\u0930\u094b\u0902 \u0915\u094b \u0938\u092e\u091d\u0947\u0902, \u0906\u0930\u094d\u0925\u093f\u0915 \u0935\u093f\u0936\u094d\u0932\u0947\u0937\u0923\u094b\u0902 \u0915\u093e \u0905\u0928\u0941\u0938\u0930\u0923 \u0915\u0930\u0947\u0902 \u0914\u0930 \u0905\u092a\u0928\u0947 \u0926\u0947\u0936 \u0915\u0940 \u0938\u0940\u092e\u093e\u0913\u0902 \u0938\u0947 \u092a\u0930\u0947 \u0938\u0902\u092a\u0924\u094d\u0924\u093f \u092c\u0928\u093e\u0928\u0947 \u0915\u0940 \u0930\u0923\u0928\u0940\u0924\u093f \u0935\u093f\u0915\u0938\u093f\u0924 \u0915\u0930\u0947\u0902\u0964",
+      free: "\u092e\u0941\u092b\u094d\u0924 \u091a\u0948\u0928\u0932 \u0938\u0947 \u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902",
+      services: "\u0938\u0947\u0935\u093e\u090f\u0901 \u0926\u0947\u0916\u0947\u0902",
     },
     intro: {
-      eyebrow: "परिचय",
-      title: "Varejo Investidor क्या है",
+      eyebrow: "\u092a\u0930\u093f\u091a\u092f",
+      title: "Varejo Investidor \u0915\u094d\u092f\u093e \u0939\u0948",
       manifesto:
-        "Varejo Investidor उन लोगों के लिए एक वैश्विक वित्तीय संरचना है जो बुनियादी स्तर से आगे बढ़कर अंतरराष्ट्रीय बाजार को समझना और अपनी वित्तीय जिंदगी को चरणों में बनाना चाहते हैं।",
+        "Varejo Investidor \u0909\u0928 \u0932\u094b\u0917\u094b\u0902 \u0915\u0947 \u0932\u093f\u090f \u090f\u0915 \u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u0935\u093f\u0924\u094d\u0924\u0940\u092f \u0938\u0902\u0930\u091a\u0928\u093e \u0939\u0948 \u091c\u094b \u092c\u0941\u0928\u093f\u092f\u093e\u0926\u0940 \u0938\u094d\u0924\u0930 \u0938\u0947 \u0906\u0917\u0947 \u092c\u0922\u093c\u0915\u0930 \u0905\u0902\u0924\u0930\u0930\u093e\u0937\u094d\u091f\u094d\u0930\u0940\u092f \u092c\u093e\u091c\u093e\u0930 \u0915\u094b \u0938\u092e\u091d\u0928\u093e \u0914\u0930 \u0905\u092a\u0928\u0940 \u0935\u093f\u0924\u094d\u0924\u0940\u092f \u091c\u093f\u0902\u0926\u0917\u0940 \u0915\u094b \u091a\u0930\u0923\u094b\u0902 \u092e\u0947\u0902 \u092c\u0928\u093e\u0928\u093e \u091a\u093e\u0939\u0924\u0947 \u0939\u0948\u0902\u0964",
       text: [
-        "2018 से हम Forex, सोना, तेल, क्रिप्टो, सूचकांक और वैश्विक मुद्राओं का अनुसरण करते हुए 4,200 से अधिक लाइव सिग्नल भेज चुके हैं।",
-        "यह यात्रा तीन स्तरों में विभाजित है: चींटी, भेड़िया और गरुड़।",
-        "चींटी स्तर आधार बनाता है। भेड़िया स्तर रणनीति और बाजार-पठन विकसित करता है। गरुड़ स्तर संपत्ति, सुरक्षा और वैश्विक संरचना की दृष्टि को विस्तृत करता है।",
+        "2018 \u0938\u0947 \u0939\u092e Forex, \u0938\u094b\u0928\u093e, \u0924\u0947\u0932, \u0915\u094d\u0930\u093f\u092a\u094d\u091f\u094b, \u0938\u0942\u091a\u0915\u093e\u0902\u0915 \u0914\u0930 \u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u092e\u0941\u0926\u094d\u0930\u093e\u0913\u0902 \u0915\u093e \u0905\u0928\u0941\u0938\u0930\u0923 \u0915\u0930\u0924\u0947 \u0939\u0941\u090f 4,200 \u0938\u0947 \u0905\u0927\u093f\u0915 \u0932\u093e\u0907\u0935 \u0938\u093f\u0917\u094d\u0928\u0932 \u092d\u0947\u091c \u091a\u0941\u0915\u0947 \u0939\u0948\u0902\u0964",
+        "\u092f\u0939 \u092f\u093e\u0924\u094d\u0930\u093e \u0924\u0940\u0928 \u0938\u094d\u0924\u0930\u094b\u0902 \u092e\u0947\u0902 \u0935\u093f\u092d\u093e\u091c\u093f\u0924 \u0939\u0948: \u091a\u0940\u0902\u091f\u0940, \u092d\u0947\u0921\u093c\u093f\u092f\u093e \u0914\u0930 \u0917\u0930\u0941\u0921\u093c\u0964",
+        "\u091a\u0940\u0902\u091f\u0940 \u0938\u094d\u0924\u0930 \u0906\u0927\u093e\u0930 \u092c\u0928\u093e\u0924\u093e \u0939\u0948\u0964 \u092d\u0947\u0921\u093c\u093f\u092f\u093e \u0938\u094d\u0924\u0930 \u0930\u0923\u0928\u0940\u0924\u093f \u0914\u0930 \u092c\u093e\u091c\u093e\u0930-\u092a\u0920\u0928 \u0935\u093f\u0915\u0938\u093f\u0924 \u0915\u0930\u0924\u093e \u0939\u0948\u0964 \u0917\u0930\u0941\u0921\u093c \u0938\u094d\u0924\u0930 \u0938\u0902\u092a\u0924\u094d\u0924\u093f, \u0938\u0941\u0930\u0915\u094d\u0937\u093e \u0914\u0930 \u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u0938\u0902\u0930\u091a\u0928\u093e \u0915\u0940 \u0926\u0943\u0937\u094d\u091f\u093f \u0915\u094b \u0935\u093f\u0938\u094d\u0924\u0943\u0924 \u0915\u0930\u0924\u093e \u0939\u0948\u0964",
       ],
-      stats: ["2018 से", "लाइव सिग्नल", "चींटी / भेड़िया / गरुड़"],
+      stats: ["2018 \u0938\u0947", "\u0932\u093e\u0907\u0935 \u0938\u093f\u0917\u094d\u0928\u0932", "\u091a\u0940\u0902\u091f\u0940 / \u092d\u0947\u0921\u093c\u093f\u092f\u093e / \u0917\u0930\u0941\u0921\u093c"],
     },
     cards: [
-      { code: "चींटी", title: "वित्तीय आधार", text: "आधार बनाने, जोखिम व्यवस्थित करने और पहले स्तंभ तैयार करने के लिए स्तर-आधारित शिक्षा।", href: "/nivel-formiga" },
-      { code: "भेड़िया", title: "रणनीति और विस्तार", text: "अनुशासित ऑपरेशन के लिए लाइव सिग्नल, बाजार-पठन और संरचित निर्णय।", href: "/nivel-lobo" },
-      { code: "गरुड़", title: "वैश्विक संपत्ति", text: "सुरक्षा, पोजिशनिंग, संपत्ति और अंतरराष्ट्रीय दृष्टि के लिए रणनीतिक सेवाएँ।", href: "/nivel-harpia" },
+      { code: "\u091a\u0940\u0902\u091f\u0940", title: "\u0935\u093f\u0924\u094d\u0924\u0940\u092f \u0906\u0927\u093e\u0930", text: "\u0906\u0927\u093e\u0930 \u092c\u0928\u093e\u0928\u0947, \u091c\u094b\u0916\u093f\u092e \u0935\u094d\u092f\u0935\u0938\u094d\u0925\u093f\u0924 \u0915\u0930\u0928\u0947 \u0914\u0930 \u092a\u0939\u0932\u0947 \u0938\u094d\u0924\u0902\u092d \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0938\u094d\u0924\u0930-\u0906\u0927\u093e\u0930\u093f\u0924 \u0936\u093f\u0915\u094d\u0937\u093e\u0964", href: "/nivel-formiga" },
+      { code: "\u092d\u0947\u0921\u093c\u093f\u092f\u093e", title: "\u0930\u0923\u0928\u0940\u0924\u093f \u0914\u0930 \u0935\u093f\u0938\u094d\u0924\u093e\u0930", text: "\u0905\u0928\u0941\u0936\u093e\u0938\u093f\u0924 \u0911\u092a\u0930\u0947\u0936\u0928 \u0915\u0947 \u0932\u093f\u090f \u0932\u093e\u0907\u0935 \u0938\u093f\u0917\u094d\u0928\u0932, \u092c\u093e\u091c\u093e\u0930-\u092a\u0920\u0928 \u0914\u0930 \u0938\u0902\u0930\u091a\u093f\u0924 \u0928\u093f\u0930\u094d\u0923\u092f\u0964", href: "/nivel-lobo" },
+      { code: "\u0917\u0930\u0941\u0921\u093c", title: "\u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u0938\u0902\u092a\u0924\u094d\u0924\u093f", text: "\u0938\u0941\u0930\u0915\u094d\u0937\u093e, \u092a\u094b\u091c\u093f\u0936\u0928\u093f\u0902\u0917, \u0938\u0902\u092a\u0924\u094d\u0924\u093f \u0914\u0930 \u0905\u0902\u0924\u0930\u0930\u093e\u0937\u094d\u091f\u094d\u0930\u0940\u092f \u0926\u0943\u0937\u094d\u091f\u093f \u0915\u0947 \u0932\u093f\u090f \u0930\u0923\u0928\u0940\u0924\u093f\u0915 \u0938\u0947\u0935\u093e\u090f\u0901\u0964", href: "/nivel-harpia" },
     ],
-    cardCta: "और जानें",
+    cardCta: "\u0914\u0930 \u091c\u093e\u0928\u0947\u0902",
     final: {
-      title: "मुफ्त में शुरू करें और अपना अगला स्तर चुनें।",
-      free: "मुफ्त चैनल में प्रवेश करें",
-      elite: "एलीट चैनल देखें",
+      title: "\u092e\u0941\u092b\u094d\u0924 \u092e\u0947\u0902 \u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902 \u0914\u0930 \u0905\u092a\u0928\u093e \u0905\u0917\u0932\u093e \u0938\u094d\u0924\u0930 \u091a\u0941\u0928\u0947\u0902\u0964",
+      free: "\u092e\u0941\u092b\u094d\u0924 \u091a\u0948\u0928\u0932 \u092e\u0947\u0902 \u092a\u094d\u0930\u0935\u0947\u0936 \u0915\u0930\u0947\u0902",
+      elite: "\u090f\u0932\u0940\u091f \u091a\u0948\u0928\u0932 \u0926\u0947\u0916\u0947\u0902",
     },
   },
   ar: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "كل ما تحتاجه للاستثمار وبناء الثروة على المستوى العالمي.",
-      text: "افهم الأسواق العالمية، تابع التحليلات الاقتصادية، وطور استراتيجية لبناء الثروة خارج حدود بلدك.",
-      free: "ابدأ مجانا",
-      services: "شاهد الخدمات",
+      title: "\u0643\u0644 \u0645\u0627 \u062a\u062d\u062a\u0627\u062c\u0647 \u0644\u0644\u0627\u0633\u062a\u062b\u0645\u0627\u0631 \u0648\u0628\u0646\u0627\u0621 \u0627\u0644\u062b\u0631\u0648\u0629 \u0639\u0644\u0649 \u0627\u0644\u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0639\u0627\u0644\u0645\u064a.",
+      text: "\u0627\u0641\u0647\u0645 \u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629\u060c \u062a\u0627\u0628\u0639 \u0627\u0644\u062a\u062d\u0644\u064a\u0644\u0627\u062a \u0627\u0644\u0627\u0642\u062a\u0635\u0627\u062f\u064a\u0629\u060c \u0648\u0637\u0648\u0631 \u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u0644\u0628\u0646\u0627\u0621 \u0627\u0644\u062b\u0631\u0648\u0629 \u062e\u0627\u0631\u062c \u062d\u062f\u0648\u062f \u0628\u0644\u062f\u0643.",
+      free: "\u0627\u0628\u062f\u0623 \u0645\u062c\u0627\u0646\u0627",
+      services: "\u0634\u0627\u0647\u062f \u0627\u0644\u062e\u062f\u0645\u0627\u062a",
     },
     intro: {
-      eyebrow: "ما هو",
-      title: "ما هو Varejo Investidor",
+      eyebrow: "\u0645\u0627 \u0647\u0648",
+      title: "\u0645\u0627 \u0647\u0648 Varejo Investidor",
       manifesto:
-        "Varejo Investidor هو هيكل مالي عالمي لمن يريد تجاوز الأساسيات وفهم الأسواق الدولية وبناء حياته المالية على طبقات.",
+        "Varejo Investidor \u0647\u0648 \u0647\u064a\u0643\u0644 \u0645\u0627\u0644\u064a \u0639\u0627\u0644\u0645\u064a \u0644\u0645\u0646 \u064a\u0631\u064a\u062f \u062a\u062c\u0627\u0648\u0632 \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0627\u062a \u0648\u0641\u0647\u0645 \u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u062f\u0648\u0644\u064a\u0629 \u0648\u0628\u0646\u0627\u0621 \u062d\u064a\u0627\u062a\u0647 \u0627\u0644\u0645\u0627\u0644\u064a\u0629 \u0639\u0644\u0649 \u0637\u0628\u0642\u0627\u062a.",
       text: [
-        "منذ 2018، أرسلنا أكثر من 4,200 إشارة مباشرة مع متابعة الفوركس والذهب والنفط والكريبتو والمؤشرات والعملات العالمية.",
-        "تنقسم الرحلة إلى مستويات: النملة، الذئب، والهاربي.",
-        "مستوى النملة يبني الأساس. مستوى الذئب يطور الاستراتيجية وقراءة السوق. مستوى الهاربي يوسع الرؤية نحو الثروة والحماية والهيكل العالمي.",
+        "\u0645\u0646\u0630 2018\u060c \u0623\u0631\u0633\u0644\u0646\u0627 \u0623\u0643\u062b\u0631 \u0645\u0646 4,200 \u0625\u0634\u0627\u0631\u0629 \u0645\u0628\u0627\u0634\u0631\u0629 \u0645\u0639 \u0645\u062a\u0627\u0628\u0639\u0629 \u0627\u0644\u0641\u0648\u0631\u0643\u0633 \u0648\u0627\u0644\u0630\u0647\u0628 \u0648\u0627\u0644\u0646\u0641\u0637 \u0648\u0627\u0644\u0643\u0631\u064a\u0628\u062a\u0648 \u0648\u0627\u0644\u0645\u0624\u0634\u0631\u0627\u062a \u0648\u0627\u0644\u0639\u0645\u0644\u0627\u062a \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629.",
+        "\u062a\u0646\u0642\u0633\u0645 \u0627\u0644\u0631\u062d\u0644\u0629 \u0625\u0644\u0649 \u0645\u0633\u062a\u0648\u064a\u0627\u062a: \u0627\u0644\u0646\u0645\u0644\u0629\u060c \u0627\u0644\u0630\u0626\u0628\u060c \u0648\u0627\u0644\u0647\u0627\u0631\u0628\u064a.",
+        "\u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0646\u0645\u0644\u0629 \u064a\u0628\u0646\u064a \u0627\u0644\u0623\u0633\u0627\u0633. \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0630\u0626\u0628 \u064a\u0637\u0648\u0631 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u0648\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u0633\u0648\u0642. \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0647\u0627\u0631\u0628\u064a \u064a\u0648\u0633\u0639 \u0627\u0644\u0631\u0624\u064a\u0629 \u0646\u062d\u0648 \u0627\u0644\u062b\u0631\u0648\u0629 \u0648\u0627\u0644\u062d\u0645\u0627\u064a\u0629 \u0648\u0627\u0644\u0647\u064a\u0643\u0644 \u0627\u0644\u0639\u0627\u0644\u0645\u064a.",
       ],
-      stats: ["منذ 2018", "إشارات مباشرة", "النملة / الذئب / الهاربي"],
+      stats: ["\u0645\u0646\u0630 2018", "\u0625\u0634\u0627\u0631\u0627\u062a \u0645\u0628\u0627\u0634\u0631\u0629", "\u0627\u0644\u0646\u0645\u0644\u0629 / \u0627\u0644\u0630\u0626\u0628 / \u0627\u0644\u0647\u0627\u0631\u0628\u064a"],
     },
     cards: [
-      { code: "النملة", title: "الأساس المالي", text: "تعليم بالمستويات لبناء القاعدة وتنظيم المخاطر وإنشاء الأعمدة الأولى.", href: "/nivel-formiga" },
-      { code: "الذئب", title: "الاستراتيجية والتوسع", text: "إشارات مباشرة وقراءة للسوق وقرارات منظمة للتنفيذ بانضباط.", href: "/nivel-lobo" },
-      { code: "الهاربي", title: "الثروة العالمية", text: "خدمات استراتيجية للحماية والتموضع وبناء الثروة والرؤية الدولية.", href: "/nivel-harpia" },
+      { code: "\u0627\u0644\u0646\u0645\u0644\u0629", title: "\u0627\u0644\u0623\u0633\u0627\u0633 \u0627\u0644\u0645\u0627\u0644\u064a", text: "\u062a\u0639\u0644\u064a\u0645 \u0628\u0627\u0644\u0645\u0633\u062a\u0648\u064a\u0627\u062a \u0644\u0628\u0646\u0627\u0621 \u0627\u0644\u0642\u0627\u0639\u062f\u0629 \u0648\u062a\u0646\u0638\u064a\u0645 \u0627\u0644\u0645\u062e\u0627\u0637\u0631 \u0648\u0625\u0646\u0634\u0627\u0621 \u0627\u0644\u0623\u0639\u0645\u062f\u0629 \u0627\u0644\u0623\u0648\u0644\u0649.", href: "/nivel-formiga" },
+      { code: "\u0627\u0644\u0630\u0626\u0628", title: "\u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u0648\u0627\u0644\u062a\u0648\u0633\u0639", text: "\u0625\u0634\u0627\u0631\u0627\u062a \u0645\u0628\u0627\u0634\u0631\u0629 \u0648\u0642\u0631\u0627\u0621\u0629 \u0644\u0644\u0633\u0648\u0642 \u0648\u0642\u0631\u0627\u0631\u0627\u062a \u0645\u0646\u0638\u0645\u0629 \u0644\u0644\u062a\u0646\u0641\u064a\u0630 \u0628\u0627\u0646\u0636\u0628\u0627\u0637.", href: "/nivel-lobo" },
+      { code: "\u0627\u0644\u0647\u0627\u0631\u0628\u064a", title: "\u0627\u0644\u062b\u0631\u0648\u0629 \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629", text: "\u062e\u062f\u0645\u0627\u062a \u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u0644\u0644\u062d\u0645\u0627\u064a\u0629 \u0648\u0627\u0644\u062a\u0645\u0648\u0636\u0639 \u0648\u0628\u0646\u0627\u0621 \u0627\u0644\u062b\u0631\u0648\u0629 \u0648\u0627\u0644\u0631\u0624\u064a\u0629 \u0627\u0644\u062f\u0648\u0644\u064a\u0629.", href: "/nivel-harpia" },
     ],
-    cardCta: "اعرف المزيد",
+    cardCta: "\u0627\u0639\u0631\u0641 \u0627\u0644\u0645\u0632\u064a\u062f",
     final: {
-      title: "ابدأ مجانا واختر مستواك التالي.",
-      free: "ادخل القناة المجانية",
-      elite: "تعرف إلى قناة النخبة",
+      title: "\u0627\u0628\u062f\u0623 \u0645\u062c\u0627\u0646\u0627 \u0648\u0627\u062e\u062a\u0631 \u0645\u0633\u062a\u0648\u0627\u0643 \u0627\u0644\u062a\u0627\u0644\u064a.",
+      free: "\u0627\u062f\u062e\u0644 \u0627\u0644\u0642\u0646\u0627\u0629 \u0627\u0644\u0645\u062c\u0627\u0646\u064a\u0629",
+      elite: "\u062a\u0639\u0631\u0641 \u0625\u0644\u0649 \u0642\u0646\u0627\u0629 \u0627\u0644\u0646\u062e\u0628\u0629",
     },
   },
   tr: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Küresel ölçekte yatırım yapmak ve servet oluşturmak için ihtiyacınız olan her şey.",
-      text: "Küresel piyasaları anlayın, ekonomik analizleri takip edin ve ülkenizin sınırlarının ötesinde servet oluşturacak bir strateji geliştirin.",
-      free: "Ücretsiz başla",
-      services: "Hizmetleri gör",
+      title: "K\u00fcresel \u00f6l\u00e7ekte yat\u0131r\u0131m yapmak ve servet olu\u015fturmak i\u00e7in ihtiyac\u0131n\u0131z olan her \u015fey.",
+      text: "K\u00fcresel piyasalar\u0131 anlay\u0131n, ekonomik analizleri takip edin ve \u00fclkenizin s\u0131n\u0131rlar\u0131n\u0131n \u00f6tesinde servet olu\u015fturacak bir strateji geli\u015ftirin.",
+      free: "\u00dccretsiz ba\u015fla",
+      services: "Hizmetleri g\u00f6r",
     },
     intro: {
       eyebrow: "Nedir",
       title: "Varejo Investidor nedir",
       manifesto:
-        "Varejo Investidor, temel seviyeyi aşmak, uluslararası piyasaları anlamak ve finansal hayatını katmanlar halinde kurmak isteyenler için küresel bir finansal yapıdır.",
+        "Varejo Investidor, temel seviyeyi a\u015fmak, uluslararas\u0131 piyasalar\u0131 anlamak ve finansal hayat\u0131n\u0131 katmanlar halinde kurmak isteyenler i\u00e7in k\u00fcresel bir finansal yap\u0131d\u0131r.",
       text: [
-        "2018'den beri Forex, altın, petrol, kripto, endeksler ve küresel para birimlerini takip ederek 4.200'den fazla canlı sinyal gönderdik.",
-        "Yolculuk üç seviyeye ayrılır: Karınca, Kurt ve Harpia.",
-        "Karınca seviyesi temeli kurar. Kurt seviyesi strateji ve piyasa okuma geliştirir. Harpia seviyesi varlık, koruma ve küresel yapı vizyonunu genişletir.",
+        "2018'den beri Forex, alt\u0131n, petrol, kripto, endeksler ve k\u00fcresel para birimlerini takip ederek 4.200'den fazla canl\u0131 sinyal g\u00f6nderdik.",
+        "Yolculuk \u00fc\u00e7 seviyeye ayr\u0131l\u0131r: Kar\u0131nca, Kurt ve Harpia.",
+        "Kar\u0131nca seviyesi temeli kurar. Kurt seviyesi strateji ve piyasa okuma geli\u015ftirir. Harpia seviyesi varl\u0131k, koruma ve k\u00fcresel yap\u0131 vizyonunu geni\u015fletir.",
       ],
-      stats: ["2018'den beri", "canlı sinyaller", "Karınca / Kurt / Harpia"],
+      stats: ["2018'den beri", "canl\u0131 sinyaller", "Kar\u0131nca / Kurt / Harpia"],
     },
     cards: [
-      { code: "KARINCA", title: "Finansal temel", text: "Temel oluşturmak, riski düzenlemek ve ilk sütunları kurmak için seviyeli eğitim.", href: "/nivel-formiga" },
-      { code: "KURT", title: "Strateji ve genişleme", text: "Disiplinli işlem için canlı sinyaller, piyasa okuma ve yapılandırılmış kararlar.", href: "/nivel-lobo" },
-      { code: "HARPIA", title: "Küresel varlık", text: "Koruma, konumlanma, varlık ve uluslararası vizyon için stratejik hizmetler.", href: "/nivel-harpia" },
+      { code: "KARINCA", title: "Finansal temel", text: "Temel olu\u015fturmak, riski d\u00fczenlemek ve ilk s\u00fctunlar\u0131 kurmak i\u00e7in seviyeli e\u011fitim.", href: "/nivel-formiga" },
+      { code: "KURT", title: "Strateji ve geni\u015fleme", text: "Disiplinli i\u015flem i\u00e7in canl\u0131 sinyaller, piyasa okuma ve yap\u0131land\u0131r\u0131lm\u0131\u015f kararlar.", href: "/nivel-lobo" },
+      { code: "HARPIA", title: "K\u00fcresel varl\u0131k", text: "Koruma, konumlanma, varl\u0131k ve uluslararas\u0131 vizyon i\u00e7in stratejik hizmetler.", href: "/nivel-harpia" },
     ],
     cardCta: "Daha fazla bilgi",
     final: {
-      title: "Ücretsiz başla ve bir sonraki seviyeni seç.",
-      free: "Ücretsiz kanala gir",
-      elite: "Elite Kanalını keşfet",
+      title: "\u00dccretsiz ba\u015fla ve bir sonraki seviyeni se\u00e7.",
+      free: "\u00dccretsiz kanala gir",
+      elite: "Elite Kanal\u0131n\u0131 ke\u015ffet",
     },
   },
   id: {
@@ -236,34 +269,202 @@ const homeLiteCopy = {
   vi: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Mọi thứ bạn cần để đầu tư và xây dựng tài sản ở quy mô toàn cầu.",
-      text: "Hiểu các thị trường toàn cầu, theo dõi các phân tích kinh tế và xây dựng chiến lược để phát triển tài sản vượt ra ngoài biên giới quốc gia của bạn.",
-      free: "Bắt đầu miễn phí",
-      services: "Xem dịch vụ",
+      title: "M\u1ecdi th\u1ee9 b\u1ea1n c\u1ea7n \u0111\u1ec3 \u0111\u1ea7u t\u01b0 v\u00e0 x\u00e2y d\u1ef1ng t\u00e0i s\u1ea3n \u1edf quy m\u00f4 to\u00e0n c\u1ea7u.",
+      text: "Hi\u1ec3u c\u00e1c th\u1ecb tr\u01b0\u1eddng to\u00e0n c\u1ea7u, theo d\u00f5i c\u00e1c ph\u00e2n t\u00edch kinh t\u1ebf v\u00e0 x\u00e2y d\u1ef1ng chi\u1ebfn l\u01b0\u1ee3c \u0111\u1ec3 ph\u00e1t tri\u1ec3n t\u00e0i s\u1ea3n v\u01b0\u1ee3t ra ngo\u00e0i bi\u00ean gi\u1edbi qu\u1ed1c gia c\u1ee7a b\u1ea1n.",
+      free: "B\u1eaft \u0111\u1ea7u mi\u1ec5n ph\u00ed",
+      services: "Xem d\u1ecbch v\u1ee5",
     },
     intro: {
-      eyebrow: "Giới thiệu",
-      title: "Varejo Investidor là gì",
+      eyebrow: "Gi\u1edbi thi\u1ec7u",
+      title: "Varejo Investidor l\u00e0 g\u00ec",
       manifesto:
-        "Varejo Investidor là một cấu trúc tài chính toàn cầu dành cho người muốn vượt qua nền tảng cơ bản, hiểu thị trường quốc tế và xây dựng đời sống tài chính theo từng lớp.",
+        "Varejo Investidor l\u00e0 m\u1ed9t c\u1ea5u tr\u00fac t\u00e0i ch\u00ednh to\u00e0n c\u1ea7u d\u00e0nh cho ng\u01b0\u1eddi mu\u1ed1n v\u01b0\u1ee3t qua n\u1ec1n t\u1ea3ng c\u01a1 b\u1ea3n, hi\u1ec3u th\u1ecb tr\u01b0\u1eddng qu\u1ed1c t\u1ebf v\u00e0 x\u00e2y d\u1ef1ng \u0111\u1eddi s\u1ed1ng t\u00e0i ch\u00ednh theo t\u1eebng l\u1edbp.",
       text: [
-        "Từ năm 2018, chúng tôi đã gửi hơn 4.200 tín hiệu trực tiếp, theo dõi Forex, vàng, dầu, crypto, chỉ số và tiền tệ toàn cầu.",
-        "Hành trình được chia thành các cấp độ: Kiến, Sói và Đại Bàng Harpy.",
-        "Cấp độ Kiến xây dựng nền tảng. Cấp độ Sói phát triển chiến lược và khả năng đọc thị trường. Cấp độ Đại Bàng Harpy mở rộng tầm nhìn về tài sản, bảo vệ vốn và cấu trúc toàn cầu.",
+        "T\u1eeb n\u0103m 2018, ch\u00fang t\u00f4i \u0111\u00e3 g\u1eedi h\u01a1n 4.200 t\u00edn hi\u1ec7u tr\u1ef1c ti\u1ebfp, theo d\u00f5i Forex, v\u00e0ng, d\u1ea7u, crypto, ch\u1ec9 s\u1ed1 v\u00e0 ti\u1ec1n t\u1ec7 to\u00e0n c\u1ea7u.",
+        "H\u00e0nh tr\u00ecnh \u0111\u01b0\u1ee3c chia th\u00e0nh c\u00e1c c\u1ea5p \u0111\u1ed9: Ki\u1ebfn, S\u00f3i v\u00e0 \u0110\u1ea1i B\u00e0ng Harpy.",
+        "C\u1ea5p \u0111\u1ed9 Ki\u1ebfn x\u00e2y d\u1ef1ng n\u1ec1n t\u1ea3ng. C\u1ea5p \u0111\u1ed9 S\u00f3i ph\u00e1t tri\u1ec3n chi\u1ebfn l\u01b0\u1ee3c v\u00e0 kh\u1ea3 n\u0103ng \u0111\u1ecdc th\u1ecb tr\u01b0\u1eddng. C\u1ea5p \u0111\u1ed9 \u0110\u1ea1i B\u00e0ng Harpy m\u1edf r\u1ed9ng t\u1ea7m nh\u00ecn v\u1ec1 t\u00e0i s\u1ea3n, b\u1ea3o v\u1ec7 v\u1ed1n v\u00e0 c\u1ea5u tr\u00fac to\u00e0n c\u1ea7u.",
       ],
-      stats: ["Từ năm 2018", "tín hiệu trực tiếp", "Kiến / Sói / Đại Bàng Harpy"],
+      stats: ["T\u1eeb n\u0103m 2018", "t\u00edn hi\u1ec7u tr\u1ef1c ti\u1ebfp", "Ki\u1ebfn / S\u00f3i / \u0110\u1ea1i B\u00e0ng Harpy"],
     },
     cards: [
-      { code: "KIẾN", title: "Nền tảng tài chính", text: "Giáo dục theo cấp độ để xây nền móng, tổ chức rủi ro và tạo các trụ cột đầu tiên.", href: "/nivel-formiga" },
-      { code: "SÓI", title: "Chiến lược và mở rộng", text: "Tín hiệu trực tiếp, đọc thị trường và quyết định có cấu trúc để vận hành kỷ luật.", href: "/nivel-lobo" },
-      { code: "ĐẠI BÀNG HARPY", title: "Tài sản toàn cầu", text: "Tư vấn chiến lược về bảo vệ, định vị, tài sản và tầm nhìn quốc tế.", href: "/nivel-harpia" },
+      { code: "KI\u1ebeN", title: "N\u1ec1n t\u1ea3ng t\u00e0i ch\u00ednh", text: "Gi\u00e1o d\u1ee5c theo c\u1ea5p \u0111\u1ed9 \u0111\u1ec3 x\u00e2y n\u1ec1n m\u00f3ng, t\u1ed5 ch\u1ee9c r\u1ee7i ro v\u00e0 t\u1ea1o c\u00e1c tr\u1ee5 c\u1ed9t \u0111\u1ea7u ti\u00ean.", href: "/nivel-formiga" },
+      { code: "S\u00d3I", title: "Chi\u1ebfn l\u01b0\u1ee3c v\u00e0 m\u1edf r\u1ed9ng", text: "T\u00edn hi\u1ec7u tr\u1ef1c ti\u1ebfp, \u0111\u1ecdc th\u1ecb tr\u01b0\u1eddng v\u00e0 quy\u1ebft \u0111\u1ecbnh c\u00f3 c\u1ea5u tr\u00fac \u0111\u1ec3 v\u1eadn h\u00e0nh k\u1ef7 lu\u1eadt.", href: "/nivel-lobo" },
+      { code: "\u0110\u1ea0I B\u00c0NG HARPY", title: "T\u00e0i s\u1ea3n to\u00e0n c\u1ea7u", text: "T\u01b0 v\u1ea5n chi\u1ebfn l\u01b0\u1ee3c v\u1ec1 b\u1ea3o v\u1ec7, \u0111\u1ecbnh v\u1ecb, t\u00e0i s\u1ea3n v\u00e0 t\u1ea7m nh\u00ecn qu\u1ed1c t\u1ebf.", href: "/nivel-harpia" },
     ],
-    cardCta: "Tìm hiểu thêm",
+    cardCta: "T\u00ecm hi\u1ec3u th\u00eam",
     final: {
-      title: "Bắt đầu miễn phí và chọn cấp độ tiếp theo.",
-      free: "Vào kênh miễn phí",
-      elite: "Tìm hiểu Kênh Elite",
+      title: "B\u1eaft \u0111\u1ea7u mi\u1ec5n ph\u00ed v\u00e0 ch\u1ecdn c\u1ea5p \u0111\u1ed9 ti\u1ebfp theo.",
+      free: "V\u00e0o k\u00eanh mi\u1ec5n ph\u00ed",
+      elite: "T\u00ecm hi\u1ec3u K\u00eanh Elite",
     },
+  },
+  th: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "\u0e17\u0e38\u0e01\u0e2a\u0e34\u0e48\u0e07\u0e17\u0e35\u0e48\u0e04\u0e38\u0e13\u0e15\u0e49\u0e2d\u0e07\u0e43\u0e0a\u0e49\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e25\u0e07\u0e17\u0e38\u0e19\u0e41\u0e25\u0e30\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e04\u0e27\u0e32\u0e21\u0e21\u0e31\u0e48\u0e07\u0e04\u0e31\u0e48\u0e07\u0e43\u0e19\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01",
+      text: "\u0e40\u0e02\u0e49\u0e32\u0e43\u0e08\u0e15\u0e25\u0e32\u0e14\u0e42\u0e25\u0e01 \u0e15\u0e34\u0e14\u0e15\u0e32\u0e21\u0e1a\u0e17\u0e27\u0e34\u0e40\u0e04\u0e23\u0e32\u0e30\u0e2b\u0e4c\u0e40\u0e28\u0e23\u0e29\u0e10\u0e01\u0e34\u0e08 \u0e41\u0e25\u0e30\u0e1e\u0e31\u0e12\u0e19\u0e32\u0e01\u0e25\u0e22\u0e38\u0e17\u0e18\u0e4c\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e04\u0e27\u0e32\u0e21\u0e21\u0e31\u0e48\u0e07\u0e04\u0e31\u0e48\u0e07\u0e19\u0e2d\u0e01\u0e1e\u0e23\u0e21\u0e41\u0e14\u0e19\u0e1b\u0e23\u0e30\u0e40\u0e17\u0e28\u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13",
+      free: "\u0e40\u0e02\u0e49\u0e32\u0e2a\u0e39\u0e48\u0e0a\u0e48\u0e2d\u0e07 Formiga",
+      services: "\u0e14\u0e39\u0e1a\u0e23\u0e34\u0e01\u0e32\u0e23\u0e02\u0e2d\u0e07\u0e40\u0e23\u0e32",
+    },
+    intro: {
+      eyebrow: "\u0e04\u0e37\u0e2d\u0e2d\u0e30\u0e44\u0e23",
+      title: "Varejo Investidor \u0e04\u0e37\u0e2d\u0e2d\u0e30\u0e44\u0e23",
+      manifesto:
+        "Varejo Investidor \u0e04\u0e37\u0e2d\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e01\u0e32\u0e23\u0e40\u0e07\u0e34\u0e19\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a\u0e1c\u0e39\u0e49\u0e17\u0e35\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e2d\u0e2d\u0e01\u0e08\u0e32\u0e01\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19 \u0e40\u0e02\u0e49\u0e32\u0e43\u0e08\u0e15\u0e25\u0e32\u0e14\u0e15\u0e48\u0e32\u0e07\u0e1b\u0e23\u0e30\u0e40\u0e17\u0e28 \u0e41\u0e25\u0e30\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e0a\u0e35\u0e27\u0e34\u0e15\u0e01\u0e32\u0e23\u0e40\u0e07\u0e34\u0e19\u0e40\u0e1b\u0e47\u0e19\u0e02\u0e31\u0e49\u0e19\u0e40\u0e1b\u0e47\u0e19\u0e15\u0e2d\u0e19",
+      text: [
+        "\u0e15\u0e31\u0e49\u0e07\u0e41\u0e15\u0e48\u0e1b\u0e35 2018 \u0e40\u0e23\u0e32\u0e2a\u0e48\u0e07\u0e2a\u0e31\u0e0d\u0e0d\u0e32\u0e13\u0e2a\u0e14\u0e21\u0e32\u0e01\u0e01\u0e27\u0e48\u0e32 4,200 \u0e04\u0e23\u0e31\u0e49\u0e07 \u0e42\u0e14\u0e22\u0e15\u0e34\u0e14\u0e15\u0e32\u0e21 Forex \u0e17\u0e2d\u0e07\u0e04\u0e33 \u0e19\u0e49\u0e33\u0e21\u0e31\u0e19 \u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15 \u0e14\u0e31\u0e0a\u0e19\u0e35 \u0e41\u0e25\u0e30\u0e2a\u0e01\u0e38\u0e25\u0e40\u0e07\u0e34\u0e19\u0e17\u0e31\u0e48\u0e27\u0e42\u0e25\u0e01",
+        "\u0e40\u0e2a\u0e49\u0e19\u0e17\u0e32\u0e07\u0e16\u0e39\u0e01\u0e41\u0e1a\u0e48\u0e07\u0e40\u0e1b\u0e47\u0e19\u0e23\u0e30\u0e14\u0e31\u0e1a: \u0e21\u0e14 \u0e2b\u0e21\u0e32\u0e1b\u0e48\u0e32 \u0e41\u0e25\u0e30\u0e2e\u0e32\u0e23\u0e4c\u0e1b\u0e35",
+        "\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e21\u0e14\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19 \u0e23\u0e30\u0e14\u0e31\u0e1a\u0e2b\u0e21\u0e32\u0e1b\u0e48\u0e32\u0e1e\u0e31\u0e12\u0e19\u0e32\u0e01\u0e25\u0e22\u0e38\u0e17\u0e18\u0e4c\u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e2d\u0e48\u0e32\u0e19\u0e15\u0e25\u0e32\u0e14 \u0e23\u0e30\u0e14\u0e31\u0e1a\u0e2e\u0e32\u0e23\u0e4c\u0e1b\u0e35\u0e02\u0e22\u0e32\u0e22\u0e21\u0e38\u0e21\u0e21\u0e2d\u0e07\u0e44\u0e1b\u0e2a\u0e39\u0e48\u0e04\u0e27\u0e32\u0e21\u0e21\u0e31\u0e48\u0e07\u0e04\u0e31\u0e48\u0e07 \u0e01\u0e32\u0e23\u0e1b\u0e01\u0e1b\u0e49\u0e2d\u0e07 \u0e41\u0e25\u0e30\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01",
+      ],
+      stats: ["\u0e15\u0e31\u0e49\u0e07\u0e41\u0e15\u0e48\u0e1b\u0e35 2018", "\u0e2a\u0e31\u0e0d\u0e0d\u0e32\u0e13\u0e2a\u0e14", "\u0e21\u0e14 / \u0e2b\u0e21\u0e32\u0e1b\u0e48\u0e32 / \u0e2e\u0e32\u0e23\u0e4c\u0e1b\u0e35"],
+    },
+    cards: [
+      { code: "\u0e21\u0e14", title: "\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19\u0e01\u0e32\u0e23\u0e40\u0e07\u0e34\u0e19", text: "\u0e01\u0e32\u0e23\u0e28\u0e36\u0e01\u0e29\u0e32\u0e40\u0e1b\u0e47\u0e19\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e10\u0e32\u0e19 \u0e08\u0e31\u0e14\u0e01\u0e32\u0e23\u0e04\u0e27\u0e32\u0e21\u0e40\u0e2a\u0e35\u0e48\u0e22\u0e07 \u0e41\u0e25\u0e30\u0e27\u0e32\u0e07\u0e40\u0e2a\u0e32\u0e2b\u0e25\u0e31\u0e01\u0e41\u0e23\u0e01", href: "/nivel-formiga" },
+      { code: "\u0e2b\u0e21\u0e32\u0e1b\u0e48\u0e32", title: "\u0e01\u0e25\u0e22\u0e38\u0e17\u0e18\u0e4c\u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e02\u0e22\u0e32\u0e22\u0e15\u0e31\u0e27", text: "\u0e2a\u0e31\u0e0d\u0e0d\u0e32\u0e13\u0e2a\u0e14 \u0e01\u0e32\u0e23\u0e2d\u0e48\u0e32\u0e19\u0e15\u0e25\u0e32\u0e14 \u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e15\u0e31\u0e14\u0e2a\u0e34\u0e19\u0e43\u0e08\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e21\u0e35\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e01\u0e32\u0e23\u0e1b\u0e0f\u0e34\u0e1a\u0e31\u0e15\u0e34\u0e17\u0e35\u0e48\u0e21\u0e35\u0e27\u0e34\u0e19\u0e31\u0e22", href: "/nivel-lobo" },
+      { code: "\u0e2e\u0e32\u0e23\u0e4c\u0e1b\u0e35", title: "\u0e04\u0e27\u0e32\u0e21\u0e21\u0e31\u0e48\u0e07\u0e04\u0e31\u0e48\u0e07\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01", text: "\u0e1a\u0e23\u0e34\u0e01\u0e32\u0e23\u0e40\u0e0a\u0e34\u0e07\u0e01\u0e25\u0e22\u0e38\u0e17\u0e18\u0e4c\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e01\u0e32\u0e23\u0e1b\u0e01\u0e1b\u0e49\u0e2d\u0e07 \u0e01\u0e32\u0e23\u0e27\u0e32\u0e07\u0e15\u0e33\u0e41\u0e2b\u0e19\u0e48\u0e07 \u0e04\u0e27\u0e32\u0e21\u0e21\u0e31\u0e48\u0e07\u0e04\u0e31\u0e48\u0e07 \u0e41\u0e25\u0e30\u0e27\u0e34\u0e2a\u0e31\u0e22\u0e17\u0e31\u0e28\u0e19\u0e4c\u0e23\u0e30\u0e2b\u0e27\u0e48\u0e32\u0e07\u0e1b\u0e23\u0e30\u0e40\u0e17\u0e28", href: "/nivel-harpia" },
+    ],
+    cardCta: "\u0e40\u0e23\u0e35\u0e22\u0e19\u0e23\u0e39\u0e49\u0e40\u0e1e\u0e34\u0e48\u0e21\u0e40\u0e15\u0e34\u0e21",
+    final: {
+      title: "\u0e01\u0e32\u0e23\u0e40\u0e14\u0e34\u0e19\u0e17\u0e32\u0e07\u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13\u0e40\u0e23\u0e34\u0e48\u0e21\u0e17\u0e35\u0e48\u0e23\u0e30\u0e14\u0e31\u0e1a Formiga",
+      text: "\u0e40\u0e23\u0e34\u0e48\u0e21\u0e1f\u0e23\u0e35 \u0e15\u0e34\u0e14\u0e15\u0e32\u0e21\u0e15\u0e25\u0e32\u0e14\u0e42\u0e25\u0e01 \u0e41\u0e25\u0e30\u0e1e\u0e31\u0e12\u0e19\u0e32\u0e01\u0e32\u0e23\u0e40\u0e07\u0e34\u0e19\u0e1c\u0e48\u0e32\u0e19\u0e23\u0e30\u0e14\u0e31\u0e1a Formiga, Lobo \u0e41\u0e25\u0e30 Harpia",
+      free: "\u0e40\u0e02\u0e49\u0e32\u0e2a\u0e39\u0e48\u0e0a\u0e48\u0e2d\u0e07 Formiga",
+      elite: "\u0e23\u0e39\u0e49\u0e08\u0e31\u0e01 Canal Elite Harpia",
+    },
+  },
+  ru: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "???, ??? ????? ??? ?????????????? ? ???????? ???????? ?? ?????????? ??????.",
+      text: "????????? ??????? ?????, ??????? ?? ????????????? ???????? ? ?????????? ????????? ??? ???????? ???????? ?? ????????? ????? ??????.",
+      free: "????? ? ????? ???????",
+      services: "?????????? ??????",
+    },
+    intro: {
+      eyebrow: "??? ???",
+      title: "??? ????? Varejo Investidor",
+      manifesto: "Varejo Investidor ? ??? ?????????? ?????????? ????????? ??? ???, ??? ????? ????? ?? ????? ???????? ??????, ???????? ????????????? ????? ? ??????? ?????????? ????? ????????.",
+      text: [
+        "? 2018 ???? ?? ????????? ????? 4 200 ????? ???????? ? ????????? ?????? ?? Forex, ???????, ??????, ??????????????, ????????? ? ???????? ????????.",
+        "???? ???????? ?? ??????: ???????, ???? ? ??????.",
+        "??????? ??????? ?????? ????. ???? ????????? ????????? ? ?????? ?????. ?????? ????????? ?????? ?? ???????, ?????? ? ?????????? ?????????.",
+      ],
+      stats: ["? 2018", "????? ???????", "??????? / ???? / ??????"],
+    },
+    cards: [
+      { code: "???????", title: "?????????? ????", text: "????????? ???????? ??? ?????????? ??????, ?????????? ?????? ? ?????? ?????????? ????.", href: "/nivel-formiga" },
+      { code: "????", title: "????????? ? ????", text: "????? ???????, ?????? ????? ? ????????????????? ??????? ??? ?????????????????? ??????.", href: "/nivel-lobo" },
+      { code: "??????", title: "?????????? ???????", text: "?????????????? ??????? ??????, ????????????????, ???????? ? ????????????? ?????????.", href: "/nivel-harpia" },
+    ],
+    cardCta: "?????? ??????",
+    final: { title: "??? ???? ?????????? ? ?????? ???????.", text: "??????? ?????????, ??????? ?? ???????? ??????? ? ???????????? ????? ?????? ???????, ???? ? ??????.", free: "????? ? ????? ???????", elite: "?????? ELITE HARPIA" },
+  },
+  ur: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "????? ??? ?? ?????? ???? ??? ???? ????? ?? ??? ?? ?? ?? ??? ??????",
+      text: "????? ???????? ?? ??????? ????? ?????? ?? ???? ???? ??? ???? ??? ?? ???? ?? ???? ???? ????? ?? ???? ???? ???? ?????",
+      free: "?????? ???? ??? ???? ???",
+      services: "????? ??????",
+    },
+    intro: {
+      eyebrow: "?????",
+      title: "Varejo Investidor ??? ??",
+      manifesto: "Varejo Investidor ??? ????? ??????? ?????? ?? ?? ??? ?????? ????? ?? ??? ???????? ?????? ?????? ??? ???? ????? ?? ????? ??? ????? ??? ??? ???? ???",
+      text: [
+        "2018 ?? ?? Forex? ????? ???? ?????? ?????? ??? ????? ??????? ?? 4,200 ?? ???? ????? ????? ???? ??? ????",
+        "?? ??? ??? ????? ??? ????? ??: ??????? ?????? ??? ??????",
+        "?????? ????? ????? ??? ?????? ???? ???? ??? ?????? ????? ???? ???? ??? ????? ????? ???? ??? ????? ???? ?? ??? ??? ?????? ???",
+      ],
+      stats: ["2018 ??", "????? ?????", "?????? / ?????? / ?????"],
+    },
+    cards: [
+      { code: "??????", title: "???? ?????", text: "????? ?????? ???? ???? ???? ??? ???? ???? ???? ???? ???? ?? ??? ????? ??? ??????", href: "/nivel-formiga" },
+      { code: "??????", title: "???? ???? ??? ?????", text: "????? ?????? ?????? ????? ??? ??? ? ??? ?? ???? ??????", href: "/nivel-lobo" },
+      { code: "?????", title: "????? ????", text: "????? ????????? ???? ??? ??? ???????? ??? ?? ??? ???????? ???????", href: "/nivel-harpia" },
+    ],
+    cardCta: "???? ?????",
+    final: { title: "?? ?? ??? ?????? ??? ?? ???? ???? ???", text: "??? ???? ????? ????? ???????? ?? ???? ???? ??? ??????? ?????? ??? ????? ????? ?? ????? ???? ?????", free: "?????? ???? ??? ???? ???", elite: "Elite Harpia ??????" },
+  },
+  bn: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "??????? ???????? ???????? ? ????? ????? ???? ????? ?? ?????????",
+      text: "??????? ??????? ?????, ????????? ???????? ?????? ???? ??? ????? ????? ????? ????? ????? ????? ???? ???? ?????",
+      free: "??????? ???????? ??? ???",
+      services: "?????? ???? ?????",
+    },
+    intro: {
+      eyebrow: "???????",
+      title: "Varejo Investidor ??",
+      manifesto: "Varejo Investidor ??? ?????? ??????????????? ???? ???? ??????? ?????? ??????, ?? ??????????? ????? ???? ??? ???? ???? ?????? ???? ???? ??????? ????",
+      text: [
+        "???? ??? ???? ???? Forex, ????, ???, ????????, ??????? ? ??????? ???????? ?????? ??? ?,?????? ???? ???? ???????? ??????????",
+        "???????? ??? ????? ??? ???: ???????, ?????? ? ???????",
+        "??????? ?????? ???? ???? ?????? ???? ? ??????? ????? ????? ???? ?????? ?????, ??????? ? ??????? ??????? ?????? ???????? ????",
+      ],
+      stats: ["???? ????", "???? ????????", "??????? / ?????? / ??????"],
+    },
+    cards: [
+      { code: "???????", title: "?????? ??????", text: "?????? ????, ????? ?????? ??? ??? ????? ?????? ?????? ????? ???? ??????????? ???????", href: "/nivel-formiga" },
+      { code: "??????", title: "???? ? ??????????", text: "???? ????????, ??????? ????? ??? ???????????? ??????????? ???????", href: "/nivel-lobo" },
+      { code: "??????", title: "??????? ?????", text: "???????, ???????, ????? ? ??????????? ???????????? ???? ?????? ???????", href: "/nivel-harpia" },
+    ],
+    cardCta: "??? ?????",
+    final: { title: "????? ?????? ??????? ???? ???? ???? ????", text: "?????????? ???? ????, ??????? ??????? ?????? ???? ??? ???????, ?????? ? ?????? ?????? ??????? ?????? ????", free: "??????? ???????? ??? ???", elite: "Elite Harpia ?????" },
+  },
+  ja: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "グローバルな資産形成と投資に必要なすべてを一つの場所で。",
+      text: "世界の金融市場を理解し、経済分析を学び、自国の枠を超えた資産形成戦略を構築しましょう。",
+      free: "アリチャンネルに参加",
+      services: "サービスを見る",
+    },
+    intro: {
+      eyebrow: "概要",
+      title: "Varejo Investidorとは",
+      manifesto: "Varejo Investidorは、基礎から抜け出し、国際市場を理解し、資産形成を段階的に構築したい人のためのグローバル金融構造です。",
+      text: [
+        "2018年から、Forex、金、原油、暗号資産、指数、世界の通貨を追跡し、4,200件以上のライブシグナルを配信してきました。",
+        "旅はアリ、オオカミ、ハーピーの3つのレベルに分かれています。",
+        "アリは基礎を築き、オオカミは戦略と市場読解を磨き、ハーピーは資産、保護、グローバル構造へ視野を広げます。",
+      ],
+      stats: ["2018年から", "ライブシグナル", "アリ / オオカミ / ハーピー"],
+    },
+    cards: [
+      { code: "アリ", title: "金融基盤", text: "整理、規律、最初の投資、リスク意識を身につける入口。", href: "/nivel-formiga" },
+      { code: "オオカミ", title: "戦略と拡大", text: "市場読解、運用、リスク、国際市場でのポジショニング。", href: "/nivel-lobo" },
+      { code: "ハーピー", title: "グローバル資産", text: "資産保全、継承、強い通貨、国際的な構造。", href: "/nivel-harpia" },
+    ],
+    cardCta: "詳しく見る",
+    final: { title: "あなたの旅はアリレベルから始まります。", text: "無料で始め、世界市場を追跡し、アリ、オオカミ、ハーピーの各レベルで金融進化を進めましょう。", free: "アリチャンネルに参加", elite: "Elite Harpiaを見る" },
+  },
+  ko: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "글로벌 투자와 자산 형성에 필요한 모든 것을 한 곳에서.",
+      text: "글로벌 금융시장을 이해하고 경제 분석을 배우며 자국의 경계를 넘어 자산을 구축하는 전략을 개발하세요.",
+      free: "개미 채널 참여",
+      services: "서비스 보기",
+    },
+    intro: {
+      eyebrow: "소개",
+      title: "Varejo Investidor란 무엇인가",
+      manifesto: "Varejo Investidor는 기초를 넘어 국제 시장을 이해하고 자산 형성을 단계적으로 구축하려는 사람들을 위한 글로벌 금융 구조입니다.",
+      text: [
+        "2018년부터 Forex, 금, 원유, 암호화폐, 지수, 글로벌 통화를 추적하며 4,200개 이상의 실시간 신호를 전달했습니다.",
+        "여정은 개미, 늑대, 하피 세 단계로 나뉩니다.",
+        "개미는 기반을 만들고, 늑대는 전략과 시장 읽기를 개발하며, 하피는 자산, 보호, 글로벌 구조로 시야를 확장합니다.",
+      ],
+      stats: ["2018년부터", "실시간 신호", "개미 / 늑대 / 하피"],
+    },
+    cards: [
+      { code: "개미", title: "금융 기반", text: "정리, 규율, 첫 투자와 리스크 인식을 만드는 입구입니다.", href: "/nivel-formiga" },
+      { code: "늑대", title: "전략과 확장", text: "시장 읽기, 운용, 리스크, 국제 시장에서의 포지셔닝입니다.", href: "/nivel-lobo" },
+      { code: "하피", title: "글로벌 자산", text: "자산 보호, 승계, 강한 통화와 국제 구조를 다룹니다.", href: "/nivel-harpia" },
+    ],
+    cardCta: "자세히 보기",
+    final: { title: "당신의 여정은 개미 레벨에서 시작됩니다.", text: "무료로 시작하고 글로벌 시장을 따라가며 개미, 늑대, 하피 레벨을 통해 금융 성장을 발전시키세요.", free: "개미 채널 참여", elite: "Elite Harpia 보기" },
   },
 } satisfies Record<
   Locale,
@@ -280,33 +481,51 @@ const signalCounterLabels: Record<Locale, string> = {
   pt: "SINAIS AO VIVO NO WHATSAPP",
   en: "LIVE SIGNALS ON WHATSAPP",
   es: "SE\u00D1ALES EN VIVO EN WHATSAPP",
+  fr: "SIGNAUX EN DIRECT SUR WHATSAPP",
   hi: "\u0935\u094D\u0939\u093E\u091F\u094D\u0938\u0910\u092A \u092A\u0930 \u0932\u093E\u0907\u0935 \u0938\u093F\u0917\u094D\u0928\u0932",
   ar: "\u0625\u0634\u0627\u0631\u0627\u062A \u0645\u0628\u0627\u0634\u0631\u0629 \u0639\u0644\u0649 \u0648\u0627\u062A\u0633\u0627\u0628",
   tr: "WHATSAPP'TA CANLI S\u0130NYALLER",
   id: "SINYAL LIVE DI WHATSAPP",
   vi: "T\u00CDN HI\u1EC6U TR\u1EF0C TI\u1EBEP TR\u00CAN WHATSAPP",
+  th: "\u0e2a\u0e31\u0e0d\u0e0d\u0e32\u0e13\u0e2a\u0e14\u0e1a\u0e19 WhatsApp",
+  ja: "WHATSAPPのライブシグナル",
+  ko: "WHATSAPP 실시간 신호",
 };
 
 const homeFxproLinks: Record<Locale, string> = {
   pt: "https://direct.fxpro.group/pt/partner/77014650?platform=web",
   en: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   es: "https://direct.fxpro.group/es/partner/77014650?platform=web",
+  fr: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   hi: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   ar: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   tr: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   id: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   vi: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  ru: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  ur: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  bn: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  th: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  ja: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  ko: "https://direct.fxpro.group/en/partner/77014650?platform=web",
 };
 
 const homeFxproBanners: Record<Locale, string> = {
   pt: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-pt-fscm-1324x150.png",
   en: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   es: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-es-fscm-1324x150.png",
+  fr: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   hi: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   ar: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   tr: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   id: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   vi: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  ru: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  ur: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  bn: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  th: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  ja: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  ko: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
 };
 
 const binanceLink = "https://accounts.binance.com/register?ref=453580362";
@@ -377,6 +596,22 @@ const homeAccountCopy: Record<
     bannerLabel: "ABRE TU CUENTA FOREX",
     bannerText: "Haz clic en el banner para acceder al broker en el idioma correcto.",
     ecosystemLabel: "Explora el ecosistema",
+  },
+  fr: {
+    eyebrow: "Compte global",
+    title: "Ouvrez votre compte et accedez aux marches mondiaux",
+    text: "Forex, or, petrole, indices, actions, ETF et cryptomonnaies via les principales plateformes du marche international.",
+    fxproLabel: "COURTIER FOREX",
+    fxproTitle: "Marches mondiaux avec FXPro",
+    fxproText: "Accedez au Forex, a l'or, au petrole et aux indices via le courtier utilise dans la structure operationnelle de Varejo Investidor.",
+    fxproCta: "Ouvrir un compte FXPro",
+    binanceLabel: "COURTIER CRYPTO",
+    binanceTitle: "Marche mondial des cryptomonnaies",
+    binanceText: "Achetez, vendez et suivez les cryptomonnaies via l'une des plus grandes plateformes d'echange au monde.",
+    binanceCta: "Ouvrir un compte Binance",
+    bannerLabel: "OUVREZ VOTRE COMPTE FOREX",
+    bannerText: "Cliquez sur la banniere pour acceder au courtier dans la bonne langue.",
+    ecosystemLabel: "Explorer l'ecosysteme",
   },
   hi: {
     eyebrow: "\u0917\u094D\u0932\u094B\u092C\u0932 \u0905\u0915\u093E\u0909\u0902\u091F",
@@ -458,17 +693,72 @@ const homeAccountCopy: Record<
     bannerText: "Nh\u1EA5p v\u00E0o banner \u0111\u1EC3 truy c\u1EADp broker \u0111\u00FAng ng\u00F4n ng\u1EEF.",
     ecosystemLabel: "Kh\u00E1m ph\u00E1 h\u1EC7 sinh th\u00E1i",
   },
+  th: {
+    eyebrow: "\u0e1a\u0e31\u0e0d\u0e0a\u0e35\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01",
+    title: "\u0e40\u0e1b\u0e34\u0e14\u0e1a\u0e31\u0e0d\u0e0a\u0e35\u0e02\u0e2d\u0e07\u0e04\u0e38\u0e13\u0e41\u0e25\u0e30\u0e40\u0e02\u0e49\u0e32\u0e16\u0e36\u0e07\u0e15\u0e25\u0e32\u0e14\u0e42\u0e25\u0e01",
+    text: "Forex \u0e17\u0e2d\u0e07\u0e04\u0e33 \u0e19\u0e49\u0e33\u0e21\u0e31\u0e19 \u0e14\u0e31\u0e0a\u0e19\u0e35 \u0e2b\u0e38\u0e49\u0e19 ETF \u0e41\u0e25\u0e30\u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15 \u0e1c\u0e48\u0e32\u0e19\u0e41\u0e1e\u0e25\u0e15\u0e1f\u0e2d\u0e23\u0e4c\u0e21\u0e0a\u0e31\u0e49\u0e19\u0e19\u0e33\u0e02\u0e2d\u0e07\u0e15\u0e25\u0e32\u0e14\u0e15\u0e48\u0e32\u0e07\u0e1b\u0e23\u0e30\u0e40\u0e17\u0e28",
+    fxproLabel: "\u0e42\u0e1a\u0e23\u0e01\u0e40\u0e01\u0e2d\u0e23\u0e4c FOREX",
+    fxproTitle: "\u0e15\u0e25\u0e32\u0e14\u0e42\u0e25\u0e01\u0e01\u0e31\u0e1a FXPro",
+    fxproText: "\u0e40\u0e02\u0e49\u0e32\u0e16\u0e36\u0e07 Forex \u0e17\u0e2d\u0e07\u0e04\u0e33 \u0e19\u0e49\u0e33\u0e21\u0e31\u0e19 \u0e41\u0e25\u0e30\u0e14\u0e31\u0e0a\u0e19\u0e35\u0e1c\u0e48\u0e32\u0e19\u0e42\u0e1a\u0e23\u0e01\u0e40\u0e01\u0e2d\u0e23\u0e4c\u0e17\u0e35\u0e48\u0e43\u0e0a\u0e49\u0e43\u0e19\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e01\u0e32\u0e23\u0e14\u0e33\u0e40\u0e19\u0e34\u0e19\u0e07\u0e32\u0e19\u0e02\u0e2d\u0e07 Varejo Investidor",
+    fxproCta: "\u0e40\u0e1b\u0e34\u0e14\u0e1a\u0e31\u0e0d\u0e0a\u0e35 FXPro",
+    binanceLabel: "\u0e42\u0e1a\u0e23\u0e01\u0e40\u0e01\u0e2d\u0e23\u0e4c\u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15",
+    binanceTitle: "\u0e15\u0e25\u0e32\u0e14\u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01",
+    binanceText: "\u0e0b\u0e37\u0e49\u0e2d \u0e02\u0e32\u0e22 \u0e41\u0e25\u0e30\u0e15\u0e34\u0e14\u0e15\u0e32\u0e21\u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15\u0e1c\u0e48\u0e32\u0e19\u0e2b\u0e19\u0e36\u0e48\u0e07\u0e43\u0e19\u0e41\u0e1e\u0e25\u0e15\u0e1f\u0e2d\u0e23\u0e4c\u0e21\u0e41\u0e25\u0e01\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e17\u0e35\u0e48\u0e43\u0e2b\u0e0d\u0e48\u0e17\u0e35\u0e48\u0e2a\u0e38\u0e14\u0e43\u0e19\u0e42\u0e25\u0e01",
+    binanceCta: "\u0e40\u0e1b\u0e34\u0e14\u0e1a\u0e31\u0e0d\u0e0a\u0e35 Binance",
+    bannerLabel: "\u0e40\u0e1b\u0e34\u0e14\u0e1a\u0e31\u0e0d\u0e0a\u0e35 FOREX",
+    bannerText: "\u0e04\u0e25\u0e34\u0e01\u0e41\u0e1a\u0e19\u0e40\u0e19\u0e2d\u0e23\u0e4c\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e40\u0e02\u0e49\u0e32\u0e2a\u0e39\u0e48\u0e42\u0e1a\u0e23\u0e01\u0e40\u0e01\u0e2d\u0e23\u0e4c\u0e43\u0e19\u0e20\u0e32\u0e29\u0e32\u0e17\u0e35\u0e48\u0e16\u0e39\u0e01\u0e15\u0e49\u0e2d\u0e07",
+    ecosystemLabel: "\u0e2a\u0e33\u0e23\u0e27\u0e08\u0e23\u0e30\u0e1a\u0e1a\u0e19\u0e34\u0e40\u0e27\u0e28",
+  },
+  ja: {
+    eyebrow: "グローバル口座",
+    title: "口座を開設して世界市場にアクセス",
+    text: "Forex、金、原油、指数、株式、ETF、暗号資産を国際市場の主要プラットフォームを通じて利用できます。",
+    fxproLabel: "FOREXブローカー",
+    fxproTitle: "世界市場にアクセスできるForex",
+    fxproText: "通貨、金、原油、指数、国際市場を追跡するためにVarejo Investidorが利用するブローカーへアクセスします。",
+    fxproCta: "FXPRO口座を開設",
+    binanceLabel: "暗号資産取引所",
+    binanceTitle: "国際アクセスを備えた暗号資産",
+    binanceText: "世界最大級の取引所を通じて暗号資産を購入、売却、追跡できます。",
+    binanceCta: "BINANCE口座を開設",
+    bannerLabel: "FOREX口座を開設",
+    bannerText: "正しい言語でブローカーへアクセスするにはバナーをクリックしてください。",
+    ecosystemLabel: "エコシステムを見る",
+  },
+  ko: {
+    eyebrow: "글로벌 계좌",
+    title: "계좌를 개설하고 글로벌 시장에 접근하세요",
+    text: "Forex, 금, 원유, 지수, 주식, ETF, 암호화폐를 국제 시장의 주요 플랫폼을 통해 이용하세요.",
+    fxproLabel: "FOREX 브로커",
+    fxproTitle: "글로벌 시장 접근이 가능한 Forex",
+    fxproText: "통화, 금, 원유, 지수 및 국제 시장을 확인하기 위해 Varejo Investidor가 사용하는 브로커에 접근하세요.",
+    fxproCta: "FXPRO 계좌 개설",
+    binanceLabel: "암호화폐 거래소",
+    binanceTitle: "국제 접근이 가능한 암호화폐",
+    binanceText: "세계 최대 거래소 중 하나를 통해 암호화폐를 사고팔고 추적하세요.",
+    binanceCta: "BINANCE 계좌 개설",
+    bannerLabel: "FOREX 계좌 개설",
+    bannerText: "올바른 언어로 브로커에 접근하려면 배너를 클릭하세요.",
+    ecosystemLabel: "생태계 보기",
+  },
 };
 
 const homeSeoLabels: Record<Locale, Record<"forex" | "stocks" | "crypto" | "etfs" | "formiga" | "lobo" | "harpia" | "articles", string>> = {
   pt: { forex: "Forex", stocks: "A\u00E7\u00F5es", crypto: "Criptomoedas", etfs: "ETFs", formiga: "N\u00EDvel Formiga", lobo: "N\u00EDvel Lobo", harpia: "N\u00EDvel Harpia", articles: "Artigos" },
   en: { forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", formiga: "Ant Level", lobo: "Wolf Level", harpia: "Harpy Level", articles: "Articles" },
   es: { forex: "Forex", stocks: "Acciones", crypto: "Cripto", etfs: "ETFs", formiga: "Nivel Formiga", lobo: "Nivel Lobo", harpia: "Nivel Harpia", articles: "Art\u00EDculos" },
+  fr: { forex: "Forex", stocks: "Actions", crypto: "Crypto", etfs: "ETF", formiga: "Niveau Fourmi", lobo: "Niveau Loup", harpia: "Niveau Harpie", articles: "Articles" },
   hi: { forex: "Forex", stocks: "\u0936\u0947\u092F\u0930", crypto: "\u0915\u094D\u0930\u093F\u092A\u094D\u091F\u094B", etfs: "ETFs", formiga: "\u091A\u0940\u0902\u091F\u0940 \u0938\u094D\u0924\u0930", lobo: "\u092D\u0947\u0921\u093C\u093F\u092F\u093E \u0938\u094D\u0924\u0930", harpia: "\u0917\u0930\u0941\u0921\u093C \u0938\u094D\u0924\u0930", articles: "\u0932\u0947\u0916" },
   ar: { forex: "\u0627\u0644\u0641\u0648\u0631\u0643\u0633", stocks: "\u0627\u0644\u0623\u0633\u0647\u0645", crypto: "\u0627\u0644\u0643\u0631\u064A\u0628\u062A\u0648", etfs: "ETFs", formiga: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0646\u0645\u0644\u0629", lobo: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0630\u0626\u0628", harpia: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0647\u0627\u0631\u0628\u064A", articles: "\u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062A" },
   tr: { forex: "Forex", stocks: "Hisseler", crypto: "Kripto", etfs: "ETF'ler", formiga: "Kar\u0131nca Seviyesi", lobo: "Kurt Seviyesi", harpia: "Harpia Seviyesi", articles: "Makaleler" },
   id: { forex: "Forex", stocks: "Saham", crypto: "Kripto", etfs: "ETF", formiga: "Level Semut", lobo: "Level Serigala", harpia: "Level Elang Harpy", articles: "Artikel" },
   vi: { forex: "Forex", stocks: "C\u1ED5 Phi\u1EBFu", crypto: "Ti\u1EC1n \u0110i\u1EC7n T\u1EED", etfs: "ETF", formiga: "C\u1EA5p Ki\u1EBFn", lobo: "C\u1EA5p S\u00F3i", harpia: "C\u1EA5p \u0110\u1EA1i B\u00E0ng Harpy", articles: "B\u00E0i vi\u1EBFt" },
+  th: { forex: "Forex", stocks: "\u0e2b\u0e38\u0e49\u0e19", crypto: "\u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15", etfs: "ETF", formiga: "\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e21\u0e14", lobo: "\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e2b\u0e21\u0e32\u0e1b\u0e48\u0e32", harpia: "\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e2e\u0e32\u0e23\u0e4c\u0e1b\u0e35", articles: "\u0e1a\u0e17\u0e04\u0e27\u0e32\u0e21" },
+  ru: { forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", formiga: "Ant Level", lobo: "Wolf Level", harpia: "Harpy Level", articles: "Articles" },
+  ur: { forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", formiga: "Ant Level", lobo: "Wolf Level", harpia: "Harpy Level", articles: "Articles" },
+  bn: { forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", formiga: "Ant Level", lobo: "Wolf Level", harpia: "Harpy Level", articles: "Articles" },
+  ja: { forex: "Forex", stocks: "株式", crypto: "暗号資産", etfs: "ETF", formiga: "アリレベル", lobo: "オオカミレベル", harpia: "ハーピーレベル", articles: "記事" },
+  ko: { forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETF", formiga: "개미 레벨", lobo: "늑대 레벨", harpia: "하피 레벨", articles: "기사" },
 };
 
 function localizedMarketPath(locale: Locale, market: "forex" | "stocks" | "crypto" | "etfs") {
@@ -476,11 +766,18 @@ function localizedMarketPath(locale: Locale, market: "forex" | "stocks" | "crypt
     pt: { forex: "forex", stocks: "acoes", crypto: "cripto", etfs: "etfs" },
     en: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
     es: { forex: "forex", stocks: "acciones", crypto: "cripto", etfs: "etfs" },
+    fr: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
     hi: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
     ar: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
     tr: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
     id: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
     vi: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    th: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    ru: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    ur: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    bn: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    ja: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
+    ko: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
   };
 
   const slug = slugs[locale][market];
@@ -500,6 +797,180 @@ function homeSeoLinks(locale: Locale) {
     { href: getInsightsPath(locale), label: labels.articles },
   ];
 }
+
+const homeFlowCopy: Record<Locale, {
+  eyebrow: string;
+  title: string;
+  text: string;
+  button: string;
+  steps: Array<{ name: string; text: string }>;
+}> = {
+  pt: {
+    eyebrow: "Como funciona",
+    title: "Como funciona o Varejo Investidor",
+    text: "A jornada organiza o investidor em tres niveis claros: base, operacao e patrimonio global.",
+    button: "COME\u00c7AR PELO CANAL FORMIGA",
+    steps: [
+      { name: "Formiga", text: "Aprende os fundamentos, entende o mercado e comeca a construir consciencia financeira." },
+      { name: "Lobo", text: "Opera com metodo, gestao de risco e leitura de mercado." },
+      { name: "Harpia", text: "Constroi patrimonio global, protege capital e pensa em longo prazo." },
+    ],
+  },
+  en: {
+    eyebrow: "How it works",
+    title: "How Varejo Investidor works",
+    text: "The journey organizes investors into three clear levels: foundation, execution, and global wealth.",
+    button: "START WITH THE FORMIGA CHANNEL",
+    steps: [
+      { name: "Ant", text: "Learns the foundations, understands markets, and starts building financial awareness." },
+      { name: "Wolf", text: "Operates with method, risk management, and market reading." },
+      { name: "Harpy", text: "Builds global wealth, protects capital, and thinks long term." },
+    ],
+  },
+  es: {
+    eyebrow: "C\u00f3mo funciona",
+    title: "C\u00f3mo funciona Varejo Investidor",
+    text: "La jornada organiza al inversor en tres niveles claros: base, operaci\u00f3n y patrimonio global.",
+    button: "EMPEZAR POR EL CANAL FORMIGA",
+    steps: [
+      { name: "Hormiga", text: "Aprende los fundamentos, entiende el mercado y comienza a construir conciencia financiera." },
+      { name: "Lobo", text: "Opera con m\u00e9todo, gesti\u00f3n de riesgo y lectura de mercado." },
+      { name: "Harp\u00eda", text: "Construye patrimonio global, protege capital y piensa a largo plazo." },
+    ],
+  },
+  fr: {
+    eyebrow: "Fonctionnement",
+    title: "Comment fonctionne Varejo Investidor",
+    text: "Le parcours organise l'investisseur en trois niveaux : base, execution et patrimoine mondial.",
+    button: "COMMENCER PAR LE CANAL FORMIGA",
+    steps: [
+      { name: "Fourmi", text: "Apprend les bases, comprend le marche et construit une conscience financiere." },
+      { name: "Loup", text: "Opere avec methode, gestion du risque et lecture de marche." },
+      { name: "Harpie", text: "Construit un patrimoine mondial, protege le capital et pense long terme." },
+    ],
+  },
+  hi: {
+    eyebrow: "कैसे काम करता है",
+    title: "Varejo Investidor कैसे काम करता है",
+    text: "यात्रा निवेशक को तीन स्तरों में व्यवस्थित करती है: आधार, संचालन और वैश्विक संपत्ति।",
+    button: "FORMIGA चैनल से शुरू करें",
+    steps: [
+      { name: "चींटी", text: "बुनियाद सीखता है, बाजार समझता है और वित्तीय जागरूकता बनाना शुरू करता है।" },
+      { name: "भेड़िया", text: "मेथड, जोखिम प्रबंधन और बाजार पढ़ने के साथ ऑपरेट करता है।" },
+      { name: "गरुड़", text: "वैश्विक संपत्ति बनाता है, पूंजी की रक्षा करता है और लंबी अवधि सोचता है।" },
+    ],
+  },
+  ar: {
+    eyebrow: "كيف يعمل",
+    title: "كيف يعمل Varejo Investidor",
+    text: "تنظم الرحلة المستثمر في ثلاثة مستويات: الأساس، التشغيل، والثروة العالمية.",
+    button: "ابدأ من قناة Formiga",
+    steps: [
+      { name: "النملة", text: "يتعلم الأساسيات ويفهم السوق ويبدأ في بناء الوعي المالي." },
+      { name: "الذئب", text: "يعمل بمنهجية وإدارة مخاطر وقراءة للسوق." },
+      { name: "الهاربي", text: "يبني ثروة عالمية ويحمي رأس المال ويفكر على المدى الطويل." },
+    ],
+  },
+  tr: {
+    eyebrow: "Nasıl çalışır",
+    title: "Varejo Investidor nasıl çalışır",
+    text: "Yolculuk yatırımcıyı üç seviyede düzenler: temel, operasyon ve küresel varlık.",
+    button: "FORMIGA KANALIYLA BAŞLA",
+    steps: [
+      { name: "Karınca", text: "Temelleri öğrenir, piyasayı anlar ve finansal farkındalık inşa eder." },
+      { name: "Kurt", text: "Metot, risk yönetimi ve piyasa okumasıyla işlem yapar." },
+      { name: "Harpia", text: "Küresel varlık inşa eder, sermayeyi korur ve uzun vadeli düşünür." },
+    ],
+  },
+  id: {
+    eyebrow: "Cara kerja",
+    title: "Cara kerja Varejo Investidor",
+    text: "Perjalanan ini mengatur investor dalam tiga level: dasar, eksekusi, dan kekayaan global.",
+    button: "MULAI DARI CHANNEL FORMIGA",
+    steps: [
+      { name: "Semut", text: "Mempelajari dasar, memahami pasar, dan mulai membangun kesadaran finansial." },
+      { name: "Serigala", text: "Beroperasi dengan metode, manajemen risiko, dan pembacaan pasar." },
+      { name: "Elang Harpy", text: "Membangun kekayaan global, melindungi modal, dan berpikir jangka panjang." },
+    ],
+  },
+  vi: {
+    eyebrow: "Cách hoạt động",
+    title: "Varejo Investidor hoạt động như thế nào",
+    text: "Hành trình sắp xếp nhà đầu tư theo ba cấp độ: nền tảng, vận hành và tài sản toàn cầu.",
+    button: "BẮT ĐẦU VỚI KÊNH FORMIGA",
+    steps: [
+      { name: "Kiến", text: "Học nền tảng, hiểu thị trường và bắt đầu xây dựng nhận thức tài chính." },
+      { name: "Sói", text: "Vận hành với phương pháp, quản trị rủi ro và đọc thị trường." },
+      { name: "Đại Bàng Harpy", text: "Xây dựng tài sản toàn cầu, bảo vệ vốn và tư duy dài hạn." },
+    ],
+  },
+  th: {
+    eyebrow: "วิธีทำงาน",
+    title: "Varejo Investidor ทำงานอย่างไร",
+    text: "เส้นทางนี้แบ่งนักลงทุนเป็นสามระดับ: พื้นฐาน การดำเนินการ และความมั่งคั่งระดับโลก",
+    button: "เริ่มจากช่อง FORMIGA",
+    steps: [
+      { name: "มด", text: "เรียนรู้พื้นฐาน เข้าใจตลาด และเริ่มสร้างความตระหนักทางการเงิน" },
+      { name: "หมาป่า", text: "ดำเนินการด้วยวิธีการ การบริหารความเสี่ยง และการอ่านตลาด" },
+      { name: "ฮาร์ปี", text: "สร้างความมั่งคั่งระดับโลก ปกป้องเงินทุน และคิดระยะยาว" },
+    ],
+  },
+  ru: {
+    eyebrow: "Как это работает",
+    title: "Как работает Varejo Investidor",
+    text: "Путь делит инвестора на три уровня: база, операции и глобальный капитал.",
+    button: "НАЧАТЬ С КАНАЛА FORMIGA",
+    steps: [
+      { name: "Муравей", text: "Изучает основы, понимает рынок и формирует финансовую осознанность." },
+      { name: "Волк", text: "Действует с методом, управлением риском и чтением рынка." },
+      { name: "Гарпия", text: "Строит глобальный капитал, защищает средства и мыслит долгосрочно." },
+    ],
+  },
+  ur: {
+    eyebrow: "یہ کیسے کام کرتا ہے",
+    title: "Varejo Investidor کیسے کام کرتا ہے",
+    text: "یہ سفر سرمایہ کار کو تین سطحوں میں منظم کرتا ہے: بنیاد، عمل اور عالمی دولت۔",
+    button: "FORMIGA چینل سے شروع کریں",
+    steps: [
+      { name: "چیونٹی", text: "بنیادیں سیکھتا ہے، مارکیٹ سمجھتا ہے اور مالی شعور بناتا ہے۔" },
+      { name: "بھیڑیا", text: "طریقہ، رسک مینجمنٹ اور مارکیٹ ریڈنگ کے ساتھ کام کرتا ہے۔" },
+      { name: "ہارپی", text: "عالمی دولت بناتا ہے، سرمایہ محفوظ رکھتا ہے اور طویل مدتی سوچتا ہے۔" },
+    ],
+  },
+  bn: {
+    eyebrow: "কিভাবে কাজ করে",
+    title: "Varejo Investidor কিভাবে কাজ করে",
+    text: "এই যাত্রা বিনিয়োগকারীকে তিন স্তরে সাজায়: ভিত্তি, অপারেশন এবং বৈশ্বিক সম্পদ।",
+    button: "FORMIGA চ্যানেল দিয়ে শুরু করুন",
+    steps: [
+      { name: "পিঁপড়া", text: "ভিত্তি শেখে, বাজার বোঝে এবং আর্থিক সচেতনতা তৈরি শুরু করে।" },
+      { name: "নেকড়ে", text: "পদ্ধতি, ঝুঁকি ব্যবস্থাপনা এবং বাজার পাঠের মাধ্যমে পরিচালনা করে।" },
+      { name: "হার্পি", text: "বৈশ্বিক সম্পদ তৈরি করে, মূলধন রক্ষা করে এবং দীর্ঘমেয়াদে ভাবে।" },
+    ],
+  },
+  ja: {
+    eyebrow: "仕組み",
+    title: "Varejo Investidorの仕組み",
+    text: "投資家の旅を基礎、運用、グローバル資産の三段階に整理します。",
+    button: "FORMIGAチャンネルから始める",
+    steps: [
+      { name: "アリ", text: "基礎を学び、市場を理解し、金融意識を作り始めます。" },
+      { name: "オオカミ", text: "方法、リスク管理、市場分析に基づいて行動します。" },
+      { name: "ハーピー", text: "グローバル資産を築き、資本を守り、長期で考えます。" },
+    ],
+  },
+  ko: {
+    eyebrow: "작동 방식",
+    title: "Varejo Investidor 작동 방식",
+    text: "투자 여정을 기초, 실행, 글로벌 자산의 세 단계로 정리합니다.",
+    button: "FORMIGA 채널로 시작하기",
+    steps: [
+      { name: "개미", text: "기초를 배우고 시장을 이해하며 금융 인식을 쌓기 시작합니다." },
+      { name: "늑대", text: "방법, 리스크 관리, 시장 해석을 바탕으로 실행합니다." },
+      { name: "하피", text: "글로벌 자산을 구축하고 자본을 보호하며 장기적으로 생각합니다." },
+    ],
+  },
+};
 
 function AnimatedCounter({ label }: { label: string }) {
   const ref = useRef<HTMLSpanElement | null>(null);
@@ -547,9 +1018,11 @@ function AnimatedCounter({ label }: { label: string }) {
 
 export default function Home() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const copy = homeLiteCopy[locale];
-  const account = homeAccountCopy[locale];
+  const copy = homeLiteCopy[locale as keyof typeof homeLiteCopy] ?? homeLiteCopy.en;
+  const flow = homeFlowCopy[locale] ?? homeFlowCopy.en;
+  const account = homeAccountCopy[locale] ?? homeAccountCopy.en;
   const finalText = "text" in copy.final ? copy.final.text : undefined;
+  const educationHref = locale === "pt" ? "/educacao" : `/${locale}/education`;
 
   return (
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -592,15 +1065,59 @@ export default function Home() {
               {copy.hero.text}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink shadow-premium transition hover:-translate-y-0.5">
+              <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink shadow-premium transition hover:-translate-y-0.5">
                 {copy.hero.free}
               </a>
-              <a href="/servicos" className="premium-button-ghost border border-ink/[0.18] bg-paper/[0.03] px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5">
+              <a href={educationHref} onClick={() => trackVarejoClick("home_education_click", { locale })} className="premium-button-ghost border border-ink/[0.18] bg-paper/[0.03] px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5">
                 {copy.hero.services}
               </a>
             </motion.div>
           </motion.div>
         </div>
+      </section>
+
+      <section className="home-flow-section border-y border-gold/[0.12] bg-paper px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          variants={fadeUp}
+          className="relative mx-auto max-w-[1280px] overflow-hidden border border-gold/[0.18] bg-white/[0.025] p-6 shadow-fine md:p-9"
+        >
+          <div className="absolute inset-0 terminal-grid opacity-20" />
+          <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/[0.07] blur-3xl" />
+          <div className="relative grid gap-8 lg:grid-cols-[0.42fr_1fr] lg:items-center">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{flow.eyebrow}</p>
+              <h2 className="mt-4 font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-5xl">
+                {flow.title}
+              </h2>
+              <p className="mt-5 text-base leading-8 text-ink/[0.68]">{flow.text}</p>
+              <a
+                href={t.freeChannel.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackVarejoClick("home_flow_formiga_click", { locale })}
+                className="premium-button-gold mt-7 inline-flex border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+              >
+                {flow.button}
+              </a>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {flow.steps.map((step, index) => (
+                <article key={step.name} className="level-card relative overflow-hidden border border-gold/[0.16] bg-paper p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.48] hover:shadow-premium">
+                  <div className="absolute inset-0 luxury-grid opacity-25" />
+                  <div className="relative">
+                    <span className="font-mono text-xs font-black text-gold">0{index + 1}</span>
+                    <h3 className="mt-3 font-serif text-3xl leading-[1.04] tracking-[-0.035em]">{step.name}</h3>
+                    <p className="mt-4 text-sm leading-7 text-ink/[0.64]">{step.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       <section className="border-y border-ink/[0.08] bg-white/90 px-5 py-20 md:px-8 md:py-24 lg:px-12 xl:px-16">
@@ -633,7 +1150,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="section-team-stage relative mx-auto flex w-full max-w-[34rem] justify-center lg:max-w-none">
             <div className="section-team-depth absolute inset-0" />
-            <Image src="/characters/home-structure-horizontal-cutout.png" alt="Personagens Formiga, Lobo e Harpia ao lado dos serviços do Varejo Investidor" width={1536} height={1024} sizes="(min-width: 1024px) 46vw, 92vw" className="home-structure-image relative z-10 h-auto w-full object-contain" />
+            <Image src="/characters/home-structure-horizontal-cutout.png" alt="Personagens Formiga, Lobo e Harpia ao lado dos servi\u00e7os do Varejo Investidor" width={1536} height={1024} sizes="(min-width: 1024px) 46vw, 92vw" className="home-structure-image relative z-10 h-auto w-full object-contain" />
           </motion.div>
 
           <div className="grid gap-5">
@@ -683,7 +1200,7 @@ export default function Home() {
                   <h3 className="font-serif text-3xl leading-[1.05] tracking-[-0.035em] md:text-4xl">{account.fxproTitle}</h3>
                   <p className="mt-5 max-w-xl flex-1 leading-8 text-ink/[0.64]">{account.fxproText}</p>
                 </div>
-                <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" className="premium-button-gold mt-8 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
+                <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("fxpro_click", { locale, source: "home_account_card" })} className="premium-button-gold mt-8 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
                   {account.fxproCta}
                 </a>
               </div>
@@ -700,7 +1217,7 @@ export default function Home() {
                   <h3 className="font-serif text-3xl leading-[1.05] tracking-[-0.035em] md:text-4xl">{account.binanceTitle}</h3>
                   <p className="mt-5 max-w-xl flex-1 leading-8 text-ink/[0.64]">{account.binanceText}</p>
                 </div>
-                <a href={binanceLink} target="_blank" rel="noopener noreferrer" className="premium-button-gold mt-8 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
+                <a href={binanceLink} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("binance_click", { locale, source: "home_account_card" })} className="premium-button-gold mt-8 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
                   {account.binanceCta}
                 </a>
               </div>
@@ -714,7 +1231,7 @@ export default function Home() {
                 {account.bannerText}
               </p>
             </div>
-            <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" className="group mx-auto mt-6 block w-full max-w-[1324px] overflow-hidden rounded-sm transition duration-300 hover:-translate-y-0.5">
+            <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("fxpro_click", { locale, source: "home_banner" })} className="group mx-auto mt-6 block w-full max-w-[1324px] overflow-hidden rounded-sm transition duration-300 hover:-translate-y-0.5">
               <img
                 src={homeFxproBanners[locale]}
                 alt="FxPro Banner"
@@ -757,10 +1274,10 @@ export default function Home() {
               </p>
             ) : null}
             <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" className="premium-button-gold border border-gold bg-gold px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition">
+              <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_final_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition">
                 {copy.final.free}
               </a>
-              <a href="/sinais" className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
+              <a href="/sinais" onClick={() => trackVarejoClick("home_elite_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
                 {copy.final.elite}
               </a>
             </div>

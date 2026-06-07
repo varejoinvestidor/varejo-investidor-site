@@ -25,8 +25,8 @@ import {
 type CategoryFilter = "all" | InsightCategoryKey;
 
 function SchemaScripts({ locale }: { locale: Locale }) {
-  const hero = insightsHero[locale];
-  const labels = insightLabels[locale];
+  const hero = insightsHero[locale] ?? insightsHero.en;
+  const labels = insightLabels[locale] ?? insightLabels.en;
   const posts = getPostsByLocale(locale);
   const blogSchema = {
     "@context": "https://schema.org",
@@ -48,7 +48,7 @@ function SchemaScripts({ locale }: { locale: Locale }) {
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: insightsFaq[locale].map((faq) => ({
+    mainEntity: (insightsFaq[locale] ?? insightsFaq.en).map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
@@ -69,11 +69,12 @@ export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSent, setNewsletterSent] = useState(false);
-  const labels = insightLabels[pageLocale];
-  const hero = insightsHero[pageLocale];
+  const labels = insightLabels[pageLocale] ?? insightLabels.en;
+  const hero = insightsHero[pageLocale] ?? insightsHero.en;
   const posts = getPostsByLocale(pageLocale);
   const latest = posts[0];
-  const categories = Object.entries(insightCategories[pageLocale]) as Array<[InsightCategoryKey, string]>;
+  const categoryLabels = insightCategories[pageLocale] ?? insightCategories.en;
+  const categories = Object.entries(categoryLabels) as Array<[InsightCategoryKey, string]>;
   const marketLinks = getInsightMarketLinks(pageLocale);
   const filteredPosts = useMemo(
     () => (activeCategory === "all" ? posts : posts.filter((post) => post.category === activeCategory)),
@@ -104,7 +105,7 @@ export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
               <div className="relative">
                 <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{labels.latest}</p>
                 <p className="mt-5 text-sm uppercase tracking-[0.18em] text-paper/[0.48]">
-                  {insightCategories[pageLocale][latest.category]} | {latest.date} | {latest.readingTime}
+                  {categoryLabels[latest.category]} | {latest.date} | {latest.readingTime}
                 </p>
                 <h2 className="mt-5 font-serif text-4xl leading-[1.02] tracking-[-0.04em] md:text-6xl">{latest.title}</h2>
                 <p className="mt-5 max-w-3xl text-base leading-8 text-paper/[0.68]">{latest.description}</p>
@@ -188,7 +189,7 @@ export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
                 >
                   <div className="absolute inset-0 terminal-grid opacity-35" />
                   <div className="relative">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">{insightCategories[pageLocale][post.category]}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">{categoryLabels[post.category]}</p>
                     <h3 className="mt-5 font-serif text-3xl leading-[1.05] tracking-[-0.04em]">{post.title}</h3>
                     <p className="mt-4 min-h-[96px] text-sm leading-7 text-paper/[0.64]">{post.description}</p>
                     <div className="mt-6 flex items-center justify-between border-t border-gold/[0.12] pt-4 text-[10px] uppercase tracking-[0.14em] text-paper/[0.45]">
@@ -224,7 +225,7 @@ export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
           <div className="mx-auto max-w-7xl">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{labels.faq}</p>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
-              {insightsFaq[pageLocale].map((faq) => (
+              {(insightsFaq[pageLocale] ?? insightsFaq.en).map((faq) => (
                 <div key={faq.question} className="border border-gold/[0.16] bg-white p-6">
                   <h3 className="font-serif text-2xl tracking-[-0.03em]">{faq.question}</h3>
                   <p className="mt-3 leading-7 text-paper/[0.64]">{faq.answer}</p>

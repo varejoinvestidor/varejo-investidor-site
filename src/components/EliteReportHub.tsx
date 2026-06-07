@@ -19,11 +19,18 @@ export const eliteReportPaths: Record<Locale, string> = {
   pt: "/relatorio-elite",
   en: "/elite-report",
   es: "/reporte-elite",
+  fr: "/fr/elite-report",
   hi: "/elite-report-hi",
   ar: "/ar/elite-report",
   tr: "/tr/elite-report",
   id: "/id/elite-report",
   vi: "/vi/elite-report",
+  th: "/th/elite-report",
+  ru: "/ru/elite-report",
+  ur: "/ur/elite-report",
+  bn: "/bn/elite-report",
+  ja: "/ja/elite-report",
+  ko: "/ko/elite-report",
 };
 
 const reportCopy: Record<
@@ -309,9 +316,6 @@ const publicOperationsSnapshot: PublicOperation[] = [
 ];
 
 function getPublicOperationsSnapshot() {
-  // Source reference for future server-side refresh:
-  // https://www.mql5.com/en/signals/2359292?source=Site+Signals+My
-  // The public UI intentionally exposes only summarized, non-sensitive fields.
   return publicOperationsSnapshot;
 }
 
@@ -564,7 +568,7 @@ function reportHref(year: string) {
 
 export default function EliteReportHub({ initialLocale }: { initialLocale: Locale }) {
   const [locale, setLocale] = useState<Locale>(initialLocale);
-  const t = translations[locale];
+  const t = translations[locale] ?? translations.en;
   const copy = reportCopy[locale] ?? reportCopy.en;
   const publicCopy = reportPageCopy[locale] ?? reportPageCopy.en;
   const ctaHref = locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[3];
@@ -572,12 +576,23 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
   const liveOperations = publicOperations.filter((operation) => operation.status === "active");
   const completedOperations = publicOperations.filter((operation) => operation.status === "closed");
   const monthlyReports = getMonthlyReports(publicOperations);
+  const timelineTitle = locale === "pt" ? "Linha do tempo desde 2018" : "Timeline since 2018";
+  const timelineText =
+    locale === "pt"
+      ? "Evolucao publica do Canal Elite, com foco em historico, organizacao de sinais e preservacao dos detalhes completos apenas para membros."
+      : "Public evolution of the Elite Channel, focused on history, signal organization, and preserving full details for members only.";
+  const timelineEvents = [
+    { year: "2018", title: locale === "pt" ? "Inicio dos relatorios Elite" : "Elite reports begin", text: locale === "pt" ? "Primeiros registros operacionais consolidados a partir de agosto." : "First consolidated operating records starting in August." },
+    { year: "2021", title: locale === "pt" ? "Historico mensal organizado" : "Monthly history organized", text: locale === "pt" ? "Consolidacao por periodo, sinais e desempenho publico resumido." : "Consolidation by period, signals, and summarized public performance." },
+    { year: "2024", title: locale === "pt" ? "Central de resultados" : "Results center", text: locale === "pt" ? "Leitura mais institucional com filtros, relatorios e historico do Canal Elite." : "More institutional view with filters, reports, and Elite Channel history." },
+    { year: "2026", title: locale === "pt" ? "Operacoes protegidas" : "Protected operations", text: locale === "pt" ? "Resumo publico das operacoes em andamento sem expor entrada, alvo, stop, volume ou lote." : "Public summary of ongoing operations without exposing entry, target, stop, volume, or lot." },
+  ];
 
   function changeLocale(nextLocale: Locale) {
     setLocale(nextLocale);
     window.localStorage.setItem("varejo_language", nextLocale);
     window.localStorage.setItem("language", nextLocale);
-    window.location.href = eliteReportPaths[nextLocale];
+    window.location.href = eliteReportPaths[nextLocale] ?? eliteReportPaths.en;
   }
 
   return (
@@ -782,6 +797,22 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
                 <a href="/historico/2024" className="mt-6 block border border-gold/[0.28] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:bg-gold hover:text-ink">
                   {copy.table.view}
                 </a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader eyebrow="2018 - 2026" title={timelineTitle} text={timelineText} />
+          <div className="mt-8 grid gap-4 md:grid-cols-4">
+            {timelineEvents.map((item) => (
+              <article key={item.year} className="terminal-module relative overflow-hidden border border-gold/[0.18] bg-paper p-6 shadow-fine">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/[0.65] to-transparent" />
+                <p className="font-mono text-3xl font-black text-gold">{item.year}</p>
+                <h3 className="mt-4 font-serif text-2xl leading-[1.08] tracking-[-0.03em]">{item.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-ink/[0.62]">{item.text}</p>
               </article>
             ))}
           </div>

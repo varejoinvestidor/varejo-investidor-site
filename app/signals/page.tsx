@@ -587,7 +587,7 @@ export default function SignalsPage() {
                 href={eliteReportPaths[locale] ?? eliteReportPaths.en}
                 className="premium-button-gold inline-block border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 lg:min-w-[260px]"
               >
-                {reportCtaLabels[locale] ?? reportCtaLabels.en}
+                {reportCtaLabels[locale as keyof typeof reportCtaLabels] ?? reportCtaLabels.en}
               </a>
             </div>
           </div>

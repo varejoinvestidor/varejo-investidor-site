@@ -32,14 +32,21 @@ export const insightsBasePath: Record<Locale, string> = {
   pt: "/artigos-globais",
   en: "/global-articles",
   es: "/articulos-globales",
+  fr: "/fr/articles",
   hi: "/global-articles-hi",
   ar: "/ar/global-articles",
   tr: "/tr/global-articles",
   id: "/id/articles",
   vi: "/vi/articles",
+  th: "/th/articles",
+  ru: "/ru/articles",
+  ur: "/ur/articles",
+  bn: "/bn/articles",
+  ja: "/ja/articles",
+  ko: "/ko/articles",
 };
 
-export const insightLocales: Locale[] = ["pt", "en", "es", "hi", "ar", "tr", "id", "vi"];
+export const insightLocales: Locale[] = ["pt", "en", "es", "fr", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"];
 
 export const insightsHero: Record<Locale, { title: string; subtitle: string; metaDescription: string }> = {
   pt: {
@@ -56,6 +63,11 @@ export const insightsHero: Record<Locale, { title: string; subtitle: string; met
     title: "Art\u00EDculos Globales",
     subtitle: "An\u00E1lisis editorial sobre Forex, acciones, cripto, commodities, ETFs, ciclos econ\u00F3micos y estructura financiera global.",
     metaDescription: "Art\u00EDculos Globales de Varejo Investidor: an\u00E1lisis sobre Forex, acciones, cripto, commodities, ETFs, ciclos econ\u00F3micos y estructura financiera global.",
+  },
+  fr: {
+    title: "Articles Globaux",
+    subtitle: "Analyses editoriales sur le Forex, les actions, la crypto, les matieres premieres, les ETF, les cycles economiques et la structure financiere mondiale.",
+    metaDescription: "Articles Globaux de Varejo Investidor : analyses sur le Forex, les actions, la crypto, les matieres premieres, les ETF, les cycles economiques et la structure financiere mondiale.",
   },
   hi: {
     title: "\u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u0932\u0947\u0916",
@@ -81,6 +93,36 @@ export const insightsHero: Record<Locale, { title: string; subtitle: string; met
     title: "B\u00E0i vi\u1EBFt To\u00E0n c\u1EA7u",
     subtitle: "Ph\u00E2n t\u00EDch chuy\u00EAn s\u00E2u v\u1EC1 Forex, c\u1ED5 phi\u1EBFu, crypto, h\u00E0ng h\u00F3a, ETF, chu k\u1EF3 kinh t\u1EBF v\u00E0 c\u1EA5u tr\u00FAc t\u00E0i ch\u00EDnh to\u00E0n c\u1EA7u.",
     metaDescription: "B\u00E0i vi\u1EBFt To\u00E0n c\u1EA7u c\u1EE7a Varejo Investidor: ph\u00E2n t\u00EDch Forex, c\u1ED5 phi\u1EBFu, crypto, h\u00E0ng h\u00F3a, ETF, chu k\u1EF3 kinh t\u1EBF v\u00E0 c\u1EA5u tr\u00FAc t\u00E0i ch\u00EDnh to\u00E0n c\u1EA7u.",
+  },
+  th: {
+    title: "บทความระดับโลก",
+    subtitle: "บทวิเคราะห์เชิงบรรณาธิการเกี่ยวกับ Forex หุ้น คริปโต สินค้าโภคภัณฑ์ ETF วัฏจักรเศรษฐกิจ และโครงสร้างการเงินโลก",
+    metaDescription: "บทความระดับโลกของ Varejo Investidor: การวิเคราะห์ Forex หุ้น คริปโต สินค้าโภคภัณฑ์ ETF วัฏจักรเศรษฐกิจ และโครงสร้างการเงินโลกสำหรับนักลงทุนรายย่อย",
+  },
+  ru: {
+    title: "?????????? ??????",
+    subtitle: "???????????? ????????? ? Forex, ??????, ??????, ???????? ???????, ETF, ????????????? ?????? ? ?????????? ?????????? ?????????.",
+    metaDescription: "?????????? ?????? Varejo Investidor: ?????? Forex, ?????, ??????, ???????? ???????, ETF, ????????????? ?????? ? ?????????? ?????????? ?????????.",
+  },
+  ur: {
+    title: "????? ??????",
+    subtitle: "Forex? ??????? ?????? ???????? ETFs? ????? ??????? ??? ????? ??????? ?????? ?? ?????? ???????",
+    metaDescription: "Varejo Investidor ?? ????? ??????: Forex? ??????? ?????? ???????? ETFs? ????? ??????? ??? ????? ??????? ?????? ?? ??????",
+  },
+  bn: {
+    title: "??????? ????????",
+    subtitle: "Forex, ??????, ????????, ???????, ETF, ????????? ???? ??? ??????? ??????????????? ?????????? ????? ?????????? ?????????",
+    metaDescription: "Varejo Investidor ??????? ????????: Forex, ??????, ????????, ???????, ETF, ????????? ???? ? ??????? ??????????????? ?????????? ?????????",
+  },
+  ja: {
+    title: "グローバル記事",
+    subtitle: "Forex、株式、暗号資産、商品、ETF、経済サイクル、グローバル金融構造に関する編集分析。",
+    metaDescription: "Varejo Investidorのグローバル記事: 個人投資家のためのForex、株式、暗号資産、商品、ETF、経済サイクル、グローバル金融構造の分析。",
+  },
+  ko: {
+    title: "글로벌 기사",
+    subtitle: "Forex, 주식, 암호화폐, 원자재, ETF, 경제 사이클과 글로벌 금융 구조에 대한 편집 분석.",
+    metaDescription: "Varejo Investidor 글로벌 기사: 개인 투자자를 위한 Forex, 주식, 암호화폐, 원자재, ETF, 경제 사이클과 글로벌 금융 구조 분석.",
   },
 };
 
@@ -323,6 +365,12 @@ export const insightCategories: Record<Locale, Record<InsightCategoryKey, string
   tr: { macro: "Kuresel Makro", forex: "Forex", stocks: "Hisseler", crypto: "Kripto", commodities: "Emtialar", etfs: "ETF'ler", risk: "Risk", wealth: "Varlik" },
   id: { macro: "Makro Global", forex: "Forex", stocks: "Saham", crypto: "Kripto", commodities: "Komoditas", etfs: "ETF", risk: "Risiko", wealth: "Kekayaan" },
   vi: { macro: "Vĩ mô toàn cầu", forex: "Forex", stocks: "Cổ Phiếu", crypto: "Tiền Điện Tử", commodities: "Hàng Hóa", etfs: "ETF", risk: "Rủi ro", wealth: "Tài sản" },
+  th: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
+  ru: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
+  ur: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
+  bn: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
+  ja: { macro: "グローバルマクロ", forex: "Forex", stocks: "株式", crypto: "暗号資産", commodities: "商品", etfs: "ETF", risk: "リスク", wealth: "資産" },
+  ko: { macro: "글로벌 매크로", forex: "Forex", stocks: "주식", crypto: "암호화폐", commodities: "원자재", etfs: "ETF", risk: "리스크", wealth: "자산" },
 };
 
 const titleSets: Record<Locale, Array<[string, string, InsightCategoryKey, string]>> = {
@@ -382,6 +430,48 @@ const titleSets: Record<Locale, Array<[string, string, InsightCategoryKey, strin
     ["bitcoin-thanh-khoan-rui-ro", "Bitcoin, thanh khoản và rủi ro: cần theo dõi điều gì", "crypto", "Crypto đòi hỏi đọc thanh khoản, bảo mật, chu kỳ và khẩu vị rủi ro."],
     ["etf-co-phieu-toan-cau-tai-san", "ETF và cổ phiếu toàn cầu trong xây dựng tài sản", "wealth", "Danh mục toàn cầu bắt đầu bằng đa dạng hóa, tiền tệ mạnh và cấu trúc dài hạn."],
   ],
+  th: [
+    ["dollar-rates-global-markets", "What the dollar reveals about global markets", "macro", "The dollar, rates, liquidity and risk remain the core language of global cycles."],
+    ["forex-gold-oil", "Forex, gold and oil: how markets connect", "forex", "Currencies, energy and metals tell the same global story from different angles."],
+    ["economic-cycles-retail", "Why retail investors need to understand economic cycles", "risk", "Cycles explain risk, opportunity, liquidity and wealth building."],
+    ["bitcoin-liquidity-risk", "Bitcoin, liquidity and risk: what to watch", "crypto", "Crypto requires reading liquidity, security, cycle and risk appetite."],
+    ["etfs-global-stocks-wealth", "ETFs and global stocks in wealth building", "wealth", "Global portfolios begin with diversification, strong currency and long-term structure."],
+  ],
+  ru: [
+    ["dollar-rates-global-markets", "What the dollar reveals about global markets", "macro", "The dollar, rates, liquidity and risk remain the core language of global cycles."],
+    ["forex-gold-oil", "Forex, gold and oil: how markets connect", "forex", "Currencies, energy and metals tell the same global story from different angles."],
+    ["economic-cycles-retail", "Why retail investors need to understand economic cycles", "risk", "Cycles explain risk, opportunity, liquidity and wealth building."],
+    ["bitcoin-liquidity-risk", "Bitcoin, liquidity and risk: what to watch", "crypto", "Crypto requires reading liquidity, security, cycle and risk appetite."],
+    ["etfs-global-stocks-wealth", "ETFs and global stocks in wealth building", "wealth", "Global portfolios begin with diversification, strong currency and long-term structure."],
+  ],
+  ur: [
+    ["dollar-rates-global-markets", "What the dollar reveals about global markets", "macro", "The dollar, rates, liquidity and risk remain the core language of global cycles."],
+    ["forex-gold-oil", "Forex, gold and oil: how markets connect", "forex", "Currencies, energy and metals tell the same global story from different angles."],
+    ["economic-cycles-retail", "Why retail investors need to understand economic cycles", "risk", "Cycles explain risk, opportunity, liquidity and wealth building."],
+    ["bitcoin-liquidity-risk", "Bitcoin, liquidity and risk: what to watch", "crypto", "Crypto requires reading liquidity, security, cycle and risk appetite."],
+    ["etfs-global-stocks-wealth", "ETFs and global stocks in wealth building", "wealth", "Global portfolios begin with diversification, strong currency and long-term structure."],
+  ],
+  bn: [
+    ["dollar-rates-global-markets", "What the dollar reveals about global markets", "macro", "The dollar, rates, liquidity and risk remain the core language of global cycles."],
+    ["forex-gold-oil", "Forex, gold and oil: how markets connect", "forex", "Currencies, energy and metals tell the same global story from different angles."],
+    ["economic-cycles-retail", "Why retail investors need to understand economic cycles", "risk", "Cycles explain risk, opportunity, liquidity and wealth building."],
+    ["bitcoin-liquidity-risk", "Bitcoin, liquidity and risk: what to watch", "crypto", "Crypto requires reading liquidity, security, cycle and risk appetite."],
+    ["etfs-global-stocks-wealth", "ETFs and global stocks in wealth building", "wealth", "Global portfolios begin with diversification, strong currency and long-term structure."],
+  ],
+  ja: [
+    ["dollar-rates-global-markets", "ドルが世界市場について示すこと", "macro", "ドル、金利、流動性、リスクは、世界のサイクルを読むための中心的な言語です。"],
+    ["forex-gold-oil", "Forex、金、原油: 市場はどのようにつながるのか", "forex", "通貨、エネルギー、金属は、同じグローバルストーリーを異なる角度から映し出します。"],
+    ["economic-cycles-retail", "個人投資家が経済サイクルを理解すべき理由", "risk", "サイクルはリスク、機会、流動性、長期的な資産形成を説明します。"],
+    ["bitcoin-liquidity-risk", "Bitcoin、流動性、リスク: 何を見るべきか", "crypto", "暗号資産には、流動性、安全性、サイクル、リスク選好の読み取りが必要です。"],
+    ["etfs-global-stocks-wealth", "ETFとグローバル株式による資産形成", "wealth", "グローバルポートフォリオは、分散、強い通貨、長期構造から始まります。"],
+  ],
+  ko: [
+    ["dollar-rates-global-markets", "달러가 글로벌 시장에 대해 보여주는 것", "macro", "달러, 금리, 유동성, 리스크는 글로벌 사이클을 읽는 핵심 언어입니다."],
+    ["forex-gold-oil", "Forex, 금, 원유: 시장은 어떻게 연결되는가", "forex", "통화, 에너지, 금속은 같은 글로벌 이야기를 서로 다른 각도에서 보여줍니다."],
+    ["economic-cycles-retail", "개인 투자자가 경제 사이클을 이해해야 하는 이유", "risk", "사이클은 리스크, 기회, 유동성, 장기 자산 형성을 설명합니다."],
+    ["bitcoin-liquidity-risk", "Bitcoin, 유동성, 리스크: 무엇을 봐야 하는가", "crypto", "암호화폐는 유동성, 보안, 사이클, 리스크 선호도를 읽는 능력이 필요합니다."],
+    ["etfs-global-stocks-wealth", "ETF와 글로벌 주식으로 만드는 자산", "wealth", "글로벌 포트폴리오는 분산, 강한 통화, 장기 구조에서 시작됩니다."],
+  ],
 };
 
 function bodyCopy(locale: Locale) {
@@ -405,7 +495,7 @@ function bodyCopy(locale: Locale) {
     id: "Dalam metodologi Semut, Serigala dan Elang Harpy, analisis bukan hanya soal memprediksi harga. Analisis mengatur perilaku finansial, risiko operasional dan pembangunan kekayaan global.",
     vi: "Trong phương pháp Kiến, Sói và Đại Bàng Harpy, phân tích không chỉ để dự đoán giá. Nó tổ chức hành vi tài chính, rủi ro vận hành và quá trình xây dựng tài sản toàn cầu.",
   };
-  return [first[locale], second[locale]];
+  return [first[locale] ?? first.en, second[locale] ?? second.en];
 }
 
 function makePost(locale: Locale, item: [string, string, InsightCategoryKey, string], index: number): InsightPost {
@@ -436,15 +526,16 @@ export const insightPosts: InsightPost[] = Object.entries(titleSets).flatMap(([l
 );
 
 export function getInsightsPath(locale: Locale, slug?: string) {
-  return `${insightsBasePath[locale]}${slug ? `/${slug}` : ""}`;
+  return `${insightsBasePath[locale] ?? insightsBasePath.en}${slug ? `/${slug}` : ""}`;
 }
 
 export function getPostsByLocale(locale: Locale) {
-  return insightPosts.filter((post) => post.locale === locale);
+  const posts = insightPosts.filter((post) => post.locale === locale);
+  return posts.length ? posts : insightPosts.filter((post) => post.locale === "en");
 }
 
 export function getPost(locale: Locale, slug: string) {
-  return insightPosts.find((post) => post.locale === locale && post.slug === slug);
+  return insightPosts.find((post) => post.locale === locale && post.slug === slug) ?? insightPosts.find((post) => post.locale === "en" && post.slug === slug);
 }
 
 export function localeFromInsightsPath(pathname: string | null): Locale | null {
@@ -465,6 +556,13 @@ export function localeFromInsightsPath(pathname: string | null): Locale | null {
   if (pathname.startsWith("/tr/global-insights")) return "tr";
   if (pathname.startsWith("/id/insights")) return "id";
   if (pathname.startsWith("/vi/insights")) return "vi";
+  if (pathname.startsWith("/ru/insights")) return "ru";
+  if (pathname.startsWith("/ur/insights")) return "ur";
+  if (pathname.startsWith("/bn/insights")) return "bn";
+  if (pathname.startsWith("/ja/articles")) return "ja";
+  if (pathname.startsWith("/ja/insights")) return "ja";
+  if (pathname.startsWith("/ko/articles")) return "ko";
+  if (pathname.startsWith("/ko/insights")) return "ko";
   return null;
 }
 

@@ -3,7 +3,7 @@ import { PlatformPage } from "../../../../src/components/PlatformPage";
 import { getPlatformContent, platformSlugs } from "../../../../src/data/platformContent";
 import type { Locale } from "../../../../src/i18n";
 
-const locales: Locale[] = ["en", "es", "hi", "ar", "tr", "id", "vi"];
+const locales: Locale[] = ["en", "es", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"];
 
 function isLocale(value: string): value is Locale {
   return locales.includes(value as Locale);

@@ -183,9 +183,9 @@ const copy: Record<
 };
 
 export function BrokerAccessBlock({ locale }: { locale: Locale }) {
-  const data = copy[locale];
-  const banner = fxproBanners[locale];
-  const forexLink = fxproLinks[locale];
+  const data = copy[locale] ?? copy.en;
+  const banner = fxproBanners[locale] ?? fxproBanners.en;
+  const forexLink = fxproLinks[locale] ?? fxproLinks.en;
   const isRtl = locale === "ar";
   const cards = [
     {

@@ -8,6 +8,7 @@ import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/insightsContent";
 import { getPlatformPath, platformSlugs } from "../data/platformContent";
+import { eliteReportPaths } from "./EliteReportHub";
 
 export const ticker = [
   ["XAU/USD", "+0.74%", "up"],
@@ -35,7 +36,7 @@ export const ELITE_STRIPE_LINKS = [
 ] as const;
 
 export const ELITE_CHECKOUT_URL = ELITE_LASTLINK_URL;
-export const LOCALES = ["pt", "en", "es", "hi", "ar", "tr", "id", "vi"] as const;
+export const LOCALES = ["pt", "en", "es", "fr", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"] as const;
 
 export function getElitePlanHref(locale: Locale, planIndex: number) {
   return locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[planIndex] ?? ELITE_STRIPE_LINKS[3];
@@ -58,6 +59,14 @@ export function eliteLinkProps(locale: Locale, fallback = "/sinais") {
   };
 }
 
+export function trackVarejoClick(event: string, payload: Record<string, string> = {}) {
+  if (typeof window === "undefined") return;
+  const detail = { event, ...payload };
+  window.dispatchEvent(new CustomEvent("varejo:track", { detail }));
+  const dataLayer = (window as Window & { dataLayer?: Record<string, string>[] }).dataLayer;
+  if (Array.isArray(dataLayer)) dataLayer.push(detail);
+}
+
 export function detectLocale(): Locale {
   if (typeof navigator === "undefined") return "en";
 
@@ -66,11 +75,18 @@ export function detectLocale(): Locale {
 
   if (detected.includes("pt")) return "pt";
   if (detected.includes("es")) return "es";
+  if (detected.includes("fr")) return "fr";
   if (detected.includes("hi")) return "hi";
   if (detected.includes("ar")) return "ar";
   if (detected.includes("tr")) return "tr";
   if (detected.includes("id") || detected.includes("id-id")) return "id";
   if (detected.includes("vi") || detected.includes("vi-vn")) return "vi";
+  if (detected.includes("th") || detected.includes("th-th")) return "th";
+  if (detected.includes("ru") || detected.includes("ru-ru")) return "ru";
+  if (detected.includes("ur") || detected.includes("ur-pk")) return "ur";
+  if (detected.includes("bn") || detected.includes("bn-bd")) return "bn";
+  if (detected.includes("ja") || detected.includes("ja-jp")) return "ja";
+  if (detected.includes("ko") || detected.includes("ko-kr")) return "ko";
   if (detected.includes("en")) return "en";
 
   return "en";
@@ -89,8 +105,8 @@ function localeFromPath(pathname: string | null): Locale | null {
 
 function applyDocumentLocale(nextLocale: Locale) {
   document.documentElement.lang =
-    nextLocale === "pt" ? "pt-BR" : nextLocale === "ar" ? "ar" : nextLocale;
-  document.documentElement.dir = nextLocale === "ar" ? "rtl" : "ltr";
+    nextLocale === "pt" ? "pt-BR" : nextLocale === "ar" ? "ar" : nextLocale === "ur" ? "ur" : nextLocale;
+  document.documentElement.dir = nextLocale === "ar" || nextLocale === "ur" ? "rtl" : "ltr";
 }
 
 export function useSiteLocale() {
@@ -198,6 +214,16 @@ function FlagIcon({ locale }: { locale: Locale }) {
     );
   }
 
+  if (locale === "fr") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="5.33" height="12" fill="#1f3f82" />
+        <rect x="5.33" width="5.34" height="12" fill="#f7f3eb" />
+        <rect x="10.67" width="5.33" height="12" fill="#c8232c" />
+      </svg>
+    );
+  }
+
   if (locale === "hi") {
     return (
       <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
@@ -237,6 +263,65 @@ function FlagIcon({ locale }: { locale: Locale }) {
     );
   }
 
+  if (locale === "th") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#a51931" />
+        <rect y="2" width="16" height="8" fill="#f7f3eb" />
+        <rect y="4" width="16" height="4" fill="#2d2a7f" />
+      </svg>
+    );
+  }
+
+  if (locale === "ru") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="4" fill="#f7f3eb" />
+        <rect y="4" width="16" height="4" fill="#244aa5" />
+        <rect y="8" width="16" height="4" fill="#d52b1e" />
+      </svg>
+    );
+  }
+
+  if (locale === "ur") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#0f6f42" />
+        <rect width="3.2" height="12" fill="#f7f3eb" />
+        <path d="M9.2 6.1a2.4 2.4 0 1 1 0-.2 1.65 1.65 0 1 0 0 .2Z" fill="#f7f3eb" />
+        <path d="M10.9 4.55 11.3 5.55h1.05l-.85.62.33 1-.93-.58-.9.58.32-1-.84-.62h1.04Z" fill="#f7f3eb" />
+      </svg>
+    );
+  }
+
+  if (locale === "bn") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#006a4e" />
+        <circle cx="7" cy="6" r="3" fill="#f42a41" />
+      </svg>
+    );
+  }
+
+  if (locale === "ja") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#f7f3eb" />
+        <circle cx="8" cy="6" r="3" fill="#bc002d" />
+      </svg>
+    );
+  }
+
+  if (locale === "ko") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#f7f3eb" />
+        <circle cx="8" cy="6" r="2.7" fill="#cd2e3a" />
+        <path d="M5.65 7.55a2.7 2.7 0 0 0 4.7-1.1 1.35 1.35 0 0 1-2.7 0 1.35 1.35 0 0 0-2 1.1Z" fill="#0047a0" />
+      </svg>
+    );
+  }
+
   return (
     <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
       <rect width="16" height="12" fill="#c8232c" />
@@ -250,11 +335,18 @@ const languageMeta: Record<Locale, { code: string; name: string }> = {
   pt: { code: "PT", name: "Portugu\u00EAs" },
   en: { code: "EN", name: "English" },
   es: { code: "ES", name: "Espa\u00F1ol" },
+  fr: { code: "FR", name: "Fran\u00E7ais" },
   hi: { code: "HI", name: "\u0939\u093F\u0928\u094D\u0926\u0940" },
   ar: { code: "AR", name: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" },
   tr: { code: "TR", name: "T\u00FCrk\u00E7e" },
   id: { code: "ID", name: "Bahasa Indonesia" },
   vi: { code: "VI", name: "Ti\u1EBFng Vi\u1EC7t" },
+  th: { code: "TH", name: "\u0E44\u0E17\u0E22" },
+  ru: { code: "RU", name: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439" },
+  ur: { code: "UR", name: "\u0627\u0631\u062F\u0648" },
+  bn: { code: "BN", name: "\u09AC\u09BE\u0982\u09B2\u09BE" },
+  ja: { code: "JA", name: "\u65E5\u672C\u8A9E" },
+  ko: { code: "KO", name: "\uD55C\uAD6D\uC5B4" },
 };
 
 export function LanguageSwitcher({
@@ -296,6 +388,69 @@ export function LanguageSwitcher({
   );
 }
 
+function DesktopLanguageDropdown({
+  locale,
+  onChange,
+}: {
+  locale: Locale;
+  onChange: (locale: Locale) => void;
+}) {
+  const active = languageMeta[locale] ?? languageMeta.en;
+
+  return (
+    <details className="desktop-language-dropdown header-dropdown">
+      <summary className="header-dropdown-trigger desktop-language-trigger">
+        <span className="language-button-inner inline-flex items-center justify-center gap-2">
+          <FlagIcon locale={locale} />
+          <span>{active.name}</span>
+        </span>
+        <span className="header-dropdown-chevron" aria-hidden="true">▾</span>
+      </summary>
+      <div className="header-dropdown-panel language-dropdown-panel">
+        {LOCALES.map((item) => (
+          <button
+            key={item}
+            type="button"
+            onClick={() => onChange(item)}
+            className={`language-dropdown-option ${locale === item ? "is-active" : ""}`}
+            aria-pressed={locale === item}
+          >
+            <FlagIcon locale={item} />
+            <span>{languageMeta[item].name}</span>
+          </button>
+        ))}
+      </div>
+    </details>
+  );
+}
+
+function HeaderDropdown({
+  label,
+  items,
+  active,
+}: {
+  label: string;
+  items: Array<{ label: string; href: string }>;
+  active: boolean;
+}) {
+  return (
+    <details className={`header-dropdown ${active ? "is-active" : ""}`}>
+      <summary className={`nav-link header-dropdown-trigger text-ink ${active ? "active" : ""}`}>
+        <span>{label}</span>
+        <span className="header-dropdown-chevron" aria-hidden="true">▾</span>
+      </summary>
+      <div className="header-dropdown-panel">
+        {items.map((item) => (
+          <a key={`${item.href}-${item.label}`} href={item.href} className="header-dropdown-item">
+            <span>{item.label}</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </details>
+  );
+}
+
 export function SiteChrome({
   locale,
   t,
@@ -306,6 +461,8 @@ export function SiteChrome({
   onLocaleChange: (locale: Locale) => void;
 }) {
   const pathname = usePathname();
+  const safeT = t ?? translations.en;
+  const insightNavLabel = insightLabels[locale]?.nav ?? insightLabels.en.nav;
   const [mobileLanguageOpen, setMobileLanguageOpen] = useState(true);
 
   useEffect(() => {
@@ -343,11 +500,73 @@ export function SiteChrome({
             : locale === "tr"
               ? "Bireysel Yatırımcı için Küresel Piyasalar"
               : "Mercado Global para o Investidor de Varejo";
-  const navItems = useMemo(
+  const marketDropdownLabels: Record<Locale, Record<"markets" | "forex" | "stocks" | "crypto" | "etfs" | "funds", string>> = {
+    pt: { markets: "Mercados", forex: "Forex", stocks: "Ações", crypto: "Criptomoedas", etfs: "ETFs", funds: "Fundos Imobiliários" },
+    en: { markets: "Markets", forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", funds: "Real Estate Funds" },
+    es: { markets: "Mercados", forex: "Forex", stocks: "Acciones", crypto: "Criptomonedas", etfs: "ETFs", funds: "Fondos Inmobiliarios" },
+    fr: { markets: "Marchés", forex: "Forex", stocks: "Actions", crypto: "Crypto", etfs: "ETFs", funds: "Fonds immobiliers" },
+    hi: { markets: "बाज़ार", forex: "Forex", stocks: "शेयर", crypto: "क्रिप्टो", etfs: "ETFs", funds: "Real Estate Funds" },
+    ar: { markets: "الأسواق", forex: "الفوركس", stocks: "الأسهم", crypto: "الكريبتو", etfs: "ETFs", funds: "صناديق عقارية" },
+    tr: { markets: "Piyasalar", forex: "Forex", stocks: "Hisseler", crypto: "Kripto", etfs: "ETF'ler", funds: "Gayrimenkul Fonları" },
+    id: { markets: "Pasar", forex: "Forex", stocks: "Saham", crypto: "Kripto", etfs: "ETFs", funds: "Dana Properti" },
+    vi: { markets: "Thị trường", forex: "Forex", stocks: "Cổ phiếu", crypto: "Tiền điện tử", etfs: "ETFs", funds: "Quỹ bất động sản" },
+    th: { markets: "ตลาด", forex: "Forex", stocks: "หุ้น", crypto: "คริปโต", etfs: "ETFs", funds: "กองทุนอสังหาริมทรัพย์" },
+    ru: { markets: "Рынки", forex: "Forex", stocks: "Акции", crypto: "Крипто", etfs: "ETFs", funds: "Фонды недвижимости" },
+    ur: { markets: "مارکیٹس", forex: "Forex", stocks: "اسٹاکس", crypto: "کرپٹو", etfs: "ETFs", funds: "ریئل اسٹیٹ فنڈز" },
+    bn: { markets: "বাজার", forex: "Forex", stocks: "শেয়ার", crypto: "ক্রিপ্টো", etfs: "ETFs", funds: "রিয়েল এস্টেট ফান্ড" },
+    ja: { markets: "マーケット", forex: "Forex", stocks: "株式", crypto: "暗号資産", etfs: "ETFs", funds: "不動産ファンド" },
+    ko: { markets: "시장", forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETFs", funds: "부동산 펀드" },
+  };
+  const toolDropdownLabels: Record<Locale, { tools: string; risk: string; lot: string; reports: string }> = {
+    pt: { tools: "Ferramentas", risk: "Calculadora de Risco", lot: "Escolha do Lote Correto", reports: "Relatórios" },
+    en: { tools: "Tools", risk: "Risk Calculator", lot: "Correct Lot Size", reports: "Reports" },
+    es: { tools: "Herramientas", risk: "Calculadora de Riesgo", lot: "Elección del Lote Correcto", reports: "Reportes" },
+    fr: { tools: "Outils", risk: "Calculateur de Risque", lot: "Choix du Lot Correct", reports: "Rapports" },
+    hi: { tools: "टूल्स", risk: "जोखिम कैलकुलेटर", lot: "सही लॉट चयन", reports: "रिपोर्ट" },
+    ar: { tools: "الأدوات", risk: "حاسبة المخاطر", lot: "اختيار اللوت الصحيح", reports: "التقارير" },
+    tr: { tools: "Araçlar", risk: "Risk Hesaplayıcı", lot: "Doğru Lot Seçimi", reports: "Raporlar" },
+    id: { tools: "Alat", risk: "Kalkulator Risiko", lot: "Pilihan Lot yang Tepat", reports: "Laporan" },
+    vi: { tools: "Công cụ", risk: "Máy tính Rủi ro", lot: "Chọn Lot Phù hợp", reports: "Báo cáo" },
+    th: { tools: "เครื่องมือ", risk: "เครื่องคำนวณความเสี่ยง", lot: "เลือกล็อตที่เหมาะสม", reports: "รายงาน" },
+    ru: { tools: "Инструменты", risk: "Калькулятор риска", lot: "Правильный размер лота", reports: "Отчеты" },
+    ur: { tools: "ٹولز", risk: "رسک کیلکولیٹر", lot: "درست لاٹ کا انتخاب", reports: "رپورٹس" },
+    bn: { tools: "টুলস", risk: "ঝুঁকি ক্যালকুলেটর", lot: "সঠিক লট নির্বাচন", reports: "রিপোর্ট" },
+    ja: { tools: "ツール", risk: "リスク計算機", lot: "適切なロット選択", reports: "レポート" },
+    ko: { tools: "도구", risk: "리스크 계산기", lot: "올바른 랏 선택", reports: "리포트" },
+  };
+  const marketLabels = marketDropdownLabels[locale] ?? marketDropdownLabels.en;
+  const toolLabels = toolDropdownLabels[locale] ?? toolDropdownLabels.en;
+  const marketPrefix = locale === "pt" ? "" : `/${locale}`;
+  const marketItems = [
+    { label: marketLabels.forex, href: `${marketPrefix}/forex` },
+    { label: marketLabels.stocks, href: locale === "pt" ? "/acoes" : `${marketPrefix}/stocks` },
+    { label: marketLabels.crypto, href: locale === "pt" ? "/cripto" : `${marketPrefix}/crypto` },
+    { label: marketLabels.etfs, href: `${marketPrefix}/etfs` },
+    { label: getMarketLabel("ouro", locale), href: locale === "pt" ? "/ouro" : `${marketPrefix}/gold` },
+    { label: getMarketLabel("petroleo", locale), href: locale === "pt" ? "/petroleo" : `${marketPrefix}/oil` },
+    { label: getMarketLabel("commodities", locale), href: `${marketPrefix}/commodities` },
+    ...(locale === "pt" ? [{ label: marketLabels.funds, href: "/fundos-imobiliarios" }] : []),
+  ];
+  const toolItems = [
+    { label: toolLabels.risk, href: "/calculadora-de-risco" },
+    { label: toolLabels.lot, href: "/ferramentas/lote-correto-forex" },
+    { label: toolLabels.reports, href: eliteReportPaths[locale] ?? eliteReportPaths.en },
+  ];
+  const localizedHref = (page: "home" | "signals" | "education" | "services" | "about") => {
+    if (page === "home") return locale === "pt" ? "/#home" : `/${locale}`;
+    const ptPaths = {
+      signals: "/sinais",
+      education: "/educacao",
+      services: "/servicos",
+      about: "/sobre",
+    };
+    return locale === "pt" ? ptPaths[page] : `/${locale}/${page}`;
+  };
+  const firstNavItems = useMemo(
     () => [
-      { label: t.nav.home, href: "/#home", activePaths: ["/", "/pt", "/en", "/es", "/hi", "/ar", "/tr", "/id", "/vi"] },
+      { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", "/pt", "/en", "/es", "/fr", "/hi", "/ar", "/tr", "/id", "/vi", "/th", "/ru", "/ur", "/bn", "/ja", "/ko"] },
       {
-        label: insightLabels[locale].nav,
+        label: insightNavLabel,
         href: getInsightsPath(locale),
         activePaths: [
           "/artigos-globais",
@@ -366,21 +585,34 @@ export function SiteChrome({
           "/tr/global-insights",
           "/id/insights",
           "/vi/insights",
+          "/ja/articles",
+          "/ja/insights",
+          "/ko/articles",
+          "/ko/insights",
         ],
       },
-      { label: t.nav.signals, href: "/sinais", activePaths: ["/sinais", "/signals"] },
-      { label: t.nav.education, href: "/educacao", activePaths: ["/educacao"] },
-      { label: t.nav.services, href: "/servicos", activePaths: ["/servicos", "/services"] },
-      { label: t.nav.about, href: "/sobre", activePaths: ["/sobre", "/about"] },
+      { label: safeT.nav.signals, href: localizedHref("signals"), activePaths: ["/sinais", "/signals", `/${locale}/signals`] },
+      { label: safeT.nav.education, href: localizedHref("education"), activePaths: ["/educacao", `/${locale}/education`] },
     ],
-    [locale, t],
+    [locale, safeT, insightNavLabel],
   );
+  const lastNavItems = useMemo(
+    () => [
+      { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
+      { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
+    ],
+    [locale, safeT],
+  );
+  const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
+  const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
+  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/lote-correto-forex", eliteReportPaths[locale] ?? eliteReportPaths.en]);
+  const mobileNavItems = [...firstNavItems, ...lastNavItems];
 
   return (
     <div className="site-chrome fixed left-0 right-0 top-0 z-50">
       <div className="global-ticker border-b border-ink/[0.08] bg-ink px-3 text-paper md:px-5">
         <div className="mx-auto flex max-w-7xl items-center gap-4 overflow-hidden py-1.5 text-[9px] uppercase tracking-[0.16em] sm:gap-7 sm:py-2 sm:text-[11px] sm:tracking-[0.22em]">
-          <span className="shrink-0 text-gold">{t.tickerLabel}</span>
+          <span className="shrink-0 text-gold">{safeT.tickerLabel}</span>
           <div className="ticker-track flex min-w-max gap-6">
             {[...ticker, ...ticker].map(([asset, move, tone], index) => (
               <span key={`${asset}-${index}`} className="ticker-item flex items-center gap-2">
@@ -393,7 +625,7 @@ export function SiteChrome({
       </div>
 
       <header className="site-header border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
-        <nav className="site-header-nav mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8 md:py-4">
+        <nav className="site-header-nav mx-auto grid max-w-7xl items-center gap-4 px-4 py-3 md:px-8 md:py-4 xl:grid-cols-[minmax(260px,25%)_minmax(0,55%)_minmax(220px,20%)]">
           <a href="/#home" className="site-brand group flex min-w-0 items-center gap-3">
             <span className="grid h-9 w-9 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper sm:h-10 sm:w-10">VI</span>
             <span className="min-w-0 leading-tight">
@@ -402,21 +634,27 @@ export function SiteChrome({
             </span>
           </a>
 
-          <div className="hidden items-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
-            {navItems.map((item) => {
-              const isActive = item.activePaths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
+          <div className="desktop-main-menu hidden items-center justify-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
+            {firstNavItems.map((item) => {
+              const isActive = isActivePath(item.activePaths);
+              return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
+            })}
+            <HeaderDropdown label={marketLabels.markets} items={marketItems} active={marketsActive} />
+            <HeaderDropdown label={toolLabels.tools} items={toolItems} active={toolsActive} />
+            {lastNavItems.map((item) => {
+              const isActive = isActivePath(item.activePaths);
               return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
           </div>
 
-          <div className="hidden items-center gap-2 xl:flex">
-            <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
+          <div className="desktop-language-area hidden items-center justify-end xl:flex">
+            <DesktopLanguageDropdown locale={locale} onChange={onLocaleChange} />
           </div>
         </nav>
         <div className="mobile-nav-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
           <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-2 pt-2 text-sm">
-            {navItems.map((item) => {
-              const isActive = item.activePaths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
+            {mobileNavItems.map((item) => {
+              const isActive = isActivePath(item.activePaths);
               return <a key={item.label} href={item.href} className={`mobile-nav-link nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-center text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
           </div>
@@ -581,6 +819,7 @@ export function FreeChannelCTA({
           href={t.freeChannel.link}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackVarejoClick("canal_formiga_click", { locale: t.locale.toLowerCase() })}
           className="shrink-0 border border-rise bg-rise px-6 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper shadow-[0_18px_40px_rgba(15,143,86,0.25)] transition hover:-translate-y-0.5 hover:border-gold hover:bg-gold hover:text-ink sm:min-w-[260px]"
         >
           {t.freeChannel.button}
@@ -867,14 +1106,21 @@ export function SupportFooter({
     pt: { forex: "forex", acoes: "acoes", cripto: "cripto", etfs: "etfs", ouro: "ouro", petroleo: "petroleo", commodities: "commodities", "fundos-imobiliarios": "fundos-imobiliarios" },
     en: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     es: { forex: "forex", acoes: "acciones", cripto: "cripto", etfs: "etfs", ouro: "oro", petroleo: "petroleo", commodities: "commodities" },
+    fr: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     hi: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     ar: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     tr: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     id: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     vi: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    th: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ru: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ur: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    bn: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ja: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ko: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
   };
   const marketFooterLinks = marketFooterSlugs.map((slug) => ({
-    href: locale === "pt" ? `/${marketAliases.pt[slug] ?? slug}` : `/${locale}/${marketAliases[locale][slug] ?? slug}`,
+    href: locale === "pt" ? `/${marketAliases.pt[slug] ?? slug}` : `/${locale}/${(marketAliases[locale] ?? marketAliases.en)[slug] ?? slug}`,
     label: getMarketLabel(slug, locale),
   }));
   const platformFooterLinks = platformSlugs.map((slug) => ({

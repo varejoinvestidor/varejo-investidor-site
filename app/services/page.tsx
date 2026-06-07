@@ -343,7 +343,7 @@ function highTicketTone(kind: string) {
 export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const isPt = locale === "pt";
-  const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale];
+  const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale as keyof typeof internationalServicesIntro] ?? internationalServicesIntro.en;
   const compactServices = compactServicesByLocale[locale as keyof typeof compactServicesByLocale] ?? compactServicesByLocale.en;
   const packageCopy = elitePackagesByLocale[locale as keyof typeof elitePackagesByLocale] ?? elitePackagesByLocale.en;
   const internationalElitePrices = [

@@ -33,6 +33,18 @@ const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
     petroleo: "petroleo",
     commodities: "commodities",
   },
+  fr: {
+    forex: "forex",
+    actions: "acoes",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    or: "ouro",
+    gold: "ouro",
+    petrole: "petroleo",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
   hi: {
     forex: "forex",
     stocks: "acoes",
@@ -88,10 +100,64 @@ const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
     commodities: "commodities",
     "hang-hoa": "commodities",
   },
+  th: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
+  ru: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
+  ur: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
+  bn: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
+  ja: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
+  ko: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
 };
 
 function isLocale(value: string): value is Locale {
-  return value === "pt" || value === "en" || value === "es" || value === "hi" || value === "ar" || value === "tr" || value === "id" || value === "vi";
+  return value === "pt" || value === "en" || value === "es" || value === "fr" || value === "hi" || value === "ar" || value === "tr" || value === "id" || value === "vi" || value === "th" || value === "ru" || value === "ur" || value === "bn" || value === "ja" || value === "ko";
 }
 
 function getMarketSlug(locale: string, market: string): MarketSlug | null {

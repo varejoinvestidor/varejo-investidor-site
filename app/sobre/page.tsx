@@ -425,7 +425,7 @@ function InfoCard({ title, text, index }: { title: string; text: string; index: 
 
 export default function SobrePage() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const copy = localizedAboutCopy[locale] ?? localizedAboutCopy.en;
+  const copy = localizedAboutCopy[locale as keyof typeof localizedAboutCopy] ?? localizedAboutCopy.en;
 
   return (
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">

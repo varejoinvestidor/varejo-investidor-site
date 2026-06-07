@@ -25,8 +25,14 @@ function marketPath(locale: Locale, slug: MarketSlug) {
     tr: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     id: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     vi: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    th: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ru: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ur: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    bn: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ja: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
+    ko: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
   };
-  const alias = aliases[locale][slug] ?? slug;
+  const alias = (aliases[locale] ?? aliases.en)[slug] ?? slug;
   return locale === "pt" ? `/${alias}` : `/${locale}/${alias}`;
 }
 
