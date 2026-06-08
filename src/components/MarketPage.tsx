@@ -169,7 +169,7 @@ const forexUiLabels: Record<Locale, {
   tr: { baseCurrency: "Baz para birimi", quoteCurrency: "Karsi para birimi", capital: "Sermaye", lot: "Lot", move: "Hareket", result: "Sonuc" },
   id: { baseCurrency: "Mata uang dasar", quoteCurrency: "Mata uang kutipan", capital: "Modal", lot: "Lot", move: "Pergerakan", result: "Hasil" },
   vi: { baseCurrency: "Dong tien co so", quoteCurrency: "Dong tien dinh gia", capital: "Von", lot: "Lot", move: "Bien dong", result: "Ket qua" },
-  th: { baseCurrency: "???????????", quoteCurrency: "???????????????", capital: "???", lot: "????", move: "?????????????", result: "???????" },
+  th: { baseCurrency: "สกุลเงินฐาน", quoteCurrency: "สกุลเงินอ้างอิง", capital: "เงินทุน", lot: "ล็อต", move: "การเคลื่อนไหว", result: "ผลลัพธ์" },
 };
 
 function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {

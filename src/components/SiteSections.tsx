@@ -517,22 +517,22 @@ export function SiteChrome({
     ja: { markets: "マーケット", forex: "Forex", stocks: "株式", crypto: "暗号資産", etfs: "ETFs", funds: "不動産ファンド" },
     ko: { markets: "시장", forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETFs", funds: "부동산 펀드" },
   };
-  const toolDropdownLabels: Record<Locale, { tools: string; risk: string; lot: string; reports: string }> = {
-    pt: { tools: "Ferramentas", risk: "Calculadora de Risco", lot: "Escolha do Lote Correto", reports: "Relatórios" },
-    en: { tools: "Tools", risk: "Risk Calculator", lot: "Correct Lot Size", reports: "Reports" },
-    es: { tools: "Herramientas", risk: "Calculadora de Riesgo", lot: "Elección del Lote Correcto", reports: "Reportes" },
-    fr: { tools: "Outils", risk: "Calculateur de Risque", lot: "Choix du Lot Correct", reports: "Rapports" },
-    hi: { tools: "टूल्स", risk: "जोखिम कैलकुलेटर", lot: "सही लॉट चयन", reports: "रिपोर्ट" },
-    ar: { tools: "الأدوات", risk: "حاسبة المخاطر", lot: "اختيار اللوت الصحيح", reports: "التقارير" },
-    tr: { tools: "Araçlar", risk: "Risk Hesaplayıcı", lot: "Doğru Lot Seçimi", reports: "Raporlar" },
-    id: { tools: "Alat", risk: "Kalkulator Risiko", lot: "Pilihan Lot yang Tepat", reports: "Laporan" },
-    vi: { tools: "Công cụ", risk: "Máy tính Rủi ro", lot: "Chọn Lot Phù hợp", reports: "Báo cáo" },
-    th: { tools: "เครื่องมือ", risk: "เครื่องคำนวณความเสี่ยง", lot: "เลือกล็อตที่เหมาะสม", reports: "รายงาน" },
-    ru: { tools: "Инструменты", risk: "Калькулятор риска", lot: "Правильный размер лота", reports: "Отчеты" },
-    ur: { tools: "ٹولز", risk: "رسک کیلکولیٹر", lot: "درست لاٹ کا انتخاب", reports: "رپورٹس" },
-    bn: { tools: "টুলস", risk: "ঝুঁকি ক্যালকুলেটর", lot: "সঠিক লট নির্বাচন", reports: "রিপোর্ট" },
-    ja: { tools: "ツール", risk: "リスク計算機", lot: "適切なロット選択", reports: "レポート" },
-    ko: { tools: "도구", risk: "리스크 계산기", lot: "올바른 랏 선택", reports: "리포트" },
+  const toolDropdownLabels: Record<Locale, { tools: string; forex: string; compound: string; reports: string }> = {
+    pt: { tools: "Ferramentas", forex: "Calculadora Forex", compound: "Calculadora de Juros Compostos", reports: "Relatórios" },
+    en: { tools: "Tools", forex: "Forex Calculator", compound: "Compound Interest Calculator", reports: "Reports" },
+    es: { tools: "Herramientas", forex: "Calculadora Forex", compound: "Calculadora de Interés Compuesto", reports: "Reportes" },
+    fr: { tools: "Outils", forex: "Calculateur Forex", compound: "Calculateur d'intérêts composés", reports: "Rapports" },
+    hi: { tools: "टूल्स", forex: "Forex Calculator", compound: "कंपाउंड इंटरेस्ट कैलकुलेटर", reports: "रिपोर्ट" },
+    ar: { tools: "الأدوات", forex: "حاسبة الفوركس", compound: "حاسبة الفائدة المركبة", reports: "التقارير" },
+    tr: { tools: "Araçlar", forex: "Forex Hesaplayıcı", compound: "Bileşik Faiz Hesaplayıcı", reports: "Raporlar" },
+    id: { tools: "Alat", forex: "Kalkulator Forex", compound: "Kalkulator Bunga Majemuk", reports: "Laporan" },
+    vi: { tools: "Công cụ", forex: "Máy tính Forex", compound: "Máy tính Lãi kép", reports: "Báo cáo" },
+    th: { tools: "เครื่องมือ", forex: "เครื่องคำนวณ Forex", compound: "เครื่องคำนวณดอกเบี้ยทบต้น", reports: "รายงาน" },
+    ru: { tools: "Инструменты", forex: "Калькулятор Forex", compound: "Калькулятор сложных процентов", reports: "Отчеты" },
+    ur: { tools: "ٹولز", forex: "Forex Calculator", compound: "کمپاؤنڈ انٹرسٹ کیلکولیٹر", reports: "رپورٹس" },
+    bn: { tools: "টুলস", forex: "Forex Calculator", compound: "চক্রবৃদ্ধি সুদ ক্যালকুলেটর", reports: "রিপোর্ট" },
+    ja: { tools: "ツール", forex: "Forex計算機", compound: "複利計算機", reports: "レポート" },
+    ko: { tools: "도구", forex: "Forex 계산기", compound: "복리 계산기", reports: "리포트" },
   };
   const marketLabels = marketDropdownLabels[locale] ?? marketDropdownLabels.en;
   const toolLabels = toolDropdownLabels[locale] ?? toolDropdownLabels.en;
@@ -548,8 +548,8 @@ export function SiteChrome({
     ...(locale === "pt" ? [{ label: marketLabels.funds, href: "/fundos-imobiliarios" }] : []),
   ];
   const toolItems = [
-    { label: toolLabels.risk, href: "/calculadora-de-risco" },
-    { label: toolLabels.lot, href: "/ferramentas/lote-correto-forex" },
+    { label: toolLabels.forex, href: "/ferramentas/calculadora-forex" },
+    { label: toolLabels.compound, href: "/ferramentas/calculadora-juros-compostos" },
     { label: toolLabels.reports, href: eliteReportPaths[locale] ?? eliteReportPaths.en },
   ];
   const localizedHref = (page: "home" | "signals" | "education" | "services" | "about") => {
@@ -605,7 +605,7 @@ export function SiteChrome({
   );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
-  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/lote-correto-forex", eliteReportPaths[locale] ?? eliteReportPaths.en]);
+  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", eliteReportPaths[locale] ?? eliteReportPaths.en]);
   const mobileNavItems = [...firstNavItems, ...lastNavItems];
 
   return (
@@ -1023,8 +1023,8 @@ export function SupportFooter({
           language: "\u092D\u093E\u0937\u093E",
           marketLine: "Forex | Crypto | Commodities | Global Markets",
           levelLinks: ["Formiga \u0938\u094D\u0924\u0930", "Lobo \u0938\u094D\u0924\u0930", "Harpia \u0938\u094D\u0924\u0930"],
-          riskCalculator: "\u0930\u093F\u0938\u094D\u0915 \u0915\u0948\u0932\u0915\u0941\u0932\u0947\u091F\u0930",
-          forexLotTool: "Forex lot tool",
+          forexCalculator: "Forex Calculator",
+          compoundInterestTool: "\u0915\u0902\u092A\u093E\u0909\u0902\u0921 \u0907\u0902\u091F\u0930\u0947\u0938\u094D\u091F \u0915\u0948\u0932\u0915\u0941\u0932\u0947\u091F\u0930",
         }
       : locale === "es"
         ? {
@@ -1037,8 +1037,8 @@ export function SupportFooter({
             language: "Idioma",
             marketLine: "Forex | Cripto | Commodities | Mercados Globales",
             levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia"],
-            riskCalculator: "Calculadora de riesgo",
-            forexLotTool: "Lote correcto en Forex",
+            forexCalculator: "Calculadora Forex",
+            compoundInterestTool: "Calculadora de inter\u00E9s compuesto",
           }
         : locale === "pt"
           ? {
@@ -1051,8 +1051,8 @@ export function SupportFooter({
               language: "Idioma",
               marketLine: "Forex | Cripto | Commodities | Mercados Globais",
               levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
-              riskCalculator: "Calculadora de Risco",
-              forexLotTool: "Lote Correto no Forex",
+              forexCalculator: "Calculadora Forex",
+              compoundInterestTool: "Calculadora de Juros Compostos",
             }
           : locale === "ar"
             ? {
@@ -1065,8 +1065,8 @@ export function SupportFooter({
                 language: "\u0627\u0644\u0644\u063A\u0629",
                 marketLine: "Forex | Crypto | Commodities | Global Markets",
                 levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia"],
-                riskCalculator: "\u062D\u0627\u0633\u0628\u0629 \u0627\u0644\u0645\u062E\u0627\u0637\u0631",
-                forexLotTool: "Forex lot tool",
+                forexCalculator: "\u062D\u0627\u0633\u0628\u0629 Forex",
+                compoundInterestTool: "\u062D\u0627\u0633\u0628\u0629 \u0627\u0644\u0641\u0627\u0626\u062F\u0629 \u0627\u0644\u0645\u0631\u0643\u0628\u0629",
               }
             : locale === "tr"
               ? {
@@ -1079,8 +1079,8 @@ export function SupportFooter({
                   language: "Dil",
                   marketLine: "Forex | Kripto | Emtialar | K\u00FCresel Piyasalar",
                   levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi"],
-                  riskCalculator: "Risk Hesaplay\u0131c\u0131",
-                  forexLotTool: "Forex lot araci",
+                  forexCalculator: "Forex Hesaplay\u0131c\u0131",
+                  compoundInterestTool: "Bile\u015Fik Faiz Hesaplay\u0131c\u0131",
                 }
               : {
                   social: "Social",
@@ -1092,8 +1092,8 @@ export function SupportFooter({
                   language: "Language",
                   marketLine: "Forex | Crypto | Commodities | Global Markets",
                   levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level"],
-                  riskCalculator: locale === "id" ? "Kalkulator Risiko" : locale === "vi" ? "M\u00E1y T\u00EDnh R\u1EE7i Ro" : "Risk Calculator",
-                  forexLotTool: locale === "id" ? "Alat Lot Forex" : locale === "vi" ? "C\u00F4ng C\u1EE5 Lot Forex" : "Correct Forex Lot",
+                  forexCalculator: locale === "id" ? "Kalkulator Forex" : locale === "vi" ? "M\u00E1y T\u00EDnh Forex" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13 Forex" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 Forex" : locale === "ja" ? "Forex\u8A08\u7B97\u6A5F" : locale === "ko" ? "Forex \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur Forex" : "Forex Calculator",
+                  compoundInterestTool: locale === "id" ? "Kalkulator Bunga Majemuk" : locale === "vi" ? "M\u00E1y T\u00EDnh L\u00E3i K\u00E9p" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13\u0E14\u0E2D\u0E01\u0E40\u0E1A\u0E35\u0E49\u0E22\u0E17\u0E1A\u0E15\u0E49\u0E19" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 \u0441\u043B\u043E\u0436\u043D\u044B\u0445 \u043F\u0440\u043E\u0446\u0435\u043D\u0442\u043E\u0432" : locale === "ur" ? "\u06A9\u0645\u067E\u0627\u0624\u0646\u0688 \u0627\u0646\u0679\u0631\u0633\u0679 \u06A9\u06CC\u0644\u06A9\u0648\u0644\u06CC\u0679\u0631" : locale === "bn" ? "\u099A\u0995\u09CD\u09B0\u09AC\u09C3\u09A6\u09CD\u09A7\u09BF \u09B8\u09C1\u09A6 \u0995\u09CD\u09AF\u09BE\u09B2\u0995\u09C1\u09B2\u09C7\u099F\u09B0" : locale === "ja" ? "\u8907\u5229\u8A08\u7B97\u6A5F" : locale === "ko" ? "\uBCF5\uB9AC \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur d'int\u00E9r\u00EAts compos\u00E9s" : "Compound Interest Calculator",
                 };
   const levelFooterLinks = [
     { href: "/formiga", label: footerLabels.levelLinks[0] },
@@ -1251,16 +1251,16 @@ export function SupportFooter({
             <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.tools}</p>
             <div className="mt-4 flex flex-col gap-2">
               <a
-                href="/calculadora-de-risco"
+                href="/ferramentas/calculadora-forex"
                 className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
               >
-                {footerLabels.riskCalculator}
+                {footerLabels.forexCalculator}
               </a>
               <a
-                href="/ferramentas/lote-correto-forex"
+                href="/ferramentas/calculadora-juros-compostos"
                 className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
               >
-                {footerLabels.forexLotTool}
+                {footerLabels.compoundInterestTool}
               </a>
             </div>
           </div>

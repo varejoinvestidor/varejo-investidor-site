@@ -512,12 +512,12 @@ export default function EducationPage() {
         {locale === "pt" ? (
           <div className="mx-auto mt-6 max-w-7xl">
             <a
-              href="/calculadora-de-risco"
+              href="/ferramentas/calculadora-forex"
               className="group grid gap-4 border border-gold/[0.22] bg-white p-6 shadow-fine transition hover:-translate-y-1 hover:border-gold hover:shadow-premium md:grid-cols-[1fr_auto] md:items-center md:p-7"
             >
               <span>
                 <span className="block text-xs font-black uppercase tracking-[0.26em] text-gold">Ferramenta educacional</span>
-                <span className="mt-3 block font-serif text-3xl tracking-[-0.04em] text-ink">Calculadora de Risco</span>
+                <span className="mt-3 block font-serif text-3xl tracking-[-0.04em] text-ink">Calculadora Forex</span>
                 <span className="mt-2 block max-w-3xl text-sm leading-7 text-ink/[0.64]">
                   Calcule lote, stop, risco por operação e sobrevivência da conta antes de operar.
                 </span>

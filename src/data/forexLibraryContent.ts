@@ -102,8 +102,7 @@ const en: ForexLibraryContent = {
     ],
     toolsTitle: "Related tools",
     tools: [
-      { title: "Risk Calculator", text: "Calculate how much each trade can impact your account.", button: "Open calculator", href: "/calculadora-de-risco" },
-      { title: "Correct Lot Size", text: "Discover which lot size fits your account size.", button: "Choose lot", href: "/ferramentas/lote-correto-forex" },
+      { title: "Forex Calculator", text: "Calculate risk, lot size, pip value and targets in one tool.", button: "Open calculator", href: "/ferramentas/calculadora-forex" },
     ],
     finalTitle: "Learn Forex from beginner to advanced",
     finalText: "Deepen your knowledge, follow economic analysis and evolve inside the Formiga, Lobo and Harpia methodology.",
@@ -162,8 +161,7 @@ export const forexLibraryContent: Record<Locale, ForexLibraryContent> = {
       ],
       toolsTitle: "Ferramentas relacionadas",
       tools: [
-        { title: "Calculadora de Risco", text: "Calcule quanto cada operação pode impactar sua conta.", button: "Abrir calculadora", href: "/calculadora-de-risco" },
-        { title: "Escolha do Lote Correto", text: "Descubra qual lote é adequado para o tamanho da sua conta.", button: "Escolher lote", href: "/ferramentas/lote-correto-forex" },
+        { title: "Calculadora Forex", text: "Calcule risco, lote, valor por pip e metas em uma unica ferramenta.", button: "Abrir calculadora", href: "/ferramentas/calculadora-forex" },
       ],
       finalTitle: "Aprenda Forex do básico ao avançado",
       finalText: "Aprofunde seu conhecimento, acompanhe análises econômicas e evolua dentro da metodologia Formiga, Lobo e Harpia.",

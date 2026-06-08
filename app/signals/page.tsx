@@ -300,6 +300,89 @@ const whatsappPrints = [
 
 const PT_FREE_SIGNAL_TEST_URL = "https://whatsapp.com/channel/0029VasGTTE6RGJD46g47c1h";
 
+const localizedSignalFallbacks = {
+  th: {
+    ...signalCopyByLocale.en,
+    howTitle: "สัญญาณที่ส่งผ่าน WhatsApp ทำงานอย่างไร",
+    howText: "ทีมของเราติดตามตลาดโลกและส่งบทวิเคราะห์พร้อมสัญญาณไปยัง WhatsApp โดยตรง คุณได้รับข้อมูลของการเทรดและดำเนินการในบัญชีของคุณเอง",
+    howItems: ["2 ถึง 5 สัญญาณต่อวัน", "ส่งตรงผ่าน WhatsApp", "มีจุดเข้า เป้าหมาย และจุดตัดขาดทุน", "บทวิเคราะห์และบริบทตลาด"],
+    scheduleTitle: "ช่วงเวลาส่งสัญญาณ",
+    scheduleText: "สัญญาณมักถูกส่งในช่วงที่ตลาดมีสภาพคล่องสูง และอาจเปลี่ยนตามโอกาสจริงของตลาด",
+    scheduleCards: [["เช้าและบ่าย", "8:00 ถึง 15:00"], ["กลางคืน", "21:00 ถึง 00:00"]],
+    freeTitle: "ช่อง Formiga",
+    freePrice: "ฟรี",
+    freeButton: "เข้าร่วมช่อง Formiga",
+    eliteButton: "เข้าร่วม Elite",
+    packagesTitle: "การเข้าถึง Elite",
+    packagesText: "เลือกแพ็กเกจเพื่อรับสัญญาณทั้งหมด กลุ่มพิเศษ บทวิเคราะห์ คลาสย้อนหลัง และคอนเทนต์ระดับ Harpy",
+    now: "สมัครตอนนี้",
+  },
+  ru: {
+    ...signalCopyByLocale.en,
+    howTitle: "Как работают сигналы в WhatsApp",
+    howText: "Наша команда следит за мировыми рынками и отправляет аналитику и сигналы прямо в WhatsApp. Вы получаете данные сделки и исполняете ее на своем счете.",
+    howItems: ["2-5 сигналов в день", "Доставка прямо в WhatsApp", "Вход, цель и стоп определены", "Аналитика и рыночный контекст"],
+    scheduleTitle: "Время отправки",
+    scheduleText: "Сигналы обычно отправляются в периоды высокой ликвидности. Время может меняться в зависимости от реальных рыночных возможностей.",
+    scheduleCards: [["УТРО И ДЕНЬ", "8:00-15:00"], ["ВЕЧЕР", "21:00-00:00"]],
+    freeTitle: "Канал Formiga",
+    freePrice: "Бесплатно",
+    freeButton: "Войти в канал Formiga",
+    eliteButton: "Войти в Elite",
+    packagesTitle: "Доступ Elite",
+    packagesText: "Выберите пакет для доступа ко всем сигналам, закрытой группе, аналитике, записям занятий и контенту уровня Harpy.",
+    now: "Подписаться",
+  },
+  bn: {
+    ...signalCopyByLocale.en,
+    howTitle: "WhatsApp-এ পাঠানো সিগন্যাল কীভাবে কাজ করে",
+    howText: "আমাদের দল গ্লোবাল মার্কেট অনুসরণ করে এবং বিশ্লেষণ ও সিগন্যাল সরাসরি WhatsApp-এ পাঠায়। আপনি ট্রেডের তথ্য পান এবং নিজের অ্যাকাউন্টে তা বাস্তবায়ন করেন।",
+    howItems: ["প্রতিদিন ২ থেকে ৫টি সিগন্যাল", "সরাসরি WhatsApp ডেলিভারি", "এন্ট্রি, টার্গেট ও স্টপ নির্ধারিত", "মার্কেট বিশ্লেষণ ও প্রেক্ষাপট"],
+    scheduleTitle: "সিগন্যাল পাঠানোর সময়",
+    scheduleText: "সিগন্যাল সাধারণত বাজারের বেশি লিকুইডিটির সময়ে পাঠানো হয়। বাস্তব সুযোগ অনুযায়ী সময় পরিবর্তিত হতে পারে।",
+    scheduleCards: [["সকাল ও বিকেল", "৮টা থেকে ১৫টা"], ["রাত", "২১টা থেকে ০০টা"]],
+    freeTitle: "Formiga চ্যানেল",
+    freePrice: "ফ্রি",
+    freeButton: "Formiga চ্যানেলে যোগ দিন",
+    eliteButton: "Elite-এ যোগ দিন",
+    packagesTitle: "Elite অ্যাক্সেস",
+    packagesText: "সব সিগন্যাল, এক্সক্লুসিভ গ্রুপ, বিশ্লেষণ, রেকর্ডেড ক্লাস এবং Harpy স্তরের কনটেন্ট পেতে প্যাকেজ বেছে নিন।",
+    now: "এখন সাবস্ক্রাইব করুন",
+  },
+  ja: {
+    ...signalCopyByLocale.en,
+    howTitle: "WhatsAppで届くシグナルの仕組み",
+    howText: "私たちのチームが世界市場を追跡し、分析とシグナルをWhatsAppで直接送信します。取引情報を受け取り、ご自身の口座で実行できます。",
+    howItems: ["1日2-5件のシグナル", "WhatsAppへ直接配信", "エントリー、目標、ストップを明示", "市場分析と背景"],
+    scheduleTitle: "配信時間",
+    scheduleText: "シグナルは通常、市場の流動性が高い時間帯に送信されます。実際の機会に応じて時間は変わる場合があります。",
+    scheduleCards: [["午前・午後", "8:00-15:00"], ["夜", "21:00-00:00"]],
+    freeTitle: "アリチャンネル",
+    freePrice: "無料",
+    freeButton: "アリチャンネルに参加",
+    eliteButton: "Eliteに参加",
+    packagesTitle: "Eliteアクセス",
+    packagesText: "すべてのシグナル、限定グループ、分析、録画講座、Harpyレベルのコンテンツへアクセスできます。",
+    now: "今すぐ購読",
+  },
+  ko: {
+    ...signalCopyByLocale.en,
+    howTitle: "WhatsApp으로 전달되는 신호의 작동 방식",
+    howText: "저희 팀은 글로벌 시장을 추적하고 분석과 신호를 WhatsApp으로 직접 보냅니다. 사용자는 거래 정보를 받고 본인 계좌에서 직접 실행합니다.",
+    howItems: ["하루 2-5개 신호", "WhatsApp 직접 전달", "진입, 목표, 손절 제시", "시장 분석과 배경"],
+    scheduleTitle: "신호 발송 시간",
+    scheduleText: "신호는 보통 시장 유동성이 높은 시간대에 발송됩니다. 실제 기회에 따라 시간은 달라질 수 있습니다.",
+    scheduleCards: [["오전 및 오후", "8:00-15:00"], ["밤", "21:00-00:00"]],
+    freeTitle: "개미 채널",
+    freePrice: "무료",
+    freeButton: "개미 채널 참여",
+    eliteButton: "Elite 참여",
+    packagesTitle: "Elite 접근",
+    packagesText: "모든 신호, 전용 그룹, 분석, 녹화 강의, Harpy 레벨 콘텐츠에 접근할 수 있습니다.",
+    now: "지금 구독하기",
+  },
+} as const;
+
 const reportCtaLabels = {
   pt: "VER RELATÓRIOS E RESULTADOS",
   en: "VIEW REPORTS AND RESULTS",
@@ -309,6 +392,11 @@ const reportCtaLabels = {
   tr: "RAPORLARI VE SONUÇLARI GÖR",
   id: "LIHAT LAPORAN DAN HASIL",
   vi: "XEM BÁO CÁO VÀ KẾT QUẢ",
+  th: "ดูรายงานและผลลัพธ์",
+  ru: "СМОТРЕТЬ ОТЧЕТЫ И РЕЗУЛЬТАТЫ",
+  bn: "রিপোর্ট ও ফলাফল দেখুন",
+  ja: "レポートと結果を見る",
+  ko: "리포트와 결과 보기",
 } as const;
 
 export default function SignalsPage() {
@@ -366,7 +454,9 @@ export default function SignalsPage() {
         best: "सबसे अधिक बचत",
         now: "\u0905\u092D\u0940 \u0938\u0926\u0938\u094D\u092F\u0924\u093E \u0932\u0947\u0902",
       }
-    : signalCopyByLocale[locale as keyof typeof signalCopyByLocale] ?? signalCopyByLocale.en;
+    : signalCopyByLocale[locale as keyof typeof signalCopyByLocale] ??
+      localizedSignalFallbacks[locale as keyof typeof localizedSignalFallbacks] ??
+      signalCopyByLocale.en;
   const howItems: string[] = signalPageCopy?.howItems ?? howItWorks;
   const ichimokuItems: string[] = signalPageCopy?.ichimokuItems ?? ichimokuPoints;
   const freeItems: string[] = signalPageCopy?.formigaItems ?? formigaBullets;

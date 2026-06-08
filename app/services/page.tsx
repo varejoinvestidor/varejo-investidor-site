@@ -260,6 +260,122 @@ const compactServicesByLocale = {
   ],
 };
 
+const compactServicesFallbackByLocale = {
+  th: [
+    {
+      title: "ช่อง Elite",
+      description: "ผลิตภัณฑ์หลักพร้อมสัญญาณสด บทวิเคราะห์ คลาสย้อนหลัง และการอ่านตลาดโลก",
+      bullets: ["สัญญาณ 100%", "บทวิเคราะห์ครบ", "การศึกษาตามระดับ", "ตลาดโลก"],
+      cta: "ดูช่อง Elite",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "ช่อง Formiga ฟรี",
+      subtitle: "จุดเริ่มต้นของระบบ Varejo Investidor",
+      description: "รับบทวิเคราะห์เศรษฐกิจ เนื้อหาการศึกษา และอัปเดตตลาดโลกฟรีผ่าน WhatsApp",
+      details: ["เริ่มต้นเข้าใจ Forex ทองคำ น้ำมัน ดัชนี สกุลเงินโลก และโครงสร้างการเงิน", "ช่อง Formiga ช่วยให้ผู้ลงทุนทั่วไปสร้างวินัย อ่านตลาด และพัฒนาไปสู่ระดับ Wolf และ Harpy"],
+      bullets: ["เข้าฟรี", "เนื้อหารายวัน", "ฐาน Formiga", "WhatsApp"],
+      highlights: ["สัญญาณฟรี", "เนื้อหารายวัน", "ตลาดต่างประเทศ", "พัฒนาการเงิน", "โครงสร้างระยะยาว"],
+      cta: "เข้าร่วมช่อง FORMIGA",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  ru: [
+    {
+      title: "Канал Elite",
+      description: "Основной продукт с живыми сигналами, аналитикой, записями занятий и чтением глобальных рынков.",
+      bullets: ["100% сигналов", "Полная аналитика", "Обучение по уровням", "Глобальные рынки"],
+      cta: "Посмотреть канал Elite",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "Бесплатный канал Formiga",
+      subtitle: "Точка входа в экосистему Varejo Investidor",
+      description: "Получайте экономический анализ, образовательные материалы и обновления по глобальным рынкам прямо в WhatsApp.",
+      details: ["Начните с понимания Forex, золота, нефти, индексов, мировых валют и финансовой структуры.", "Канал Formiga помогает частным инвесторам выйти за пределы базового уровня и развить дисциплину, чтение рынка и движение к уровням Wolf и Harpy."],
+      bullets: ["Бесплатный доступ", "Ежедневный контент", "База Formiga", "WhatsApp"],
+      highlights: ["Бесплатные сигналы", "Ежедневный контент", "Международные рынки", "Финансовое развитие", "Долгосрочная структура"],
+      cta: "ВОЙТИ В КАНАЛ FORMIGA",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  bn: [
+    {
+      title: "Elite চ্যানেল",
+      description: "লাইভ সিগন্যাল, মার্কেট বিশ্লেষণ, রেকর্ডেড ক্লাস এবং গ্লোবাল মার্কেট রিডিংসহ প্রধান পণ্য।",
+      bullets: ["১০০% সিগন্যাল", "সম্পূর্ণ বিশ্লেষণ", "স্তরভিত্তিক শিক্ষা", "গ্লোবাল মার্কেট"],
+      cta: "Elite চ্যানেল দেখুন",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "ফ্রি Formiga চ্যানেল",
+      subtitle: "Varejo Investidor ইকোসিস্টেমের প্রথম প্রবেশদ্বার",
+      description: "WhatsApp-এ সরাসরি অর্থনৈতিক বিশ্লেষণ, শিক্ষামূলক কনটেন্ট এবং গ্লোবাল মার্কেট আপডেট পান।",
+      details: ["Forex, সোনা, তেল, সূচক, বৈশ্বিক মুদ্রা ও আর্থিক কাঠামো বোঝার মাধ্যমে শুরু করুন।", "Formiga চ্যানেল সাধারণ বিনিয়োগকারীদের শৃঙ্খলা, মার্কেট রিডিং এবং Wolf ও Harpy স্তরের দিকে অগ্রসর হতে সাহায্য করে।"],
+      bullets: ["ফ্রি অ্যাক্সেস", "দৈনিক কনটেন্ট", "Formiga ভিত্তি", "WhatsApp"],
+      highlights: ["ফ্রি সিগন্যাল", "দৈনিক কনটেন্ট", "আন্তর্জাতিক বাজার", "আর্থিক উন্নয়ন", "দীর্ঘমেয়াদি কাঠামো"],
+      cta: "FORMIGA চ্যানেলে যোগ দিন",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  ja: [
+    {
+      title: "Eliteチャンネル",
+      description: "ライブシグナル、市場分析、録画講座、グローバル市場理解を提供する中核サービス。",
+      bullets: ["100%のシグナル", "完全な分析", "レベル別教育", "グローバル市場"],
+      cta: "Eliteチャンネルを見る",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "無料アリチャンネル",
+      subtitle: "Varejo Investidorエコシステムへの入口",
+      description: "経済分析、教育コンテンツ、世界市場の最新情報をWhatsAppで無料で受け取れます。",
+      details: ["Forex、金、原油、指数、主要通貨、金融構造の理解から始めます。", "アリチャンネルは基礎を固め、規律と市場理解を育て、WolfとHarpyレベルへ進むための入口です。"],
+      bullets: ["無料アクセス", "日々のコンテンツ", "アリ基礎", "WhatsApp"],
+      highlights: ["無料シグナル", "日々のコンテンツ", "国際市場", "金融成長", "長期構造"],
+      cta: "アリチャンネルに参加",
+      href: "free",
+      kind: "free",
+    },
+  ],
+  ko: [
+    {
+      title: "Elite 채널",
+      description: "라이브 신호, 시장 분석, 녹화 강의, 글로벌 시장 읽기를 제공하는 핵심 상품입니다.",
+      bullets: ["100% 신호", "완전한 분석", "단계별 교육", "글로벌 시장"],
+      cta: "Elite 채널 보기",
+      href: "/sinais",
+      kind: "elite",
+    },
+    {
+      title: "무료 개미 채널",
+      subtitle: "Varejo Investidor 생태계의 첫 진입점",
+      description: "경제 분석, 교육 콘텐츠, 글로벌 시장 업데이트를 WhatsApp에서 무료로 받아보세요.",
+      details: ["Forex, 금, 원유, 지수, 글로벌 통화와 금융 구조를 이해하며 시작합니다.", "개미 채널은 일반 투자자가 기초 단계에서 벗어나 규율과 시장 읽기를 발전시키고 Wolf 및 Harpy 단계로 이동하도록 돕습니다."],
+      bullets: ["무료 접근", "일일 콘텐츠", "개미 기초", "WhatsApp"],
+      highlights: ["무료 신호", "일일 콘텐츠", "국제 시장", "금융 성장", "장기 구조"],
+      cta: "개미 채널 참여",
+      href: "free",
+      kind: "free",
+    },
+  ],
+} as const;
+
+const elitePackagesFallbackByLocale = {
+  th: { title: "แพ็กเกจที่มี", cta: "สมัครตอนนี้", items: [["รายเดือน", "US$ 30", ""], ["3 เดือน", "US$ 80", ""], ["6 เดือน", "US$ 145", ""], ["รายปี", "US$ 240", "คุ้มค่าที่สุด"]] },
+  ru: { title: "Доступные пакеты", cta: "Подписаться", items: [["Ежемесячно", "US$ 30", ""], ["3 месяца", "US$ 80", ""], ["6 месяцев", "US$ 145", ""], ["Годовой", "US$ 240", "ЛУЧШАЯ ЦЕНА"]] },
+  bn: { title: "উপলব্ধ প্যাকেজ", cta: "এখন সাবস্ক্রাইব করুন", items: [["মাসিক", "US$ 30", ""], ["৩ মাস", "US$ 80", ""], ["৬ মাস", "US$ 145", ""], ["বার্ষিক", "US$ 240", "সেরা মূল্য"]] },
+  ja: { title: "利用可能なプラン", cta: "今すぐ購読", items: [["月額", "US$ 30", ""], ["3か月", "US$ 80", ""], ["6か月", "US$ 145", ""], ["年額", "US$ 240", "最もお得"]] },
+  ko: { title: "이용 가능한 플랜", cta: "지금 구독하기", items: [["월간", "US$ 30", ""], ["3개월", "US$ 80", ""], ["6개월", "US$ 145", ""], ["연간", "US$ 240", "최고 가치"]] },
+} as const;
+
 const highTicketServices = [
   {
     title: "Mentoria Individual 4 horas",
@@ -288,10 +404,11 @@ const highTicketServices = [
   {
     title: "Consultoria Gold",
     description: "Consultoria premium para estrutura patrimonial, visão global, estratégia, risco e expansão.",
+    capacityNote: "Para garantir acompanhamento individual e qualidade estratégica, esta consultoria possui limite anual de 40 participantes.",
     workload: "6 meses | 30 horas",
     price: "R$ 18.000,00",
     hourly: "R$ 600,00/hora",
-    tag: "Estrutura 6 meses",
+    tag: "Vagas limitadas • Máximo 40 clientes por ano",
     deliveries: ["Estruturação financeira", "Gestão de risco", "Leitura institucional", "Clareza estratégica"],
     cta: "Solicitar Consultoria Gold",
     href: "https://lastlink.com/p/C5FB7AC16/checkout-payment",
@@ -300,10 +417,11 @@ const highTicketServices = [
   {
     title: "Consultoria Platinum",
     description: "Consultoria anual de elite para patrimônio, sucessão, proteção de capital, visão global e expansão estratégica.",
+    capacityNote: "A Consultoria Platinum possui capacidade limitada para preservar atendimento personalizado, planejamento patrimonial e acompanhamento estratégico de longo prazo.",
     workload: "Anual | 58 horas",
     price: "R$ 29.000,00",
     hourly: "aprox. R$ 500,00/hora",
-    tag: "Elite anual",
+    tag: "Exclusivo • Máximo 40 clientes por ano",
     deliveries: ["Visão patrimonial", "Estrutura global", "Sucessão e proteção", "Expansão estratégica"],
     cta: "Solicitar Consultoria Platinum",
     href: "https://lastlink.com/p/C8CE5F9DB/checkout-payment",
@@ -320,6 +438,11 @@ const internationalServicesIntro = {
   tr: "Sinyaller, eğitim ve küresel piyasa okuma için Varejo Investidor kanallarını keşfedin.",
   id: "Jelajahi kanal Varejo Investidor untuk sinyal, edukasi, dan pembacaan pasar global.",
   vi: "Khám phá các kênh của Varejo Investidor dành cho tín hiệu, giáo dục và đọc thị trường toàn cầu.",
+  th: "สำรวจช่องทางของ Varejo Investidor สำหรับสัญญาณ การศึกษา และการอ่านตลาดโลก",
+  ru: "Изучите каналы Varejo Investidor для сигналов, обучения и чтения глобальных рынков.",
+  bn: "সিগন্যাল, শিক্ষা এবং গ্লোবাল মার্কেট রিডিংয়ের জন্য Varejo Investidor-এর চ্যানেলগুলো দেখুন।",
+  ja: "シグナル、教育、グローバル市場理解のためのVarejo Investidorのチャンネルをご覧ください。",
+  ko: "신호, 교육, 글로벌 시장 읽기를 위한 Varejo Investidor 채널을 살펴보세요.",
 };
 
 function compactCardTone(kind: string) {
@@ -344,8 +467,14 @@ export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const isPt = locale === "pt";
   const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale as keyof typeof internationalServicesIntro] ?? internationalServicesIntro.en;
-  const compactServices = compactServicesByLocale[locale as keyof typeof compactServicesByLocale] ?? compactServicesByLocale.en;
-  const packageCopy = elitePackagesByLocale[locale as keyof typeof elitePackagesByLocale] ?? elitePackagesByLocale.en;
+  const compactServices =
+    compactServicesByLocale[locale as keyof typeof compactServicesByLocale] ??
+    compactServicesFallbackByLocale[locale as keyof typeof compactServicesFallbackByLocale] ??
+    compactServicesByLocale.en;
+  const packageCopy =
+    elitePackagesByLocale[locale as keyof typeof elitePackagesByLocale] ??
+    elitePackagesFallbackByLocale[locale as keyof typeof elitePackagesFallbackByLocale] ??
+    elitePackagesByLocale.en;
   const internationalElitePrices = [
     ["Monthly", "US$30"],
     ["3 Months", "US$80"],
@@ -592,6 +721,15 @@ export default function ServicesPage() {
                     <p className={`mt-5 text-lg leading-8 ${service.kind === "platinum" ? "text-paper/[0.72]" : "text-ink/[0.66]"}`}>
                       {service.description}
                     </p>
+                    {"capacityNote" in service ? (
+                      <p
+                        className={`mt-4 border-l border-gold/[0.55] pl-4 text-sm font-semibold leading-7 ${
+                          service.kind === "platinum" ? "text-paper/[0.78]" : "text-ink/[0.72]"
+                        }`}
+                      >
+                        {service.capacityNote}
+                      </p>
+                    ) : null}
 
                     <div className="mt-7 border-y border-gold/[0.22] py-6">
                       <p className={`text-xs font-bold uppercase tracking-[0.22em] ${service.kind === "platinum" ? "text-gold" : "text-ink/[0.46]"}`}>
@@ -632,6 +770,53 @@ export default function ServicesPage() {
                     </a>
                   </div>
                 </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {isPt ? (
+        <section className="relative overflow-hidden border-y border-gold/[0.16] bg-ink px-5 py-16 text-paper md:px-8 md:py-24">
+          <div className="absolute inset-0 terminal-grid opacity-20" />
+          <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/[0.08] blur-3xl" />
+          <div className="relative mx-auto max-w-7xl">
+            <div className="max-w-4xl">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">
+                Capacidade operacional
+              </p>
+              <h2 className="mt-4 font-serif text-4xl uppercase leading-[1.02] tracking-[-0.04em] md:text-6xl">
+                Atendimento limitado por capacidade operacional
+              </h2>
+              <div className="mt-6 space-y-5 text-base leading-8 text-paper/[0.72] md:text-lg">
+                <p>
+                  O Varejo Investidor trabalha com número reduzido de clientes em consultorias estratégicas. O objetivo é preservar qualidade, acompanhamento individual e profundidade na construção patrimonial.
+                </p>
+                <p>
+                  Por esse motivo, as consultorias Gold e Platinum possuem limite máximo de 40 participantes por ano.
+                </p>
+                <p>
+                  As vagas são preenchidas conforme disponibilidade operacional.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
+              {[
+                ["40 vagas anuais", "Consultoria Gold"],
+                ["40 vagas anuais", "Consultoria Platinum"],
+              ].map(([limit, name]) => (
+                <article
+                  key={name}
+                  className="relative overflow-hidden border border-gold/[0.28] bg-paper/[0.04] p-6 transition hover:-translate-y-1 hover:border-gold hover:bg-gold/[0.07] md:p-8"
+                >
+                  <div className="absolute right-6 top-6 h-20 w-20 rounded-full bg-gold/[0.12] blur-2xl" />
+                  <div className="relative">
+                    <p className="font-serif text-5xl leading-none tracking-[-0.05em] text-gold md:text-6xl">40</p>
+                    <p className="mt-4 text-xs font-black uppercase tracking-[0.22em] text-paper/[0.62]">{limit.replace("40 ", "")}</p>
+                    <h3 className="mt-6 text-lg font-black uppercase tracking-[0.14em] text-paper">{name}</h3>
+                  </div>
+                </article>
               ))}
             </div>
           </div>

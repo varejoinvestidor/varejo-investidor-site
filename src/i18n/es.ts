@@ -207,10 +207,10 @@ export const es = {
         kind: "paid",
       },
       {
-        title: "Canal Gratuito Hormiga",
+        title: "Canal Formiga gratuito",
         description: "Canal gratuito en WhatsApp para recibir señales gratuitas, análisis y contenidos diarios.",
         bullets: ["Señales gratuitas", "Análisis de mercado", "Contenidos diarios", "Acceso gratuito por WhatsApp"],
-        cta: "Entrar al Canal Gratuito",
+        cta: "Entrar al Canal Formiga",
         href: "free",
         kind: "free",
       },
