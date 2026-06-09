@@ -1262,6 +1262,12 @@ export function SupportFooter({
               >
                 {footerLabels.compoundInterestTool}
               </a>
+              <a
+                href="/eventos"
+                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+              >
+                Eventos Presenciais
+              </a>
             </div>
           </div>
 
