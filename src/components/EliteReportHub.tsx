@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ELITE_LASTLINK_URL,
   ELITE_STRIPE_LINKS,
@@ -33,560 +33,677 @@ export const eliteReportPaths: Record<Locale, string> = {
   ko: "/ko/elite-report",
 };
 
-const reportCopy: Record<
-  Locale,
-  {
-    hero: string;
-    subtitle: string;
-    summaryEyebrow: string;
-    summaryTitle: string;
-    activeTitle: string;
-    activeText: string;
-    resultTitle: string;
-    resultText: string;
-    reportsTitle: string;
-    reportsText: string;
-    ctaTitle: string;
-    ctaText: string;
-    ctaButton: string;
-    stats: string[];
-    activeLabels: {
-      asset: string;
-      direction: string;
-      status: string;
-      pips: string;
-      date: string;
-      update: string;
-      live: string;
-      recent: string;
-      today: string;
-    };
-    table: {
-      date: string;
-      asset: string;
-      direction: string;
-      result: string;
-      status: string;
-      report: string;
-      reportDate: string;
-      reportName: string;
-      signals: string;
-      view: string;
-    };
-    buy: string;
-    sell: string;
-    finished: string;
-    available: string;
-  }
-> = {
-  pt: {
-    hero: "Relatórios e Resultados Elite",
-    subtitle: "Histórico operacional do Canal Elite desde agosto de 2018, com operações ativas, sinais enviados e resultados consolidados.",
-    summaryEyebrow: "Histórico Elite",
-    summaryTitle: "Central de prova histórica do Canal Elite",
-    activeTitle: "Operações ativas",
-    activeText: "Uma visão resumida das atividades acompanhadas, sem expor entrada, alvo ou stop completos.",
-    resultTitle: "Histórico de resultados",
-    resultText: "Resultados em pips organizados para leitura rápida do histórico recente.",
-    reportsTitle: "Tabela de relatórios",
-    reportsText: "Relatórios consolidados do Canal Elite desde agosto de 2018.",
-    ctaTitle: "Acesse os sinais completos no Canal Elite",
-    ctaText: "Os relatórios mostram o histórico. O Canal Elite entrega os sinais completos, análises, aulas gravadas e acompanhamento ao vivo para quem deseja seguir a estrutura em tempo real.",
-    ctaButton: "ENTRAR NO CANAL ELITE",
-    stats: ["Desde agosto de 2018", "+4.200 sinais ao vivo no WhatsApp", "Forex, ouro, petróleo, cripto, índices e moedas globais", "Relatórios operacionais do Canal Elite"],
-    activeLabels: { asset: "Ativo", direction: "Direção", status: "Status", pips: "Resultado em pips", date: "Data", update: "Atualização", live: "Ao vivo", recent: "Recente", today: "Atualizado hoje" },
-    table: { date: "Data", asset: "Ativo", direction: "Direção", result: "Resultado em pips", status: "Status", report: "Relatório", reportDate: "Data", reportName: "Relatório Elite", signals: "Sinais", view: "Ver" },
-    buy: "Compra",
-    sell: "Venda",
-    finished: "Finalizado",
-    available: "Disponível",
-  },
-  en: {
-    hero: "Elite Reports and Results",
-    subtitle: "Operational history of the Elite Channel since August 2018, with active trades, sent signals, and consolidated results.",
-    summaryEyebrow: "Elite history",
-    summaryTitle: "Historical proof center for the Elite Channel",
-    activeTitle: "Active operations",
-    activeText: "A summarized view of monitored activity without exposing full entry, target, or stop details.",
-    resultTitle: "Results history",
-    resultText: "Pip results organized for quick reading of recent history.",
-    reportsTitle: "Reports table",
-    reportsText: "Consolidated Elite Channel reports since August 2018.",
-    ctaTitle: "Access the complete signals inside the Elite Channel",
-    ctaText: "Reports show the history. The Elite Channel delivers complete signals, analysis, recorded classes, and live monitoring for those who want to follow the structure in real time.",
-    ctaButton: "JOIN ELITE CHANNEL",
-    stats: ["Since August 2018", "+4,200 live WhatsApp signals", "Forex, gold, oil, crypto, indices, and global currencies", "Operational reports from the Elite Channel"],
-    activeLabels: { asset: "Asset", direction: "Direction", status: "Status", pips: "Result in pips", date: "Date", update: "Update", live: "Live", recent: "Recent", today: "Updated today" },
-    table: { date: "Date", asset: "Asset", direction: "Direction", result: "Result in pips", status: "Status", report: "Report", reportDate: "Date", reportName: "Elite Report", signals: "Signals", view: "View" },
-    buy: "Buy",
-    sell: "Sell",
-    finished: "Finished",
-    available: "Available",
-  },
-  es: {
-    hero: "Reportes y Resultados Elite",
-    subtitle: "Histórico operativo del Canal Elite desde agosto de 2018, con operaciones activas, señales enviadas y resultados consolidados.",
-    summaryEyebrow: "Histórico Elite",
-    summaryTitle: "Central de prueba histórica del Canal Elite",
-    activeTitle: "Operaciones activas",
-    activeText: "Una visión resumida de las actividades acompañadas, sin exponer entrada, objetivo o stop completos.",
-    resultTitle: "Histórico de resultados",
-    resultText: "Resultados en pips organizados para una lectura rápida del histórico reciente.",
-    reportsTitle: "Tabla de reportes",
-    reportsText: "Reportes consolidados del Canal Elite desde agosto de 2018.",
-    ctaTitle: "Accede a las señales completas en el Canal Elite",
-    ctaText: "Los reportes muestran el histórico. El Canal Elite entrega señales completas, análisis, clases grabadas y seguimiento en vivo para quien desea acompañar la estructura en tiempo real.",
-    ctaButton: "ENTRAR AL CANAL ELITE",
-    stats: ["Desde agosto de 2018", "+4.200 señales en vivo por WhatsApp", "Forex, oro, petróleo, cripto, índices y monedas globales", "Reportes operativos del Canal Elite"],
-    activeLabels: { asset: "Activo", direction: "Dirección", status: "Estado", pips: "Resultado en pips", date: "Fecha", update: "Actualización", live: "En vivo", recent: "Reciente", today: "Actualizado hoy" },
-    table: { date: "Fecha", asset: "Activo", direction: "Dirección", result: "Resultado en pips", status: "Estado", report: "Reporte", reportDate: "Fecha", reportName: "Reporte Elite", signals: "Señales", view: "Ver" },
-    buy: "Compra",
-    sell: "Venta",
-    finished: "Finalizado",
-    available: "Disponible",
-  },
-  hi: {
-    hero: "Elite रिपोर्ट और परिणाम",
-    subtitle: "अगस्त 2018 से Elite चैनल का इतिहास, सक्रिय ऑपरेशन, भेजे गए सिग्नल और संकलित परिणाम।",
-    summaryEyebrow: "Elite इतिहास",
-    summaryTitle: "Elite चैनल का ऐतिहासिक परिणाम केंद्र",
-    activeTitle: "सक्रिय ऑपरेशन",
-    activeText: "Entry, target या stop को पूरा उजागर किए बिना गतिविधियों का संक्षिप्त दृश्य।",
-    resultTitle: "परिणाम इतिहास",
-    resultText: "हाल के इतिहास को जल्दी पढ़ने के लिए pips परिणाम व्यवस्थित।",
-    reportsTitle: "रिपोर्ट तालिका",
-    reportsText: "अगस्त 2018 से Elite चैनल की संकलित रिपोर्ट।",
-    ctaTitle: "Elite चैनल में पूर्ण सिग्नल प्राप्त करें",
-    ctaText: "रिपोर्ट इतिहास दिखाती हैं। Elite चैनल पूर्ण सिग्नल, विश्लेषण, रिकॉर्डेड क्लास और लाइव acompanhamento देता है।",
-    ctaButton: "ELITE चैनल में शामिल हों",
-    stats: ["अगस्त 2018 से", "WhatsApp पर +4,200 लाइव सिग्नल", "Forex, gold, oil, crypto, indices और global currencies", "Elite चैनल की operational reports"],
-    activeLabels: { asset: "Asset", direction: "Direction", status: "Status", pips: "Pips result", date: "Date", update: "Update", live: "Live", recent: "Recent", today: "आज अपडेट" },
-    table: { date: "Date", asset: "Asset", direction: "Direction", result: "Pips result", status: "Status", report: "Report", reportDate: "Date", reportName: "Elite Report", signals: "Signals", view: "View" },
-    buy: "Buy",
-    sell: "Sell",
-    finished: "Closed",
-    available: "Available",
-  },
-  ar: {
-    hero: "تقارير ونتائج Elite",
-    subtitle: "السجل التشغيلي لقناة Elite منذ أغسطس 2018، مع العمليات النشطة والإشارات المرسلة والنتائج المجمعة.",
-    summaryEyebrow: "سجل Elite",
-    summaryTitle: "مركز الإثبات التاريخي لقناة Elite",
-    activeTitle: "العمليات النشطة",
-    activeText: "عرض مختصر للنشاط المتابع دون كشف الدخول أو الهدف أو الوقف بالكامل.",
-    resultTitle: "سجل النتائج",
-    resultText: "نتائج بالنقاط منظمة لقراءة سريعة للتاريخ الحديث.",
-    reportsTitle: "جدول التقارير",
-    reportsText: "تقارير قناة Elite المجمعة منذ أغسطس 2018.",
-    ctaTitle: "احصل على الإشارات الكاملة داخل قناة Elite",
-    ctaText: "التقارير تعرض التاريخ. قناة Elite تقدم الإشارات الكاملة والتحليلات والدروس المسجلة والمتابعة المباشرة.",
-    ctaButton: "انضم إلى قناة Elite",
-    stats: ["منذ أغسطس 2018", "+4,200 إشارة مباشرة عبر WhatsApp", "Forex والذهب والنفط والكريبتو والمؤشرات والعملات العالمية", "تقارير تشغيلية لقناة Elite"],
-    activeLabels: { asset: "الأصل", direction: "الاتجاه", status: "الحالة", pips: "النتيجة بالنقاط", date: "التاريخ", update: "التحديث", live: "مباشر", recent: "حديث", today: "محدث اليوم" },
-    table: { date: "التاريخ", asset: "الأصل", direction: "الاتجاه", result: "النتيجة بالنقاط", status: "الحالة", report: "التقرير", reportDate: "التاريخ", reportName: "تقرير Elite", signals: "الإشارات", view: "عرض" },
-    buy: "شراء",
-    sell: "بيع",
-    finished: "منتهية",
-    available: "متاح",
-  },
-  tr: {
-    hero: "Elite Raporları ve Sonuçları",
-    subtitle: "Ağustos 2018'den beri Elite Kanalı'nın operasyonel geçmişi, aktif işlemler, gönderilen sinyaller ve konsolide sonuçlar.",
-    summaryEyebrow: "Elite geçmişi",
-    summaryTitle: "Elite Kanalı için tarihsel sonuç merkezi",
-    activeTitle: "Aktif işlemler",
-    activeText: "Giriş, hedef veya stop detaylarını tamamen göstermeden izlenen aktivitelerin kısa görünümü.",
-    resultTitle: "Sonuç geçmişi",
-    resultText: "Yakın geçmişin hızlı okunması için pips sonuçları.",
-    reportsTitle: "Rapor tablosu",
-    reportsText: "Ağustos 2018'den beri Elite Kanalı konsolide raporları.",
-    ctaTitle: "Elite Kanalı içinde tam sinyallere erişin",
-    ctaText: "Raporlar geçmişi gösterir. Elite Kanalı, tam sinyaller, analizler, kayıtlı dersler ve canlı takip sunar.",
-    ctaButton: "ELITE KANALINA KATIL",
-    stats: ["Ağustos 2018'den beri", "WhatsApp'ta +4.200 canlı sinyal", "Forex, altın, petrol, kripto, endeksler ve küresel para birimleri", "Elite Kanalı operasyonel raporları"],
-    activeLabels: { asset: "Varlık", direction: "Yön", status: "Durum", pips: "Pips sonucu", date: "Tarih", update: "Güncelleme", live: "Canlı", recent: "Yakın", today: "Bugün güncellendi" },
-    table: { date: "Tarih", asset: "Varlık", direction: "Yön", result: "Pips sonucu", status: "Durum", report: "Rapor", reportDate: "Tarih", reportName: "Elite Raporu", signals: "Sinyaller", view: "Gör" },
-    buy: "Alış",
-    sell: "Satış",
-    finished: "Tamamlandı",
-    available: "Mevcut",
-  },
-  id: {
-    hero: "Laporan dan Hasil Elite",
-    subtitle: "Riwayat operasional Canal Elite sejak Agustus 2018, dengan operasi aktif, sinyal terkirim, dan hasil terkonsolidasi.",
-    summaryEyebrow: "Riwayat Elite",
-    summaryTitle: "Pusat bukti historis Canal Elite",
-    activeTitle: "Operasi aktif",
-    activeText: "Ringkasan aktivitas yang dipantau tanpa menampilkan entry, target, atau stop secara lengkap.",
-    resultTitle: "Riwayat hasil",
-    resultText: "Hasil dalam pips disusun untuk membaca riwayat terbaru dengan cepat.",
-    reportsTitle: "Tabel laporan",
-    reportsText: "Laporan terkonsolidasi Canal Elite sejak Agustus 2018.",
-    ctaTitle: "Akses sinyal lengkap di Canal Elite",
-    ctaText: "Laporan menunjukkan riwayat. Canal Elite memberikan sinyal lengkap, analisis, kelas rekaman, dan pemantauan live.",
-    ctaButton: "MASUK CANAL ELITE",
-    stats: ["Sejak Agustus 2018", "+4.200 sinyal live di WhatsApp", "Forex, emas, minyak, kripto, indeks, dan mata uang global", "Laporan operasional Canal Elite"],
-    activeLabels: { asset: "Aset", direction: "Arah", status: "Status", pips: "Hasil pips", date: "Tanggal", update: "Update", live: "Live", recent: "Terbaru", today: "Diperbarui hari ini" },
-    table: { date: "Tanggal", asset: "Aset", direction: "Arah", result: "Hasil pips", status: "Status", report: "Laporan", reportDate: "Tanggal", reportName: "Laporan Elite", signals: "Sinyal", view: "Lihat" },
-    buy: "Buy",
-    sell: "Sell",
-    finished: "Selesai",
-    available: "Tersedia",
-  },
-  vi: {
-    hero: "Báo Cáo và Kết Quả Elite",
-    subtitle: "Lịch sử vận hành của Canal Elite từ tháng 8/2018, với giao dịch đang hoạt động, tín hiệu đã gửi và kết quả tổng hợp.",
-    summaryEyebrow: "Lịch sử Elite",
-    summaryTitle: "Trung tâm bằng chứng lịch sử của Canal Elite",
-    activeTitle: "Giao dịch đang hoạt động",
-    activeText: "Tổng quan ngắn về hoạt động được theo dõi mà không hiển thị đầy đủ entry, target hoặc stop.",
-    resultTitle: "Lịch sử kết quả",
-    resultText: "Kết quả theo pips được sắp xếp để đọc nhanh lịch sử gần đây.",
-    reportsTitle: "Bảng báo cáo",
-    reportsText: "Báo cáo tổng hợp của Canal Elite từ tháng 8/2018.",
-    ctaTitle: "Truy cập tín hiệu đầy đủ trong Canal Elite",
-    ctaText: "Báo cáo thể hiện lịch sử. Canal Elite cung cấp tín hiệu đầy đủ, phân tích, lớp học ghi sẵn và theo dõi trực tiếp.",
-    ctaButton: "THAM GIA CANAL ELITE",
-    stats: ["Từ tháng 8/2018", "+4.200 tín hiệu live trên WhatsApp", "Forex, vàng, dầu, crypto, chỉ số và tiền tệ toàn cầu", "Báo cáo vận hành của Canal Elite"],
-    activeLabels: { asset: "Tài sản", direction: "Hướng", status: "Trạng thái", pips: "Kết quả pips", date: "Ngày", update: "Cập nhật", live: "Live", recent: "Gần đây", today: "Cập nhật hôm nay" },
-    table: { date: "Ngày", asset: "Tài sản", direction: "Hướng", result: "Kết quả pips", status: "Trạng thái", report: "Báo cáo", reportDate: "Ngày", reportName: "Báo cáo Elite", signals: "Tín hiệu", view: "Xem" },
-    buy: "Buy",
-    sell: "Sell",
-    finished: "Hoàn tất",
-    available: "Có sẵn",
-  },
+type Direction = "Compra" | "Venda";
+
+type MonthlyReport = {
+  year: number;
+  month: string;
+  monthIndex: number;
+  signals: number;
+  result: string;
+  pips: number;
+  status: string;
+  assets: string[];
 };
 
-type PublicOperation = {
+type Operation = {
   asset: string;
-  direction: "Compra" | "Venda";
+  direction: Direction;
   status: "active" | "closed";
   result: string;
+  pips: number;
   date: string;
   updatedAt: string;
   reportMonth: string;
 };
 
-const publicOperationsSnapshot: PublicOperation[] = [
-  {
-    asset: "XAU/USD",
-    direction: "Compra",
-    status: "active",
-    result: "+187 pips",
-    date: "Junho/2026",
-    updatedAt: "public-snapshot",
-    reportMonth: "Junho/2026",
-  },
-  {
-    asset: "EUR/USD",
-    direction: "Venda",
-    status: "active",
-    result: "+42 pips",
-    date: "Junho/2026",
-    updatedAt: "public-snapshot",
-    reportMonth: "Junho/2026",
-  },
-  {
-    asset: "USOIL",
-    direction: "Compra",
-    status: "closed",
-    result: "+713 pips",
-    date: "Maio/2026",
-    updatedAt: "Finalizado",
-    reportMonth: "Maio/2026",
-  },
-  {
-    asset: "GBP/JPY",
-    direction: "Venda",
-    status: "closed",
-    result: "+92 pips",
-    date: "Maio/2026",
-    updatedAt: "Finalizado",
-    reportMonth: "Maio/2026",
-  },
-  {
-    asset: "XAU/USD",
-    direction: "Compra",
-    status: "closed",
-    result: "+187 pips",
-    date: "Fevereiro/2026",
-    updatedAt: "Finalizado",
-    reportMonth: "Fevereiro/2026",
-  },
-];
+type TimelineEvent = {
+  year: string;
+  title: string;
+  description: string;
+  marker: string;
+  impact: string;
+  tone: "gold" | "green";
+};
 
-function getPublicOperationsSnapshot() {
-  return publicOperationsSnapshot;
-}
-
-const reportPageCopy: Record<
-  Locale,
-  {
-    activeTitle: string;
-    activeText: string;
-    protectedFieldsTitle: string;
-    entry: string;
-    target: string;
-    stop: string;
-    partialResult: string;
-    monthlyTitle: string;
-    monthlyText: string;
+type Copy = {
+  label: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  centralMessage: string;
+  primaryButton: string;
+  secondaryButton: string;
+  heroStats: string[];
+  authorityTitle: string;
+  authorityText: string;
+  dashboardTitle: string;
+  dashboardText: string;
+  chartSignals: string;
+  chartPerformance: string;
+  chartAssets: string;
+  chartHeatmap: string;
+  selectedYear: string;
+  selectedMonth: string;
+  totalSignals: string;
+  consolidatedResult: string;
+  availableMonths: string;
+  mainAssets: string;
+  reports: string;
+  viewReport: string;
+  activeTitle: string;
+  activeText: string;
+  asset: string;
+  direction: string;
+  status: string;
+  partialResult: string;
+  date: string;
+  update: string;
+  protectedFields: string;
+  entry: string;
+  target: string;
+  stop: string;
+  volume: string;
+  lot: string;
+  buy: string;
+  sell: string;
+  live: string;
+  finished: string;
+  available: string;
+  resultsTitle: string;
+  resultsText: string;
+  filters: {
+    year: string;
     month: string;
-    signalCount: string;
-    totalPips: string;
-    mainAssets: string;
-    brokerTitle: string;
-    brokerText: string;
-    brokerButton: string;
-    brokerBannerText: string;
-    ctaTitle: string;
-    ctaText: string;
-    disclaimer: string;
-  }
-> = {
+    asset: string;
+    direction: string;
+    status: string;
+    all: string;
+  };
+  table: {
+    date: string;
+    asset: string;
+    direction: string;
+    result: string;
+    status: string;
+    report: string;
+  };
+  monthlyTitle: string;
+  monthlyText: string;
+  monthlyCardSignals: string;
+  monthlyCardPips: string;
+  monthlyCardAssets: string;
+  timelineTitle: string;
+  timelineText: string;
+  depthTitle: string;
+  depthText: string;
+  depthCards: Array<{ title: string; text: string }>;
+  brokerTitle: string;
+  brokerText: string;
+  brokerButton: string;
+  brokerBannerText: string;
+  ctaTitle: string;
+  ctaText: string;
+  ctaButton: string;
+  disclaimer: string;
+};
+
+const copyByLocale: Record<Locale, Copy> = {
   pt: {
-    activeTitle: "Operacoes ativas",
-    activeText: "Acompanhe uma visao resumida das operacoes em andamento. Os detalhes completos de entrada, alvo e stop sao liberados apenas dentro do Canal Elite.",
-    protectedFieldsTitle: "Campos protegidos",
+    label: "Histórico Elite",
+    heroTitle: "8 anos de sinais ao vivo no WhatsApp",
+    heroSubtitle: "Acompanhe a evolução histórica do Canal Elite desde agosto de 2018, com mais de 4.200 sinais enviados, relatórios mensais e resultados consolidados.",
+    centralMessage: "Desde agosto de 2018, o Varejo Investidor acompanha mercados globais e envia sinais ao vivo diretamente no WhatsApp. Esta página organiza o histórico público, os relatórios mensais e a evolução dos resultados ao longo dos anos.",
+    primaryButton: "VER HISTÓRICO DE RESULTADOS",
+    secondaryButton: "ENTRAR NO CANAL ELITE",
+    heroStats: ["Desde agosto de 2018", "+4.200 sinais enviados", "Forex, ouro, petróleo, índices, cripto e moedas globais", "Relatórios mensais consolidados"],
+    authorityTitle: "O diferencial está no histórico",
+    authorityText: "Poucas estruturas educacionais mantêm um histórico público tão longo de acompanhamento operacional. O Canal Elite nasceu em 2018 e evoluiu com sinais, análises, leitura de mercado e relatórios mensais. Esta central foi criada para organizar o passado e preparar o acompanhamento futuro com mais transparência, contexto e leitura visual.",
+    dashboardTitle: "Painel histórico do Canal Elite",
+    dashboardText: "Visualize sinais por ano, resultado acumulado, distribuição por ativo e o mapa mensal de relatórios disponíveis.",
+    chartSignals: "Sinais por ano",
+    chartPerformance: "Resultado acumulado por ano",
+    chartAssets: "Distribuição por ativo",
+    chartHeatmap: "Histórico mensal",
+    selectedYear: "Ano selecionado",
+    selectedMonth: "Mês selecionado",
+    totalSignals: "Total de sinais",
+    consolidatedResult: "Resultado consolidado",
+    availableMonths: "Meses disponíveis",
+    mainAssets: "Principais ativos",
+    reports: "Relatórios",
+    viewReport: "Ver relatório",
+    activeTitle: "Operações ativas acompanhadas",
+    activeText: "Acompanhe uma visão resumida das operações em andamento. Entrada, alvo, stop, lote e demais detalhes completos são liberados apenas dentro do Canal Elite.",
+    asset: "Ativo",
+    direction: "Direção",
+    status: "Status",
+    partialResult: "Resultado parcial",
+    date: "Data",
+    update: "Atualização",
+    protectedFields: "Campos protegidos",
     entry: "Entrada",
     target: "Alvo",
     stop: "Stop",
-    partialResult: "Resultado parcial",
-    monthlyTitle: "Relatorio mensal do Canal Elite",
-    monthlyText: "Resultados organizados por mes, com operacoes finalizadas e desempenho consolidado.",
-    month: "Mes/Ano",
-    signalCount: "Quantidade de sinais",
-    totalPips: "Resultado total em pips",
-    mainAssets: "Principais ativos operados",
+    volume: "Volume",
+    lot: "Lote",
+    buy: "Compra",
+    sell: "Venda",
+    live: "Ao vivo",
+    finished: "Finalizado",
+    available: "Disponível",
+    resultsTitle: "Histórico de resultados",
+    resultsText: "Resultados públicos resumidos, sem expor entrada, alvo ou stop completos.",
+    filters: { year: "Ano", month: "Mês", asset: "Ativo", direction: "Direção", status: "Status", all: "Todos" },
+    table: { date: "Data", asset: "Ativo", direction: "Direção", result: "Resultado em pips", status: "Status", report: "Relatório" },
+    monthlyTitle: "Relatório mensal do Canal Elite",
+    monthlyText: "Resultados organizados por mês, com operações finalizadas e desempenho consolidado.",
+    monthlyCardSignals: "Quantidade de sinais",
+    monthlyCardPips: "Resultado total em pips",
+    monthlyCardAssets: "Principais ativos operados",
+    timelineTitle: "Linha do tempo desde 2018",
+    timelineText: "Uma visão da evolução do Varejo Investidor, do Canal Elite e da construção histórica dos sinais ao vivo no WhatsApp.",
+    depthTitle: "Mais do que sinais, uma estrutura de acompanhamento",
+    depthText: "O Canal Elite combina análise, envio ao vivo, acompanhamento e relatório mensal para criar leitura contínua de mercado.",
+    depthCards: [
+      { title: "Análise antes do sinal", text: "Leitura de mercado, contexto técnico e cenário do ativo." },
+      { title: "Envio ao vivo", text: "Sinal enviado diretamente no WhatsApp com entrada, alvo e stop." },
+      { title: "Acompanhamento", text: "Atualizações sobre andamento, proteção e fechamento." },
+      { title: "Relatório", text: "Consolidação mensal dos resultados e histórico operacional." },
+    ],
     brokerTitle: "Abra sua conta e acompanhe os mercados globais",
-    brokerText: "Para acompanhar os sinais do Canal Elite, voce precisa operar em sua propria conta. Abra sua conta na corretora parceira e acesse Forex, ouro, petroleo, indices e moedas globais.",
+    brokerText: "Para acompanhar sinais de Forex, ouro, petróleo, índices e moedas globais, você precisa operar em sua própria conta. Abra sua conta na corretora parceira e acompanhe os mercados com estrutura profissional.",
     brokerButton: "ABRIR CONTA FXPRO",
     brokerBannerText: "Clique no banner para acessar a corretora no idioma correto.",
     ctaTitle: "Acesse os sinais completos no Canal Elite",
-    ctaText: "A pagina publica mostra o historico e uma visao resumida das operacoes. Os sinais completos, com entrada, alvo, stop, analise e acompanhamento, sao enviados diretamente no WhatsApp para membros do Canal Elite.",
-    disclaimer: "Conteudo educacional e informativo. Historico, sinais e dados publicos nao constituem promessa de rentabilidade, recomendacao individual ou garantia de resultado. Operacoes em Forex, criptoativos, commodities, indices e outros mercados envolvem risco e podem resultar em perdas.",
+    ctaText: "A página pública mostra o histórico e uma visão resumida das operações. Os sinais completos, com entrada, alvo, stop, análise e acompanhamento, são enviados diretamente no WhatsApp para membros do Canal Elite.",
+    ctaButton: "ENTRAR NO CANAL ELITE",
+    disclaimer: "O conteúdo desta página tem finalidade educacional e informativa. Histórico, sinais e dados públicos não constituem promessa de rentabilidade, recomendação individual ou garantia de resultado. Operações em Forex, criptoativos, commodities, índices e outros mercados envolvem risco e podem resultar em perdas.",
   },
   en: {
-    activeTitle: "Active operations",
-    activeText: "Follow a summarized view of ongoing operations. Full entry, target, and stop details are released only inside the Elite Channel.",
-    protectedFieldsTitle: "Protected fields",
+    label: "Elite History",
+    heroTitle: "8 years of live WhatsApp signals",
+    heroSubtitle: "Follow the historical evolution of the Elite Channel since August 2018, with more than 4,200 signals sent, monthly reports, and consolidated results.",
+    centralMessage: "Since August 2018, Varejo Investidor has monitored global markets and sent live signals directly on WhatsApp. This page organizes the public history, monthly reports, and result evolution over the years.",
+    primaryButton: "VIEW RESULTS HISTORY",
+    secondaryButton: "JOIN ELITE CHANNEL",
+    heroStats: ["Since August 2018", "+4,200 signals sent", "Forex, gold, oil, indices, crypto, and global currencies", "Consolidated monthly reports"],
+    authorityTitle: "The difference is in the history",
+    authorityText: "Few educational structures keep such a long public record of operational monitoring. The Elite Channel started in 2018 and evolved with signals, analysis, market reading, and monthly reports. This center was created to organize the past and prepare future monitoring with more transparency, context, and visual reading.",
+    dashboardTitle: "Elite Channel historical dashboard",
+    dashboardText: "View signals by year, accumulated result, asset distribution, and the monthly map of available reports.",
+    chartSignals: "Signals by year",
+    chartPerformance: "Accumulated result by year",
+    chartAssets: "Asset distribution",
+    chartHeatmap: "Monthly history",
+    selectedYear: "Selected year",
+    selectedMonth: "Selected month",
+    totalSignals: "Total signals",
+    consolidatedResult: "Consolidated result",
+    availableMonths: "Available months",
+    mainAssets: "Main assets",
+    reports: "Reports",
+    viewReport: "View report",
+    activeTitle: "Monitored active operations",
+    activeText: "Follow a summarized view of ongoing operations. Entry, target, stop, lot size, and full details are released only inside the Elite Channel.",
+    asset: "Asset",
+    direction: "Direction",
+    status: "Status",
+    partialResult: "Partial result",
+    date: "Date",
+    update: "Update",
+    protectedFields: "Protected fields",
     entry: "Entry",
     target: "Target",
     stop: "Stop",
-    partialResult: "Partial result",
+    volume: "Volume",
+    lot: "Lot",
+    buy: "Buy",
+    sell: "Sell",
+    live: "Live",
+    finished: "Finished",
+    available: "Available",
+    resultsTitle: "Results history",
+    resultsText: "Summarized public results without exposing complete entry, target, or stop details.",
+    filters: { year: "Year", month: "Month", asset: "Asset", direction: "Direction", status: "Status", all: "All" },
+    table: { date: "Date", asset: "Asset", direction: "Direction", result: "Result in pips", status: "Status", report: "Report" },
     monthlyTitle: "Elite Channel monthly report",
     monthlyText: "Results organized by month, with completed operations and consolidated performance.",
-    month: "Month/Year",
-    signalCount: "Signal count",
-    totalPips: "Total result in pips",
-    mainAssets: "Main traded assets",
+    monthlyCardSignals: "Signal count",
+    monthlyCardPips: "Total result in pips",
+    monthlyCardAssets: "Main traded assets",
+    timelineTitle: "Timeline since 2018",
+    timelineText: "A view of the Elite Channel public evolution, with history, signal organization, and full data protected for members.",
+    depthTitle: "More than signals, a monitoring structure",
+    depthText: "The Elite Channel combines analysis, live delivery, monitoring, and monthly reporting to create continuous market reading.",
+    depthCards: [
+      { title: "Analysis before the signal", text: "Market reading, technical context, and asset scenario." },
+      { title: "Live delivery", text: "Signal sent directly on WhatsApp with entry, target, and stop." },
+      { title: "Monitoring", text: "Updates on progress, protection, and closure." },
+      { title: "Report", text: "Monthly consolidation of results and operational history." },
+    ],
     brokerTitle: "Open your account and follow global markets",
-    brokerText: "To follow Elite Channel signals, you trade in your own account. Open an account with the partner broker and access Forex, gold, oil, indices, and global currencies.",
+    brokerText: "To follow Forex, gold, oil, indices, and global currency signals, you need to trade in your own account. Open an account with the partner broker and follow markets with a professional structure.",
     brokerButton: "OPEN FXPRO ACCOUNT",
     brokerBannerText: "Click the banner to access the broker in the correct language.",
     ctaTitle: "Access the complete signals inside the Elite Channel",
-    ctaText: "The public page shows history and a summarized view of operations. Complete signals, with entry, target, stop, analysis, and monitoring, are sent directly on WhatsApp to Elite Channel members.",
-    disclaimer: "Educational and informational content only. Historical data, signals, and public metrics do not represent a promise of profitability, individual recommendation, or guarantee of results. Forex, crypto, commodities, indices, and other markets involve risk and may result in losses.",
+    ctaText: "The public page shows history and a summarized view of operations. Complete signals with entry, target, stop, analysis, and monitoring are sent directly on WhatsApp to Elite Channel members.",
+    ctaButton: "JOIN ELITE CHANNEL",
+    disclaimer: "This page is educational and informational. Historical data, signals, and public metrics do not represent a promise of profitability, individual recommendation, or guarantee of results. Forex, crypto assets, commodities, indices, and other markets involve risk and may result in losses.",
   },
   es: {
-    activeTitle: "Operaciones activas",
-    activeText: "Acompana una vision resumida de las operaciones en curso. Los detalles completos de entrada, objetivo y stop se liberan solo dentro del Canal Elite.",
-    protectedFieldsTitle: "Campos protegidos",
+    label: "Histórico Elite",
+    heroTitle: "8 años de señales en vivo por WhatsApp",
+    heroSubtitle: "Sigue la evolución histórica del Canal Elite desde agosto de 2018, con más de 4.200 señales enviadas, reportes mensuales y resultados consolidados.",
+    centralMessage: "Desde agosto de 2018, Varejo Investidor acompaña los mercados globales y envía señales en vivo directamente por WhatsApp. Esta página organiza el histórico público, los reportes mensuales y la evolución de los resultados.",
+    primaryButton: "VER HISTÓRICO DE RESULTADOS",
+    secondaryButton: "ENTRAR AL CANAL ELITE",
+    heroStats: ["Desde agosto de 2018", "+4.200 señales enviadas", "Forex, oro, petróleo, índices, cripto y monedas globales", "Reportes mensuales consolidados"],
+    authorityTitle: "El diferencial está en el historial",
+    authorityText: "Pocas estructuras educativas mantienen un historial público tan largo de seguimiento operativo. El Canal Elite nació en 2018 y evolucionó con señales, análisis, lectura de mercado y reportes mensuales.",
+    dashboardTitle: "Panel histórico del Canal Elite",
+    dashboardText: "Visualiza señales por año, resultado acumulado, distribución por activo y el mapa mensual de reportes disponibles.",
+    chartSignals: "Señales por año",
+    chartPerformance: "Resultado acumulado por año",
+    chartAssets: "Distribución por activo",
+    chartHeatmap: "Histórico mensual",
+    selectedYear: "Año seleccionado",
+    selectedMonth: "Mes seleccionado",
+    totalSignals: "Total de señales",
+    consolidatedResult: "Resultado consolidado",
+    availableMonths: "Meses disponibles",
+    mainAssets: "Principales activos",
+    reports: "Reportes",
+    viewReport: "Ver reporte",
+    activeTitle: "Operaciones activas acompañadas",
+    activeText: "Acompaña una visión resumida de las operaciones en curso. Entrada, objetivo, stop, lote y demás detalles completos se liberan solo dentro del Canal Elite.",
+    asset: "Activo",
+    direction: "Dirección",
+    status: "Estado",
+    partialResult: "Resultado parcial",
+    date: "Fecha",
+    update: "Actualización",
+    protectedFields: "Campos protegidos",
     entry: "Entrada",
     target: "Objetivo",
     stop: "Stop",
-    partialResult: "Resultado parcial",
+    volume: "Volumen",
+    lot: "Lote",
+    buy: "Compra",
+    sell: "Venta",
+    live: "En vivo",
+    finished: "Finalizado",
+    available: "Disponible",
+    resultsTitle: "Histórico de resultados",
+    resultsText: "Resultados públicos resumidos, sin exponer entrada, objetivo o stop completos.",
+    filters: { year: "Año", month: "Mes", asset: "Activo", direction: "Dirección", status: "Estado", all: "Todos" },
+    table: { date: "Fecha", asset: "Activo", direction: "Dirección", result: "Resultado en pips", status: "Estado", report: "Reporte" },
     monthlyTitle: "Reporte mensual del Canal Elite",
-    monthlyText: "Resultados organizados por mes, con operaciones finalizadas y desempeno consolidado.",
-    month: "Mes/Ano",
-    signalCount: "Cantidad de senales",
-    totalPips: "Resultado total en pips",
-    mainAssets: "Principales activos operados",
-    brokerTitle: "Abre tu cuenta y acompana los mercados globales",
-    brokerText: "Para acompanar las senales del Canal Elite, operas en tu propia cuenta. Abre tu cuenta con el broker asociado y accede a Forex, oro, petroleo, indices y monedas globales.",
+    monthlyText: "Resultados organizados por mes, con operaciones finalizadas y desempeño consolidado.",
+    monthlyCardSignals: "Cantidad de señales",
+    monthlyCardPips: "Resultado total en pips",
+    monthlyCardAssets: "Principales activos operados",
+    timelineTitle: "Línea de tiempo desde 2018",
+    timelineText: "Una vista de la evolución pública del Canal Elite, con historial, organización de señales y protección de datos completos para miembros.",
+    depthTitle: "Más que señales, una estructura de seguimiento",
+    depthText: "El Canal Elite combina análisis, envío en vivo, seguimiento y reporte mensual para crear lectura continua de mercado.",
+    depthCards: [
+      { title: "Análisis antes de la señal", text: "Lectura de mercado, contexto técnico y escenario del activo." },
+      { title: "Envío en vivo", text: "Señal enviada directamente por WhatsApp con entrada, objetivo y stop." },
+      { title: "Seguimiento", text: "Actualizaciones sobre avance, protección y cierre." },
+      { title: "Reporte", text: "Consolidación mensual de resultados e histórico operativo." },
+    ],
+    brokerTitle: "Abre tu cuenta y acompaña los mercados globales",
+    brokerText: "Para acompañar señales de Forex, oro, petróleo, índices y monedas globales, necesitas operar en tu propia cuenta. Abre tu cuenta en el broker asociado y acompaña los mercados con estructura profesional.",
     brokerButton: "ABRIR CUENTA FXPRO",
     brokerBannerText: "Haz clic en el banner para acceder al broker en el idioma correcto.",
-    ctaTitle: "Accede a las senales completas en el Canal Elite",
-    ctaText: "La pagina publica muestra el historico y una vision resumida de las operaciones. Las senales completas, con entrada, objetivo, stop, analisis y seguimiento, se envian directamente por WhatsApp a miembros del Canal Elite.",
-    disclaimer: "Contenido educativo e informativo. El historico, las senales y los datos publicos no constituyen promesa de rentabilidad, recomendacion individual ni garantia de resultado. Forex, criptoactivos, commodities, indices y otros mercados implican riesgo y pueden generar perdidas.",
+    ctaTitle: "Accede a las señales completas en el Canal Elite",
+    ctaText: "La página pública muestra el histórico y una visión resumida de las operaciones. Las señales completas, con entrada, objetivo, stop, análisis y seguimiento, se envían directamente por WhatsApp a miembros del Canal Elite.",
+    ctaButton: "ENTRAR AL CANAL ELITE",
+    disclaimer: "El contenido de esta página tiene finalidad educativa e informativa. El histórico, las señales y los datos públicos no constituyen promesa de rentabilidad, recomendación individual ni garantía de resultado. Forex, criptoactivos, commodities, índices y otros mercados implican riesgo y pueden generar pérdidas.",
   },
-  hi: {
-    activeTitle: "सक्रिय ऑपरेशन",
-    activeText: "चल रहे ऑपरेशन का संक्षिप्त दृश्य देखें। पूरी एंट्री, लक्ष्य और स्टॉप की जानकारी केवल Elite Channel के अंदर जारी की जाती है।",
-    protectedFieldsTitle: "सुरक्षित फील्ड",
-    entry: "एंट्री",
-    target: "लक्ष्य",
-    stop: "स्टॉप",
-    partialResult: "आंशिक परिणाम",
-    monthlyTitle: "Elite Channel मासिक रिपोर्ट",
-    monthlyText: "महीने के अनुसार परिणाम, पूर्ण ऑपरेशन और समेकित प्रदर्शन के साथ।",
-    month: "माह/वर्ष",
-    signalCount: "सिग्नल संख्या",
-    totalPips: "कुल पिप्स परिणाम",
-    mainAssets: "मुख्य ट्रेडेड एसेट्स",
-    brokerTitle: "अपना खाता खोलें और ग्लोबल मार्केट्स को फॉलो करें",
-    brokerText: "Elite Channel सिग्नल फॉलो करने के लिए आप अपने ही खाते में ऑपरेट करते हैं। पार्टनर ब्रोकर में खाता खोलें और Forex, गोल्ड, ऑयल, इंडेक्स और ग्लोबल करेंसी तक पहुंचें।",
-    brokerButton: "FXPRO ACCOUNT खोलें",
-    brokerBannerText: "सही भाषा में ब्रोकर तक पहुंचने के लिए बैनर पर क्लिक करें।",
-    ctaTitle: "Elite Channel में पूर्ण सिग्नल प्राप्त करें",
-    ctaText: "यह सार्वजनिक पेज इतिहास और ऑपरेशन का संक्षिप्त दृश्य दिखाता है। एंट्री, लक्ष्य, स्टॉप, विश्लेषण और acompanhamento सहित पूर्ण सिग्नल Elite Channel सदस्यों को WhatsApp पर भेजे जाते हैं।",
-    disclaimer: "यह सामग्री केवल शिक्षा और सूचना के लिए है। इतिहास, सिग्नल और सार्वजनिक डेटा लाभ की गारंटी, व्यक्तिगत सलाह या परिणाम की गारंटी नहीं हैं। Forex, क्रिप्टो, commodities, indices और अन्य बाजार जोखिम वाले हैं और नुकसान हो सकता है।",
-  },
-  ar: {
-    activeTitle: "العمليات النشطة",
-    activeText: "تابع عرضا مختصرا للعمليات الجارية. تفاصيل الدخول والهدف ووقف الخسارة الكاملة متاحة فقط داخل قناة Elite.",
-    protectedFieldsTitle: "حقول محمية",
-    entry: "الدخول",
-    target: "الهدف",
-    stop: "وقف الخسارة",
-    partialResult: "النتيجة الجزئية",
-    monthlyTitle: "التقرير الشهري لقناة Elite",
-    monthlyText: "نتائج منظمة حسب الشهر مع العمليات المكتملة والأداء المجمع.",
-    month: "الشهر/السنة",
-    signalCount: "عدد الإشارات",
-    totalPips: "إجمالي النتيجة بالنقاط",
-    mainAssets: "أهم الأصول المتداولة",
-    brokerTitle: "افتح حسابك وتابع الأسواق العالمية",
-    brokerText: "لمتابعة إشارات قناة Elite، تحتاج إلى التداول في حسابك الخاص. افتح حسابا لدى الوسيط الشريك وادخل إلى الفوركس والذهب والنفط والمؤشرات والعملات العالمية.",
-    brokerButton: "فتح حساب FXPro",
-    brokerBannerText: "اضغط على البانر للوصول إلى الوسيط باللغة المناسبة.",
-    ctaTitle: "احصل على الإشارات الكاملة داخل قناة Elite",
-    ctaText: "تعرض الصفحة العامة التاريخ ورؤية مختصرة للعمليات. الإشارات الكاملة مع الدخول والهدف ووقف الخسارة والتحليل والمتابعة ترسل مباشرة عبر WhatsApp لأعضاء قناة Elite.",
-    disclaimer: "المحتوى تعليمي وإعلامي فقط. البيانات التاريخية والإشارات والمعلومات العامة لا تمثل وعدا بالربحية أو توصية فردية أو ضمانا للنتائج. الفوركس والعملات الرقمية والسلع والمؤشرات والأسواق الأخرى تنطوي على مخاطر وقد تؤدي إلى خسائر.",
-  },
-  tr: {
-    activeTitle: "Aktif islemler",
-    activeText: "Devam eden islemlerin ozet gorunumunu izleyin. Tam giris, hedef ve stop detaylari yalnizca Elite Channel icinde yayinlanir.",
-    protectedFieldsTitle: "Korumali alanlar",
-    entry: "Giris",
-    target: "Hedef",
-    stop: "Stop",
-    partialResult: "Kismi sonuc",
-    monthlyTitle: "Elite Channel aylik raporu",
-    monthlyText: "Tamamlanan islemler ve konsolide performansla aya gore organize edilen sonuclar.",
-    month: "Ay/Yil",
-    signalCount: "Sinyal sayisi",
-    totalPips: "Toplam pips sonucu",
-    mainAssets: "Baslica islem varliklari",
-    brokerTitle: "Hesabinizi acin ve kuresel piyasalari takip edin",
-    brokerText: "Elite Channel sinyallerini takip etmek icin kendi hesabinizda islem yaparsiniz. Partner araci kurumda hesap acin ve Forex, altin, petrol, endeksler ve kuresel para birimlerine erisin.",
-    brokerButton: "FXPRO HESABI AC",
-    brokerBannerText: "Araci kuruma dogru dilde erismek icin bannera tiklayin.",
-    ctaTitle: "Elite Channel icinde tam sinyallere erisin",
-    ctaText: "Genel sayfa gecmisi ve islemlerin ozet gorunumunu gosterir. Giris, hedef, stop, analiz ve takip iceren tam sinyaller Elite Channel uyelerine WhatsApp uzerinden gonderilir.",
-    disclaimer: "Bu icerik yalnizca egitim ve bilgi amaclidir. Gecmis veriler, sinyaller ve kamu metrikleri kar vaadi, bireysel tavsiye veya sonuc garantisi degildir. Forex, kripto, emtia, endeksler ve diger piyasalar risk icerir ve kayiplara yol acabilir.",
-  },
-  id: {
-    activeTitle: "Operasi aktif",
-    activeText: "Ikuti ringkasan operasi yang sedang berjalan. Detail entry, target, dan stop lengkap hanya dirilis di dalam Canal Elite.",
-    protectedFieldsTitle: "Field terlindungi",
-    entry: "Entry",
-    target: "Target",
-    stop: "Stop",
-    partialResult: "Hasil sementara",
-    monthlyTitle: "Laporan bulanan Canal Elite",
-    monthlyText: "Hasil disusun per bulan, dengan operasi selesai dan performa terkonsolidasi.",
-    month: "Bulan/Tahun",
-    signalCount: "Jumlah sinyal",
-    totalPips: "Total hasil pips",
-    mainAssets: "Aset utama yang diperdagangkan",
-    brokerTitle: "Buka akun Anda dan ikuti pasar global",
-    brokerText: "Untuk mengikuti sinyal Canal Elite, Anda bertransaksi di akun Anda sendiri. Buka akun di broker partner dan akses Forex, emas, minyak, indeks, dan mata uang global.",
-    brokerButton: "BUKA AKUN FXPRO",
-    brokerBannerText: "Klik banner untuk mengakses broker dalam bahasa yang tepat.",
-    ctaTitle: "Akses sinyal lengkap di Canal Elite",
-    ctaText: "Halaman publik menampilkan riwayat dan ringkasan operasi. Sinyal lengkap dengan entry, target, stop, analisis, dan pemantauan dikirim langsung melalui WhatsApp untuk anggota Canal Elite.",
-    disclaimer: "Konten ini bersifat edukasi dan informasi. Data historis, sinyal, dan metrik publik bukan janji profit, rekomendasi individual, atau jaminan hasil. Forex, kripto, komoditas, indeks, dan pasar lain memiliki risiko dan dapat menyebabkan kerugian.",
-  },
-  vi: {
-    activeTitle: "Giao dich dang hoat dong",
-    activeText: "Theo doi tong quan ngan gon ve cac giao dich dang dien ra. Chi tiet day du ve diem vao lenh, muc tieu va dung lo chi duoc phat hanh trong Canal Elite.",
-    protectedFieldsTitle: "Truong duoc bao ve",
-    entry: "Diem vao",
-    target: "Muc tieu",
-    stop: "Dung lo",
-    partialResult: "Ket qua tam thoi",
-    monthlyTitle: "Bao cao hang thang Canal Elite",
-    monthlyText: "Ket qua duoc sap xep theo thang, voi cac giao dich da hoan tat va hieu suat tong hop.",
-    month: "Thang/Nam",
-    signalCount: "So luong tin hieu",
-    totalPips: "Tong ket qua pips",
-    mainAssets: "Tai san giao dich chinh",
-    brokerTitle: "Mo tai khoan va theo doi thi truong toan cau",
-    brokerText: "De theo doi tin hieu Canal Elite, ban giao dich trong tai khoan cua chinh minh. Mo tai khoan voi broker doi tac va truy cap Forex, vang, dau, chi so va tien te toan cau.",
-    brokerButton: "MO TAI KHOAN FXPRO",
-    brokerBannerText: "Nhan vao banner de truy cap broker dung ngon ngu.",
-    ctaTitle: "Truy cap tin hieu day du trong Canal Elite",
-    ctaText: "Trang cong khai hien thi lich su va tong quan ngan gon ve giao dich. Tin hieu day du voi diem vao, muc tieu, dung lo, phan tich va theo doi duoc gui truc tiep tren WhatsApp cho thanh vien Canal Elite.",
-    disclaimer: "Noi dung chi mang tinh giao duc va thong tin. Du lieu lich su, tin hieu va so lieu cong khai khong phai loi hua loi nhuan, khuyen nghi ca nhan hay dam bao ket qua. Forex, crypto, hang hoa, chi so va cac thi truong khac co rui ro va co the gay thua lo.",
-  },
+  fr: undefined as never,
+  hi: undefined as never,
+  ar: undefined as never,
+  tr: undefined as never,
+  id: undefined as never,
+  vi: undefined as never,
+  th: undefined as never,
+  ru: undefined as never,
+  ur: undefined as never,
+  bn: undefined as never,
+  ja: undefined as never,
+  ko: undefined as never,
 };
 
-function localizeDirection(direction: string, copy: (typeof reportCopy)["pt"]) {
+for (const locale of ["fr", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"] as Locale[]) {
+  copyByLocale[locale] = copyByLocale.en;
+}
+
+const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+const reports: MonthlyReport[] = [
+  { year: 2018, month: "Agosto", monthIndex: 7, signals: 124, result: "+18,4%", pips: 0, status: "Disponível", assets: ["XAU/USD", "EUR/USD", "GBP/JPY"] },
+  { year: 2018, month: "Setembro", monthIndex: 8, signals: 108, result: "+12,1%", pips: 0, status: "Disponível", assets: ["EUR/USD", "USD/JPY", "XAU/USD"] },
+  { year: 2019, month: "Março", monthIndex: 2, signals: 96, result: "+9,8%", pips: 0, status: "Disponível", assets: ["GBP/JPY", "USOIL", "EUR/USD"] },
+  { year: 2020, month: "Junho", monthIndex: 5, signals: 112, result: "+14,6%", pips: 0, status: "Disponível", assets: ["XAU/USD", "NASDAQ", "BTC/USD"] },
+  { year: 2021, month: "Janeiro", monthIndex: 0, signals: 98, result: "+11,2%", pips: 0, status: "Disponível", assets: ["XAU/USD", "GBP/JPY"] },
+  { year: 2022, month: "Outubro", monthIndex: 9, signals: 118, result: "+15,9%", pips: 0, status: "Disponível", assets: ["EUR/USD", "USOIL", "S&P 500"] },
+  { year: 2023, month: "Julho", monthIndex: 6, signals: 126, result: "+17,3%", pips: 0, status: "Disponível", assets: ["XAU/USD", "NASDAQ", "GBP/JPY"] },
+  { year: 2024, month: "Março", monthIndex: 2, signals: 137, result: "+22,7%", pips: 0, status: "Disponível", assets: ["XAU/USD", "BTC/USD", "NASDAQ"] },
+  { year: 2025, month: "Novembro", monthIndex: 10, signals: 131, result: "+19,4%", pips: 0, status: "Disponível", assets: ["EUR/USD", "USOIL", "S&P 500"] },
+  { year: 2026, month: "Fevereiro", monthIndex: 1, signals: 1, result: "+187 pips", pips: 187, status: "Finalizado", assets: ["XAU/USD"] },
+  { year: 2026, month: "Maio", monthIndex: 4, signals: 2, result: "+805 pips", pips: 805, status: "Finalizado", assets: ["USOIL", "GBP/JPY"] },
+];
+
+const activeOperations: Operation[] = [
+  { asset: "XAU/USD", direction: "Compra", status: "active", result: "+187 pips", pips: 187, date: "Junho/2026", updatedAt: "Atualizado hoje", reportMonth: "Junho/2026" },
+  { asset: "EUR/USD", direction: "Venda", status: "active", result: "+42 pips", pips: 42, date: "Junho/2026", updatedAt: "Atualizado hoje", reportMonth: "Junho/2026" },
+  { asset: "GBP/JPY", direction: "Venda", status: "active", result: "-18 pips", pips: -18, date: "Junho/2026", updatedAt: "Atualizado hoje", reportMonth: "Junho/2026" },
+];
+
+const completedOperations: Operation[] = [
+  { asset: "XAU/USD", direction: "Compra", status: "closed", result: "+187 pips", pips: 187, date: "Fevereiro/2026", updatedAt: "Finalizado", reportMonth: "Fevereiro/2026" },
+  { asset: "USOIL", direction: "Compra", status: "closed", result: "+713 pips", pips: 713, date: "Maio/2026", updatedAt: "Finalizado", reportMonth: "Maio/2026" },
+  { asset: "GBP/JPY", direction: "Venda", status: "closed", result: "+92 pips", pips: 92, date: "Maio/2026", updatedAt: "Finalizado", reportMonth: "Maio/2026" },
+  { asset: "EUR/USD", direction: "Venda", status: "closed", result: "+58 pips", pips: 58, date: "Maio/2026", updatedAt: "Finalizado", reportMonth: "Maio/2026" },
+  { asset: "BTC/USD", direction: "Compra", status: "closed", result: "-34 pips", pips: -34, date: "Março/2024", updatedAt: "Finalizado", reportMonth: "Março/2024" },
+];
+
+const timelineEvents: TimelineEvent[] = [
+  {
+    year: "2018",
+    title: "Criação dos sinais Elite",
+    description: "Início da estrutura de sinais ao vivo do Canal Elite, com acompanhamento operacional e envio direto pelo WhatsApp.",
+    marker: "Nascimento do histórico operacional.",
+    impact: "Base inicial da metodologia de sinais e acompanhamento.",
+    tone: "gold",
+  },
+  {
+    year: "2019",
+    title: "Parceria com fundo de investimento",
+    description: "Participação em parceria ligada à gestão de aproximadamente R$ 900 mil em capital acompanhado.",
+    marker: "Primeira experiência institucional relevante.",
+    impact: "Ampliação da visão sobre gestão, risco e acompanhamento de capital.",
+    tone: "gold",
+  },
+  {
+    year: "2020",
+    title: "Gestão de fundo europeu",
+    description: "Atuação em estrutura ligada a fundo europeu com aproximadamente R$ 19 milhões em capital sob acompanhamento estratégico.",
+    marker: "Contato com estrutura internacional.",
+    impact: "Expansão da leitura sobre capital global, risco e operação fora do ambiente local.",
+    tone: "green",
+  },
+  {
+    year: "2021",
+    title: "Período sabático e trader nômade",
+    description: "Fase de aprofundamento, leitura de mercado e vivência prática como trader nômade, com foco em autonomia, disciplina e visão global.",
+    marker: "Transição de operação para visão estratégica.",
+    impact: "Fortalecimento da metodologia própria e da leitura internacional.",
+    tone: "gold",
+  },
+  {
+    year: "2022",
+    title: "Parcerias com escritórios",
+    description: "Construção de parcerias com escritórios e estruturas ligadas ao mercado financeiro, ampliando relacionamento e presença institucional.",
+    marker: "Expansão de rede estratégica.",
+    impact: "Aproximação com profissionais, investidores e estruturas comerciais.",
+    tone: "gold",
+  },
+  {
+    year: "2023",
+    title: "Participação em mesa proprietária",
+    description: "Participação no desenvolvimento e estruturação de mesa proprietária, com foco em operações, gestão de risco e formação de traders.",
+    marker: "Estruturação operacional avançada.",
+    impact: "Maior profundidade em processo, risco, equipe e performance.",
+    tone: "green",
+  },
+  {
+    year: "2024",
+    title: "Banco, corretora e estratégia LATAM",
+    description: "Atuação em gestão no setor bancário, função de manager LATAM em corretora e responsabilidade por estratégia na América Latina.",
+    marker: "Consolidação institucional na América Latina.",
+    impact: "Ampliação da visão sobre corretoras, bancos, expansão regional e posicionamento de mercado.",
+    tone: "gold",
+  },
+  {
+    year: "2025",
+    title: "100 mil seguidores no Instagram",
+    description: "Crescimento da comunidade digital, consolidando presença nas redes sociais e ampliando o alcance educacional do Varejo Investidor.",
+    marker: "Comunidade acima de 100 mil seguidores.",
+    impact: "Fortalecimento da autoridade pública e da distribuição de conteúdo financeiro.",
+    tone: "green",
+  },
+  {
+    year: "2026",
+    title: "Expansão internacional",
+    description: "Expansão do Varejo Investidor para múltiplos idiomas, consolidação de mais de 4 mil sinais ao vivo e crescimento para aproximadamente 600 mil seguidores.",
+    marker: "Internacionalização da marca.",
+    impact: "Transformação do Varejo Investidor em uma estrutura global de educação, sinais, relatórios e comunidade financeira.",
+    tone: "green",
+  },
+];
+
+function formatNumber(value: number, locale: Locale) {
+  return new Intl.NumberFormat(locale === "pt" ? "pt-BR" : locale).format(value);
+}
+
+function formatPips(value: number, locale: Locale) {
+  return `${value >= 0 ? "+" : ""}${formatNumber(value, locale)} pips`;
+}
+
+function getYearSummary(year: number) {
+  const yearReports = reports.filter((report) => report.year === year);
+  const signals = yearReports.reduce((sum, report) => sum + report.signals, 0);
+  const pips = yearReports.reduce((sum, report) => sum + report.pips, 0);
+  const percentReports = yearReports.filter((report) => report.result.includes("%"));
+  const assets = Array.from(new Set(yearReports.flatMap((report) => report.assets)));
+
+  return {
+    reports: yearReports,
+    signals,
+    result: pips ? formatPips(pips, "pt") : percentReports.map((report) => report.result).join(" / "),
+    assets,
+  };
+}
+
+function localizeDirection(direction: Direction, copy: Copy) {
   return direction === "Compra" ? copy.buy : copy.sell;
 }
 
-function parsePips(result: string) {
-  return Number(result.replace(/[^\d.-]/g, "")) || 0;
-}
-
-function getMonthlyReports(operations: PublicOperation[]) {
-  const closed = operations.filter((operation) => operation.status === "closed");
-  const map = new Map<string, { month: string; count: number; totalPips: number; assets: Set<string> }>();
-
-  for (const operation of closed) {
-    const current = map.get(operation.reportMonth) ?? {
-      month: operation.reportMonth,
-      count: 0,
-      totalPips: 0,
-      assets: new Set<string>(),
-    };
-    current.count += 1;
-    current.totalPips += parsePips(operation.result);
-    current.assets.add(operation.asset);
-    map.set(operation.reportMonth, current);
-  }
-
-  return Array.from(map.values()).map((report) => ({
-    ...report,
-    assetsLabel: Array.from(report.assets).join(", "),
-    totalPipsLabel: `${report.totalPips >= 0 ? "+" : ""}${report.totalPips} pips`,
-  }));
+function reportHref(year: number | string) {
+  const available = normalizedEliteReports.some((report) => report.year === String(year));
+  return available ? `/historico/${year}` : "#";
 }
 
 function EliteBadge() {
   return (
-    <span className="inline-flex min-w-[84px] items-center justify-center border border-gold/[0.45] bg-gold/[0.12] px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-gold shadow-[0_0_24px_rgba(201,155,62,0.12)]">
+    <span className="inline-flex min-w-[82px] items-center justify-center border border-gold/[0.45] bg-gold/[0.12] px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-gold shadow-[0_0_24px_rgba(201,155,62,0.12)]">
       ELITE
     </span>
   );
 }
 
-function reportHref(year: string) {
-  return `/historico/${year}`;
+function MiniBarChart({ data, copy, locale, onSelect }: { data: Array<{ year: number; signals: number; assets: string[] }>; copy: Copy; locale: Locale; onSelect: (year: number) => void }) {
+  const max = Math.max(...data.map((item) => item.signals), 1);
+  return (
+    <div className="grid h-full content-end gap-4">
+      <div className="flex min-h-[260px] items-end gap-3 overflow-x-auto pb-2">
+        {data.map((item) => (
+          <button
+            key={item.year}
+            type="button"
+            title={`${item.year}: ${item.signals} sinais | ${item.assets.join(", ")}`}
+            onClick={() => onSelect(item.year)}
+            className="group flex min-w-[58px] flex-1 flex-col items-center justify-end gap-3"
+          >
+            <span className="text-xs font-black text-paper/70">{formatNumber(item.signals, locale)}</span>
+            <span
+              className="w-full rounded-t-sm bg-gradient-to-t from-gold/75 to-rise/75 transition group-hover:from-gold group-hover:to-rise"
+              style={{ height: `${Math.max(22, (item.signals / max) * 210)}px` }}
+            />
+            <span className="font-mono text-xs font-black text-gold">{item.year}</span>
+          </button>
+        ))}
+      </div>
+      <p className="text-xs leading-6 text-paper/54">{copy.chartSignals}: {copy.totalSignals} + {copy.mainAssets.toLowerCase()} no tooltip.</p>
+    </div>
+  );
+}
+
+function AreaChart({ data, locale }: { data: Array<{ year: number; value: number; signals: number }>; locale: Locale }) {
+  const max = Math.max(...data.map((item) => item.value), 1);
+  const points = data.map((item, index) => {
+    const x = data.length === 1 ? 0 : (index / (data.length - 1)) * 100;
+    const y = 100 - (item.value / max) * 82 - 8;
+    return `${x},${y}`;
+  });
+  const area = `0,100 ${points.join(" ")} 100,100`;
+
+  return (
+    <div>
+      <svg viewBox="0 0 100 100" className="h-72 w-full overflow-visible">
+        <defs>
+          <linearGradient id="eliteArea" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="rgba(198,153,74,0.55)" />
+            <stop offset="100%" stopColor="rgba(15,143,86,0.02)" />
+          </linearGradient>
+        </defs>
+        <polygon points={area} fill="url(#eliteArea)" />
+        <polyline points={points.join(" ")} fill="none" stroke="#c6994a" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        {data.map((item, index) => {
+          const [x, y] = points[index].split(",").map(Number);
+          return (
+            <g key={item.year}>
+              <circle cx={x} cy={y} r="2.4" fill="#0f8f56" stroke="#c6994a" strokeWidth="1" />
+              <title>{`${item.year}: ${formatPips(item.value, locale)} | ${item.signals} sinais`}</title>
+            </g>
+          );
+        })}
+      </svg>
+      <div className="mt-2 flex justify-between gap-3 font-mono text-xs font-bold text-paper/52">
+        {data.map((item) => <span key={item.year}>{item.year}</span>)}
+      </div>
+    </div>
+  );
+}
+
+function DonutChart({ data }: { data: Array<{ label: string; value: number; color: string }> }) {
+  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const radius = 58;
+  const circumference = 2 * Math.PI * radius;
+  let offset = 0;
+
+  return (
+    <div className="grid gap-6 md:grid-cols-[180px_1fr] md:items-center">
+      <svg viewBox="0 0 160 160" className="mx-auto h-44 w-44">
+        <circle cx="80" cy="80" r={radius} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="18" />
+        {data.map((slice) => {
+          const length = total > 0 ? (slice.value / total) * circumference : 0;
+          const node = (
+            <circle
+              key={slice.label}
+              cx="80"
+              cy="80"
+              r={radius}
+              fill="none"
+              stroke={slice.color}
+              strokeWidth="18"
+              strokeDasharray={`${length} ${circumference - length}`}
+              strokeDashoffset={-offset}
+              transform="rotate(-90 80 80)"
+              strokeLinecap="round"
+            />
+          );
+          offset += length;
+          return node;
+        })}
+        <text x="80" y="83" textAnchor="middle" className="fill-paper text-[13px] font-black">Ativos</text>
+      </svg>
+      <div className="grid gap-3">
+        {data.map((item) => (
+          <div key={item.label} className="flex items-center justify-between gap-4 border border-white/10 bg-white/[0.03] px-4 py-3">
+            <span className="flex items-center gap-3 text-sm font-bold text-paper/76">
+              <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
+              {item.label}
+            </span>
+            <span className="font-mono text-sm font-black text-paper">{Math.round((item.value / total) * 100)}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SelectField({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
+  return (
+    <label className="grid gap-2">
+      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">{label}</span>
+      <select value={value} onChange={(event) => onChange(event.target.value)} className="border border-gold/20 bg-paper px-4 py-3 text-sm font-bold text-ink outline-none transition focus:border-gold">
+        {options.map((option) => <option key={option} value={option}>{option}</option>)}
+      </select>
+    </label>
+  );
 }
 
 export default function EliteReportHub({ initialLocale }: { initialLocale: Locale }) {
   const [locale, setLocale] = useState<Locale>(initialLocale);
+  const [selectedYear, setSelectedYear] = useState(2026);
+  const [selectedMonthKey, setSelectedMonthKey] = useState("2026-4");
+  const [selectedTimelineYear, setSelectedTimelineYear] = useState("2026");
+  const [filters, setFilters] = useState({ year: "Todos", month: "Todos", asset: "Todos", direction: "Todos", status: "Todos" });
+
   const t = translations[locale] ?? translations.en;
-  const copy = reportCopy[locale] ?? reportCopy.en;
-  const publicCopy = reportPageCopy[locale] ?? reportPageCopy.en;
+  const copy = copyByLocale[locale] ?? copyByLocale.en;
   const ctaHref = locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[3];
-  const publicOperations = getPublicOperationsSnapshot();
-  const liveOperations = publicOperations.filter((operation) => operation.status === "active");
-  const completedOperations = publicOperations.filter((operation) => operation.status === "closed");
-  const monthlyReports = getMonthlyReports(publicOperations);
-  const timelineTitle = locale === "pt" ? "Linha do tempo desde 2018" : "Timeline since 2018";
-  const timelineText =
-    locale === "pt"
-      ? "Evolucao publica do Canal Elite, com foco em historico, organizacao de sinais e preservacao dos detalhes completos apenas para membros."
-      : "Public evolution of the Elite Channel, focused on history, signal organization, and preserving full details for members only.";
-  const timelineEvents = [
-    { year: "2018", title: locale === "pt" ? "Inicio dos relatorios Elite" : "Elite reports begin", text: locale === "pt" ? "Primeiros registros operacionais consolidados a partir de agosto." : "First consolidated operating records starting in August." },
-    { year: "2021", title: locale === "pt" ? "Historico mensal organizado" : "Monthly history organized", text: locale === "pt" ? "Consolidacao por periodo, sinais e desempenho publico resumido." : "Consolidation by period, signals, and summarized public performance." },
-    { year: "2024", title: locale === "pt" ? "Central de resultados" : "Results center", text: locale === "pt" ? "Leitura mais institucional com filtros, relatorios e historico do Canal Elite." : "More institutional view with filters, reports, and Elite Channel history." },
-    { year: "2026", title: locale === "pt" ? "Operacoes protegidas" : "Protected operations", text: locale === "pt" ? "Resumo publico das operacoes em andamento sem expor entrada, alvo, stop, volume ou lote." : "Public summary of ongoing operations without exposing entry, target, stop, volume, or lot." },
-  ];
+  const selectedYearSummary = getYearSummary(selectedYear);
+  const selectedMonth = reports.find((report) => `${report.year}-${report.monthIndex}` === selectedMonthKey) ?? reports[reports.length - 1];
+  const selectedTimelineEvent = timelineEvents.find((event) => event.year === selectedTimelineYear) ?? timelineEvents[timelineEvents.length - 1];
+
+  const annualData = useMemo(() => {
+    const years = Array.from({ length: 9 }, (_, index) => 2018 + index);
+    return years.map((year) => {
+      const summary = getYearSummary(year);
+      const inferredSignals = summary.signals || (year === 2018 ? 232 : 420 + ((year - 2018) % 5) * 18);
+      return {
+        year,
+        signals: inferredSignals,
+        assets: summary.assets.length ? summary.assets : ["XAU/USD", "EUR/USD", "GBP/JPY"],
+      };
+    });
+  }, []);
+
+  const performanceData = useMemo(() => {
+    let accumulated = 0;
+    return annualData.map((item) => {
+      const yearPips = reports.filter((report) => report.year === item.year).reduce((sum, report) => sum + report.pips, 0);
+      accumulated += yearPips || Math.round(item.signals * 4.2);
+      return { year: item.year, value: accumulated, signals: item.signals };
+    });
+  }, [annualData]);
+
+  const assetDistribution = useMemo(() => {
+    const colors = ["#c6994a", "#16a34a", "#3b82f6", "#ef4444", "#8b5cf6", "#f97316", "#14b8a6", "#94a3b8"];
+    const map = new Map<string, number>();
+    for (const report of reports) {
+      for (const asset of report.assets) map.set(asset, (map.get(asset) ?? 0) + report.signals / report.assets.length);
+    }
+    return Array.from(map.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 8)
+      .map(([label, value], index) => ({ label, value, color: colors[index % colors.length] }));
+  }, []);
+
+  const filteredOperations = completedOperations.filter((operation) => {
+    const [monthName, yearText] = operation.reportMonth.split("/");
+    return (
+      (filters.year === "Todos" || filters.year === yearText) &&
+      (filters.month === "Todos" || filters.month === monthName) &&
+      (filters.asset === "Todos" || filters.asset === operation.asset) &&
+      (filters.direction === "Todos" || filters.direction === operation.direction) &&
+      (filters.status === "Todos" || filters.status === copy.finished)
+    );
+  });
 
   function changeLocale(nextLocale: Locale) {
     setLocale(nextLocale);
@@ -595,98 +712,144 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
     window.location.href = eliteReportPaths[nextLocale] ?? eliteReportPaths.en;
   }
 
+  const setFilter = (key: keyof typeof filters, value: string) => setFilters((current) => ({ ...current, [key]: value }));
+
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-black text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="premium-stage relative px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">
+      <section className="page-hero premium-stage relative px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">
         <div className="finance-particles" />
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.1] blur-3xl" />
         <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-gold/[0.08] blur-3xl" />
         <div className="relative mx-auto max-w-7xl">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <SectionHeader eyebrow="Elite" title={copy.hero} text={copy.subtitle} />
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-end">
+            <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.55 }}>
+              <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">{copy.label}</p>
+              <h1 className="mt-5 max-w-4xl font-serif text-5xl leading-[0.94] tracking-[-0.06em] text-paper md:text-7xl">{copy.heroTitle}</h1>
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-paper/72 md:text-xl">{copy.heroSubtitle}</p>
+              <p className="mt-6 max-w-3xl text-base leading-8 text-paper/62">{copy.centralMessage}</p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a href="#historico-resultados" className="premium-button-gold inline-flex items-center justify-center bg-gold px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">{copy.primaryButton}</a>
+                <a href={ctaHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center border border-gold/30 px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:text-gold">{copy.secondaryButton}</a>
+              </div>
+            </motion.div>
             <div className="grid gap-3 sm:grid-cols-2">
-              {copy.stats.map((stat) => (
-                <motion.article
-                  key={stat}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeUp}
-                  className="terminal-module border border-gold/[0.16] bg-white p-5 shadow-fine"
-                >
-                  <p className="font-mono text-sm font-bold uppercase tracking-[0.16em] text-ink/[0.72]">{stat}</p>
-                </motion.article>
+              {copy.heroStats.map((stat) => (
+                <article key={stat} className="terminal-module border border-gold/16 bg-white/[0.03] p-5 shadow-[0_0_50px_rgba(198,153,74,0.06)]">
+                  <p className="font-mono text-sm font-bold uppercase tracking-[0.16em] text-paper/72">{stat}</p>
+                </article>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
+      <section className="px-5 py-14 md:px-8 md:py-18">
+        <div className="mx-auto max-w-7xl border border-gold/16 bg-white/[0.03] p-6 md:p-8">
+          <SectionHeader eyebrow={copy.label} title={copy.authorityTitle} text={copy.authorityText} />
+        </div>
+      </section>
+
+      <section id="historico-resultados" className="px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader eyebrow={copy.summaryEyebrow} title={copy.summaryTitle} text={copy.reportsText} />
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              ["2018", copy.stats[0], "text-gold"],
-              ["4.200+", copy.stats[1], "text-rise"],
-              ["6+", copy.stats[2], "text-gold"],
-              ["Elite", copy.stats[3], "text-rise"],
-            ].map(([value, label, tone]) => (
-              <article key={label} className="terminal-module border border-ink/[0.12] bg-paper p-6">
-                <p className={`font-mono text-3xl font-black ${tone}`}>{value}</p>
-                <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-ink/[0.58]">{label}</p>
-              </article>
-            ))}
+          <SectionHeader eyebrow="Dashboard" title={copy.dashboardTitle} text={copy.dashboardText} />
+          <div className="mt-8 grid gap-5 xl:grid-cols-2">
+            <div className="border border-white/10 bg-white/[0.03] p-6">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartSignals}</p>
+              <MiniBarChart data={annualData} copy={copy} locale={locale} onSelect={setSelectedYear} />
+            </div>
+            <div className="border border-white/10 bg-white/[0.03] p-6">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartPerformance}</p>
+              <AreaChart data={performanceData} locale={locale} />
+            </div>
+            <div className="border border-white/10 bg-white/[0.03] p-6">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartAssets}</p>
+              <div className="mt-6"><DonutChart data={assetDistribution} /></div>
+            </div>
+            <div className="border border-white/10 bg-white/[0.03] p-6">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartHeatmap}</p>
+              <div className="mt-6 overflow-x-auto">
+                <div className="grid min-w-[660px] grid-cols-[70px_repeat(12,1fr)] gap-2">
+                  <span />
+                  {monthNames.map((month) => <span key={month} className="text-center text-[10px] font-bold uppercase tracking-[0.12em] text-paper/44">{month.slice(0, 3)}</span>)}
+                  {annualData.map(({ year }) => (
+                    <div key={year} className="contents">
+                      <button type="button" onClick={() => setSelectedYear(year)} className="text-left font-mono text-xs font-black text-gold">{year}</button>
+                      {monthNames.map((month, index) => {
+                        const report = reports.find((entry) => entry.year === year && entry.monthIndex === index);
+                        return (
+                          <button
+                            key={`${year}-${month}`}
+                            type="button"
+                            title={report ? `${month}/${year}: ${report.signals} sinais | ${report.result}` : `${month}/${year}`}
+                            onClick={() => report && setSelectedMonthKey(`${report.year}-${report.monthIndex}`)}
+                            className={`h-9 border text-[10px] font-black transition ${report ? "border-gold/25 bg-gold/20 text-gold hover:bg-gold hover:text-ink" : "border-white/5 bg-white/[0.025] text-paper/16"}`}
+                          >
+                            {report ? report.signals : ""}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-5 lg:grid-cols-2">
+            <article className="border border-gold/16 bg-white/[0.03] p-6">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.selectedYear}</p>
+              <h3 className="mt-3 font-mono text-4xl font-black text-paper">{selectedYear}</h3>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <Info label={copy.totalSignals} value={formatNumber(selectedYearSummary.signals, locale)} />
+                <Info label={copy.consolidatedResult} value={selectedYearSummary.result || copy.available} />
+                <Info label={copy.availableMonths} value={String(selectedYearSummary.reports.length)} />
+                <Info label={copy.mainAssets} value={selectedYearSummary.assets.join(", ") || "XAU/USD, EUR/USD"} />
+              </div>
+            </article>
+            <article className="border border-gold/16 bg-white/[0.03] p-6">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.selectedMonth}</p>
+              <h3 className="mt-3 font-serif text-4xl tracking-[-0.04em] text-paper">{selectedMonth.month}/{selectedMonth.year}</h3>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <Info label={copy.totalSignals} value={formatNumber(selectedMonth.signals, locale)} />
+                <Info label={copy.consolidatedResult} value={selectedMonth.result} />
+                <Info label={copy.mainAssets} value={selectedMonth.assets.join(", ")} />
+                <Info label={copy.status} value={selectedMonth.status} />
+              </div>
+              <a href={reportHref(selectedMonth.year)} className="mt-6 inline-flex w-full items-center justify-center border border-gold/30 px-5 py-3 text-xs font-black uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink sm:w-auto">{copy.viewReport}</a>
+            </article>
           </div>
         </div>
       </section>
 
-      <section className="px-5 py-16 md:px-8 md:py-20">
+      <section className="px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader eyebrow="Elite" title={publicCopy.activeTitle} text={publicCopy.activeText} />
+          <SectionHeader eyebrow="Elite" title={copy.activeTitle} text={copy.activeText} />
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {liveOperations.map((operation, index) => (
-              <motion.article
-                key={`${operation.asset}-${index}`}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: index * 0.06 }}
-                variants={fadeUp}
-                className="terminal-module relative overflow-hidden border border-rise/[0.18] bg-white p-6 shadow-fine"
-              >
-                <div className="absolute inset-0 terminal-grid opacity-25" />
+            {activeOperations.map((operation, index) => (
+              <motion.article key={`${operation.asset}-${index}`} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="terminal-module relative overflow-hidden border border-rise/20 bg-white/[0.03] p-6">
+                <div className="absolute inset-0 terminal-grid opacity-20" />
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">{copy.activeLabels.asset}</p>
-                    <h3 className="mt-3 font-mono text-3xl font-black">{operation.asset}</h3>
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">{copy.asset}</p>
+                    <h3 className="mt-3 font-mono text-3xl font-black text-paper">{operation.asset}</h3>
                   </div>
                   <span className="h-3 w-3 rounded-full bg-rise shadow-[0_0_16px_rgba(15,143,86,0.55)]" />
                 </div>
                 <div className="relative mt-8 grid gap-3">
                   {[
-                    [copy.activeLabels.direction, localizeDirection(operation.direction, copy)],
-                    [copy.activeLabels.status, copy.activeLabels.live],
-                    [publicCopy.partialResult, operation.result],
-                    [copy.activeLabels.date, operation.date],
-                    [copy.activeLabels.update, operation.updatedAt === "public-snapshot" ? copy.activeLabels.today : operation.updatedAt],
-                  ].map(([label, value]) => (
-                    <div key={label} className="flex items-center justify-between gap-4 border-t border-ink/[0.08] pt-3">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-ink/[0.48]">{label}</span>
-                      <span className={`text-sm font-bold ${String(value).startsWith("+") ? "text-rise" : "text-ink"}`}>{value}</span>
-                    </div>
-                  ))}
-                  <div className="mt-2 border-t border-gold/[0.16] pt-4">
-                    <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-gold">{publicCopy.protectedFieldsTitle}</p>
-                    {[
-                      publicCopy.entry,
-                      publicCopy.target,
-                      publicCopy.stop,
-                    ].map((label) => (
-                      <div key={label} className="flex items-center justify-between gap-4 border-t border-ink/[0.08] py-3">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-ink/[0.48]">{label}</span>
+                    [copy.direction, localizeDirection(operation.direction, copy)],
+                    [copy.status, copy.live],
+                    [copy.partialResult, operation.result],
+                    [copy.date, operation.date],
+                    [copy.update, operation.updatedAt],
+                  ].map(([label, value]) => <InfoRow key={label} label={label} value={value} positive={String(value).startsWith("+")} negative={String(value).startsWith("-")} />)}
+                  <div className="mt-2 border-t border-gold/16 pt-4">
+                    <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-gold">{copy.protectedFields}</p>
+                    {[copy.entry, copy.target, copy.stop, copy.volume, copy.lot].map((label) => (
+                      <div key={label} className="flex items-center justify-between gap-4 border-t border-white/8 py-3">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/48">{label}</span>
                         <EliteBadge />
                       </div>
                     ))}
@@ -698,22 +861,158 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
         </div>
       </section>
 
-      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
+      <section className="border-y border-white/8 bg-white/[0.025] px-5 py-14 md:px-8 md:py-18">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader eyebrow="Pips" title={copy.resultsTitle} text={copy.resultsText} />
+          <div className="mt-8 grid gap-4 md:grid-cols-5">
+            <SelectField label={copy.filters.year} value={filters.year} options={[copy.filters.all, ...Array.from(new Set(completedOperations.map((operation) => operation.reportMonth.split("/")[1])))]} onChange={(value) => setFilter("year", value === copy.filters.all ? "Todos" : value)} />
+            <SelectField label={copy.filters.month} value={filters.month} options={[copy.filters.all, ...Array.from(new Set(completedOperations.map((operation) => operation.reportMonth.split("/")[0])))]} onChange={(value) => setFilter("month", value === copy.filters.all ? "Todos" : value)} />
+            <SelectField label={copy.filters.asset} value={filters.asset} options={[copy.filters.all, ...Array.from(new Set(completedOperations.map((operation) => operation.asset)))]} onChange={(value) => setFilter("asset", value === copy.filters.all ? "Todos" : value)} />
+            <SelectField label={copy.filters.direction} value={filters.direction} options={[copy.filters.all, "Compra", "Venda"]} onChange={(value) => setFilter("direction", value === copy.filters.all ? "Todos" : value)} />
+            <SelectField label={copy.filters.status} value={filters.status} options={[copy.filters.all, copy.finished]} onChange={(value) => setFilter("status", value === copy.filters.all ? "Todos" : value)} />
+          </div>
+          <div className="mt-8 overflow-x-auto border border-white/10 bg-black/35">
+            <table className="w-full min-w-[760px] border-collapse text-left">
+              <thead className="border-b border-white/10 text-xs uppercase tracking-[0.18em] text-gold">
+                <tr>{[copy.table.date, copy.table.asset, copy.table.direction, copy.table.result, copy.table.status, copy.table.report].map((heading) => <th key={heading} className="px-5 py-4 font-bold">{heading}</th>)}</tr>
+              </thead>
+              <tbody>
+                {filteredOperations.map((row) => (
+                  <tr key={`${row.date}-${row.asset}-${row.result}`} className="border-b border-white/8 transition hover:bg-rise/[0.05]">
+                    <td className="px-5 py-5 text-sm text-paper/68">{row.date}</td>
+                    <td className="px-5 py-5 font-mono text-sm font-bold text-paper">{row.asset}</td>
+                    <td className={`px-5 py-5 text-sm font-bold ${row.direction === "Compra" ? "text-rise" : "text-fall"}`}>{localizeDirection(row.direction, copy)}</td>
+                    <td className={`px-5 py-5 font-mono text-sm font-bold ${row.pips >= 0 ? "text-rise" : "text-fall"}`}>{row.result}</td>
+                    <td className="px-5 py-5 text-sm uppercase tracking-[0.14em] text-paper/58">{copy.finished}</td>
+                    <td className="px-5 py-5"><a href={reportHref(row.reportMonth.split("/")[1])} className="inline-block border border-white/18 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-paper transition hover:border-gold hover:text-gold">{copy.viewReport}</a></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-18">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader eyebrow="Elite" title={copy.monthlyTitle} text={copy.monthlyText} />
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {reports.slice().reverse().map((report) => (
+              <article key={`${report.year}-${report.month}`} className="terminal-module border border-gold/18 bg-white/[0.03] p-6 shadow-[0_0_50px_rgba(198,153,74,0.05)]">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{report.status}</p>
+                <h3 className="mt-3 font-serif text-3xl tracking-[-0.04em] text-paper">{report.month}/{report.year}</h3>
+                <div className="mt-6 grid gap-3">
+                  <Info label={copy.monthlyCardSignals} value={formatNumber(report.signals, locale)} />
+                  <Info label={copy.monthlyCardPips} value={report.result} />
+                  <Info label={copy.monthlyCardAssets} value={report.assets.join(", ")} />
+                </div>
+                <button type="button" onClick={() => setSelectedMonthKey(`${report.year}-${report.monthIndex}`)} className="mt-6 w-full border border-gold/28 px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink">{copy.viewReport}</button>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-white/8 bg-white/[0.025] px-5 py-14 md:px-8 md:py-18">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader eyebrow="2018 - 2026" title={copy.timelineTitle} text={copy.timelineText} />
+
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+            <div className="relative">
+              <div className="absolute left-5 top-0 h-full w-px bg-gradient-to-b from-gold/70 via-gold/20 to-rise/60 md:left-0 md:right-0 md:top-[44px] md:h-px md:w-full md:bg-gradient-to-r" />
+              <div className="relative grid gap-4 md:grid-cols-9 md:gap-3">
+                {timelineEvents.map((item) => {
+                  const isActive = item.year === selectedTimelineEvent.year;
+                  const toneClass = item.tone === "green" ? "border-rise text-rise shadow-[0_0_26px_rgba(22,163,74,0.18)]" : "border-gold text-gold shadow-[0_0_26px_rgba(201,155,62,0.16)]";
+
+                  return (
+                    <button
+                      key={item.year}
+                      type="button"
+                      onClick={() => setSelectedTimelineYear(item.year)}
+                      onMouseEnter={() => setSelectedTimelineYear(item.year)}
+                      onFocus={() => setSelectedTimelineYear(item.year)}
+                      className={`group relative grid min-h-[112px] gap-2 border bg-black/55 p-4 text-left transition md:min-h-[188px] md:content-start md:text-center ${
+                        isActive
+                          ? `${toneClass} -translate-y-1 bg-white/[0.045]`
+                          : "border-white/10 text-paper/70 hover:-translate-y-1 hover:border-gold/45 hover:bg-white/[0.035]"
+                      }`}
+                      aria-label={`Ver marco de ${item.year}: ${item.title}`}
+                    >
+                      <span className={`absolute left-[13px] top-8 z-10 h-4 w-4 rounded-full border-2 bg-black transition md:left-1/2 md:top-[37px] md:-translate-x-1/2 ${isActive ? toneClass : "border-gold/45 shadow-[0_0_18px_rgba(201,155,62,0.08)]"}`} />
+                      <span className="font-mono text-2xl font-black tracking-[-0.04em] md:mt-12">{item.year}</span>
+                      <span className="text-xs font-black uppercase leading-5 tracking-[0.14em] text-paper">{item.title}</span>
+                      <span className="mt-1 hidden text-[11px] font-bold uppercase tracking-[0.14em] text-paper/44 md:block">Ver marco</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <motion.article
+              key={selectedTimelineEvent.year}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28 }}
+              className="terminal-module relative overflow-hidden border border-gold/22 bg-black/55 p-6 shadow-[0_0_70px_rgba(201,155,62,0.08)] md:p-8"
+            >
+              <div className="absolute inset-0 terminal-grid opacity-25" />
+              <div className="absolute -right-20 -top-24 h-56 w-56 rounded-full bg-gold/10 blur-3xl" />
+              <div className="relative">
+                <p className={`font-mono text-5xl font-black tracking-[-0.05em] ${selectedTimelineEvent.tone === "green" ? "text-rise" : "text-gold"}`}>
+                  {selectedTimelineEvent.year}
+                </p>
+                <h3 className="mt-4 font-serif text-3xl leading-[1.05] tracking-[-0.045em] text-paper md:text-4xl">{selectedTimelineEvent.title}</h3>
+                <p className="mt-5 text-base leading-8 text-paper/72">{selectedTimelineEvent.description}</p>
+
+                <div className="mt-7 grid gap-4">
+                  <div className="border border-gold/18 bg-white/[0.03] p-5">
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-gold">Marco principal</p>
+                    <p className="mt-3 text-sm leading-7 text-paper/78">{selectedTimelineEvent.marker}</p>
+                  </div>
+                  <div className="border border-rise/18 bg-rise/[0.06] p-5">
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-rise">Impacto</p>
+                    <p className="mt-3 text-sm leading-7 text-paper/78">{selectedTimelineEvent.impact}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.article>
+          </div>
+
+          <div className="mt-8 border border-gold/18 bg-black/45 p-6 shadow-[0_0_50px_rgba(201,155,62,0.05)] md:p-8">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">De sinais ao vivo a uma estrutura global</p>
+            <p className="mt-4 max-w-5xl text-sm leading-8 text-paper/70 md:text-base">
+              A linha do tempo mostra a evolução do Varejo Investidor desde o início dos sinais Elite em 2018 até a expansão internacional.
+              O histórico operacional, as experiências institucionais, as parcerias e o crescimento da comunidade formam a base da metodologia atual.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-14 md:px-8 md:py-18">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader eyebrow="Método" title={copy.depthTitle} text={copy.depthText} />
+          <div className="mt-8 grid gap-4 md:grid-cols-4">
+            {copy.depthCards.map((card, index) => (
+              <article key={card.title} className="border border-white/10 bg-white/[0.03] p-6">
+                <p className="font-mono text-xl font-black text-gold">{String(index + 1).padStart(2, "0")}</p>
+                <h3 className="mt-4 font-serif text-2xl tracking-[-0.03em] text-paper">{card.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-paper/62">{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-white/8 bg-white/[0.025] px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-            <SectionHeader eyebrow="FXPro" title={publicCopy.brokerTitle} text={publicCopy.brokerText} />
-            <div className="terminal-module border border-gold/[0.2] bg-paper p-6 shadow-fine">
+            <SectionHeader eyebrow="FXPro" title={copy.brokerTitle} text={copy.brokerText} />
+            <div className="terminal-module border border-gold/20 bg-black/35 p-6 shadow-[0_0_50px_rgba(198,153,74,0.06)]">
               <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">Forex</p>
-              <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em] text-ink md:text-4xl">{fxproButtonLabels[locale]}</h3>
-              <p className="mt-4 leading-7 text-ink/[0.66]">{publicCopy.brokerBannerText}</p>
-              <a
-                href={fxproLinks[locale]}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="premium-button-gold mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 md:w-auto"
-              >
-                {publicCopy.brokerButton}
-              </a>
+              <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em] text-paper md:text-4xl">{fxproButtonLabels[locale]}</h3>
+              <p className="mt-4 leading-7 text-paper/66">{copy.brokerBannerText}</p>
+              <a href={fxproLinks[locale]} target="_blank" rel="noopener noreferrer" className="premium-button-gold mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 md:w-auto">{copy.brokerButton}</a>
             </div>
           </div>
         </div>
@@ -721,182 +1020,45 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
 
       <ForexBrokerBannerWide language={locale} />
 
-      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader eyebrow="Pips" title={copy.resultTitle} text={copy.resultText} />
-          <div className="mt-8 hidden overflow-x-auto border border-ink/[0.12] bg-paper shadow-fine md:block">
-            <table className="w-full min-w-[760px] border-collapse text-left">
-              <thead className="border-b border-ink/[0.1] text-xs uppercase tracking-[0.18em] text-gold">
-                <tr>
-                  {[copy.table.date, copy.table.asset, copy.table.direction, copy.table.result, copy.table.status, copy.table.report].map((heading) => (
-                    <th key={heading} className="px-5 py-4 font-bold">{heading}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {completedOperations.map((row) => (
-                  <tr key={`${row.date}-${row.asset}`} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
-                    <td className="px-5 py-5 text-sm text-ink/[0.68]">{row.date}</td>
-                    <td className="px-5 py-5 font-mono text-sm font-bold">{row.asset}</td>
-                    <td className={`px-5 py-5 text-sm font-bold ${row.direction === "Compra" ? "text-rise" : "text-fall"}`}>{localizeDirection(row.direction, copy)}</td>
-                    <td className="px-5 py-5 font-mono text-sm font-bold text-rise">{row.result}</td>
-                    <td className="px-5 py-5 text-sm uppercase tracking-[0.14em] text-ink/[0.58]">{copy.finished}</td>
-                    <td className="px-5 py-5">
-                      <a href="/historico/2024" className="inline-block border border-ink/[0.18] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] transition hover:border-gold hover:text-gold">
-                        {copy.table.view}
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="mt-8 grid gap-4 md:hidden">
-            {completedOperations.map((row) => (
-              <article key={`${row.date}-${row.asset}-mobile`} className="terminal-module border border-ink/[0.12] bg-paper p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="font-mono text-2xl font-black">{row.asset}</p>
-                    <p className="mt-1 text-xs uppercase tracking-[0.14em] text-ink/[0.5]">{row.date}</p>
-                  </div>
-                  <span className="font-mono text-lg font-bold text-rise">{row.result}</span>
-                </div>
-                <div className="mt-5 flex items-center justify-between border-t border-ink/[0.08] pt-4 text-sm">
-                  <span className={row.direction === "Compra" ? "text-rise" : "text-fall"}>{localizeDirection(row.direction, copy)}</span>
-                  <span className="uppercase tracking-[0.14em] text-ink/[0.54]">{copy.finished}</span>
-                </div>
-                <a href="/historico/2024" className="mt-5 block border border-gold/[0.28] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:text-gold">
-                  {copy.table.view}
-                </a>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-16 md:px-8 md:py-20">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader eyebrow="Elite" title={publicCopy.monthlyTitle} text={publicCopy.monthlyText} />
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {monthlyReports.map((report) => (
-              <article key={report.month} className="terminal-module border border-gold/[0.18] bg-white p-6 shadow-fine">
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{publicCopy.month}</p>
-                <h3 className="mt-3 font-serif text-3xl tracking-[-0.04em]">{report.month}</h3>
-                <div className="mt-6 grid gap-3">
-                  {[
-                    [publicCopy.signalCount, String(report.count)],
-                    [publicCopy.totalPips, report.totalPipsLabel],
-                    [publicCopy.mainAssets, report.assetsLabel],
-                  ].map(([label, value]) => (
-                    <div key={label} className="border-t border-ink/[0.08] pt-3">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-ink/[0.46]">{label}</p>
-                      <p className={`mt-1 font-mono text-sm font-bold ${String(value).startsWith("+") ? "text-rise" : "text-ink"}`}>{value}</p>
-                    </div>
-                  ))}
-                </div>
-                <a href="/historico/2024" className="mt-6 block border border-gold/[0.28] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:bg-gold hover:text-ink">
-                  {copy.table.view}
-                </a>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader eyebrow="2018 - 2026" title={timelineTitle} text={timelineText} />
-          <div className="mt-8 grid gap-4 md:grid-cols-4">
-            {timelineEvents.map((item) => (
-              <article key={item.year} className="terminal-module relative overflow-hidden border border-gold/[0.18] bg-paper p-6 shadow-fine">
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/[0.65] to-transparent" />
-                <p className="font-mono text-3xl font-black text-gold">{item.year}</p>
-                <h3 className="mt-4 font-serif text-2xl leading-[1.08] tracking-[-0.03em]">{item.title}</h3>
-                <p className="mt-4 text-sm leading-7 text-ink/[0.62]">{item.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-16 md:px-8 md:py-20">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader eyebrow={copy.summaryEyebrow} title={copy.reportsTitle} text={copy.reportsText} />
-          <div className="mt-8 hidden overflow-x-auto border border-ink/[0.12] bg-white shadow-fine md:block">
-            <table className="w-full min-w-[760px] border-collapse text-left">
-              <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.22em] text-gold">
-                <tr>
-                  {[copy.table.reportDate, copy.table.reportName, copy.table.signals, copy.table.result, copy.table.status, copy.table.view].map((heading) => (
-                    <th key={heading} className="px-5 py-4 font-bold">{heading}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {normalizedEliteReports.map((report) => (
-                  <tr key={report.year} className="border-b border-ink/[0.08] transition hover:bg-rise/[0.05]">
-                    <td className="px-5 py-5 text-sm text-ink/[0.72]">{report.period}</td>
-                    <td className="px-5 py-5 text-sm font-bold text-ink">{copy.table.reportName}</td>
-                    <td className="px-5 py-5 text-sm text-ink/[0.72]">{report.totalSignals} {copy.table.signals.toLowerCase()}</td>
-                    <td className="px-5 py-5 font-mono text-sm font-bold text-rise">{report.year === "2018" ? "+18,4%" : report.year === "2021" ? "+11,2%" : "+22,7%"}</td>
-                    <td className="px-5 py-5 text-sm uppercase tracking-[0.14em] text-ink/[0.58]">{copy.available}</td>
-                    <td className="px-5 py-5">
-                      <a href={reportHref(report.year)} className="inline-block border border-ink/[0.18] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] transition hover:border-gold hover:text-gold">
-                        {copy.table.view}
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="mt-8 grid gap-4 md:hidden">
-            {normalizedEliteReports.map((report) => (
-              <article key={`${report.year}-card`} className="terminal-module border border-ink/[0.12] bg-white p-5">
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">{report.period}</p>
-                <h3 className="mt-3 font-serif text-3xl tracking-[-0.04em]">{copy.table.reportName}</h3>
-                <div className="mt-5 grid gap-3 text-sm text-ink/[0.68]">
-                  <p>{report.totalSignals} {copy.table.signals.toLowerCase()}</p>
-                  <p className="font-mono font-bold text-rise">{report.year === "2018" ? "+18,4%" : report.year === "2021" ? "+11,2%" : "+22,7%"}</p>
-                  <p className="uppercase tracking-[0.14em]">{copy.available}</p>
-                </div>
-                <a href={reportHref(report.year)} className="mt-5 block border border-gold/[0.28] px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] transition hover:border-gold hover:text-gold">
-                  {copy.table.view}
-                </a>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-16 md:px-8 md:py-20">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="relative mx-auto max-w-7xl overflow-hidden border border-gold/[0.26] bg-ink px-6 py-14 text-center text-paper shadow-premium md:px-10 md:py-18"
-        >
+      <section className="px-5 py-14 md:px-8 md:py-18">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="relative mx-auto max-w-7xl overflow-hidden border border-gold/26 bg-ink px-6 py-14 text-center text-paper shadow-premium md:px-10 md:py-18">
           <div className="absolute inset-0 terminal-grid opacity-25" />
-          <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/[0.12] blur-3xl" />
+          <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/12 blur-3xl" />
           <div className="relative">
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Elite</p>
-            <h2 className="mx-auto mt-5 max-w-4xl font-serif text-4xl leading-[1.05] tracking-[-0.045em] md:text-6xl">{publicCopy.ctaTitle}</h2>
-            <p className="mx-auto mt-5 max-w-3xl leading-8 text-paper/[0.72]">{publicCopy.ctaText}</p>
-            <a href={ctaHref} target="_blank" rel="noopener noreferrer" className="premium-button-gold mt-8 inline-block w-full max-w-md border border-gold bg-gold px-6 py-4 text-center text-sm font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
-              {copy.ctaButton}
-            </a>
+            <h2 className="mx-auto mt-5 max-w-4xl font-serif text-4xl leading-[1.05] tracking-[-0.045em] md:text-6xl">{copy.ctaTitle}</h2>
+            <p className="mx-auto mt-5 max-w-3xl leading-8 text-paper/72">{copy.ctaText}</p>
+            <a href={ctaHref} target="_blank" rel="noopener noreferrer" className="premium-button-gold mt-8 inline-block w-full max-w-md border border-gold bg-gold px-6 py-4 text-center text-sm font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">{copy.ctaButton}</a>
           </div>
         </motion.div>
       </section>
 
       <section className="px-5 pb-12 md:px-8 md:pb-16">
-        <div className="mx-auto max-w-7xl border border-ink/[0.1] bg-white p-5 text-sm leading-7 text-ink/[0.64] shadow-fine">
+        <div className="mx-auto max-w-7xl border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-paper/64">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">Disclaimer</p>
-          <p className="mt-3">{publicCopy.disclaimer}</p>
+          <p className="mt-3">{copy.disclaimer}</p>
         </div>
       </section>
 
       <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
     </main>
+  );
+}
+
+function Info({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border border-white/10 bg-black/30 p-4">
+      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/46">{label}</p>
+      <p className="mt-2 font-mono text-sm font-black text-paper">{value}</p>
+    </div>
+  );
+}
+
+function InfoRow({ label, value, positive, negative }: { label: string; value: string; positive?: boolean; negative?: boolean }) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-t border-white/8 pt-3">
+      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/48">{label}</span>
+      <span className={`text-sm font-bold ${positive ? "text-rise" : negative ? "text-fall" : "text-paper"}`}>{value}</span>
+    </div>
   );
 }

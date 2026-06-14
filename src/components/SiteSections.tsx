@@ -517,15 +517,15 @@ export function SiteChrome({
     ja: { markets: "マーケット", forex: "Forex", stocks: "株式", crypto: "暗号資産", etfs: "ETFs", funds: "不動産ファンド" },
     ko: { markets: "시장", forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETFs", funds: "부동산 펀드" },
   };
-  const toolDropdownLabels: Record<Locale, { tools: string; forex: string; compound: string; reports: string }> = {
-    pt: { tools: "Ferramentas", forex: "Calculadora Forex", compound: "Calculadora de Juros Compostos", reports: "Relatórios" },
-    en: { tools: "Tools", forex: "Forex Calculator", compound: "Compound Interest Calculator", reports: "Reports" },
+  const toolDropdownLabels: Record<Locale, { tools: string; forex: string; compound: string; portfolio?: string; reports: string }> = {
+    pt: { tools: "Ferramentas", forex: "Calculadora Forex", compound: "Calculadora de Juros Compostos", portfolio: "Raio-X da Carteira Global", reports: "Relatórios" },
+    en: { tools: "Tools", forex: "Forex Calculator", compound: "Compound Interest Calculator", portfolio: "Global Portfolio X-Ray", reports: "Reports" },
     es: { tools: "Herramientas", forex: "Calculadora Forex", compound: "Calculadora de Interés Compuesto", reports: "Reportes" },
     fr: { tools: "Outils", forex: "Calculateur Forex", compound: "Calculateur d'intérêts composés", reports: "Rapports" },
     hi: { tools: "टूल्स", forex: "Forex Calculator", compound: "कंपाउंड इंटरेस्ट कैलकुलेटर", reports: "रिपोर्ट" },
     ar: { tools: "الأدوات", forex: "حاسبة الفوركس", compound: "حاسبة الفائدة المركبة", reports: "التقارير" },
     tr: { tools: "Araçlar", forex: "Forex Hesaplayıcı", compound: "Bileşik Faiz Hesaplayıcı", reports: "Raporlar" },
-    id: { tools: "Alat", forex: "Kalkulator Forex", compound: "Kalkulator Bunga Majemuk", reports: "Laporan" },
+    id: { tools: "Alat", forex: "Kalkulator Forex", compound: "Kalkulator Bunga Majemuk", portfolio: "X-Ray Portofolio Global", reports: "Laporan" },
     vi: { tools: "Công cụ", forex: "Máy tính Forex", compound: "Máy tính Lãi kép", reports: "Báo cáo" },
     th: { tools: "เครื่องมือ", forex: "เครื่องคำนวณ Forex", compound: "เครื่องคำนวณดอกเบี้ยทบต้น", reports: "รายงาน" },
     ru: { tools: "Инструменты", forex: "Калькулятор Forex", compound: "Калькулятор сложных процентов", reports: "Отчеты" },
@@ -550,6 +550,7 @@ export function SiteChrome({
   const toolItems = [
     { label: toolLabels.forex, href: "/ferramentas/calculadora-forex" },
     { label: toolLabels.compound, href: "/ferramentas/calculadora-juros-compostos" },
+    { label: toolLabels.portfolio ?? "Global Portfolio X-Ray", href: "/ferramentas/raio-x-carteira-global" },
     { label: toolLabels.reports, href: eliteReportPaths[locale] ?? eliteReportPaths.en },
   ];
   const localizedHref = (page: "home" | "signals" | "education" | "services" | "about") => {
@@ -605,7 +606,7 @@ export function SiteChrome({
   );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
-  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", eliteReportPaths[locale] ?? eliteReportPaths.en]);
+  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en]);
   const mobileNavItems = [...firstNavItems, ...lastNavItems];
 
   return (
@@ -1011,7 +1012,20 @@ export function SupportFooter({
             : locale === "tr"
               ? "Bireysel Yat\u0131r\u0131mc\u0131 \u0130\u00E7in K\u00FCresel Piyasa"
           : "Mercado Global para o Investidor de Varejo";
-  const footerLabels =
+  const footerLabels: {
+    social: string;
+    levels: string;
+    markets: string;
+    content: string;
+    platforms: string;
+    tools: string;
+    language: string;
+    marketLine: string;
+    levelLinks: [string, string, string];
+    forexCalculator: string;
+    compoundInterestTool: string;
+    portfolioXrayTool?: string;
+  } =
     locale === "hi"
       ? {
           social: "\u0938\u094B\u0936\u0932",
@@ -1053,6 +1067,7 @@ export function SupportFooter({
               levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
               forexCalculator: "Calculadora Forex",
               compoundInterestTool: "Calculadora de Juros Compostos",
+              portfolioXrayTool: "Raio-X da Carteira Global",
             }
           : locale === "ar"
             ? {
@@ -1261,6 +1276,12 @@ export function SupportFooter({
                 className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
               >
                 {footerLabels.compoundInterestTool}
+              </a>
+              <a
+                href="/ferramentas/raio-x-carteira-global"
+                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+              >
+                {footerLabels.portfolioXrayTool ?? "Global Portfolio X-Ray"}
               </a>
               <a
                 href="/eventos"

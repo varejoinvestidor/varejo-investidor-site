@@ -40,6 +40,7 @@ const staticPaths = [
   "/signals",
   "/ferramentas/calculadora-forex",
   "/ferramentas/calculadora-juros-compostos",
+  "/ferramentas/raio-x-carteira-global",
   "/relatorio-elite",
   "/elite-report",
   "/reporte-elite",
