@@ -226,7 +226,7 @@ function ForexLibrarySections({
   freeChannelLink: string;
 }) {
   const sections = content.sections;
-  const isRtl = locale === "ar";
+  const isRtl = locale === "ar" || locale === "ur" || locale === "fa";
   const ui = forexUiLabels[locale] ?? forexUiLabels.en;
 
   return (

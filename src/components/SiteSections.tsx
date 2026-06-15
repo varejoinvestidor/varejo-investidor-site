@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { translations, type Locale } from "../i18n";
+import { SUPPORTED_LOCALES, isRtlLocale, isSupportedLocale, localeToHtmlLang, translations, type Locale } from "../i18n";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/insightsContent";
@@ -36,7 +36,7 @@ export const ELITE_STRIPE_LINKS = [
 ] as const;
 
 export const ELITE_CHECKOUT_URL = ELITE_LASTLINK_URL;
-export const LOCALES = ["pt", "en", "es", "fr", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"] as const;
+export const LOCALES = SUPPORTED_LOCALES;
 
 export function getElitePlanHref(locale: Locale, planIndex: number) {
   return locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[planIndex] ?? ELITE_STRIPE_LINKS[3];
@@ -76,6 +76,9 @@ export function detectLocale(): Locale {
   if (detected.includes("pt")) return "pt";
   if (detected.includes("es")) return "es";
   if (detected.includes("fr")) return "fr";
+  if (detected.includes("it")) return "it";
+  if (detected.includes("de")) return "de";
+  if (detected.includes("fa") || detected.includes("fa-ir")) return "fa";
   if (detected.includes("hi")) return "hi";
   if (detected.includes("ar")) return "ar";
   if (detected.includes("tr")) return "tr";
@@ -87,13 +90,16 @@ export function detectLocale(): Locale {
   if (detected.includes("bn") || detected.includes("bn-bd")) return "bn";
   if (detected.includes("ja") || detected.includes("ja-jp")) return "ja";
   if (detected.includes("ko") || detected.includes("ko-kr")) return "ko";
+  if (detected.includes("zh") || detected.includes("zh-cn") || detected.includes("zh-sg")) return "zh";
+  if (detected.includes("pl") || detected.includes("pl-pl")) return "pl";
+  if (detected.includes("tl") || detected.includes("fil") || detected.includes("ph")) return "tl";
   if (detected.includes("en")) return "en";
 
   return "en";
 }
 
 function isLocale(value: string | null): value is Locale {
-  return Boolean(value && value in translations);
+  return isSupportedLocale(value);
 }
 
 function localeFromPath(pathname: string | null): Locale | null {
@@ -104,9 +110,8 @@ function localeFromPath(pathname: string | null): Locale | null {
 }
 
 function applyDocumentLocale(nextLocale: Locale) {
-  document.documentElement.lang =
-    nextLocale === "pt" ? "pt-BR" : nextLocale === "ar" ? "ar" : nextLocale === "ur" ? "ur" : nextLocale;
-  document.documentElement.dir = nextLocale === "ar" || nextLocale === "ur" ? "rtl" : "ltr";
+  document.documentElement.lang = localeToHtmlLang(nextLocale);
+  document.documentElement.dir = isRtlLocale(nextLocale) ? "rtl" : "ltr";
 }
 
 export function useSiteLocale() {
@@ -224,6 +229,37 @@ function FlagIcon({ locale }: { locale: Locale }) {
     );
   }
 
+  if (locale === "it") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="5.33" height="12" fill="#009246" />
+        <rect x="5.33" width="5.34" height="12" fill="#f7f3eb" />
+        <rect x="10.67" width="5.33" height="12" fill="#ce2b37" />
+      </svg>
+    );
+  }
+
+  if (locale === "de") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="4" fill="#111" />
+        <rect y="4" width="16" height="4" fill="#dd0000" />
+        <rect y="8" width="16" height="4" fill="#ffce00" />
+      </svg>
+    );
+  }
+
+  if (locale === "fa") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="4" fill="#239f40" />
+        <rect y="4" width="16" height="4" fill="#f7f3eb" />
+        <rect y="8" width="16" height="4" fill="#da0000" />
+        <circle cx="8" cy="6" r="1.05" fill="#da0000" />
+      </svg>
+    );
+  }
+
   if (locale === "hi") {
     return (
       <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
@@ -322,6 +358,41 @@ function FlagIcon({ locale }: { locale: Locale }) {
     );
   }
 
+  if (locale === "zh") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="6" fill="#ef3340" />
+        <rect y="6" width="16" height="6" fill="#f7f3eb" />
+        <path d="M4.4 3.8a2.05 2.05 0 1 0 0 4.4 2.45 2.45 0 1 1 0-4.4Z" fill="#f7f3eb" />
+        <circle cx="7.4" cy="2.4" r="0.45" fill="#f7f3eb" />
+        <circle cx="9" cy="3.2" r="0.45" fill="#f7f3eb" />
+        <circle cx="9" cy="5" r="0.45" fill="#f7f3eb" />
+        <circle cx="7.4" cy="5.8" r="0.45" fill="#f7f3eb" />
+        <circle cx="8.1" cy="4.1" r="0.45" fill="#f7f3eb" />
+      </svg>
+    );
+  }
+
+  if (locale === "pl") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="6" fill="#f7f3eb" />
+        <rect y="6" width="16" height="6" fill="#dc143c" />
+      </svg>
+    );
+  }
+
+  if (locale === "tl") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="6" fill="#0038a8" />
+        <rect y="6" width="16" height="6" fill="#ce1126" />
+        <path d="M0 0 7.2 6 0 12Z" fill="#f7f3eb" />
+        <circle cx="2.25" cy="6" r="0.78" fill="#fcd116" />
+      </svg>
+    );
+  }
+
   return (
     <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
       <rect width="16" height="12" fill="#c8232c" />
@@ -336,6 +407,9 @@ const languageMeta: Record<Locale, { code: string; name: string }> = {
   en: { code: "EN", name: "English" },
   es: { code: "ES", name: "Espa\u00F1ol" },
   fr: { code: "FR", name: "Fran\u00E7ais" },
+  it: { code: "IT", name: "Italiano" },
+  de: { code: "DE", name: "Deutsch" },
+  fa: { code: "FA", name: "\u0641\u0627\u0631\u0633\u06CC" },
   hi: { code: "HI", name: "\u0939\u093F\u0928\u094D\u0926\u0940" },
   ar: { code: "AR", name: "\u0627\u0644\u0639\u0631\u0628\u064A\u0629" },
   tr: { code: "TR", name: "T\u00FCrk\u00E7e" },
@@ -347,6 +421,9 @@ const languageMeta: Record<Locale, { code: string; name: string }> = {
   bn: { code: "BN", name: "\u09AC\u09BE\u0982\u09B2\u09BE" },
   ja: { code: "JA", name: "\u65E5\u672C\u8A9E" },
   ko: { code: "KO", name: "\uD55C\uAD6D\uC5B4" },
+  zh: { code: "ZH", name: "\u4E2D\u6587" },
+  pl: { code: "PL", name: "Polski" },
+  tl: { code: "TL", name: "Filipino" },
 };
 
 export function LanguageSwitcher({
@@ -565,7 +642,7 @@ export function SiteChrome({
   };
   const firstNavItems = useMemo(
     () => [
-      { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", "/pt", "/en", "/es", "/fr", "/hi", "/ar", "/tr", "/id", "/vi", "/th", "/ru", "/ur", "/bn", "/ja", "/ko"] },
+      { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", "/pt", "/en", "/es", "/fr", "/it", "/de", "/hi", "/ar", "/tr", "/id", "/vi", "/th", "/ru", "/ur", "/bn", "/ja", "/ko", "/zh"] },
       {
         label: insightNavLabel,
         href: getInsightsPath(locale),
@@ -590,6 +667,12 @@ export function SiteChrome({
           "/ja/insights",
           "/ko/articles",
           "/ko/insights",
+          "/it/articles",
+          "/it/insights",
+          "/de/articles",
+          "/de/insights",
+          "/zh/articles",
+          "/zh/insights",
         ],
       },
       { label: safeT.nav.signals, href: localizedHref("signals"), activePaths: ["/sinais", "/signals", `/${locale}/signals`] },

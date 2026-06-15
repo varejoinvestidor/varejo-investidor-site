@@ -186,7 +186,7 @@ export function BrokerAccessBlock({ locale }: { locale: Locale }) {
   const data = copy[locale] ?? copy.en;
   const banner = fxproBanners[locale] ?? fxproBanners.en;
   const forexLink = fxproLinks[locale] ?? fxproLinks.en;
-  const isRtl = locale === "ar";
+  const isRtl = locale === "ar" || locale === "ur" || locale === "fa";
   const cards = [
     {
       label: data.forexLabel,

@@ -215,6 +215,37 @@ const educationCopy = {
 };
 
 const formationSteps = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3", "L4", "L5", "H1", "H2", "H3", "H4", "H5"];
+const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
+const ichimokuLearningItems = [
+  "Ebook completo Domine o Ichimoku",
+  "Aula gravada explicativa",
+  "Introdução ao indicador Ichimoku",
+  "Componentes principais",
+  "Estratégias de leitura de mercado",
+  "Exemplos práticos",
+  "Aplicação em diferentes mercados",
+];
+const ichimokuProductItems = ichimokuLearningItems;
+const ichimokuLearningItemsFull = [
+  "Estrutura completa do Ichimoku",
+  "Tenkan-Sen e Kijun-Sen",
+  "Nuvem Kumo",
+  "Suportes e resistências dinâmicas",
+  "Leitura de tendência",
+  "Sinais de entrada e saída",
+  "Aplicação em Forex",
+  "Aplicação em ações",
+  "Aplicação em criptomoedas",
+  "Aplicação em commodities",
+  "Gestão de risco",
+  "Estudos de caso reais",
+];
+const ichimokuOfferItems = [
+  "Ebook completo",
+  "Aula gravada",
+  "Atualizações futuras",
+  "Acesso imediato",
+];
 const localizedEducationCopy = {
   ...educationCopy,
   ar: {
@@ -369,7 +400,7 @@ export default function EducationPage() {
   );
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section id="topo" className="education-hero premium-stage px-5 pb-8 pt-32 md:px-8 md:pb-10 md:pt-40">
@@ -460,6 +491,168 @@ export default function EducationPage() {
           ))}
         </div>
 
+        {false && locale === "pt" ? (
+          <motion.div
+            id="domine-ichimoku"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            variants={fadeUp}
+            className="mx-auto mt-10 max-w-7xl"
+          >
+            <div className="relative overflow-hidden border border-gold/[0.42] bg-ink px-6 py-8 shadow-premium md:px-9 md:py-9">
+              <div className="absolute inset-0 terminal-grid opacity-20" />
+              <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-gold/[0.12] blur-3xl" />
+              <div className="relative grid gap-8 lg:grid-cols-[1.35fr_0.65fr] lg:items-center">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.28em] text-gold">Produto educacional</p>
+                  <h2 className="mt-4 font-serif text-5xl leading-[1] tracking-[-0.05em] text-paper md:text-6xl">
+                    Domine o Ichimoku
+                  </h2>
+                  <p className="mt-4 max-w-3xl text-lg leading-8 text-paper/[0.72]">
+                    Ebook completo + aula gravada para aprender a interpretar o Ichimoku em Forex, ações, cripto,
+                    commodities e índices.
+                  </p>
+                  <p className="mt-5 max-w-3xl text-sm leading-7 text-paper/[0.62]">
+                    Aprenda os fundamentos do Ichimoku, seus principais componentes e como interpretar sinais,
+                    tendência, suporte, resistência e contexto de mercado com mais clareza.
+                  </p>
+
+                  <p className="mt-7 text-xs font-black uppercase tracking-[0.24em] text-gold">O que inclui</p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    {ichimokuProductItems.map((item) => (
+                      <div key={item} className="flex items-start gap-3 border border-gold/[0.12] bg-paper/[0.035] p-4">
+                        <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gold shadow-[0_0_16px_rgba(201,155,62,0.35)]" />
+                        <span className="text-sm leading-6 text-paper/[0.76]">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="border border-gold/[0.32] bg-paper/[0.045] p-6 text-center shadow-fine">
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">Ebook + aula gravada</p>
+                  <p className="mt-5 font-serif text-6xl tracking-[-0.06em] text-paper">R$ 79,90</p>
+                  <a
+                    href={ICHIMOKU_PRODUCT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-6 py-4 text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52] hover:shadow-[0_0_24px_rgba(201,155,62,0.24)]"
+                  >
+                    Comprar agora
+                  </a>
+                  <p className="mt-5 text-xs leading-6 text-paper/[0.48]">
+                    Este material possui finalidade educacional e não representa recomendação individual de investimento
+                    ou garantia de resultado.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ) : null}
+
+        {false && locale === "pt" ? (
+          <motion.section
+            id="domine-ichimoku"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            variants={fadeUp}
+            className="mx-auto mt-12 max-w-7xl"
+          >
+            <div className="relative overflow-hidden border border-gold/[0.36] bg-ink px-5 py-8 shadow-premium md:px-8 md:py-10 lg:px-10">
+              <div className="absolute inset-0 terminal-grid opacity-20" />
+              <div className="absolute left-8 top-12 h-72 w-72 bg-gold/[0.06] blur-3xl" />
+              <div className="absolute bottom-0 right-0 h-80 w-80 bg-rise/[0.045] blur-3xl" />
+
+              <div className="relative grid gap-9 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+                <div className="mx-auto w-full max-w-[450px]">
+                  <div className="group relative border border-gold/[0.34] bg-paper/[0.035] p-3 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.72] hover:shadow-[0_0_36px_rgba(201,155,62,0.13)]">
+                    <div className="absolute inset-0 luxury-grid opacity-20 transition group-hover:opacity-35" />
+                    <Image
+                      src="/products/ebook-ichimoku.png"
+                      alt="Capa do ebook Domine o Ichimoku"
+                      width={512}
+                      height={768}
+                      className="relative h-auto w-full border border-gold/[0.16] bg-paper object-contain"
+                      sizes="(max-width: 768px) 88vw, 450px"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <p className="inline-flex border border-gold/[0.36] bg-gold/[0.08] px-4 py-2 text-[11px] font-black uppercase tracking-[0.24em] text-gold">
+                    Produto educacional
+                  </p>
+                  <h2 className="mt-5 font-serif text-5xl leading-[0.98] tracking-[-0.05em] text-paper md:text-6xl">
+                    Domine o Ichimoku
+                  </h2>
+                  <p className="mt-5 max-w-4xl text-lg leading-8 text-paper/[0.76]">
+                    Ebook completo + aula gravada para aprender a interpretar o Ichimoku em Forex, ações, criptomoedas,
+                    commodities e índices globais.
+                  </p>
+                  <div className="mt-5 grid gap-4 text-sm leading-7 text-paper/[0.66] md:text-[15px]">
+                    <p>
+                      O Ichimoku é uma metodologia visual criada para identificar tendência, suporte, resistência,
+                      momentum e contexto de mercado em um único gráfico.
+                    </p>
+                    <p>
+                      Neste treinamento você aprenderá a interpretar os principais componentes do indicador e compreender
+                      como utilizá-lo em diferentes mercados financeiros.
+                    </p>
+                  </div>
+
+                  <div className="mt-8 grid gap-5 xl:grid-cols-[1fr_0.56fr] xl:items-start">
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">O que você aprenderá</p>
+                      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                        {ichimokuLearningItemsFull.map((item) => (
+                          <div key={item} className="flex items-start gap-3 border border-gold/[0.12] bg-paper/[0.035] p-4">
+                            <span className="mt-1 text-sm font-black text-gold">✓</span>
+                            <span className="text-sm leading-6 text-paper/[0.78]">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <aside className="border border-gold/[0.34] bg-paper/[0.05] p-6 shadow-fine">
+                      <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">Ebook + aula gravada</p>
+                      <p className="mt-5 font-serif text-6xl tracking-[-0.06em] text-paper">R$ 79,90</p>
+                      <div className="mt-5 grid gap-3">
+                        {ichimokuOfferItems.map((item) => (
+                          <div key={item} className="flex items-center gap-3 text-sm font-semibold text-paper/[0.78]">
+                            <span className="text-gold">✓</span>
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <a
+                        href={ICHIMOKU_PRODUCT_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-6 py-4 text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52] hover:shadow-[0_0_24px_rgba(201,155,62,0.24)]"
+                      >
+                        Comprar agora
+                      </a>
+                      <p className="mt-5 text-xs leading-6 text-paper/[0.58]">
+                        Criado por quem atua com mercados globais desde 2018 e utiliza o Ichimoku como uma das bases da
+                        metodologia aplicada no Canal Elite.
+                      </p>
+                      <p className="mt-4 border-t border-gold/[0.14] pt-4 text-[11px] leading-5 text-paper/[0.46]">
+                        Conteúdo exclusivamente educacional. Não constitui recomendação de investimento, promessa de
+                        resultado ou consultoria financeira individual.
+                      </p>
+                    </aside>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.section>
+        ) : null}
+
+        {true ? (
+          <>
         <div id="grade" className="mx-auto mt-16 max-w-7xl">
           <SectionHeader eyebrow={copy.tableEyebrow} title={copy.tableTitle} text={copy.tableText} />
           <div className="education-table mt-8 overflow-x-auto border border-ink/[0.12] bg-white shadow-fine">
@@ -510,6 +703,102 @@ export default function EducationPage() {
         </div>
 
         {locale === "pt" ? (
+          <motion.section
+            id="domine-ichimoku"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            variants={fadeUp}
+            className="box-border mx-auto mt-10 w-[calc(100%-48px)] max-w-[1180px] overflow-hidden"
+          >
+            <div className="relative overflow-hidden border border-gold/[0.34] bg-ink px-5 py-7 shadow-premium md:px-7 md:py-8">
+              <div className="absolute inset-0 terminal-grid opacity-18" />
+              <div className="absolute left-8 top-10 h-56 w-56 bg-gold/[0.055] blur-3xl" />
+              <div className="absolute bottom-0 right-0 h-64 w-64 bg-rise/[0.035] blur-3xl" />
+
+              <div className="relative grid min-w-0 gap-8 md:grid-cols-[280px_minmax(0,1fr)] md:items-center min-[1100px]:grid-cols-[300px_minmax(0,1fr)_240px]">
+                <div className="mx-auto flex w-full justify-center">
+                  <div className="group relative w-full max-w-[300px] border border-gold/[0.32] bg-paper/[0.035] p-3 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.7] hover:shadow-[0_0_30px_rgba(201,155,62,0.12)]">
+                    <div className="absolute inset-0 luxury-grid opacity-18 transition group-hover:opacity-30" />
+                    <Image
+                      src="/products/ebook-ichimoku.png"
+                      alt="Capa do ebook Domine o Ichimoku"
+                      width={512}
+                      height={768}
+                      className="relative mx-auto h-auto max-h-[520px] w-full max-w-[300px] border border-gold/[0.14] bg-paper object-contain"
+                      sizes="(max-width: 768px) 80vw, 300px"
+                    />
+                  </div>
+                </div>
+
+                <div className="min-w-0">
+                  <p className="inline-flex border border-gold/[0.36] bg-gold/[0.08] px-4 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-gold">
+                    Produto educacional
+                  </p>
+                  <h2 className="mt-4 font-serif text-4xl leading-[1] tracking-[-0.045em] text-paper md:text-5xl">
+                    Domine o Ichimoku
+                  </h2>
+                  <p className="mt-4 text-base leading-7 text-paper/[0.76]">
+                    Ebook completo + aula gravada para aprender a interpretar o Ichimoku em Forex, ações, criptomoedas,
+                    commodities e índices globais.
+                  </p>
+                  <div className="mt-4 grid gap-3 text-sm leading-7 text-paper/[0.64]">
+                    <p>
+                      O Ichimoku é uma metodologia visual criada para identificar tendência, suporte, resistência,
+                      momentum e contexto de mercado em um único gráfico.
+                    </p>
+                    <p>
+                      Neste treinamento você aprenderá a interpretar os principais componentes do indicador e compreender
+                      como utilizá-lo em diferentes mercados financeiros.
+                    </p>
+                  </div>
+
+                  <p className="mt-6 text-xs font-black uppercase tracking-[0.2em] text-gold">O que você aprenderá</p>
+                      <div className="mt-3 grid gap-3 md:grid-cols-2">
+                    {ichimokuLearningItemsFull.map((item) => (
+                      <div key={item} className="flex items-start gap-2 border border-gold/[0.11] bg-paper/[0.03] px-3 py-2.5">
+                        <span className="mt-0.5 text-xs font-black text-gold">✓</span>
+                        <span className="text-xs leading-5 text-paper/[0.78]">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <aside className="w-full min-w-0 max-w-none border border-gold/[0.34] bg-paper/[0.05] p-5 shadow-fine md:col-span-2 min-[1100px]:col-span-1 min-[1100px]:max-w-[240px]">
+                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gold">Ebook + aula gravada</p>
+                  <p className="mt-4 font-serif text-5xl tracking-[-0.06em] text-paper">R$ 79,90</p>
+                  <div className="mt-5 grid gap-3">
+                    {["Ebook completo", "Aula gravada", "Acesso imediato", "Material educacional"].map((item) => (
+                      <div key={item} className="flex items-center gap-3 text-sm font-semibold text-paper/[0.78]">
+                        <span className="text-gold">✓</span>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <a
+                    href={ICHIMOKU_PRODUCT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52] hover:shadow-[0_0_24px_rgba(201,155,62,0.24)]"
+                  >
+                    Comprar agora
+                  </a>
+                  <p className="mt-5 text-xs leading-6 text-paper/[0.56]">
+                    Criado por quem atua com mercados globais desde 2018 e utiliza o Ichimoku como uma das bases da
+                    metodologia aplicada no Canal Elite.
+                  </p>
+                  <p className="mt-4 border-t border-gold/[0.14] pt-4 text-[11px] leading-5 text-paper/[0.44]">
+                    Conteúdo exclusivamente educacional. Não constitui recomendação de investimento, promessa de resultado
+                    ou consultoria financeira individual.
+                  </p>
+                </aside>
+              </div>
+            </div>
+          </motion.section>
+        ) : null}
+
+        {false && locale === "pt" ? (
           <div className="mx-auto mt-6 max-w-7xl">
             <a
               href="/ferramentas/calculadora-forex"
@@ -528,9 +817,11 @@ export default function EducationPage() {
             </a>
           </div>
         ) : null}
+          </>
+        ) : null}
       </section>
 
-      <ForexBrokerBannerWide language={locale} />
+      {locale !== "pt" ? <ForexBrokerBannerWide language={locale} /> : null}
 
       <section className="px-5 py-12 md:px-8 md:py-16">
         <div className="mx-auto max-w-7xl">

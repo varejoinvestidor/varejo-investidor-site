@@ -33,6 +33,9 @@ export const insightsBasePath: Record<Locale, string> = {
   en: "/global-articles",
   es: "/articulos-globales",
   fr: "/fr/articles",
+  it: "/it/articles",
+  de: "/de/articles",
+  fa: "/fa/articles",
   hi: "/global-articles-hi",
   ar: "/ar/global-articles",
   tr: "/tr/global-articles",
@@ -44,9 +47,12 @@ export const insightsBasePath: Record<Locale, string> = {
   bn: "/bn/articles",
   ja: "/ja/articles",
   ko: "/ko/articles",
+  zh: "/zh/articles",
+  pl: "/pl/articles",
+  tl: "/tl/articles",
 };
 
-export const insightLocales: Locale[] = ["pt", "en", "es", "fr", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"];
+export const insightLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko", "zh", "pl", "tl"];
 
 export const insightsHero: Record<Locale, { title: string; subtitle: string; metaDescription: string }> = {
   pt: {
@@ -68,6 +74,21 @@ export const insightsHero: Record<Locale, { title: string; subtitle: string; met
     title: "Articles Globaux",
     subtitle: "Analyses editoriales sur le Forex, les actions, la crypto, les matieres premieres, les ETF, les cycles economiques et la structure financiere mondiale.",
     metaDescription: "Articles Globaux de Varejo Investidor : analyses sur le Forex, les actions, la crypto, les matieres premieres, les ETF, les cycles economiques et la structure financiere mondiale.",
+  },
+  it: {
+    title: "Articoli Globali",
+    subtitle: "Analisi editoriali su Forex, azioni, crypto, commodities, ETF, cicli economici e struttura finanziaria globale.",
+    metaDescription: "Articoli Globali di Varejo Investidor: analisi su Forex, azioni, crypto, commodities, ETF, cicli economici e struttura finanziaria globale.",
+  },
+  de: {
+    title: "Globale Artikel",
+    subtitle: "Institutionelle Analysen zu Forex, Aktien, Krypto, Rohstoffen, ETFs, Konjunkturzyklen und globaler Finanzstruktur.",
+    metaDescription: "Globale Artikel von Varejo Investidor: Analysen zu Forex, Aktien, Krypto, Rohstoffen, ETFs, Konjunkturzyklen und globaler Finanzstruktur.",
+  },
+  fa: {
+    title: "\u0645\u0642\u0627\u0644\u0627\u062a \u062c\u0647\u0627\u0646\u06cc",
+    subtitle: "\u062a\u062d\u0644\u06cc\u0644\u200c\u0647\u0627\u06cc \u062a\u062d\u0631\u06cc\u0631\u06cc\u0647 \u062f\u0631\u0628\u0627\u0631\u0647 Forex\u060c \u0633\u0647\u0627\u0645\u060c \u06a9\u0631\u06cc\u067e\u062a\u0648\u060c ETFs \u0648 \u0633\u0627\u062e\u062a\u0627\u0631 \u0645\u0627\u0644\u06cc \u062c\u0647\u0627\u0646\u06cc.",
+    metaDescription: "\u0645\u0642\u0627\u0644\u0627\u062a \u062c\u0647\u0627\u0646\u06cc Varejo Investidor \u062f\u0631\u0628\u0627\u0631\u0647 Forex\u060c \u0633\u0647\u0627\u0645\u060c \u06a9\u0631\u06cc\u067e\u062a\u0648\u060c ETFs \u0648 \u0628\u0627\u0632\u0627\u0631\u0647\u0627\u06cc \u062c\u0647\u0627\u0646\u06cc.",
   },
   hi: {
     title: "\u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u0932\u0947\u0916",
@@ -123,6 +144,21 @@ export const insightsHero: Record<Locale, { title: string; subtitle: string; met
     title: "글로벌 기사",
     subtitle: "Forex, 주식, 암호화폐, 원자재, ETF, 경제 사이클과 글로벌 금융 구조에 대한 편집 분석.",
     metaDescription: "Varejo Investidor 글로벌 기사: 개인 투자자를 위한 Forex, 주식, 암호화폐, 원자재, ETF, 경제 사이클과 글로벌 금융 구조 분석.",
+  },
+  zh: {
+    title: "\u5168\u7403\u6587\u7AE0",
+    subtitle: "\u5173\u4E8E Forex\u3001\u80A1\u7968\u3001\u52A0\u5BC6\u8D44\u4EA7\u3001\u5927\u5B97\u5546\u54C1\u3001ETF\u3001\u7ECF\u6D4E\u5468\u671F\u548C\u5168\u7403\u91D1\u878D\u7ED3\u6784\u7684\u673A\u6784\u5316\u5206\u6790\u3002",
+    metaDescription: "Varejo Investidor \u5168\u7403\u6587\u7AE0\uFF1A\u9762\u5411\u96F6\u552E\u6295\u8D44\u8005\u7684 Forex\u3001\u80A1\u7968\u3001\u52A0\u5BC6\u8D44\u4EA7\u3001\u5927\u5B97\u5546\u54C1\u3001ETF\u3001\u7ECF\u6D4E\u5468\u671F\u548C\u5168\u7403\u91D1\u878D\u7ED3\u6784\u5206\u6790\u3002",
+  },
+  pl: {
+    title: "Artykuly globalne",
+    subtitle: "Analizy redakcyjne o Forex, akcjach, krypto, surowcach, ETF-ach, cyklach gospodarczych i globalnej strukturze finansowej.",
+    metaDescription: "Artykuly globalne Varejo Investidor: analizy o Forex, akcjach, krypto, surowcach, ETF-ach i globalnej strukturze finansowej.",
+  },
+  tl: {
+    title: "Mga Pandaigdigang Artikulo",
+    subtitle: "Editorial analysis tungkol sa Forex, stocks, crypto, commodities, ETFs, economic cycles, at global financial structure.",
+    metaDescription: "Global Articles ng Varejo Investidor: analysis tungkol sa Forex, stocks, crypto, commodities, ETFs, economic cycles, at global financial structure.",
   },
 };
 

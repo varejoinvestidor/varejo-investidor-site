@@ -776,8 +776,10 @@ const homeSeoLabels: Record<Locale, Record<"forex" | "stocks" | "crypto" | "etfs
   ko: { forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETF", formiga: "개미 레벨", lobo: "늑대 레벨", harpia: "하피 레벨", articles: "기사" },
 };
 
-function localizedMarketPath(locale: Locale, market: "forex" | "stocks" | "crypto" | "etfs") {
-  const slugs: Record<Locale, Record<typeof market, string>> = {
+type HomeMarketKey = "forex" | "stocks" | "crypto" | "etfs" | "fiis" | "platforms" | "tools" | "articles";
+
+function localizedMarketPath(locale: Locale, market: HomeMarketKey) {
+  const slugs: Partial<Record<Locale, Partial<Record<HomeMarketKey, string>>>> = {
     pt: { forex: "forex", stocks: "acoes", crypto: "cripto", etfs: "etfs" },
     en: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
     es: { forex: "forex", stocks: "acciones", crypto: "cripto", etfs: "etfs" },
@@ -795,12 +797,23 @@ function localizedMarketPath(locale: Locale, market: "forex" | "stocks" | "crypt
     ko: { forex: "forex", stocks: "stocks", crypto: "crypto", etfs: "etfs" },
   };
 
-  const slug = slugs[locale][market];
+  const defaultSlugs: Record<HomeMarketKey, string> = {
+    forex: "forex",
+    stocks: "stocks",
+    crypto: "crypto",
+    etfs: "etfs",
+    fiis: "fundos-imobiliarios",
+    platforms: "platforms",
+    tools: "tools",
+    articles: "articles",
+  };
+  const localeSlugs = slugs[locale] ?? slugs.en ?? defaultSlugs;
+  const slug = localeSlugs[market] ?? defaultSlugs[market] ?? market;
   return locale === "pt" ? `/${slug}` : `/${locale}/${slug}`;
 }
 
 function homeSeoLinks(locale: Locale) {
-  const labels = homeSeoLabels[locale];
+  const labels = homeSeoLabels[locale] ?? homeSeoLabels.en;
   return [
     { href: localizedMarketPath(locale, "forex"), label: labels.forex },
     { href: localizedMarketPath(locale, "stocks"), label: labels.stocks },
@@ -1040,7 +1053,7 @@ export default function Home() {
   const educationHref = locale === "pt" ? "/educacao" : `/${locale}/education`;
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section id="home" className="home-hero premium-stage relative px-5 pb-20 pt-36 md:px-8 md:pb-28 md:pt-48 lg:px-12 xl:px-16">

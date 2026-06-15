@@ -20,6 +20,10 @@ export type PlatformContent = {
 const localePrefix: Partial<Record<Locale, string>> = {
   en: "/en/platforms",
   es: "/es/platforms",
+  fr: "/fr/platforms",
+  it: "/it/platforms",
+  de: "/de/platforms",
+  fa: "/fa/platforms",
   hi: "/hi/platforms",
   ar: "/ar/platforms",
   tr: "/tr/platforms",
@@ -30,6 +34,9 @@ const localePrefix: Partial<Record<Locale, string>> = {
   bn: "/bn/platforms",
   ja: "/ja/platforms",
   ko: "/ko/platforms",
+  zh: "/zh/platforms",
+  pl: "/pl/platforms",
+  tl: "/tl/platforms",
 };
 
 export function getPlatformPath(locale: Locale, slug: PlatformSlug) {
@@ -41,6 +48,10 @@ const sharedPlatformLabels: Record<Locale, { eyebrow: string; related: string; a
   pt: { eyebrow: "Plataformas", related: "Conecte com mercados", articles: "Ler Artigos Globais" },
   en: { eyebrow: "Platforms", related: "Connect with markets", articles: "Read Global Articles" },
   es: { eyebrow: "Plataformas", related: "Conectar con mercados", articles: "Leer Art\u00EDculos Globales" },
+  fr: { eyebrow: "Plateformes", related: "Connecter aux marches", articles: "Lire les articles mondiaux" },
+  it: { eyebrow: "Piattaforme", related: "Connetti ai mercati", articles: "Leggi Articoli Globali" },
+  de: { eyebrow: "Plattformen", related: "Mit Maerkten verbinden", articles: "Globale Artikel lesen" },
+  zh: { eyebrow: "平台", related: "连接全球市场", articles: "阅读全球文章" },
   hi: { eyebrow: "\u092A\u094D\u0932\u0947\u091F\u092B\u0949\u0930\u094D\u092E", related: "\u092C\u093E\u091C\u093E\u0930\u094B\u0902 \u0938\u0947 \u091C\u094B\u0921\u093C\u0947\u0902", articles: "\u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u0932\u0947\u0916 \u092A\u0922\u093C\u0947\u0902" },
   ar: { eyebrow: "\u0627\u0644\u0645\u0646\u0635\u0627\u062A", related: "\u0627\u0631\u0628\u0637\u0647\u0627 \u0628\u0627\u0644\u0623\u0633\u0648\u0627\u0642", articles: "\u0627\u0642\u0631\u0623 \u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062A \u0627\u0644\u0639\u0627\u0644\u0645\u064A\u0629" },
   tr: { eyebrow: "Platformlar", related: "Piyasalarla ba\u011Flan", articles: "K\u00FCresel Makaleleri Oku" },
@@ -54,6 +65,10 @@ const freeLabels: Record<Locale, string> = {
   pt: "Come\u00E7ar gratuitamente",
   en: "Start for free",
   es: "Comenzar gratis",
+  fr: "Commencer gratuitement",
+  it: "Inizia gratis",
+  de: "Kostenlos starten",
+  zh: "免费开始",
   hi: "\u092E\u0941\u092B\u094D\u0924 \u092E\u0947\u0902 \u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902",
   ar: "\u0627\u0628\u062F\u0623 \u0645\u062C\u0627\u0646\u064B\u0627",
   tr: "\u00DCcretsiz ba\u015Fla",

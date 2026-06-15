@@ -85,7 +85,7 @@ export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
     <>
       <SiteChrome t={t} locale={locale} onLocaleChange={changeLocale} />
       <SchemaScripts locale={pageLocale} />
-      <main lang={pageLocale === "pt" ? "pt-BR" : pageLocale} dir={pageLocale === "ar" ? "rtl" : "ltr"} className="min-h-screen bg-ink text-paper">
+      <main lang={pageLocale === "pt" ? "pt-BR" : pageLocale} dir={pageLocale === "ar" || pageLocale === "ur" || pageLocale === "fa" ? "rtl" : "ltr"} className="min-h-screen bg-ink text-paper">
         <section className="page-hero relative overflow-hidden px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-36">
           <div className="absolute inset-0 terminal-grid opacity-55" />
           <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-gold/[0.08] blur-3xl" />

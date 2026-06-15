@@ -518,7 +518,7 @@ export default function SignalsPage() {
         ]
     : prices;
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="signals-hero premium-stage relative px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-44">
@@ -534,7 +534,7 @@ export default function SignalsPage() {
               </p>
             ) : null}
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              {t.signalBlock.stats.map((item) => (
+              {(t.signalBlock.stats as string[]).map((item) => (
                 <div key={item} className="operational-chip border-l-2 border-rise bg-white p-4 shadow-fine">
                   <p className="font-bold">{item}</p>
                 </div>

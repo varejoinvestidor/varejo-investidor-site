@@ -45,6 +45,32 @@ const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
     oil: "petroleo",
     commodities: "commodities",
   },
+  it: {
+    forex: "forex",
+    stocks: "acoes",
+    azioni: "acoes",
+    crypto: "cripto",
+    cripto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oro: "ouro",
+    oil: "petroleo",
+    petrolio: "petroleo",
+    commodities: "commodities",
+  },
+  de: {
+    forex: "forex",
+    stocks: "acoes",
+    aktien: "acoes",
+    crypto: "cripto",
+    krypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    oel: "petroleo",
+    commodities: "commodities",
+    rohstoffe: "commodities",
+  },
   hi: {
     forex: "forex",
     stocks: "acoes",
@@ -154,15 +180,25 @@ const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
     oil: "petroleo",
     commodities: "commodities",
   },
+  zh: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
 };
 
 function isLocale(value: string): value is Locale {
-  return value === "pt" || value === "en" || value === "es" || value === "fr" || value === "hi" || value === "ar" || value === "tr" || value === "id" || value === "vi" || value === "th" || value === "ru" || value === "ur" || value === "bn" || value === "ja" || value === "ko";
+  return value in marketAliasMap;
 }
 
 function getMarketSlug(locale: string, market: string): MarketSlug | null {
   if (!isLocale(locale)) return null;
-  return marketAliasMap[locale][market] ?? null;
+  const localeAliases = marketAliasMap[locale] ?? marketAliasMap.en;
+  return localeAliases[market] ?? marketAliasMap.en[market] ?? null;
 }
 
 export function generateStaticParams() {

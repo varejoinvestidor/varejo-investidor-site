@@ -17,6 +17,8 @@ import {
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
+const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
+
 const compactPtServices = [
   {
     title: "Canal Elite",
@@ -494,7 +496,7 @@ export default function ServicesPage() {
               ? "Sản phẩm"
               : "Produto";
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="services-hero premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">
@@ -772,6 +774,68 @@ export default function ServicesPage() {
                 </motion.article>
               ))}
             </div>
+          </div>
+        </section>
+      ) : null}
+
+      {isPt ? (
+        <section className="relative overflow-hidden border-y border-gold/[0.12] bg-ink px-5 py-14 text-paper md:px-8 md:py-20">
+          <div className="absolute inset-0 terminal-grid opacity-18" />
+          <div className="absolute right-12 top-10 h-64 w-64 bg-gold/[0.055] blur-3xl" />
+          <div className="relative mx-auto max-w-7xl">
+            <div className="max-w-4xl">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">Produto educacional</p>
+              <h2 className="mt-4 font-serif text-4xl uppercase leading-[1.02] tracking-[-0.04em] text-paper md:text-6xl">
+                Domine o Ichimoku
+              </h2>
+              <p className="mt-5 max-w-3xl text-base leading-8 text-paper/[0.7] md:text-lg">
+                Ebook completo + aula gravada para aprender a interpretar o Ichimoku em diferentes mercados financeiros.
+              </p>
+            </div>
+
+            <motion.article
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={fadeUp}
+              className="mt-9 grid gap-6 border border-gold/[0.32] bg-paper/[0.045] p-5 shadow-premium md:grid-cols-[180px_1fr_auto] md:items-center md:p-7"
+            >
+              <div className="mx-auto w-full max-w-[180px] border border-gold/[0.24] bg-paper/[0.06] p-2">
+                <Image
+                  src="/products/ebook-ichimoku.png"
+                  alt="Capa do ebook Domine o Ichimoku"
+                  width={512}
+                  height={768}
+                  className="h-auto max-h-[260px] w-full object-contain"
+                  sizes="180px"
+                />
+              </div>
+
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">Ebook + aula gravada</p>
+                <h2 className="mt-3 font-serif text-4xl leading-[1.02] tracking-[-0.04em] text-paper md:text-5xl">
+                  Domine o Ichimoku
+                </h2>
+                <p className="mt-4 max-w-3xl text-base leading-8 text-paper/[0.7]">
+                  Aprenda os fundamentos do Ichimoku, seus principais componentes e como interpretar tendência, suporte,
+                  resistência, momentum e contexto de mercado com mais clareza.
+                </p>
+              </div>
+
+              <div className="min-w-[230px] border border-gold/[0.24] bg-ink/[0.5] p-5 text-center">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">Preço</p>
+                <p className="mt-3 font-serif text-5xl tracking-[-0.05em] text-paper">R$ 79,90</p>
+                <a
+                  href={ICHIMOKU_PRODUCT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52] hover:shadow-[0_0_22px_rgba(201,155,62,0.22)]"
+                >
+                  Comprar agora
+                </a>
+              </div>
+            </motion.article>
           </div>
         </section>
       ) : null}

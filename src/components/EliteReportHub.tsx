@@ -20,6 +20,8 @@ export const eliteReportPaths: Record<Locale, string> = {
   en: "/elite-report",
   es: "/reporte-elite",
   fr: "/fr/elite-report",
+  it: "/it/elite-report",
+  de: "/de/elite-report",
   hi: "/elite-report-hi",
   ar: "/ar/elite-report",
   tr: "/tr/elite-report",
@@ -31,6 +33,7 @@ export const eliteReportPaths: Record<Locale, string> = {
   bn: "/bn/elite-report",
   ja: "/ja/elite-report",
   ko: "/ko/elite-report",
+  zh: "/zh/elite-report",
 };
 
 type Direction = "Compra" | "Venda";
@@ -60,9 +63,12 @@ type Operation = {
 type TimelineEvent = {
   year: string;
   title: string;
-  description: string;
+  shortTitle: string;
+  summary: string;
   marker: string;
+  context: string;
   impact: string;
+  result: string;
   tone: "gold" | "green";
 };
 
@@ -409,77 +415,111 @@ const completedOperations: Operation[] = [
   { asset: "BTC/USD", direction: "Compra", status: "closed", result: "-34 pips", pips: -34, date: "Março/2024", updatedAt: "Finalizado", reportMonth: "Março/2024" },
 ];
 
+const timelineStats = [
+  { value: "2018", label: "Início dos sinais" },
+  { value: "4.200+", label: "Sinais enviados" },
+  { value: "8 anos", label: "Histórico operacional" },
+  { value: "600 mil+", label: "Seguidores globais" },
+];
+
 const timelineEvents: TimelineEvent[] = [
   {
     year: "2018",
     title: "Criação dos sinais Elite",
-    description: "Início da estrutura de sinais ao vivo do Canal Elite, com acompanhamento operacional e envio direto pelo WhatsApp.",
-    marker: "Nascimento do histórico operacional.",
-    impact: "Base inicial da metodologia de sinais e acompanhamento.",
+    shortTitle: "Criação dos sinais Elite",
+    summary: "Março de 2018 marca o início dos sinais gratuitos do Varejo Investidor. Após meses de desenvolvimento da metodologia, em agosto de 2018 foi criado oficialmente o Canal Elite, estrutura paga de acompanhamento operacional, análises e sinais enviados ao vivo pelo WhatsApp.",
+    marker: "Nascimento da estrutura operacional que serviria de base para milhares de sinais enviados ao longo dos anos.",
+    context: "O mercado de educação financeira ainda era dominado por cursos gravados e promessas de resultado. A proposta do Canal Elite foi diferente: acompanhar mercados reais diariamente, compartilhar operações e construir um histórico público de longo prazo.",
+    impact: "Início da construção de um dos maiores históricos de sinais ao vivo enviados pelo WhatsApp para investidores de varejo.",
+    result: "Criação da metodologia operacional e início do histórico que mais tarde ultrapassaria 4.200 sinais enviados.",
     tone: "gold",
   },
   {
     year: "2019",
     title: "Parceria com fundo de investimento",
-    description: "Participação em parceria ligada à gestão de aproximadamente R$ 900 mil em capital acompanhado.",
-    marker: "Primeira experiência institucional relevante.",
-    impact: "Ampliação da visão sobre gestão, risco e acompanhamento de capital.",
+    shortTitle: "Parceria com fundo",
+    summary: "Primeiro contato com estruturas mais profissionais de gestão e acompanhamento de patrimônio.",
+    marker: "Participação em parceria ligada à gestão de aproximadamente R$ 900 mil em capital acompanhado.",
+    context: "A experiência permitiu contato com processos de risco, proteção patrimonial, acompanhamento de carteira e tomada de decisão voltada para preservação de capital.",
+    impact: "Mudança de visão. O foco deixa de ser apenas operação e passa a incluir gestão, patrimônio e construção de longo prazo.",
+    result: "Ampliação do conhecimento sobre estruturas profissionais de investimento.",
     tone: "gold",
   },
   {
     year: "2020",
-    title: "Gestão de fundo europeu",
-    description: "Atuação em estrutura ligada a fundo europeu com aproximadamente R$ 19 milhões em capital sob acompanhamento estratégico.",
-    marker: "Contato com estrutura internacional.",
-    impact: "Expansão da leitura sobre capital global, risco e operação fora do ambiente local.",
+    title: "Fundo Europeu",
+    shortTitle: "Fundo Europeu",
+    summary: "Participação em estrutura ligada a fundo europeu com aproximadamente R$ 19 milhões em capital acompanhado.",
+    marker: "Primeira vivência relevante em ambiente internacional de gestão.",
+    context: "O contato com estruturas globais trouxe uma visão mais ampla sobre liquidez, diversificação, proteção patrimonial e comportamento institucional.",
+    impact: "Expansão da leitura sobre capital global e mercados internacionais.",
+    result: "Fortalecimento da visão macroeconômica e internacional que mais tarde se tornaria uma das bases do método Harpia.",
     tone: "green",
   },
   {
     year: "2021",
-    title: "Período sabático e trader nômade",
-    description: "Fase de aprofundamento, leitura de mercado e vivência prática como trader nômade, com foco em autonomia, disciplina e visão global.",
-    marker: "Transição de operação para visão estratégica.",
-    impact: "Fortalecimento da metodologia própria e da leitura internacional.",
+    title: "Trader Nômade",
+    shortTitle: "Trader Nômade",
+    summary: "Período dedicado ao aprofundamento dos estudos, operação independente e experiência prática em diferentes ambientes.",
+    marker: "Fase sabática voltada para desenvolvimento pessoal e profissional.",
+    context: "Ao operar de forma independente e estudar mercados globais diariamente, surgem os conceitos que mais tarde evoluiriam para os níveis Formiga, Lobo e Harpia.",
+    impact: "Consolidação da filosofia de construção patrimonial baseada em visão global.",
+    result: "Fortalecimento da metodologia educacional que hoje sustenta toda a estrutura do Varejo Investidor.",
     tone: "gold",
   },
   {
     year: "2022",
     title: "Parcerias com escritórios",
-    description: "Construção de parcerias com escritórios e estruturas ligadas ao mercado financeiro, ampliando relacionamento e presença institucional.",
-    marker: "Expansão de rede estratégica.",
-    impact: "Aproximação com profissionais, investidores e estruturas comerciais.",
+    shortTitle: "Parcerias",
+    summary: "Construção de relacionamentos com escritórios, assessorias e profissionais do mercado financeiro.",
+    marker: "Expansão da presença institucional.",
+    context: "O período foi marcado por aproximação com estruturas comerciais, assessores, investidores e profissionais ligados ao setor financeiro.",
+    impact: "Aumento da compreensão sobre captação, relacionamento e posicionamento de mercado.",
+    result: "Ampliação da rede estratégica e fortalecimento institucional.",
     tone: "gold",
   },
   {
     year: "2023",
-    title: "Participação em mesa proprietária",
-    description: "Participação no desenvolvimento e estruturação de mesa proprietária, com foco em operações, gestão de risco e formação de traders.",
-    marker: "Estruturação operacional avançada.",
-    impact: "Maior profundidade em processo, risco, equipe e performance.",
+    title: "Mesa Proprietária",
+    shortTitle: "Mesa Proprietária",
+    summary: "Participação na criação e estruturação de mesa proprietária.",
+    marker: "Contato direto com processos de avaliação, risco e performance de traders.",
+    context: "O ambiente de mesa proprietária exige disciplina operacional, controle emocional, métricas de desempenho e gestão rigorosa de risco.",
+    impact: "Maior profundidade em processos operacionais e acompanhamento de performance.",
+    result: "Experiência prática em estruturas profissionais de operação.",
     tone: "green",
   },
   {
     year: "2024",
-    title: "Banco, corretora e estratégia LATAM",
-    description: "Atuação em gestão no setor bancário, função de manager LATAM em corretora e responsabilidade por estratégia na América Latina.",
-    marker: "Consolidação institucional na América Latina.",
-    impact: "Ampliação da visão sobre corretoras, bancos, expansão regional e posicionamento de mercado.",
+    title: "Banco + Estratégia LATAM",
+    shortTitle: "Estratégia LATAM",
+    summary: "Atuação em gestão bancária e posição de manager LATAM em corretora global.",
+    marker: "Responsável pela estratégia de introdução e expansão da corretora em toda a América Latina.",
+    context: "O trabalho envolveu desenvolvimento de mercado, posicionamento regional, relacionamento com parceiros e expansão comercial em múltiplos países.",
+    impact: "Ampliação da visão sobre bancos, corretoras, aquisição de clientes, regulação e expansão internacional.",
+    result: "Consolidação da experiência institucional em nível regional.",
     tone: "gold",
   },
   {
     year: "2025",
-    title: "100 mil seguidores no Instagram",
-    description: "Crescimento da comunidade digital, consolidando presença nas redes sociais e ampliando o alcance educacional do Varejo Investidor.",
-    marker: "Comunidade acima de 100 mil seguidores.",
-    impact: "Fortalecimento da autoridade pública e da distribuição de conteúdo financeiro.",
+    title: "100 Mil Seguidores",
+    shortTitle: "100 Mil Seguidores",
+    summary: "A comunidade Varejo Investidor ultrapassa a marca de 100 mil seguidores.",
+    marker: "Crescimento acelerado da presença digital.",
+    context: "Após anos produzindo conteúdo, relatórios e análises, a audiência passa a crescer de forma consistente.",
+    impact: "Maior alcance da metodologia Formiga, Lobo e Harpia.",
+    result: "Fortalecimento da autoridade digital e expansão da comunidade.",
     tone: "green",
   },
   {
     year: "2026",
-    title: "Expansão internacional",
-    description: "Expansão do Varejo Investidor para múltiplos idiomas, consolidação de mais de 4 mil sinais ao vivo e crescimento para aproximadamente 600 mil seguidores.",
-    marker: "Internacionalização da marca.",
-    impact: "Transformação do Varejo Investidor em uma estrutura global de educação, sinais, relatórios e comunidade financeira.",
+    title: "Expansão Internacional",
+    shortTitle: "Expansão Internacional",
+    summary: "O projeto alcança múltiplos idiomas e amplia sua presença para diferentes regiões do mundo.",
+    marker: "Mais de 4.200 sinais enviados ao vivo desde 2018 e aproximadamente 600 mil seguidores.",
+    context: "O conteúdo passa a ser distribuído em diversos idiomas, atingindo públicos da América Latina, Europa, Ásia e Oriente Médio.",
+    impact: "Transformação do Varejo Investidor em uma estrutura internacional de educação financeira, sinais e relatórios.",
+    result: "Consolidação da marca como plataforma global voltada ao investidor de varejo.",
     tone: "green",
   },
 ];
@@ -715,7 +755,7 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
   const setFilter = (key: keyof typeof filters, value: string) => setFilters((current) => ({ ...current, [key]: value }));
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-black text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-black text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="page-hero premium-stage relative px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">
@@ -917,32 +957,39 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="2018 - 2026" title={copy.timelineTitle} text={copy.timelineText} />
 
-          <div className="mt-10 grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
-            <div className="relative">
-              <div className="absolute left-5 top-0 h-full w-px bg-gradient-to-b from-gold/70 via-gold/20 to-rise/60 md:left-0 md:right-0 md:top-[44px] md:h-px md:w-full md:bg-gradient-to-r" />
-              <div className="relative grid gap-4 md:grid-cols-9 md:gap-3">
-                {timelineEvents.map((item) => {
+          <div className="mt-10 grid gap-4 md:grid-cols-4">
+            {timelineStats.map((stat) => (
+              <div key={stat.label} className="border border-gold/18 bg-black/45 p-5 shadow-[0_0_38px_rgba(201,155,62,0.05)]">
+                <p className="font-mono text-3xl font-black tracking-[-0.05em] text-gold md:text-4xl">{stat.value}</p>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.18em] text-paper/58">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid gap-8 lg:grid-cols-[0.4fr_0.6fr] lg:items-start">
+            <div className="relative border border-white/10 bg-black/35 p-5 md:p-6">
+              <div className="absolute bottom-8 left-[35px] top-8 w-px bg-gradient-to-b from-gold/70 via-gold/22 to-rise/65" />
+              <div className="relative grid gap-1">
+                {timelineEvents.map((item, index) => {
                   const isActive = item.year === selectedTimelineEvent.year;
-                  const toneClass = item.tone === "green" ? "border-rise text-rise shadow-[0_0_26px_rgba(22,163,74,0.18)]" : "border-gold text-gold shadow-[0_0_26px_rgba(201,155,62,0.16)]";
+                  const isLast = index === timelineEvents.length - 1;
+                  const dotClass = item.tone === "green" ? "border-rise bg-rise shadow-[0_0_22px_rgba(22,163,74,0.22)]" : "border-gold bg-gold shadow-[0_0_22px_rgba(201,155,62,0.22)]";
+                  const itemTone = item.tone === "green" ? "text-rise" : "text-gold";
 
                   return (
                     <button
                       key={item.year}
                       type="button"
                       onClick={() => setSelectedTimelineYear(item.year)}
-                      onMouseEnter={() => setSelectedTimelineYear(item.year)}
-                      onFocus={() => setSelectedTimelineYear(item.year)}
-                      className={`group relative grid min-h-[112px] gap-2 border bg-black/55 p-4 text-left transition md:min-h-[188px] md:content-start md:text-center ${
-                        isActive
-                          ? `${toneClass} -translate-y-1 bg-white/[0.045]`
-                          : "border-white/10 text-paper/70 hover:-translate-y-1 hover:border-gold/45 hover:bg-white/[0.035]"
-                      }`}
-                      aria-label={`Ver marco de ${item.year}: ${item.title}`}
+                      className={["group relative grid w-full grid-cols-[38px_1fr] gap-4 py-3 text-left transition", isActive ? "translate-x-1" : "hover:translate-x-1"].join(" ")}
+                      aria-label={"Ver marco de " + item.year + ": " + item.title}
                     >
-                      <span className={`absolute left-[13px] top-8 z-10 h-4 w-4 rounded-full border-2 bg-black transition md:left-1/2 md:top-[37px] md:-translate-x-1/2 ${isActive ? toneClass : "border-gold/45 shadow-[0_0_18px_rgba(201,155,62,0.08)]"}`} />
-                      <span className="font-mono text-2xl font-black tracking-[-0.04em] md:mt-12">{item.year}</span>
-                      <span className="text-xs font-black uppercase leading-5 tracking-[0.14em] text-paper">{item.title}</span>
-                      <span className="mt-1 hidden text-[11px] font-bold uppercase tracking-[0.14em] text-paper/44 md:block">Ver marco</span>
+                      <span className={["relative z-10 mt-1 h-4 w-4 rounded-full border-2 transition", isActive ? dotClass : "border-gold/50 bg-black group-hover:border-gold"].join(" ")} />
+                      <span className="min-w-0 pb-4">
+                        <span className={["font-mono text-2xl font-black tracking-[-0.04em] transition", isActive ? itemTone : "text-paper/78 group-hover:text-gold"].join(" ")}>{item.year}</span>
+                        <span className="mt-1 block text-sm font-black uppercase leading-5 tracking-[0.12em] text-paper">{item.shortTitle}</span>
+                        {!isLast && <span className="mt-4 block h-px w-full bg-gradient-to-r from-white/14 to-transparent" />}
+                      </span>
                     </button>
                   );
                 })}
@@ -954,26 +1001,41 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.28 }}
-              className="terminal-module relative overflow-hidden border border-gold/22 bg-black/55 p-6 shadow-[0_0_70px_rgba(201,155,62,0.08)] md:p-8"
+              className="terminal-module sticky top-28 min-h-[520px] overflow-hidden border border-gold/22 bg-black/55 p-7 shadow-[0_0_80px_rgba(201,155,62,0.08)] md:p-10"
             >
               <div className="absolute inset-0 terminal-grid opacity-25" />
-              <div className="absolute -right-20 -top-24 h-56 w-56 rounded-full bg-gold/10 blur-3xl" />
-              <div className="relative">
-                <p className={`font-mono text-5xl font-black tracking-[-0.05em] ${selectedTimelineEvent.tone === "green" ? "text-rise" : "text-gold"}`}>
-                  {selectedTimelineEvent.year}
-                </p>
-                <h3 className="mt-4 font-serif text-3xl leading-[1.05] tracking-[-0.045em] text-paper md:text-4xl">{selectedTimelineEvent.title}</h3>
-                <p className="mt-5 text-base leading-8 text-paper/72">{selectedTimelineEvent.description}</p>
+              <div className="absolute -right-24 -top-28 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
+              <div className="absolute -bottom-28 left-8 h-64 w-64 rounded-full bg-rise/8 blur-3xl" />
+              <div className="relative flex min-h-[460px] flex-col justify-between">
+                <div>
+                  <p className={["font-mono text-6xl font-black tracking-[-0.06em] md:text-7xl", selectedTimelineEvent.tone === "green" ? "text-rise" : "text-gold"].join(" ")}>
+                    {selectedTimelineEvent.year}
+                  </p>
+                  <h3 className="mt-5 max-w-3xl font-serif text-4xl leading-[1.02] tracking-[-0.05em] text-paper md:text-6xl">{selectedTimelineEvent.title}</h3>
+                </div>
 
-                <div className="mt-7 grid gap-4">
-                  <div className="border border-gold/18 bg-white/[0.03] p-5">
-                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-gold">Marco principal</p>
-                    <p className="mt-3 text-sm leading-7 text-paper/78">{selectedTimelineEvent.marker}</p>
-                  </div>
-                  <div className="border border-rise/18 bg-rise/[0.06] p-5">
-                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-rise">Impacto</p>
-                    <p className="mt-3 text-sm leading-7 text-paper/78">{selectedTimelineEvent.impact}</p>
-                  </div>
+                <div className="mt-8 grid gap-4">
+                  {[
+                    { label: "Resumo", value: selectedTimelineEvent.summary, icon: "01", tone: "gold" },
+                    { label: "Marco principal", value: selectedTimelineEvent.marker, icon: "02", tone: "gold" },
+                    { label: "Contexto", value: selectedTimelineEvent.context, icon: "03", tone: "neutral" },
+                    { label: "Impacto", value: selectedTimelineEvent.impact, icon: "04", tone: "green" },
+                    { label: "Resultado", value: selectedTimelineEvent.result, icon: "05", tone: "green" },
+                  ].map((block) => (
+                    <div
+                      key={block.label}
+                      className={[
+                        "grid gap-4 border p-5 md:grid-cols-[58px_1fr] md:p-6",
+                        block.tone === "green" ? "border-rise/18 bg-rise/[0.055]" : block.tone === "gold" ? "border-gold/18 bg-gold/[0.045]" : "border-white/10 bg-white/[0.028]",
+                      ].join(" ")}
+                    >
+                      <div className={["flex h-12 w-12 items-center justify-center border font-mono text-xs font-black", block.tone === "green" ? "border-rise/30 text-rise" : block.tone === "gold" ? "border-gold/30 text-gold" : "border-white/15 text-paper/62"].join(" ")}>{block.icon}</div>
+                      <div>
+                        <p className={["text-[10px] font-black uppercase tracking-[0.22em]", block.tone === "green" ? "text-rise" : block.tone === "gold" ? "text-gold" : "text-paper/58"].join(" ")}>{block.label}</p>
+                        <p className="mt-3 text-sm leading-7 text-paper/80 md:text-base md:leading-8">{block.value}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </motion.article>
@@ -982,8 +1044,7 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
           <div className="mt-8 border border-gold/18 bg-black/45 p-6 shadow-[0_0_50px_rgba(201,155,62,0.05)] md:p-8">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">De sinais ao vivo a uma estrutura global</p>
             <p className="mt-4 max-w-5xl text-sm leading-8 text-paper/70 md:text-base">
-              A linha do tempo mostra a evolução do Varejo Investidor desde o início dos sinais Elite em 2018 até a expansão internacional.
-              O histórico operacional, as experiências institucionais, as parcerias e o crescimento da comunidade formam a base da metodologia atual.
+              {"A linha do tempo mostra a evolu\u00e7\u00e3o do Varejo Investidor desde o in\u00edcio dos sinais Elite em 2018 at\u00e9 a expans\u00e3o internacional. O hist\u00f3rico operacional, as experi\u00eancias institucionais, as parcerias e o crescimento da comunidade formam a base da metodologia atual."}
             </p>
           </div>
         </div>
