@@ -13,7 +13,7 @@ import {
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 type Track = {
-  id: "formiga" | "lobo" | "harpia";
+  id: "formiga" | "lobo" | "harpia" | "select";
   name: string;
   subtitle: string;
   seal: string;
@@ -82,6 +82,21 @@ const educationCopy = {
           ["H3", "Estrutura familiar", "Sucessão, patrimônio geracional e construção de longo prazo.", 5],
           ["H4", "Expansão internacional", "Moedas fortes, ativos globais, contas internacionais e proteção.", 5],
           ["H5", "Estrutura de elite", "Preservação, decisão patrimonial e visão acima do mercado.", 5],
+        ],
+      },
+      {
+        id: "select",
+        name: "SELECT",
+        subtitle: "Estrutura patrimonial voltada para investidores de alta renda, com foco em diversifica\u00E7\u00E3o internacional, gest\u00E3o de risco, prote\u00E7\u00E3o patrimonial e posicionamento global de capital.",
+        seal: "N\u00CDVEL",
+        difficulty: "Estrutura avan\u00E7ada",
+        tone: "elite",
+        levels: [
+          ["S1", "Estrutura patrimonial", "Organiza\u00E7\u00E3o de patrim\u00F4nio, governan\u00E7a financeira e arquitetura de capital.", 5],
+          ["S2", "Diversifica\u00E7\u00E3o global", "Exposi\u00E7\u00E3o internacional, moedas fortes e ativos globais.", 5],
+          ["S3", "Prote\u00E7\u00E3o patrimonial", "Gest\u00E3o de risco, prote\u00E7\u00E3o cambial e preserva\u00E7\u00E3o de capital.", 5],
+          ["S4", "Aloca\u00E7\u00E3o estrat\u00E9gica", "Carteiras multimercado, ciclos econ\u00F4micos e posicionamento internacional.", 5],
+          ["S5", "Estrutura institucional", "Family office, sucess\u00E3o, legado e patrim\u00F4nio multigeracional.", 5],
         ],
       },
     ] satisfies Track[],
@@ -214,7 +229,7 @@ const educationCopy = {
   },
 };
 
-const formationSteps = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3", "L4", "L5", "H1", "H2", "H3", "H4", "H5"];
+const formationSteps = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3", "L4", "L5", "H1", "H2", "H3", "H4", "H5", "S1", "S2", "S3", "S4", "S5"];
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
 const ichimokuLearningItems = [
   "Ebook completo Domine o Ichimoku",
@@ -440,7 +455,7 @@ export default function EducationPage() {
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{copy.matrixEyebrow}</p>
               <h2 className="mt-3 font-serif text-4xl tracking-[-0.04em] text-paper">{copy.matrixTitle}</h2>
             </div>
-            <div className="education-step-grid grid grid-cols-5 gap-3 sm:grid-cols-[repeat(15,minmax(0,1fr))]">
+            <div className="education-step-grid grid grid-cols-5 gap-3 sm:grid-cols-[repeat(20,minmax(0,1fr))]">
               {formationSteps.map((step, index) => (
                 <div key={step} className="education-step-node grid place-items-center gap-2">
                   <span className={`h-2.5 w-2.5 rounded-full ${index < 5 ? "bg-rise" : "bg-gold"}`} />
@@ -452,7 +467,7 @@ export default function EducationPage() {
           <div className="education-matrix-line mt-6 h-px bg-gradient-to-r from-rise via-gold to-gold" />
         </div>
 
-        <div id="formacao" className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-3">
+        <div id="formacao" className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-2 xl:grid-cols-4">
           {copy.tracks.map((track, index) => (
             <motion.article
               key={track.name}
@@ -472,7 +487,7 @@ export default function EducationPage() {
                 <h2 className="mt-5 font-serif text-4xl leading-[1.04] tracking-[-0.04em]">{track.name}</h2>
                 <p className="mt-5 text-[15px] leading-8 text-ink/[0.68]">{track.subtitle}</p>
                 <div className="education-track-line mt-7 h-1 bg-ink/[0.28]">
-                  <div className={`h-full ${track.tone === "rise" ? "bg-rise" : "bg-gold"}`} style={{ width: `${(index + 1) * 33}%` }} />
+                  <div className={`h-full ${track.tone === "rise" ? "bg-rise" : "bg-gold"}`} style={{ width: `${((index + 1) / copy.tracks.length) * 100}%` }} />
                 </div>
                 <div className="mt-7 grid gap-4">
                   {track.levels.map(([code, title, objective, progress]) => (

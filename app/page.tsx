@@ -1049,6 +1049,21 @@ export default function Home() {
   const copy = homeLiteCopy[locale as keyof typeof homeLiteCopy] ?? homeLiteCopy.en;
   const flow = homeFlowCopy[locale] ?? homeFlowCopy.en;
   const account = homeAccountCopy[locale] ?? homeAccountCopy.en;
+  const selectHome = locale === "pt"
+    ? {
+        eyebrow: "VAREJO INVESTIDOR SELECT",
+        title: "Não possui tempo para acompanhar operações?",
+        text: "O Varejo Investidor Select foi criado para investidores que desejam exposição aos mercados globais através de uma estrutura operacional automatizada.",
+        cta: "CONHECER VAREJO INVESTIDOR SELECT",
+        cards: ["R$ 250.000 mínimo", "US$ 50.000 internacional", "Forex", "Ações", "Criptomoedas"],
+      }
+    : {
+        eyebrow: "ADVANCED LEVEL",
+        title: "No time to monitor trades?",
+        text: "Varejo Investidor Select was created for investors who want exposure to global markets through an automated operational structure.",
+        cta: "EXPLORE SELECT",
+        cards: ["R$ 250k minimum", "US$ 50k international", "Forex", "Stocks", "Crypto"],
+      };
   const finalText = "text" in copy.final ? copy.final.text : undefined;
   const educationHref = locale === "pt" ? "/educacao" : `/${locale}/education`;
 
@@ -1202,6 +1217,46 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="relative overflow-hidden border-y border-gold/[0.14] bg-ink px-5 py-16 text-paper md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <div className="absolute inset-0 terminal-grid opacity-20" />
+        <div className="absolute right-[8%] top-8 h-72 w-72 rounded-full bg-gold/[0.08] blur-3xl" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          variants={fadeUp}
+          className="relative mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center"
+        >
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">{selectHome.eyebrow}</p>
+            <h2 className="mt-5 font-serif text-4xl leading-[1.03] tracking-[-0.045em] md:text-6xl">
+              {selectHome.title}
+            </h2>
+            <p className="mt-6 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+              {selectHome.text}
+            </p>
+            <a
+              href={locale === "pt" ? "/servicos#select" : `/${locale}/services#select`}
+              className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+            >
+              {selectHome.cta}
+            </a>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {selectHome.cards.map((item, index) => (
+              <article key={item} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine">
+                <div className="absolute inset-0 luxury-grid opacity-20" />
+                <div className="relative">
+                  <p className="font-mono text-xs font-black text-gold">0{index + 1}</p>
+                  <p className="mt-5 font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-paper">{item}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       <section className="home-global-account px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">

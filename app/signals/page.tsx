@@ -784,6 +784,63 @@ export default function SignalsPage() {
         </div>
       </section>
 
+      <section className="relative overflow-hidden border-y border-gold/[0.14] bg-ink px-5 py-16 text-paper md:px-8 md:py-20">
+        <div className="absolute inset-0 terminal-grid opacity-20" />
+        <div className="absolute right-[8%] top-10 h-72 w-72 rounded-full bg-gold/[0.08] blur-3xl" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
+              <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Varejo Investidor Select</p>
+              <h2 className="mt-4 font-serif text-4xl leading-[1.02] tracking-[-0.045em] md:text-6xl">
+                Prefere não executar operações manualmente?
+              </h2>
+              <p className="mt-6 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+                Enquanto o Canal Elite envia sinais para execução manual, o Select realiza o acompanhamento operacional através de uma estrutura automatizada.
+              </p>
+              <a
+                href={locale === "pt" ? "/servicos#select" : `/${locale}/services#select`}
+                className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+              >
+                Conhecer Varejo Investidor Select
+              </a>
+            </motion.div>
+            <div className="grid gap-5 md:grid-cols-2">
+              {[
+                ["Canal Elite", ["Recebe sinal", "Executa operação", "Acompanha resultado"]],
+                ["Varejo Investidor Select", ["Capital aplicado", "Conta vinculada", "Cópia automática", "Equipe acompanha", "Relatórios periódicos"]],
+              ].map(([title, steps], cardIndex) => (
+                <motion.article
+                  key={title as string}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: cardIndex * 0.06 }}
+                  variants={fadeUp}
+                  className={`relative overflow-hidden border p-6 shadow-fine ${
+                    cardIndex === 1
+                      ? "border-gold/[0.5] bg-gold/[0.10]"
+                      : "border-sky-300/[0.18] bg-paper/[0.04]"
+                  }`}
+                >
+                  <div className="absolute inset-0 terminal-grid opacity-20" />
+                  <div className="relative">
+                    <h3 className="font-serif text-4xl tracking-[-0.05em] text-paper">{title as string}</h3>
+                    <div className="mt-7 grid gap-2">
+                      {(steps as string[]).map((step, index) => (
+                        <div key={step} className="border border-gold/[0.16] bg-ink/[0.36] p-3 text-center">
+                          <p className="text-xs font-black uppercase tracking-[0.14em] text-paper/[0.78]">{step}</p>
+                          {index < (steps as string[]).length - 1 ? <p className="mt-2 text-gold">↓</p> : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="elite-packages" className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader

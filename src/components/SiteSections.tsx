@@ -682,7 +682,6 @@ export function SiteChrome({
   );
   const lastNavItems = useMemo(
     () => [
-      { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
       { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
     ],
     [locale, safeT],
@@ -690,7 +689,12 @@ export function SiteChrome({
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
   const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en]);
-  const mobileNavItems = [...firstNavItems, ...lastNavItems];
+  const servicesActive = isActivePath(["/servicos", "/services", `/${locale}/services`]);
+  const mobileNavItems = [
+    ...firstNavItems,
+    { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
+    ...lastNavItems,
+  ];
 
   return (
     <div className="site-chrome fixed left-0 right-0 top-0 z-50">
@@ -725,6 +729,9 @@ export function SiteChrome({
             })}
             <HeaderDropdown label={marketLabels.markets} items={marketItems} active={marketsActive} />
             <HeaderDropdown label={toolLabels.tools} items={toolItems} active={toolsActive} />
+            <a href={localizedHref("services")} className={`nav-link px-3 py-2 text-ink ${servicesActive ? "active" : ""}`}>
+              {safeT.nav.services}
+            </a>
             {lastNavItems.map((item) => {
               const isActive = isActivePath(item.activePaths);
               return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
@@ -1104,7 +1111,7 @@ export function SupportFooter({
     tools: string;
     language: string;
     marketLine: string;
-    levelLinks: [string, string, string];
+    levelLinks: [string, string, string, string];
     forexCalculator: string;
     compoundInterestTool: string;
     portfolioXrayTool?: string;
@@ -1119,7 +1126,7 @@ export function SupportFooter({
           tools: "\u091F\u0942\u0932\u094D\u0938",
           language: "\u092D\u093E\u0937\u093E",
           marketLine: "Forex | Crypto | Commodities | Global Markets",
-          levelLinks: ["Formiga \u0938\u094D\u0924\u0930", "Lobo \u0938\u094D\u0924\u0930", "Harpia \u0938\u094D\u0924\u0930"],
+          levelLinks: ["Formiga \u0938\u094D\u0924\u0930", "Lobo \u0938\u094D\u0924\u0930", "Harpia \u0938\u094D\u0924\u0930", "Select"],
           forexCalculator: "Forex Calculator",
           compoundInterestTool: "\u0915\u0902\u092A\u093E\u0909\u0902\u0921 \u0907\u0902\u091F\u0930\u0947\u0938\u094D\u091F \u0915\u0948\u0932\u0915\u0941\u0932\u0947\u091F\u0930",
         }
@@ -1133,7 +1140,7 @@ export function SupportFooter({
             tools: "Herramientas",
             language: "Idioma",
             marketLine: "Forex | Cripto | Commodities | Mercados Globales",
-            levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia"],
+            levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia", "Select"],
             forexCalculator: "Calculadora Forex",
             compoundInterestTool: "Calculadora de inter\u00E9s compuesto",
           }
@@ -1147,7 +1154,7 @@ export function SupportFooter({
               tools: "Ferramentas",
               language: "Idioma",
               marketLine: "Forex | Cripto | Commodities | Mercados Globais",
-              levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
+              levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia", "Select"],
               forexCalculator: "Calculadora Forex",
               compoundInterestTool: "Calculadora de Juros Compostos",
               portfolioXrayTool: "Raio-X da Carteira Global",
@@ -1162,7 +1169,7 @@ export function SupportFooter({
                 tools: "\u0627\u0644\u0623\u062F\u0648\u0627\u062A",
                 language: "\u0627\u0644\u0644\u063A\u0629",
                 marketLine: "Forex | Crypto | Commodities | Global Markets",
-                levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia"],
+                levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia", "Select"],
                 forexCalculator: "\u062D\u0627\u0633\u0628\u0629 Forex",
                 compoundInterestTool: "\u062D\u0627\u0633\u0628\u0629 \u0627\u0644\u0641\u0627\u0626\u062F\u0629 \u0627\u0644\u0645\u0631\u0643\u0628\u0629",
               }
@@ -1176,7 +1183,7 @@ export function SupportFooter({
                   tools: "Ara\u00E7lar",
                   language: "Dil",
                   marketLine: "Forex | Kripto | Emtialar | K\u00FCresel Piyasalar",
-                  levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi"],
+                  levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi", "Select"],
                   forexCalculator: "Forex Hesaplay\u0131c\u0131",
                   compoundInterestTool: "Bile\u015Fik Faiz Hesaplay\u0131c\u0131",
                 }
@@ -1189,7 +1196,7 @@ export function SupportFooter({
                   tools: locale === "id" ? "Alat" : locale === "vi" ? "C\u00F4ng c\u1EE5" : "Tools",
                   language: "Language",
                   marketLine: "Forex | Crypto | Commodities | Global Markets",
-                  levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level"],
+                  levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level", "Select"],
                   forexCalculator: locale === "id" ? "Kalkulator Forex" : locale === "vi" ? "M\u00E1y T\u00EDnh Forex" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13 Forex" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 Forex" : locale === "ja" ? "Forex\u8A08\u7B97\u6A5F" : locale === "ko" ? "Forex \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur Forex" : "Forex Calculator",
                   compoundInterestTool: locale === "id" ? "Kalkulator Bunga Majemuk" : locale === "vi" ? "M\u00E1y T\u00EDnh L\u00E3i K\u00E9p" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13\u0E14\u0E2D\u0E01\u0E40\u0E1A\u0E35\u0E49\u0E22\u0E17\u0E1A\u0E15\u0E49\u0E19" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 \u0441\u043B\u043E\u0436\u043D\u044B\u0445 \u043F\u0440\u043E\u0446\u0435\u043D\u0442\u043E\u0432" : locale === "ur" ? "\u06A9\u0645\u067E\u0627\u0624\u0646\u0688 \u0627\u0646\u0679\u0631\u0633\u0679 \u06A9\u06CC\u0644\u06A9\u0648\u0644\u06CC\u0679\u0631" : locale === "bn" ? "\u099A\u0995\u09CD\u09B0\u09AC\u09C3\u09A6\u09CD\u09A7\u09BF \u09B8\u09C1\u09A6 \u0995\u09CD\u09AF\u09BE\u09B2\u0995\u09C1\u09B2\u09C7\u099F\u09B0" : locale === "ja" ? "\u8907\u5229\u8A08\u7B97\u6A5F" : locale === "ko" ? "\uBCF5\uB9AC \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur d'int\u00E9r\u00EAts compos\u00E9s" : "Compound Interest Calculator",
                 };
@@ -1197,6 +1204,7 @@ export function SupportFooter({
     { href: "/formiga", label: footerLabels.levelLinks[0] },
     { href: "/lobo", label: footerLabels.levelLinks[1] },
     { href: "/harpia", label: footerLabels.levelLinks[2] },
+    { href: "/servicos#select", label: footerLabels.levelLinks[3] },
   ];
   const marketFooterSlugs: MarketSlug[] =
     locale === "pt" ? [...publicMarketSlugs, "fundos-imobiliarios"] : publicMarketSlugs;

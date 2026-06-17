@@ -18,6 +18,8 @@ import {
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
+const SELECT_CONTACT_URL =
+  "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20Varejo%20Investidor%20Select.";
 
 const compactPtServices = [
   {
@@ -530,7 +532,7 @@ export default function ServicesPage() {
       <section className="px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-4 lg:grid-cols-2">
-            {compactServices.map((service, index) => {
+            {compactServices.slice(0, 1).map((service, index) => {
               const href = service.href === "free" ? t.freeChannel.link : service.href;
               const external = service.href === "free";
               const subtitle = "subtitle" in service ? String(service.subtitle) : "";
@@ -686,7 +688,130 @@ export default function ServicesPage() {
       </section>
 
       {isPt ? (
-        <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-24">
+        <section id="select" className="relative overflow-hidden border-y border-gold/[0.16] bg-ink px-5 py-16 text-paper md:px-8 md:py-24">
+          <div className="absolute inset-0 terminal-grid opacity-20" />
+          <div className="absolute right-12 top-12 h-72 w-72 rounded-full bg-gold/[0.08] blur-3xl" />
+          <div className="relative mx-auto max-w-7xl">
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">Varejo Investidor Select</p>
+                <h2 className="mt-5 font-serif text-4xl leading-[1.03] tracking-[-0.045em] md:text-6xl">
+                  Gestão operacional para investidores que desejam exposição aos mercados globais.
+                </h2>
+                <p className="mt-6 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+                  Estrutura criada para investidores que desejam exposição a Forex, ações e criptomoedas sem acompanhar operações diariamente.
+                </p>
+                <div className="mt-6 grid gap-2 sm:grid-cols-2">
+                  {[
+                    "Aplicação mínima R$ 250.000",
+                    "Aproximadamente US$ 50.000 para investidores internacionais",
+                    "Forex",
+                    "Ações",
+                    "Criptomoedas",
+                    "Gestão operacional",
+                    "Conta em seu nome",
+                    "Cópia automática",
+                  ].map((item) => (
+                    <p key={item} className="border border-gold/[0.18] bg-paper/[0.04] px-4 py-3 text-xs font-bold uppercase tracking-[0.13em] text-paper/[0.74]">
+                      <span className="mr-2 text-gold">✓</span>
+                      {item}
+                    </p>
+                  ))}
+                </div>
+                <a
+                  href={SELECT_CONTACT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+                >
+                  Conhecer Select
+                </a>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  ["Aplicação mínima", "R$ 250.000", "ou US$ 50.000"],
+                  ["Taxa de gestão", "0,70% ao ano", "modelo patrimonial"],
+                  ["Taxa de performance", "30%", "sobre resultados acima de 14% ao ano"],
+                  ["Posicionamento", "Multimercado global", "Forex, ações, ETFs, renda fixa, commodities e criptoativos"],
+                ].map(([label, value, detail]) => (
+                  <article key={label} className="relative overflow-hidden border border-gold/[0.24] bg-paper/[0.045] p-5 shadow-fine">
+                    <div className="absolute inset-0 luxury-grid opacity-20" />
+                    <div className="relative">
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">{label}</p>
+                      <p className="mt-4 font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-paper">{value}</p>
+                      <p className="mt-3 text-sm leading-6 text-paper/[0.62]">{detail}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {isPt ? (
+        <section id="domine-ichimoku" className="relative overflow-hidden border-y border-gold/[0.12] bg-ink px-5 py-14 text-paper md:px-8 md:py-20">
+          <div className="absolute inset-0 terminal-grid opacity-18" />
+          <div className="absolute right-12 top-10 h-64 w-64 bg-gold/[0.055] blur-3xl" />
+          <div className="relative mx-auto max-w-7xl">
+            <div className="max-w-4xl">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">Produto educacional</p>
+              <h2 className="mt-4 font-serif text-4xl uppercase leading-[1.02] tracking-[-0.04em] text-paper md:text-6xl">
+                Domine o Ichimoku
+              </h2>
+              <p className="mt-5 max-w-3xl text-base leading-8 text-paper/[0.7] md:text-lg">
+                Ebook completo + aula gravada para aprender a interpretar o Ichimoku em diferentes mercados financeiros.
+              </p>
+            </div>
+
+            <motion.article
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              variants={fadeUp}
+              className="mt-9 grid gap-6 border border-gold/[0.32] bg-paper/[0.045] p-5 shadow-premium md:grid-cols-[180px_1fr_auto] md:items-center md:p-7"
+            >
+              <div className="mx-auto w-full max-w-[180px] border border-gold/[0.24] bg-paper/[0.06] p-2">
+                <Image
+                  src="/products/ebook-ichimoku.png"
+                  alt="Capa do ebook Domine o Ichimoku"
+                  width={512}
+                  height={768}
+                  className="h-auto max-h-[260px] w-full object-contain"
+                  sizes="180px"
+                />
+              </div>
+
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">Ebook + aula gravada</p>
+                <h2 className="mt-3 font-serif text-4xl leading-[1.02] tracking-[-0.04em] text-paper md:text-5xl">
+                  Domine o Ichimoku
+                </h2>
+                <p className="mt-4 max-w-3xl text-base leading-8 text-paper/[0.7]">
+                  Aprenda os fundamentos do Ichimoku, seus principais componentes e como interpretar tendência, suporte, resistência, momentum e contexto de mercado com mais clareza.
+                </p>
+              </div>
+
+              <div className="min-w-[230px] border border-gold/[0.24] bg-ink/[0.5] p-5 text-center">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">Preço</p>
+                <p className="mt-3 font-serif text-5xl tracking-[-0.05em] text-paper">R$ 79,90</p>
+                <a
+                  href={ICHIMOKU_PRODUCT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52] hover:shadow-[0_0_22px_rgba(201,155,62,0.22)]"
+                >
+                  Comprar agora
+                </a>
+              </div>
+            </motion.article>
+          </div>
+        </section>
+      ) : null}
+
+      {isPt ? (
+        <section id="mentorias" className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-24">
           <div className="mx-auto max-w-7xl">
             <SectionHeader
               eyebrow="Serviços estratégicos"
@@ -778,8 +903,8 @@ export default function ServicesPage() {
         </section>
       ) : null}
 
-      {isPt ? (
-        <section className="relative overflow-hidden border-y border-gold/[0.12] bg-ink px-5 py-14 text-paper md:px-8 md:py-20">
+      {false && isPt ? (
+        <section className="hidden">
           <div className="absolute inset-0 terminal-grid opacity-18" />
           <div className="absolute right-12 top-10 h-64 w-64 bg-gold/[0.055] blur-3xl" />
           <div className="relative mx-auto max-w-7xl">

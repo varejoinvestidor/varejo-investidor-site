@@ -512,6 +512,39 @@ export default function SobrePage() {
         </div>
       </section>
 
+      <section className="relative overflow-hidden border-y border-gold/[0.12] bg-ink px-5 py-16 text-paper md:px-8 md:py-24">
+        <div className="absolute inset-0 terminal-grid opacity-20" />
+        <div className="absolute right-10 top-10 h-72 w-72 rounded-full bg-gold/[0.08] blur-3xl" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="max-w-4xl">
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">Evolu\u00E7\u00E3o do ecossistema</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">
+              Formiga, Lobo, Harpia e Select.
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-paper/[0.72]">
+              O Select representa a camada mais avan\u00E7ada do ecossistema Varejo Investidor, destinada a investidores que j\u00E1 constru\u00EDram patrim\u00F4nio relevante e buscam uma estrutura internacional de diversifica\u00E7\u00E3o, prote\u00E7\u00E3o e crescimento de longo prazo.
+            </p>
+          </div>
+          <div className="mt-10 grid gap-4 lg:grid-cols-4">
+            {[
+              ["Formiga", "Primeiros passos financeiros"],
+              ["Lobo", "Estrutura operacional"],
+              ["Harpia", "Vis\u00E3o global"],
+              ["Select", "Estrutura patrimonial avan\u00E7ada"],
+            ].map(([level, text], index) => (
+              <article key={level} className="relative overflow-hidden border border-gold/[0.2] bg-paper/[0.04] p-6 shadow-fine">
+                <div className="absolute inset-0 luxury-grid opacity-20" />
+                <div className="relative">
+                  <p className="font-mono text-xs font-black text-gold">0{index + 1}</p>
+                  <h3 className="mt-5 font-serif text-4xl tracking-[-0.05em] text-paper">{level}</h3>
+                  <p className="mt-4 text-sm font-bold uppercase tracking-[0.13em] text-paper/[0.68]">{text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl">
           <motion.div
