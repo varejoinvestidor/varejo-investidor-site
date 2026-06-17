@@ -5,19 +5,23 @@ import Image from "next/image";
 import {
   BrokerBanners,
   ContactSection,
-  ELITE_LASTLINK_URL,
-  ELITE_STRIPE_LINKS,
   FreeChannelCTA,
   SectionHeader,
   SiteChrome,
   SupportFooter,
   fadeUp,
-  getElitePlanHref,
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
+const ELITE_LASTLINK_URL = "https://lastlink.com/p/CE761BB8E/checkout-payment/";
+const ELITE_STRIPE_LINKS = [
+  "https://buy.stripe.com/28E3cuccK1dEaub26QdfG01",
+  "https://buy.stripe.com/aFa5kC7Wu6xY1XF9zidfG02",
+  "https://buy.stripe.com/fZubJ00u28G631J26QdfG03",
+  "https://buy.stripe.com/3cI4gy2Ca1dE59Rh1KdfG04",
+];
 const SELECT_CONTACT_URL =
   "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20Varejo%20Investidor%20Select.";
 
@@ -449,12 +453,6 @@ const internationalServicesIntro = {
   ko: "신호, 교육, 글로벌 시장 읽기를 위한 Varejo Investidor 채널을 살펴보세요.",
 };
 
-function compactCardTone(kind: string) {
-  return kind === "free"
-    ? "border-rise/[0.38] bg-rise/[0.06]"
-    : "border-gold/[0.36] bg-gold/[0.07]";
-}
-
 function highTicketTone(kind: string) {
   if (kind === "platinum") {
     return "border-gold bg-ink text-paper shadow-premium";
@@ -471,20 +469,6 @@ export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const isPt = locale === "pt";
   const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale as keyof typeof internationalServicesIntro] ?? internationalServicesIntro.en;
-  const compactServices =
-    compactServicesByLocale[locale as keyof typeof compactServicesByLocale] ??
-    compactServicesFallbackByLocale[locale as keyof typeof compactServicesFallbackByLocale] ??
-    compactServicesByLocale.en;
-  const packageCopy =
-    elitePackagesByLocale[locale as keyof typeof elitePackagesByLocale] ??
-    elitePackagesFallbackByLocale[locale as keyof typeof elitePackagesFallbackByLocale] ??
-    elitePackagesByLocale.en;
-  const internationalElitePrices = [
-    ["Monthly", "US$30"],
-    ["3 Months", "US$80"],
-    ["6 Months", "US$145"],
-    ["Annual", "US$240"],
-  ];
   const productLabel =
     locale === "en"
       ? "Product"
@@ -529,160 +513,95 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="px-5 py-14 md:px-8 md:py-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-4 lg:grid-cols-2">
-            {compactServices.slice(0, 1).map((service, index) => {
-              const href = service.href === "free" ? t.freeChannel.link : service.href;
-              const external = service.href === "free";
-              const subtitle = "subtitle" in service ? String(service.subtitle) : "";
-              const details = "details" in service ? (service.details as string[]) : [];
-              const highlights = "highlights" in service ? (service.highlights as string[]) : [];
-              const linkProps = {
-                href,
-                target: external ? "_blank" : undefined,
-                rel: external ? "noopener noreferrer" : undefined,
-              };
+      <section className="relative overflow-hidden px-5 py-14 md:px-8 md:py-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(201,155,62,0.08),transparent_42%)]" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Canal Elite</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.02] tracking-[-0.045em] text-ink md:text-6xl">
+              Receba sinais ao vivo pelo WhatsApp.
+            </h2>
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-ink/[0.66] md:text-lg">
+              Escolha a forma de pagamento do Canal Elite. Clientes no Brasil podem pagar em reais via Lastlink. Clientes internacionais podem assinar em dólar via Stripe.
+            </p>
+          </div>
 
-              return (
-                <motion.article
-                  key={service.title}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: index * 0.05 }}
-                  variants={fadeUp}
-                  className={`service-channel-card service-channel-${service.kind} relative overflow-hidden border p-6 shadow-fine md:p-7 ${compactCardTone(service.kind)}`}
-                >
-                  <div className="absolute inset-0 luxury-grid opacity-30" />
-                  <div className="relative flex h-full flex-col gap-6">
-                    <div>
-                      <p className="font-mono text-xs uppercase tracking-[0.22em] text-gold">{productLabel} 0{index + 1}</p>
-                      <h2 className="mt-4 font-serif text-4xl tracking-[-0.04em]">{service.title}</h2>
-                      {subtitle ? (
-                        <p className="mt-3 text-xs font-bold uppercase tracking-[0.18em] text-rise">{subtitle}</p>
-                      ) : null}
-                      <p className="mt-4 max-w-2xl leading-7 text-ink/[0.66]">{service.description}</p>
-                      {details.length ? (
-                        <div className="mt-4 grid gap-3 text-sm leading-7 text-ink/[0.62]">
-                          {details.map((paragraph) => (
-                            <p key={paragraph}>{paragraph}</p>
-                          ))}
-                        </div>
-                      ) : null}
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {service.bullets.map((bullet) => (
-                          <span key={bullet} className="border border-ink/[0.1] px-3 py-2 text-xs uppercase tracking-[0.14em] text-ink/[0.62]">
-                            {bullet}
-                          </span>
-                        ))}
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            <motion.article
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="relative flex min-h-[560px] flex-col overflow-hidden border border-gold/[0.28] bg-gradient-to-br from-ink via-[#07110d] to-ink p-6 text-paper shadow-premium md:p-8"
+            >
+              <div className="absolute right-0 top-0 h-72 w-72 bg-gold/[0.08] blur-3xl" />
+              <div className="relative flex h-full flex-col">
+                <span className="w-fit bg-gold px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-ink">Pagamento Brasil</span>
+                <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em]">Lastlink</h3>
+                <p className="mt-4 text-base leading-8 text-paper/[0.68]">
+                  Pagamento nacional em reais para acesso ao Canal Elite.
+                </p>
+                <div className="mt-7 grid gap-3">
+                  {elitePtPackages.map(([period, price, badge]) => (
+                    <div key={period} className="grid gap-3 border border-gold/[0.16] bg-paper/[0.045] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{period}</p>
+                        <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{price}</p>
                       </div>
-                      {highlights.length ? (
-                        <div className="free-channel-highlights mt-6 grid gap-2">
-                          {highlights.map((item) => (
-                            <p key={item} className="flex items-center gap-3 border border-rise/[0.16] bg-rise/[0.055] px-3 py-2 text-xs font-bold uppercase tracking-[0.13em] text-ink/[0.72]">
-                              <span className="text-rise">✓</span>
-                              {item}
-                            </p>
-                          ))}
-                        </div>
-                      ) : null}
-                      {index === 0 ? (
-                        <div className="elite-package-table mt-6 border border-gold/[0.24] bg-ink/[0.82] p-4">
-                          {isPt ? (
-                            <>
-                              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">Escolha sua forma de pagamento</p>
-                              <p className="mt-3 text-sm leading-6 text-paper/[0.64]">
-                                Clientes no Brasil podem pagar em reais via Lastlink. Clientes internacionais podem assinar em dólar via Stripe.
-                              </p>
-                              <div className="mt-5 grid gap-4">
-                                <div className="border border-gold/[0.32] bg-paper/[0.05] p-4">
-                                  <span className="inline-block bg-gold px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-ink">
-                                    Brasil
-                                  </span>
-                                  <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em] text-paper">Pagamento Brasil</h3>
-                                  <p className="mt-3 text-sm leading-6 text-paper/[0.66]">
-                                    Assine o Canal Elite em reais com checkout nacional seguro pela Lastlink.
-                                  </p>
-                                  <p className="mt-4 font-serif text-2xl tracking-[-0.04em] text-gold">A partir de R$149,90/mês</p>
-                                  <a
-                                    href={ELITE_LASTLINK_URL}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="mt-4 flex w-full items-center justify-center border border-gold bg-gold px-4 py-3 text-center text-[10px] font-black uppercase tracking-[0.14em] text-ink transition hover:-translate-y-0.5"
-                                  >
-                                    Pagar em reais
-                                  </a>
-                                </div>
-
-                                <div className="border border-gold/[0.2] bg-paper/[0.035] p-4">
-                                  <span className="inline-block border border-gold/[0.45] px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-gold">
-                                    Internacional
-                                  </span>
-                                  <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em] text-paper">Pagamento Internacional</h3>
-                                  <p className="mt-3 text-sm leading-6 text-paper/[0.66]">
-                                    Para clientes fora do Brasil, assine em dólar via Stripe.
-                                  </p>
-                                  <div className="mt-4 grid gap-2">
-                                    {internationalElitePrices.map(([period, price], packageIndex) => (
-                                      <div key={period} className="grid gap-2 border border-gold/[0.14] bg-ink/[0.62] p-3 sm:grid-cols-[1fr_auto] sm:items-center">
-                                        <div>
-                                          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-paper/[0.58]">{period}</p>
-                                          <p className="mt-1 font-mono text-base font-bold text-gold">{price}</p>
-                                        </div>
-                                        <a
-                                          href={ELITE_STRIPE_LINKS[packageIndex]}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="border border-gold/[0.45] px-3 py-2 text-center text-[9px] font-black uppercase tracking-[0.12em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
-                                        >
-                                          Assinar em dólar
-                                        </a>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-gold">{packageCopy.title}</p>
-                              <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                                {packageCopy.items.map(([period, price, badge], packageIndex) => (
-                                  <div key={period} className="relative border border-gold/[0.16] bg-paper/[0.05] p-3">
-                                    {badge ? (
-                                      <span className="mb-2 inline-block bg-gold px-2 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-ink">
-                                        {badge}
-                                      </span>
-                                    ) : null}
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/[0.58]">{period}</p>
-                                    <p className="mt-1 font-serif text-2xl tracking-[-0.04em] text-gold">{price}</p>
-                                    <a
-                                      href={getElitePlanHref(locale, packageIndex)}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="mt-3 inline-block border border-gold/[0.35] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
-                                    >
-                                      {packageCopy.cta}
-                                    </a>
-                                  </div>
-                                ))}
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      ) : null}
+                      {badge ? <span className="w-fit border border-gold/[0.36] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold">{badge}</span> : null}
                     </div>
-                    <a
-                      {...linkProps}
-                      className={`service-channel-cta service-channel-cta-${service.kind} block shrink-0 px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] transition md:min-w-64`}
-                    >
-                      {service.cta}
-                    </a>
-                  </div>
-                </motion.article>
-              );
-            })}
+                  ))}
+                </div>
+                <a
+                  href={ELITE_LASTLINK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-auto inline-flex w-full items-center justify-center border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d8ad52]"
+                >
+                  Pagar em reais
+                </a>
+              </div>
+            </motion.article>
+
+            <motion.article
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="relative flex min-h-[560px] flex-col overflow-hidden border border-gold/[0.22] bg-gradient-to-br from-ink via-[#06111f] to-ink p-6 text-paper shadow-premium md:p-8"
+            >
+              <div className="absolute right-0 top-0 h-72 w-72 bg-sky-500/[0.07] blur-3xl" />
+              <div className="relative flex h-full flex-col">
+                <span className="w-fit border border-gold/[0.42] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-gold">Pagamento Internacional</span>
+                <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em]">Stripe</h3>
+                <p className="mt-4 text-base leading-8 text-paper/[0.68]">
+                  Assinatura internacional em dólar para clientes fora do Brasil.
+                </p>
+                <div className="mt-7 grid gap-3">
+                  {[
+                    ["Monthly", "US$30"],
+                    ["3 Months", "US$80"],
+                    ["6 Months", "US$145"],
+                    ["Annual", "US$240"],
+                  ].map(([period, price], index) => (
+                    <div key={period} className="grid gap-3 border border-gold/[0.14] bg-paper/[0.04] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{period}</p>
+                        <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{price}</p>
+                      </div>
+                      <a
+                        href={ELITE_STRIPE_LINKS[index]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center border border-gold/[0.42] px-4 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
+                      >
+                        Assinar
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
           </div>
         </div>
       </section>
@@ -719,9 +638,7 @@ export default function ServicesPage() {
                   ))}
                 </div>
                 <a
-                  href={SELECT_CONTACT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/servicos/select"
                   className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
                 >
                   Conhecer Select

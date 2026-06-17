@@ -67,8 +67,6 @@ function SchemaScripts({ locale }: { locale: Locale }) {
 export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
   const { locale, t, changeLocale } = useSiteLocale();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("all");
-  const [newsletterEmail, setNewsletterEmail] = useState("");
-  const [newsletterSent, setNewsletterSent] = useState(false);
   const labels = insightLabels[pageLocale] ?? insightLabels.en;
   const hero = insightsHero[pageLocale] ?? insightsHero.en;
   const posts = getPostsByLocale(pageLocale);
@@ -99,7 +97,7 @@ export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
         </section>
 
         <section className="px-5 py-12 md:px-8 md:py-16">
-          <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
+          <div className="mx-auto max-w-7xl">
             <motion.article variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="terminal-module relative overflow-hidden border border-gold/[0.24] bg-white p-7 shadow-premium md:p-10">
               <div className="absolute inset-0 luxury-grid opacity-35" />
               <div className="relative">
@@ -117,37 +115,6 @@ export function InsightsPage({ pageLocale }: { pageLocale: Locale }) {
                 </a>
               </div>
             </motion.article>
-
-            <motion.form
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              onSubmit={(event) => {
-                event.preventDefault();
-                setNewsletterSent(true);
-              }}
-              className="terminal-module relative overflow-hidden border border-gold/[0.18] bg-white p-7 md:p-9"
-            >
-              <div className="absolute inset-0 signal-grid opacity-25" />
-              <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Newsletter</p>
-                <h2 className="mt-4 font-serif text-4xl tracking-[-0.04em]">{labels.newsletterTitle}</h2>
-                <p className="mt-4 leading-8 text-paper/[0.66]">{labels.newsletterText}</p>
-                <label className="mt-7 block text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.48]">{labels.email}</label>
-                <input
-                  value={newsletterEmail}
-                  onChange={(event) => setNewsletterEmail(event.target.value)}
-                  type="email"
-                  placeholder="global@investor.com"
-                  className="mt-3 w-full border border-gold/[0.22] bg-ink px-4 py-4 text-paper outline-none transition placeholder:text-paper/[0.28] focus:border-gold"
-                />
-                <button className="mt-4 min-h-12 w-full border border-gold bg-gold px-5 py-4 text-xs font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
-                  {labels.newsletterButton}
-                </button>
-                {newsletterSent ? <p className="mt-4 text-sm font-semibold text-rise">{labels.newsletterSuccess}</p> : null}
-              </div>
-            </motion.form>
           </div>
         </section>
 

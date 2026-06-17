@@ -1052,17 +1052,17 @@ export default function Home() {
   const selectHome = locale === "pt"
     ? {
         eyebrow: "VAREJO INVESTIDOR SELECT",
-        title: "Não possui tempo para acompanhar operações?",
-        text: "O Varejo Investidor Select foi criado para investidores que desejam exposição aos mercados globais através de uma estrutura operacional automatizada.",
-        cta: "CONHECER VAREJO INVESTIDOR SELECT",
-        cards: ["R$ 250.000 mínimo", "US$ 50.000 internacional", "Forex", "Ações", "Criptomoedas"],
+        title: "Varejo Investidor Select",
+        text: "Para investidores que desejam exposição global sem executar operações manualmente.",
+        cta: "CONHECER SELECT",
+        cards: ["Aplicação mínima R$250.000", "ou US$50.000", "Forex", "Ações", "Criptomoedas"],
       }
     : {
-        eyebrow: "ADVANCED LEVEL",
-        title: "No time to monitor trades?",
-        text: "Varejo Investidor Select was created for investors who want exposure to global markets through an automated operational structure.",
+        eyebrow: "VAREJO INVESTIDOR SELECT",
+        title: "Varejo Investidor Select",
+        text: "For investors who want global exposure without executing trades manually.",
         cta: "EXPLORE SELECT",
-        cards: ["R$ 250k minimum", "US$ 50k international", "Forex", "Stocks", "Crypto"],
+        cards: ["Minimum R$250,000", "or US$50,000", "Forex", "Stocks", "Crypto"],
       };
   const finalText = "text" in copy.final ? copy.final.text : undefined;
   const educationHref = locale === "pt" ? "/educacao" : `/${locale}/education`;
@@ -1148,12 +1148,11 @@ export default function Home() {
               </a>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
-              {flow.steps.map((step, index) => (
+              {flow.steps.map((step) => (
                 <article key={step.name} className="level-card relative overflow-hidden border border-gold/[0.16] bg-paper p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.48] hover:shadow-premium">
                   <div className="absolute inset-0 luxury-grid opacity-25" />
                   <div className="relative">
-                    <span className="font-mono text-xs font-black text-gold">0{index + 1}</span>
-                    <h3 className="mt-3 font-serif text-3xl leading-[1.04] tracking-[-0.035em]">{step.name}</h3>
+                    <h3 className="font-serif text-3xl leading-[1.04] tracking-[-0.035em]">{step.name}</h3>
                     <p className="mt-4 text-sm leading-7 text-ink/[0.64]">{step.text}</p>
                   </div>
                 </article>
@@ -1200,10 +1199,7 @@ export default function Home() {
             {copy.cards.map((card, index) => (
               <motion.article key={card.title} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.45, delay: index * 0.06 }} variants={fadeUp} className="level-card system-module group relative overflow-hidden p-7 shadow-fine md:p-8">
                 <div className="absolute inset-0 luxury-grid opacity-30" />
-                <div className="relative grid gap-5 sm:grid-cols-[76px_1fr_auto] sm:items-center">
-                  <span className="grid h-16 w-16 place-items-center border border-gold/[0.5] bg-paper/[0.05] font-mono text-sm text-gold transition group-hover:border-gold group-hover:bg-gold/[0.08]">
-                    0{index + 1}
-                  </span>
+                <div className="relative grid gap-5 sm:grid-cols-[1fr_auto] sm:items-center">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.36em] text-gold">{card.code}</p>
                     <h3 className="mt-2 font-serif text-3xl leading-[1.04] tracking-[-0.035em] md:text-4xl">{card.title}</h3>
@@ -1239,19 +1235,18 @@ export default function Home() {
               {selectHome.text}
             </p>
             <a
-              href={locale === "pt" ? "/servicos#select" : `/${locale}/services#select`}
+              href="/select"
               className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
             >
               {selectHome.cta}
             </a>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            {selectHome.cards.map((item, index) => (
+            {selectHome.cards.map((item) => (
               <article key={item} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine">
                 <div className="absolute inset-0 luxury-grid opacity-20" />
                 <div className="relative">
-                  <p className="font-mono text-xs font-black text-gold">0{index + 1}</p>
-                  <p className="mt-5 font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-paper">{item}</p>
+                  <p className="font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-paper">{item}</p>
                 </div>
               </article>
             ))}

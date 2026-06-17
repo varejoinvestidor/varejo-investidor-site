@@ -792,16 +792,16 @@ export default function SignalsPage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
               <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Varejo Investidor Select</p>
               <h2 className="mt-4 font-serif text-4xl leading-[1.02] tracking-[-0.045em] md:text-6xl">
-                Prefere não executar operações manualmente?
+                Já possui patrimônio acima de R$250 mil?
               </h2>
               <p className="mt-6 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
-                Enquanto o Canal Elite envia sinais para execução manual, o Select realiza o acompanhamento operacional através de uma estrutura automatizada.
+                Conheça o Varejo Investidor Select e tenha execução automática das operações sem necessidade de copiar sinais manualmente.
               </p>
               <a
-                href={locale === "pt" ? "/servicos#select" : `/${locale}/services#select`}
+                href="/select"
                 className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
               >
-                Conhecer Varejo Investidor Select
+                Conhecer Select
               </a>
             </motion.div>
             <div className="grid gap-5 md:grid-cols-2">

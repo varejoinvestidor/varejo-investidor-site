@@ -95,6 +95,7 @@ const staticPaths = [
   "/elite-report-hi",
   "/educacao",
   "/servicos",
+  "/select",
   "/services",
   "/sobre",
   "/about",

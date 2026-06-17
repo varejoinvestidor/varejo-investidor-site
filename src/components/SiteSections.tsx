@@ -643,57 +643,56 @@ export function SiteChrome({
   const firstNavItems = useMemo(
     () => [
       { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", "/pt", "/en", "/es", "/fr", "/it", "/de", "/hi", "/ar", "/tr", "/id", "/vi", "/th", "/ru", "/ur", "/bn", "/ja", "/ko", "/zh"] },
-      {
-        label: insightNavLabel,
-        href: getInsightsPath(locale),
-        activePaths: [
-          "/artigos-globais",
-          "/global-articles",
-          "/articulos-globales",
-          "/global-articles-hi",
-          "/ar/global-articles",
-          "/tr/global-articles",
-          "/id/articles",
-          "/vi/articles",
-          "/insights-globais",
-          "/global-insights",
-          "/insights-globales",
-          "/global-insights-hi",
-          "/ar/global-insights",
-          "/tr/global-insights",
-          "/id/insights",
-          "/vi/insights",
-          "/ja/articles",
-          "/ja/insights",
-          "/ko/articles",
-          "/ko/insights",
-          "/it/articles",
-          "/it/insights",
-          "/de/articles",
-          "/de/insights",
-          "/zh/articles",
-          "/zh/insights",
-        ],
-      },
       { label: safeT.nav.signals, href: localizedHref("signals"), activePaths: ["/sinais", "/signals", `/${locale}/signals`] },
       { label: safeT.nav.education, href: localizedHref("education"), activePaths: ["/educacao", `/${locale}/education`] },
-    ],
-    [locale, safeT, insightNavLabel],
-  );
-  const lastNavItems = useMemo(
-    () => [
+      { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
       { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
     ],
     [locale, safeT],
   );
+  const articlesNavItem = useMemo(
+    () => ({
+      label: insightNavLabel,
+      href: getInsightsPath(locale),
+      activePaths: [
+        "/artigos-globais",
+        "/global-articles",
+        "/articulos-globales",
+        "/global-articles-hi",
+        "/ar/global-articles",
+        "/tr/global-articles",
+        "/id/articles",
+        "/vi/articles",
+        "/insights-globais",
+        "/global-insights",
+        "/insights-globales",
+        "/global-insights-hi",
+        "/ar/global-insights",
+        "/tr/global-insights",
+        "/id/insights",
+        "/vi/insights",
+        "/ja/articles",
+        "/ja/insights",
+        "/ko/articles",
+        "/ko/insights",
+        "/it/articles",
+        "/it/insights",
+        "/de/articles",
+        "/de/insights",
+        "/zh/articles",
+        "/zh/insights",
+      ],
+    }),
+    [locale, insightNavLabel],
+  );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
   const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en]);
-  const servicesActive = isActivePath(["/servicos", "/services", `/${locale}/services`]);
   const mobileNavItems = [
     ...firstNavItems,
-    { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
-    ...lastNavItems,
+    { label: marketLabels.markets, href: marketItems[0].href, activePaths: ["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`] },
+    { label: toolLabels.tools, href: toolItems[0].href, activePaths: ["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en] },
+    articlesNavItem,
   ];
 
   return (
@@ -729,13 +728,9 @@ export function SiteChrome({
             })}
             <HeaderDropdown label={marketLabels.markets} items={marketItems} active={marketsActive} />
             <HeaderDropdown label={toolLabels.tools} items={toolItems} active={toolsActive} />
-            <a href={localizedHref("services")} className={`nav-link px-3 py-2 text-ink ${servicesActive ? "active" : ""}`}>
-              {safeT.nav.services}
+            <a href={articlesNavItem.href} className={`nav-link px-3 py-2 text-ink ${isActivePath(articlesNavItem.activePaths) ? "active" : ""}`}>
+              {articlesNavItem.label}
             </a>
-            {lastNavItems.map((item) => {
-              const isActive = isActivePath(item.activePaths);
-              return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
-            })}
           </div>
 
           <div className="desktop-language-area hidden items-center justify-end xl:flex">
@@ -1204,11 +1199,21 @@ export function SupportFooter({
     { href: "/formiga", label: footerLabels.levelLinks[0] },
     { href: "/lobo", label: footerLabels.levelLinks[1] },
     { href: "/harpia", label: footerLabels.levelLinks[2] },
-    { href: "/servicos#select", label: footerLabels.levelLinks[3] },
+    { href: "/select", label: footerLabels.levelLinks[3] },
   ];
   const marketFooterSlugs: MarketSlug[] =
     locale === "pt" ? [...publicMarketSlugs, "fundos-imobiliarios"] : publicMarketSlugs;
-  const marketAliases: Record<Locale, Partial<Record<MarketSlug, string>>> = {
+  const localizedFooterHref = (page: "home" | "signals" | "education" | "services" | "about") => {
+    if (page === "home") return locale === "pt" ? "/#home" : `/${locale}`;
+    const ptPaths = {
+      signals: "/sinais",
+      education: "/educacao",
+      services: "/servicos",
+      about: "/sobre",
+    };
+    return locale === "pt" ? ptPaths[page] : `/${locale}/${page}`;
+  };
+  const marketAliases: Partial<Record<Locale, Partial<Record<MarketSlug, string>>>> = {
     pt: { forex: "forex", acoes: "acoes", cripto: "cripto", etfs: "etfs", ouro: "ouro", petroleo: "petroleo", commodities: "commodities", "fundos-imobiliarios": "fundos-imobiliarios" },
     en: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     es: { forex: "forex", acoes: "acciones", cripto: "cripto", etfs: "etfs", ouro: "oro", petroleo: "petroleo", commodities: "commodities" },
@@ -1225,8 +1230,10 @@ export function SupportFooter({
     ja: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
     ko: { forex: "forex", acoes: "stocks", cripto: "crypto", etfs: "etfs", ouro: "gold", petroleo: "oil", commodities: "commodities" },
   };
+  const ptMarketAliases = marketAliases.pt ?? {};
+  const localeMarketAliases = marketAliases[locale] ?? marketAliases.en ?? {};
   const marketFooterLinks = marketFooterSlugs.map((slug) => ({
-    href: locale === "pt" ? `/${marketAliases.pt[slug] ?? slug}` : `/${locale}/${(marketAliases[locale] ?? marketAliases.en)[slug] ?? slug}`,
+    href: locale === "pt" ? `/${ptMarketAliases[slug] ?? slug}` : `/${locale}/${localeMarketAliases[slug] ?? slug}`,
     label: getMarketLabel(slug, locale),
   }));
   const platformFooterLinks = platformSlugs.map((slug) => ({
@@ -1261,6 +1268,16 @@ export function SupportFooter({
       ),
     },
   ];
+  const mainFooterLinks = [
+    { href: localizedFooterHref("home"), label: t.nav.home },
+    { href: localizedFooterHref("signals"), label: t.nav.signals },
+    { href: localizedFooterHref("education"), label: t.nav.education },
+    { href: localizedFooterHref("services"), label: t.nav.services },
+    { href: localizedFooterHref("about"), label: t.nav.about },
+    { href: marketFooterLinks[0]?.href ?? "/forex", label: footerLabels.content },
+    { href: "/ferramentas/calculadora-forex", label: footerLabels.tools },
+    { href: getInsightsPath(locale), label: insightLabels[locale]?.nav ?? insightLabels.en.nav },
+  ];
 
   return (
     <>
@@ -1274,7 +1291,7 @@ export function SupportFooter({
       </section>
 
       <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.55fr_0.66fr_0.72fr_0.72fr_0.62fr_0.62fr_0.82fr] lg:items-start">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.55fr_0.62fr_0.66fr_0.72fr_0.72fr_0.62fr_0.62fr_0.82fr] lg:items-start">
           <div>
             <a href="/#home" className="inline-flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
@@ -1303,6 +1320,21 @@ export function SupportFooter({
                   className="grid h-11 w-11 place-items-center border border-ink/[0.12] bg-paper text-ink transition hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-paper"
                 >
                   {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">Menu</p>
+            <div className="mt-4 flex flex-col gap-2">
+              {mainFooterLinks.map((link) => (
+                <a
+                  key={`${link.href}-${link.label}`}
+                  href={link.href}
+                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+                >
+                  {link.label}
                 </a>
               ))}
             </div>
