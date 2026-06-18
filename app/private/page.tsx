@@ -55,6 +55,13 @@ type PrivateCopy = {
     paragraphs: string[];
     cards: [string, string][];
   };
+  institutions: {
+    title: string;
+    subtitle: string;
+    text: string;
+    brazil: string;
+    global: string;
+  };
   comparison: {
     title: string;
     tiers: [string, string, string][];
@@ -187,6 +194,13 @@ const ptCopy: PrivateCopy = {
       ["Monitoramento contínuo", "A estrutura patrimonial é acompanhada de forma recorrente, não pontual."],
       ["Relatórios recorrentes", "O cliente recebe visão consolidada da carteira, exposição e evolução patrimonial."],
     ],
+  },
+  institutions: {
+    title: "Compatível com as principais instituições financeiras",
+    subtitle: "O acompanhamento pode ser feito respeitando as contas, bancos e corretoras já escolhidos pelo cliente.",
+    text: "O Private foi pensado para investidores que já possuem patrimônio distribuído entre diferentes instituições. A estrutura não prende o cliente a uma única plataforma. O foco é leitura, organização, risco, alocação e acompanhamento patrimonial.",
+    brazil: "Brasil",
+    global: "Mundo",
   },
   comparison: {
     title: "Comparação dos níveis",
@@ -323,6 +337,13 @@ const enCopy: PrivateCopy = {
       ["Continuous monitoring", "The wealth structure is monitored on a recurring basis, not as a one-off review."],
       ["Recurring reports", "The client receives a consolidated view of portfolio, exposure, and wealth evolution."],
     ],
+  },
+  institutions: {
+    title: "Compatible with leading financial institutions",
+    subtitle: "Monitoring can respect the accounts, banks, and brokers already chosen by the client.",
+    text: "Private was designed for investors who already hold wealth across different institutions. The structure does not lock the client into a single platform. The focus is portfolio reading, organization, risk, allocation, and ongoing wealth monitoring.",
+    brazil: "Brazil",
+    global: "Global",
   },
   comparison: {
     title: "Level comparison",
@@ -465,6 +486,13 @@ const copyByLocale: Record<string, PrivateCopy> = {
         ["Reportes recurrentes", "El cliente recibe una visión consolidada de cartera, exposición y evolución patrimonial."],
       ],
     },
+    institutions: {
+      title: "Compatible con las principales instituciones financieras",
+      subtitle: "El seguimiento puede respetar las cuentas, bancos y corredoras ya elegidos por el cliente.",
+      text: "Private fue diseñado para inversores que ya tienen patrimonio distribuido entre diferentes instituciones. La estructura no ata al cliente a una sola plataforma. El foco está en lectura, organización, riesgo, asignación y seguimiento patrimonial.",
+      brazil: "Brasil",
+      global: "Mundo",
+    },
     comparison: {
       title: "Comparación de niveles",
       tiers: [
@@ -551,6 +579,34 @@ const labelsByLocale: Record<string, PrivateLabels> = {
   },
 };
 
+const brazilInstitutions = [
+  "Itaú",
+  "BTG Pactual",
+  "XP Investimentos",
+  "Bradesco",
+  "Santander",
+  "Banco do Brasil",
+  "Safra",
+  "Inter",
+  "Nubank",
+  "Clear",
+];
+
+const globalInstitutions = [
+  "JPMorgan",
+  "Goldman Sachs",
+  "Morgan Stanley",
+  "UBS",
+  "HSBC",
+  "Citibank",
+  "Bank of America",
+  "Charles Schwab",
+  "Interactive Brokers",
+  "Fidelity",
+  "BlackRock",
+  "Binance",
+];
+
 function usePrivateCopy(locale: string) {
   return copyByLocale[locale] ?? enCopy;
 }
@@ -566,6 +622,20 @@ function AccentCard({ title, text }: { title: string; text: string }) {
       <h3 className="mt-5 font-serif text-2xl leading-[1.05] tracking-[-0.035em] text-paper">{title}</h3>
       <p className="mt-4 text-sm leading-7 text-paper/[0.68]">{text}</p>
     </article>
+  );
+}
+
+function InstitutionLogoCard({ name }: { name: string }) {
+  return (
+    <div
+      role="img"
+      aria-label={name}
+      className="group flex min-h-[76px] items-center justify-center border border-gold/[0.12] bg-paper/[0.025] px-4 py-5 text-center shadow-fine transition duration-300 hover:-translate-y-0.5 hover:border-gold/[0.45] hover:bg-gold/[0.06]"
+    >
+      <span className="text-sm font-black uppercase tracking-[0.18em] text-paper/[0.58] transition group-hover:text-gold">
+        {name}
+      </span>
+    </div>
   );
 }
 
@@ -629,6 +699,60 @@ export default function PrivatePage() {
         </motion.div>
       </section>
 
+      <section className="border-b border-gold/[0.12] bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.86fr_1.14fr]">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{labels.clientControl}</p>
+            <h2 className="mt-5 font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.difference.title}</h2>
+            <p className="mt-5 font-serif text-2xl leading-[1.16] tracking-[-0.035em] text-gold">{copy.difference.subtitle}</p>
+            <div className="mt-6 grid gap-4 text-base leading-8 text-paper/[0.68]">
+              {copy.difference.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {copy.difference.cards.map(([title, text]) => (
+              <AccentCard key={title} title={title} text={text} />
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="border-b border-gold/[0.12] bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
+          <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{labels.clientControl}</p>
+              <h2 className="mt-5 font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.institutions.title}</h2>
+            </div>
+            <div>
+              <p className="font-serif text-2xl leading-[1.18] tracking-[-0.035em] text-gold">{copy.institutions.subtitle}</p>
+              <p className="mt-5 text-base leading-8 text-paper/[0.68]">{copy.institutions.text}</p>
+            </div>
+          </div>
+
+          <div className="mt-12 grid gap-8">
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.26em] text-paper/[0.5]">{copy.institutions.brazil}</p>
+              <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-5">
+                {brazilInstitutions.map((name) => (
+                  <InstitutionLogoCard key={name} name={name} />
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.26em] text-paper/[0.5]">{copy.institutions.global}</p>
+              <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-6">
+                {globalInstitutions.map((name) => (
+                  <InstitutionLogoCard key={name} name={name} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       <section className="bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
           <h2 className="font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.audience.title}</h2>
@@ -669,7 +793,7 @@ export default function PrivatePage() {
                   <div className="mt-7 grid gap-3">
                     {tier.includes.map((item) => (
                       <p key={item} className="border border-gold/[0.12] bg-paper/[0.035] px-4 py-3 text-sm leading-6 text-paper/[0.74]">
-                        <span className="mr-2 text-gold">✓</span>
+                        <span className="mr-2 text-gold" aria-hidden="true">+</span>
                         {item}
                       </p>
                     ))}
@@ -719,26 +843,6 @@ export default function PrivatePage() {
                 <p className="mt-6 text-base leading-7 text-paper/[0.68]">{profile}</p>
                 <p className="mt-auto pt-8 font-serif text-3xl tracking-[-0.04em] text-gold">{wealth}</p>
               </article>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      <section className="border-y border-gold/[0.12] bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.86fr_1.14fr]">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{labels.clientControl}</p>
-            <h2 className="mt-5 font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.difference.title}</h2>
-            <p className="mt-5 font-serif text-2xl leading-[1.16] tracking-[-0.035em] text-gold">{copy.difference.subtitle}</p>
-            <div className="mt-6 grid gap-4 text-base leading-8 text-paper/[0.68]">
-              {copy.difference.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2">
-            {copy.difference.cards.map(([title, text]) => (
-              <AccentCard key={title} title={title} text={text} />
             ))}
           </div>
         </motion.div>
