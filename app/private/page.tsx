@@ -70,24 +70,24 @@ type PrivateCopy = {
 const copyByLocale: Record<string, PrivateCopy> = {
   pt: {
     hero: {
-      tag: "Camada institucional global",
+      tag: "CAMADA INSTITUCIONAL GLOBAL",
       title: "Varejo Investidor Private",
-      subtitle: "Estrutura patrimonial institucional para investidores com capital acima de US$ 1.000.000.",
-      text: "Uma abordagem global para proteção, expansão e organização de patrimônio em escala internacional.",
+      subtitle: "Estrutura patrimonial global para investidores com capital acima de US$ 1.000.000.",
+      text: "Uma camada privada para organização, proteção e expansão de patrimônio em escala internacional.",
       primary: "Solicitar análise privada",
       secondary: "Agendar conversa institucional",
       cards: [
         ["Entrada", "Acima de US$ 1.000.000"],
-        ["Perfil", "Alta escala patrimonial"],
-        ["Foco", "Proteção e alocação global"],
+        ["Perfil", "Investidores, empresários e famílias com patrimônio global"],
+        ["Foco", "Proteção, alocação e continuidade patrimonial"],
       ],
     },
     what: {
       eyebrow: "O que é o Private",
-      title: "O Private não é um produto. É uma estrutura patrimonial institucional.",
+      title: "O Private não é um produto. É uma estrutura patrimonial.",
       paragraphs: [
-        "O Private é uma estrutura desenvolvida para investidores que já possuem patrimônio consolidado e precisam de organização, proteção e expansão global.",
-        "Diferente dos níveis anteriores, aqui o foco não é execução de sinais ou automação. O foco é estrutura patrimonial.",
+        "O Varejo Investidor Private foi desenvolvido para investidores que já possuem patrimônio consolidado e precisam de organização, leitura global, proteção de capital e planejamento de longo prazo.",
+        "Diferente das camadas operacionais, o foco não está apenas em sinais, automação ou execução. O foco está na arquitetura patrimonial: como o capital é distribuído, protegido, acompanhado e preparado para atravessar ciclos econômicos, moedas, jurisdições e gerações.",
       ],
     },
     audience: {
@@ -98,7 +98,7 @@ const copyByLocale: Record<string, PrivateCopy> = {
         "Famílias em construção patrimonial",
         "Profissionais com patrimônio global",
         "Investidores que buscam proteção de capital",
-        "Pessoas com múltiplas moedas e países",
+        "Pessoas com patrimônio em múltiplas moedas e países",
       ],
     },
     institutional: {
@@ -106,10 +106,10 @@ const copyByLocale: Record<string, PrivateCopy> = {
       text: "A estrutura foi criada para organizar patrimônio com visão internacional, planejamento de longo prazo e leitura de risco em múltiplos ambientes.",
       items: [
         "Estruturação global de patrimônio",
-        "Planejamento multimoeda",
         "Proteção de capital em diferentes jurisdições",
-        "Estratégia de alocação internacional",
         "Gestão de risco patrimonial",
+        "Planejamento multimoeda",
+        "Estratégia de alocação internacional",
         "Visão de longo prazo, de 10 a 30 anos",
       ],
     },
@@ -126,19 +126,19 @@ const copyByLocale: Record<string, PrivateCopy> = {
       title: "Fluxo do Private",
       steps: [
         "Entrada de capital",
-        "Análise patrimonial global",
+        "Diagnóstico patrimonial global",
         "Estruturação internacional",
         "Definição de alocação",
-        "Gestão contínua",
+        "Acompanhamento contínuo",
         "Rebalanceamento estratégico",
       ],
     },
     pillars: {
       title: "Pilares do Private",
       cards: [
-        ["Proteção patrimonial", "Organização de capital com foco em preservação e continuidade."],
+        ["Proteção patrimonial", "Organização de capital com foco em preservação, continuidade e defesa contra riscos estruturais."],
         ["Expansão global", "Visão internacional para ampliar exposição e reduzir dependência local."],
-        ["Eficiência tributária estrutural", "Planejamento de estrutura, jurisdição e organização patrimonial."],
+        ["Eficiência estrutural", "Planejamento de estrutura, jurisdição, organização e estratégia patrimonial."],
         ["Diversificação internacional", "Distribuição entre moedas, regiões, instituições e classes de ativos."],
         ["Gestão de risco avançada", "Leitura patrimonial para equilibrar liquidez, proteção e crescimento."],
         ["Planejamento intergeracional", "Estrutura pensada para ciclos longos, sucessão e permanência."],
@@ -147,7 +147,7 @@ const copyByLocale: Record<string, PrivateCopy> = {
     selectVsPrivate: {
       title: "Diferencial em relação ao Select",
       select: "Select: automação operacional e execução estruturada.",
-      private: "Private: estrutura institucional e visão patrimonial global.",
+      private: "Private: estrutura institucional, visão patrimonial global e planejamento de longo prazo.",
     },
     ladder: {
       title: "Posicionamento final da escada",
@@ -161,8 +161,8 @@ const copyByLocale: Record<string, PrivateCopy> = {
       ],
     },
     cta: {
-      title: "Acesso à estrutura Private",
-      text: "O Varejo Investidor Private é destinado a investidores que operam em escala global e buscam estrutura patrimonial de nível institucional.",
+      title: "Estruture seu patrimônio em escala global.",
+      text: "O Private é uma camada reservada para investidores que precisam organizar capital, risco, jurisdição, moeda e continuidade patrimonial.",
       disclaimer: "Conteúdo institucional e educacional. Não representa recomendação individual, promessa de rentabilidade ou oferta pública de investimento.",
     },
   },
@@ -371,7 +371,6 @@ function usePrivateCopy(locale: string) {
 function FeatureCard({ title, text }: { title: string; text: string }) {
   return (
     <article className="relative overflow-hidden border border-gold/[0.18] bg-paper/[0.025] p-6 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.5] hover:shadow-premium">
-      <div className="absolute inset-0 luxury-grid opacity-10" />
       <div className="relative">
         <h3 className="font-serif text-2xl leading-[1.05] tracking-[-0.035em] text-paper">{title}</h3>
         <p className="mt-4 text-sm leading-7 text-paper/[0.68]">{text}</p>
@@ -390,7 +389,6 @@ export default function PrivatePage() {
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="relative overflow-hidden border-b border-gold/[0.14] bg-ink px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-44 lg:px-12 xl:px-16">
-        <div className="absolute inset-0 terminal-grid opacity-8" />
         <div className="absolute right-[8%] top-24 h-[34rem] w-[34rem] rounded-full bg-gold/[0.08] blur-3xl" />
         <div className="relative mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[1fr_0.72fr] lg:items-center">
           <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>
@@ -417,7 +415,6 @@ export default function PrivatePage() {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="grid gap-4">
             {copy.hero.cards.map(([label, value]) => (
               <article key={label} className="relative overflow-hidden border border-gold/[0.24] bg-paper/[0.045] p-6 shadow-fine">
-                <div className="absolute inset-0 luxury-grid opacity-16" />
                 <div className="relative">
                   <p className="text-[10px] font-black uppercase tracking-[0.24em] text-paper/[0.52]">{label}</p>
                   <p className="mt-3 font-serif text-3xl leading-[1.02] tracking-[-0.04em] text-gold">{value}</p>
@@ -457,7 +454,6 @@ export default function PrivatePage() {
       </section>
 
       <section className="relative overflow-hidden border-y border-gold/[0.12] bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
-        <div className="absolute inset-0 terminal-grid opacity-7" />
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="relative mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.78fr_1.22fr]">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">Institucional</p>
@@ -484,7 +480,6 @@ export default function PrivatePage() {
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {copy.comparison.tiers.map(([name, mode, range]) => (
               <article key={name} className={`relative flex min-h-[280px] flex-col overflow-hidden border p-7 shadow-fine ${name === "Private" ? "border-gold/[0.5] bg-gradient-to-br from-gold/[0.14] via-paper/[0.05] to-ink" : "border-gold/[0.18] bg-paper/[0.035]"}`}>
-                <div className="absolute inset-0 luxury-grid opacity-14" />
                 <div className="relative flex h-full flex-col">
                   <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">{mode}</p>
                   <h3 className="mt-5 font-serif text-5xl leading-[0.98] tracking-[-0.055em]">{name}</h3>
@@ -552,7 +547,6 @@ export default function PrivatePage() {
       </section>
 
       <section className="relative overflow-hidden bg-ink px-5 py-16 text-center md:px-8 md:py-24 lg:px-12 xl:px-16">
-        <div className="absolute inset-0 terminal-grid opacity-10" />
         <div className="absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-gold/[0.1] blur-3xl" />
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="relative mx-auto max-w-4xl">
           <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">Private</p>

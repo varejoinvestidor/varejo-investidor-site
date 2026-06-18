@@ -523,6 +523,15 @@ type HomeSelectCopy = {
   cards: Array<{ label: string; value?: string }>;
 };
 
+type HomePrivateCopy = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  text: string;
+  cta: string;
+  cards: Array<{ label: string; value?: string }>;
+};
+
 const homeEliteCopy: Record<string, HomeEliteCopy> = {
   pt: {
     title: "Canal Elite",
@@ -737,6 +746,69 @@ Object.assign(homeSelectCopy, {
   ja: { ...homeSelectCopy.en, text: "すでに一定の資産を持ち、日々の取引を追わずに世界市場へのエクスポージャーを得たい投資家向けの運用構造です。", cta: "SELECTを見る", cards: [{ label: "最低運用額", value: "R$ 250,000" }, { label: "海外投資家", value: "US$ 50,000" }, { label: "Forex" }, { label: "株式" }, { label: "暗号資産" }] },
   ko: { ...homeSelectCopy.en, text: "이미 의미 있는 자산을 보유하고 있으며 매일 거래를 따라가지 않고 글로벌 시장 노출을 원하는 투자자를 위한 운영 구조입니다.", cta: "SELECT 보기", cards: [{ label: "최소 운용금액", value: "R$ 250,000" }, { label: "국제 투자자", value: "US$ 50,000" }, { label: "Forex" }, { label: "주식" }, { label: "암호화폐" }] },
   pl: { ...homeSelectCopy.en, text: "Struktura operacyjna dla inwestorów z istotnym kapitałem, którzy chcą ekspozycji na rynki globalne bez codziennego śledzenia transakcji.", cta: "POZNAJ SELECT", cards: [{ label: "Minimalna alokacja", value: "R$ 250.000" }, { label: "Inwestor międzynarodowy", value: "US$ 50.000" }, { label: "Forex" }, { label: "Akcje" }, { label: "Krypto" }] },
+});
+
+const homePrivateCopy: Record<string, HomePrivateCopy> = {
+  pt: {
+    eyebrow: "VAREJO INVESTIDOR PRIVATE",
+    title: "Varejo Investidor Private",
+    subtitle: "Estrutura patrimonial institucional para investidores acima de US$ 1.000.000.",
+    text: "Organização, proteção e expansão global de patrimônio para investidores, famílias e empresários com capital internacional.",
+    cta: "CONHECER PRIVATE",
+    cards: [
+      { label: "Entrada", value: "US$ 1.000.000+" },
+      { label: "Perfil", value: "Alta escala patrimonial" },
+      { label: "Foco", value: "Proteção global" },
+      { label: "Estrutura", value: "Institucional" },
+    ],
+  },
+  en: {
+    eyebrow: "VAREJO INVESTIDOR PRIVATE",
+    title: "Varejo Investidor Private",
+    subtitle: "Institutional wealth structure for investors above US$1,000,000.",
+    text: "Global wealth organization, protection, and expansion for investors, families, and business owners with international capital.",
+    cta: "EXPLORE PRIVATE",
+    cards: [
+      { label: "Entry", value: "US$1,000,000+" },
+      { label: "Profile", value: "High-scale wealth" },
+      { label: "Focus", value: "Global protection" },
+      { label: "Structure", value: "Institutional" },
+    ],
+  },
+  es: {
+    eyebrow: "VAREJO INVESTIDOR PRIVATE",
+    title: "Varejo Investidor Private",
+    subtitle: "Estructura patrimonial institucional para inversores por encima de US$ 1.000.000.",
+    text: "Organización, protección y expansión global de patrimonio para inversores, familias y empresarios con capital internacional.",
+    cta: "CONOCER PRIVATE",
+    cards: [
+      { label: "Entrada", value: "US$ 1.000.000+" },
+      { label: "Perfil", value: "Alta escala patrimonial" },
+      { label: "Foco", value: "Protección global" },
+      { label: "Estructura", value: "Institucional" },
+    ],
+  },
+};
+
+Object.assign(homePrivateCopy, {
+  fr: { ...homePrivateCopy.en, subtitle: "Structure patrimoniale institutionnelle pour les investisseurs au-dessus de US$ 1 000 000.", text: "Organisation, protection et expansion mondiale du patrimoine pour investisseurs, familles et entrepreneurs disposant d’un capital international.", cta: "DÉCOUVRIR PRIVATE" },
+  de: { ...homePrivateCopy.en, subtitle: "Institutionelle Vermögensstruktur für Anleger ab US$1.000.000.", text: "Globale Organisation, Schutz und Ausbau von Vermögen für Anleger, Familien und Unternehmer mit internationalem Kapital.", cta: "PRIVATE ANSEHEN" },
+  it: { ...homePrivateCopy.en, subtitle: "Struttura patrimoniale istituzionale per investitori sopra US$ 1.000.000.", text: "Organizzazione, protezione ed espansione globale del patrimonio per investitori, famiglie e imprenditori con capitale internazionale.", cta: "SCOPRI PRIVATE" },
+  ar: { ...homePrivateCopy.en, subtitle: "هيكل ثروة مؤسسي للمستثمرين فوق US$1,000,000.", text: "تنظيم وحماية وتوسيع الثروة عالمياً للمستثمرين والعائلات ورواد الأعمال ذوي رأس المال الدولي.", cta: "تعرّف على Private" },
+  fa: { ...homePrivateCopy.en, subtitle: "ساختار ثروت نهادی برای سرمایه‌گذاران بالای US$1,000,000.", text: "سازمان‌دهی، حفاظت و گسترش جهانی دارایی برای سرمایه‌گذاران، خانواده‌ها و کارآفرینان دارای سرمایه بین‌المللی.", cta: "آشنایی با Private" },
+  hi: { ...homePrivateCopy.en, subtitle: "US$1,000,000 से अधिक पूंजी वाले निवेशकों के लिए संस्थागत संपत्ति संरचना.", text: "अंतरराष्ट्रीय पूंजी वाले निवेशकों, परिवारों और उद्यमियों के लिए वैश्विक संपत्ति संगठन, सुरक्षा और विस्तार.", cta: "PRIVATE देखें" },
+  ur: { ...homePrivateCopy.en, subtitle: "US$1,000,000 سے زائد سرمایہ رکھنے والے سرمایہ کاروں کے لیے ادارہ جاتی دولت کی ساخت۔", text: "بین الاقوامی سرمایہ رکھنے والے سرمایہ کاروں، خاندانوں اور کاروباری افراد کے لیے عالمی دولت کی تنظیم، تحفظ اور توسیع۔", cta: "PRIVATE دیکھیں" },
+  bn: { ...homePrivateCopy.en, subtitle: "US$1,000,000-এর বেশি মূলধনের বিনিয়োগকারীদের জন্য প্রাতিষ্ঠানিক সম্পদ কাঠামো।", text: "আন্তর্জাতিক মূলধন থাকা বিনিয়োগকারী, পরিবার ও উদ্যোক্তাদের জন্য বৈশ্বিক সম্পদ সংগঠন, সুরক্ষা ও সম্প্রসারণ।", cta: "PRIVATE দেখুন" },
+  tr: { ...homePrivateCopy.en, subtitle: "US$1.000.000 üzeri sermayeye sahip yatırımcılar için kurumsal varlık yapısı.", text: "Uluslararası sermayeye sahip yatırımcılar, aileler ve girişimciler için küresel varlık organizasyonu, koruma ve büyüme.", cta: "PRIVATE'I TANIMA" },
+  ru: { ...homePrivateCopy.en, subtitle: "Институциональная структура капитала для инвесторов свыше US$1,000,000.", text: "Глобальная организация, защита и расширение капитала для инвесторов, семей и предпринимателей с международным капиталом.", cta: "УЗНАТЬ PRIVATE" },
+  id: { ...homePrivateCopy.en, subtitle: "Struktur kekayaan institusional untuk investor di atas US$1.000.000.", text: "Organisasi, perlindungan, dan ekspansi kekayaan global untuk investor, keluarga, dan pengusaha dengan modal internasional.", cta: "LIHAT PRIVATE" },
+  vi: { ...homePrivateCopy.en, subtitle: "Cấu trúc tài sản cấp tổ chức cho nhà đầu tư trên US$1,000,000.", text: "Tổ chức, bảo vệ và mở rộng tài sản toàn cầu cho nhà đầu tư, gia đình và doanh nhân có vốn quốc tế.", cta: "TÌM HIỂU PRIVATE" },
+  th: { ...homePrivateCopy.en, subtitle: "โครงสร้างสินทรัพย์ระดับสถาบันสำหรับนักลงทุนมากกว่า US$1,000,000", text: "การจัดระเบียบ การปกป้อง และการขยายสินทรัพย์ระดับโลกสำหรับนักลงทุน ครอบครัว และผู้ประกอบการที่มีเงินทุนระหว่างประเทศ", cta: "ดู PRIVATE" },
+  tl: { ...homePrivateCopy.en, subtitle: "Institutional wealth structure para sa investors na higit US$1,000,000.", text: "Global wealth organization, protection, at expansion para sa investors, families, at entrepreneurs na may international capital.", cta: "TINGNAN ANG PRIVATE" },
+  zh: { ...homePrivateCopy.en, subtitle: "面向 US$1,000,000 以上投资者的机构级财富结构。", text: "为拥有国际资本的投资者、家族和企业家提供全球财富组织、保护与扩张。", cta: "了解 PRIVATE" },
+  ja: { ...homePrivateCopy.en, subtitle: "US$1,000,000超の投資家向けの機関投資家レベルの資産構造。", text: "国際資本を持つ投資家、ファミリー、起業家のためのグローバルな資産整理、保護、拡大。", cta: "PRIVATEを見る" },
+  ko: { ...homePrivateCopy.en, subtitle: "US$1,000,000 이상의 투자자를 위한 기관 수준 자산 구조.", text: "국제 자본을 보유한 투자자, 가족, 기업가를 위한 글로벌 자산 조직, 보호, 확장.", cta: "PRIVATE 보기" },
+  pl: { ...homePrivateCopy.en, subtitle: "Instytucjonalna struktura majątkowa dla inwestorów powyżej US$1,000,000.", text: "Globalna organizacja, ochrona i rozwój majątku dla inwestorów, rodzin i przedsiębiorców z kapitałem międzynarodowym.", cta: "POZNAJ PRIVATE" },
 });
 
 const homeFxproLinks: Record<Locale, string> = {
@@ -1283,6 +1355,7 @@ export default function Home() {
   const account = homeAccountCopy[locale] ?? homeAccountCopy.en;
   const eliteHome = homeEliteCopy[locale] ?? homeEliteCopy.en;
   const selectHome = homeSelectCopy[locale] ?? homeSelectCopy.en;
+  const privateHome = homePrivateCopy[locale] ?? homePrivateCopy.en;
   const finalText = "text" in copy.final ? copy.final.text : undefined;
   const educationHref = locale === "pt" ? "/educacao" : `/${locale}/education`;
 
@@ -1503,6 +1576,49 @@ export default function Home() {
             {selectHome.cards.map((item) => (
               <article key={`${item.label}-${item.value ?? ""}`} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine">
                 <div className="absolute inset-0 luxury-grid opacity-20" />
+                <div className="relative">
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/[0.55]">{item.label}</p>
+                  {item.value ? (
+                    <p className="mt-3 font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-gold">{item.value}</p>
+                  ) : null}
+                </div>
+              </article>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="relative overflow-hidden border-b border-gold/[0.14] bg-ink px-5 py-16 text-paper md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <div className="absolute left-[8%] top-10 h-72 w-72 rounded-full bg-gold/[0.07] blur-3xl" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          variants={fadeUp}
+          className="relative mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center"
+        >
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">{privateHome.eyebrow}</p>
+            <h2 className="mt-5 font-serif text-4xl leading-[1.03] tracking-[-0.045em] md:text-6xl">
+              {privateHome.title}
+            </h2>
+            <p className="mt-4 max-w-3xl font-serif text-2xl leading-[1.16] tracking-[-0.035em] text-gold md:text-4xl">
+              {privateHome.subtitle}
+            </p>
+            <p className="mt-6 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+              {privateHome.text}
+            </p>
+            <a
+              href="/private"
+              className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+            >
+              {privateHome.cta}
+            </a>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {privateHome.cards.map((item) => (
+              <article key={`${item.label}-${item.value ?? ""}`} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine transition hover:-translate-y-1 hover:border-gold/[0.48]">
                 <div className="relative">
                   <p className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/[0.55]">{item.label}</p>
                   {item.value ? (

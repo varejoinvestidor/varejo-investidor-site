@@ -651,10 +651,6 @@ export function SiteChrome({
     ],
     [locale, safeT],
   );
-  const aboutNavItem = useMemo(
-    () => ({ label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] }),
-    [locale, safeT],
-  );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
   const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en]);
@@ -662,7 +658,6 @@ export function SiteChrome({
     ...firstNavItems,
     { label: marketLabels.markets, href: marketItems[0].href, activePaths: ["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`] },
     { label: toolLabels.tools, href: toolItems[0].href, activePaths: ["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en] },
-    aboutNavItem,
   ];
 
   return (
@@ -698,9 +693,6 @@ export function SiteChrome({
             })}
             <HeaderDropdown label={marketLabels.markets} items={marketItems} active={marketsActive} />
             <HeaderDropdown label={toolLabels.tools} items={toolItems} active={toolsActive} />
-            <a href={aboutNavItem.href} className={`nav-link px-3 py-2 text-ink ${isActivePath(aboutNavItem.activePaths) ? "active" : ""}`}>
-              {aboutNavItem.label}
-            </a>
           </div>
 
           <div className="desktop-language-area hidden items-center justify-end xl:flex">
