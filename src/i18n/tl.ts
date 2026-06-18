@@ -192,3 +192,52 @@
   footer: "Global ecosystem for education, signals, market reading, and strategic structure for retail investors.",
 };
 
+Object.assign(tl.nav, {
+  home: "Home",
+  signals: "Signals",
+  education: "Edukasyon",
+  services: "Serbisyo",
+  about: "Tungkol sa amin",
+  access: "Pumasok sa Elite Channel",
+});
+
+tl.tickerLabel = "Global market tape";
+
+tl.servicesPage = {
+  eyebrow: "Mga serbisyo",
+  title: "Mga Serbisyo ng Varejo Investidor",
+  text: "Tuklasin ang ecosystem ng Varejo Investidor: WhatsApp signals, financial education, global market analysis, at structures para sa investors na may international capital.",
+  items: [
+    { title: "Elite Channel", description: "Core product na may live signals, market analysis, recorded classes, at global market reading.", bullets: ["Live signals mula 2018", "Mahigit 4,200 signals na naipadala", "Asset, direction, entry, target, stop, at context", "Forex, gold, oil, crypto, indices, at global currencies", "Education by Formiga, Lobo, and Harpia levels"], cta: "Tingnan ang Elite Channel", href: "/sinais", kind: "paid" },
+    { title: "Free Formiga Channel", description: "Free WhatsApp channel para sa market analysis, financial education, at daily global updates.", bullets: ["Free content", "Market analysis", "Daily updates", "WhatsApp entry"], cta: "Pumasok sa Formiga Channel", href: "free", kind: "free" },
+    { title: "Individual Mentorship", description: "One-on-one guidance para sa investor profile, market reading, operational structure, risk, at strategic direction.", bullets: ["Profile analysis", "Market reading", "Operational structure", "Risk and strategy"], cta: "Request contact", href: "#contato", kind: "paid" },
+    { title: "Gold Consulting", description: "Strategic structure para sa financial organization, institutional market reading, risk management, at operational development.", bullets: ["Financial structure", "Institutional reading", "Risk management", "Strategic clarity"], cta: "Request Gold consulting", href: "#contato", kind: "gold" },
+    { title: "Platinum Consulting", description: "Premium structure focused on wealth vision, global exposure, capital protection, and long-term strategy.", bullets: ["Wealth vision", "Global structure", "Capital protection", "Long-term strategy"], cta: "Request Platinum consulting", href: "#contato", kind: "platinum" },
+  ],
+};
+
+tl.pricing = {
+  ...tl.pricing,
+  eyebrow: "Varejo Investidor Elite Channel",
+  title: "Isang access para sa signals, analysis, at global education.",
+  text: "Pinagsasama ng Elite Channel ang live signals, market analysis, recorded classes, at professional global market reading.",
+  badge: "Best value",
+  featuresTitle: "Kasama sa Elite",
+  features: ["Market signals", "Global analysis", "Recorded classes", "Forex, crypto, gold, oil, indices, and currencies", "Education through Formiga, Lobo, and Harpia levels"],
+  cta: "Subscribe now",
+};
+
+tl.contact = {
+  eyebrow: "Strategic contact",
+  title: "Makipag-usap sa Varejo Investidor",
+  text: "Piliin ang service na bagay sa stage mo at humingi ng guidance para sa tamang structure.",
+  button: "Request strategic contact",
+};
+
+tl.disclaimer = {
+  title: "Risk disclaimer",
+  text: "Ang content ng Varejo Investidor ay para sa education at information lamang. Ang analyses, signals, examples, materials, at services ay hindi individual investment advice, financial consulting, promise of profit, o guarantee of results. May risk ang Forex, crypto assets, commodities, indices, at iba pang markets, at maaaring magdulot ng losses. Bawat user ang responsable sa sariling financial decisions.",
+};
+
+tl.footer = "Global ecosystem para sa education, signals, market reading, at strategic structure para sa retail investors.";
+

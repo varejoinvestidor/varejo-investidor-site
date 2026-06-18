@@ -192,3 +192,52 @@ export const pl = {
   footer: "Global ecosystem for education, signals, market reading, and strategic structure for retail investors.",
 };
 
+Object.assign(pl.nav, {
+  home: "Start",
+  signals: "Sygnały",
+  education: "Edukacja",
+  services: "Usługi",
+  about: "O nas",
+  access: "Dołącz do kanału Elite",
+});
+
+pl.tickerLabel = "Taśma rynków globalnych";
+
+pl.servicesPage = {
+  eyebrow: "Usługi",
+  title: "Usługi Varejo Investidor",
+  text: "Poznaj strukturę Varejo Investidor: sygnały w WhatsApp, edukację finansową, analizę rynków globalnych oraz rozwiązania dla inwestorów z kapitałem międzynarodowym.",
+  items: [
+    { title: "Kanał Elite", description: "Główny produkt z sygnałami na żywo, analizami, nagranymi lekcjami i globalnym odczytem rynku.", bullets: ["Sygnały na żywo od 2018 roku", "Ponad 4 200 wysłanych sygnałów", "Aktywo, kierunek, wejście, cel, stop i kontekst", "Forex, złoto, ropa, krypto, indeksy i waluty globalne", "Edukacja przez poziomy Formiga, Lobo i Harpia"], cta: "Poznaj Kanał Elite", href: "/sinais", kind: "paid" },
+    { title: "Bezpłatny Kanał Formiga", description: "Bezpłatny kanał WhatsApp z analizą rynku, edukacją finansową i aktualizacjami globalnymi.", bullets: ["Bezpłatne treści", "Analiza rynku", "Codzienne aktualizacje", "Wejście przez WhatsApp"], cta: "Wejdź do Kanału Formiga", href: "free", kind: "free" },
+    { title: "Mentoring indywidualny", description: "Indywidualna praca nad profilem inwestora, czytaniem rynku, strukturą operacyjną, ryzykiem i kierunkiem strategicznym.", bullets: ["Analiza profilu", "Czytanie rynku", "Struktura operacyjna", "Ryzyko i strategia"], cta: "Poproś o kontakt", href: "#contato", kind: "paid" },
+    { title: "Konsulting Gold", description: "Program strategiczny dla organizacji finansowej, odczytu instytucjonalnego, zarządzania ryzykiem i rozwoju operacyjnego.", bullets: ["Struktura finansowa", "Czytanie instytucjonalne", "Zarządzanie ryzykiem", "Jasność strategiczna"], cta: "Poproś o konsulting Gold", href: "#contato", kind: "gold" },
+    { title: "Konsulting Platinum", description: "Struktura premium skoncentrowana na majątku, ekspozycji globalnej, ochronie kapitału i długoterminowej strategii.", bullets: ["Wizja majątkowa", "Struktura globalna", "Ochrona kapitału", "Strategia długoterminowa"], cta: "Poproś o konsulting Platinum", href: "#contato", kind: "platinum" },
+  ],
+};
+
+pl.pricing = {
+  ...pl.pricing,
+  eyebrow: "Kanał Elite Varejo Investidor",
+  title: "Jeden dostęp do sygnałów, analiz i edukacji globalnej.",
+  text: "Kanał Elite łączy sygnały, analizy, nagrane lekcje i profesjonalny odczyt rynków globalnych.",
+  badge: "Najlepsza wartość",
+  featuresTitle: "W Elite otrzymujesz",
+  features: ["Sygnały rynkowe", "Analizy globalne", "Nagrane lekcje", "Forex, krypto, złoto, ropa, indeksy i waluty", "Edukację przez poziomy Formiga, Lobo i Harpia"],
+  cta: "Subskrybuj",
+};
+
+pl.contact = {
+  eyebrow: "Kontakt strategiczny",
+  title: "Porozmawiaj z Varejo Investidor",
+  text: "Wybierz usługę odpowiednią do Twojego etapu i poproś o wskazanie właściwej struktury.",
+  button: "Poproś o kontakt strategiczny",
+};
+
+pl.disclaimer = {
+  title: "Informacja o ryzyku",
+  text: "Treści Varejo Investidor mają charakter edukacyjny i informacyjny. Analizy, sygnały, przykłady, materiały i usługi nie stanowią indywidualnej rekomendacji inwestycyjnej, porady finansowej, obietnicy zysku ani gwarancji wyniku. Operacje na Forex, kryptowalutach, surowcach, indeksach i innych rynkach wiążą się z ryzykiem strat. Każdy użytkownik odpowiada za własne decyzje finansowe.",
+};
+
+pl.footer = "Globalny ekosystem edukacji, sygnałów, analizy rynku i struktury strategicznej dla inwestorów indywidualnych.";
+
