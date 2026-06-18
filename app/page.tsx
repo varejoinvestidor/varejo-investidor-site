@@ -507,6 +507,238 @@ const signalCounterLabels: Record<Locale, string> = {
   ko: "WHATSAPP 실시간 신호",
 };
 
+type HomeEliteCopy = {
+  title: string;
+  subtitle: string;
+  text: string;
+  cards: string[];
+  cta: string;
+};
+
+type HomeSelectCopy = {
+  eyebrow: string;
+  title: string;
+  text: string;
+  cta: string;
+  cards: Array<{ label: string; value?: string }>;
+};
+
+const homeEliteCopy: Record<string, HomeEliteCopy> = {
+  pt: {
+    title: "Canal Elite",
+    subtitle: "Receba análises e sinais enviados diretamente para o WhatsApp.",
+    text: "O Canal Elite foi desenvolvido para investidores que desejam acompanhar os mercados globais através de sinais estruturados, análises e leitura de mercado. Desde 2018, mais de 4.200 sinais foram enviados ao vivo acompanhando Forex, ouro, petróleo, índices, criptomoedas e moedas globais.",
+    cards: ["Sinais ao Vivo", "Recebimento no WhatsApp", "Entrada, Alvo e Stop", "Análises de Mercado", "Educação por Níveis", "Leitura Global"],
+    cta: "Conhecer Canal Elite",
+  },
+  en: {
+    title: "Elite Channel",
+    subtitle: "Receive analysis and signals directly on WhatsApp.",
+    text: "The Elite Channel was designed for investors who want to follow global markets through structured signals, analysis, and market reading. Since 2018, more than 4,200 live signals have been sent across Forex, gold, oil, indices, crypto, and global currencies.",
+    cards: ["Live Signals", "WhatsApp Delivery", "Entry, Target and Stop", "Market Analysis", "Level-Based Education", "Global Reading"],
+    cta: "Explore Elite Channel",
+  },
+  es: {
+    title: "Canal Elite",
+    subtitle: "Recibe análisis y señales directamente en WhatsApp.",
+    text: "El Canal Elite fue creado para inversores que desean seguir los mercados globales mediante señales estructuradas, análisis y lectura de mercado. Desde 2018, se han enviado más de 4.200 señales en vivo sobre Forex, oro, petróleo, índices, criptoactivos y monedas globales.",
+    cards: ["Señales en vivo", "Recepción por WhatsApp", "Entrada, objetivo y stop", "Análisis de mercado", "Educación por niveles", "Lectura global"],
+    cta: "Conocer Canal Elite",
+  },
+  fr: {
+    title: "Canal Elite",
+    subtitle: "Recevez analyses et signaux directement sur WhatsApp.",
+    text: "Le Canal Elite s’adresse aux investisseurs qui souhaitent suivre les marchés mondiaux grâce à des signaux structurés, des analyses et une lecture de marché claire. Depuis 2018, plus de 4 200 signaux en direct ont été envoyés sur le Forex, l’or, le pétrole, les indices, les cryptoactifs et les devises mondiales.",
+    cards: ["Signaux en direct", "Réception sur WhatsApp", "Entrée, objectif et stop", "Analyse de marché", "Éducation par niveaux", "Lecture globale"],
+    cta: "Découvrir Canal Elite",
+  },
+  de: {
+    title: "Elite-Kanal",
+    subtitle: "Erhalten Sie Analysen und Signale direkt über WhatsApp.",
+    text: "Der Elite-Kanal wurde für Anleger entwickelt, die globale Märkte über strukturierte Signale, Analysen und Markteinordnung begleiten möchten. Seit 2018 wurden mehr als 4.200 Live-Signale zu Forex, Gold, Öl, Indizes, Kryptowährungen und globalen Währungen versendet.",
+    cards: ["Live-Signale", "Versand per WhatsApp", "Einstieg, Ziel und Stop", "Marktanalyse", "Ausbildung nach Stufen", "Globale Marktsicht"],
+    cta: "Elite-Kanal ansehen",
+  },
+  it: {
+    title: "Canale Elite",
+    subtitle: "Ricevi analisi e segnali direttamente su WhatsApp.",
+    text: "Il Canale Elite è stato creato per investitori che vogliono seguire i mercati globali tramite segnali strutturati, analisi e lettura del mercato. Dal 2018 sono stati inviati oltre 4.200 segnali live su Forex, oro, petrolio, indici, crypto e valute globali.",
+    cards: ["Segnali live", "Invio su WhatsApp", "Entrata, target e stop", "Analisi di mercato", "Educazione per livelli", "Lettura globale"],
+    cta: "Scopri il Canale Elite",
+  },
+  tr: {
+    title: "Elite Kanalı",
+    subtitle: "Analizleri ve sinyalleri doğrudan WhatsApp üzerinden alın.",
+    text: "Elite Kanalı, küresel piyasaları yapılandırılmış sinyaller, analizler ve piyasa okuması ile takip etmek isteyen yatırımcılar için geliştirildi. 2018’den bu yana Forex, altın, petrol, endeksler, kripto ve küresel para birimlerinde 4.200’den fazla canlı sinyal gönderildi.",
+    cards: ["Canlı Sinyaller", "WhatsApp ile teslim", "Giriş, hedef ve stop", "Piyasa analizi", "Seviyeli eğitim", "Küresel okuma"],
+    cta: "Elite Kanalını Tanı",
+  },
+  id: {
+    title: "Kanal Elite",
+    subtitle: "Terima analisis dan sinyal langsung melalui WhatsApp.",
+    text: "Kanal Elite dibuat untuk investor yang ingin mengikuti pasar global melalui sinyal terstruktur, analisis, dan pembacaan pasar. Sejak 2018, lebih dari 4.200 sinyal live telah dikirim untuk Forex, emas, minyak, indeks, kripto, dan mata uang global.",
+    cards: ["Sinyal live", "Dikirim via WhatsApp", "Entry, target dan stop", "Analisis pasar", "Edukasi bertingkat", "Pembacaan global"],
+    cta: "Lihat Kanal Elite",
+  },
+  vi: {
+    title: "Kênh Elite",
+    subtitle: "Nhận phân tích và tín hiệu trực tiếp qua WhatsApp.",
+    text: "Kênh Elite được xây dựng cho nhà đầu tư muốn theo dõi thị trường toàn cầu thông qua tín hiệu có cấu trúc, phân tích và đọc thị trường. Từ năm 2018, hơn 4.200 tín hiệu trực tiếp đã được gửi trên Forex, vàng, dầu, chỉ số, crypto và tiền tệ toàn cầu.",
+    cards: ["Tín hiệu trực tiếp", "Nhận qua WhatsApp", "Điểm vào, mục tiêu và stop", "Phân tích thị trường", "Giáo dục theo cấp độ", "Đọc thị trường toàn cầu"],
+    cta: "Tìm hiểu Kênh Elite",
+  },
+  ru: {
+    title: "Канал Elite",
+    subtitle: "Получайте аналитику и сигналы напрямую в WhatsApp.",
+    text: "Канал Elite создан для инвесторов, которые хотят следить за глобальными рынками через структурированные сигналы, аналитику и рыночное чтение. С 2018 года отправлено более 4 200 live-сигналов по Forex, золоту, нефти, индексам, криптовалютам и мировым валютам.",
+    cards: ["Live-сигналы", "Получение в WhatsApp", "Вход, цель и стоп", "Рыночная аналитика", "Обучение по уровням", "Глобальное чтение"],
+    cta: "Узнать о канале Elite",
+  },
+  pl: {
+    title: "Kanał Elite",
+    subtitle: "Otrzymuj analizy i sygnały bezpośrednio na WhatsApp.",
+    text: "Kanał Elite powstał dla inwestorów, którzy chcą śledzić globalne rynki przez uporządkowane sygnały, analizę i czytanie rynku. Od 2018 roku wysłano ponad 4 200 sygnałów live na Forex, złocie, ropie, indeksach, krypto i walutach globalnych.",
+    cards: ["Sygnały live", "Odbiór na WhatsApp", "Wejście, cel i stop", "Analiza rynku", "Edukacja poziomami", "Globalna perspektywa"],
+    cta: "Poznaj Kanał Elite",
+  },
+};
+
+Object.assign(homeEliteCopy, {
+  ar: {
+    title: "قناة Elite",
+    subtitle: "استلم التحليلات والإشارات مباشرة عبر واتساب.",
+    text: "تم تطوير قناة Elite للمستثمرين الذين يرغبون في متابعة الأسواق العالمية من خلال إشارات منظمة وتحليلات وقراءة للسوق. منذ عام 2018 تم إرسال أكثر من 4,200 إشارة مباشرة على الفوركس والذهب والنفط والمؤشرات والعملات الرقمية والعملات العالمية.",
+    cards: ["إشارات مباشرة", "استلام عبر واتساب", "دخول وهدف ووقف", "تحليل السوق", "تعليم حسب المستويات", "قراءة عالمية"],
+    cta: "تعرف على قناة Elite",
+  },
+  fa: {
+    title: "کانال Elite",
+    subtitle: "تحلیل‌ها و سیگنال‌ها را مستقیم در واتساپ دریافت کنید.",
+    text: "کانال Elite برای سرمایه‌گذارانی طراحی شده که می‌خواهند بازارهای جهانی را از طریق سیگنال‌های ساختاریافته، تحلیل و خوانش بازار دنبال کنند. از سال ۲۰۱۸ بیش از ۴٬۲۰۰ سیگنال زنده در فارکس، طلا، نفت، شاخص‌ها، رمزارزها و ارزهای جهانی ارسال شده است.",
+    cards: ["سیگنال زنده", "ارسال در واتساپ", "ورود، هدف و حد ضرر", "تحلیل بازار", "آموزش مرحله‌ای", "خوانش جهانی"],
+    cta: "آشنایی با کانال Elite",
+  },
+  hi: {
+    title: "Elite चैनल",
+    subtitle: "विश्लेषण और सिग्नल सीधे WhatsApp पर प्राप्त करें।",
+    text: "Elite चैनल उन निवेशकों के लिए बनाया गया है जो संरचित सिग्नल, विश्लेषण और मार्केट रीडिंग के माध्यम से वैश्विक बाजारों का अनुसरण करना चाहते हैं। 2018 से Forex, सोना, तेल, इंडेक्स, क्रिप्टो और वैश्विक मुद्राओं पर 4,200 से अधिक लाइव सिग्नल भेजे जा चुके हैं।",
+    cards: ["लाइव सिग्नल", "WhatsApp पर प्राप्ति", "एंट्री, लक्ष्य और स्टॉप", "मार्केट विश्लेषण", "स्तर आधारित शिक्षा", "वैश्विक रीडिंग"],
+    cta: "Elite चैनल देखें",
+  },
+  ur: {
+    title: "Elite چینل",
+    subtitle: "تجزیے اور سگنلز براہ راست WhatsApp پر حاصل کریں۔",
+    text: "Elite چینل ان سرمایہ کاروں کے لیے بنایا گیا ہے جو منظم سگنلز، تجزیات اور مارکیٹ ریڈنگ کے ذریعے عالمی منڈیوں کو فالو کرنا چاہتے ہیں۔ 2018 سے Forex، سونا، تیل، انڈیکس، کرپٹو اور عالمی کرنسیوں پر 4,200 سے زائد لائیو سگنلز بھیجے جا چکے ہیں۔",
+    cards: ["لائیو سگنلز", "WhatsApp پر موصول", "انٹری، ہدف اور اسٹاپ", "مارکیٹ تجزیہ", "سطحی تعلیم", "عالمی ریڈنگ"],
+    cta: "Elite چینل دیکھیں",
+  },
+  bn: {
+    title: "Elite চ্যানেল",
+    subtitle: "বিশ্লেষণ ও সিগন্যাল সরাসরি WhatsApp-এ পান।",
+    text: "Elite চ্যানেল এমন বিনিয়োগকারীদের জন্য তৈরি, যারা কাঠামোবদ্ধ সিগন্যাল, বিশ্লেষণ ও বাজার পাঠের মাধ্যমে বৈশ্বিক বাজার অনুসরণ করতে চান। ২০১৮ সাল থেকে Forex, সোনা, তেল, সূচক, ক্রিপ্টো ও বৈশ্বিক মুদ্রায় ৪,২০০টির বেশি লাইভ সিগন্যাল পাঠানো হয়েছে।",
+    cards: ["লাইভ সিগন্যাল", "WhatsApp-এ গ্রহণ", "এন্ট্রি, লক্ষ্য ও স্টপ", "বাজার বিশ্লেষণ", "স্তরভিত্তিক শিক্ষা", "গ্লোবাল রিডিং"],
+    cta: "Elite চ্যানেল দেখুন",
+  },
+  th: {
+    title: "ช่อง Elite",
+    subtitle: "รับบทวิเคราะห์และสัญญาณโดยตรงผ่าน WhatsApp",
+    text: "ช่อง Elite ถูกสร้างขึ้นสำหรับนักลงทุนที่ต้องการติดตามตลาดโลกผ่านสัญญาณที่มีโครงสร้าง บทวิเคราะห์ และการอ่านตลาด ตั้งแต่ปี 2018 มีการส่งสัญญาณสดมากกว่า 4,200 ครั้งใน Forex ทองคำ น้ำมัน ดัชนี คริปโต และสกุลเงินโลก",
+    cards: ["สัญญาณสด", "รับผ่าน WhatsApp", "เข้า เป้าหมาย และ Stop", "วิเคราะห์ตลาด", "การศึกษาตามระดับ", "มุมมอง global"],
+    cta: "ดูช่อง Elite",
+  },
+  tl: {
+    title: "Elite Channel",
+    subtitle: "Tumanggap ng analysis at signals direkta sa WhatsApp.",
+    text: "Ang Elite Channel ay ginawa para sa investors na gustong sundan ang global markets gamit ang structured signals, analysis, at market reading. Mula 2018, mahigit 4,200 live signals ang naipadala sa Forex, gold, oil, indices, crypto, at global currencies.",
+    cards: ["Live signals", "WhatsApp delivery", "Entry, target at stop", "Market analysis", "Level-based education", "Global reading"],
+    cta: "Tingnan ang Elite Channel",
+  },
+  zh: {
+    title: "Elite 频道",
+    subtitle: "通过 WhatsApp 直接接收分析和交易信号。",
+    text: "Elite 频道面向希望通过结构化信号、市场分析和全球视角跟踪市场的投资者。自 2018 年以来，已在 Forex、黄金、原油、指数、加密资产和全球货币中发送超过 4,200 条实时信号。",
+    cards: ["实时信号", "WhatsApp 接收", "入场、目标和止损", "市场分析", "分级教育", "全球市场解读"],
+    cta: "了解 Elite 频道",
+  },
+  ja: {
+    title: "Elite チャンネル",
+    subtitle: "分析とシグナルをWhatsAppで直接受け取れます。",
+    text: "Eliteチャンネルは、構造化されたシグナル、分析、市場読解を通じて世界市場を追いたい投資家のために設計されています。2018年以降、Forex、金、原油、指数、暗号資産、世界通貨で4,200件以上のライブシグナルを配信してきました。",
+    cards: ["ライブシグナル", "WhatsAppで受信", "エントリー・目標・ストップ", "市場分析", "レベル別教育", "グローバル読解"],
+    cta: "Eliteチャンネルを見る",
+  },
+  ko: {
+    title: "Elite 채널",
+    subtitle: "분석과 신호를 WhatsApp으로 직접 받아보세요.",
+    text: "Elite 채널은 구조화된 신호, 분석, 시장 해석을 통해 글로벌 시장을 따라가고 싶은 투자자를 위해 설계되었습니다. 2018년부터 Forex, 금, 원유, 지수, 암호화폐, 글로벌 통화에서 4,200개 이상의 실시간 신호가 전송되었습니다.",
+    cards: ["실시간 신호", "WhatsApp 수신", "진입, 목표, 손절", "시장 분석", "레벨별 교육", "글로벌 리딩"],
+    cta: "Elite 채널 보기",
+  },
+});
+
+const homeSelectCopy: Record<string, HomeSelectCopy> = {
+  pt: {
+    eyebrow: "VAREJO INVESTIDOR SELECT",
+    title: "Varejo Investidor Select",
+    text: "Estrutura operacional voltada para investidores que já possuem patrimônio relevante e desejam exposição aos mercados globais sem necessidade de acompanhar operações diariamente.",
+    cta: "CONHECER SELECT",
+    cards: [
+      { label: "Aplicação mínima", value: "R$ 250.000" },
+      { label: "Investidor internacional", value: "US$ 50.000" },
+      { label: "Forex" },
+      { label: "Ações" },
+      { label: "Criptomoedas" },
+    ],
+  },
+  en: {
+    eyebrow: "VAREJO INVESTIDOR SELECT",
+    title: "Varejo Investidor Select",
+    text: "An operational structure for investors who already have meaningful wealth and want exposure to global markets without following trades every day.",
+    cta: "EXPLORE SELECT",
+    cards: [
+      { label: "Minimum allocation", value: "R$ 250,000" },
+      { label: "International investor", value: "US$ 50,000" },
+      { label: "Forex" },
+      { label: "Stocks" },
+      { label: "Crypto" },
+    ],
+  },
+  es: {
+    eyebrow: "VAREJO INVESTIDOR SELECT",
+    title: "Varejo Investidor Select",
+    text: "Estructura operativa para inversores que ya poseen patrimonio relevante y desean exposición a mercados globales sin acompañar operaciones todos los días.",
+    cta: "CONOCER SELECT",
+    cards: [
+      { label: "Aplicación mínima", value: "R$ 250.000" },
+      { label: "Inversor internacional", value: "US$ 50.000" },
+      { label: "Forex" },
+      { label: "Acciones" },
+      { label: "Criptoactivos" },
+    ],
+  },
+};
+
+Object.assign(homeSelectCopy, {
+  fr: { ...homeSelectCopy.en, text: "Structure opérationnelle destinée aux investisseurs disposant déjà d’un patrimoine significatif et souhaitant une exposition aux marchés mondiaux sans suivre les opérations chaque jour.", cta: "DÉCOUVRIR SELECT", cards: [{ label: "Allocation minimale", value: "R$ 250 000" }, { label: "Investisseur international", value: "US$ 50 000" }, { label: "Forex" }, { label: "Actions" }, { label: "Cryptoactifs" }] },
+  de: { ...homeSelectCopy.en, text: "Operative Struktur für Anleger mit relevantem Vermögen, die globale Marktexponierung wünschen, ohne täglich Trades zu verfolgen.", cta: "SELECT ANSEHEN", cards: [{ label: "Mindestanlage", value: "R$ 250.000" }, { label: "Internationaler Anleger", value: "US$ 50.000" }, { label: "Forex" }, { label: "Aktien" }, { label: "Krypto" }] },
+  it: { ...homeSelectCopy.en, text: "Struttura operativa per investitori con patrimonio rilevante che desiderano esposizione ai mercati globali senza seguire le operazioni ogni giorno.", cta: "SCOPRI SELECT", cards: [{ label: "Investimento minimo", value: "R$ 250.000" }, { label: "Investitore internazionale", value: "US$ 50.000" }, { label: "Forex" }, { label: "Azioni" }, { label: "Cripto" }] },
+  ar: { ...homeSelectCopy.en, text: "هيكل تشغيلي للمستثمرين الذين يمتلكون ثروة مهمة ويرغبون في التعرض للأسواق العالمية دون متابعة العمليات يومياً.", cta: "تعرّف على Select", cards: [{ label: "الحد الأدنى", value: "R$ 250.000" }, { label: "مستثمر دولي", value: "US$ 50.000" }, { label: "الفوركس" }, { label: "الأسهم" }, { label: "الكريبتو" }] },
+  fa: { ...homeSelectCopy.en, text: "ساختار عملیاتی برای سرمایه‌گذارانی که دارایی قابل توجه دارند و می‌خواهند بدون پیگیری روزانه معاملات، در بازارهای جهانی قرار بگیرند.", cta: "آشنایی با Select", cards: [{ label: "حداقل سرمایه", value: "R$ 250.000" }, { label: "سرمایه‌گذار بین‌المللی", value: "US$ 50.000" }, { label: "Forex" }, { label: "سهام" }, { label: "رمزارزها" }] },
+  hi: { ...homeSelectCopy.en, text: "उन निवेशकों के लिए परिचालन संरचना जिनके पास महत्वपूर्ण पूंजी है और जो रोज़ाना ऑपरेशन देखे बिना वैश्विक बाजारों में एक्सपोज़र चाहते हैं।", cta: "SELECT देखें", cards: [{ label: "न्यूनतम निवेश", value: "R$ 250.000" }, { label: "अंतरराष्ट्रीय निवेशक", value: "US$ 50.000" }, { label: "Forex" }, { label: "शेयर" }, { label: "क्रिप्टो" }] },
+  ur: { ...homeSelectCopy.en, text: "ایسی آپریشنل ساخت جو ان سرمایہ کاروں کے لیے ہے جن کے پاس قابلِ ذکر سرمایہ ہے اور وہ روزانہ ٹریڈز دیکھے بغیر عالمی منڈیوں تک رسائی چاہتے ہیں۔", cta: "SELECT دیکھیں", cards: [{ label: "کم از کم سرمایہ", value: "R$ 250.000" }, { label: "بین الاقوامی سرمایہ کار", value: "US$ 50.000" }, { label: "Forex" }, { label: "Stocks" }, { label: "Crypto" }] },
+  bn: { ...homeSelectCopy.en, text: "যাদের ইতিমধ্যে উল্লেখযোগ্য পুঁজি আছে এবং প্রতিদিন অপারেশন না দেখে বৈশ্বিক বাজারে এক্সপোজার চান, তাদের জন্য অপারেশনাল কাঠামো।", cta: "SELECT দেখুন", cards: [{ label: "ন্যূনতম বিনিয়োগ", value: "R$ 250.000" }, { label: "আন্তর্জাতিক বিনিয়োগকারী", value: "US$ 50.000" }, { label: "Forex" }, { label: "Stocks" }, { label: "Crypto" }] },
+  tr: { ...homeSelectCopy.en, text: "Halihazırda anlamlı bir varlığa sahip olan ve işlemleri her gün takip etmeden küresel piyasalara maruz kalmak isteyen yatırımcılar için operasyonel yapı.", cta: "SELECT'İ TANIMA", cards: [{ label: "Minimum yatırım", value: "R$ 250.000" }, { label: "Uluslararası yatırımcı", value: "US$ 50.000" }, { label: "Forex" }, { label: "Hisseler" }, { label: "Kripto" }] },
+  ru: { ...homeSelectCopy.en, text: "Операционная структура для инвесторов с существенным капиталом, которым нужна экспозиция на глобальные рынки без ежедневного отслеживания сделок.", cta: "УЗНАТЬ SELECT", cards: [{ label: "Минимальный капитал", value: "R$ 250.000" }, { label: "Международный инвестор", value: "US$ 50.000" }, { label: "Forex" }, { label: "Акции" }, { label: "Крипто" }] },
+  id: { ...homeSelectCopy.en, text: "Struktur operasional untuk investor yang sudah memiliki kekayaan signifikan dan ingin eksposur ke pasar global tanpa memantau transaksi setiap hari.", cta: "LIHAT SELECT", cards: [{ label: "Alokasi minimum", value: "R$ 250.000" }, { label: "Investor internasional", value: "US$ 50.000" }, { label: "Forex" }, { label: "Saham" }, { label: "Kripto" }] },
+  vi: { ...homeSelectCopy.en, text: "Cấu trúc vận hành dành cho nhà đầu tư đã có tài sản đáng kể và muốn tiếp cận thị trường toàn cầu mà không cần theo dõi giao dịch hằng ngày.", cta: "TÌM HIỂU SELECT", cards: [{ label: "Mức tối thiểu", value: "R$ 250.000" }, { label: "Nhà đầu tư quốc tế", value: "US$ 50.000" }, { label: "Forex" }, { label: "Cổ phiếu" }, { label: "Crypto" }] },
+  th: { ...homeSelectCopy.en, text: "โครงสร้างการดำเนินงานสำหรับนักลงทุนที่มีสินทรัพย์สำคัญแล้ว และต้องการเข้าถึงตลาดโลกโดยไม่ต้องติดตามการเทรดทุกวัน", cta: "ดู SELECT", cards: [{ label: "เงินลงทุนขั้นต่ำ", value: "R$ 250.000" }, { label: "นักลงทุนต่างประเทศ", value: "US$ 50.000" }, { label: "Forex" }, { label: "หุ้น" }, { label: "คริปโต" }] },
+  tl: { ...homeSelectCopy.en, text: "Operational structure para sa investors na may malaking kapital at gustong magkaroon ng exposure sa global markets nang hindi kailangang bantayan ang trades araw-araw.", cta: "TINGNAN ANG SELECT", cards: [{ label: "Minimum allocation", value: "R$ 250,000" }, { label: "International investor", value: "US$ 50,000" }, { label: "Forex" }, { label: "Stocks" }, { label: "Crypto" }] },
+  zh: { ...homeSelectCopy.en, text: "面向已有较高资产、希望参与全球市场但不想每天跟踪交易的投资者的运营结构。", cta: "了解 SELECT", cards: [{ label: "最低配置", value: "R$ 250,000" }, { label: "国际投资者", value: "US$ 50,000" }, { label: "Forex" }, { label: "股票" }, { label: "加密资产" }] },
+  ja: { ...homeSelectCopy.en, text: "すでに一定の資産を持ち、日々の取引を追わずに世界市場へのエクスポージャーを得たい投資家向けの運用構造です。", cta: "SELECTを見る", cards: [{ label: "最低運用額", value: "R$ 250,000" }, { label: "海外投資家", value: "US$ 50,000" }, { label: "Forex" }, { label: "株式" }, { label: "暗号資産" }] },
+  ko: { ...homeSelectCopy.en, text: "이미 의미 있는 자산을 보유하고 있으며 매일 거래를 따라가지 않고 글로벌 시장 노출을 원하는 투자자를 위한 운영 구조입니다.", cta: "SELECT 보기", cards: [{ label: "최소 운용금액", value: "R$ 250,000" }, { label: "국제 투자자", value: "US$ 50,000" }, { label: "Forex" }, { label: "주식" }, { label: "암호화폐" }] },
+  pl: { ...homeSelectCopy.en, text: "Struktura operacyjna dla inwestorów z istotnym kapitałem, którzy chcą ekspozycji na rynki globalne bez codziennego śledzenia transakcji.", cta: "POZNAJ SELECT", cards: [{ label: "Minimalna alokacja", value: "R$ 250.000" }, { label: "Inwestor międzynarodowy", value: "US$ 50.000" }, { label: "Forex" }, { label: "Akcje" }, { label: "Krypto" }] },
+});
+
 const homeFxproLinks: Record<Locale, string> = {
   pt: "https://direct.fxpro.group/pt/partner/77014650?platform=web",
   en: "https://direct.fxpro.group/en/partner/77014650?platform=web",
@@ -1049,21 +1281,8 @@ export default function Home() {
   const copy = homeLiteCopy[locale as keyof typeof homeLiteCopy] ?? homeLiteCopy.en;
   const flow = homeFlowCopy[locale] ?? homeFlowCopy.en;
   const account = homeAccountCopy[locale] ?? homeAccountCopy.en;
-  const selectHome = locale === "pt"
-    ? {
-        eyebrow: "VAREJO INVESTIDOR SELECT",
-        title: "Varejo Investidor Select",
-        text: "Para investidores que desejam exposição global sem executar operações manualmente.",
-        cta: "CONHECER SELECT",
-        cards: ["Aplicação mínima R$250.000", "ou US$50.000", "Forex", "Ações", "Criptomoedas"],
-      }
-    : {
-        eyebrow: "VAREJO INVESTIDOR SELECT",
-        title: "Varejo Investidor Select",
-        text: "For investors who want global exposure without executing trades manually.",
-        cta: "EXPLORE SELECT",
-        cards: ["Minimum R$250,000", "or US$50,000", "Forex", "Stocks", "Crypto"],
-      };
+  const eliteHome = homeEliteCopy[locale] ?? homeEliteCopy.en;
+  const selectHome = homeSelectCopy[locale] ?? homeSelectCopy.en;
   const finalText = "text" in copy.final ? copy.final.text : undefined;
   const educationHref = locale === "pt" ? "/educacao" : `/${locale}/education`;
 
@@ -1172,7 +1391,7 @@ export default function Home() {
             <div className="home-stats mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
               {copy.intro.stats.map((stat, index) => (
                 <div key={stat} className="strategic-stat border-l-2 border-gold/[0.68] bg-paper px-4 py-4 shadow-fine">
-                  {index === 1 ?<AnimatedCounter label={signalCounterLabels[locale]} /> : <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>}
+                  {index === 1 ?<AnimatedCounter label={signalCounterLabels[locale] ?? signalCounterLabels.en} /> : <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>}
                 </div>
               ))}
             </div>
@@ -1197,22 +1416,61 @@ export default function Home() {
 
           <div className="grid gap-5">
             {copy.cards.map((card, index) => (
-              <motion.article key={card.title} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.45, delay: index * 0.06 }} variants={fadeUp} className="level-card system-module group relative overflow-hidden p-7 shadow-fine md:p-8">
+              <motion.a key={card.title} href={card.href} aria-label={card.title} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.45, delay: index * 0.06 }} variants={fadeUp} className="level-card system-module group relative block overflow-hidden p-7 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:p-8">
                 <div className="absolute inset-0 luxury-grid opacity-30" />
-                <div className="relative grid gap-5 sm:grid-cols-[1fr_auto] sm:items-center">
+                <div className="relative">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.36em] text-gold">{card.code}</p>
                     <h3 className="mt-2 font-serif text-3xl leading-[1.04] tracking-[-0.035em] md:text-4xl">{card.title}</h3>
                     <p className="mt-3 leading-7 text-ink/[0.64]">{card.text}</p>
                   </div>
-                  <a href={card.href} className="learn-more block min-w-[150px] px-5 py-4 text-center text-xs uppercase transition">
-                    {copy.cardCta}
-                  </a>
+                  <span className="mt-5 inline-flex text-lg text-gold transition group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
                 </div>
-              </motion.article>
+              </motion.a>
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="relative overflow-hidden border-y border-gold/[0.12] bg-paper px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <div className="absolute inset-0 terminal-grid opacity-20" />
+        <div className="absolute left-[10%] top-8 h-72 w-72 rounded-full bg-gold/[0.07] blur-3xl" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          variants={fadeUp}
+          className="relative mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-center"
+        >
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">{eliteHome.title}</p>
+            <h2 className="mt-5 max-w-3xl font-serif text-4xl leading-[1.03] tracking-[-0.045em] md:text-6xl">
+              {eliteHome.subtitle}
+            </h2>
+            <p className="mt-6 max-w-3xl text-base leading-8 text-ink/[0.7] md:text-lg">
+              {eliteHome.text}
+            </p>
+            <a
+              href="/sinais"
+              onClick={() => trackVarejoClick("home_elite_section_click", { locale })}
+              className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+            >
+              {eliteHome.cta}
+            </a>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {eliteHome.cards.map((item) => (
+              <article key={item} className="relative overflow-hidden border border-gold/[0.18] bg-white/[0.035] p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.5] hover:shadow-premium md:p-6">
+                <div className="absolute inset-0 luxury-grid opacity-20" />
+                <div className="relative flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gold shadow-[0_0_18px_rgba(201,155,62,0.55)]" />
+                  <p className="font-serif text-2xl leading-[1.08] tracking-[-0.035em] text-ink">{item}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       <section className="relative overflow-hidden border-y border-gold/[0.14] bg-ink px-5 py-16 text-paper md:px-8 md:py-20 lg:px-12 xl:px-16">
@@ -1243,10 +1501,13 @@ export default function Home() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {selectHome.cards.map((item) => (
-              <article key={item} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine">
+              <article key={`${item.label}-${item.value ?? ""}`} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine">
                 <div className="absolute inset-0 luxury-grid opacity-20" />
                 <div className="relative">
-                  <p className="font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-paper">{item}</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/[0.55]">{item.label}</p>
+                  {item.value ? (
+                    <p className="mt-3 font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-gold">{item.value}</p>
+                  ) : null}
                 </div>
               </article>
             ))}

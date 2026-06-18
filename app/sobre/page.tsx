@@ -415,8 +415,7 @@ function InfoCard({ title, text, index }: { title: string; text: string; index: 
     >
       <div className="absolute inset-0 luxury-grid opacity-25" />
       <div className="relative">
-        <p className="font-mono text-xs text-gold">0{index + 1}</p>
-        <h3 className="mt-5 font-serif text-3xl leading-[1.04] tracking-[-0.04em]">{title}</h3>
+        <h3 className="font-serif text-3xl leading-[1.04] tracking-[-0.04em]">{title}</h3>
         <p className="mt-3 text-sm leading-7 text-ink/[0.66]">{text}</p>
       </div>
     </motion.article>
@@ -487,8 +486,7 @@ export default function SobrePage() {
           className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.42fr_1fr]"
         >
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">01</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.whatTitle}</h2>
+            <h2 className="font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.whatTitle}</h2>
           </div>
           <div className="grid gap-5 text-lg leading-9 text-ink/[0.68]">
             {copy.whatParagraphs.map((paragraph) => (
@@ -501,8 +499,7 @@ export default function SobrePage() {
       <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">02</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.foundTitle}</h2>
+            <h2 className="font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.foundTitle}</h2>
           </div>
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.found.map((item, index) => (
@@ -522,7 +519,7 @@ export default function SobrePage() {
               Formiga, Lobo, Harpia e Select.
             </h2>
             <p className="mt-6 text-lg leading-8 text-paper/[0.72]">
-              O Select representa a camada mais avan\u00E7ada do ecossistema Varejo Investidor, destinada a investidores que j\u00E1 constru\u00EDram patrim\u00F4nio relevante e buscam uma estrutura internacional de diversifica\u00E7\u00E3o, prote\u00E7\u00E3o e crescimento de longo prazo.
+              O Select representa a camada mais avançada do ecossistema Varejo Investidor, destinada a investidores que já construíram patrimônio relevante e buscam uma estrutura internacional de diversificação, proteção e crescimento de longo prazo.
             </p>
           </div>
           <div className="mt-10 grid gap-4 lg:grid-cols-4">
@@ -535,8 +532,7 @@ export default function SobrePage() {
               <article key={level} className="relative overflow-hidden border border-gold/[0.2] bg-paper/[0.04] p-6 shadow-fine">
                 <div className="absolute inset-0 luxury-grid opacity-20" />
                 <div className="relative">
-                  <p className="font-mono text-xs font-black text-gold">0{index + 1}</p>
-                  <h3 className="mt-5 font-serif text-4xl tracking-[-0.05em] text-paper">{level}</h3>
+                  <h3 className="font-serif text-4xl tracking-[-0.05em] text-paper">{level}</h3>
                   <p className="mt-4 text-sm font-bold uppercase tracking-[0.13em] text-paper/[0.68]">{text}</p>
                 </div>
               </article>
@@ -556,8 +552,7 @@ export default function SobrePage() {
           >
             <div className="absolute inset-0 terminal-grid opacity-25" />
             <div className="relative">
-              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">03</p>
-              <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.notOnlyTitle}</h2>
+              <h2 className="font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.notOnlyTitle}</h2>
               <div className="mt-10 grid gap-5 lg:grid-cols-2">
                 <div className="border border-paper/[0.12] bg-paper/[0.035] p-6">
                   <p className="text-xs font-bold uppercase tracking-[0.26em] text-fall">{copy.notOnlyLeftTitle}</p>
@@ -588,8 +583,7 @@ export default function SobrePage() {
       <section className="border-y border-ink/[0.08] bg-white px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-4xl">
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">04</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.levelsTitle}</h2>
+            <h2 className="font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-6xl">{copy.levelsTitle}</h2>
             <p className="mt-5 text-lg leading-8 text-ink/[0.66]">{copy.levelsText}</p>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -605,8 +599,7 @@ export default function SobrePage() {
               >
                 <div className="absolute right-5 top-5 h-20 w-20 rounded-full bg-gold/[0.08] blur-2xl" />
                 <div className="relative">
-                  <p className="font-mono text-xs text-gold">0{index + 1}</p>
-                  <h3 className="mt-7 font-serif text-5xl tracking-[-0.05em]">{name}</h3>
+                  <h3 className="font-serif text-5xl tracking-[-0.05em]">{name}</h3>
                   <p className="mt-5 text-lg font-bold text-gold">{title}</p>
                   <p className="mt-3 leading-8 text-ink/[0.68]">{text}</p>
                 </div>
@@ -627,8 +620,7 @@ export default function SobrePage() {
           >
             <div className="absolute inset-0 luxury-grid opacity-25" />
             <div className="relative">
-              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">05</p>
-              <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-5xl">{copy.visionTitle}</h2>
+              <h2 className="font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-5xl">{copy.visionTitle}</h2>
               <div className="mt-7 grid gap-4 text-base leading-8 text-ink/[0.68] md:text-lg">
                 {copy.visionParagraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
@@ -647,8 +639,7 @@ export default function SobrePage() {
           >
             <div className="absolute inset-0 terminal-grid opacity-20" />
             <div className="relative">
-              <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">06</p>
-              <h2 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-5xl">{copy.futureTitle}</h2>
+              <h2 className="font-serif text-4xl leading-[1.05] tracking-[-0.04em] md:text-5xl">{copy.futureTitle}</h2>
               <p className="mt-7 text-base leading-8 text-ink/[0.68] md:text-lg">{copy.futureText}</p>
               <div className="mt-7 flex flex-wrap gap-2">
                 {copy.futureIndicators.map((item) => (
@@ -673,8 +664,7 @@ export default function SobrePage() {
           <div className="absolute inset-0 terminal-grid opacity-25" />
           <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/[0.1] blur-3xl" />
           <div className="relative">
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-gold">07</p>
-            <h2 className="mx-auto mt-5 max-w-4xl text-balance font-serif text-4xl leading-[1.05] tracking-[-0.045em] md:text-7xl">
+            <h2 className="mx-auto max-w-4xl text-balance font-serif text-4xl leading-[1.05] tracking-[-0.045em] md:text-7xl">
               {copy.finalTitle}
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-paper/[0.72]">{copy.finalText}</p>

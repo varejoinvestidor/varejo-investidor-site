@@ -1,4 +1,4 @@
-﻿export const pl = {
+export const pl = {
   locale: "PL",
   nav: {
     "home": "Start",

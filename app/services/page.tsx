@@ -522,46 +522,50 @@ export default function ServicesPage() {
               Receba sinais ao vivo pelo WhatsApp.
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-ink/[0.66] md:text-lg">
-              Escolha a forma de pagamento do Canal Elite. Clientes no Brasil podem pagar em reais via Lastlink. Clientes internacionais podem assinar em dólar via Stripe.
+              {isPt
+                ? "Escolha a forma de pagamento do Canal Elite. Clientes no Brasil podem pagar em reais via Lastlink. Clientes internacionais podem assinar em dólar via Stripe."
+                : "Subscribe to the Elite Channel in dollars through Stripe and receive access to the private signal structure."}
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            <motion.article
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="relative flex min-h-[560px] flex-col overflow-hidden border border-gold/[0.28] bg-gradient-to-br from-ink via-[#07110d] to-ink p-6 text-paper shadow-premium md:p-8"
-            >
-              <div className="absolute right-0 top-0 h-72 w-72 bg-gold/[0.08] blur-3xl" />
-              <div className="relative flex h-full flex-col">
-                <span className="w-fit bg-gold px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-ink">Pagamento Brasil</span>
-                <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em]">Lastlink</h3>
-                <p className="mt-4 text-base leading-8 text-paper/[0.68]">
-                  Pagamento nacional em reais para acesso ao Canal Elite.
-                </p>
-                <div className="mt-7 grid gap-3">
-                  {elitePtPackages.map(([period, price, badge]) => (
-                    <div key={period} className="grid gap-3 border border-gold/[0.16] bg-paper/[0.045] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{period}</p>
-                        <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{price}</p>
+          <div className={`mt-10 grid gap-5 ${isPt ? "lg:grid-cols-2" : "mx-auto max-w-3xl"}`}>
+            {isPt ? (
+              <motion.article
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="relative flex min-h-[560px] flex-col overflow-hidden border border-gold/[0.28] bg-gradient-to-br from-ink via-[#07110d] to-ink p-6 text-paper shadow-premium md:p-8"
+              >
+                <div className="absolute right-0 top-0 h-72 w-72 bg-gold/[0.08] blur-3xl" />
+                <div className="relative flex h-full flex-col">
+                  <span className="w-fit bg-gold px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-ink">Pagamento Brasil</span>
+                  <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em]">Lastlink</h3>
+                  <p className="mt-4 text-base leading-8 text-paper/[0.68]">
+                    Pagamento nacional em reais para acesso ao Canal Elite.
+                  </p>
+                  <div className="mt-7 grid gap-3">
+                    {elitePtPackages.map(([period, price, badge]) => (
+                      <div key={period} className="grid gap-3 border border-gold/[0.16] bg-paper/[0.045] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{period}</p>
+                          <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{price}</p>
+                        </div>
+                        {badge ? <span className="w-fit border border-gold/[0.36] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold">{badge}</span> : null}
                       </div>
-                      {badge ? <span className="w-fit border border-gold/[0.36] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold">{badge}</span> : null}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  <a
+                    href={ELITE_LASTLINK_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex w-full items-center justify-center border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d8ad52]"
+                  >
+                    Pagar em reais
+                  </a>
                 </div>
-                <a
-                  href={ELITE_LASTLINK_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-auto inline-flex w-full items-center justify-center border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d8ad52]"
-                >
-                  Pagar em reais
-                </a>
-              </div>
-            </motion.article>
+              </motion.article>
+            ) : null}
 
             <motion.article
               initial="hidden"
@@ -572,10 +576,10 @@ export default function ServicesPage() {
             >
               <div className="absolute right-0 top-0 h-72 w-72 bg-sky-500/[0.07] blur-3xl" />
               <div className="relative flex h-full flex-col">
-                <span className="w-fit border border-gold/[0.42] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-gold">Pagamento Internacional</span>
+                <span className="w-fit border border-gold/[0.42] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-gold">{isPt ? "Pagamento Internacional" : "International Payment"}</span>
                 <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em]">Stripe</h3>
                 <p className="mt-4 text-base leading-8 text-paper/[0.68]">
-                  Assinatura internacional em dólar para clientes fora do Brasil.
+                  {isPt ? "Assinatura internacional em dólar para clientes fora do Brasil." : "International subscription in dollars through Stripe."}
                 </p>
                 <div className="mt-7 grid gap-3">
                   {[
@@ -595,7 +599,7 @@ export default function ServicesPage() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center border border-gold/[0.42] px-4 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
                       >
-                        Assinar
+                        {isPt ? "Assinar" : "Subscribe"}
                       </a>
                     </div>
                   ))}
@@ -638,7 +642,7 @@ export default function ServicesPage() {
                   ))}
                 </div>
                 <a
-                  href="/servicos/select"
+                  href="/select"
                   className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
                 >
                   Conhecer Select

@@ -642,48 +642,18 @@ export function SiteChrome({
   };
   const firstNavItems = useMemo(
     () => [
-      { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", "/pt", "/en", "/es", "/fr", "/it", "/de", "/hi", "/ar", "/tr", "/id", "/vi", "/th", "/ru", "/ur", "/bn", "/ja", "/ko", "/zh"] },
+      { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", ...SUPPORTED_LOCALES.map((item) => `/${item}`)] },
       { label: safeT.nav.signals, href: localizedHref("signals"), activePaths: ["/sinais", "/signals", `/${locale}/signals`] },
       { label: safeT.nav.education, href: localizedHref("education"), activePaths: ["/educacao", `/${locale}/education`] },
+      { label: "Select", href: "/select", activePaths: ["/select", "/servicos/select"] },
+      { label: "Private", href: "/private", activePaths: ["/private"] },
       { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
-      { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
     ],
     [locale, safeT],
   );
-  const articlesNavItem = useMemo(
-    () => ({
-      label: insightNavLabel,
-      href: getInsightsPath(locale),
-      activePaths: [
-        "/artigos-globais",
-        "/global-articles",
-        "/articulos-globales",
-        "/global-articles-hi",
-        "/ar/global-articles",
-        "/tr/global-articles",
-        "/id/articles",
-        "/vi/articles",
-        "/insights-globais",
-        "/global-insights",
-        "/insights-globales",
-        "/global-insights-hi",
-        "/ar/global-insights",
-        "/tr/global-insights",
-        "/id/insights",
-        "/vi/insights",
-        "/ja/articles",
-        "/ja/insights",
-        "/ko/articles",
-        "/ko/insights",
-        "/it/articles",
-        "/it/insights",
-        "/de/articles",
-        "/de/insights",
-        "/zh/articles",
-        "/zh/insights",
-      ],
-    }),
-    [locale, insightNavLabel],
+  const aboutNavItem = useMemo(
+    () => ({ label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] }),
+    [locale, safeT],
   );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
@@ -692,7 +662,7 @@ export function SiteChrome({
     ...firstNavItems,
     { label: marketLabels.markets, href: marketItems[0].href, activePaths: ["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`] },
     { label: toolLabels.tools, href: toolItems[0].href, activePaths: ["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en] },
-    articlesNavItem,
+    aboutNavItem,
   ];
 
   return (
@@ -728,8 +698,8 @@ export function SiteChrome({
             })}
             <HeaderDropdown label={marketLabels.markets} items={marketItems} active={marketsActive} />
             <HeaderDropdown label={toolLabels.tools} items={toolItems} active={toolsActive} />
-            <a href={articlesNavItem.href} className={`nav-link px-3 py-2 text-ink ${isActivePath(articlesNavItem.activePaths) ? "active" : ""}`}>
-              {articlesNavItem.label}
+            <a href={aboutNavItem.href} className={`nav-link px-3 py-2 text-ink ${isActivePath(aboutNavItem.activePaths) ? "active" : ""}`}>
+              {aboutNavItem.label}
             </a>
           </div>
 
@@ -1200,6 +1170,7 @@ export function SupportFooter({
     { href: "/lobo", label: footerLabels.levelLinks[1] },
     { href: "/harpia", label: footerLabels.levelLinks[2] },
     { href: "/select", label: footerLabels.levelLinks[3] },
+    { href: "/private", label: "Private" },
   ];
   const marketFooterSlugs: MarketSlug[] =
     locale === "pt" ? [...publicMarketSlugs, "fundos-imobiliarios"] : publicMarketSlugs;
@@ -1272,11 +1243,12 @@ export function SupportFooter({
     { href: localizedFooterHref("home"), label: t.nav.home },
     { href: localizedFooterHref("signals"), label: t.nav.signals },
     { href: localizedFooterHref("education"), label: t.nav.education },
+    { href: "/select", label: "Select" },
+    { href: "/private", label: "Private" },
     { href: localizedFooterHref("services"), label: t.nav.services },
-    { href: localizedFooterHref("about"), label: t.nav.about },
     { href: marketFooterLinks[0]?.href ?? "/forex", label: footerLabels.content },
     { href: "/ferramentas/calculadora-forex", label: footerLabels.tools },
-    { href: getInsightsPath(locale), label: insightLabels[locale]?.nav ?? insightLabels.en.nav },
+    { href: localizedFooterHref("about"), label: t.nav.about },
   ];
 
   return (

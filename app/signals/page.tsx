@@ -590,8 +590,7 @@ export default function SignalsPage() {
                 className="terminal-module relative overflow-hidden border border-rise/[0.18] bg-white p-6 shadow-fine"
               >
                 <div className="absolute inset-0 terminal-grid opacity-25" />
-                <p className="relative font-mono text-xs text-rise">0{index + 1}</p>
-                <h3 className="relative mt-8 font-serif text-3xl leading-[1.03] tracking-[-0.04em]">{item}</h3>
+                <h3 className="relative font-serif text-3xl leading-[1.03] tracking-[-0.04em]">{item}</h3>
               </motion.article>
             ))}
           </div>
