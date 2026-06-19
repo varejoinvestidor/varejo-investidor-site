@@ -89,6 +89,7 @@ const staticPaths = [
   "/ferramentas/calculadora-forex",
   "/ferramentas/calculadora-juros-compostos",
   "/ferramentas/raio-x-carteira-global",
+  "/ferramentas/calendario-economico",
   "/relatorio-elite",
   "/elite-report",
   "/reporte-elite",

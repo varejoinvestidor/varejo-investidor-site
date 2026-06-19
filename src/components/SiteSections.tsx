@@ -635,6 +635,29 @@ export function SiteChrome({
     ja: { tools: "ツール", forex: "Forex計算機", compound: "複利計算機", reports: "レポート" },
     ko: { tools: "도구", forex: "Forex 계산기", compound: "복리 계산기", reports: "리포트" },
   };
+  const economicCalendarLabels: Record<string, string> = {
+    pt: "Calendário Econômico",
+    en: "Economic Calendar",
+    es: "Calendario económico",
+    fr: "Calendrier économique",
+    de: "Wirtschaftskalender",
+    it: "Calendario economico",
+    ar: "التقويم الاقتصادي",
+    fa: "تقویم اقتصادی",
+    hi: "आर्थिक कैलेंडर",
+    ur: "اقتصادی کیلنڈر",
+    bn: "অর্থনৈতিক ক্যালেন্ডার",
+    tr: "Ekonomik Takvim",
+    ru: "Экономический календарь",
+    id: "Kalender Ekonomi",
+    vi: "Lịch kinh tế",
+    th: "ปฏิทินเศรษฐกิจ",
+    tl: "Kalendaryong Pang-ekonomiya",
+    zh: "经济日历",
+    ja: "経済カレンダー",
+    ko: "경제 캘린더",
+    pl: "Kalendarz ekonomiczny",
+  };
   const marketLabels = marketDropdownLabels[locale] ?? marketDropdownLabels.en;
   const toolLabels = toolDropdownLabels[locale] ?? toolDropdownLabels.en;
   const marketPrefix = locale === "pt" ? "" : `/${locale}`;
@@ -652,6 +675,7 @@ export function SiteChrome({
     { label: toolLabels.forex, href: "/ferramentas/calculadora-forex" },
     { label: toolLabels.compound, href: "/ferramentas/calculadora-juros-compostos" },
     { label: toolLabels.portfolio ?? "Global Portfolio X-Ray", href: "/ferramentas/raio-x-carteira-global" },
+    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: "/ferramentas/calendario-economico" },
     { label: toolLabels.reports, href: eliteReportPaths[locale] ?? eliteReportPaths.en },
   ];
   const localizedHref = (page: "home" | "signals" | "education" | "services" | "about") => {
@@ -677,7 +701,7 @@ export function SiteChrome({
   );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
-  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en]);
+  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", "/ferramentas/calendario-economico", eliteReportPaths[locale] ?? eliteReportPaths.en]);
   const mobilePrimaryItems = [
     ...firstNavItems,
     { label: insightNavLabel, href: getInsightsPath(locale), activePaths: [getInsightsPath(locale)] },
@@ -688,6 +712,7 @@ export function SiteChrome({
     { label: toolLabels.compound, href: "/ferramentas/calculadora-juros-compostos" },
     { label: locale === "pt" ? "Aposentadoria" : "Retirement", href: "/ferramentas/calculadora-juros-compostos#aposentadoria" },
     { label: toolLabels.portfolio ?? "Portfolio", href: "/ferramentas/raio-x-carteira-global" },
+    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: "/ferramentas/calendario-economico" },
   ];
 
   return (

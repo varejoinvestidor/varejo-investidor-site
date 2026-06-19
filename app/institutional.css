@@ -1,6 +1,44 @@
 /* Approved mobile navigation only.
    Page design remains in globals.css, restored from the premium dark version. */
 
+@media (min-width: 1280px) {
+  .desktop-main-menu .nav-link,
+  .desktop-main-menu .header-dropdown-trigger,
+  .desktop-language-trigger {
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    color: rgba(244, 240, 232, .78) !important;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease !important;
+  }
+
+  .desktop-main-menu .nav-link:hover,
+  .desktop-main-menu .header-dropdown-trigger:hover,
+  .desktop-main-menu .nav-link.active,
+  .desktop-main-menu .header-dropdown.is-active > .header-dropdown-trigger,
+  .desktop-main-menu .header-dropdown[open] > .header-dropdown-trigger,
+  .desktop-language-trigger:hover,
+  .desktop-language-dropdown[open] > .desktop-language-trigger {
+    border-color: #c6994a !important;
+    background: #c6994a !important;
+    color: #050505 !important;
+    box-shadow: 0 10px 28px rgba(198, 153, 74, .16) !important;
+  }
+
+  .desktop-main-menu .nav-link:active,
+  .desktop-main-menu .header-dropdown-trigger:active,
+  .desktop-language-trigger:active {
+    transform: translateY(1px);
+  }
+
+  .header-dropdown-panel .header-dropdown-item:hover,
+  .language-dropdown-panel .language-dropdown-option:hover,
+  .language-dropdown-panel .language-dropdown-option.is-active {
+    border-color: rgba(198, 153, 74, .72) !important;
+    background: rgba(198, 153, 74, .16) !important;
+    color: #f4f0e8 !important;
+  }
+}
+
 @media (max-width: 1279px) {
   .site-chrome {
     position: sticky !important;
