@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Varejo Investidor Private | Estrutura Patrimonial Global",
+  title: "Private Varejo Investidor | Gestão Patrimonial Global",
   description:
-    "Camada patrimonial global para investidores acima de US$ 1.000.000, com acompanhamento patrimonial contínuo, alocação estratégica e organização internacional de patrimônio.",
+    "Estrutura Private para clientes acima de US$ 1 milhão, com alocação global, controle patrimonial, relatórios mensais e acompanhamento estratégico.",
   alternates: {
     canonical: "/private",
   },
   openGraph: {
-    title: "Varejo Investidor Private",
+    title: "Private Varejo Investidor",
     description:
-      "Estrutura patrimonial global para investidores com patrimônio acima de US$ 1.000.000.",
+      "Gestão patrimonial global, controle patrimonial e acompanhamento estratégico para clientes acima de US$ 1 milhão.",
     url: "/private",
     siteName: "Varejo Investidor",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Varejo Investidor Private",
+    title: "Private Varejo Investidor",
     description:
-      "Acompanhamento patrimonial contínuo, alocação global e estrutura de wealth management para investidores de alta escala.",
+      "Alocação global, relatórios mensais e acompanhamento patrimonial para clientes Private.",
   },
 };
 

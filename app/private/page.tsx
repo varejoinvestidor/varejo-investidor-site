@@ -36,14 +36,16 @@ type PrivateCopy = {
     title: string;
     subtitle: string;
     paragraphs: string[];
+    cards: [string, string][];
   };
   audience: {
     title: string;
+    text: string;
     cards: string[];
   };
   structure: {
     title: string;
-    tiers: Tier[];
+    cards: [string, string][];
   };
   flow: {
     title: string;
@@ -62,12 +64,9 @@ type PrivateCopy = {
     brazil: string;
     global: string;
   };
-  comparison: {
-    title: string;
-    tiers: [string, string, string][];
-  };
   pillars: {
     title: string;
+    subtitle: string;
     cards: [string, string][];
   };
   cta: {
@@ -92,126 +91,87 @@ type PrivateLabels = {
 const ptCopy: PrivateCopy = {
   hero: {
     eyebrow: "CAMADA PATRIMONIAL GLOBAL",
-    title: "Varejo Investidor Private",
-    subtitle: "Estrutura patrimonial global para investidores com patrimônio acima de US$ 1.000.000.",
-    text: "Uma camada privada de acompanhamento patrimonial, alocação estratégica e monitoramento contínuo para investidores, empresários e famílias que desejam preservar, expandir e organizar patrimônio em escala internacional.",
-    primary: "Solicitar análise privada",
-    secondary: "Agendar conversa institucional",
+    title: "Private Varejo Investidor",
+    subtitle: "Não gerimos apenas investimentos. Organizamos patrimônio, estrutura e continuidade.",
+    text: "Para clientes com patrimônio acima de US$ 1 milhão que buscam alocação global, leitura de mercado, controle patrimonial e acompanhamento direto sem precisar transferir seus recursos para fora da instituição em que confiam.",
+    primary: "Solicitar análise Private",
+    secondary: "Conhecer estrutura patrimonial",
     cards: [
-      ["Patrimônio mínimo", "US$ 1.000.000"],
-      ["Modelo", "Gestão patrimonial contínua"],
-      ["Foco", "Proteção, crescimento e continuidade patrimonial"],
+      ["Patrimônio mínimo", "Acima de US$ 1 milhão"],
+      ["Modelo", "Estrutura patrimonial global"],
+      ["Foco", "Controle, proteção e continuidade"],
     ],
   },
   notConsulting: {
-    title: "O Private não vende horas. Ele acompanha patrimônio.",
-    subtitle: "Patrimônio relevante exige monitoramento contínuo.",
+    title: "Gestão patrimonial global",
+    subtitle: "Patrimônio relevante exige visão internacional, organização e continuidade.",
     paragraphs: [
-      "O Private foi desenvolvido para investidores que já possuem patrimônio consolidado e não desejam gastar tempo acompanhando mercados, relatórios, riscos ou decisões operacionais diariamente.",
-      "Enquanto o Select executa a estratégia de investimento, o Private acompanha toda a estrutura patrimonial.",
-      "O foco está na preservação de capital, alocação estratégica, controle de risco e crescimento de longo prazo.",
+      "O Private Varejo Investidor acompanha o patrimônio do cliente com visão internacional, combinando alocação em dólar, proteção cambial, leitura macroeconômica, diversificação entre classes de ativos e organização estratégica da carteira.",
+      "A proposta não é parecer uma página de sinais, consultoria comum ou produto de varejo. O foco está em estrutura, controle, relatórios e acompanhamento patrimonial de longo prazo.",
+    ],
+    cards: [
+      ["Alocação global em dólar", "Organização de exposição internacional e multimoeda."],
+      ["Diversificação entre mercados", "Leitura de classes, regiões, moedas e instituições."],
+      ["Proteção cambial", "Acompanhamento do impacto de moedas fortes sobre o patrimônio."],
+      ["Leitura macroeconômica", "Interpretação de ciclos, juros, inflação e geopolítica."],
+      ["Controle de risco", "Monitoramento de concentração, liquidez e vulnerabilidades."],
+      ["Visão patrimonial de longo prazo", "Estrutura para preservação, crescimento e continuidade."],
     ],
   },
   audience: {
-    title: "Para quem é",
+    title: "Critérios de entrada",
+    text: "O Private Varejo Investidor é destinado a clientes com patrimônio relevante, visão de longo prazo e necessidade de uma estrutura mais próxima, estratégica e organizada.",
     cards: [
-      "Investidores acima de US$ 1.000.000",
-      "Empresários com liquidez relevante",
-      "Famílias em construção patrimonial",
-      "Patrimônio em múltiplas moedas",
-      "Investidores internacionais",
-      "Clientes que buscam acompanhamento contínuo",
+      "Patrimônio acima de US$ 1 milhão",
+      "Interesse em alocação global",
+      "Necessidade de acompanhamento direto",
+      "Busca por relatórios e controle patrimonial",
+      "Visão de preservação e crescimento de longo prazo",
     ],
   },
   structure: {
     title: "Estrutura Private",
-    tiers: [
-      {
-        name: "Private Core",
-        range: "US$ 1.000.000 a US$ 3.000.000",
-        management: "0,70% ao ano",
-        performance: "30% acima de 15% ao ano",
-        includes: [
-          "Relatórios mensais",
-          "Controle de risco patrimonial",
-          "Acompanhamento patrimonial",
-          "Alocação estratégica",
-          "Monitoramento contínuo",
-          "Atendimento prioritário",
-        ],
-      },
-      {
-        name: "Private Global",
-        range: "US$ 3.000.000 a US$ 10.000.000",
-        management: "0,60% ao ano",
-        performance: "30% acima de 15% ao ano",
-        includes: [
-          "Tudo do Private Core",
-          "Estratégia multimoeda",
-          "Diversificação internacional",
-          "Estruturação global",
-          "Relatórios avançados",
-          "Revisões estratégicas",
-        ],
-      },
-      {
-        name: "Private Family",
-        range: "Acima de US$ 10.000.000",
-        management: "0,50% ao ano",
-        performance: "20% acima de 15% ao ano",
-        includes: [
-          "Tudo do Private Global",
-          "Governança patrimonial",
-          "Continuidade familiar",
-          "Planejamento sucessório",
-          "Estrutura internacional",
-          "Atendimento dedicado",
-        ],
-      },
+    cards: [
+      ["Patrimônio mínimo", "Acima de US$ 1 milhão"],
+      ["Atendimento", "Direto e estratégico"],
+      ["Relatórios", "Mensais"],
+      ["Reuniões", "Periódicas"],
+      ["Instituições", "Bancos, corretoras e custodiantes de confiança"],
+      ["Foco", "Preservação, crescimento e continuidade patrimonial"],
     ],
   },
   flow: {
     title: "Como o Private funciona",
     steps: [
-      ["Diagnóstico patrimonial", "Mapeamento completo da estrutura patrimonial."],
-      ["Definição da alocação", "Distribuição estratégica entre ativos, moedas e regiões."],
-      ["Implementação", "Execução através das instituições escolhidas pelo cliente."],
-      ["Monitoramento contínuo", "Acompanhamento permanente de patrimônio e risco."],
-      ["Relatórios mensais", "Visão consolidada da carteira e posicionamento."],
-      ["Rebalanceamento", "Ajustes conforme cenário global e objetivos."],
+      ["Diagnóstico patrimonial", "Análise do perfil, patrimônio, objetivos, instituições utilizadas e exposição atual."],
+      ["Arquitetura da carteira", "Definição da estratégia de alocação, liquidez, proteção, risco e crescimento."],
+      ["Execução com controle do cliente", "A execução respeita a instituição escolhida pelo cliente, mantendo acesso, transparência e controle."],
+      ["Acompanhamento contínuo", "Relatórios mensais, reuniões estratégicas e ajustes conforme mercado, cenário global e objetivos do cliente."],
     ],
   },
   difference: {
-    title: "Por que o Private é diferente",
+    title: "Controle do cliente",
     subtitle: "O patrimônio permanece sob controle do cliente.",
     paragraphs: [
-      "O Private não exige transferência de patrimônio para uma instituição específica.",
-      "A estrutura acompanha e orienta a carteira utilizando as instituições escolhidas pelo próprio cliente.",
+      "O patrimônio permanece sob controle do cliente, dentro da instituição financeira escolhida. O Varejo Investidor atua na leitura estratégica, organização da carteira, acompanhamento e orientação de alocação, sem assumir custódia direta dos recursos.",
     ],
     cards: [
-      ["Patrimônio sob controle do cliente", "A estrutura acompanha sem exigir transferência para uma instituição específica."],
-      ["Instituições escolhidas pelo cliente", "O acompanhamento respeita as contas, bancos e corretoras definidos pelo próprio investidor."],
-      ["Monitoramento contínuo", "A estrutura patrimonial é acompanhada de forma recorrente, não pontual."],
-      ["Relatórios recorrentes", "O cliente recebe visão consolidada da carteira, exposição e evolução patrimonial."],
+      ["Acesso e controle", "O cliente mantém acesso e controle da própria conta."],
+      ["Instituições autorizadas", "A alocação pode ser feita em bancos, corretoras ou plataformas autorizadas."],
+      ["Acompanhamento contínuo", "Relatórios, reuniões e leitura contínua de mercado."],
+      ["Transparência", "A estrutura reduz a barreira de confiança e mantém clareza sobre cada decisão."],
     ],
   },
   institutions: {
-    title: "Compatível com as principais instituições financeiras",
-    subtitle: "O acompanhamento pode ser feito respeitando as contas, bancos e corretoras já escolhidos pelo cliente.",
-    text: "O Private foi pensado para investidores que já possuem patrimônio distribuído entre diferentes instituições. A estrutura não prende o cliente a uma única plataforma. O foco é leitura, organização, risco, alocação e acompanhamento patrimonial.",
+    title: "Compatível com as maiores instituições financeiras",
+    subtitle: "A estrutura Private respeita a instituição de confiança do cliente.",
+    text: "A estrutura Private foi pensada para clientes que já possuem relacionamento com bancos, corretoras, custodiantes ou plataformas internacionais. A estratégia pode ser organizada respeitando a instituição de confiança do cliente.",
     brazil: "Brasil",
     global: "Mundo",
   },
-  comparison: {
-    title: "Comparação dos níveis",
-    tiers: [
-      ["Elite", "Sinais e execução manual", "Até US$ 50.000"],
-      ["Select", "Estratégia automatizada", "US$ 50.000 a US$ 1.000.000"],
-      ["Private", "Gestão patrimonial global", "Acima de US$ 1.000.000"],
-    ],
-  },
   pillars: {
-    title: "O que recebe o cliente Private",
+    title: "Relatórios e acompanhamento",
+    subtitle: "O cliente Private recebe uma visão organizada da carteira, da exposição e das decisões patrimoniais ao longo do tempo.",
     cards: [
       ["Relatórios mensais", "Visão consolidada da carteira, evolução e posicionamento."],
       ["Controle de exposição", "Acompanhamento por ativos, moedas, regiões e instituições."],
@@ -225,8 +185,8 @@ const ptCopy: PrivateCopy = {
   },
   cta: {
     eyebrow: "PRIVATE",
-    title: "Seu patrimônio exige mais do que investimentos. Ele exige estrutura.",
-    text: "O Private foi desenvolvido para investidores que precisam acompanhar patrimônio, risco, liquidez e alocação global com visão de longo prazo.",
+    title: "Estruture seu patrimônio em nível global",
+    text: "Clientes Private precisam de mais do que produtos financeiros. Precisam de uma estrutura clara, acompanhamento direto e visão internacional para proteger, organizar e expandir patrimônio ao longo do tempo.",
     minimum: "Patrimônio mínimo: US$ 1.000.000",
     disclaimer: "Conteúdo institucional e educacional. Não representa recomendação individual, oferta pública ou promessa de rentabilidade.",
   },
@@ -235,126 +195,87 @@ const ptCopy: PrivateCopy = {
 const enCopy: PrivateCopy = {
   hero: {
     eyebrow: "GLOBAL WEALTH LAYER",
-    title: "Varejo Investidor Private",
-    subtitle: "Global wealth structure for investors with wealth above US$ 1,000,000.",
-    text: "A private layer of wealth monitoring, strategic allocation, and continuous oversight for investors, business owners, and families seeking to preserve, expand, and organize wealth at international scale.",
-    primary: "Request private analysis",
-    secondary: "Schedule institutional call",
+    title: "Private Varejo Investidor",
+    subtitle: "We do not only manage investments. We organize wealth, structure, and continuity.",
+    text: "For clients with wealth above US$ 1 million seeking global allocation, market reading, wealth control, and direct monitoring without needing to transfer resources away from the institution they trust.",
+    primary: "Request Private analysis",
+    secondary: "Explore the wealth structure",
     cards: [
-      ["Minimum wealth", "US$ 1,000,000"],
-      ["Model", "Continuous wealth management"],
-      ["Focus", "Protection, growth, and wealth continuity"],
+      ["Minimum wealth", "Above US$ 1 million"],
+      ["Model", "Global wealth structure"],
+      ["Focus", "Control, protection, and continuity"],
     ],
   },
   notConsulting: {
-    title: "Private does not sell hours. It monitors wealth.",
-    subtitle: "Relevant wealth requires continuous oversight.",
+    title: "Global wealth management",
+    subtitle: "Relevant wealth requires international vision, organization, and continuity.",
     paragraphs: [
-      "Private was developed for investors who already have consolidated wealth and do not want to spend time monitoring markets, reports, risks, or operational decisions every day.",
-      "While Select executes the investment strategy, Private monitors the entire wealth structure.",
-      "The focus is capital preservation, strategic allocation, risk control, and long-term growth.",
+      "Private Varejo Investidor monitors the client's wealth with an international view, combining dollar allocation, currency protection, macroeconomic reading, diversification across asset classes, and strategic portfolio organization.",
+      "This is not positioned as a signals page, common consulting service, or retail product. The focus is structure, control, reporting, and long-term wealth monitoring.",
+    ],
+    cards: [
+      ["Global dollar allocation", "Organization of international and multi-currency exposure."],
+      ["Diversification across markets", "Reading of asset classes, regions, currencies, and institutions."],
+      ["Currency protection", "Monitoring the impact of strong currencies on wealth."],
+      ["Macroeconomic reading", "Interpretation of cycles, rates, inflation, and geopolitics."],
+      ["Risk control", "Monitoring concentration, liquidity, and vulnerabilities."],
+      ["Long-term wealth vision", "Structure for preservation, growth, and continuity."],
     ],
   },
   audience: {
-    title: "Who it is for",
+    title: "Entry criteria",
+    text: "Private Varejo Investidor is designed for clients with relevant wealth, a long-term view, and the need for a closer, strategic, and organized structure.",
     cards: [
-      "Investors above US$ 1,000,000",
-      "Business owners with relevant liquidity",
-      "Families building long-term wealth",
-      "Wealth in multiple currencies",
-      "International investors",
-      "Clients seeking continuous wealth monitoring",
+      "Wealth above US$ 1 million",
+      "Interest in global allocation",
+      "Need for direct monitoring",
+      "Search for reports and wealth control",
+      "Long-term preservation and growth vision",
     ],
   },
   structure: {
     title: "Private structure",
-    tiers: [
-      {
-        name: "Private Core",
-        range: "US$ 1,000,000 to US$ 3,000,000",
-        management: "0.70% per year",
-        performance: "30% above 15% per year",
-        includes: [
-          "Monthly reports",
-          "Wealth risk control",
-          "Wealth monitoring",
-          "Strategic allocation",
-          "Continuous oversight",
-          "Priority access",
-        ],
-      },
-      {
-        name: "Private Global",
-        range: "US$ 3,000,000 to US$ 10,000,000",
-        management: "0.60% per year",
-        performance: "30% above 15% per year",
-        includes: [
-          "Everything in Private Core",
-          "Multi-currency strategy",
-          "International diversification",
-          "Global structuring",
-          "Advanced reports",
-          "Strategic reviews",
-        ],
-      },
-      {
-        name: "Private Family",
-        range: "Above US$ 10,000,000",
-        management: "0.50% per year",
-        performance: "20% above 15% per year",
-        includes: [
-          "Everything in Private Global",
-          "Wealth governance",
-          "Family continuity",
-          "Succession planning",
-          "International structure",
-          "Dedicated access",
-        ],
-      },
+    cards: [
+      ["Minimum wealth", "Above US$ 1 million"],
+      ["Service", "Direct and strategic"],
+      ["Reports", "Monthly"],
+      ["Meetings", "Periodic"],
+      ["Institutions", "Trusted banks, brokers, and custodians"],
+      ["Focus", "Preservation, growth, and wealth continuity"],
     ],
   },
   flow: {
     title: "How Private works",
     steps: [
-      ["Wealth diagnosis", "Complete mapping of the wealth structure."],
-      ["Allocation definition", "Strategic distribution across assets, currencies, and regions."],
-      ["Implementation", "Execution through the institutions selected by the client."],
-      ["Continuous monitoring", "Permanent monitoring of wealth and risk."],
-      ["Monthly reports", "Consolidated view of portfolio and positioning."],
-      ["Rebalancing", "Adjustments according to the global scenario and objectives."],
+      ["Wealth diagnosis", "Analysis of profile, wealth, objectives, institutions used, and current exposure."],
+      ["Portfolio architecture", "Definition of allocation, liquidity, protection, risk, and growth strategy."],
+      ["Execution with client control", "Execution respects the institution chosen by the client, preserving access, transparency, and control."],
+      ["Continuous monitoring", "Monthly reports, strategic meetings, and adjustments according to markets, global scenario, and client objectives."],
     ],
   },
   difference: {
-    title: "Why Private is different",
+    title: "Client control",
     subtitle: "The wealth remains under the client's control.",
     paragraphs: [
-      "Private does not require transferring wealth to a specific institution.",
-      "The structure monitors and guides the portfolio using the institutions chosen by the client.",
+      "The wealth remains under the client's control, inside the chosen financial institution. Varejo Investidor works on strategic reading, portfolio organization, monitoring, and allocation guidance without taking direct custody of the resources.",
     ],
     cards: [
-      ["Wealth stays under client control", "The structure monitors without requiring transfer to a specific institution."],
-      ["Client-selected institutions", "Monitoring respects the accounts, banks, and brokers chosen by the investor."],
-      ["Continuous monitoring", "The wealth structure is monitored on a recurring basis, not as a one-off review."],
-      ["Recurring reports", "The client receives a consolidated view of portfolio, exposure, and wealth evolution."],
+      ["Access and control", "The client keeps access and control of their own account."],
+      ["Authorized institutions", "Allocation can be made through banks, brokers, or authorized platforms."],
+      ["Continuous monitoring", "Reports, meetings, and continuous market reading."],
+      ["Transparency", "The structure lowers the trust barrier and keeps clarity around each decision."],
     ],
   },
   institutions: {
-    title: "Compatible with leading financial institutions",
-    subtitle: "Monitoring can respect the accounts, banks, and brokers already chosen by the client.",
-    text: "Private was designed for investors who already hold wealth across different institutions. The structure does not lock the client into a single platform. The focus is portfolio reading, organization, risk, allocation, and ongoing wealth monitoring.",
+    title: "Compatible with major financial institutions",
+    subtitle: "The Private structure respects the client's trusted institution.",
+    text: "The Private structure was designed for clients who already have relationships with banks, brokers, custodians, or international platforms. The strategy can be organized while respecting the client's trusted institution.",
     brazil: "Brazil",
     global: "Global",
   },
-  comparison: {
-    title: "Level comparison",
-    tiers: [
-      ["Elite", "Signals and manual execution", "Up to US$ 50,000"],
-      ["Select", "Automated strategy", "US$ 50,000 to US$ 1,000,000"],
-      ["Private", "Global wealth management", "Above US$ 1,000,000"],
-    ],
-  },
   pillars: {
-    title: "What the Private client receives",
+    title: "Reports and monitoring",
+    subtitle: "The Private client receives an organized view of the portfolio, exposure, and wealth decisions over time.",
     cards: [
       ["Monthly reports", "Consolidated view of portfolio, evolution, and positioning."],
       ["Exposure control", "Monitoring by assets, currencies, regions, and institutions."],
@@ -368,8 +289,8 @@ const enCopy: PrivateCopy = {
   },
   cta: {
     eyebrow: "PRIVATE",
-    title: "Your wealth needs more than investments. It needs structure.",
-    text: "Private was developed for investors who need to monitor wealth, risk, liquidity, and global allocation with a long-term view.",
+    title: "Structure your wealth at a global level",
+    text: "Private clients need more than financial products. They need a clear structure, direct monitoring, and international vision to protect, organize, and expand wealth over time.",
     minimum: "Minimum wealth: US$ 1,000,000",
     disclaimer: "Institutional and educational content. It does not represent individual recommendation, public offering, or promise of returns.",
   },
@@ -383,131 +304,92 @@ const copyByLocale: Record<string, PrivateCopy> = {
     hero: {
       ...enCopy.hero,
       eyebrow: "CAPA PATRIMONIAL GLOBAL",
-      subtitle: "Estructura patrimonial global para inversores con patrimonio superior a US$ 1.000.000.",
-      text: "Una capa privada de seguimiento patrimonial, asignación estratégica y monitoreo continuo para inversores, empresarios y familias que desean preservar, expandir y organizar patrimonio a escala internacional.",
-      primary: "Solicitar análisis privado",
-      secondary: "Agendar conversación institucional",
+      title: "Private Varejo Investidor",
+      subtitle: "No gestionamos solo inversiones. Organizamos patrimonio, estructura y continuidad.",
+      text: "Para clientes con patrimonio superior a US$ 1 millón que buscan asignación global, lectura de mercado, control patrimonial y seguimiento directo sin transferir recursos fuera de la institución en la que confían.",
+      primary: "Solicitar análisis Private",
+      secondary: "Conocer la estructura patrimonial",
       cards: [
-        ["Patrimonio mínimo", "US$ 1.000.000"],
-        ["Modelo", "Gestión patrimonial continua"],
-        ["Foco", "Protección, crecimiento y continuidad patrimonial"],
+        ["Patrimonio mínimo", "Superior a US$ 1 millón"],
+        ["Modelo", "Estructura patrimonial global"],
+        ["Foco", "Control, protección y continuidad"],
       ],
     },
     notConsulting: {
-      title: "Private no vende horas. Acompaña patrimonio.",
-      subtitle: "El patrimonio relevante exige monitoreo continuo.",
+      title: "Gestión patrimonial global",
+      subtitle: "El patrimonio relevante exige visión internacional, organización y continuidad.",
       paragraphs: [
-        "Private fue desarrollado para inversores que ya poseen patrimonio consolidado y no desean dedicar tiempo diario a mercados, reportes, riesgos o decisiones operativas.",
-        "Mientras Select ejecuta la estrategia de inversión, Private acompaña toda la estructura patrimonial.",
-        "El foco está en preservación de capital, asignación estratégica, control de riesgo y crecimiento de largo plazo.",
+        "Private Varejo Investidor acompaña el patrimonio del cliente con visión internacional, combinando asignación en dólar, protección cambiaria, lectura macroeconómica, diversificación entre clases de activos y organización estratégica de la cartera.",
+        "No se posiciona como una página de señales, una consultoría común o un producto minorista. El foco está en estructura, control, reportes y seguimiento patrimonial de largo plazo.",
+      ],
+      cards: [
+        ["Asignación global en dólar", "Organización de exposición internacional y multimoneda."],
+        ["Diversificación entre mercados", "Lectura de clases de activos, regiones, monedas e instituciones."],
+        ["Protección cambiaria", "Seguimiento del impacto de monedas fuertes sobre el patrimonio."],
+        ["Lectura macroeconómica", "Interpretación de ciclos, tasas, inflación y geopolítica."],
+        ["Control de riesgo", "Monitoreo de concentración, liquidez y vulnerabilidades."],
+        ["Visión patrimonial de largo plazo", "Estructura para preservación, crecimiento y continuidad."],
       ],
     },
     audience: {
-      title: "Para quién es",
+      title: "Criterios de entrada",
+      text: "Private Varejo Investidor está destinado a clientes con patrimonio relevante, visión de largo plazo y necesidad de una estructura más cercana, estratégica y organizada.",
       cards: [
-        "Inversores por encima de US$ 1.000.000",
-        "Empresarios con liquidez relevante",
-        "Familias en construcción patrimonial",
-        "Patrimonio en múltiples monedas",
-        "Inversores internacionales",
-        "Clientes que buscan seguimiento continuo",
+        "Patrimonio superior a US$ 1 millón",
+        "Interés en asignación global",
+        "Necesidad de seguimiento directo",
+        "Búsqueda de reportes y control patrimonial",
+        "Visión de preservación y crecimiento de largo plazo",
       ],
     },
     structure: {
-      ...enCopy.structure,
       title: "Estructura Private",
-      tiers: [
-        {
-          name: "Private Core",
-          range: "US$ 1.000.000 a US$ 3.000.000",
-          management: "0,70% al año",
-          performance: "30% por encima del 15% anual",
-          includes: [
-            "Reportes mensuales",
-            "Control de riesgo patrimonial",
-            "Seguimiento patrimonial",
-            "Asignación estratégica",
-            "Monitoreo continuo",
-            "Atención prioritaria",
-          ],
-        },
-        {
-          name: "Private Global",
-          range: "US$ 3.000.000 a US$ 10.000.000",
-          management: "0,60% al año",
-          performance: "30% por encima del 15% anual",
-          includes: [
-            "Todo lo incluido en Private Core",
-            "Estrategia multimoneda",
-            "Diversificación internacional",
-            "Estructuración global",
-            "Reportes avanzados",
-            "Revisiones estratégicas",
-          ],
-        },
-        {
-          name: "Private Family",
-          range: "Por encima de US$ 10.000.000",
-          management: "0,50% al año",
-          performance: "20% por encima del 15% anual",
-          includes: [
-            "Todo lo incluido en Private Global",
-            "Gobernanza patrimonial",
-            "Continuidad familiar",
-            "Planificación sucesoria",
-            "Estructura internacional",
-            "Atención dedicada",
-          ],
-        },
+      cards: [
+        ["Patrimonio mínimo", "Superior a US$ 1 millón"],
+        ["Atención", "Directa y estratégica"],
+        ["Reportes", "Mensuales"],
+        ["Reuniones", "Periódicas"],
+        ["Instituciones", "Bancos, corredoras y custodios de confianza"],
+        ["Foco", "Preservación, crecimiento y continuidad patrimonial"],
       ],
     },
     flow: {
       title: "Cómo funciona Private",
       steps: [
-        ["Diagnóstico patrimonial", "Mapeo completo de la estructura patrimonial."],
-        ["Definición de asignación", "Distribución estratégica entre activos, monedas y regiones."],
-        ["Implementación", "Ejecución a través de las instituciones elegidas por el cliente."],
-        ["Monitoreo continuo", "Seguimiento permanente del patrimonio y del riesgo."],
-        ["Reportes mensuales", "Visión consolidada de la cartera y del posicionamiento."],
-        ["Rebalanceo", "Ajustes según el escenario global y los objetivos."],
+        ["Diagnóstico patrimonial", "Análisis del perfil, patrimonio, objetivos, instituciones utilizadas y exposición actual."],
+        ["Arquitectura de cartera", "Definición de estrategia de asignación, liquidez, protección, riesgo y crecimiento."],
+        ["Ejecución con control del cliente", "La ejecución respeta la institución elegida por el cliente, manteniendo acceso, transparencia y control."],
+        ["Seguimiento continuo", "Reportes mensuales, reuniones estratégicas y ajustes según mercado, escenario global y objetivos del cliente."],
       ],
     },
     difference: {
-      title: "Por qué Private es diferente",
+      title: "Control del cliente",
       subtitle: "El patrimonio permanece bajo control del cliente.",
       paragraphs: [
-        "Private no exige transferencia de patrimonio hacia una institución específica.",
-        "La estructura monitorea y orienta la cartera utilizando las instituciones elegidas por el propio cliente.",
+        "El patrimonio permanece bajo control del cliente, dentro de la institución financiera elegida. Varejo Investidor actúa en lectura estratégica, organización de cartera, seguimiento y orientación de asignación, sin asumir custodia directa de los recursos.",
       ],
       cards: [
-        ["Patrimonio bajo control del cliente", "La estructura acompaña sin exigir transferencia hacia una institución específica."],
-        ["Instituciones elegidas por el cliente", "El seguimiento respeta las cuentas, bancos y corredoras definidos por el inversor."],
-        ["Monitoreo continuo", "La estructura patrimonial se acompaña de forma recurrente, no puntual."],
-        ["Reportes recurrentes", "El cliente recibe una visión consolidada de cartera, exposición y evolución patrimonial."],
+        ["Acceso y control", "El cliente mantiene acceso y control de su propia cuenta."],
+        ["Instituciones autorizadas", "La asignación puede realizarse en bancos, corredoras o plataformas autorizadas."],
+        ["Seguimiento continuo", "Reportes, reuniones y lectura continua de mercado."],
+        ["Transparencia", "La estructura reduce la barrera de confianza y mantiene claridad sobre cada decisión."],
       ],
     },
     institutions: {
-      title: "Compatible con las principales instituciones financieras",
-      subtitle: "El seguimiento puede respetar las cuentas, bancos y corredoras ya elegidos por el cliente.",
-      text: "Private fue diseñado para inversores que ya tienen patrimonio distribuido entre diferentes instituciones. La estructura no ata al cliente a una sola plataforma. El foco está en lectura, organización, riesgo, asignación y seguimiento patrimonial.",
+      title: "Compatible con las mayores instituciones financieras",
+      subtitle: "La estructura Private respeta la institución de confianza del cliente.",
+      text: "La estructura Private fue pensada para clientes que ya tienen relación con bancos, corredoras, custodios o plataformas internacionales. La estrategia puede organizarse respetando la institución de confianza del cliente.",
       brazil: "Brasil",
       global: "Mundo",
     },
-    comparison: {
-      title: "Comparación de niveles",
-      tiers: [
-        ["Elite", "Señales y ejecución manual", "Hasta US$ 50.000"],
-        ["Select", "Estrategia automatizada", "US$ 50.000 a US$ 1.000.000"],
-        ["Private", "Gestión patrimonial global", "Por encima de US$ 1.000.000"],
-      ],
-    },
     pillars: {
-      title: "Qué recibe el cliente Private",
+      title: "Reportes y seguimiento",
+      subtitle: "El cliente Private recibe una visión organizada de la cartera, la exposición y las decisiones patrimoniales a lo largo del tiempo.",
       cards: [
-        ["Reportes mensuales", "Visión consolidada de la cartera, evolución y posicionamiento."],
+        ["Reportes mensuales", "Visión consolidada de cartera, evolución y posicionamiento."],
         ["Control de exposición", "Seguimiento por activos, monedas, regiones e instituciones."],
         ["Control de riesgo", "Monitoreo de concentración, liquidez y vulnerabilidades."],
-        ["Diversificación global", "Organización de la exposición internacional y multimoneda."],
+        ["Diversificación global", "Organización de exposición internacional y multimoneda."],
         ["Monitoreo continuo", "Seguimiento recurrente de la estructura patrimonial."],
         ["Asignación multimoneda", "Distribución estratégica entre monedas fuertes y activos globales."],
         ["Protección patrimonial", "Preservación de capital con foco en ciclos largos."],
@@ -516,8 +398,8 @@ const copyByLocale: Record<string, PrivateCopy> = {
     },
     cta: {
       eyebrow: "PRIVATE",
-      title: "Tu patrimonio exige más que inversiones. Exige estructura.",
-      text: "Private fue desarrollado para inversores que necesitan acompañar patrimonio, riesgo, liquidez y asignación global con visión de largo plazo.",
+      title: "Estructure su patrimonio a nivel global",
+      text: "Los clientes Private necesitan más que productos financieros. Necesitan una estructura clara, seguimiento directo y visión internacional para proteger, organizar y expandir patrimonio a lo largo del tiempo.",
       minimum: "Patrimonio mínimo: US$ 1.000.000",
       disclaimer: "Contenido institucional y educativo. No representa recomendación individual, oferta pública ni promesa de rentabilidad.",
     },
@@ -580,31 +462,26 @@ const labelsByLocale: Record<string, PrivateLabels> = {
 };
 
 const brazilInstitutions = [
-  "Itaú",
+  "Itaú Private",
   "BTG Pactual",
-  "XP Investimentos",
+  "XP Private",
   "Bradesco",
   "Santander",
-  "Banco do Brasil",
   "Safra",
-  "Inter",
-  "Nubank",
-  "Clear",
+  "Banco do Brasil",
 ];
 
 const globalInstitutions = [
-  "JPMorgan",
-  "Goldman Sachs",
   "Morgan Stanley",
+  "J.P. Morgan",
+  "Goldman Sachs",
   "UBS",
-  "HSBC",
-  "Citibank",
-  "Bank of America",
-  "Charles Schwab",
+  "Credit Suisse",
   "Interactive Brokers",
-  "Fidelity",
-  "BlackRock",
+  "Charles Schwab",
   "Binance",
+  "Nomad",
+  "Avenue",
 ];
 
 function usePrivateCopy(locale: string) {
@@ -696,6 +573,11 @@ export default function PrivatePage() {
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-3">
+            {copy.notConsulting.cards.map(([title, text]) => (
+              <AccentCard key={title} title={title} text={text} />
+            ))}
+          </div>
         </motion.div>
       </section>
 
@@ -755,58 +637,6 @@ export default function PrivatePage() {
 
       <section className="bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
-          <h2 className="font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.audience.title}</h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {copy.audience.cards.map((item) => (
-              <article key={item} className="border border-gold/[0.16] bg-paper/[0.035] p-5 shadow-fine transition hover:-translate-y-1 hover:border-gold/[0.45]">
-                <span className="block h-2 w-2 rounded-full bg-gold shadow-[0_0_18px_rgba(201,155,62,0.5)]" />
-                <p className="mt-5 font-serif text-2xl leading-[1.08] tracking-[-0.035em]">{item}</p>
-              </article>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      <section className="border-y border-gold/[0.12] bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
-          <h2 className="font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.structure.title}</h2>
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {copy.structure.tiers.map((tier, index) => (
-              <article key={tier.name} className={`relative flex min-h-[620px] flex-col overflow-hidden border p-6 shadow-fine transition hover:-translate-y-1 md:p-7 ${index === 2 ? "border-gold/[0.48] bg-gradient-to-br from-gold/[0.14] via-paper/[0.05] to-ink shadow-premium" : "border-gold/[0.2] bg-paper/[0.035]"}`}>
-                <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-gold/[0.08] blur-3xl" />
-                <div className="relative flex h-full flex-col">
-                  <h3 className="font-serif text-4xl leading-[0.98] tracking-[-0.05em] text-paper">{tier.name}</h3>
-                  <div className="mt-7 space-y-5 border-y border-gold/[0.16] py-6">
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">{labels.wealth}</p>
-                      <p className="mt-2 font-serif text-2xl tracking-[-0.035em] text-paper">{tier.range}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">{labels.managementFee}</p>
-                      <p className="mt-2 font-serif text-2xl tracking-[-0.035em] text-paper">{tier.management}</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">{labels.performance}</p>
-                      <p className="mt-2 font-serif text-2xl tracking-[-0.035em] text-paper">{tier.performance}</p>
-                    </div>
-                  </div>
-                  <div className="mt-7 grid gap-3">
-                    {tier.includes.map((item) => (
-                      <p key={item} className="border border-gold/[0.12] bg-paper/[0.035] px-4 py-3 text-sm leading-6 text-paper/[0.74]">
-                        <span className="mr-2 text-gold" aria-hidden="true">+</span>
-                        {item}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      <section className="bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
           <h2 className="font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.flow.title}</h2>
           <div className="mt-10 grid gap-4 md:grid-cols-3 xl:grid-cols-6">
             {copy.flow.steps.map(([title, text], index) => (
@@ -824,6 +654,7 @@ export default function PrivatePage() {
       <section className="border-y border-gold/[0.12] bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
           <h2 className="max-w-4xl font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.pillars.title}</h2>
+          <p className="mt-5 max-w-3xl text-base leading-8 text-paper/[0.68] md:text-lg">{copy.pillars.subtitle}</p>
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {copy.pillars.cards.map(([title, text]) => (
               <AccentCard key={title} title={title} text={text} />
@@ -834,14 +665,24 @@ export default function PrivatePage() {
 
       <section className="bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
-          <h2 className="font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.comparison.title}</h2>
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {copy.comparison.tiers.map(([name, profile, wealth]) => (
-              <article key={name} className={`relative flex min-h-[280px] flex-col overflow-hidden border p-7 shadow-fine ${name === "Private" ? "border-gold/[0.5] bg-gradient-to-br from-gold/[0.14] via-paper/[0.05] to-ink shadow-premium" : "border-gold/[0.18] bg-paper/[0.035]"}`}>
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">{labels.profile}</p>
-                <h3 className="mt-5 font-serif text-5xl leading-[0.98] tracking-[-0.055em]">{name}</h3>
-                <p className="mt-6 text-base leading-7 text-paper/[0.68]">{profile}</p>
-                <p className="mt-auto pt-8 font-serif text-3xl tracking-[-0.04em] text-gold">{wealth}</p>
+          <h2 className="font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.structure.title}</h2>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {copy.structure.cards.map(([title, text]) => (
+              <AccentCard key={title} title={title} text={text} />
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="border-y border-gold/[0.12] bg-ink px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="mx-auto max-w-[1280px]">
+          <h2 className="font-serif text-4xl leading-[1.04] tracking-[-0.045em] md:text-6xl">{copy.audience.title}</h2>
+          <p className="mt-5 max-w-3xl text-base leading-8 text-paper/[0.68] md:text-lg">{copy.audience.text}</p>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {copy.audience.cards.map((item) => (
+              <article key={item} className="border border-gold/[0.16] bg-paper/[0.035] p-5 shadow-fine transition hover:-translate-y-1 hover:border-gold/[0.45]">
+                <span className="block h-2 w-2 rounded-full bg-gold shadow-[0_0_18px_rgba(201,155,62,0.5)]" />
+                <p className="mt-5 font-serif text-2xl leading-[1.08] tracking-[-0.035em]">{item}</p>
               </article>
             ))}
           </div>

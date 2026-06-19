@@ -1242,6 +1242,20 @@ export function SupportFooter({
     { href: "/ferramentas/calculadora-forex", label: footerLabels.tools },
     { href: localizedFooterHref("about"), label: t.nav.about },
   ];
+  const structureFooterTitle = locale === "pt" ? "Estrutura Patrimonial" : locale === "es" ? "Estructura Patrimonial" : "Wealth Structure";
+  const companyFooterTitle = locale === "pt" ? "Empresa" : locale === "es" ? "Empresa" : "Company";
+  const structureFooterLinks = [
+    { href: "/sinais", label: "Elite" },
+    { href: "/select", label: "Select" },
+    { href: "/private", label: "Private" },
+  ];
+  const companyFooterLinks = [
+    { href: localizedFooterHref("about"), label: t.nav.about },
+    { href: getInsightsPath(locale), label: locale === "pt" ? "Artigos" : locale === "es" ? "Artículos" : "Articles" },
+    { href: marketFooterLinks[0]?.href ?? "/forex", label: footerLabels.content },
+    { href: "/eventos", label: locale === "pt" ? "Eventos" : locale === "es" ? "Eventos" : "Events" },
+    { href: t.support.link, label: locale === "pt" ? "Contato" : locale === "es" ? "Contacto" : "Contact" },
+  ];
 
   return (
     <>
@@ -1255,7 +1269,7 @@ export function SupportFooter({
       </section>
 
       <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_0.55fr_0.62fr_0.66fr_0.72fr_0.72fr_0.62fr_0.62fr_0.82fr] lg:items-start">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-6 xl:grid-cols-9 lg:items-start">
           <div>
             <a href="/#home" className="inline-flex items-center gap-3">
               <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
@@ -1296,6 +1310,38 @@ export function SupportFooter({
                 <a
                   key={`${link.href}-${link.label}`}
                   href={link.href}
+                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{structureFooterTitle}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              {structureFooterLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{companyFooterTitle}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              {companyFooterLinks.map((link) => (
+                <a
+                  key={`${link.href}-${link.label}`}
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
                 >
                   {link.label}

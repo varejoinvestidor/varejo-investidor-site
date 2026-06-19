@@ -811,6 +811,104 @@ Object.assign(homePrivateCopy, {
   pl: { ...homePrivateCopy.en, subtitle: "Instytucjonalna struktura majątkowa dla inwestorów powyżej US$1,000,000.", text: "Globalna organizacja, ochrona i rozwój majątku dla inwestorów, rodzin i przedsiębiorców z kapitałem międzynarodowym.", cta: "POZNAJ PRIVATE" },
 });
 
+homeEliteCopy.pt = {
+  title: "Canal Elite",
+  subtitle: "Receba análises e decisões estruturadas diretamente no WhatsApp.",
+  text: "Mais de 8 anos acompanhando os mercados globais através de sinais, leitura macroeconômica e gestão de risco.",
+  cards: ["Sinais ao vivo", "Recebimento no WhatsApp", "Entrada, alvo e stop", "Análises de mercado", "Educação por níveis", "Leitura global"],
+  cta: "Conhecer Canal Elite",
+};
+
+homeSelectCopy.pt = {
+  eyebrow: "VAREJO INVESTIDOR SELECT",
+  title: "Patrimônio em construção exige estratégia.",
+  text: "O Select foi desenvolvido para investidores que já possuem patrimônio relevante e desejam uma estrutura organizada para exposição global, proteção cambial e crescimento de longo prazo.",
+  cta: "CONHECER SELECT",
+  cards: [
+    { label: "Patrimônio mínimo", value: "US$ 50.000" },
+    { label: "Mercado global" },
+    { label: "Alocação em dólar" },
+    { label: "Relatórios periódicos" },
+    { label: "Controle do cliente" },
+  ],
+};
+
+homeSelectCopy.en = {
+  eyebrow: "VAREJO INVESTIDOR SELECT",
+  title: "Wealth in progress requires strategy.",
+  text: "Select was built for investors who already hold relevant capital and want an organized structure for global exposure, currency protection, and long-term growth.",
+  cta: "EXPLORE SELECT",
+  cards: [
+    { label: "Minimum wealth", value: "US$50,000" },
+    { label: "Global markets" },
+    { label: "Dollar allocation" },
+    { label: "Periodic reports" },
+    { label: "Client control" },
+  ],
+};
+
+homeSelectCopy.es = {
+  eyebrow: "VAREJO INVESTIDOR SELECT",
+  title: "El patrimonio en construcción exige estrategia.",
+  text: "Select fue desarrollado para inversores que ya poseen patrimonio relevante y desean una estructura organizada para exposición global, protección cambiaria y crecimiento de largo plazo.",
+  cta: "CONOCER SELECT",
+  cards: [
+    { label: "Patrimonio mínimo", value: "US$ 50.000" },
+    { label: "Mercado global" },
+    { label: "Asignación en dólar" },
+    { label: "Reportes periódicos" },
+    { label: "Control del cliente" },
+  ],
+};
+
+homePrivateCopy.pt = {
+  eyebrow: "VAREJO INVESTIDOR PRIVATE",
+  title: "Estrutura patrimonial global.",
+  subtitle: "Private para investidores acima de US$ 1.000.000.",
+  text: "Para investidores, empresários e famílias que buscam proteção, organização, continuidade e posicionamento internacional de patrimônio.",
+  cta: "CONHECER PRIVATE",
+  cards: [
+    { label: "Entrada", value: "US$ 1 milhão+" },
+    { label: "Alocação global" },
+    { label: "Proteção patrimonial" },
+    { label: "Visão internacional" },
+    { label: "Relatórios estratégicos" },
+    { label: "Controle do cliente" },
+  ],
+};
+
+homePrivateCopy.en = {
+  eyebrow: "VAREJO INVESTIDOR PRIVATE",
+  title: "Global wealth structure.",
+  subtitle: "Private for investors above US$1,000,000.",
+  text: "For investors, entrepreneurs, and families seeking protection, organization, continuity, and international wealth positioning.",
+  cta: "EXPLORE PRIVATE",
+  cards: [
+    { label: "Entry", value: "US$1 million+" },
+    { label: "Global allocation" },
+    { label: "Wealth protection" },
+    { label: "International view" },
+    { label: "Strategic reports" },
+    { label: "Client control" },
+  ],
+};
+
+homePrivateCopy.es = {
+  eyebrow: "VAREJO INVESTIDOR PRIVATE",
+  title: "Estructura patrimonial global.",
+  subtitle: "Private para inversores por encima de US$ 1.000.000.",
+  text: "Para inversores, empresarios y familias que buscan protección, organización, continuidad y posicionamiento patrimonial internacional.",
+  cta: "CONOCER PRIVATE",
+  cards: [
+    { label: "Entrada", value: "US$ 1 millón+" },
+    { label: "Asignación global" },
+    { label: "Protección patrimonial" },
+    { label: "Visión internacional" },
+    { label: "Reportes estratégicos" },
+    { label: "Control del cliente" },
+  ],
+};
+
 const homeFxproLinks: Record<Locale, string> = {
   pt: "https://direct.fxpro.group/pt/partner/77014650?platform=web",
   en: "https://direct.fxpro.group/en/partner/77014650?platform=web",
@@ -1130,6 +1228,178 @@ function homeSeoLinks(locale: Locale) {
   ];
 }
 
+const homeHeroStats: Record<string, Array<{ value: string; label: string }>> = {
+  pt: [
+    { value: "2018", label: "Desde" },
+    { value: "+4.200", label: "sinais enviados" },
+    { value: "15", label: "idiomas" },
+    { value: "Global", label: "mercados globais" },
+  ],
+  en: [
+    { value: "2018", label: "Since" },
+    { value: "+4,200", label: "signals sent" },
+    { value: "15", label: "languages" },
+    { value: "Global", label: "markets" },
+  ],
+  es: [
+    { value: "2018", label: "Desde" },
+    { value: "+4.200", label: "señales enviadas" },
+    { value: "15", label: "idiomas" },
+    { value: "Global", label: "mercados globales" },
+  ],
+};
+
+const homeJourneyCopy: Record<string, {
+  eyebrow: string;
+  title: string;
+  text: string;
+  cards: Array<{ title: string; wealth: string; goal: string; cta: string; href: string }>;
+}> = {
+  pt: {
+    eyebrow: "Jornada patrimonial",
+    title: "Sua evolução financeira em quatro níveis",
+    text: "Do aprendizado inicial à estrutura patrimonial global.",
+    cards: [
+      { title: "Formiga", wealth: "Início da jornada", goal: "Educação financeira, fundamentos e organização.", cta: "Começar gratuitamente", href: "formiga" },
+      { title: "Elite", wealth: "Investidores em evolução", goal: "Receber sinais, análises e acompanhamento dos mercados globais.", cta: "Conhecer Elite", href: "elite" },
+      { title: "Select", wealth: "US$ 50.000+", goal: "Estratégia patrimonial e exposição global sem necessidade de acompanhar o mercado diariamente.", cta: "Conhecer Select", href: "select" },
+      { title: "Private", wealth: "US$ 1.000.000+", goal: "Estrutura patrimonial internacional, proteção e continuidade.", cta: "Conhecer Private", href: "private" },
+    ],
+  },
+  en: {
+    eyebrow: "Wealth journey",
+    title: "Your financial evolution in four levels",
+    text: "From the first educational base to a global wealth structure.",
+    cards: [
+      { title: "Formiga", wealth: "Starting point", goal: "Financial education, foundations, and organization.", cta: "Start free", href: "formiga" },
+      { title: "Elite", wealth: "Evolving investors", goal: "Receive signals, analysis, and global market follow-up.", cta: "Explore Elite", href: "elite" },
+      { title: "Select", wealth: "US$50,000+", goal: "Wealth strategy and global exposure without tracking markets every day.", cta: "Explore Select", href: "select" },
+      { title: "Private", wealth: "US$1,000,000+", goal: "International wealth structure, protection, and continuity.", cta: "Explore Private", href: "private" },
+    ],
+  },
+  es: {
+    eyebrow: "Jornada patrimonial",
+    title: "Tu evolución financiera en cuatro niveles",
+    text: "Del aprendizaje inicial a la estructura patrimonial global.",
+    cards: [
+      { title: "Formiga", wealth: "Inicio de la jornada", goal: "Educación financiera, fundamentos y organización.", cta: "Empezar gratis", href: "formiga" },
+      { title: "Elite", wealth: "Inversores en evolución", goal: "Recibir señales, análisis y seguimiento de mercados globales.", cta: "Conocer Elite", href: "elite" },
+      { title: "Select", wealth: "US$ 50.000+", goal: "Estrategia patrimonial y exposición global sin acompañar el mercado diariamente.", cta: "Conocer Select", href: "select" },
+      { title: "Private", wealth: "US$ 1.000.000+", goal: "Estructura patrimonial internacional, protección y continuidad.", cta: "Conocer Private", href: "private" },
+    ],
+  },
+};
+
+const homeAuthorityCopy: Record<string, {
+  eyebrow: string;
+  title: string;
+  text: string;
+  cards: Array<{ title: string; text: string }>;
+}> = {
+  pt: {
+    eyebrow: "Autoridade",
+    title: "Uma estrutura construída desde 2018",
+    text: "O Varejo Investidor conecta educação, sinais, mercados globais e soluções patrimoniais para diferentes fases da jornada financeira.",
+    cards: [
+      { title: "+4.200 sinais enviados", text: "Histórico operacional acompanhado ao vivo desde 2018." },
+      { title: "15 idiomas ativos", text: "Estrutura internacional preparada para investidores globais." },
+      { title: "Mercados globais", text: "Forex, ações, ETFs, criptoativos e commodities." },
+      { title: "Educação estruturada", text: "Base educacional pela metodologia Formiga, Lobo e Harpia." },
+      { title: "Atendimento patrimonial", text: "Select e Private para patrimônio internacional e gestão estratégica." },
+    ],
+  },
+  en: {
+    eyebrow: "Authority",
+    title: "A structure built since 2018",
+    text: "Varejo Investidor connects education, signals, global markets, and wealth solutions for different stages of the financial journey.",
+    cards: [
+      { title: "+4,200 signals sent", text: "Operational history followed live since 2018." },
+      { title: "15 active languages", text: "International structure prepared for global investors." },
+      { title: "Global markets", text: "Forex, stocks, ETFs, crypto assets, and commodities." },
+      { title: "Structured education", text: "Educational foundation through the Formiga, Lobo, and Harpia methodology." },
+      { title: "Wealth support", text: "Select and Private for international wealth and strategic guidance." },
+    ],
+  },
+  es: {
+    eyebrow: "Autoridad",
+    title: "Una estructura construida desde 2018",
+    text: "Varejo Investidor conecta educación, señales, mercados globales y soluciones patrimoniales para diferentes etapas financieras.",
+    cards: [
+      { title: "+4.200 señales enviadas", text: "Historial operativo acompañado en vivo desde 2018." },
+      { title: "15 idiomas activos", text: "Estructura internacional preparada para inversores globales." },
+      { title: "Mercados globales", text: "Forex, acciones, ETFs, criptoactivos y commodities." },
+      { title: "Educación estructurada", text: "Base educativa por la metodología Formiga, Lobo y Harpia." },
+      { title: "Atención patrimonial", text: "Select y Private para patrimonio internacional y estrategia." },
+    ],
+  },
+};
+
+const homeEducationBaseCopy: Record<string, { eyebrow: string; title: string; text: string; cta: string }> = {
+  pt: {
+    eyebrow: "Base educacional",
+    title: "A metodologia começa na educação.",
+    text: "Formiga, Lobo e Harpia organizam a base educacional do Varejo Investidor. Essa trilha ajuda o investidor a sair do básico, entender risco, ler mercados globais e construir visão patrimonial.",
+    cta: "Conhecer Educação",
+  },
+  en: {
+    eyebrow: "Educational base",
+    title: "The methodology starts with education.",
+    text: "Formiga, Lobo, and Harpia organize Varejo Investidor's educational base, helping investors understand risk, read global markets, and build a wealth mindset.",
+    cta: "View Education",
+  },
+  es: {
+    eyebrow: "Base educativa",
+    title: "La metodología comienza con educación.",
+    text: "Formiga, Lobo y Harpia organizan la base educativa de Varejo Investidor para ayudar al inversor a entender riesgo, mercados globales y visión patrimonial.",
+    cta: "Ver Educación",
+  },
+};
+
+const homeInstitutionsCopy: Record<string, { eyebrow: string; title: string; text: string; institutions: string[] }> = {
+  pt: {
+    eyebrow: "Instituições compatíveis",
+    title: "Compatível com as maiores instituições financeiras.",
+    text: "O cliente mantém o patrimônio na instituição que já utiliza.",
+    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+  },
+  en: {
+    eyebrow: "Compatible institutions",
+    title: "Compatible with major financial institutions.",
+    text: "The client keeps wealth in the institution they already use.",
+    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+  },
+  es: {
+    eyebrow: "Instituciones compatibles",
+    title: "Compatible con grandes instituciones financieras.",
+    text: "El cliente mantiene su patrimonio en la institución que ya utiliza.",
+    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+  },
+};
+
+const homeFinalCtas: Record<string, { select: string; private: string }> = {
+  pt: { select: "CONHECER SELECT", private: "CONHECER PRIVATE" },
+  en: { select: "EXPLORE SELECT", private: "EXPLORE PRIVATE" },
+  es: { select: "CONOCER SELECT", private: "CONOCER PRIVATE" },
+};
+
+homeLiteCopy.pt.hero.text = "Construa patrimônio através da educação, dos mercados globais e de estruturas criadas para cada etapa da sua evolução financeira.";
+homeLiteCopy.pt.final = {
+  title: "Escolha o próximo passo da sua evolução patrimonial.",
+  text: "Comece pela educação, acompanhe análises e sinais, avance para uma estrutura Select ou organize patrimônio global com o Private.",
+  free: "CANAL FORMIGA",
+  elite: "CANAL ELITE",
+};
+homeLiteCopy.en.hero.text = "Build wealth through education, global markets, and structures created for each stage of your financial evolution.";
+homeLiteCopy.en.final.title = "Choose the next step in your wealth evolution.";
+(homeLiteCopy.en.final as { title: string; text?: string; free: string; elite: string }).text = "Start with education, follow analysis and signals, move toward Select, or organize global wealth through Private.";
+homeLiteCopy.en.final.free = "FORMIGA CHANNEL";
+homeLiteCopy.en.final.elite = "ELITE CHANNEL";
+homeLiteCopy.es.hero.text = "Construye patrimonio a través de educación, mercados globales y estructuras creadas para cada etapa de tu evolución financiera.";
+homeLiteCopy.es.final.title = "Elige el próximo paso de tu evolución patrimonial.";
+(homeLiteCopy.es.final as { title: string; text?: string; free: string; elite: string }).text = "Empieza con educación, acompaña análisis y señales, avanza hacia Select u organiza patrimonio global con Private.";
+homeLiteCopy.es.final.free = "CANAL FORMIGA";
+homeLiteCopy.es.final.elite = "CANAL ELITE";
+
 const homeFlowCopy: Record<Locale, {
   eyebrow: string;
   title: string;
@@ -1351,7 +1621,12 @@ function AnimatedCounter({ label }: { label: string }) {
 export default function Home() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = homeLiteCopy[locale as keyof typeof homeLiteCopy] ?? homeLiteCopy.en;
-  const flow = homeFlowCopy[locale] ?? homeFlowCopy.en;
+  const heroStats = homeHeroStats[locale] ?? homeHeroStats.en;
+  const journey = homeJourneyCopy[locale] ?? homeJourneyCopy.en;
+  const authority = homeAuthorityCopy[locale] ?? homeAuthorityCopy.en;
+  const educationBase = homeEducationBaseCopy[locale] ?? homeEducationBaseCopy.en;
+  const institutions = homeInstitutionsCopy[locale] ?? homeInstitutionsCopy.en;
+  const finalCtas = homeFinalCtas[locale] ?? homeFinalCtas.en;
   const account = homeAccountCopy[locale] ?? homeAccountCopy.en;
   const eliteHome = homeEliteCopy[locale] ?? homeEliteCopy.en;
   const selectHome = homeSelectCopy[locale] ?? homeSelectCopy.en;
@@ -1407,6 +1682,14 @@ export default function Home() {
                 {copy.hero.services}
               </a>
             </motion.div>
+            <motion.div variants={fadeUp} className="mt-9 grid max-w-3xl grid-cols-2 gap-3 md:grid-cols-4">
+              {heroStats.map((stat) => (
+                <div key={`${stat.value}-${stat.label}`} className="border border-gold/[0.18] bg-white/[0.04] px-4 py-4 shadow-fine backdrop-blur">
+                  <p className="font-serif text-2xl leading-none tracking-[-0.04em] text-gold md:text-3xl">{stat.value}</p>
+                  <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.16em] text-ink/[0.58]">{stat.label}</p>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -1424,31 +1707,28 @@ export default function Home() {
           <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/[0.07] blur-3xl" />
           <div className="relative grid gap-8 lg:grid-cols-[0.42fr_1fr] lg:items-center">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{flow.eyebrow}</p>
+              <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{journey.eyebrow}</p>
               <h2 className="mt-4 font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-5xl">
-                {flow.title}
+                {journey.title}
               </h2>
-              <p className="mt-5 text-base leading-8 text-ink/[0.68]">{flow.text}</p>
-              <a
-                href={t.freeChannel.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackVarejoClick("home_flow_formiga_click", { locale })}
-                className="premium-button-gold mt-7 inline-flex border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
-              >
-                {flow.button}
-              </a>
+              <p className="mt-5 text-base leading-8 text-ink/[0.68]">{journey.text}</p>
             </div>
-            <div className="grid gap-4 md:grid-cols-3">
-              {flow.steps.map((step) => (
-                <article key={step.name} className="level-card relative overflow-hidden border border-gold/[0.16] bg-paper p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.48] hover:shadow-premium">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {journey.cards.map((step) => {
+                const href = step.href === "formiga" ? t.freeChannel.link : step.href === "elite" ? "/sinais" : `/${step.href}`;
+                const external = step.href === "formiga";
+                return (
+                <a key={step.title} href={href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} onClick={() => trackVarejoClick(`home_journey_${step.href}_click`, { locale })} className="level-card group relative block overflow-hidden border border-gold/[0.16] bg-paper p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.48] hover:shadow-premium">
                   <div className="absolute inset-0 luxury-grid opacity-25" />
                   <div className="relative">
-                    <h3 className="font-serif text-3xl leading-[1.04] tracking-[-0.035em]">{step.name}</h3>
-                    <p className="mt-4 text-sm leading-7 text-ink/[0.64]">{step.text}</p>
+                    <h3 className="font-serif text-3xl leading-[1.04] tracking-[-0.035em]">{step.title}</h3>
+                    <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-gold">{step.wealth}</p>
+                    <p className="mt-3 text-sm leading-7 text-ink/[0.64]">{step.goal}</p>
+                    <span className="mt-5 inline-flex text-[11px] font-black uppercase tracking-[0.16em] text-gold transition group-hover:translate-x-1">{step.cta} &rarr;</span>
                   </div>
-                </article>
-              ))}
+                </a>
+                );
+              })}
             </div>
           </div>
         </motion.div>
@@ -1480,6 +1760,27 @@ export default function Home() {
         </motion.div>
       </section>
 
+      <section className="border-b border-gold/[0.12] bg-paper px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="mx-auto max-w-[1280px]">
+          <div className="max-w-4xl">
+            <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{authority.eyebrow}</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-6xl">{authority.title}</h2>
+            <p className="mt-5 max-w-3xl text-base leading-8 text-ink/[0.68] md:text-lg">{authority.text}</p>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            {authority.cards.map((card) => (
+              <article key={card.title} className="relative overflow-hidden border border-gold/[0.16] bg-white/[0.035] p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.45]">
+                <div className="absolute inset-0 luxury-grid opacity-20" />
+                <div className="relative">
+                  <h3 className="font-serif text-2xl leading-[1.08] tracking-[-0.035em] text-ink">{card.title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-ink/[0.62]">{card.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
       <section className="home-levels-section px-5 py-20 md:px-8 md:py-24 lg:px-12 xl:px-16">
         <div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="section-team-stage relative mx-auto flex w-full max-w-[34rem] justify-center lg:max-w-none">
@@ -1487,21 +1788,17 @@ export default function Home() {
             <Image src="/characters/home-structure-horizontal-cutout.png" alt="Personagens Formiga, Lobo e Harpia ao lado dos servi\u00e7os do Varejo Investidor" width={1536} height={1024} sizes="(min-width: 1024px) 46vw, 92vw" className="home-structure-image relative z-10 h-auto w-full object-contain" />
           </motion.div>
 
-          <div className="grid gap-5">
-            {copy.cards.map((card, index) => (
-              <motion.a key={card.title} href={card.href} aria-label={card.title} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.45, delay: index * 0.06 }} variants={fadeUp} className="level-card system-module group relative block overflow-hidden p-7 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:p-8">
-                <div className="absolute inset-0 luxury-grid opacity-30" />
-                <div className="relative">
-                  <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.36em] text-gold">{card.code}</p>
-                    <h3 className="mt-2 font-serif text-3xl leading-[1.04] tracking-[-0.035em] md:text-4xl">{card.title}</h3>
-                    <p className="mt-3 leading-7 text-ink/[0.64]">{card.text}</p>
-                  </div>
-                  <span className="mt-5 inline-flex text-lg text-gold transition group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
-                </div>
-              </motion.a>
-            ))}
-          </div>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.55 }} variants={fadeUp} className="level-card system-module relative overflow-hidden p-8 shadow-fine md:p-10">
+            <div className="absolute inset-0 luxury-grid opacity-25" />
+            <div className="relative">
+              <p className="text-[10px] font-black uppercase tracking-[0.36em] text-gold">{educationBase.eyebrow}</p>
+              <h2 className="mt-4 font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-6xl">{educationBase.title}</h2>
+              <p className="mt-5 text-base leading-8 text-ink/[0.66] md:text-lg">{educationBase.text}</p>
+              <a href={educationHref} onClick={() => trackVarejoClick("home_education_base_click", { locale })} className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5">
+                {educationBase.cta}
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1631,6 +1928,23 @@ export default function Home() {
         </motion.div>
       </section>
 
+      <section className="relative overflow-hidden border-b border-gold/[0.12] bg-ink px-5 py-16 text-paper md:px-8 md:py-20 lg:px-12 xl:px-16">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="mx-auto max-w-[1280px]">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{institutions.eyebrow}</p>
+            <h2 className="mt-4 font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-6xl">{institutions.title}</h2>
+            <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-paper/[0.68] md:text-lg">{institutions.text}</p>
+          </div>
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
+            {institutions.institutions.map((name) => (
+              <div key={name} className="group border border-paper/[0.12] bg-paper/[0.035] px-4 py-5 text-center shadow-fine transition duration-300 hover:-translate-y-0.5 hover:border-gold/[0.45]">
+                <span className="text-xs font-black uppercase tracking-[0.14em] text-paper/[0.64] transition group-hover:text-gold">{name}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
       <section className="home-global-account px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="mx-auto max-w-[1280px]">
           <div className="mx-auto max-w-4xl text-center">
@@ -1728,12 +2042,18 @@ export default function Home() {
                 {finalText}
               </p>
             ) : null}
-            <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap">
               <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_final_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition">
                 {copy.final.free}
               </a>
               <a href="/sinais" onClick={() => trackVarejoClick("home_elite_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
                 {copy.final.elite}
+              </a>
+              <a href="/select" onClick={() => trackVarejoClick("home_final_select_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
+                {finalCtas.select}
+              </a>
+              <a href="/private" onClick={() => trackVarejoClick("home_final_private_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
+                {finalCtas.private}
               </a>
             </div>
           </div>
