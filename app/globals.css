@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -8,6 +8,250 @@
   color-scheme: dark;
 }
 
+/* Global premium-institution refresh: reduce terminal noise and move the UI toward a wealth-management feel. */
+body {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(184, 137, 45, 0.055), transparent 34rem),
+    radial-gradient(circle at 82% 4%, rgba(255, 255, 255, 0.035), transparent 30rem),
+    linear-gradient(135deg, #020202 0%, #070707 48%, #020202 100%) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  background:
+    linear-gradient(120deg, transparent 0 44%, rgba(255, 255, 255, 0.018) 44.2% 44.4%, transparent 44.6%),
+    radial-gradient(circle at 52% 10%, rgba(184, 137, 45, 0.04), transparent 32rem) !important;
+  opacity: 0.42 !important;
+}
+
+.premium-stage {
+  background:
+    linear-gradient(135deg, rgba(5, 5, 5, 0.96), rgba(14, 14, 14, 0.94)),
+    radial-gradient(circle at 18% 16%, rgba(184, 137, 45, 0.07), transparent 31rem) !important;
+  background-size: auto !important;
+}
+
+.home-hero.premium-stage,
+.select-hero.premium-stage,
+.private-hero.premium-stage {
+  background:
+    linear-gradient(135deg, rgba(3, 3, 3, 0.98), rgba(11, 11, 11, 0.95) 54%, rgba(3, 3, 3, 0.98)),
+    radial-gradient(circle at 22% 18%, rgba(184, 137, 45, 0.105), transparent 34rem),
+    radial-gradient(circle at 78% 24%, rgba(255, 255, 255, 0.05), transparent 28rem),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px) !important;
+  background-size: auto, auto, auto, 88px 88px, 88px 88px !important;
+}
+
+.terminal-grid,
+.luxury-grid,
+.signal-grid {
+  background-image: none !important;
+  opacity: 0 !important;
+}
+
+.home-hero .terminal-grid,
+.home-hero .luxury-grid,
+.select-hero .terminal-grid,
+.select-hero .luxury-grid,
+.private-hero .terminal-grid,
+.private-hero .luxury-grid {
+  background-image:
+    linear-gradient(rgba(251, 250, 247, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 250, 247, 0.04) 1px, transparent 1px) !important;
+  background-size: 34px 34px !important;
+  opacity: 0.16 !important;
+}
+
+main > section:not(.premium-stage):not(.home-hero) {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  main > section:not(.premium-stage):not(.home-hero) {
+    padding-top: clamp(5.5rem, 7vw, 9rem) !important;
+    padding-bottom: clamp(5.5rem, 7vw, 9rem) !important;
+  }
+}
+
+.level-card,
+.terminal-module,
+.broker-card,
+.glass-panel,
+.strategic-stat,
+.service-channel-card,
+.shadow-premium {
+  border-radius: 6px !important;
+}
+
+.level-card,
+.terminal-module,
+.broker-card,
+.system-module,
+.strategic-stat {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+    rgba(8, 8, 8, 0.94) !important;
+  border-color: rgba(184, 137, 45, 0.16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 18px 54px rgba(0, 0, 0, 0.18) !important;
+  transition:
+    transform 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    background 240ms ease !important;
+}
+
+.level-card h2,
+.level-card h3,
+.level-card p,
+.terminal-module h2,
+.terminal-module h3,
+.terminal-module p,
+.broker-card h2,
+.broker-card h3,
+.broker-card p,
+.system-module h2,
+.system-module h3,
+.system-module p,
+.strategic-stat p,
+.strategic-stat span {
+  color: rgba(251, 250, 247, 0.86) !important;
+}
+
+.level-card .text-gold,
+.terminal-module .text-gold,
+.broker-card .text-gold,
+.system-module .text-gold,
+.strategic-stat .text-gold {
+  color: #d3ad5b !important;
+}
+
+.level-card::before,
+.system-module::after {
+  background: linear-gradient(90deg, transparent, rgba(184, 137, 45, 0.32), transparent) !important;
+  background-size: auto !important;
+  opacity: 0 !important;
+}
+
+.level-card:hover,
+.terminal-module:hover,
+.broker-card:hover,
+.system-module:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(184, 137, 45, 0.42) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 72px rgba(0, 0, 0, 0.26) !important;
+}
+
+.premium-button-gold,
+.premium-button-ghost,
+.broker-action,
+.nav-link,
+.header-dropdown-trigger,
+.header-dropdown-panel,
+.language-switcher,
+.language-dropdown-option,
+.header-dropdown-item {
+  border-radius: 4px !important;
+}
+
+.premium-button-gold {
+  background: linear-gradient(135deg, #b8892d, #d3ad5b) !important;
+  box-shadow: 0 14px 34px rgba(184, 137, 45, 0.16) !important;
+}
+
+.premium-button-gold:hover {
+  box-shadow: 0 20px 54px rgba(184, 137, 45, 0.22) !important;
+}
+
+.premium-button-ghost {
+  background: rgba(255, 255, 255, 0.035) !important;
+}
+
+.site-header {
+  background: rgba(251, 250, 247, 0.92) !important;
+  border-bottom-color: rgba(5, 5, 5, 0.07) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.065) !important;
+}
+
+.desktop-main-menu {
+  gap: 0.32rem !important;
+  border-color: rgba(5, 5, 5, 0.06) !important;
+  background: rgba(255, 255, 255, 0.76) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.045) !important;
+}
+
+.nav-link {
+  padding-inline: 0.95rem !important;
+  border-color: transparent !important;
+  color: rgba(5, 5, 5, 0.68) !important;
+  letter-spacing: 0.02em !important;
+}
+
+.nav-link:hover {
+  background: rgba(184, 137, 45, 0.075) !important;
+  color: #050505 !important;
+}
+
+.nav-link.active {
+  background: rgba(184, 137, 45, 0.13) !important;
+  border-color: rgba(184, 137, 45, 0.22) !important;
+  color: #050505 !important;
+  box-shadow: none !important;
+}
+
+.header-dropdown-panel {
+  background: rgba(5, 5, 5, 0.96) !important;
+  background-image: none !important;
+  border-color: rgba(184, 137, 45, 0.18) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34) !important;
+}
+
+h1 {
+  letter-spacing: -0.055em;
+}
+
+@media (min-width: 1024px) {
+  .hero-headline,
+  .home-hero h1 {
+    font-size: clamp(4.5rem, 6.4vw, 6rem) !important;
+    line-height: 0.96 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  main > section:not(.premium-stage):not(.home-hero) {
+    padding-top: 4.5rem !important;
+    padding-bottom: 4.5rem !important;
+  }
+
+  .level-card,
+  .terminal-module,
+  .broker-card,
+  .system-module {
+    padding: 1.35rem !important;
+  }
+
+  .hero-headline,
+  .home-hero h1 {
+    font-size: clamp(2.7rem, 11vw, 4rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  p,
+  li {
+    line-height: 1.72;
+  }
+
+  .site-header {
+    background: rgba(251, 250, 247, 0.96) !important;
+  }
+}
 * {
   box-sizing: border-box;
 }
@@ -2811,869 +3055,5 @@ main {
     flex: 0 0 auto !important;
     font-size: 10px !important;
     letter-spacing: 0.12em !important;
-  }
-}
-
-
-
-/* BlackRock-inspired final pass. These overrides intentionally sit at the end of the file. */
-body {
-  background:
-    radial-gradient(circle at 18% 0%, rgba(184, 137, 45, 0.045), transparent 34rem),
-    radial-gradient(circle at 82% 4%, rgba(255, 255, 255, 0.032), transparent 30rem),
-    linear-gradient(135deg, #020202 0%, #080808 52%, #020202 100%) !important;
-  color: #f7f3eb;
-}
-
-body::before {
-  background:
-    radial-gradient(circle at 52% 8%, rgba(184, 137, 45, 0.035), transparent 32rem),
-    linear-gradient(120deg, transparent 0 44%, rgba(255, 255, 255, 0.014) 44.2% 44.5%, transparent 44.7%) !important;
-  opacity: 0.34 !important;
-}
-
-.premium-stage {
-  background:
-    linear-gradient(135deg, rgba(4, 4, 4, 0.98), rgba(13, 13, 13, 0.96)),
-    radial-gradient(circle at 16% 18%, rgba(184, 137, 45, 0.065), transparent 32rem) !important;
-  background-size: auto !important;
-}
-
-.home-hero.premium-stage,
-.select-hero.premium-stage,
-.private-hero.premium-stage {
-  background:
-    linear-gradient(135deg, rgba(2, 2, 2, 0.99), rgba(12, 12, 12, 0.96) 52%, rgba(2, 2, 2, 0.99)),
-    radial-gradient(circle at 20% 18%, rgba(184, 137, 45, 0.1), transparent 34rem),
-    radial-gradient(circle at 78% 24%, rgba(255, 255, 255, 0.045), transparent 28rem),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px) !important;
-  background-size: auto, auto, auto, 96px 96px, 96px 96px !important;
-}
-
-.terminal-grid,
-.luxury-grid,
-.signal-grid,
-.services-hero-grid {
-  background-image: none !important;
-  opacity: 0 !important;
-}
-
-.home-hero .terminal-grid,
-.home-hero .luxury-grid,
-.select-hero .terminal-grid,
-.select-hero .luxury-grid,
-.private-hero .terminal-grid,
-.private-hero .luxury-grid {
-  background-image:
-    linear-gradient(rgba(251, 250, 247, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(251, 250, 247, 0.035) 1px, transparent 1px) !important;
-  background-size: 36px 36px !important;
-  opacity: 0.15 !important;
-}
-
-@media (min-width: 768px) {
-  main > section:not(.premium-stage):not(.home-hero) {
-    padding-top: clamp(6rem, 7.2vw, 10rem) !important;
-    padding-bottom: clamp(6rem, 7.2vw, 10rem) !important;
-  }
-}
-
-.site-header {
-  background: rgba(251, 250, 247, 0.94) !important;
-  border-bottom: 1px solid rgba(5, 5, 5, 0.08) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.055) !important;
-}
-
-.global-ticker {
-  opacity: 0.88;
-}
-
-.desktop-main-menu {
-  border: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  gap: 0.46rem !important;
-}
-
-.site-brand span:first-child {
-  border-radius: 2px;
-}
-
-.nav-link,
-.header-dropdown-trigger {
-  border: 0 !important;
-  background: transparent !important;
-  color: rgba(5, 5, 5, 0.68) !important;
-  font-weight: 800;
-  letter-spacing: 0.01em !important;
-}
-
-.nav-link:hover,
-.header-dropdown-trigger:hover {
-  color: #050505 !important;
-  background: rgba(184, 137, 45, 0.075) !important;
-}
-
-.nav-link.active,
-.header-dropdown.is-active > .header-dropdown-trigger,
-.header-dropdown[open] > .header-dropdown-trigger {
-  color: #050505 !important;
-  background: rgba(184, 137, 45, 0.12) !important;
-  box-shadow: none !important;
-}
-
-.header-dropdown-panel {
-  background: rgba(7, 7, 7, 0.98) !important;
-  background-image: none !important;
-  border: 1px solid rgba(184, 137, 45, 0.16) !important;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34) !important;
-}
-
-.level-card,
-.terminal-module,
-.broker-card,
-.system-module,
-.strategic-stat,
-.glass-panel {
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012)),
-    rgba(8, 8, 8, 0.94) !important;
-  border: 1px solid rgba(184, 137, 45, 0.145) !important;
-  border-radius: 6px !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 16px 46px rgba(0, 0, 0, 0.18) !important;
-}
-
-.level-card:hover,
-.terminal-module:hover,
-.broker-card:hover,
-.system-module:hover {
-  transform: translateY(-3px) !important;
-  border-color: rgba(184, 137, 45, 0.36) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.055),
-    0 28px 78px rgba(0, 0, 0, 0.24) !important;
-}
-
-.level-card::before,
-.system-module::after {
-  opacity: 0 !important;
-}
-
-.premium-button-gold {
-  background: linear-gradient(135deg, #b8892d, #d4ae5b) !important;
-  color: #050505 !important;
-  border-radius: 2px !important;
-  box-shadow: 0 16px 38px rgba(184, 137, 45, 0.15) !important;
-}
-
-.premium-button-ghost {
-  border-radius: 2px !important;
-}
-
-.mobile-menu-button {
-  display: inline-flex;
-  align-items: center;
-  justify-self: end;
-  gap: 0.75rem;
-  border: 1px solid rgba(5, 5, 5, 0.12);
-  background: rgba(255, 255, 255, 0.7);
-  padding: 0.72rem 0.86rem;
-  color: #050505;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.mobile-menu-icon {
-  display: grid;
-  gap: 0.28rem;
-  width: 1.2rem;
-}
-
-.mobile-menu-icon span {
-  display: block;
-  height: 1px;
-  background: #050505;
-}
-
-@media (max-width: 1279px) {
-  .site-header-nav {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) auto !important;
-  }
-
-  .mobile-nav-row {
-    display: none;
-    background: rgba(251, 250, 247, 0.98);
-  }
-
-  .mobile-nav-row.is-open {
-    display: block;
-  }
-
-  .mobile-nav-row > div {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 0.55rem !important;
-    overflow: visible !important;
-    padding-top: 0.8rem !important;
-    padding-bottom: 0.8rem !important;
-  }
-
-  .mobile-nav-row .mobile-nav-link {
-    min-width: 0 !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 48px !important;
-    border-color: rgba(5, 5, 5, 0.08) !important;
-    background: rgba(255, 255, 255, 0.78) !important;
-    font-size: 0.82rem !important;
-  }
-}
-
-@media (max-width: 767px) {
-  .global-ticker {
-    height: 24px !important;
-  }
-
-  main > section:not(.premium-stage):not(.home-hero) {
-    padding-top: 4.75rem !important;
-    padding-bottom: 4.75rem !important;
-  }
-
-  .hero-headline,
-  .home-hero h1,
-  .premium-stage h1 {
-    font-size: clamp(2.75rem, 11vw, 4rem) !important;
-    line-height: 0.98 !important;
-  }
-
-  .level-card,
-  .terminal-module,
-  .broker-card,
-  .system-module {
-    padding: 1.45rem !important;
-  }
-}
-
-.level-card,
-.terminal-module,
-.broker-card,
-.glass-panel,
-.strategic-stat,
-.service-channel-card,
-.shadow-premium {
-  border-radius: 6px !important;
-}
-
-.level-card,
-.terminal-module,
-.broker-card,
-.system-module,
-.strategic-stat {
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
-    rgba(8, 8, 8, 0.94) !important;
-  border-color: rgba(184, 137, 45, 0.16) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.045),
-    0 18px 54px rgba(0, 0, 0, 0.18) !important;
-  transition:
-    transform 240ms ease,
-    border-color 240ms ease,
-    box-shadow 240ms ease,
-    background 240ms ease !important;
-}
-
-.level-card h2,
-.level-card h3,
-.level-card p,
-.terminal-module h2,
-.terminal-module h3,
-.terminal-module p,
-.broker-card h2,
-.broker-card h3,
-.broker-card p,
-.system-module h2,
-.system-module h3,
-.system-module p,
-.strategic-stat p,
-.strategic-stat span {
-  color: rgba(251, 250, 247, 0.86) !important;
-}
-
-.level-card .text-gold,
-.terminal-module .text-gold,
-.broker-card .text-gold,
-.system-module .text-gold,
-.strategic-stat .text-gold {
-  color: #d3ad5b !important;
-}
-
-.level-card::before,
-.system-module::after {
-  background: linear-gradient(90deg, transparent, rgba(184, 137, 45, 0.32), transparent) !important;
-  background-size: auto !important;
-  opacity: 0 !important;
-}
-
-.level-card:hover,
-.terminal-module:hover,
-.broker-card:hover,
-.system-module:hover {
-  transform: translateY(-3px) !important;
-  border-color: rgba(184, 137, 45, 0.42) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 24px 72px rgba(0, 0, 0, 0.26) !important;
-}
-
-.premium-button-gold,
-.premium-button-ghost,
-.broker-action,
-.nav-link,
-.header-dropdown-trigger,
-.header-dropdown-panel,
-.language-switcher,
-.language-dropdown-option,
-.header-dropdown-item {
-  border-radius: 4px !important;
-}
-
-.premium-button-gold {
-  background: linear-gradient(135deg, #b8892d, #d3ad5b) !important;
-  box-shadow: 0 14px 34px rgba(184, 137, 45, 0.16) !important;
-}
-
-.premium-button-gold:hover {
-  box-shadow: 0 20px 54px rgba(184, 137, 45, 0.22) !important;
-}
-
-.premium-button-ghost {
-  background: rgba(255, 255, 255, 0.035) !important;
-}
-
-.site-header {
-  background: rgba(251, 250, 247, 0.92) !important;
-  border-bottom-color: rgba(5, 5, 5, 0.07) !important;
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.065) !important;
-}
-
-.desktop-main-menu {
-  gap: 0.32rem !important;
-  border-color: rgba(5, 5, 5, 0.06) !important;
-  background: rgba(255, 255, 255, 0.76) !important;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.045) !important;
-}
-
-.nav-link {
-  padding-inline: 0.95rem !important;
-  border-color: transparent !important;
-  color: rgba(5, 5, 5, 0.68) !important;
-  letter-spacing: 0.02em !important;
-}
-
-.nav-link:hover {
-  background: rgba(184, 137, 45, 0.075) !important;
-  color: #050505 !important;
-}
-
-.nav-link.active {
-  background: rgba(184, 137, 45, 0.13) !important;
-  border-color: rgba(184, 137, 45, 0.22) !important;
-  color: #050505 !important;
-  box-shadow: none !important;
-}
-
-.header-dropdown-panel {
-  background: rgba(5, 5, 5, 0.96) !important;
-  background-image: none !important;
-  border-color: rgba(184, 137, 45, 0.18) !important;
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34) !important;
-}
-
-h1 {
-  letter-spacing: -0.055em;
-}
-
-@media (min-width: 1024px) {
-  .hero-headline,
-  .home-hero h1 {
-    font-size: clamp(4.5rem, 6.4vw, 6rem) !important;
-    line-height: 0.96 !important;
-  }
-}
-
-@media (max-width: 767px) {
-  main > section:not(.premium-stage):not(.home-hero) {
-    padding-top: 4.5rem !important;
-    padding-bottom: 4.5rem !important;
-  }
-
-  .level-card,
-  .terminal-module,
-  .broker-card,
-  .system-module {
-    padding: 1.35rem !important;
-  }
-
-  .hero-headline,
-  .home-hero h1 {
-    font-size: clamp(2.7rem, 11vw, 4rem) !important;
-    line-height: 0.98 !important;
-  }
-
-  p,
-  li {
-    line-height: 1.72;
-  }
-
-  .site-header {
-    background: rgba(251, 250, 247, 0.96) !important;
-  }
-}
-
-/* Asset manager redesign system.
-   This is the new visual foundation: white editorial surfaces, clean typography,
-   minimal chrome, and institutional spacing inspired by global wealth managers. */
-:root {
-  --am-white: #ffffff;
-  --am-ink: #111111;
-  --am-muted: #5f6368;
-  --am-soft: #f5f5f5;
-  --am-soft-2: #efefef;
-  --am-line: #e6e6e6;
-  --am-gold: #b8892d;
-  --am-gold-dark: #8f681d;
-  --am-footer: #0b0b0b;
-}
-
-html,
-body {
-  background: var(--am-white) !important;
-  color: var(--am-ink) !important;
-}
-
-body::before,
-.terminal-grid,
-.luxury-grid,
-.signal-grid,
-.services-hero-grid,
-.finance-particles,
-.hero-orbit,
-.hero-orbit-ring,
-.hero-orbit-dot,
-.hero-image-aura,
-.signal-pulse-grid {
-  display: none !important;
-  background: none !important;
-  opacity: 0 !important;
-}
-
-main {
-  background: var(--am-white) !important;
-  color: var(--am-ink) !important;
-}
-
-main > section {
-  background: var(--am-white) !important;
-  color: var(--am-ink) !important;
-  border-color: var(--am-line) !important;
-}
-
-main > section:nth-of-type(even):not(.home-hero):not(.select-hero):not(.private-hero) {
-  background: var(--am-soft) !important;
-}
-
-@media (min-width: 768px) {
-  main > section {
-    padding-top: clamp(7rem, 9vw, 12rem) !important;
-    padding-bottom: clamp(7rem, 9vw, 12rem) !important;
-  }
-}
-
-.site-chrome {
-  color: var(--am-ink) !important;
-}
-
-.global-ticker {
-  background: var(--am-ink) !important;
-  border-bottom: 0 !important;
-  color: var(--am-white) !important;
-  opacity: 1 !important;
-}
-
-.global-ticker > div {
-  padding-top: 0.55rem !important;
-  padding-bottom: 0.55rem !important;
-  letter-spacing: 0.16em !important;
-}
-
-.site-header {
-  background: rgba(255, 255, 255, 0.96) !important;
-  border-bottom: 1px solid var(--am-line) !important;
-  box-shadow: none !important;
-  backdrop-filter: blur(18px);
-}
-
-.site-header-nav {
-  padding-top: 1.15rem !important;
-  padding-bottom: 1.15rem !important;
-}
-
-.site-brand span:first-child {
-  background: var(--am-ink) !important;
-  border-color: var(--am-ink) !important;
-  color: var(--am-white) !important;
-  border-radius: 0 !important;
-}
-
-.site-brand,
-.site-brand span {
-  color: var(--am-ink) !important;
-}
-
-.desktop-main-menu {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  gap: 0.6rem !important;
-}
-
-.nav-link,
-.header-dropdown-trigger {
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  color: rgba(17, 17, 17, 0.72) !important;
-  font-weight: 750 !important;
-  letter-spacing: 0.01em !important;
-  padding-inline: 0.55rem !important;
-}
-
-.nav-link:hover,
-.header-dropdown-trigger:hover,
-.nav-link.active,
-.header-dropdown.is-active > .header-dropdown-trigger,
-.header-dropdown[open] > .header-dropdown-trigger {
-  background: transparent !important;
-  color: var(--am-ink) !important;
-  box-shadow: inset 0 -2px 0 var(--am-gold) !important;
-}
-
-.header-dropdown-panel {
-  background: var(--am-white) !important;
-  border: 1px solid var(--am-line) !important;
-  border-radius: 0 !important;
-  box-shadow: 0 28px 70px rgba(17, 17, 17, 0.14) !important;
-}
-
-.header-dropdown-item {
-  color: var(--am-ink) !important;
-  border-radius: 0 !important;
-}
-
-.header-dropdown-item:hover {
-  background: var(--am-soft) !important;
-  color: var(--am-ink) !important;
-}
-
-.language-switcher,
-.language-dropdown-option,
-.mobile-language-compact,
-.mobile-menu-button {
-  background: var(--am-white) !important;
-  border: 1px solid var(--am-line) !important;
-  color: var(--am-ink) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-.home-hero,
-.select-hero,
-.private-hero,
-.premium-stage {
-  background:
-    linear-gradient(105deg, #ffffff 0%, #ffffff 55%, #f2f2f2 100%) !important;
-  color: var(--am-ink) !important;
-  border-bottom: 1px solid var(--am-line) !important;
-  overflow: hidden;
-}
-
-.home-hero::after,
-.select-hero::after,
-.private-hero::after,
-.premium-stage::after {
-  content: "";
-  position: absolute;
-  inset: auto clamp(1.5rem, 6vw, 6rem) clamp(2rem, 7vw, 6rem) auto;
-  width: clamp(13rem, 24vw, 24rem);
-  height: clamp(13rem, 24vw, 24rem);
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(184, 137, 45, 0.14), transparent 68%);
-  pointer-events: none;
-}
-
-.hero-headline,
-.home-hero h1,
-.select-hero h1,
-.private-hero h1,
-.premium-stage h1,
-main h1 {
-  color: var(--am-ink) !important;
-  font-size: clamp(3.75rem, 8.5vw, 6.8rem) !important;
-  line-height: 0.96 !important;
-  letter-spacing: -0.065em !important;
-}
-
-main h2 {
-  color: var(--am-ink) !important;
-  font-size: clamp(2.25rem, 4.8vw, 4.5rem);
-  line-height: 1 !important;
-  letter-spacing: -0.055em !important;
-}
-
-main h3 {
-  color: var(--am-ink) !important;
-  letter-spacing: -0.035em !important;
-}
-
-main p,
-main li {
-  color: var(--am-muted) !important;
-  font-size: clamp(1rem, 1.1vw, 1.125rem);
-  line-height: 1.75 !important;
-}
-
-main .text-paper,
-main [class*="text-paper/"],
-main [class*="text-paper\\["],
-main .text-ink,
-main [class*="text-ink/"] {
-  color: var(--am-ink) !important;
-}
-
-main .text-gold,
-main [class*="text-gold/"] {
-  color: var(--am-gold-dark) !important;
-}
-
-.level-card,
-.terminal-module,
-.broker-card,
-.system-module,
-.strategic-stat,
-.glass-panel,
-.service-channel-card,
-main article[class*="border"],
-main div[class*="border"][class*="shadow"] {
-  background: var(--am-white) !important;
-  background-image: none !important;
-  border: 1px solid var(--am-line) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  color: var(--am-ink) !important;
-}
-
-main > section:nth-of-type(even) .level-card,
-main > section:nth-of-type(even) .terminal-module,
-main > section:nth-of-type(even) .broker-card,
-main > section:nth-of-type(even) .system-module,
-main > section:nth-of-type(even) .strategic-stat,
-main > section:nth-of-type(even) .glass-panel,
-main > section:nth-of-type(even) .service-channel-card,
-main > section:nth-of-type(even) article[class*="border"] {
-  background: var(--am-white) !important;
-}
-
-.level-card:hover,
-.terminal-module:hover,
-.broker-card:hover,
-.system-module:hover,
-.service-channel-card:hover,
-main article[class*="border"]:hover {
-  transform: translateY(-2px) !important;
-  border-color: rgba(17, 17, 17, 0.35) !important;
-  box-shadow: 0 18px 42px rgba(17, 17, 17, 0.08) !important;
-}
-
-.level-card::before,
-.system-module::after,
-.service-channel-card::before,
-.terminal-module::before,
-.broker-card::before {
-  display: none !important;
-}
-
-.level-card h2,
-.level-card h3,
-.level-card p,
-.terminal-module h2,
-.terminal-module h3,
-.terminal-module p,
-.broker-card h2,
-.broker-card h3,
-.broker-card p,
-.system-module h2,
-.system-module h3,
-.system-module p,
-.service-channel-card h2,
-.service-channel-card h3,
-.service-channel-card p,
-.strategic-stat p,
-.strategic-stat span {
-  color: var(--am-ink) !important;
-}
-
-.level-card p,
-.terminal-module p,
-.broker-card p,
-.system-module p,
-.service-channel-card p {
-  color: var(--am-muted) !important;
-}
-
-.signal-terminal,
-.terminal-shell,
-.signal-example-box,
-.elite-report-card,
-.market-card {
-  background: var(--am-white) !important;
-  background-image: none !important;
-  border-color: var(--am-line) !important;
-  color: var(--am-ink) !important;
-  box-shadow: none !important;
-}
-
-.signal-terminal *,
-.terminal-shell *,
-.signal-example-box * {
-  color: inherit;
-}
-
-.premium-button-gold,
-.broker-action,
-main a[class*="bg-gold"],
-main button[class*="bg-gold"],
-main a[class*="bg-ink"],
-main button[class*="bg-ink"] {
-  background: var(--am-ink) !important;
-  border-color: var(--am-ink) !important;
-  color: var(--am-white) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-.premium-button-gold:hover,
-.broker-action:hover,
-main a[class*="bg-gold"]:hover,
-main button[class*="bg-gold"]:hover,
-main a[class*="bg-ink"]:hover,
-main button[class*="bg-ink"]:hover {
-  background: var(--am-gold) !important;
-  border-color: var(--am-gold) !important;
-  color: var(--am-ink) !important;
-  transform: translateY(-1px) !important;
-}
-
-.premium-button-ghost,
-main a[class*="bg-paper"],
-main button[class*="bg-paper"],
-main a[class*="bg-white"],
-main button[class*="bg-white"] {
-  background: transparent !important;
-  border: 1px solid var(--am-ink) !important;
-  color: var(--am-ink) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-.home-hero .hero-mascot-wrap,
-.home-hero .hero-image-wrapper {
-  background: transparent !important;
-}
-
-.hero-main-image,
-.hero-mascot-image {
-  filter: none !important;
-}
-
-footer,
-footer.bg-white {
-  background: var(--am-footer) !important;
-  color: var(--am-white) !important;
-  border-top: 0 !important;
-}
-
-footer *,
-footer p,
-footer a,
-footer span {
-  color: rgba(255, 255, 255, 0.72) !important;
-}
-
-footer .font-serif,
-footer .text-gold,
-footer a:hover {
-  color: var(--am-white) !important;
-}
-
-@media (max-width: 1279px) {
-  .mobile-nav-row {
-    background: var(--am-white) !important;
-    border-top-color: var(--am-line) !important;
-  }
-
-  .mobile-nav-row .mobile-nav-link {
-    background: var(--am-white) !important;
-    border-color: var(--am-line) !important;
-    color: var(--am-ink) !important;
-    min-height: 54px !important;
-  }
-
-  .mobile-language-row {
-    background: var(--am-white) !important;
-  }
-}
-
-@media (max-width: 767px) {
-  main > section,
-  main > section:not(.premium-stage):not(.home-hero) {
-    padding-top: 5.25rem !important;
-    padding-bottom: 5.25rem !important;
-  }
-
-  .hero-headline,
-  .home-hero h1,
-  .select-hero h1,
-  .private-hero h1,
-  .premium-stage h1,
-  main h1 {
-    font-size: clamp(2.6rem, 12vw, 3.75rem) !important;
-    line-height: 1 !important;
-  }
-
-  main h2 {
-    font-size: clamp(2rem, 9vw, 3rem) !important;
-  }
-
-  .level-card,
-  .terminal-module,
-  .broker-card,
-  .system-module,
-  .service-channel-card,
-  main article[class*="border"] {
-    padding: 1.65rem !important;
-  }
-
-  .home-hero,
-  .select-hero,
-  .private-hero,
-  .premium-stage {
-    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%) !important;
   }
 }
