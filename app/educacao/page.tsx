@@ -13,7 +13,7 @@ import {
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 type Track = {
-  id: "formiga" | "lobo" | "harpia" | "select";
+  id: "formiga" | "lobo" | "harpia";
   name: string;
   subtitle: string;
   seal: string;
@@ -38,6 +38,14 @@ const educationCopy = {
     expansionText: "A trilha educacional completa Formiga, Lobo e Harpia será liberada progressivamente dentro do ecossistema Varejo Investidor.",
     expansionNote: "Novas aulas, módulos e materiais serão adicionados por fase.",
     expansionUpdate: "Atualizações contínuas da estrutura educacional global.",
+    nextStepsEyebrow: "Após Harpia",
+    nextStepsTitle: "PRÓXIMOS PASSOS",
+    nextStepsText: "A formação termina no nível Harpia. A partir daqui, Elite, Select e Private são soluções do ecossistema, não novos níveis educacionais.",
+    nextSteps: [
+      { name: "Canal Elite", description: "Sinais e execução manual", href: "/sinais" },
+      { name: "Select", description: "Estrutura operacional automatizada", href: "/select" },
+      { name: "Private", description: "Estrutura patrimonial global", href: "/private" },
+    ],
     tracks: [
       {
         id: "formiga",
@@ -84,21 +92,6 @@ const educationCopy = {
           ["H5", "Estrutura de elite", "Preservação, decisão patrimonial e visão acima do mercado.", 5],
         ],
       },
-      {
-        id: "select",
-        name: "SELECT",
-        subtitle: "Estrutura patrimonial voltada para investidores de alta renda, com foco em diversifica\u00E7\u00E3o internacional, gest\u00E3o de risco, prote\u00E7\u00E3o patrimonial e posicionamento global de capital.",
-        seal: "N\u00CDVEL",
-        difficulty: "Estrutura avan\u00E7ada",
-        tone: "elite",
-        levels: [
-          ["S1", "Estrutura patrimonial", "Organiza\u00E7\u00E3o de patrim\u00F4nio, governan\u00E7a financeira e arquitetura de capital.", 5],
-          ["S2", "Diversifica\u00E7\u00E3o global", "Exposi\u00E7\u00E3o internacional, moedas fortes e ativos globais.", 5],
-          ["S3", "Prote\u00E7\u00E3o patrimonial", "Gest\u00E3o de risco, prote\u00E7\u00E3o cambial e preserva\u00E7\u00E3o de capital.", 5],
-          ["S4", "Aloca\u00E7\u00E3o estrat\u00E9gica", "Carteiras multimercado, ciclos econ\u00F4micos e posicionamento internacional.", 5],
-          ["S5", "Estrutura institucional", "Family office, sucess\u00E3o, legado e patrim\u00F4nio multigeracional.", 5],
-        ],
-      },
     ] satisfies Track[],
   },
   en: {
@@ -116,6 +109,14 @@ const educationCopy = {
     expansionText: "The complete Ant, Wolf, and Harpy educational path will be released progressively inside the Varejo Investidor ecosystem.",
     expansionNote: "New classes, modules, and materials will be added by phase.",
     expansionUpdate: "Continuous updates to the global educational structure.",
+    nextStepsEyebrow: "After Harpy",
+    nextStepsTitle: "NEXT STEPS",
+    nextStepsText: "Education ends at the Harpy level. From this point, Elite, Select, and Private are ecosystem solutions, not additional educational levels.",
+    nextSteps: [
+      { name: "Elite Channel", description: "Signals and manual execution", href: "/sinais" },
+      { name: "Select", description: "Automated operational structure", href: "/select" },
+      { name: "Private", description: "Global wealth structure", href: "/private" },
+    ],
     tracks: [
       {
         id: "formiga",
@@ -179,6 +180,14 @@ const educationCopy = {
     expansionText: "La ruta educativa completa Hormiga, Lobo y Harpía será liberada progresivamente dentro del ecosistema Varejo Investidor.",
     expansionNote: "Nuevas clases, módulos y materiales serán agregados por fase.",
     expansionUpdate: "Actualizaciones continuas de la estructura educativa global.",
+    nextStepsEyebrow: "Después de Harpía",
+    nextStepsTitle: "PRÓXIMOS PASOS",
+    nextStepsText: "La formación termina en el nivel Harpía. Desde aquí, Elite, Select y Private son soluciones del ecosistema, no nuevos niveles educativos.",
+    nextSteps: [
+      { name: "Canal Elite", description: "Señales y ejecución manual", href: "/sinais" },
+      { name: "Select", description: "Estructura operativa automatizada", href: "/select" },
+      { name: "Private", description: "Estructura patrimonial global", href: "/private" },
+    ],
     tracks: [
       {
         id: "formiga",
@@ -229,7 +238,7 @@ const educationCopy = {
   },
 };
 
-const formationSteps = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3", "L4", "L5", "H1", "H2", "H3", "H4", "H5", "S1", "S2", "S3", "S4", "S5"];
+const formationSteps = ["F1", "F2", "F3", "F4", "F5", "L1", "L2", "L3", "L4", "L5", "H1", "H2", "H3", "H4", "H5"];
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
 const ichimokuLearningItems = [
   "Ebook completo Domine o Ichimoku",
@@ -279,6 +288,14 @@ const localizedEducationCopy = {
     expansionText: "سيتم إطلاق مسار النملة والذئب والهاربي تدريجيا داخل نظام Varejo Investidor.",
     expansionNote: "ستضاف دروس ووحدات ومواد جديدة حسب كل مرحلة.",
     expansionUpdate: "تحديثات مستمرة للهيكل التعليمي العالمي.",
+    nextStepsEyebrow: "بعد الهاربي",
+    nextStepsTitle: "الخطوات التالية",
+    nextStepsText: "ينتهي المسار التعليمي عند مستوى الهاربي. بعد ذلك، تعد Elite وSelect وPrivate حلولا ضمن المنظومة وليست مستويات تعليمية إضافية.",
+    nextSteps: [
+      { name: "قناة Elite", description: "إشارات وتنفيذ يدوي", href: "/sinais" },
+      { name: "Select", description: "هيكل تشغيلي آلي", href: "/select" },
+      { name: "Private", description: "هيكل ثروات عالمي", href: "/private" },
+    ],
     tracks: [
       {
         ...educationCopy.en.tracks[0],
@@ -340,6 +357,14 @@ const localizedEducationCopy = {
     expansionText: "Karınca, Kurt ve Harpia eğitim yolu Varejo Investidor ekosistemi içinde kademeli olarak yayınlanacak.",
     expansionNote: "Yeni dersler, modüller ve materyaller aşamalara göre eklenecek.",
     expansionUpdate: "Küresel eğitim yapısına sürekli güncellemeler.",
+    nextStepsEyebrow: "Harpia sonrasında",
+    nextStepsTitle: "SONRAKİ ADIMLAR",
+    nextStepsText: "Eğitim yolu Harpia seviyesinde tamamlanır. Bu noktadan sonra Elite, Select ve Private yeni eğitim seviyeleri değil, ekosistem çözümleridir.",
+    nextSteps: [
+      { name: "Elite Kanalı", description: "Sinyaller ve manuel uygulama", href: "/sinais" },
+      { name: "Select", description: "Otomatik operasyonel yapı", href: "/select" },
+      { name: "Private", description: "Küresel varlık yapısı", href: "/private" },
+    ],
     tracks: [
       {
         ...educationCopy.en.tracks[0],
@@ -455,7 +480,7 @@ export default function EducationPage() {
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{copy.matrixEyebrow}</p>
               <h2 className="mt-3 font-serif text-4xl tracking-[-0.04em] text-paper">{copy.matrixTitle}</h2>
             </div>
-            <div className="education-step-grid grid grid-cols-5 gap-3 sm:grid-cols-[repeat(20,minmax(0,1fr))]">
+            <div className="education-step-grid grid grid-cols-5 gap-3 sm:grid-cols-[repeat(15,minmax(0,1fr))]">
               {formationSteps.map((step, index) => (
                 <div key={step} className="education-step-node grid place-items-center gap-2">
                   <span className={`h-2.5 w-2.5 rounded-full ${index < 5 ? "bg-rise" : "bg-gold"}`} />
@@ -467,7 +492,7 @@ export default function EducationPage() {
           <div className="education-matrix-line mt-6 h-px bg-gradient-to-r from-rise via-gold to-gold" />
         </div>
 
-        <div id="formacao" className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-2 xl:grid-cols-4">
+        <div id="formacao" className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-3">
           {copy.tracks.map((track, index) => (
             <motion.article
               key={track.name}
@@ -505,6 +530,45 @@ export default function EducationPage() {
             </motion.article>
           ))}
         </div>
+
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          variants={fadeUp}
+          className="mx-auto mt-14 max-w-7xl border-t border-gold/[0.2] pt-10 md:mt-20 md:pt-14"
+          aria-labelledby="education-next-steps-title"
+        >
+          <div className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{copy.nextStepsEyebrow}</p>
+            <h2
+              id="education-next-steps-title"
+              className="mt-3 font-serif text-4xl tracking-[-0.04em] text-paper md:text-5xl"
+            >
+              {copy.nextStepsTitle}
+            </h2>
+            <p className="mt-5 text-base leading-8 text-paper/[0.68] md:text-lg">{copy.nextStepsText}</p>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {copy.nextSteps.map((step) => (
+              <a
+                key={step.name}
+                href={step.href}
+                className="group flex min-h-40 flex-col justify-between border border-gold/[0.2] bg-paper/[0.035] p-6 transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:bg-paper/[0.06]"
+              >
+                <div>
+                  <h3 className="font-serif text-3xl tracking-[-0.03em] text-paper">{step.name}</h3>
+                  <p className="mt-4 text-sm leading-7 text-paper/[0.65]">{step.description}</p>
+                </div>
+                <span className="mt-6 text-right text-xl text-gold transition-transform group-hover:translate-x-1" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            ))}
+          </div>
+        </motion.section>
 
         {false && locale === "pt" ? (
           <motion.div

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, trackVarejoClick, useSiteLocale } from "../src/components/SiteSections";
 import { getInsightsPath } from "../src/data/insightsContent";
 import type { Locale } from "../src/i18n";
@@ -20,13 +19,15 @@ const homeLiteCopy = {
       eyebrow: "O que \u00e9",
       title: "O que \u00e9 o Varejo Investidor",
       manifesto:
-        "O Varejo Investidor \u00e9 uma estrutura financeira global para quem deseja sair do b\u00e1sico, entender o mercado internacional e construir sua vida financeira em camadas.",
+        "O Varejo Investidor \u00e9 uma estrutura financeira global criada para acompanhar a evolu\u00e7\u00e3o do investidor desde os primeiros passos da educa\u00e7\u00e3o financeira at\u00e9 a constru\u00e7\u00e3o de patrim\u00f4nio internacional.",
       text: [
-        "Desde 2018, entregamos mais de 4.200 sinais ao vivo, acompanhando Forex, ouro, petr\u00f3leo, cripto, \u00edndices e moedas globais.",
-        "A jornada \u00e9 dividida em n\u00edveis: Formiga, Lobo e Harpia.",
-        "O n\u00edvel Formiga constr\u00f3i a base. O n\u00edvel Lobo desenvolve estrat\u00e9gia e leitura de mercado. O n\u00edvel Harpia amplia a vis\u00e3o para patrim\u00f4nio, prote\u00e7\u00e3o e estrutura global.",
+        "Desde 2018, desenvolvemos uma jornada composta por educa\u00e7\u00e3o, sinais, gest\u00e3o operacional e estrutura patrimonial, permitindo que cada investidor avance de acordo com seu momento financeiro.",
+        "Formiga \u2014 Educa\u00e7\u00e3o financeira, organiza\u00e7\u00e3o, disciplina e constru\u00e7\u00e3o de base patrimonial.",
+        "Elite \u2014 An\u00e1lises, sinais e acompanhamento dos mercados globais.",
+        "Select \u2014 Estrutura operacional automatizada para investidores que desejam exposi\u00e7\u00e3o internacional sem acompanhar opera\u00e7\u00f5es diariamente.",
+        "Private \u2014 Estrutura patrimonial internacional voltada para prote\u00e7\u00e3o, organiza\u00e7\u00e3o, crescimento e continuidade do patrim\u00f4nio.",
       ],
-      stats: ["Desde 2018", "sinais ao vivo", "Formiga / Lobo / Harpia"],
+      stats: ["Desde 2018", "Milh\u00f5es de d\u00f3lares movimentados", "15 idiomas", "Mercados globais"],
     },
     cards: [
       { code: "FORMIGA", title: "Base financeira", text: "Educa\u00e7\u00e3o por n\u00edveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/nivel-formiga" },
@@ -492,21 +493,6 @@ const homeLiteCopy = {
   }
 >;
 
-const signalCounterLabels: Record<Locale, string> = {
-  pt: "SINAIS AO VIVO NO WHATSAPP",
-  en: "LIVE SIGNALS ON WHATSAPP",
-  es: "SE\u00D1ALES EN VIVO EN WHATSAPP",
-  fr: "SIGNAUX EN DIRECT SUR WHATSAPP",
-  hi: "\u0935\u094D\u0939\u093E\u091F\u094D\u0938\u0910\u092A \u092A\u0930 \u0932\u093E\u0907\u0935 \u0938\u093F\u0917\u094D\u0928\u0932",
-  ar: "\u0625\u0634\u0627\u0631\u0627\u062A \u0645\u0628\u0627\u0634\u0631\u0629 \u0639\u0644\u0649 \u0648\u0627\u062A\u0633\u0627\u0628",
-  tr: "WHATSAPP'TA CANLI S\u0130NYALLER",
-  id: "SINYAL LIVE DI WHATSAPP",
-  vi: "T\u00CDN HI\u1EC6U TR\u1EF0C TI\u1EBEP TR\u00CAN WHATSAPP",
-  th: "\u0e2a\u0e31\u0e0d\u0e0d\u0e32\u0e13\u0e2a\u0e14\u0e1a\u0e19 WhatsApp",
-  ja: "WHATSAPPのライブシグナル",
-  ko: "WHATSAPP 실시간 신호",
-};
-
 type HomeEliteCopy = {
   title: string;
   subtitle: string;
@@ -536,7 +522,7 @@ const homeEliteCopy: Record<string, HomeEliteCopy> = {
   pt: {
     title: "Canal Elite",
     subtitle: "Receba análises e sinais enviados diretamente para o WhatsApp.",
-    text: "O Canal Elite foi desenvolvido para investidores que desejam acompanhar os mercados globais através de sinais estruturados, análises e leitura de mercado. Desde 2018, mais de 4.200 sinais foram enviados ao vivo acompanhando Forex, ouro, petróleo, índices, criptomoedas e moedas globais.",
+    text: "O Canal Elite foi desenvolvido para investidores que desejam acompanhar os mercados globais através de sinais estruturados, análises e leitura de mercado.",
     cards: ["Sinais ao Vivo", "Recebimento no WhatsApp", "Entrada, Alvo e Stop", "Análises de Mercado", "Educação por Níveis", "Leitura Global"],
     cta: "Conhecer Canal Elite",
   },
@@ -1231,19 +1217,19 @@ function homeSeoLinks(locale: Locale) {
 const homeHeroStats: Record<string, Array<{ value: string; label: string }>> = {
   pt: [
     { value: "2018", label: "Desde" },
-    { value: "+4.200", label: "sinais enviados" },
+    { value: "Milhões", label: "de dólares movimentados" },
     { value: "15", label: "idiomas" },
     { value: "Global", label: "mercados globais" },
   ],
   en: [
     { value: "2018", label: "Since" },
-    { value: "+4,200", label: "signals sent" },
+    { value: "Millions", label: "of dollars moved" },
     { value: "15", label: "languages" },
     { value: "Global", label: "markets" },
   ],
   es: [
     { value: "2018", label: "Desde" },
-    { value: "+4.200", label: "señales enviadas" },
+    { value: "Millones", label: "de dólares movilizados" },
     { value: "15", label: "idiomas" },
     { value: "Global", label: "mercados globales" },
   ],
@@ -1257,8 +1243,8 @@ const homeJourneyCopy: Record<string, {
 }> = {
   pt: {
     eyebrow: "Jornada patrimonial",
-    title: "Sua evolução financeira em quatro níveis",
-    text: "Do aprendizado inicial à estrutura patrimonial global.",
+    title: "Sua evolução financeira em quatro etapas",
+    text: "Da educação financeira à estrutura patrimonial internacional.",
     cards: [
       { title: "Formiga", wealth: "Início da jornada", goal: "Educação financeira, fundamentos e organização.", cta: "Começar gratuitamente", href: "formiga" },
       { title: "Elite", wealth: "Investidores em evolução", goal: "Receber sinais, análises e acompanhamento dos mercados globais.", cta: "Conhecer Elite", href: "elite" },
@@ -1301,7 +1287,7 @@ const homeAuthorityCopy: Record<string, {
     title: "Uma estrutura construída desde 2018",
     text: "O Varejo Investidor conecta educação, sinais, mercados globais e soluções patrimoniais para diferentes fases da jornada financeira.",
     cards: [
-      { title: "+4.200 sinais enviados", text: "Histórico operacional acompanhado ao vivo desde 2018." },
+      { title: "Milhões de dólares movimentados", text: "Experiência operacional conectada a mercados e estruturas internacionais." },
       { title: "15 idiomas ativos", text: "Estrutura internacional preparada para investidores globais." },
       { title: "Mercados globais", text: "Forex, ações, ETFs, criptoativos e commodities." },
       { title: "Educação estruturada", text: "Base educacional pela metodologia Formiga, Lobo e Harpia." },
@@ -1574,50 +1560,6 @@ const homeFlowCopy: Record<Locale, {
   },
 };
 
-function AnimatedCounter({ label }: { label: string }) {
-  const ref = useRef<HTMLSpanElement | null>(null);
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-
-        const start = performance.now();
-        const duration = 1400;
-
-        function tick(now: number) {
-          const progress = Math.min((now - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          setValue(Math.round(eased * 4200));
-          if (progress < 1) requestAnimationFrame(tick);
-        }
-
-        requestAnimationFrame(tick);
-        observer.disconnect();
-      },
-      { threshold: 0.35 },
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <span className="flex flex-col gap-1 sm:flex-row sm:items-end sm:gap-3 lg:flex-col lg:items-start lg:gap-1">
-      <span ref={ref} className="font-mono text-2xl text-gold md:text-3xl">
-        {value.toLocaleString("pt-BR")}+
-      </span>
-      <span className="signal-counter-label text-[10px] font-bold uppercase tracking-[0.16em] text-ink/[0.62]">
-        {label}
-      </span>
-    </span>
-  );
-}
-
 export default function Home() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = homeLiteCopy[locale as keyof typeof homeLiteCopy] ?? homeLiteCopy.en;
@@ -1742,9 +1684,9 @@ export default function Home() {
               {copy.intro.title}
             </h2>
             <div className="home-stats mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-              {copy.intro.stats.map((stat, index) => (
+              {copy.intro.stats.map((stat) => (
                 <div key={stat} className="strategic-stat border-l-2 border-gold/[0.68] bg-paper px-4 py-4 shadow-fine">
-                  {index === 1 ?<AnimatedCounter label={signalCounterLabels[locale] ?? signalCounterLabels.en} /> : <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>}
+                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>
                 </div>
               ))}
             </div>
