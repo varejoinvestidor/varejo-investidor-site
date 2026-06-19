@@ -830,3 +830,197 @@ footer [class*="bg-paper"] { background: rgba(255,255,255,.05) !important; }
 [dir="rtl"] main h1,
 [dir="rtl"] main h2,
 [dir="rtl"] main h3 { text-align: right; }
+
+/* Mobile content direction: retain the approved light navigation, but restore
+   the Varejo Investidor dark editorial identity below the header. */
+@media (max-width: 767px) {
+  body {
+    background: #050505 !important;
+    color: #f4f1ea !important;
+  }
+
+  main,
+  main.min-h-screen {
+    background: #050505 !important;
+    color: #f4f1ea !important;
+  }
+
+  main > section,
+  main > section:nth-of-type(even):not(.home-hero):not(.select-hero):not(.private-hero),
+  main > section:last-of-type:not(.home-hero) {
+    padding-block: clamp(5rem, 16vw, 6.5rem) !important;
+    border-color: rgba(255, 255, 255, .09) !important;
+    background: #050505 !important;
+    color: #f4f1ea !important;
+  }
+
+  main > section:nth-of-type(even):not(.home-hero):not(.select-hero):not(.private-hero) {
+    background: #090909 !important;
+  }
+
+  main h1,
+  main h2,
+  main h3,
+  main h4,
+  main .text-paper,
+  main .text-ink,
+  main [class*="text-paper/"],
+  main [class*="text-ink/"] {
+    color: #f4f1ea !important;
+  }
+
+  main p,
+  main li,
+  main td,
+  main label {
+    color: rgba(244, 241, 234, .7) !important;
+  }
+
+  main .text-gold,
+  main [class*="text-gold/"] { color: #d0ac64 !important; }
+
+  .home-hero,
+  .select-hero,
+  .private-hero,
+  .premium-stage,
+  .signals-hero,
+  .education-hero,
+  .services-hero,
+  .about-hero,
+  .page-hero {
+    min-height: auto;
+    padding-top: clamp(5rem, 17vw, 7rem) !important;
+    padding-bottom: clamp(5.5rem, 19vw, 8rem) !important;
+    background: linear-gradient(145deg, #030303 0%, #0b0b0a 62%, #11100d 100%) !important;
+    color: #f4f1ea !important;
+  }
+
+  .home-hero::after,
+  .select-hero::after,
+  .private-hero::after,
+  .premium-stage::after {
+    inset: auto -18% -22% auto;
+    width: 72vw;
+    height: 72vw;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(167, 122, 34, .12), transparent 68%);
+    clip-path: none;
+    opacity: 1 !important;
+  }
+
+  main [class*="bg-white"],
+  main [class*="bg-paper"],
+  main [class*="bg-ink"],
+  main [class*="from-ink"],
+  main [class*="via-ink"],
+  main [class*="to-ink"] {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  /* Informational modules should read as editorial content, not controls. */
+  main .terminal-module:not(:has(a)):not(:has(button)):not(:has(input)):not(:has(select)),
+  main .system-module:not(:has(a)):not(:has(button)),
+  main .broker-card:not(:has(a)):not(:has(button)),
+  main .glass-panel:not(:has(a)):not(:has(button)),
+  main article[class*="border"]:not(:has(a)):not(:has(button)):not(:has(input)):not(:has(select)),
+  main div[class*="border"]:not(:has(a)):not(:has(button)):not(:has(input)):not(:has(select)):not(:has(img)) {
+    border-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  main .terminal-module:not(:has(a)):not(:has(button)):not(:has(input)):not(:has(select)),
+  main article[class*="border"]:not(:has(a)):not(:has(button)):not(:has(input)):not(:has(select)) {
+    padding-inline: 0 !important;
+  }
+
+  /* Structural wrappers never need a second frame around interactive cards. */
+  .home-flow-section > div,
+  main .terminal-module:has(> .relative > .grid a),
+  main div[class*="shadow"]:has(> div a):not(article) {
+    overflow: visible !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Clickable choices and plans keep a quiet, intentional surface. */
+  main a.level-card,
+  main a.terminal-module,
+  main a.broker-card,
+  main article:has(> a),
+  main article:has(button),
+  #elite-packages article,
+  #elite-packages a[class*="border"] {
+    border: 1px solid rgba(208, 172, 100, .22) !important;
+    background: #0d0d0c !important;
+    box-shadow: none !important;
+  }
+
+  main a.level-card,
+  main a.terminal-module,
+  main a.broker-card { padding: 1.35rem !important; }
+
+  /* Hero proof and institutional statistics become open indicators. */
+  .home-hero [class*="grid-cols"] > div,
+  .signals-hero .operational-chip,
+  .strategic-stat,
+  .home-stats .strategic-stat {
+    min-height: auto !important;
+    padding: 1rem 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, .12) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .home-hero [class*="grid-cols"] > div:nth-last-child(-n + 2) {
+    border-bottom-color: transparent !important;
+  }
+
+  .strategic-stat p,
+  .strategic-stat span,
+  .home-stats p { color: rgba(244, 241, 234, .82) !important; }
+
+  main input,
+  main select,
+  main textarea {
+    border-color: rgba(255, 255, 255, .16) !important;
+    background: #0b0b0b !important;
+    color: #fff !important;
+  }
+
+  main table,
+  main th {
+    background: #070707 !important;
+    color: #f4f1ea !important;
+  }
+
+  main th { border-bottom-color: rgba(208, 172, 100, .5) !important; }
+  main td { border-bottom-color: rgba(255, 255, 255, .1) !important; }
+
+  .premium-button-ghost,
+  main a[class*="border-paper"],
+  main a[class*="border-ink"] {
+    border-color: rgba(255, 255, 255, .7) !important;
+    color: #f4f1ea !important;
+  }
+
+  .premium-button-gold,
+  .broker-action,
+  main a[class*="bg-gold"],
+  main button[class*="bg-gold"] {
+    border-color: #d0ac64 !important;
+    background: #d0ac64 !important;
+    color: #090909 !important;
+  }
+
+  .signal-terminal-wrap,
+  .signal-example-box,
+  .live-signal-card {
+    border-color: rgba(255, 255, 255, .12) !important;
+    background: #0b0b0b !important;
+  }
+}
