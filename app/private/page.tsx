@@ -526,7 +526,7 @@ export default function PrivatePage() {
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={isRtl ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-ink text-paper">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="relative overflow-hidden border-b border-gold/[0.14] bg-ink px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-44 lg:px-12 xl:px-16">
+      <section className="private-hero premium-stage relative overflow-hidden border-b border-gold/[0.14] bg-ink px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-44 lg:px-12 xl:px-16">
         <div className="absolute right-[8%] top-24 h-[34rem] w-[34rem] rounded-full bg-gold/[0.07] blur-3xl" />
         <div className="relative mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[1fr_0.72fr] lg:items-center">
           <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>

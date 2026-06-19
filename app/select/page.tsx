@@ -655,7 +655,7 @@ export default function SelectPage() {
     <main lang={isBrazilian ? "pt-BR" : locale} dir={rtlLocales.has(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-ink text-paper">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-40">
+      <section className="select-hero premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-40">
         <div className="absolute inset-0 terminal-grid opacity-5" />
         <div className="absolute right-0 top-24 h-[520px] w-[520px] bg-gold/[0.08] blur-3xl" />
         <div className="relative mx-auto max-w-7xl">

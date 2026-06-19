@@ -8,6 +8,250 @@
   color-scheme: dark;
 }
 
+/* Global premium-institution refresh: reduce terminal noise and move the UI toward a wealth-management feel. */
+body {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(184, 137, 45, 0.055), transparent 34rem),
+    radial-gradient(circle at 82% 4%, rgba(255, 255, 255, 0.035), transparent 30rem),
+    linear-gradient(135deg, #020202 0%, #070707 48%, #020202 100%) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  background:
+    linear-gradient(120deg, transparent 0 44%, rgba(255, 255, 255, 0.018) 44.2% 44.4%, transparent 44.6%),
+    radial-gradient(circle at 52% 10%, rgba(184, 137, 45, 0.04), transparent 32rem) !important;
+  opacity: 0.42 !important;
+}
+
+.premium-stage {
+  background:
+    linear-gradient(135deg, rgba(5, 5, 5, 0.96), rgba(14, 14, 14, 0.94)),
+    radial-gradient(circle at 18% 16%, rgba(184, 137, 45, 0.07), transparent 31rem) !important;
+  background-size: auto !important;
+}
+
+.home-hero.premium-stage,
+.select-hero.premium-stage,
+.private-hero.premium-stage {
+  background:
+    linear-gradient(135deg, rgba(3, 3, 3, 0.98), rgba(11, 11, 11, 0.95) 54%, rgba(3, 3, 3, 0.98)),
+    radial-gradient(circle at 22% 18%, rgba(184, 137, 45, 0.105), transparent 34rem),
+    radial-gradient(circle at 78% 24%, rgba(255, 255, 255, 0.05), transparent 28rem),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.032) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px) !important;
+  background-size: auto, auto, auto, 88px 88px, 88px 88px !important;
+}
+
+.terminal-grid,
+.luxury-grid,
+.signal-grid {
+  background-image: none !important;
+  opacity: 0 !important;
+}
+
+.home-hero .terminal-grid,
+.home-hero .luxury-grid,
+.select-hero .terminal-grid,
+.select-hero .luxury-grid,
+.private-hero .terminal-grid,
+.private-hero .luxury-grid {
+  background-image:
+    linear-gradient(rgba(251, 250, 247, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 250, 247, 0.04) 1px, transparent 1px) !important;
+  background-size: 34px 34px !important;
+  opacity: 0.16 !important;
+}
+
+main > section:not(.premium-stage):not(.home-hero) {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  main > section:not(.premium-stage):not(.home-hero) {
+    padding-top: clamp(5.5rem, 7vw, 9rem) !important;
+    padding-bottom: clamp(5.5rem, 7vw, 9rem) !important;
+  }
+}
+
+.level-card,
+.terminal-module,
+.broker-card,
+.glass-panel,
+.strategic-stat,
+.service-channel-card,
+.shadow-premium {
+  border-radius: 6px !important;
+}
+
+.level-card,
+.terminal-module,
+.broker-card,
+.system-module,
+.strategic-stat {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)),
+    rgba(8, 8, 8, 0.94) !important;
+  border-color: rgba(184, 137, 45, 0.16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 18px 54px rgba(0, 0, 0, 0.18) !important;
+  transition:
+    transform 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    background 240ms ease !important;
+}
+
+.level-card h2,
+.level-card h3,
+.level-card p,
+.terminal-module h2,
+.terminal-module h3,
+.terminal-module p,
+.broker-card h2,
+.broker-card h3,
+.broker-card p,
+.system-module h2,
+.system-module h3,
+.system-module p,
+.strategic-stat p,
+.strategic-stat span {
+  color: rgba(251, 250, 247, 0.86) !important;
+}
+
+.level-card .text-gold,
+.terminal-module .text-gold,
+.broker-card .text-gold,
+.system-module .text-gold,
+.strategic-stat .text-gold {
+  color: #d3ad5b !important;
+}
+
+.level-card::before,
+.system-module::after {
+  background: linear-gradient(90deg, transparent, rgba(184, 137, 45, 0.32), transparent) !important;
+  background-size: auto !important;
+  opacity: 0 !important;
+}
+
+.level-card:hover,
+.terminal-module:hover,
+.broker-card:hover,
+.system-module:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(184, 137, 45, 0.42) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 72px rgba(0, 0, 0, 0.26) !important;
+}
+
+.premium-button-gold,
+.premium-button-ghost,
+.broker-action,
+.nav-link,
+.header-dropdown-trigger,
+.header-dropdown-panel,
+.language-switcher,
+.language-dropdown-option,
+.header-dropdown-item {
+  border-radius: 4px !important;
+}
+
+.premium-button-gold {
+  background: linear-gradient(135deg, #b8892d, #d3ad5b) !important;
+  box-shadow: 0 14px 34px rgba(184, 137, 45, 0.16) !important;
+}
+
+.premium-button-gold:hover {
+  box-shadow: 0 20px 54px rgba(184, 137, 45, 0.22) !important;
+}
+
+.premium-button-ghost {
+  background: rgba(255, 255, 255, 0.035) !important;
+}
+
+.site-header {
+  background: rgba(251, 250, 247, 0.92) !important;
+  border-bottom-color: rgba(5, 5, 5, 0.07) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.065) !important;
+}
+
+.desktop-main-menu {
+  gap: 0.32rem !important;
+  border-color: rgba(5, 5, 5, 0.06) !important;
+  background: rgba(255, 255, 255, 0.76) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.045) !important;
+}
+
+.nav-link {
+  padding-inline: 0.95rem !important;
+  border-color: transparent !important;
+  color: rgba(5, 5, 5, 0.68) !important;
+  letter-spacing: 0.02em !important;
+}
+
+.nav-link:hover {
+  background: rgba(184, 137, 45, 0.075) !important;
+  color: #050505 !important;
+}
+
+.nav-link.active {
+  background: rgba(184, 137, 45, 0.13) !important;
+  border-color: rgba(184, 137, 45, 0.22) !important;
+  color: #050505 !important;
+  box-shadow: none !important;
+}
+
+.header-dropdown-panel {
+  background: rgba(5, 5, 5, 0.96) !important;
+  background-image: none !important;
+  border-color: rgba(184, 137, 45, 0.18) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34) !important;
+}
+
+h1 {
+  letter-spacing: -0.055em;
+}
+
+@media (min-width: 1024px) {
+  .hero-headline,
+  .home-hero h1 {
+    font-size: clamp(4.5rem, 6.4vw, 6rem) !important;
+    line-height: 0.96 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  main > section:not(.premium-stage):not(.home-hero) {
+    padding-top: 4.5rem !important;
+    padding-bottom: 4.5rem !important;
+  }
+
+  .level-card,
+  .terminal-module,
+  .broker-card,
+  .system-module {
+    padding: 1.35rem !important;
+  }
+
+  .hero-headline,
+  .home-hero h1 {
+    font-size: clamp(2.7rem, 11vw, 4rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  p,
+  li {
+    line-height: 1.72;
+  }
+
+  .site-header {
+    background: rgba(251, 250, 247, 0.96) !important;
+  }
+}
 * {
   box-sizing: border-box;
 }
