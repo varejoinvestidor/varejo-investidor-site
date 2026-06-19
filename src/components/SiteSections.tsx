@@ -1371,6 +1371,12 @@ export function SupportFooter({
   ];
   const structureFooterTitle = locale === "pt" ? "Estrutura Patrimonial" : locale === "es" ? "Estructura Patrimonial" : "Wealth Structure";
   const companyFooterTitle = locale === "pt" ? "Empresa" : locale === "es" ? "Empresa" : "Company";
+  const platformsToolsTitle =
+    locale === "pt"
+      ? "Plataformas e Ferramentas"
+      : locale === "es"
+        ? "Plataformas y Herramientas"
+        : `${footerLabels.platforms} & ${footerLabels.tools}`;
   const structureFooterLinks = [
     { href: "/sinais", label: "Elite" },
     { href: "/select", label: "Select" },
@@ -1382,6 +1388,21 @@ export function SupportFooter({
     { href: marketFooterLinks[0]?.href ?? "/forex", label: footerLabels.content },
     { href: "/eventos", label: locale === "pt" ? "Eventos" : locale === "es" ? "Eventos" : "Events" },
     { href: t.support.link, label: locale === "pt" ? "Contato" : locale === "es" ? "Contacto" : "Contact" },
+  ];
+  const platformsAndToolsFooterLinks = [
+    ...platformFooterLinks,
+    { href: "/ferramentas/calculadora-forex", label: footerLabels.forexCalculator },
+    { href: "/ferramentas/calculadora-juros-compostos", label: footerLabels.compoundInterestTool },
+    { href: "/ferramentas/raio-x-carteira-global", label: footerLabels.portfolioXrayTool ?? "Global Portfolio X-Ray" },
+    { href: "/eventos", label: "Eventos Presenciais" },
+  ];
+  const footerNavigationGroups = [
+    { title: "Menu", links: mainFooterLinks },
+    { title: structureFooterTitle, links: structureFooterLinks },
+    { title: companyFooterTitle, links: companyFooterLinks },
+    { title: footerLabels.levels, links: levelFooterLinks },
+    { title: footerLabels.content, links: marketFooterLinks },
+    { title: platformsToolsTitle, links: platformsAndToolsFooterLinks },
   ];
 
   return (
@@ -1395,187 +1416,89 @@ export function SupportFooter({
         </div>
       </section>
 
-      <footer className="border-t border-ink/[0.08] bg-white px-5 py-8 md:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-6 xl:grid-cols-9 lg:items-start">
-          <div>
-            <a href="/#home" className="inline-flex items-center gap-3">
-              <span className="grid h-11 w-11 place-items-center border border-ink bg-ink text-xs font-bold text-paper">
-                VI
-              </span>
-              <span>
-                <span className="block font-serif text-3xl tracking-[-0.04em] text-ink">Varejo Investidor</span>
-                <span className="text-[10px] uppercase tracking-[0.24em] text-ink/[0.45]">
-                  {brandTagline}
+      <footer className="institutional-footer border-t border-paper/[0.1] bg-ink px-5 py-10 text-paper md:px-8 md:py-12">
+        <div className="footer-shell mx-auto max-w-[1440px]">
+          <div className="footer-primary-grid">
+            <div className="footer-brand-column">
+              <a href="/#home" className="inline-flex items-center gap-3">
+                <span className="grid h-12 w-12 shrink-0 place-items-center border border-gold/[0.55] bg-gold text-xs font-black text-ink">
+                  VI
                 </span>
-              </span>
-            </a>
-            <p className="mt-4 max-w-md text-sm leading-7 text-ink/[0.6]">{t.footer}</p>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.social}</p>
-            <div className="mt-4 flex gap-2">
-              {socials.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="grid h-11 w-11 place-items-center border border-ink/[0.12] bg-paper text-ink transition hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-paper"
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">Menu</p>
-            <div className="mt-4 flex flex-col gap-2">
-              {mainFooterLinks.map((link) => (
-                <a
-                  key={`${link.href}-${link.label}`}
-                  href={link.href}
-                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{structureFooterTitle}</p>
-            <div className="mt-4 flex flex-col gap-2">
-              {structureFooterLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{companyFooterTitle}</p>
-            <div className="mt-4 flex flex-col gap-2">
-              {companyFooterLinks.map((link) => (
-                <a
-                  key={`${link.href}-${link.label}`}
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.levels}</p>
-            <div className="mt-4 flex flex-col gap-2">
-              {levelFooterLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.content}</p>
-            <div className="mt-4 flex flex-col gap-2">
-              {marketFooterLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.platforms}</p>
-            <div className="mt-4 flex flex-col gap-2">
-              {platformFooterLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.tools}</p>
-            <div className="mt-4 flex flex-col gap-2">
-              <a
-                href="/ferramentas/calculadora-forex"
-                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-              >
-                {footerLabels.forexCalculator}
+                <span className="min-w-0">
+                  <span className="block font-serif text-3xl tracking-[-0.04em] text-paper">Varejo Investidor</span>
+                  <span className="mt-1 block text-[10px] uppercase tracking-[0.22em] text-paper/[0.5]">
+                    {brandTagline}
+                  </span>
+                </span>
               </a>
+              <p className="mt-5 max-w-sm text-sm leading-7 text-paper/[0.62]">{t.footer}</p>
+              <div className="mt-6">
+                <p className="footer-heading">{footerLabels.social}</p>
+                <div className="mt-3 flex gap-2">
+                  {socials.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="grid h-10 w-10 place-items-center border border-paper/[0.16] bg-paper/[0.035] text-paper/[0.72] transition hover:-translate-y-0.5 hover:border-gold hover:text-gold"
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {footerNavigationGroups.map((group) => (
+              <nav key={group.title} aria-label={group.title} className="footer-link-column">
+                <p className="footer-heading">{group.title}</p>
+                <div className="mt-4 flex flex-col gap-2.5">
+                  {group.links.map((link) => (
+                    <a
+                      key={`${group.title}-${link.href}-${link.label}`}
+                      href={link.href}
+                      target={link.href.startsWith("http") ? "_blank" : undefined}
+                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      className="footer-link text-sm font-medium leading-6 text-paper/[0.62] transition hover:text-gold"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </nav>
+            ))}
+          </div>
+
+          <div className="footer-utility-row">
+            <div className="footer-support-block">
+              <div>
+                <p className="footer-heading">{t.support.title}</p>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-paper/[0.58]">{t.support.text}</p>
+              </div>
               <a
-                href="/ferramentas/calculadora-juros-compostos"
-                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
+                href={t.support.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-support-button inline-flex min-h-12 items-center justify-center border border-gold bg-gold px-6 py-3 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d3ad5b]"
               >
-                {footerLabels.compoundInterestTool}
-              </a>
-              <a
-                href="/ferramentas/raio-x-carteira-global"
-                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-              >
-                {footerLabels.portfolioXrayTool ?? "Global Portfolio X-Ray"}
-              </a>
-              <a
-                href="/eventos"
-                className="text-sm font-semibold text-ink/[0.62] transition hover:text-gold"
-              >
-                Eventos Presenciais
+                {t.support.button}
               </a>
             </div>
-          </div>
 
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-ink/[0.45]">{footerLabels.language}</p>
-            <div className="mt-4">
-              <LanguageSwitcher locale={locale} onChange={onLocaleChange} variant="footer" />
+            <div className="footer-language-grid">
+              <p className="footer-heading">{footerLabels.language}</p>
+              <div className="mt-4">
+                <LanguageSwitcher locale={locale} onChange={onLocaleChange} variant="footer" />
+              </div>
             </div>
           </div>
 
-          <div className="md:text-right">
-            <p className="font-serif text-2xl tracking-[-0.04em] text-ink">{t.support.title}</p>
-            <p className="mt-2 text-sm text-ink/[0.58]">{t.support.text}</p>
-            <a
-              href={t.support.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-block border border-ink bg-ink px-5 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper transition hover:bg-paper hover:text-ink"
-            >
-              {t.support.button}
-            </a>
+          <div className="footer-bottom-row">
+            <p>© {new Date().getFullYear()} Varejo Investidor</p>
+            <p>{footerLabels.marketLine}</p>
           </div>
-        </div>
-
-        <div className="mx-auto mt-8 flex max-w-7xl flex-col gap-2 border-t border-ink/[0.08] pt-5 text-xs uppercase tracking-[0.18em] text-ink/[0.45] md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} Varejo Investidor</p>
-          <p>{footerLabels.marketLine}</p>
         </div>
       </footer>
     </>

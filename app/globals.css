@@ -8,6 +8,165 @@
   color-scheme: dark;
 }
 
+/* Institutional footer */
+.institutional-footer {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(184, 137, 45, 0.07), transparent 28rem),
+    #050505 !important;
+  color: #fbfaf7;
+}
+
+.institutional-footer .footer-primary-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.55fr) repeat(6, minmax(112px, 1fr));
+  gap: clamp(1.5rem, 2.2vw, 2.75rem);
+  align-items: start;
+}
+
+.institutional-footer .footer-heading {
+  color: rgba(251, 250, 247, 0.92);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.institutional-footer .footer-link {
+  overflow-wrap: anywhere;
+}
+
+.institutional-footer .footer-utility-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 4vw, 4.5rem);
+  margin-top: 2.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(251, 250, 247, 0.1);
+}
+
+.institutional-footer .footer-support-block {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.institutional-footer .footer-support-button {
+  flex: 0 0 auto;
+}
+
+.institutional-footer .footer-language-grid .language-switcher {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.45rem !important;
+  width: 100%;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.institutional-footer .footer-language-grid .language-option {
+  display: flex;
+  min-width: 0;
+  min-height: 2.55rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(251, 250, 247, 0.13);
+  border-radius: 999px !important;
+  background: rgba(251, 250, 247, 0.025);
+  color: rgba(251, 250, 247, 0.7);
+  padding: 0.55rem 0.7rem !important;
+}
+
+.institutional-footer .footer-language-grid .language-option:hover {
+  border-color: rgba(184, 137, 45, 0.65);
+  color: #d3ad5b;
+  background: rgba(184, 137, 45, 0.08);
+}
+
+.institutional-footer .footer-language-grid .language-option[aria-pressed="true"] {
+  border-color: #b8892d;
+  background: #b8892d;
+  color: #050505;
+}
+
+.institutional-footer .footer-language-grid .language-button-inner {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.institutional-footer .footer-language-grid .language-button-inner > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.institutional-footer .footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(251, 250, 247, 0.1);
+  color: rgba(251, 250, 247, 0.42);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1279px) {
+  .institutional-footer .footer-primary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .institutional-footer .footer-brand-column {
+    grid-column: 1 / -1;
+    padding-bottom: 0.5rem;
+  }
+
+  .institutional-footer .footer-language-grid .language-switcher {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .institutional-footer .footer-primary-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .institutional-footer .footer-brand-column {
+    grid-column: auto;
+  }
+
+  .institutional-footer .footer-utility-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .institutional-footer .footer-support-block {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .institutional-footer .footer-support-button {
+    width: 100%;
+  }
+
+  .institutional-footer .footer-language-grid .language-switcher {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .institutional-footer .footer-bottom-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
 /* Global premium-institution refresh: reduce terminal noise and move the UI toward a wealth-management feel. */
 body {
   background:
