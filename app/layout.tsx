@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, localeToHtmlLang, type Locale } from "../src/i18n";
 import "./globals.css";
+import "./institutional.css";
 
 const siteTitle = "Varejo Investidor | Sinais, Educação e Mercado Global";
 const siteDescription =

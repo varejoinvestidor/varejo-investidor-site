@@ -540,29 +540,53 @@ export function SiteChrome({
   const pathname = usePathname();
   const safeT = t ?? translations.en;
   const insightNavLabel = insightLabels[locale]?.nav ?? insightLabels.en.nav;
-  const [mobileLanguageOpen, setMobileLanguageOpen] = useState(true);
+  const [mobileLanguageOpen, setMobileLanguageOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMarketsOpen, setMobileMarketsOpen] = useState(false);
+  const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
 
   useEffect(() => {
-    const hasSelectedLanguage = window.localStorage.getItem("varejo_language_selected") === "true";
-    setMobileLanguageOpen(!hasSelectedLanguage);
+    setMobileLanguageOpen(false);
     document.documentElement.style.setProperty(
       "--mobile-header-height",
-      hasSelectedLanguage ? "210px" : "300px",
+      "0px",
     );
   }, []);
 
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--mobile-header-height",
-      mobileLanguageOpen ? "300px" : "210px",
+      "0px",
     );
   }, [mobileLanguageOpen]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   function handleMobileLocaleChange(nextLocale: Locale) {
     onLocaleChange(nextLocale);
     window.localStorage.setItem("varejo_language", nextLocale);
     window.localStorage.setItem("varejo_language_selected", "true");
     setMobileLanguageOpen(false);
+    setMobileMenuOpen(false);
   }
 
   const brandTagline =
@@ -654,10 +678,16 @@ export function SiteChrome({
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
   const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en]);
-  const mobileNavItems = [
+  const mobilePrimaryItems = [
     ...firstNavItems,
-    { label: marketLabels.markets, href: marketItems[0].href, activePaths: ["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`] },
-    { label: toolLabels.tools, href: toolItems[0].href, activePaths: ["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", eliteReportPaths[locale] ?? eliteReportPaths.en] },
+    { label: insightNavLabel, href: getInsightsPath(locale), activePaths: [getInsightsPath(locale)] },
+    { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
+  ];
+  const mobileToolItems = [
+    { label: locale === "pt" ? "Calculadora de risco" : "Risk calculator", href: "/calculadora-de-risco" },
+    { label: toolLabels.compound, href: "/ferramentas/calculadora-juros-compostos" },
+    { label: locale === "pt" ? "Aposentadoria" : "Retirement", href: "/ferramentas/calculadora-juros-compostos#aposentadoria" },
+    { label: toolLabels.portfolio ?? "Portfolio", href: "/ferramentas/raio-x-carteira-global" },
   ];
 
   return (
@@ -686,6 +716,20 @@ export function SiteChrome({
             </span>
           </a>
 
+          <button
+            type="button"
+            className="mobile-menu-button xl:hidden"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation-drawer"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileMenuOpen((open) => !open)}
+          >
+            <span className="mobile-menu-icon" aria-hidden="true">
+              <span />
+              <span />
+            </span>
+          </button>
+
           <div className="desktop-main-menu hidden items-center justify-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
             {firstNavItems.map((item) => {
               const isActive = isActivePath(item.activePaths);
@@ -699,31 +743,89 @@ export function SiteChrome({
             <DesktopLanguageDropdown locale={locale} onChange={onLocaleChange} />
           </div>
         </nav>
-        <div className="mobile-nav-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
-          <div className="mx-auto flex max-w-7xl flex-wrap justify-center gap-2 pt-2 text-sm">
-            {mobileNavItems.map((item) => {
-              const isActive = isActivePath(item.activePaths);
-              return <a key={item.label} href={item.href} className={`mobile-nav-link nav-link shrink-0 border border-ink/[0.1] bg-white px-3 py-2 text-center text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
-            })}
-          </div>
-        </div>
         <div className="mobile-language-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
-          {mobileLanguageOpen ? (
-            <LanguageSwitcher locale={locale} onChange={handleMobileLocaleChange} variant="mobile" />
-          ) : (
-            <button
-              type="button"
-              onClick={() => setMobileLanguageOpen(true)}
-              className="mobile-language-compact"
-              aria-expanded={mobileLanguageOpen}
-            >
-              <span aria-hidden="true">🌐</span>
-              <FlagIcon locale={locale} />
-              <span>{languageMeta[locale].code}</span>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(true);
+              setMobileLanguageOpen(true);
+            }}
+            className="mobile-language-compact"
+            aria-label={`${languageMeta[locale].name}. Change language`}
+          >
+            <span className="mobile-language-globe" aria-hidden="true">◎</span>
+            <span>{languageMeta[locale].code}</span>
+          </button>
         </div>
       </header>
+
+      <div className={`mobile-drawer-layer xl:hidden ${mobileMenuOpen ? "is-open" : ""}`} aria-hidden={!mobileMenuOpen}>
+        <button
+          type="button"
+          className="mobile-drawer-overlay"
+          aria-label="Close menu"
+          tabIndex={mobileMenuOpen ? 0 : -1}
+          onClick={() => setMobileMenuOpen(false)}
+        />
+        <aside id="mobile-navigation-drawer" className="mobile-navigation-drawer" role="dialog" aria-modal="true" aria-label="Site navigation">
+          <div className="mobile-drawer-header">
+            <a href="/#home" className="mobile-drawer-brand" onClick={() => setMobileMenuOpen(false)}>
+              <span>VI</span>
+              <strong>Varejo Investidor</strong>
+            </a>
+            <button type="button" className="mobile-drawer-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+            </button>
+          </div>
+
+          <nav className="mobile-drawer-nav" aria-label="Mobile navigation">
+            {mobilePrimaryItems.slice(0, 6).map((item) => (
+              <a key={`${item.href}-${item.label}`} href={item.href} className={isActivePath(item.activePaths) ? "is-active" : ""}>
+                <span>{item.label}</span>
+              </a>
+            ))}
+
+            <div className={`mobile-drawer-group ${mobileMarketsOpen ? "is-open" : ""}`}>
+              <button type="button" aria-expanded={mobileMarketsOpen} onClick={() => setMobileMarketsOpen((open) => !open)}>
+                <span>{marketLabels.markets}</span><span className="mobile-drawer-chevron" aria-hidden="true">›</span>
+              </button>
+              <div className="mobile-drawer-submenu">
+                {marketItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
+              </div>
+            </div>
+
+            <div className={`mobile-drawer-group ${mobileToolsOpen ? "is-open" : ""}`}>
+              <button type="button" aria-expanded={mobileToolsOpen} onClick={() => setMobileToolsOpen((open) => !open)}>
+                <span>{toolLabels.tools}</span><span className="mobile-drawer-chevron" aria-hidden="true">›</span>
+              </button>
+              <div className="mobile-drawer-submenu">
+                {mobileToolItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
+              </div>
+            </div>
+
+            {mobilePrimaryItems.slice(6).map((item) => (
+              <a key={`${item.href}-${item.label}`} href={item.href} className={isActivePath(item.activePaths) ? "is-active" : ""}>
+                <span>{item.label}</span>
+              </a>
+            ))}
+          </nav>
+
+          <div className="mobile-drawer-language">
+            <button type="button" onClick={() => setMobileLanguageOpen((open) => !open)} aria-expanded={mobileLanguageOpen}>
+              <span>{locale === "pt" ? "Idioma" : "Language"}</span>
+              <span>{languageMeta[locale].name} <span aria-hidden="true">›</span></span>
+            </button>
+            {mobileLanguageOpen ? <LanguageSwitcher locale={locale} onChange={handleMobileLocaleChange} variant="mobile" /> : null}
+          </div>
+
+          <div className="mobile-drawer-actions">
+            <a href={safeT.freeChannel.link} target="_blank" rel="noopener noreferrer" className="is-primary">{safeT.freeChannel.button}</a>
+            <a href="/select">Select</a>
+            <a href="/private">Private</a>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
