@@ -1,4 +1,5 @@
 import type { Locale } from "../i18n";
+import { localeToUrlSegment } from "../i18n/routing";
 import { fxproButtonLabels, fxproLinks } from "./fxproLinks";
 import { getInsightsPath, insightLabels } from "./insightsContent";
 
@@ -17,30 +18,9 @@ export type PlatformContent = {
   ctaHref: string;
 };
 
-const localePrefix: Partial<Record<Locale, string>> = {
-  en: "/en/platforms",
-  es: "/es/platforms",
-  fr: "/fr/platforms",
-  it: "/it/platforms",
-  de: "/de/platforms",
-  fa: "/fa/platforms",
-  hi: "/hi/platforms",
-  ar: "/ar/platforms",
-  tr: "/tr/platforms",
-  id: "/id/platforms",
-  vi: "/vi/platforms",
-  ru: "/ru/platforms",
-  ur: "/ur/platforms",
-  bn: "/bn/platforms",
-  ja: "/ja/platforms",
-  ko: "/ko/platforms",
-  zh: "/zh/platforms",
-  pl: "/pl/platforms",
-  tl: "/tl/platforms",
-};
-
 export function getPlatformPath(locale: Locale, slug: PlatformSlug) {
-  const prefix = localePrefix[locale] ?? "/en/platforms";
+  const segment = localeToUrlSegment(locale);
+  const prefix = segment ? `/${segment}/platforms` : "/plataformas";
   return locale === "pt" ? `/plataformas/${slug}` : `${prefix}/${slug}`;
 }
 

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { SUPPORTED_LOCALES, isRtlLocale, isSupportedLocale, localeToHtmlLang, translations, type Locale } from "../i18n";
+import { localeFromPublicPath, localeToUrlSegment, localizedPath } from "../i18n/routing";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/insightsContent";
@@ -105,8 +106,7 @@ function isLocale(value: string | null): value is Locale {
 function localeFromPath(pathname: string | null): Locale | null {
   const insightsLocale = localeFromInsightsPath(pathname);
   if (insightsLocale) return insightsLocale;
-  const firstSegment = pathname?.split("/").filter(Boolean)[0] ?? null;
-  return isLocale(firstSegment) ? firstSegment : null;
+  return localeFromPublicPath(pathname);
 }
 
 function applyDocumentLocale(nextLocale: Locale) {
@@ -137,6 +137,10 @@ export function useSiteLocale() {
     window.localStorage.setItem("varejo_language_selected", "true");
     window.localStorage.setItem("language", nextLocale);
     window.localStorage.setItem("varejo-investidor-locale", nextLocale);
+    document.cookie = `varejo_language=${nextLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    const nextPath = localizedPath(pathname, nextLocale);
+    const currentPath = `${window.location.pathname}${window.location.hash}`;
+    if (nextPath !== currentPath) window.location.assign(nextPath);
   }
 
   return { locale, t, changeLocale };
@@ -660,7 +664,9 @@ export function SiteChrome({
   };
   const marketLabels = marketDropdownLabels[locale] ?? marketDropdownLabels.en;
   const toolLabels = toolDropdownLabels[locale] ?? toolDropdownLabels.en;
-  const marketPrefix = locale === "pt" ? "" : `/${locale}`;
+  const localePrefix = localeToUrlSegment(locale);
+  const localizedPage = (path: string) => localizedPath(path, locale);
+  const marketPrefix = localePrefix ? `/${localePrefix}` : "";
   const marketItems = [
     { label: marketLabels.forex, href: `${marketPrefix}/forex` },
     { label: marketLabels.stocks, href: locale === "pt" ? "/acoes" : `${marketPrefix}/stocks` },
@@ -672,29 +678,29 @@ export function SiteChrome({
     ...(locale === "pt" ? [{ label: marketLabels.funds, href: "/fundos-imobiliarios" }] : []),
   ];
   const toolItems = [
-    { label: toolLabels.forex, href: "/ferramentas/calculadora-forex" },
-    { label: toolLabels.compound, href: "/ferramentas/calculadora-juros-compostos" },
-    { label: toolLabels.portfolio ?? "Global Portfolio X-Ray", href: "/ferramentas/raio-x-carteira-global" },
-    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: "/ferramentas/calendario-economico" },
+    { label: toolLabels.forex, href: localizedPage("/ferramentas/calculadora-forex") },
+    { label: toolLabels.compound, href: localizedPage("/ferramentas/calculadora-juros-compostos") },
+    { label: toolLabels.portfolio ?? "Global Portfolio X-Ray", href: localizedPage("/ferramentas/raio-x-carteira-global") },
+    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: localizedPage("/ferramentas/calendario-economico") },
     { label: toolLabels.reports, href: eliteReportPaths[locale] ?? eliteReportPaths.en },
   ];
   const localizedHref = (page: "home" | "signals" | "education" | "services" | "about") => {
-    if (page === "home") return locale === "pt" ? "/#home" : `/${locale}`;
+    if (page === "home") return localePrefix ? `/${localePrefix}` : "/#home";
     const ptPaths = {
       signals: "/sinais",
       education: "/educacao",
       services: "/servicos",
       about: "/sobre",
     };
-    return locale === "pt" ? ptPaths[page] : `/${locale}/${page}`;
+    return localizedPage(ptPaths[page]);
   };
   const firstNavItems = useMemo(
     () => [
       { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", ...SUPPORTED_LOCALES.map((item) => `/${item}`)] },
       { label: safeT.nav.signals, href: localizedHref("signals"), activePaths: ["/sinais", "/signals", `/${locale}/signals`] },
       { label: safeT.nav.education, href: localizedHref("education"), activePaths: ["/educacao", `/${locale}/education`] },
-      { label: "Select", href: "/select", activePaths: ["/select", "/servicos/select"] },
-      { label: "Private", href: "/private", activePaths: ["/private"] },
+      { label: "Select", href: localizedPage("/select"), activePaths: ["/select", ...(localePrefix ? [`/${localePrefix}/select`] : []), "/servicos/select"] },
+      { label: "Private", href: localizedPage("/private"), activePaths: ["/private", ...(localePrefix ? [`/${localePrefix}/private`] : [])] },
       { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
     ],
     [locale, safeT],
@@ -708,11 +714,11 @@ export function SiteChrome({
     { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
   ];
   const mobileToolItems = [
-    { label: locale === "pt" ? "Calculadora de risco" : "Risk calculator", href: "/calculadora-de-risco" },
-    { label: toolLabels.compound, href: "/ferramentas/calculadora-juros-compostos" },
-    { label: locale === "pt" ? "Aposentadoria" : "Retirement", href: "/ferramentas/calculadora-juros-compostos#aposentadoria" },
-    { label: toolLabels.portfolio ?? "Portfolio", href: "/ferramentas/raio-x-carteira-global" },
-    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: "/ferramentas/calendario-economico" },
+    { label: locale === "pt" ? "Calculadora de risco" : "Risk calculator", href: localizedPage("/calculadora-de-risco") },
+    { label: toolLabels.compound, href: localizedPage("/ferramentas/calculadora-juros-compostos") },
+    { label: locale === "pt" ? "Aposentadoria" : "Retirement", href: `${localizedPage("/ferramentas/calculadora-juros-compostos")}#aposentadoria` },
+    { label: toolLabels.portfolio ?? "Portfolio", href: localizedPage("/ferramentas/raio-x-carteira-global") },
+    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: localizedPage("/ferramentas/calendario-economico") },
   ];
 
   return (
@@ -733,7 +739,7 @@ export function SiteChrome({
 
       <header className="site-header border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
         <nav className="site-header-nav mx-auto grid max-w-7xl items-center gap-4 px-4 py-3 md:px-8 md:py-4 xl:grid-cols-[minmax(260px,25%)_minmax(0,55%)_minmax(220px,20%)]">
-          <a href="/#home" className="site-brand group flex min-w-0 items-center gap-3">
+          <a href={localizedHref("home")} className="site-brand group flex min-w-0 items-center gap-3">
             <span className="grid h-9 w-9 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper sm:h-10 sm:w-10">VI</span>
             <span className="min-w-0 leading-tight">
               <span className="block truncate font-serif text-lg sm:text-xl">Varejo Investidor</span>
@@ -794,7 +800,7 @@ export function SiteChrome({
         />
         <aside id="mobile-navigation-drawer" className="mobile-navigation-drawer" role="dialog" aria-modal="true" aria-label="Site navigation">
           <div className="mobile-drawer-header">
-            <a href="/#home" className="mobile-drawer-brand" onClick={() => setMobileMenuOpen(false)}>
+            <a href={localizedHref("home")} className="mobile-drawer-brand" onClick={() => setMobileMenuOpen(false)}>
               <span>VI</span>
               <strong>Varejo Investidor</strong>
             </a>
@@ -846,8 +852,8 @@ export function SiteChrome({
 
           <div className="mobile-drawer-actions">
             <a href={safeT.freeChannel.link} target="_blank" rel="noopener noreferrer" className="is-primary">{safeT.freeChannel.button}</a>
-            <a href="/select">Select</a>
-            <a href="/private">Private</a>
+            <a href={localizedPage("/select")}>Select</a>
+            <a href={localizedPage("/private")}>Private</a>
           </div>
         </aside>
       </div>
@@ -1284,24 +1290,26 @@ export function SupportFooter({
                   forexCalculator: locale === "id" ? "Kalkulator Forex" : locale === "vi" ? "M\u00E1y T\u00EDnh Forex" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13 Forex" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 Forex" : locale === "ja" ? "Forex\u8A08\u7B97\u6A5F" : locale === "ko" ? "Forex \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur Forex" : "Forex Calculator",
                   compoundInterestTool: locale === "id" ? "Kalkulator Bunga Majemuk" : locale === "vi" ? "M\u00E1y T\u00EDnh L\u00E3i K\u00E9p" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13\u0E14\u0E2D\u0E01\u0E40\u0E1A\u0E35\u0E49\u0E22\u0E17\u0E1A\u0E15\u0E49\u0E19" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 \u0441\u043B\u043E\u0436\u043D\u044B\u0445 \u043F\u0440\u043E\u0446\u0435\u043D\u0442\u043E\u0432" : locale === "ur" ? "\u06A9\u0645\u067E\u0627\u0624\u0646\u0688 \u0627\u0646\u0679\u0631\u0633\u0679 \u06A9\u06CC\u0644\u06A9\u0648\u0644\u06CC\u0679\u0631" : locale === "bn" ? "\u099A\u0995\u09CD\u09B0\u09AC\u09C3\u09A6\u09CD\u09A7\u09BF \u09B8\u09C1\u09A6 \u0995\u09CD\u09AF\u09BE\u09B2\u0995\u09C1\u09B2\u09C7\u099F\u09B0" : locale === "ja" ? "\u8907\u5229\u8A08\u7B97\u6A5F" : locale === "ko" ? "\uBCF5\uB9AC \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur d'int\u00E9r\u00EAts compos\u00E9s" : "Compound Interest Calculator",
                 };
-  const levelFooterLinks = [
-    { href: "/formiga", label: footerLabels.levelLinks[0] },
-    { href: "/lobo", label: footerLabels.levelLinks[1] },
-    { href: "/harpia", label: footerLabels.levelLinks[2] },
-    { href: "/select", label: footerLabels.levelLinks[3] },
-    { href: "/private", label: "Private" },
-  ];
   const marketFooterSlugs: MarketSlug[] =
     locale === "pt" ? [...publicMarketSlugs, "fundos-imobiliarios"] : publicMarketSlugs;
+  const footerLocalePrefix = localeToUrlSegment(locale);
+  const localizedFooterPage = (path: string) => localizedPath(path, locale);
+  const levelFooterLinks = [
+    { href: localizedFooterPage("/formiga"), label: footerLabels.levelLinks[0] },
+    { href: localizedFooterPage("/lobo"), label: footerLabels.levelLinks[1] },
+    { href: localizedFooterPage("/harpia"), label: footerLabels.levelLinks[2] },
+    { href: localizedFooterPage("/select"), label: footerLabels.levelLinks[3] },
+    { href: localizedFooterPage("/private"), label: "Private" },
+  ];
   const localizedFooterHref = (page: "home" | "signals" | "education" | "services" | "about") => {
-    if (page === "home") return locale === "pt" ? "/#home" : `/${locale}`;
+    if (page === "home") return footerLocalePrefix ? `/${footerLocalePrefix}` : "/#home";
     const ptPaths = {
       signals: "/sinais",
       education: "/educacao",
       services: "/servicos",
       about: "/sobre",
     };
-    return locale === "pt" ? ptPaths[page] : `/${locale}/${page}`;
+    return localizedFooterPage(ptPaths[page]);
   };
   const marketAliases: Partial<Record<Locale, Partial<Record<MarketSlug, string>>>> = {
     pt: { forex: "forex", acoes: "acoes", cripto: "cripto", etfs: "etfs", ouro: "ouro", petroleo: "petroleo", commodities: "commodities", "fundos-imobiliarios": "fundos-imobiliarios" },
@@ -1323,7 +1331,7 @@ export function SupportFooter({
   const ptMarketAliases = marketAliases.pt ?? {};
   const localeMarketAliases = marketAliases[locale] ?? marketAliases.en ?? {};
   const marketFooterLinks = marketFooterSlugs.map((slug) => ({
-    href: locale === "pt" ? `/${ptMarketAliases[slug] ?? slug}` : `/${locale}/${localeMarketAliases[slug] ?? slug}`,
+    href: locale === "pt" ? `/${ptMarketAliases[slug] ?? slug}` : `/${footerLocalePrefix}/${localeMarketAliases[slug] ?? slug}`,
     label: getMarketLabel(slug, locale),
   }));
   const platformFooterLinks = platformSlugs.map((slug) => ({
@@ -1362,8 +1370,8 @@ export function SupportFooter({
     { href: localizedFooterHref("home"), label: t.nav.home },
     { href: localizedFooterHref("signals"), label: t.nav.signals },
     { href: localizedFooterHref("education"), label: t.nav.education },
-    { href: "/select", label: "Select" },
-    { href: "/private", label: "Private" },
+    { href: localizedFooterPage("/select"), label: "Select" },
+    { href: localizedFooterPage("/private"), label: "Private" },
     { href: localizedFooterHref("services"), label: t.nav.services },
     { href: marketFooterLinks[0]?.href ?? "/forex", label: footerLabels.content },
     { href: "/ferramentas/calculadora-forex", label: footerLabels.tools },
@@ -1378,9 +1386,9 @@ export function SupportFooter({
         ? "Plataformas y Herramientas"
         : `${footerLabels.platforms} & ${footerLabels.tools}`;
   const structureFooterLinks = [
-    { href: "/sinais", label: "Elite" },
-    { href: "/select", label: "Select" },
-    { href: "/private", label: "Private" },
+    { href: localizedFooterPage("/sinais"), label: "Elite" },
+    { href: localizedFooterPage("/select"), label: "Select" },
+    { href: localizedFooterPage("/private"), label: "Private" },
   ];
   const companyFooterLinks = [
     { href: localizedFooterHref("about"), label: t.nav.about },
@@ -1391,10 +1399,10 @@ export function SupportFooter({
   ];
   const platformsAndToolsFooterLinks = [
     ...platformFooterLinks,
-    { href: "/ferramentas/calculadora-forex", label: footerLabels.forexCalculator },
-    { href: "/ferramentas/calculadora-juros-compostos", label: footerLabels.compoundInterestTool },
-    { href: "/ferramentas/raio-x-carteira-global", label: footerLabels.portfolioXrayTool ?? "Global Portfolio X-Ray" },
-    { href: "/eventos", label: "Eventos Presenciais" },
+    { href: localizedFooterPage("/ferramentas/calculadora-forex"), label: footerLabels.forexCalculator },
+    { href: localizedFooterPage("/ferramentas/calculadora-juros-compostos"), label: footerLabels.compoundInterestTool },
+    { href: localizedFooterPage("/ferramentas/raio-x-carteira-global"), label: footerLabels.portfolioXrayTool ?? "Global Portfolio X-Ray" },
+    { href: localizedFooterPage("/eventos"), label: "Eventos Presenciais" },
   ];
   const footerNavigationGroups = [
     { title: "Menu", links: mainFooterLinks },
@@ -1420,7 +1428,7 @@ export function SupportFooter({
         <div className="footer-shell mx-auto max-w-[1440px]">
           <div className="footer-primary-grid">
             <div className="footer-brand-column">
-              <a href="/#home" className="inline-flex items-center gap-3">
+              <a href={localizedFooterHref("home")} className="inline-flex items-center gap-3">
                 <span className="grid h-12 w-12 shrink-0 place-items-center border border-gold/[0.55] bg-gold text-xs font-black text-ink">
                   VI
                 </span>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, trackVarejoClick, useSiteLocale } from "../src/components/SiteSections";
 import { getInsightsPath } from "../src/data/insightsContent";
 import type { Locale } from "../src/i18n";
+import { localeToUrlSegment, localizedPath } from "../src/i18n/routing";
 
 const homeLiteCopy = {
   pt: {
@@ -1197,7 +1198,8 @@ function localizedMarketPath(locale: Locale, market: HomeMarketKey) {
   };
   const localeSlugs = slugs[locale] ?? slugs.en ?? defaultSlugs;
   const slug = localeSlugs[market] ?? defaultSlugs[market] ?? market;
-  return locale === "pt" ? `/${slug}` : `/${locale}/${slug}`;
+  const localeSegment = localeToUrlSegment(locale);
+  return locale === "pt" ? `/${slug}` : `/${localeSegment}/${slug}`;
 }
 
 function homeSeoLinks(locale: Locale) {
@@ -1207,9 +1209,9 @@ function homeSeoLinks(locale: Locale) {
     { href: localizedMarketPath(locale, "stocks"), label: labels.stocks },
     { href: localizedMarketPath(locale, "crypto"), label: labels.crypto },
     { href: localizedMarketPath(locale, "etfs"), label: labels.etfs },
-    { href: "/nivel-formiga", label: labels.formiga },
-    { href: "/nivel-lobo", label: labels.lobo },
-    { href: "/nivel-harpia", label: labels.harpia },
+    { href: localizedPath("/nivel-formiga", locale), label: labels.formiga },
+    { href: localizedPath("/nivel-lobo", locale), label: labels.lobo },
+    { href: localizedPath("/nivel-harpia", locale), label: labels.harpia },
     { href: getInsightsPath(locale), label: labels.articles },
   ];
 }
@@ -1574,7 +1576,8 @@ export default function Home() {
   const selectHome = homeSelectCopy[locale] ?? homeSelectCopy.en;
   const privateHome = homePrivateCopy[locale] ?? homePrivateCopy.en;
   const finalText = "text" in copy.final ? copy.final.text : undefined;
-  const educationHref = locale === "pt" ? "/educacao" : `/${locale}/education`;
+  const localizedPage = (path: string) => localizedPath(path, locale);
+  const educationHref = localizedPage("/educacao");
 
   return (
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
@@ -1657,7 +1660,7 @@ export default function Home() {
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {journey.cards.map((step) => {
-                const href = step.href === "formiga" ? t.freeChannel.link : step.href === "elite" ? "/sinais" : `/${step.href}`;
+                const href = step.href === "formiga" ? t.freeChannel.link : step.href === "elite" ? localizedPage("/sinais") : localizedPage(`/${step.href}`);
                 const external = step.href === "formiga";
                 return (
                 <a key={step.title} href={href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} onClick={() => trackVarejoClick(`home_journey_${step.href}_click`, { locale })} className="level-card group relative block overflow-hidden border border-gold/[0.16] bg-paper p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.48] hover:shadow-premium">
@@ -1764,7 +1767,7 @@ export default function Home() {
               {eliteHome.text}
             </p>
             <a
-              href="/sinais"
+              href={localizedPage("/sinais")}
               onClick={() => trackVarejoClick("home_elite_section_click", { locale })}
               className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
             >
@@ -1805,7 +1808,7 @@ export default function Home() {
               {selectHome.text}
             </p>
             <a
-              href="/select"
+              href={localizedPage("/select")}
               className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
             >
               {selectHome.cta}
@@ -1849,7 +1852,7 @@ export default function Home() {
               {privateHome.text}
             </p>
             <a
-              href="/private"
+              href={localizedPage("/private")}
               className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
             >
               {privateHome.cta}
@@ -1988,13 +1991,13 @@ export default function Home() {
               <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_final_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition">
                 {copy.final.free}
               </a>
-              <a href="/sinais" onClick={() => trackVarejoClick("home_elite_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
+              <a href={localizedPage("/sinais")} onClick={() => trackVarejoClick("home_elite_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
                 {copy.final.elite}
               </a>
-              <a href="/select" onClick={() => trackVarejoClick("home_final_select_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
+              <a href={localizedPage("/select")} onClick={() => trackVarejoClick("home_final_select_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
                 {finalCtas.select}
               </a>
-              <a href="/private" onClick={() => trackVarejoClick("home_final_private_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
+              <a href={localizedPage("/private")} onClick={() => trackVarejoClick("home_final_private_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
                 {finalCtas.private}
               </a>
             </div>

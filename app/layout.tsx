@@ -8,6 +8,31 @@ const siteTitle = "Varejo Investidor | Sinais, Educação e Mercado Global";
 const siteDescription =
   "Ecossistema global com sinais ao vivo, educação por níveis, análises de mercado e estrutura estratégica para investidores de varejo.";
 
+const languageAlternates: Record<string, string> = {
+  "x-default": "/en",
+  "pt-BR": "/",
+  en: "/en",
+  es: "/es",
+  fr: "/fr",
+  de: "/de",
+  it: "/it",
+  ar: "/ar",
+  fa: "/fa",
+  hi: "/hi",
+  ur: "/ur",
+  bn: "/bn",
+  tr: "/tr",
+  ru: "/ru",
+  id: "/id",
+  vi: "/vi",
+  th: "/th",
+  fil: "/fil",
+  zh: "/zh",
+  ja: "/ja",
+  ko: "/ko",
+  pl: "/pl",
+};
+
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
@@ -25,30 +50,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
-    languages: {
-      "x-default": "/en",
-      "pt-BR": "/pt",
-      en: "/en",
-      es: "/es",
-      fr: "/fr",
-      it: "/it",
-      de: "/de",
-      fa: "/fa",
-      hi: "/hi",
-      ar: "/ar",
-      tr: "/tr",
-      id: "/id",
-      vi: "/vi",
-      th: "/th",
-      ru: "/ru",
-      ur: "/ur",
-      bn: "/bn",
-      ja: "/ja",
-      ko: "/ko",
-      zh: "/zh",
-      pl: "/pl",
-      tl: "/tl",
-    },
+    languages: languageAlternates,
   },
 };
 
