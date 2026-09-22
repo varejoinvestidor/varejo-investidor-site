@@ -270,6 +270,57 @@ const ichimokuOfferItems = [
   "Atualizações futuras",
   "Acesso imediato",
 ];
+
+const expansionCourseGroups = [
+  {
+    title: "FORMIGA",
+    tone: "rise",
+    products: [
+      { name: "Formiga Nível 1", price: "R$ 89,90" },
+      { name: "Formiga Nível 2", price: "R$ 597,00" },
+      { name: "Formiga Nível 3", price: "R$ 597,00" },
+      { name: "Formiga Nível 4", price: "R$ 597,00" },
+      { name: "Formiga Nível 5", price: "R$ 597,00" },
+    ],
+  },
+  {
+    title: "LOBO",
+    tone: "gold",
+    products: [
+      { name: "Lobo Nível 1", price: "R$ 597,00" },
+      { name: "Lobo Nível 2", price: "R$ 597,00" },
+      { name: "Lobo Nível 3", price: "R$ 597,00" },
+      { name: "Lobo Nível 4", price: "R$ 597,00" },
+      { name: "Lobo Nível 5", price: "R$ 597,00" },
+    ],
+  },
+  {
+    title: "HARPIA",
+    tone: "elite",
+    products: [
+      { name: "Harpia Nível 1", price: "R$ 597,00" },
+      { name: "Harpia Nível 2", price: "R$ 597,00" },
+      { name: "Harpia Nível 3", price: "R$ 597,00" },
+      { name: "Harpia Nível 4", price: "R$ 597,00" },
+      { name: "Harpia Nível 5", price: "R$ 597,00" },
+    ],
+  },
+];
+
+const expansionPackages = [
+  { name: "PACOTE FORMIGA", detail: "5 níveis", original: "R$ 2.477,90", promo: "R$ 1.997,00" },
+  { name: "PACOTE LOBO", detail: "5 níveis", original: "R$ 2.985,00", promo: "R$ 2.497,00" },
+  { name: "PACOTE HARPIA", detail: "5 níveis", original: "R$ 2.985,00", promo: "R$ 2.497,00" },
+];
+
+const completeFormationOffer = {
+  title: "FORMAÇÃO VAREJO INVESTIDOR",
+  detail: "15 níveis completos",
+  originalLabel: "Valor original",
+  original: "R$ 8.457,50",
+  promoLabel: "Valor promocional",
+  promo: "R$ 6.997,00",
+};
 const localizedEducationCopy = {
   ...educationCopy,
   ar: {
@@ -766,19 +817,110 @@ export default function EducationPage() {
         </div>
 
         <div id="expansao" className="mx-auto mt-10 max-w-7xl">
-          <div
-            aria-disabled="true"
-            className="education-expansion relative cursor-not-allowed overflow-hidden border border-gold/[0.45] bg-ink/[0.88] px-6 py-8 text-center shadow-premium md:px-10 md:py-10"
-          >
+          <section className="education-expansion relative overflow-hidden border border-gold/[0.45] bg-ink/[0.88] px-5 py-8 shadow-premium md:px-8 md:py-10">
             <div className="absolute inset-0 terminal-grid opacity-20" />
-            <div className="expansion-badge relative mx-auto inline-flex items-center justify-center">
-              EM BREVE
+            <div className="relative mx-auto max-w-4xl text-center">
+              <div className="expansion-badge mx-auto inline-flex items-center justify-center">EM BREVE</div>
+              <h2 className="mt-5 font-serif text-5xl tracking-[-0.05em] text-gold md:text-6xl">
+                {copy.expansionTitle}
+              </h2>
+              <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
+                A trilha educacional completa será liberada progressivamente com cursos individuais, pacotes por nível e uma formação completa para a jornada Formiga, Lobo e Harpia.
+              </p>
             </div>
-            <h2 className="relative mt-5 font-serif text-5xl tracking-[-0.05em] text-gold md:text-6xl">{copy.expansionTitle}</h2>
-            <p className="relative mx-auto mt-4 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">{copy.expansionText}</p>
-            <p className="relative mx-auto mt-3 max-w-3xl text-sm uppercase tracking-[0.16em] text-paper/[0.52]">{copy.expansionNote}</p>
-            <p className="relative mx-auto mt-4 max-w-3xl text-xs font-bold uppercase tracking-[0.18em] text-gold">{copy.expansionUpdate}</p>
-          </div>
+
+            <div className="relative mt-10 grid gap-5 lg:grid-cols-3">
+              {expansionCourseGroups.map((group) => (
+                <motion.article
+                  key={group.title}
+                  variants={fadeUp}
+                  className="flex min-h-full flex-col border border-gold/[0.18] bg-paper/[0.035] p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.48] hover:bg-paper/[0.055]"
+                >
+                  <div className="flex items-center justify-between gap-4 border-b border-gold/[0.14] pb-4">
+                    <h3 className="font-serif text-3xl tracking-[-0.035em] text-paper">{group.title}</h3>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">5 níveis</span>
+                  </div>
+                  <div className="mt-5 grid gap-3">
+                    {group.products.map((product) => (
+                      <div
+                        key={product.name}
+                        className="border border-gold/[0.12] bg-ink/[0.42] p-4 transition duration-300 hover:border-gold/[0.32]"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className="text-sm font-black uppercase tracking-[0.14em] text-paper">{product.name}</p>
+                            <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{product.price}</p>
+                          </div>
+                          <span className="shrink-0 border border-gold/[0.35] bg-gold px-3 py-2 text-[10px] font-black uppercase tracking-[0.14em] text-ink">
+                            EM BREVE
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+
+            <div className="relative mt-10 border-t border-gold/[0.16] pt-8">
+              <p className="text-center text-xs font-black uppercase tracking-[0.28em] text-gold">PACOTES</p>
+              <div className="mt-6 grid gap-5 md:grid-cols-3">
+                {expansionPackages.map((pack) => (
+                  <motion.article
+                    key={pack.name}
+                    variants={fadeUp}
+                    className="border border-gold/[0.18] bg-paper/[0.035] p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.5]"
+                  >
+                    <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">{pack.detail}</p>
+                    <h3 className="mt-3 font-serif text-3xl tracking-[-0.035em] text-paper">{pack.name}</h3>
+                    <div className="mt-5 grid gap-2">
+                      <p className="text-xs uppercase tracking-[0.16em] text-paper/[0.5]">
+                        De: <span className="line-through">{pack.original}</span>
+                      </p>
+                      <p className="font-serif text-4xl tracking-[-0.05em] text-gold">
+                        <span className="text-sm font-sans uppercase tracking-[0.16em] text-paper/[0.55]">Por: </span>
+                        {pack.promo}
+                      </p>
+                    </div>
+                    <span className="mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink">
+                      EM BREVE
+                    </span>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+
+            <motion.article
+              variants={fadeUp}
+              className="relative mt-8 overflow-hidden border border-gold bg-gradient-to-br from-gold/[0.18] via-paper/[0.055] to-ink p-6 shadow-[0_0_42px_rgba(201,155,62,0.14)] md:p-8"
+            >
+              <div className="absolute -right-20 -top-24 h-64 w-64 bg-gold/[0.12] blur-3xl" />
+              <div className="relative grid gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-center">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.26em] text-gold">Oferta principal</p>
+                  <h3 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.055em] text-paper md:text-6xl">
+                    {completeFormationOffer.title}
+                  </h3>
+                  <p className="mt-4 text-lg font-semibold text-paper/[0.72]">{completeFormationOffer.detail}</p>
+                </div>
+                <div className="border border-gold/[0.24] bg-ink/[0.55] p-5">
+                  <p className="text-xs uppercase tracking-[0.18em] text-paper/[0.52]">
+                    {completeFormationOffer.originalLabel}:{" "}
+                    <span className="line-through">{completeFormationOffer.original}</span>
+                  </p>
+                  <p className="mt-3 text-xs font-black uppercase tracking-[0.22em] text-gold">
+                    {completeFormationOffer.promoLabel}
+                  </p>
+                  <p className="mt-2 font-serif text-5xl tracking-[-0.06em] text-paper md:text-6xl">
+                    {completeFormationOffer.promo}
+                  </p>
+                  <span className="mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink">
+                    EM BREVE
+                  </span>
+                </div>
+              </div>
+            </motion.article>
+          </section>
         </div>
 
         {locale === "pt" ? (

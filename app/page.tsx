@@ -28,7 +28,7 @@ const homeLiteCopy = {
         "Select \u2014 Estrutura operacional automatizada para investidores que desejam exposi\u00e7\u00e3o internacional sem acompanhar opera\u00e7\u00f5es diariamente.",
         "Private \u2014 Estrutura patrimonial internacional voltada para prote\u00e7\u00e3o, organiza\u00e7\u00e3o, crescimento e continuidade do patrim\u00f4nio.",
       ],
-      stats: ["Desde 2018", "Milh\u00f5es de d\u00f3lares movimentados", "15 idiomas", "Mercados globais"],
+      stats: ["Desde 2018", "Milh\u00f5es de d\u00f3lares movimentados", "21 idiomas", "Mercados globais"],
     },
     cards: [
       { code: "FORMIGA", title: "Base financeira", text: "Educa\u00e7\u00e3o por n\u00edveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/nivel-formiga" },
@@ -1290,7 +1290,7 @@ const homeAuthorityCopy: Record<string, {
     text: "O Varejo Investidor conecta educação, sinais, mercados globais e soluções patrimoniais para diferentes fases da jornada financeira.",
     cards: [
       { title: "Milhões de dólares movimentados", text: "Experiência operacional conectada a mercados e estruturas internacionais." },
-      { title: "15 idiomas ativos", text: "Estrutura internacional preparada para investidores globais." },
+      { title: "21 idiomas ativos", text: "Estrutura internacional preparada para investidores globais." },
       { title: "Mercados globais", text: "Forex, ações, ETFs, criptoativos e commodities." },
       { title: "Educação estruturada", text: "Base educacional pela metodologia Formiga, Lobo e Harpia." },
       { title: "Atendimento patrimonial", text: "Select e Private para patrimônio internacional e gestão estratégica." },
@@ -1302,7 +1302,7 @@ const homeAuthorityCopy: Record<string, {
     text: "Varejo Investidor connects education, signals, global markets, and wealth solutions for different stages of the financial journey.",
     cards: [
       { title: "+4,200 signals sent", text: "Operational history followed live since 2018." },
-      { title: "15 active languages", text: "International structure prepared for global investors." },
+      { title: "21 active languages", text: "International structure prepared for global investors." },
       { title: "Global markets", text: "Forex, stocks, ETFs, crypto assets, and commodities." },
       { title: "Structured education", text: "Educational foundation through the Formiga, Lobo, and Harpia methodology." },
       { title: "Wealth support", text: "Select and Private for international wealth and strategic guidance." },
@@ -1314,7 +1314,7 @@ const homeAuthorityCopy: Record<string, {
     text: "Varejo Investidor conecta educación, señales, mercados globales y soluciones patrimoniales para diferentes etapas financieras.",
     cards: [
       { title: "+4.200 señales enviadas", text: "Historial operativo acompañado en vivo desde 2018." },
-      { title: "15 idiomas activos", text: "Estructura internacional preparada para inversores globales." },
+      { title: "21 idiomas activos", text: "Estructura internacional preparada para inversores globales." },
       { title: "Mercados globales", text: "Forex, acciones, ETFs, criptoactivos y commodities." },
       { title: "Educación estructurada", text: "Base educativa por la metodología Formiga, Lobo y Harpia." },
       { title: "Atención patrimonial", text: "Select y Private para patrimonio internacional y estrategia." },

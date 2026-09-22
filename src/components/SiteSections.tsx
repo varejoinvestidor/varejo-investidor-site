@@ -1341,7 +1341,7 @@ export function SupportFooter({
   const socials = [
     {
       label: "Instagram",
-      href: "https://www.instagram.com/varejoinvestidor/",
+      href: "https://www.instagram.com/varejoinvestidorbrasil/",
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
           <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" strokeWidth="1.8" />
