@@ -7,7 +7,7 @@ import "./globals.css";
 import "./institutional.css";
 import "./mobile-system.css";
 
-const siteTitle = "Varejo Investidor | Sinais, Educação e Mercado Global";
+const siteTitle = "Varejo Investidor | Research, Formação e Mercado Global";
 const siteDescription = SITE_DESCRIPTION;
 
 const languageAlternates: Record<string, string> = {

@@ -5,7 +5,7 @@ export const id = {
   locale: "ID",
   nav: {
     home: "Beranda",
-    signals: "Sinyal",
+    signals: "Research",
     education: "Formasi",
     terminal: "Terminal",
     plans: "Paket",
@@ -131,7 +131,7 @@ export const id = {
     ...en.servicesPage,
     eyebrow: "Layanan",
     title: "Layanan Varejo Investidor",
-    text: "Kenali kanal, mentoring dan konsultasi Varejo Investidor untuk sinyal, edukasi, visi pasar dan pengembangan kekayaan.",
+    text: "Kenali kanal, mentoring dan konsultasi Varejo Investidor untuk Research, edukasi, visi pasar dan pengembangan kekayaan.",
   },
   disclaimer: {
     title: "Disclaimer",

@@ -2,9 +2,15 @@ import type { Metadata } from "next";
 import { absoluteSiteUrl } from "../config/site";
 import { getForexLibraryContent } from "./forexLibraryContent";
 import { getMarketContent, type MarketSlug } from "./marketContent";
+import { getInstitutionalMarketPage } from "./institutionalMarketPages";
 
 export function createMarketMetadata(slug: MarketSlug): Metadata {
-  const content = slug === "forex" ? getForexLibraryContent("pt") : getMarketContent(slug, "pt");
+  const institutional = getInstitutionalMarketPage(slug, "pt");
+  const content = institutional
+    ? { metaTitle: institutional.metaTitle, metaDescription: institutional.metaDescription }
+    : slug === "forex"
+      ? getForexLibraryContent("pt")
+      : getMarketContent(slug, "pt");
   const path = `/${slug}`;
   const url = absoluteSiteUrl(path);
 

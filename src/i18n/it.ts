@@ -2,7 +2,7 @@
   locale: "IT",
   nav: {
     home: "Home",
-    signals: "Segnali",
+    signals: "Research",
     education: "Formazione",
     terminal: "Terminal",
     plans: "Piani",
@@ -60,7 +60,7 @@
     title: "A real product experience for signals, markets, and risk.",
     text: "Elite Channel centralizes global reading, signals, and classes in an experience with a professional market-reading structure.",
     cards: [
-      ["Signals", "Trades with asset, direction, entry, target, and stop."],
+      ["Research", "Trades with asset, direction, entry, target, and stop."],
       ["Analysis", "Macro, technical context, and global market reading."],
       ["Markets", "Forex, gold, oil, crypto, indices, and currencies."],
     ],
@@ -163,7 +163,7 @@
   servicesPage: {
     eyebrow: "Services",
     title: "Varejo Investidor Services",
-    text: "Explore Varejo Investidor channels, mentorships, and consulting programs for signals, education, market vision, and wealth development.",
+    text: "Explore Varejo Investidor channels, mentorships, and consulting programs for Research, education, market vision, and wealth development.",
     items: [
       { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,200 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
       { title: "Ant Free Channel", description: "Free WhatsApp channel for signals, analysis, and daily content.", bullets: ["Free signals", "Market analysis", "Daily content", "Free WhatsApp entry"], cta: "Join Free Channel", href: "free", kind: "free" },

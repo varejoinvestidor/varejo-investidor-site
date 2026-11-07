@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ELITE_LASTLINK_PLANS_PT } from "../../src/data/eliteLastlinkPricingPt";
+import { ElitePaymentCards } from "../../src/components/ElitePaymentCards";
+import { InstitutionalServiceCard } from "../../src/components/InstitutionalServiceCard";
 import {
   BrokerBanners,
   ContactSection,
@@ -16,13 +18,6 @@ import {
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
-const ELITE_LASTLINK_URL = "https://lastlink.com/p/CE761BB8E/checkout-payment/";
-const ELITE_STRIPE_LINKS = [
-  "https://buy.stripe.com/28E3cuccK1dEaub26QdfG01",
-  "https://buy.stripe.com/aFa5kC7Wu6xY1XF9zidfG02",
-  "https://buy.stripe.com/fZubJ00u28G631J26QdfG03",
-  "https://buy.stripe.com/3cI4gy2Ca1dE59Rh1KdfG04",
-];
 const SELECT_CONTACT_URL =
   "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20Varejo%20Investidor%20Select.";
 
@@ -619,16 +614,10 @@ const internationalServicesIntro = {
   tl: "Tuklasin ang mga serbisyo ng Varejo Investidor: WhatsApp signals, financial education, global market analysis, at structures para sa investors na may international capital.",
 };
 
-function highTicketTone(kind: string) {
-  if (kind === "platinum") {
-    return "border-gold bg-ink text-paper shadow-premium";
-  }
-
-  if (kind === "gold") {
-    return "border-gold/[0.55] bg-gold/[0.08] text-ink";
-  }
-
-  return "border-ink/[0.12] bg-paper text-ink";
+function institutionalCardTone(kind: string): "platinum" | "mentorship" | "elite" | "select" {
+  if (kind === "platinum") return "platinum";
+  if (kind === "gold") return "elite";
+  return "mentorship";
 }
 
 export default function ServicesPage() {
@@ -687,106 +676,17 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Canal Elite</p>
             <h2 className="mt-4 font-serif text-4xl leading-[1.02] tracking-[-0.045em] text-ink md:text-6xl">
-              Receba sinais ao vivo pelo WhatsApp.
+              {isPt ? "Research Elite no WhatsApp" : "Elite Research on WhatsApp"}
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-ink/[0.66] md:text-lg">
               {isPt
-                ? "Escolha a forma de pagamento do Canal Elite. Clientes no Brasil podem pagar em reais via Lastlink. Clientes internacionais podem assinar em dólar via Stripe."
-                : "Subscribe to the Elite Channel in dollars through Stripe and receive access to the private signal structure."}
+                ? "Escolha a forma de pagamento do Canal Elite. Clientes no Brasil pagam em reais via Lastlink. Clientes internacionais assinam em dólar via Stripe."
+                : "Choose how to subscribe to Elite Research. International clients pay in dollars through Stripe."}
             </p>
           </div>
 
-          <div className={`mt-10 grid gap-5 ${isPt ? "lg:grid-cols-2" : "mx-auto max-w-3xl"}`}>
-            {isPt ? (
-              <motion.article
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                className="relative flex min-h-[560px] flex-col overflow-hidden border border-gold/[0.28] bg-gradient-to-br from-ink via-[#07110d] to-ink p-6 text-paper shadow-premium md:p-8"
-              >
-                <div className="absolute right-0 top-0 h-72 w-72 bg-gold/[0.08] blur-3xl" />
-                <div className="relative flex h-full flex-col">
-                  <span className="w-fit bg-gold px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-ink">Pagamento Brasil</span>
-                  <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em]">Lastlink</h3>
-                  <p className="mt-4 text-base leading-8 text-paper/[0.68]">
-                    Pagamento nacional em reais para acesso ao Canal Elite.
-                  </p>
-                  <div className="mt-7 grid gap-3">
-                    {ELITE_LASTLINK_PLANS_PT.map((plan) => (
-                      <div
-                        key={plan.period}
-                        className={`grid gap-3 border p-4 sm:grid-cols-[1fr_auto] sm:items-center ${
-                          plan.featured
-                            ? "border-gold/[0.55] bg-gradient-to-r from-gold/[0.14] via-paper/[0.06] to-paper/[0.04] shadow-[0_0_0_1px_rgba(201,155,62,0.12)]"
-                            : "border-gold/[0.16] bg-paper/[0.045]"
-                        }`}
-                      >
-                        <div>
-                          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{plan.period}</p>
-                          <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-paper/[0.42]">{plan.validity}</p>
-                          <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{plan.total}</p>
-                          <p className="mt-1 text-xs font-semibold tracking-[0.06em] text-paper/[0.58]">equivalente a {plan.monthlyEquivalent}</p>
-                        </div>
-                        {plan.badge ? (
-                          <span className="w-fit border border-gold/[0.36] bg-gold/[0.08] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold">
-                            {plan.badge}
-                          </span>
-                        ) : null}
-                      </div>
-                    ))}
-                  </div>
-                  <a
-                    href={ELITE_LASTLINK_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-auto inline-flex w-full items-center justify-center border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d8ad52]"
-                  >
-                    Pagar em reais
-                  </a>
-                </div>
-              </motion.article>
-            ) : null}
-
-            <motion.article
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              className="relative flex min-h-[560px] flex-col overflow-hidden border border-gold/[0.22] bg-gradient-to-br from-ink via-[#06111f] to-ink p-6 text-paper shadow-premium md:p-8"
-            >
-              <div className="absolute right-0 top-0 h-72 w-72 bg-sky-500/[0.07] blur-3xl" />
-              <div className="relative flex h-full flex-col">
-                <span className="w-fit border border-gold/[0.42] px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-gold">{isPt ? "Pagamento Internacional" : "International Payment"}</span>
-                <h3 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em]">Stripe</h3>
-                <p className="mt-4 text-base leading-8 text-paper/[0.68]">
-                  {isPt ? "Assinatura internacional em dólar para clientes fora do Brasil." : "International subscription in dollars through Stripe."}
-                </p>
-                <div className="mt-7 grid gap-3">
-                  {[
-                    ["Monthly", "US$30"],
-                    ["3 Months", "US$80"],
-                    ["6 Months", "US$145"],
-                    ["Annual", "US$240"],
-                  ].map(([period, price], index) => (
-                    <div key={period} className="grid gap-3 border border-gold/[0.14] bg-paper/[0.04] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{period}</p>
-                        <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{price}</p>
-                      </div>
-                      <a
-                        href={ELITE_STRIPE_LINKS[index]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center border border-gold/[0.42] px-4 py-3 text-[10px] font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
-                      >
-                        {isPt ? "Assinar" : "Subscribe"}
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.article>
+          <div className="mt-10">
+            <ElitePaymentCards isPt={isPt} />
           </div>
         </div>
       </section>
@@ -807,42 +707,34 @@ export default function ServicesPage() {
           </div>
 
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {(wealthServicesByLocale[locale] ?? wealthServicesByLocale.en).map((service) => (
-              <motion.article
+            {(wealthServicesByLocale[locale] ?? wealthServicesByLocale.en).map((service, index) => (
+              <InstitutionalServiceCard
                 key={service.href}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                className={`relative flex min-h-[520px] flex-col overflow-hidden border p-6 shadow-premium transition duration-300 hover:-translate-y-1 md:p-8 ${
-                  service.href === "/private"
-                    ? "border-gold/[0.42] bg-gradient-to-br from-gold/[0.12] via-paper/[0.045] to-ink"
-                    : "border-gold/[0.26] bg-paper/[0.04]"
-                }`}
+                tone={service.href === "/private" ? "platinum" : "select"}
+                delay={index * 0.05}
               >
-                <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-gold/[0.08] blur-3xl" />
-                <div className="relative flex h-full flex-col">
-                  <p className="text-xs font-black uppercase tracking-[0.28em] text-gold">{service.eyebrow}</p>
-                  <h2 className="mt-5 font-serif text-4xl leading-[1.02] tracking-[-0.045em] md:text-5xl">{service.title}</h2>
-                  <p className="mt-5 font-serif text-2xl leading-[1.14] tracking-[-0.035em] text-gold">{service.subtitle}</p>
-                  <p className="mt-5 text-base leading-8 text-paper/[0.7]">{service.description}</p>
+                <p className="inline-block w-fit border border-gold/[0.42] px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-gold">
+                  {service.eyebrow}
+                </p>
+                <h2 className="mt-5 font-serif text-4xl leading-[1.02] tracking-[-0.05em] md:text-5xl">{service.title}</h2>
+                <p className="mt-4 font-serif text-2xl leading-[1.14] tracking-[-0.04em] text-gold">{service.subtitle}</p>
+                <p className="mt-4 text-base leading-8 text-paper/[0.68]">{service.description}</p>
 
-                  <div className="mt-7 grid gap-2 sm:grid-cols-2">
-                    {service.highlights.map((item) => (
-                      <p key={item} className="border border-gold/[0.16] bg-paper/[0.04] px-4 py-3 text-xs font-bold uppercase tracking-[0.12em] text-paper/[0.72]">
-                        {item}
-                      </p>
-                    ))}
-                  </div>
-
-                  <a
-                    href={service.href}
-                    className="premium-button-gold mt-auto inline-flex w-full items-center justify-center border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d8ad52]"
-                  >
-                    {service.cta}
-                  </a>
+                <div className="mt-6 grid flex-1 gap-2 sm:grid-cols-2">
+                  {service.highlights.map((item) => (
+                    <p key={item} className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-3 text-xs font-bold uppercase tracking-[0.12em] text-paper/[0.72]">
+                      {item}
+                    </p>
+                  ))}
                 </div>
-              </motion.article>
+
+                <a
+                  href={service.href}
+                  className="premium-button-gold mt-6 inline-flex w-full items-center justify-center border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d8ad52]"
+                >
+                  {service.cta}
+                </a>
+              </InstitutionalServiceCard>
             ))}
           </div>
         </div>
@@ -870,9 +762,10 @@ export default function ServicesPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               variants={fadeUp}
-              className="mt-9 grid gap-6 border border-gold/[0.32] bg-paper/[0.045] p-5 shadow-premium md:grid-cols-[180px_1fr_auto] md:items-center md:p-7"
+              className="terminal-module relative mt-9 grid gap-6 overflow-hidden border border-gold/[0.32] bg-ink p-5 text-paper shadow-premium md:grid-cols-[180px_1fr_auto] md:items-center md:p-7"
             >
-              <div className="mx-auto w-full max-w-[180px] border border-gold/[0.24] bg-paper/[0.06] p-2">
+              <div className="absolute inset-0 terminal-grid opacity-20" aria-hidden="true" />
+              <div className="relative mx-auto w-full max-w-[180px] border border-gold/[0.24] bg-paper/[0.06] p-2">
                 <Image
                   src="/products/ebook-ichimoku.png"
                   alt="Capa do ebook Domine o Ichimoku"
@@ -883,7 +776,7 @@ export default function ServicesPage() {
                 />
               </div>
 
-              <div>
+              <div className="relative">
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">Ebook + aula gravada</p>
                 <h2 className="mt-3 font-serif text-4xl leading-[1.02] tracking-[-0.04em] text-paper md:text-5xl">
                   Domine o Ichimoku
@@ -893,14 +786,14 @@ export default function ServicesPage() {
                 </p>
               </div>
 
-              <div className="min-w-[230px] border border-gold/[0.24] bg-ink/[0.5] p-5 text-center">
+              <div className="relative min-w-[230px] border border-gold/[0.24] bg-paper/[0.04] p-5 text-center">
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">Preço</p>
-                <p className="mt-3 font-serif text-5xl tracking-[-0.05em] text-paper">R$ 79,90</p>
+                <p className="mt-3 font-mono text-3xl font-bold tracking-[-0.04em] text-paper">R$ 79,90</p>
                 <a
                   href={ICHIMOKU_PRODUCT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52] hover:shadow-[0_0_22px_rgba(201,155,62,0.22)]"
+                  className="premium-button-gold mt-5 inline-flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52]"
                 >
                   Comprar agora
                 </a>
@@ -921,82 +814,45 @@ export default function ServicesPage() {
 
             <div className="mt-10 grid gap-5 lg:grid-cols-2">
               {highTicketServices.map((service, index) => (
-                <motion.article
-                  key={service.title}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  variants={fadeUp}
-                  className={`relative overflow-hidden border p-6 shadow-fine transition hover:-translate-y-1 hover:shadow-premium md:p-8 ${highTicketTone(service.kind)}`}
-                >
-                  <div className={service.kind === "platinum" ? "absolute inset-0 terminal-grid opacity-25" : "absolute inset-0 luxury-grid opacity-35"} />
-                  <div className="absolute right-6 top-8 h-24 w-24 rounded-full bg-gold/[0.1] blur-3xl" />
-                  <div className="relative">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <span className={`border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] ${service.kind === "platinum" ? "border-gold bg-gold text-ink" : "border-gold text-gold"}`}>
-                        {service.tag}
-                      </span>
-                      <span className={`font-mono text-xs uppercase tracking-[0.18em] ${service.kind === "platinum" ? "text-paper/[0.54]" : "text-ink/[0.48]"}`}>
-                        {service.workload}
-                      </span>
-                    </div>
-
-                    <h2 className="mt-7 font-serif text-4xl leading-[1.02] tracking-[-0.04em] md:text-5xl">
-                      {service.title}
-                    </h2>
-                    <p className={`mt-5 text-lg leading-8 ${service.kind === "platinum" ? "text-paper/[0.72]" : "text-ink/[0.66]"}`}>
-                      {service.description}
-                    </p>
-                    {"capacityNote" in service ? (
-                      <p
-                        className={`mt-4 border-l border-gold/[0.55] pl-4 text-sm font-semibold leading-7 ${
-                          service.kind === "platinum" ? "text-paper/[0.78]" : "text-ink/[0.72]"
-                        }`}
-                      >
-                        {service.capacityNote}
-                      </p>
-                    ) : null}
-
-                    <div className="mt-7 border-y border-gold/[0.22] py-6">
-                      <p className={`text-xs font-bold uppercase tracking-[0.22em] ${service.kind === "platinum" ? "text-gold" : "text-ink/[0.46]"}`}>
-                        Investimento
-                      </p>
-                      <p className="mt-3 font-serif text-5xl tracking-[-0.05em] text-gold md:text-6xl">
-                        {service.price}
-                      </p>
-                      <p className={`mt-3 font-mono text-xs uppercase tracking-[0.2em] ${service.kind === "platinum" ? "text-gold/[0.78]" : "text-gold"}`}>
-                        {service.hourly}
-                      </p>
-                    </div>
-
-                    <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                      {service.deliveries.map((delivery) => (
-                        <p
-                          key={delivery}
-                          className={`border-l pl-4 text-sm leading-7 ${
-                            service.kind === "platinum" ? "border-gold text-paper/[0.76]" : "border-ink/[0.24] text-ink/[0.68]"
-                          }`}
-                        >
-                          {delivery}
-                        </p>
-                      ))}
-                    </div>
-
-                    <a
-                      href={service.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`mt-8 block w-full border px-5 py-4 text-center text-sm font-bold uppercase tracking-[0.16em] transition hover:-translate-y-0.5 ${
-                        service.kind === "platinum"
-                          ? "border-gold bg-gold text-ink hover:border-paper hover:bg-paper"
-                          : "border-ink bg-ink text-paper hover:border-gold hover:bg-gold hover:text-ink"
-                      }`}
-                    >
-                      {service.cta}
-                    </a>
+                <InstitutionalServiceCard key={service.title} tone={institutionalCardTone(service.kind)} delay={index * 0.05}>
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <span className="inline-block border border-gold bg-gold px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-ink">
+                      {service.tag}
+                    </span>
+                    <span className="font-mono text-xs uppercase tracking-[0.18em] text-paper/[0.52]">{service.workload}</span>
                   </div>
-                </motion.article>
+
+                  <h2 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.05em] md:text-5xl">{service.title}</h2>
+                  <p className="mt-4 text-base leading-8 text-paper/[0.68]">{service.description}</p>
+                  {"capacityNote" in service ? (
+                    <p className="mt-4 border-l border-gold/[0.55] pl-4 text-sm font-semibold leading-7 text-paper/[0.78]">
+                      {service.capacityNote}
+                    </p>
+                  ) : null}
+
+                  <div className="mt-6 border border-gold/[0.22] bg-paper/[0.04] p-4">
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">Investimento</p>
+                    <p className="mt-3 font-mono text-3xl font-bold tracking-[-0.04em] text-paper md:text-4xl">{service.price}</p>
+                    <p className="mt-2 font-mono text-xs uppercase tracking-[0.16em] text-paper/[0.55]">{service.hourly}</p>
+                  </div>
+
+                  <div className="mt-6 grid flex-1 gap-2 sm:grid-cols-2">
+                    {service.deliveries.map((delivery) => (
+                      <p key={delivery} className="border border-gold/[0.16] bg-paper/[0.04] px-4 py-3 text-sm leading-7 text-paper/[0.76]">
+                        {delivery}
+                      </p>
+                    ))}
+                  </div>
+
+                  <a
+                    href={service.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="premium-button-gold mt-6 block w-full border border-gold bg-gold px-5 py-4 text-center text-sm font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+                  >
+                    {service.cta}
+                  </a>
+                </InstitutionalServiceCard>
               ))}
             </div>
           </div>

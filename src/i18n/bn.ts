@@ -6,7 +6,7 @@ export const bn = {
   nav: {
     ...en.nav,
     home: "হোম",
-    signals: "সিগন্যাল",
+    signals: "Research",
     education: "প্রশিক্ষণ",
     services: "সেবা",
     about: "আমাদের সম্পর্কে",
@@ -79,7 +79,7 @@ export const bn = {
     ...en.servicesPage,
     eyebrow: "সেবা",
     title: "Varejo Investidor সেবা",
-    text: "সিগন্যাল, শিক্ষা, মার্কেট ভিশন এবং সম্পদ উন্নয়নের জন্য চ্যানেল, মেন্টরশিপ ও কনসাল্টিং।",
+    text: "Research, শিক্ষা, মার্কেট ভিশন এবং সম্পদ উন্নয়নের জন্য চ্যানেল, মেন্টরশিপ ও কনসাল্টিং।",
   },
   disclaimer: {
     title: "ঝুঁকি সংক্রান্ত ঘোষণা",

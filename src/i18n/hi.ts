@@ -2,7 +2,7 @@ export const hi = {
   locale: "HI",
   nav: {
     home: "होम",
-    signals: "सिग्नल",
+    signals: "Research",
     education: "प्रशिक्षण",
     terminal: "टर्मिनल",
     plans: "पैकेज",
@@ -196,7 +196,7 @@ export const hi = {
   servicesPage: {
     eyebrow: "सेवाएँ",
     title: "Varejo Investidor सेवाएँ",
-    text: "वित्तीय विकास के लिए सेवाएँ: सिग्नल, शिक्षा, बाजार दृष्टि और वैश्विक संरचना।",
+    text: "वित्तीय विकास के लिए सेवाएँ: Research, शिक्षा, बाजार दृष्टि और वैश्विक संरचना।",
     items: [
       {
         title: "एलीट चैनल",
@@ -257,7 +257,7 @@ export const hi = {
 
 Object.assign(hi.nav, {
   home: "होम",
-  signals: "सिग्नल",
+  signals: "Research",
   education: "प्रशिक्षण",
   services: "सेवाएँ",
   about: "हमारे बारे में",

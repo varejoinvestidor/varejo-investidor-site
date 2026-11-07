@@ -6,7 +6,7 @@ export const ja = {
   nav: {
     ...en.nav,
     home: "ホーム",
-    signals: "シグナル",
+    signals: "Research",
     education: "研修",
     services: "サービス",
     about: "概要",
@@ -79,7 +79,7 @@ export const ja = {
     ...en.servicesPage,
     eyebrow: "サービス",
     title: "Varejo Investidorのサービス",
-    text: "シグナル、教育、市場理解、資産形成のためのチャンネル、メンタリング、コンサルティングを提供します。",
+    text: "Research、教育、市場理解、資産形成のためのチャンネル、メンタリング、コンサルティングを提供します。",
   },
   disclaimer: {
     ...en.disclaimer,

@@ -30,8 +30,7 @@ export const whatsappLandingLocales: Array<{
   short: string;
   rtl?: boolean;
 }> = [
-  { locale: "pt", label: "Português", short: "PT" },
-  { locale: "pt-pt", label: "Português de Portugal", short: "PT-PT" },
+  { locale: "pt", label: "Português (Brasil)", short: "PT-BR" },
   { locale: "en", label: "English", short: "EN" },
   { locale: "es", label: "Español", short: "ES" },
   { locale: "hi", label: "हिन्दी", short: "HI" },

@@ -2,7 +2,7 @@
   locale: "PT",
   nav: {
     home: "Home",
-    signals: "Sinais",
+    signals: "Research",
     education: "Formação",
     terminal: "Terminal",
     plans: "Planos",
@@ -32,7 +32,7 @@
     eyebrow: "ENTRADA GRATUITA",
   },
   signalBlock: {
-    eyebrow: "Análises e sinais desde 2018",
+    eyebrow: "Research | desde 2018",
     title: "Receba análises e sinais diretamente no seu WhatsApp.",
     text: "Deixe a análise conosco. Receba sinais diretamente no WhatsApp com entrada, alvo e stop definidos. Basta copiar e inserir a operação na sua própria conta.",
     cta: "TESTE OS SINAIS GRATUITAMENTE",
@@ -60,7 +60,7 @@
     title: "Uma experiência de produto real para acompanhar sinais, mercados e risco.",
     text: "O Canal Elite centraliza leitura global, sinais e aulas em uma experiência com estrutura profissional de leitura de mercado.",
     cards: [
-      ["Sinais", "Operações com ativo, direção, entrada, alvo e stop."],
+      ["Research", "Operações com ativo, direção, entrada, alvo e stop."],
       ["Análises", "Contexto macro, técnico e leitura de mercado global."],
       ["Mercados", "Forex, ouro, petróleo, cripto, índices e moedas."],
     ],
@@ -196,7 +196,7 @@
   servicesPage: {
     eyebrow: "Serviços",
     title: "Serviços Varejo Investidor",
-    text: "Conheça os canais, mentorias e consultorias do Varejo Investidor para sinais, educação, visão de mercado e desenvolvimento patrimonial.",
+    text: "Conheça os canais, mentorias e consultorias do Varejo Investidor para Research, educação, visão de mercado e desenvolvimento patrimonial.",
     items: [
       { title: "Canal Elite Harpia", description: "Produto principal com 100% dos sinais, análises, aulas gravadas e leitura global de mercado.", bullets: ["Sinais ao vivo desde 2018", "Mais de 4.200 sinais enviados", "Ativo, direção, entrada, alvo, stop e contexto", "Forex, ouro, petróleo, cripto, índices e moedas globais", "Educação por níveis Formiga, Lobo e Harpia"], cta: "Conhecer Canal Elite Harpia", href: "/sinais", kind: "paid" },
       { title: "Canal Formiga", description: "Porta de entrada gratuita no WhatsApp para receber análises econômicas, educação financeira e atualizações dos mercados globais.", bullets: ["Entrada gratuita pelo WhatsApp", "Análises econômicas", "Conteúdos educacionais", "Primeiro passo antes dos níveis Lobo e Harpia"], cta: "Entrar no Canal Formiga", href: "free", kind: "free" },

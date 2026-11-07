@@ -6,7 +6,7 @@ export const ko = {
   nav: {
     ...en.nav,
     home: "홈",
-    signals: "신호",
+    signals: "Research",
     education: "연수",
     services: "서비스",
     about: "소개",
@@ -79,7 +79,7 @@ export const ko = {
     ...en.servicesPage,
     eyebrow: "서비스",
     title: "Varejo Investidor 서비스",
-    text: "신호, 교육, 시장 관점, 자산 성장을 위한 채널, 멘토링, 컨설팅을 제공합니다.",
+    text: "Research, 교육, 시장 관점, 자산 성장을 위한 채널, 멘토링, 컨설팅을 제공합니다.",
   },
   disclaimer: {
     ...en.disclaimer,

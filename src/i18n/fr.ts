@@ -6,7 +6,7 @@ export const fr = {
   nav: {
     ...en.nav,
     home: "Accueil",
-    signals: "Signaux",
+    signals: "Research",
     education: "Formation",
     services: "Services",
     about: "À propos",

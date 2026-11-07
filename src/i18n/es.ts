@@ -2,7 +2,7 @@ export const es = {
   locale: "ES",
   nav: {
     home: "Inicio",
-    signals: "Señales",
+    signals: "Research",
     education: "Formación",
     terminal: "Terminal",
     plans: "Planes",
@@ -60,7 +60,7 @@ export const es = {
     title: "Una experiencia real para seguir señales, mercados y riesgo.",
     text: "El Canal Elite centraliza lectura global, señales y clases dentro de una estructura profesional de lectura de mercado.",
     cards: [
-      ["Señales", "Operaciones con activo, dirección, entrada, objetivo y stop."],
+      ["Research", "Operaciones con activo, dirección, entrada, objetivo y stop."],
       ["Análisis", "Contexto macro, técnico y lectura del mercado global."],
       ["Mercados", "Forex, oro, petróleo, cripto, índices y divisas."],
     ],
@@ -196,7 +196,7 @@ export const es = {
   servicesPage: {
     eyebrow: "Servicios",
     title: "Servicios Varejo Investidor",
-    text: "Conoce los canales, mentorías y consultorías de Varejo Investidor para señales, educación, visión de mercado y desarrollo patrimonial.",
+    text: "Conoce los canales, mentorías y consultorías de Varejo Investidor para Research, educación, visión de mercado y desarrollo patrimonial.",
     items: [
       {
         title: "Canal Elite",

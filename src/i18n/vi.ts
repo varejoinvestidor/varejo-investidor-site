@@ -5,7 +5,7 @@ export const vi = {
   locale: "VI",
   nav: {
     home: "Trang chủ",
-    signals: "Tín hiệu",
+    signals: "Research",
     education: "Đào tạo",
     terminal: "Terminal",
     plans: "Gói",
@@ -131,7 +131,7 @@ export const vi = {
     ...en.servicesPage,
     eyebrow: "Dịch vụ",
     title: "Dịch vụ Varejo Investidor",
-    text: "Khám phá các kênh, mentoring và tư vấn của Varejo Investidor cho tín hiệu, giáo dục, tầm nhìn thị trường và phát triển tài sản.",
+    text: "Khám phá các kênh, mentoring và tư vấn của Varejo Investidor cho Research, giáo dục, tầm nhìn thị trường và phát triển tài sản.",
   },
   disclaimer: {
     title: "Tuyên bố miễn trừ",

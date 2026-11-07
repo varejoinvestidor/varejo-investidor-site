@@ -5,7 +5,7 @@ export const tr = {
   locale: "TR",
   nav: {
     home: "Ana Sayfa",
-    signals: "Sinyaller",
+    signals: "Research",
     education: "Formasyon",
     terminal: "Terminal",
     plans: "Paketler",
@@ -105,7 +105,7 @@ export const tr = {
     ...en.servicesPage,
     eyebrow: "Hizmetler",
     title: "Varejo Investidor Hizmetleri",
-    text: "Sinyaller, eğitim, piyasa vizyonu ve varlık gelişimi için Varejo Investidor kanallarını ve hizmetlerini inceleyin.",
+    text: "Research, eğitim, piyasa vizyonu ve varlık gelişimi için Varejo Investidor kanallarını ve hizmetlerini inceleyin.",
   },
   disclaimer: {
     title: "Yasal Uyarı",

@@ -6,7 +6,7 @@ export const th = {
   nav: {
     ...en.nav,
     home: "หน้าแรก",
-    signals: "สัญญาณ",
+    signals: "Research",
     education: "หลักสูตร",
     services: "บริการ",
     about: "เกี่ยวกับเรา",
@@ -79,7 +79,7 @@ export const th = {
     ...en.servicesPage,
     eyebrow: "บริการ",
     title: "บริการ Varejo Investidor",
-    text: "ช่องทาง เมนเทอร์ชิป และคอนซัลติ้งสำหรับสัญญาณ การศึกษา มุมมองตลาด และการพัฒนาความมั่งคั่ง",
+    text: "ช่องทาง เมนเทอร์ชิป และคอนซัลติ้งสำหรับResearch, การศึกษา มุมมองตลาด และการพัฒนาความมั่งคั่ง",
   },
   disclaimer: {
     ...en.disclaimer,

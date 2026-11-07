@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BrokerAccessBlock } from "./BrokerAccessBlock";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "./SiteSections";
 import type { Locale } from "../i18n";
 import { getForexLibraryContent, type ForexLibraryContent } from "../data/forexLibraryContent";
 import { absoluteSiteUrl } from "../config/site";
 import { getMarketContent, getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
+import { getInstitutionalMarketPage } from "../data/institutionalMarketPages";
+import { InstitutionalMarketSections, MarketInstitutionalHero } from "./InstitutionalMarketSections";
 
 const pageLabels: Record<Locale, {
   eyebrow: string;
@@ -174,14 +175,15 @@ const forexUiLabels: Record<Locale, {
 };
 
 function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {
+  const institutional = getInstitutionalMarketPage(slug, locale);
   const content = getMarketContent(slug, locale);
   const forexContent = slug === "forex" ? getForexLibraryContent(locale) : null;
   const url = absoluteSiteUrl(`/${slug}`);
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: forexContent?.title ?? content.title,
-    description: forexContent?.metaDescription ?? content.metaDescription,
+    headline: institutional?.hero.title ?? forexContent?.title ?? content.title,
+    description: institutional?.metaDescription ?? forexContent?.metaDescription ?? content.metaDescription,
     inLanguage: locale === "pt" ? "pt-BR" : locale,
     mainEntityOfPage: url,
     publisher: {
@@ -444,8 +446,6 @@ function ForexLibrarySections({
         </div>
       </section>
 
-      <BrokerAccessBlock locale={locale} />
-
       <section className="px-5 py-14 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl border border-gold/[0.22] bg-white p-7 text-center shadow-premium md:p-12">
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{content.eyebrow}</p>
@@ -468,10 +468,11 @@ function ForexLibrarySections({
 export function MarketPage({ slug }: { slug: MarketSlug }) {
   const { locale, t, changeLocale } = useSiteLocale();
   const pageLocale = slug === "fundos-imobiliarios" ? "pt" : locale;
+  const institutionalPage = getInstitutionalMarketPage(slug, pageLocale);
   const content = getMarketContent(slug, pageLocale);
   const forexContent = slug === "forex" ? getForexLibraryContent(pageLocale) : null;
-  const labels = pageLabels[pageLocale];
-  const direction = pageLocale === "ar" ? "rtl" : "ltr";
+  const labels = pageLabels[pageLocale] ?? pageLabels.en;
+  const direction = pageLocale === "ar" || pageLocale === "ur" || pageLocale === "fa" ? "rtl" : "ltr";
   const relatedMarkets = content.related.filter((market) => market !== "fundos-imobiliarios" || pageLocale === "pt");
 
   const levelCards = [
@@ -485,6 +486,18 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
       <SiteChrome t={t} locale={locale} onLocaleChange={changeLocale} />
       <SchemaScripts slug={slug} locale={pageLocale} />
       <main lang={pageLocale === "pt" ? "pt-BR" : pageLocale} dir={direction} className="min-h-screen bg-ink text-paper">
+        {institutionalPage ? (
+          <>
+            <MarketInstitutionalHero page={institutionalPage} locale={pageLocale} />
+            <InstitutionalMarketSections page={institutionalPage} locale={pageLocale} currentSlug={slug} />
+            {forexContent ? (
+              <div className="border-t border-gold/[0.16]">
+                <ForexLibrarySections content={forexContent} locale={pageLocale} freeChannelLink={t.freeChannel.link} />
+              </div>
+            ) : null}
+          </>
+        ) : (
+          <>
         <section className="page-hero relative overflow-hidden px-5 pb-16 pt-28 md:px-8 md:pb-24 md:pt-36">
           <div className="absolute inset-0 terminal-grid opacity-50" />
           <div className="absolute left-1/2 top-1/3 h-80 w-80 -translate-x-1/2 rounded-full bg-gold/[0.08] blur-3xl" />
@@ -495,11 +508,9 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
             transition={{ duration: 0.55 }}
             className="relative mx-auto max-w-7xl"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold">{forexContent?.eyebrow ?? labels.eyebrow}</p>
-            <h1 className="mt-5 max-w-5xl font-serif text-5xl leading-[0.96] tracking-[-0.05em] text-paper md:text-7xl">
-              {forexContent?.title ?? content.title}
-            </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-paper/[0.68] md:text-xl">{forexContent?.subtitle ?? content.subtitle}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold">{labels.eyebrow}</p>
+            <h1 className="mt-5 max-w-5xl font-serif text-5xl leading-[0.96] tracking-[-0.05em] text-paper md:text-7xl">{content.title}</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-paper/[0.68] md:text-xl">{content.subtitle}</p>
           </motion.div>
         </section>
 
@@ -627,6 +638,8 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
             </div>
           </div>
         </section>
+          </>
+        )}
           </>
         )}
 

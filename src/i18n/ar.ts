@@ -5,7 +5,7 @@ export const ar = {
   locale: "AR",
   nav: {
     home: "الرئيسية",
-    signals: "الإشارات",
+    signals: "Research",
     education: "التكوين",
     terminal: "المنصة",
     plans: "الباقات",
@@ -105,7 +105,7 @@ export const ar = {
     ...en.servicesPage,
     eyebrow: "الخدمات",
     title: "خدمات Varejo Investidor",
-    text: "تعرّف إلى قنوات وخدمات Varejo Investidor للإشارات والتعليم ورؤية السوق وبناء الثروة.",
+    text: "تعرّف إلى قنوات وخدمات Varejo Investidor لـ Research والتعليم ورؤية السوق وبناء الثروة.",
   },
   disclaimer: {
     title: "إخلاء مسؤولية",

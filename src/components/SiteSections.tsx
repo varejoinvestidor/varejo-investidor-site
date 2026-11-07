@@ -11,7 +11,6 @@ import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/
 import { getPlatformPath, platformSlugs } from "../data/platformContent";
 import { languageMeta, persistLanguageChoice } from "../i18n/languageCatalog";
 import { getYoutubeChannelUrl } from "../config/youtubeChannels";
-import { eliteReportPaths } from "./EliteReportHub";
 import { LocaleFlagIcon } from "./LocaleFlagIcon";
 
 export const ticker = [
@@ -311,7 +310,6 @@ export function SiteChrome({
   const [mobileLanguageOpen, setMobileLanguageOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileMarketsOpen, setMobileMarketsOpen] = useState(false);
-  const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
 
   useEffect(() => {
     setMobileLanguageOpen(false);
@@ -396,48 +394,7 @@ export function SiteChrome({
     ja: { markets: "マーケット", forex: "Forex", stocks: "株式", crypto: "暗号資産", etfs: "ETFs", funds: "不動産ファンド" },
     ko: { markets: "시장", forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETFs", funds: "부동산 펀드" },
   };
-  const toolDropdownLabels: Record<Locale, { tools: string; forex: string; compound: string; portfolio?: string; reports: string }> = {
-    pt: { tools: "Ferramentas", forex: "Calculadora Forex", compound: "Calculadora de Juros Compostos", portfolio: "Raio-X da Carteira Global", reports: "Relatórios" },
-    en: { tools: "Tools", forex: "Forex Calculator", compound: "Compound Interest Calculator", portfolio: "Global Portfolio X-Ray", reports: "Reports" },
-    es: { tools: "Herramientas", forex: "Calculadora Forex", compound: "Calculadora de Interés Compuesto", reports: "Reportes" },
-    fr: { tools: "Outils", forex: "Calculateur Forex", compound: "Calculateur d'intérêts composés", reports: "Rapports" },
-    hi: { tools: "टूल्स", forex: "Forex Calculator", compound: "कंपाउंड इंटरेस्ट कैलकुलेटर", reports: "रिपोर्ट" },
-    ar: { tools: "الأدوات", forex: "حاسبة الفوركس", compound: "حاسبة الفائدة المركبة", reports: "التقارير" },
-    tr: { tools: "Araçlar", forex: "Forex Hesaplayıcı", compound: "Bileşik Faiz Hesaplayıcı", reports: "Raporlar" },
-    id: { tools: "Alat", forex: "Kalkulator Forex", compound: "Kalkulator Bunga Majemuk", portfolio: "X-Ray Portofolio Global", reports: "Laporan" },
-    vi: { tools: "Công cụ", forex: "Máy tính Forex", compound: "Máy tính Lãi kép", reports: "Báo cáo" },
-    th: { tools: "เครื่องมือ", forex: "เครื่องคำนวณ Forex", compound: "เครื่องคำนวณดอกเบี้ยทบต้น", reports: "รายงาน" },
-    ru: { tools: "Инструменты", forex: "Калькулятор Forex", compound: "Калькулятор сложных процентов", reports: "Отчеты" },
-    ur: { tools: "ٹولز", forex: "Forex Calculator", compound: "کمپاؤنڈ انٹرسٹ کیلکولیٹر", reports: "رپورٹس" },
-    bn: { tools: "টুলস", forex: "Forex Calculator", compound: "চক্রবৃদ্ধি সুদ ক্যালকুলেটর", reports: "রিপোর্ট" },
-    ja: { tools: "ツール", forex: "Forex計算機", compound: "複利計算機", reports: "レポート" },
-    ko: { tools: "도구", forex: "Forex 계산기", compound: "복리 계산기", reports: "리포트" },
-  };
-  const economicCalendarLabels: Record<string, string> = {
-    pt: "Calendário Econômico",
-    en: "Economic Calendar",
-    es: "Calendario económico",
-    fr: "Calendrier économique",
-    de: "Wirtschaftskalender",
-    it: "Calendario economico",
-    ar: "التقويم الاقتصادي",
-    fa: "تقویم اقتصادی",
-    hi: "आर्थिक कैलेंडर",
-    ur: "اقتصادی کیلنڈر",
-    bn: "অর্থনৈতিক ক্যালেন্ডার",
-    tr: "Ekonomik Takvim",
-    ru: "Экономический календарь",
-    id: "Kalender Ekonomi",
-    vi: "Lịch kinh tế",
-    th: "ปฏิทินเศรษฐกิจ",
-    tl: "Kalendaryong Pang-ekonomiya",
-    zh: "经济日历",
-    ja: "経済カレンダー",
-    ko: "경제 캘린더",
-    pl: "Kalendarz ekonomiczny",
-  };
   const marketLabels = marketDropdownLabels[locale] ?? marketDropdownLabels.en;
-  const toolLabels = toolDropdownLabels[locale] ?? toolDropdownLabels.en;
   const localePrefix = localeToUrlSegment(locale);
   const localizedPage = (path: string) => localizedPath(path, locale);
   const marketPrefix = localePrefix ? `/${localePrefix}` : "";
@@ -450,13 +407,6 @@ export function SiteChrome({
     { label: getMarketLabel("petroleo", locale), href: locale === "pt" ? "/petroleo" : `${marketPrefix}/oil` },
     { label: getMarketLabel("commodities", locale), href: `${marketPrefix}/commodities` },
     ...(locale === "pt" ? [{ label: marketLabels.funds, href: "/fundos-imobiliarios" }] : []),
-  ];
-  const toolItems = [
-    { label: toolLabels.forex, href: localizedPage("/ferramentas/calculadora-forex") },
-    { label: toolLabels.compound, href: localizedPage("/ferramentas/calculadora-juros-compostos") },
-    { label: toolLabels.portfolio ?? "Global Portfolio X-Ray", href: localizedPage("/ferramentas/raio-x-carteira-global") },
-    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: localizedPage("/ferramentas/calendario-economico") },
-    { label: toolLabels.reports, href: eliteReportPaths[locale] ?? eliteReportPaths.en },
   ];
   const localizedHref = (page: "home" | "signals" | "education" | "services" | "about") => {
     if (page === "home") return localePrefix ? `/${localePrefix}` : "/#home";
@@ -481,20 +431,11 @@ export function SiteChrome({
   );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
-  const toolsActive = isActivePath(["/calculadora-de-risco", "/ferramentas/calculadora-de-risco", "/ferramentas/lote-correto-forex", "/ferramentas/calculadora-forex", "/ferramentas/calculadora-juros-compostos", "/ferramentas/raio-x-carteira-global", "/ferramentas/calendario-economico", eliteReportPaths[locale] ?? eliteReportPaths.en]);
   const mobilePrimaryItems = [
     ...firstNavItems,
     { label: insightNavLabel, href: getInsightsPath(locale), activePaths: [getInsightsPath(locale)] },
     { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
   ];
-  const mobileToolItems = [
-    { label: locale === "pt" ? "Calculadora de risco" : "Risk calculator", href: localizedPage("/calculadora-de-risco") },
-    { label: toolLabels.compound, href: localizedPage("/ferramentas/calculadora-juros-compostos") },
-    { label: locale === "pt" ? "Aposentadoria" : "Retirement", href: `${localizedPage("/ferramentas/calculadora-juros-compostos")}#aposentadoria` },
-    { label: toolLabels.portfolio ?? "Portfolio", href: localizedPage("/ferramentas/raio-x-carteira-global") },
-    { label: economicCalendarLabels[locale] ?? economicCalendarLabels.en, href: localizedPage("/ferramentas/calendario-economico") },
-  ];
-
   return (
     <div className="site-chrome fixed left-0 right-0 top-0 z-50">
       <div className="global-ticker border-b border-ink/[0.08] bg-ink px-3 text-paper md:px-5">
@@ -541,7 +482,6 @@ export function SiteChrome({
               return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
             <HeaderDropdown label={marketLabels.markets} items={marketItems} active={marketsActive} />
-            <HeaderDropdown label={toolLabels.tools} items={toolItems} active={toolsActive} />
           </div>
 
           <div className="desktop-language-area hidden items-center justify-end xl:flex">
@@ -597,15 +537,6 @@ export function SiteChrome({
               </button>
               <div className="mobile-drawer-submenu">
                 {marketItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-              </div>
-            </div>
-
-            <div className={`mobile-drawer-group ${mobileToolsOpen ? "is-open" : ""}`}>
-              <button type="button" aria-expanded={mobileToolsOpen} onClick={() => setMobileToolsOpen((open) => !open)}>
-                <span>{toolLabels.tools}</span><span className="mobile-drawer-chevron" aria-hidden="true">›</span>
-              </button>
-              <div className="mobile-drawer-submenu">
-                {mobileToolItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
               </div>
             </div>
 
@@ -1139,6 +1070,46 @@ export function SupportFooter({
         </svg>
       ),
     },
+    {
+      label: "WhatsApp",
+      href: "https://wa.me/5519983393147",
+      icon: (
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
+          <path
+            d="M12 2.75c-4.97 0-9.25 4.04-9.25 9.02 0 1.59.43 3.14 1.25 4.5L3.5 21.5l5.64-1.43a9.4 9.4 0 0 0 4.86 1.34h.01c4.97 0 9.25-4.04 9.25-9.02S16.97 2.75 12 2.75Z"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M9.1 9.05c.12-.27.39-.43.7-.43.15 0 .3.02.43.07.2.07.4.22.57.4l.35.45c.1.13.1.31 0 .44l-.22.29c-.08.1-.1.23-.05.35.22.5.59.93 1.06 1.2.12.07.27.08.4.02l.33-.17c.14-.07.31-.07.45 0l.5.24c.15.07.24.22.24.38v.45c0 .2-.09.38-.27.48-.58.33-1.27.42-1.9.24-1.2-.38-2.17-1.35-2.55-2.55-.18-.63-.09-1.32.24-1.9.1-.18.28-.27.48-.27h.03Z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+    },
+    {
+      label: "X (@varejoinvest)",
+      href: "https://x.com/varejoinvest",
+      icon: (
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      ),
+    },
+    ...(locale === "pt"
+      ? [
+          {
+            label: "TikTok (@varejoinvestidor)",
+            href: "https://www.tiktok.com/@varejoinvestidor",
+            icon: (
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+              </svg>
+            ),
+          },
+        ]
+      : []),
   ];
   const mainFooterLinks = [
     { href: localizedFooterHref("home"), label: t.nav.home },
