@@ -192,7 +192,7 @@ const baseCopy: CompoundCopy = {
   ctaTitle: "Construa patrimônio com visão global.",
   ctaText: "Use a calculadora para visualizar o caminho. Depois, entre no Canal Formiga para receber análises econômicas, conteúdos educacionais e atualizações sobre os mercados globais.",
   formigaButton: "Entrar no Canal Formiga",
-  educationButton: "Conhecer Educação",
+  educationButton: "Conhecer Formação",
   disclaimer: "Esta ferramenta possui finalidade educacional e apresenta apenas simulações matemáticas. Rentabilidades, inflação e câmbio futuros não são garantidos. Os resultados podem variar conforme impostos, taxas, inflação, moeda, ativos escolhidos, comportamento do investidor e condições de mercado. Cada usuário é responsável por suas próprias decisões financeiras.",
 };
 
@@ -218,7 +218,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     ctaTitle: "Start building wealth on a global level.",
     ctaText: "Use the calculator to visualize the path. Then join the Formiga Channel for economic analysis, education and global market updates.",
     formigaButton: "Join Formiga Channel",
-    educationButton: "Explore Education",
+    educationButton: "Explore Formation",
     disclaimer: "This tool is educational and provides only mathematical simulations. Future returns, inflation and exchange rates are not guaranteed. Results may vary due to taxes, fees, inflation, currency, selected assets, investor behavior and market conditions. Each user is responsible for their own financial decisions.",
   },
   es: {
@@ -241,7 +241,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     ctaTitle: "Comienza tu construcción patrimonial global.",
     ctaText: "Usa la calculadora para visualizar el camino. Después entra al Canal Formiga para recibir análisis económicos y educación financiera.",
     formigaButton: "Entrar al Canal Formiga",
-    educationButton: "Conocer Educación",
+    educationButton: "Conocer Formación",
     disclaimer: "Esta calculadora tiene finalidad educativa y presenta solo una simulación matemática. Las rentabilidades futuras no están garantizadas.",
   },
   fr: {
@@ -257,7 +257,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "Ouvrir un compte FXPro",
     binance: "Ouvrir un compte Binance",
     formigaButton: "Rejoindre le Canal Formiga",
-    educationButton: "Découvrir l'Éducation",
+    educationButton: "Découvrir la formation",
     disclaimer: "Ce calculateur est éducatif et présente uniquement une simulation mathématique. Les rendements futurs ne sont pas garantis.",
   },
   hi: {
@@ -272,7 +272,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "FXPro Account खोलें",
     binance: "Binance Account खोलें",
     formigaButton: "Formiga चैनल में शामिल हों",
-    educationButton: "शिक्षा देखें",
+    educationButton: "प्रशिक्षण देखें",
     disclaimer: "यह कैलकुलेटर केवल शैक्षिक उद्देश्य के लिए गणितीय सिमुलेशन प्रस्तुत करता है। भविष्य के रिटर्न की गारंटी नहीं है।",
   },
   ar: {
@@ -287,7 +287,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "فتح حساب FXPro",
     binance: "فتح حساب Binance",
     formigaButton: "الدخول إلى قناة Formiga",
-    educationButton: "معرفة التعليم",
+    educationButton: "معرفة التكوين",
     disclaimer: "هذه الحاسبة تعليمية وتعرض محاكاة رياضية فقط. العوائد المستقبلية غير مضمونة.",
   },
   tr: {
@@ -302,7 +302,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "FXPro Hesabı Aç",
     binance: "Binance Hesabı Aç",
     formigaButton: "Formiga Kanalına Gir",
-    educationButton: "Eğitimi İncele",
+    educationButton: "Formasyonu İncele",
     disclaimer: "Bu hesaplayıcı eğitim amaçlıdır ve yalnızca matematiksel simülasyon sunar. Gelecekteki getiriler garanti değildir.",
   },
   id: {
@@ -317,7 +317,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "Buka Akun FXPro",
     binance: "Buka Akun Binance",
     formigaButton: "Masuk Kanal Formiga",
-    educationButton: "Lihat Edukasi",
+    educationButton: "Lihat Formasi",
     disclaimer: "Kalkulator ini bersifat edukatif dan hanya menampilkan simulasi matematis. Imbal hasil masa depan tidak dijamin.",
   },
   vi: {
@@ -332,7 +332,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "Mở Tài Khoản FXPro",
     binance: "Mở Tài Khoản Binance",
     formigaButton: "Vào Kênh Formiga",
-    educationButton: "Xem Giáo dục",
+    educationButton: "Xem Đào tạo",
     disclaimer: "Công cụ này chỉ phục vụ giáo dục và là mô phỏng toán học. Lợi suất tương lai không được đảm bảo.",
   },
   th: {
@@ -347,7 +347,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "เปิดบัญชี FXPro",
     binance: "เปิดบัญชี Binance",
     formigaButton: "เข้าช่อง Formiga",
-    educationButton: "ดูการศึกษา",
+    educationButton: "ดูหลักสูตร",
     disclaimer: "เครื่องมือนี้มีวัตถุประสงค์เพื่อการศึกษาและเป็นเพียงการจำลองทางคณิตศาสตร์ ผลตอบแทนในอนาคตไม่รับประกัน",
   },
   ru: {
@@ -362,7 +362,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "Открыть счет FXPro",
     binance: "Открыть счет Binance",
     formigaButton: "Войти в канал Formiga",
-    educationButton: "Посмотреть обучение",
+    educationButton: "Посмотреть курс",
     disclaimer: "Калькулятор предназначен для обучения и показывает только математическую симуляцию. Будущая доходность не гарантируется.",
   },
   ur: {
@@ -377,7 +377,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "FXPro اکاؤنٹ کھولیں",
     binance: "Binance اکاؤنٹ کھولیں",
     formigaButton: "Formiga چینل میں شامل ہوں",
-    educationButton: "تعلیم دیکھیں",
+    educationButton: "تربیت دیکھیں",
     disclaimer: "یہ کیلکولیٹر تعلیمی مقصد کے لیے ہے اور صرف ریاضیاتی simulation دکھاتا ہے۔ مستقبل کے ریٹرن کی ضمانت نہیں۔",
   },
   bn: {
@@ -392,7 +392,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "FXPro অ্যাকাউন্ট খুলুন",
     binance: "Binance অ্যাকাউন্ট খুলুন",
     formigaButton: "Formiga চ্যানেলে যোগ দিন",
-    educationButton: "শিক্ষা দেখুন",
+    educationButton: "প্রশিক্ষণ দেখুন",
     disclaimer: "এই ক্যালকুলেটর শিক্ষামূলক এবং শুধুমাত্র গাণিতিক সিমুলেশন দেখায়। ভবিষ্যৎ রিটার্ন নিশ্চিত নয়।",
   },
   ja: {
@@ -407,7 +407,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "FXPro口座を開設",
     binance: "Binance口座を開設",
     formigaButton: "Formigaチャンネルに参加",
-    educationButton: "教育を見る",
+    educationButton: "研修を見る",
     disclaimer: "この計算機は教育目的であり、数学的なシミュレーションのみを示します。将来の利回りは保証されません。",
   },
   ko: {
@@ -422,7 +422,7 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
     fxpro: "FXPro 계좌 열기",
     binance: "Binance 계좌 열기",
     formigaButton: "Formiga 채널 참여",
-    educationButton: "교육 보기",
+    educationButton: "연수 보기",
     disclaimer: "이 계산기는 교육 목적이며 수학적 시뮬레이션만 제공합니다. 미래 수익률은 보장되지 않습니다.",
   },
 };

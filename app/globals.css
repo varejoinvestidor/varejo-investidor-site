@@ -2842,25 +2842,7 @@ main {
   }
 }
 
-@media (max-width: 768px) {
-  .signal-terminal-wrap,
-  .signal-terminal,
-  .signal-example-box,
-  .live-signal-card {
-    display: none !important;
-  }
-
-  .home-stats,
-  .stats-cards,
-  .numbers-section,
-  .home-metrics,
-  .about-metrics,
-  .since2018-card,
-  .signals-counter,
-  .levels-card {
-    display: none !important;
-  }
-}
+/* Mobile: keep signal widgets and hero metrics visible — see app/mobile-system.css for layout. */
 
 @media (max-width: 480px) {
   :root {

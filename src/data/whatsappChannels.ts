@@ -54,7 +54,7 @@ export const whatsappLandingLocales: Array<{
   { locale: "ur", label: "اردو", short: "UR", rtl: true },
 ];
 
-export const whatsappChannels: Partial<Record<WhatsAppLandingLocale, Record<WhatsAppChannelLevel, string>>> = {
+export const whatsappChannels: Partial<Record<WhatsAppLandingLocale, Partial<Record<WhatsAppChannelLevel, string>>>> = {
   pt: {
     formiga: "https://whatsapp.com/channel/0029Va9J7SAAO7R8cN76Ib13",
     lobo: "https://whatsapp.com/channel/0029VasGTTE6RGJD46g47c1h",
@@ -86,6 +86,188 @@ export const whatsappChannels: Partial<Record<WhatsAppLandingLocale, Record<What
   ja: {
     formiga: "https://whatsapp.com/channel/0029VbDXe3WB4hdOjfEDp531",
     lobo: "https://whatsapp.com/channel/0029VbDAArmGZNCkTLZbMk0q",
+  },
+  fr: {
+    formiga: "https://whatsapp.com/channel/0029VbDxJEI6BIEmo6T8tD34",
+  },
+};
+
+export function siteLocaleToWhatsAppLocale(locale: string): WhatsAppLandingLocale | null {
+  if (locale === "pt") return "pt";
+  if (locale in whatsappLandingCopy) return locale as WhatsAppLandingLocale;
+  return null;
+}
+
+export function getWhatsAppChannelUrl(locale: string, level: WhatsAppChannelLevel): string | null {
+  const mapped = siteLocaleToWhatsAppLocale(locale);
+  if (!mapped) return null;
+  const channels = whatsappChannels[mapped];
+  return channels?.[level] ?? null;
+}
+
+export function getFormigaChannelUrl(locale: string, fallbackLink: string): string {
+  return getWhatsAppChannelUrl(locale, "formiga") ?? fallbackLink;
+}
+
+export function getLoboChannelUrl(locale: string): string | null {
+  return getWhatsAppChannelUrl(locale, "lobo");
+}
+
+export function getLoboChannelButtonLabel(locale: string): string {
+  const mapped = siteLocaleToWhatsAppLocale(locale);
+  if (!mapped) return "JOIN THE WOLF CHANNEL";
+  return whatsappLandingCopy[mapped].lobo.button;
+}
+
+/** Textos do seletor na página /canais-whatsapp (primeira visualização em PT-BR). */
+export const WHATSAPP_LANGUAGE_GATE = {
+  title: "Escolha seu idioma",
+  subtitle: "Selecione seu idioma para acessar os canais oficiais da Varejo Investidor.",
+  searchPlaceholder: "Buscar idioma...",
+  emptySearch: "Nenhum idioma encontrado.",
+  languagesCount: "idiomas",
+} as const;
+
+export const whatsappGateUiCopy: Record<
+  WhatsAppLandingLocale,
+  {
+    gateTitle: string;
+    gateSubtitle: string;
+    searchPlaceholder: string;
+    channelsEyebrow: string;
+  }
+> = {
+  pt: {
+    gateTitle: "Escolha seu idioma",
+    gateSubtitle: "Selecione seu idioma para acessar os canais oficiais da Varejo Investidor.",
+    searchPlaceholder: "Buscar idioma...",
+    channelsEyebrow: "Formiga / Lobo",
+  },
+  "pt-pt": {
+    gateTitle: "Escolha o seu idioma",
+    gateSubtitle: "Selecione o seu idioma para aceder aos canais oficiais da Varejo Investidor.",
+    searchPlaceholder: "Pesquisar idioma...",
+    channelsEyebrow: "Formiga / Lobo",
+  },
+  en: {
+    gateTitle: "Choose your language",
+    gateSubtitle: "Select your language to access the official Varejo Investidor channels.",
+    searchPlaceholder: "Search language...",
+    channelsEyebrow: "Ant / Wolf",
+  },
+  es: {
+    gateTitle: "Elige tu idioma",
+    gateSubtitle: "Selecciona tu idioma para acceder a los canales oficiales de Varejo Investidor.",
+    searchPlaceholder: "Buscar idioma...",
+    channelsEyebrow: "Hormiga / Lobo",
+  },
+  hi: {
+    gateTitle: "अपनी भाषा चुनें",
+    gateSubtitle: "Varejo Investidor के आधिकारिक चैनल तक पहुंचने के लिए अपनी भाषा चुनें।",
+    searchPlaceholder: "भाषा खोजें...",
+    channelsEyebrow: "चींटी / भेड़िया",
+  },
+  fa: {
+    gateTitle: "زبان خود را انتخاب کنید",
+    gateSubtitle: "برای دسترسی به کانال‌های رسمی Varejo Investidor زبان خود را انتخاب کنید.",
+    searchPlaceholder: "جستجوی زبان...",
+    channelsEyebrow: "مورچه / گرگ",
+  },
+  ar: {
+    gateTitle: "اختر لغتك",
+    gateSubtitle: "اختر لغتك للوصول إلى القنوات الرسمية لـ Varejo Investidor.",
+    searchPlaceholder: "ابحث عن لغة...",
+    channelsEyebrow: "النملة / الذئب",
+  },
+  tr: {
+    gateTitle: "Dilinizi seçin",
+    gateSubtitle: "Varejo Investidor resmi kanallarına erişmek için dilinizi seçin.",
+    searchPlaceholder: "Dil ara...",
+    channelsEyebrow: "Karınca / Kurt",
+  },
+  ja: {
+    gateTitle: "言語を選択",
+    gateSubtitle: "Varejo Investidor 公式チャンネルにアクセスするには言語を選択してください。",
+    searchPlaceholder: "言語を検索...",
+    channelsEyebrow: "アリ / オオカミ",
+  },
+  fr: {
+    gateTitle: "Choisissez votre langue",
+    gateSubtitle: "Sélectionnez votre langue pour accéder aux canaux officiels Varejo Investidor.",
+    searchPlaceholder: "Rechercher une langue...",
+    channelsEyebrow: "Fourmi / Loup",
+  },
+  de: {
+    gateTitle: "Sprache wählen",
+    gateSubtitle: "Wählen Sie Ihre Sprache, um die offiziellen Varejo Investidor Kanäle zu öffnen.",
+    searchPlaceholder: "Sprache suchen...",
+    channelsEyebrow: "Ameise / Wolf",
+  },
+  it: {
+    gateTitle: "Scegli la tua lingua",
+    gateSubtitle: "Seleziona la lingua per accedere ai canali ufficiali Varejo Investidor.",
+    searchPlaceholder: "Cerca lingua...",
+    channelsEyebrow: "Formiga / Lupo",
+  },
+  ru: {
+    gateTitle: "Выберите язык",
+    gateSubtitle: "Выберите язык для доступа к официальным каналам Varejo Investidor.",
+    searchPlaceholder: "Поиск языка...",
+    channelsEyebrow: "Formiga / Волк",
+  },
+  id: {
+    gateTitle: "Pilih bahasa Anda",
+    gateSubtitle: "Pilih bahasa untuk mengakses kanal resmi Varejo Investidor.",
+    searchPlaceholder: "Cari bahasa...",
+    channelsEyebrow: "Semut / Serigala",
+  },
+  pl: {
+    gateTitle: "Wybierz język",
+    gateSubtitle: "Wybierz język, aby uzyskać dostęp do oficjalnych kanałów Varejo Investidor.",
+    searchPlaceholder: "Szukaj języka...",
+    channelsEyebrow: "Mrówka / Wilk",
+  },
+  tl: {
+    gateTitle: "Piliin ang wika",
+    gateSubtitle: "Piliin ang wika para ma-access ang opisyal na Varejo Investidor channels.",
+    searchPlaceholder: "Maghanap ng wika...",
+    channelsEyebrow: "Langgam / Lobo",
+  },
+  ko: {
+    gateTitle: "언어 선택",
+    gateSubtitle: "Varejo Investidor 공식 채널에 접속하려면 언어를 선택하세요.",
+    searchPlaceholder: "언어 검색...",
+    channelsEyebrow: "개미 / 늑대",
+  },
+  vi: {
+    gateTitle: "Chọn ngôn ngữ",
+    gateSubtitle: "Chọn ngôn ngữ để truy cập các kênh chính thức Varejo Investidor.",
+    searchPlaceholder: "Tìm ngôn ngữ...",
+    channelsEyebrow: "Kiến / Sói",
+  },
+  th: {
+    gateTitle: "เลือกภาษา",
+    gateSubtitle: "เลือกภาษาเพื่อเข้าถึงช่องทางอย่างเป็นทางการของ Varejo Investidor",
+    searchPlaceholder: "ค้นหาภาษา...",
+    channelsEyebrow: "มด / หมาป่า",
+  },
+  bn: {
+    gateTitle: "আপনার ভাষা বেছে নিন",
+    gateSubtitle: "Varejo Investidor-এর অফিসিয়াল চ্যানেলে যেতে ভাষা নির্বাচন করুন।",
+    searchPlaceholder: "ভাষা খুঁজুন...",
+    channelsEyebrow: "পিঁপড়া / নেকড়ে",
+  },
+  zh: {
+    gateTitle: "选择语言",
+    gateSubtitle: "选择语言以访问 Varejo Investidor 官方频道。",
+    searchPlaceholder: "搜索语言...",
+    channelsEyebrow: "蚂蚁 / 狼",
+  },
+  ur: {
+    gateTitle: "اپنی زبان منتخب کریں",
+    gateSubtitle: "Varejo Investidor کے سرکاری چینلز تک رسائی کے لیے زبان منتخب کریں۔",
+    searchPlaceholder: "زبان تلاش کریں...",
+    channelsEyebrow: "چیونٹی / بھیڑیا",
   },
 };
 

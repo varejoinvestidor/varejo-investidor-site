@@ -7,7 +7,7 @@ export const bn = {
     ...en.nav,
     home: "হোম",
     signals: "সিগন্যাল",
-    education: "শিক্ষা",
+    education: "প্রশিক্ষণ",
     services: "সেবা",
     about: "আমাদের সম্পর্কে",
     access: "Elite চ্যানেলে যোগ দিন",

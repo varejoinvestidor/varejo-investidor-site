@@ -3,7 +3,7 @@
   nav: {
     "home": "Home",
     "signals": "Signals",
-    "education": "Edukasyon",
+    "education": "Pagsasanay",
     "terminal": "Terminal",
     "plans": "Plans",
     "services": "Serbisyo",
@@ -195,7 +195,7 @@
 Object.assign(tl.nav, {
   home: "Home",
   signals: "Signals",
-  education: "Edukasyon",
+  education: "Pagsasanay",
   services: "Serbisyo",
   about: "Tungkol sa amin",
   access: "Pumasok sa Elite Channel",

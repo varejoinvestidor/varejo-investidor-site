@@ -3,7 +3,7 @@
   nav: {
     home: "\u062e\u0627\u0646\u0647",
     signals: "\u0633\u06cc\u06af\u0646\u0627\u0644\u200c\u0647\u0627",
-    education: "\u0622\u0645\u0648\u0632\u0634",
+    education: "دوره",
     terminal: "\u062a\u0631\u0645\u06cc\u0646\u0627\u0644",
     plans: "\u0637\u0631\u062d\u200c\u0647\u0627",
     services: "\u062e\u062f\u0645\u0627\u062a",

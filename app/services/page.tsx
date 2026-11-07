@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { ELITE_LASTLINK_PLANS_PT } from "../../src/data/eliteLastlinkPricingPt";
 import {
   BrokerBanners,
   ContactSection,
@@ -423,15 +424,8 @@ const compactPtServices = [
   },
 ];
 
-const elitePtPackages = [
-  ["Mensal", "R$149,90", ""],
-  ["Trimestral", "R$397,90", ""],
-  ["Semestral", "R$697,90", ""],
-  ["Anual", "R$1.197,90", "MAIOR ECONOMIA"],
-];
-
 const elitePackagesByLocale = {
-  pt: { title: "Pacotes disponíveis", cta: "Assinar agora", items: elitePtPackages },
+  pt: { title: "Pacotes disponíveis", cta: "Assinar agora", items: ELITE_LASTLINK_PLANS_PT },
   en: {
     title: "Available packages",
     cta: "Subscribe now",
@@ -719,13 +713,26 @@ export default function ServicesPage() {
                     Pagamento nacional em reais para acesso ao Canal Elite.
                   </p>
                   <div className="mt-7 grid gap-3">
-                    {elitePtPackages.map(([period, price, badge]) => (
-                      <div key={period} className="grid gap-3 border border-gold/[0.16] bg-paper/[0.045] p-4 sm:grid-cols-[1fr_auto] sm:items-center">
+                    {ELITE_LASTLINK_PLANS_PT.map((plan) => (
+                      <div
+                        key={plan.period}
+                        className={`grid gap-3 border p-4 sm:grid-cols-[1fr_auto] sm:items-center ${
+                          plan.featured
+                            ? "border-gold/[0.55] bg-gradient-to-r from-gold/[0.14] via-paper/[0.06] to-paper/[0.04] shadow-[0_0_0_1px_rgba(201,155,62,0.12)]"
+                            : "border-gold/[0.16] bg-paper/[0.045]"
+                        }`}
+                      >
                         <div>
-                          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{period}</p>
-                          <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{price}</p>
+                          <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/[0.52]">{plan.period}</p>
+                          <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-paper/[0.42]">{plan.validity}</p>
+                          <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{plan.total}</p>
+                          <p className="mt-1 text-xs font-semibold tracking-[0.06em] text-paper/[0.58]">equivalente a {plan.monthlyEquivalent}</p>
                         </div>
-                        {badge ? <span className="w-fit border border-gold/[0.36] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold">{badge}</span> : null}
+                        {plan.badge ? (
+                          <span className="w-fit border border-gold/[0.36] bg-gold/[0.08] px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] text-gold">
+                            {plan.badge}
+                          </span>
+                        ) : null}
                       </div>
                     ))}
                   </div>

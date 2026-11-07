@@ -206,7 +206,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Entrar no Canal Formiga",
       primaryHref: "free",
-      secondary: "Ver Educação",
+      secondary: "Ver Formação",
       secondaryHref: educationHref,
     },
     en: {
@@ -238,7 +238,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Start in the Formiga Channel",
       primaryHref: "free",
-      secondary: "View Education",
+      secondary: "View Formation",
       secondaryHref: educationHref,
     },
     es: {
@@ -270,7 +270,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Empezar en el Canal Formiga",
       primaryHref: "free",
-      secondary: "Ver educación",
+      secondary: "Ver formación",
       secondaryHref: educationHref,
     },
     hi: {
@@ -302,7 +302,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Formiga चैनल से शुरू करें",
       primaryHref: "free",
-      secondary: "शिक्षा देखें",
+      secondary: "प्रशिक्षण देखें",
       secondaryHref: educationHref,
     },
     ar: {
@@ -334,7 +334,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "ابدأ في قناة Formiga",
       primaryHref: "free",
-      secondary: "عرض التعليم",
+      secondary: "عرض التكوين",
       secondaryHref: educationHref,
     },
     tr: {
@@ -366,7 +366,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Formiga Kanalında başla",
       primaryHref: "free",
-      secondary: "Eğitimi Gör",
+      secondary: "Formasyonu Gör",
       secondaryHref: educationHref,
     },
   },
@@ -401,7 +401,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Ver Sinais ao Vivo",
       primaryHref: "/sinais",
-      secondary: "Ver Educação",
+      secondary: "Ver Formação",
       secondaryHref: educationHref,
     },
     en: {
@@ -434,7 +434,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "View Live Signals",
       primaryHref: "/sinais",
-      secondary: "View Education",
+      secondary: "View Formation",
       secondaryHref: educationHref,
     },
     es: {
@@ -467,7 +467,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Ver señales en vivo",
       primaryHref: "/sinais",
-      secondary: "Ver educación",
+      secondary: "Ver formación",
       secondaryHref: educationHref,
     },
     hi: {
@@ -500,7 +500,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "लाइव सिग्नल देखें",
       primaryHref: "/sinais",
-      secondary: "शिक्षा देखें",
+      secondary: "प्रशिक्षण देखें",
       secondaryHref: educationHref,
     },
     ar: {
@@ -533,7 +533,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "شاهد الإشارات المباشرة",
       primaryHref: "/sinais",
-      secondary: "عرض التعليم",
+      secondary: "عرض التكوين",
       secondaryHref: educationHref,
     },
     tr: {
@@ -566,7 +566,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Canlı sinyalleri gör",
       primaryHref: "/sinais",
-      secondary: "Eğitimi Gör",
+      secondary: "Formasyonu Gör",
       secondaryHref: educationHref,
     },
   },
@@ -601,7 +601,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Conhecer Serviços",
       primaryHref: "/servicos",
-      secondary: "Ver Educação",
+      secondary: "Ver Formação",
       secondaryHref: educationHref,
     },
     en: {
@@ -634,7 +634,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "View Services",
       primaryHref: "/servicos",
-      secondary: "View Education",
+      secondary: "View Formation",
       secondaryHref: educationHref,
     },
     es: {
@@ -667,7 +667,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Ver Servicios",
       primaryHref: "/servicos",
-      secondary: "Ver educación",
+      secondary: "Ver formación",
       secondaryHref: educationHref,
     },
     hi: {
@@ -700,7 +700,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "सेवाएँ देखें",
       primaryHref: "/servicos",
-      secondary: "शिक्षा देखें",
+      secondary: "प्रशिक्षण देखें",
       secondaryHref: educationHref,
     },
     ar: {
@@ -733,7 +733,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "شاهد الخدمات",
       primaryHref: "/servicos",
-      secondary: "عرض التعليم",
+      secondary: "عرض التكوين",
       secondaryHref: educationHref,
     },
     tr: {
@@ -766,7 +766,7 @@ const levelCopies: Record<Level, Partial<Record<Locale, LevelCopy>>> = {
       ],
       primary: "Hizmetleri Gör",
       primaryHref: "/servicos",
-      secondary: "Eğitimi Gör",
+      secondary: "Formasyonu Gör",
       secondaryHref: educationHref,
     },
   },

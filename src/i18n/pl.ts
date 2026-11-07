@@ -3,7 +3,7 @@ export const pl = {
   nav: {
     "home": "Start",
     "signals": "Sygna?y",
-    "education": "Edukacja",
+    "education": "Formacja",
     "terminal": "Terminal",
     "plans": "Plany",
     "services": "Us?ugi",
@@ -195,7 +195,7 @@ export const pl = {
 Object.assign(pl.nav, {
   home: "Start",
   signals: "Sygnały",
-  education: "Edukacja",
+  education: "Formacja",
   services: "Usługi",
   about: "O nas",
   access: "Dołącz do kanału Elite",

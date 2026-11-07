@@ -7,7 +7,7 @@ export const ko = {
     ...en.nav,
     home: "홈",
     signals: "신호",
-    education: "교육",
+    education: "연수",
     services: "서비스",
     about: "소개",
     access: "Elite 참여",

@@ -1,0 +1,277 @@
+/**
+ * Varejo Investidor — mobile system (320px–768px).
+ * Loaded after globals.css and institutional.css to resolve conflicts and preserve content.
+ */
+
+:root {
+  --vi-mobile-gutter: clamp(1rem, 4.2vw, 1.35rem);
+  --vi-type-display: clamp(1.875rem, 7.8vw, 2.375rem);
+  --vi-type-section: clamp(1.4375rem, 5.8vw, 1.75rem);
+  --vi-type-subtitle: clamp(1rem, 3.6vw, 1.125rem);
+  --vi-type-body: clamp(0.875rem, 3.2vw, 1rem);
+  --vi-type-caption: clamp(0.75rem, 2.6vw, 0.8125rem);
+  --vi-touch-min: 3rem;
+  --vi-site-chrome-height: 72px;
+}
+
+@media (max-width: 1279px) {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  main {
+    overflow-x: clip;
+    max-width: 100vw;
+  }
+
+  section,
+  article,
+  .glass-panel,
+  .terminal-module,
+  .level-card,
+  .service-channel-card {
+    max-width: 100%;
+  }
+
+  .hero-headline,
+  .home-hero h1,
+  main > section:first-of-type h1 {
+    font-size: var(--vi-type-display) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
+    text-wrap: balance;
+  }
+
+  h2,
+  .font-serif.text-4xl,
+  .font-serif.text-5xl,
+  .font-serif.text-6xl {
+    font-size: var(--vi-type-section) !important;
+    line-height: 1.08 !important;
+    text-wrap: balance;
+  }
+
+  .home-hero p,
+  .signals-hero p,
+  .education-hero p,
+  .page-hero p,
+  section p.text-lg,
+  section p.text-xl {
+    font-size: var(--vi-type-subtitle) !important;
+    line-height: 1.55 !important;
+    max-width: 38rem;
+  }
+
+  p,
+  li {
+    font-size: var(--vi-type-body);
+    line-height: 1.58;
+  }
+
+  .text-\[10px\],
+  .text-xs {
+    font-size: var(--vi-type-caption) !important;
+  }
+
+  .home-hero {
+    min-height: auto !important;
+    padding-top: 1.35rem !important;
+    padding-bottom: 2.75rem !important;
+    padding-left: var(--vi-mobile-gutter) !important;
+    padding-right: var(--vi-mobile-gutter) !important;
+  }
+
+  .signals-hero,
+  .education-hero,
+  .services-hero,
+  .about-hero,
+  .premium-stage:not(.home-hero) {
+    min-height: auto !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  main > section:first-of-type {
+    scroll-margin-top: calc(var(--vi-site-chrome-height) + 12px);
+  }
+
+  main,
+  .main-content,
+  .page-content {
+    padding-top: 0 !important;
+  }
+
+  .hero-image-wrapper {
+    min-height: 14.5rem !important;
+    max-width: min(100%, 22.5rem) !important;
+  }
+
+  .hero-mascot-image,
+  .hero-main-image {
+    max-height: min(22.5rem, 72vw) !important;
+  }
+
+  .premium-button-gold,
+  .premium-button-ghost,
+  .broker-action,
+  .service-channel-cta,
+  .level-card .learn-more,
+  .mobile-drawer-actions a {
+    min-height: var(--vi-touch-min) !important;
+  }
+
+  .home-hero .flex.flex-col.gap-3.sm\:flex-row {
+    width: 100%;
+  }
+
+  .home-hero .flex.flex-col.gap-3.sm\:flex-row > a,
+  .home-hero .flex.flex-col.gap-3.sm\:flex-row > span {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .home-hero .hero-stats-grid {
+    gap: 0.65rem !important;
+    width: 100%;
+  }
+
+  .home-hero .hero-stat-card {
+    min-height: 5rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .home-hero .hero-stat-card p:last-child {
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  .level-card,
+  .terminal-module,
+  .service-channel-card,
+  .broker-card,
+  .education-academic-card {
+    padding: 1.35rem !important;
+  }
+
+  .signal-terminal-wrap,
+  .signal-terminal,
+  .signal-example-box,
+  .live-signal-card {
+    display: block !important;
+    max-width: 100%;
+  }
+
+  .signals-hero .glass-panel,
+  .signals-hero .signal-terminal-wrap {
+    margin-top: 0.5rem;
+  }
+
+  .overflow-x-auto,
+  .education-table,
+  .table-wrapper {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .broker-home-card {
+    min-height: auto !important;
+  }
+
+  .level-card h3 {
+    font-size: var(--vi-type-section) !important;
+    line-height: 1.08 !important;
+  }
+
+  .home-stats .strategic-stat {
+    display: block !important;
+  }
+
+  .whatsapp-print-card {
+    min-height: auto !important;
+  }
+
+  .whatsapp-print-frame {
+    height: min(420px, 72vw) !important;
+    max-height: 26rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .premium-stage,
+  .page-hero,
+  .private-hero,
+  .select-hero,
+  .about-hero,
+  .services-hero,
+  .education-hero,
+  .signals-hero,
+  section.relative.overflow-hidden.px-5 {
+    padding-top: 1.35rem !important;
+  }
+
+  .signals-hero .grid.lg\:grid-cols-\[0\.9fr_1\.1fr\] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.75rem !important;
+  }
+
+  .signal-terminal {
+    padding: 1rem !important;
+    font-size: 0.82rem;
+  }
+
+  .signal-terminal [class*="grid-cols-"] {
+    grid-template-columns: minmax(5.25rem, 38%) minmax(0, 1fr) !important;
+    gap: 0.35rem !important;
+  }
+}
+
+@media (max-width: 359px) {
+  .home-hero .hero-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 430px) {
+  :root {
+    --vi-mobile-gutter: 1rem;
+  }
+
+  .signal-terminal [class*="grid-cols-"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+[dir="rtl"] .mobile-drawer-nav > a,
+[dir="rtl"] .mobile-drawer-group > button {
+  text-align: right;
+}
+
+[dir="rtl"] .premium-button-gold,
+[dir="rtl"] .premium-button-ghost {
+  letter-spacing: 0.06em;
+}
+
+.language-gate-panel {
+  max-width: 100%;
+}
+
+.language-gate-option {
+  min-height: var(--vi-touch-min);
+}
+
+.canais-whatsapp-page main,
+.language-gate {
+  padding-inline: var(--vi-mobile-gutter);
+}

@@ -45,7 +45,7 @@ function BuyAction({
 
   return (
     <span className="inline-flex w-full cursor-not-allowed items-center justify-center border border-gold/[0.35] bg-gold/[0.12] px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-gold/80">
-      Checkout em configuração
+      Checkout em breve
     </span>
   );
 }

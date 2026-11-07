@@ -7,7 +7,7 @@ export const ru = {
     ...en.nav,
     home: "Главная",
     signals: "Сигналы",
-    education: "Обучение",
+    education: "Курс",
     services: "Услуги",
     about: "О проекте",
     access: "Войти в Elite",
@@ -97,7 +97,7 @@ export const ru = {
 Object.assign(ru.nav, {
   home: "Главная",
   signals: "Сигналы",
-  education: "Обучение",
+  education: "Курс",
   services: "Услуги",
   about: "О нас",
   access: "Войти в Elite",

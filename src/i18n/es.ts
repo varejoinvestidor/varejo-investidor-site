@@ -3,7 +3,7 @@ export const es = {
   nav: {
     home: "Inicio",
     signals: "Señales",
-    education: "Educación",
+    education: "Formación",
     terminal: "Terminal",
     plans: "Planes",
     services: "Servicios",

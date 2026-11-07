@@ -7,7 +7,7 @@ export const th = {
     ...en.nav,
     home: "หน้าแรก",
     signals: "สัญญาณ",
-    education: "การศึกษา",
+    education: "หลักสูตร",
     services: "บริการ",
     about: "เกี่ยวกับเรา",
     access: "เข้าร่วมช่อง Elite",

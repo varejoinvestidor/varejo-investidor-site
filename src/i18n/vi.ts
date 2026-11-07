@@ -6,7 +6,7 @@ export const vi = {
   nav: {
     home: "Trang chủ",
     signals: "Tín hiệu",
-    education: "Giáo dục",
+    education: "Đào tạo",
     terminal: "Terminal",
     plans: "Gói",
     services: "Dịch vụ",

@@ -4,6 +4,11 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, trackVarejoClick, useSiteLocale } from "../src/components/SiteSections";
 import { getInsightsPath } from "../src/data/insightsContent";
+import {
+  getFormigaChannelUrl,
+  getLoboChannelButtonLabel,
+  getLoboChannelUrl,
+} from "../src/data/whatsappChannels";
 import type { Locale } from "../src/i18n";
 import { localeToUrlSegment, localizedPath } from "../src/i18n/routing";
 
@@ -14,7 +19,7 @@ const homeLiteCopy = {
       title: "Tudo o que voc\u00ea precisa para investir e construir patrim\u00f4nio em n\u00edvel global.",
       text: "Entenda os mercados globais, acompanhe an\u00e1lises econ\u00f4micas e desenvolva uma estrat\u00e9gia para construir patrim\u00f4nio al\u00e9m das fronteiras do seu pa\u00eds.",
       free: "ENTRAR NO CANAL FORMIGA",
-      services: "CONHECER A EDUCA\u00c7\u00c3O",
+      services: "CONHECER A FORMA\u00c7\u00c3O",
     },
     intro: {
       eyebrow: "O que \u00e9",
@@ -49,7 +54,7 @@ const homeLiteCopy = {
       title: "Everything you need to invest and build wealth on a global level.",
       text: "Understand global markets, follow economic analysis, and develop a strategy to build wealth beyond the borders of your country.",
       free: "JOIN THE FORMIGA CHANNEL",
-      services: "EXPLORE EDUCATION",
+      services: "EXPLORE FORMATION",
     },
     intro: {
       eyebrow: "What it is",
@@ -81,7 +86,7 @@ const homeLiteCopy = {
       title: "Todo lo que necesitas para invertir y construir patrimonio a nivel global.",
       text: "Comprende los mercados globales, sigue an\u00e1lisis econ\u00f3micos y desarrolla una estrategia para construir patrimonio m\u00e1s all\u00e1 de las fronteras de tu pa\u00eds.",
       free: "ENTRAR AL CANAL FORMIGA",
-      services: "CONOCER LA EDUCACI\u00d3N",
+      services: "CONOCER LA FORMACI\u00d3N",
     },
     intro: {
       eyebrow: "Qu\u00e9 es",
@@ -1220,19 +1225,19 @@ const homeHeroStats: Record<string, Array<{ value: string; label: string }>> = {
   pt: [
     { value: "2018", label: "Desde" },
     { value: "Milhões", label: "de dólares movimentados" },
-    { value: "15", label: "idiomas" },
+    { value: "21", label: "idiomas" },
     { value: "Global", label: "mercados globais" },
   ],
   en: [
     { value: "2018", label: "Since" },
     { value: "Millions", label: "of dollars moved" },
-    { value: "15", label: "languages" },
+    { value: "21", label: "languages" },
     { value: "Global", label: "markets" },
   ],
   es: [
     { value: "2018", label: "Desde" },
     { value: "Millones", label: "de dólares movilizados" },
-    { value: "15", label: "idiomas" },
+    { value: "21", label: "idiomas" },
     { value: "Global", label: "mercados globales" },
   ],
 };
@@ -1327,19 +1332,19 @@ const homeEducationBaseCopy: Record<string, { eyebrow: string; title: string; te
     eyebrow: "Base educacional",
     title: "A metodologia começa na educação.",
     text: "Formiga, Lobo e Harpia organizam a base educacional do Varejo Investidor. Essa trilha ajuda o investidor a sair do básico, entender risco, ler mercados globais e construir visão patrimonial.",
-    cta: "Conhecer Educação",
+    cta: "Conhecer Formação",
   },
   en: {
     eyebrow: "Educational base",
     title: "The methodology starts with education.",
     text: "Formiga, Lobo, and Harpia organize Varejo Investidor's educational base, helping investors understand risk, read global markets, and build a wealth mindset.",
-    cta: "View Education",
+    cta: "View Formation",
   },
   es: {
     eyebrow: "Base educativa",
     title: "La metodología comienza con educación.",
     text: "Formiga, Lobo y Harpia organizan la base educativa de Varejo Investidor para ayudar al inversor a entender riesgo, mercados globales y visión patrimonial.",
-    cta: "Ver Educación",
+    cta: "Ver Formación",
   },
 };
 
@@ -1578,12 +1583,17 @@ export default function Home() {
   const finalText = "text" in copy.final ? copy.final.text : undefined;
   const localizedPage = (path: string) => localizedPath(path, locale);
   const educationHref = localizedPage("/educacao");
+  const formigaHref = getFormigaChannelUrl(locale, t.freeChannel.link);
+  const loboHref = getLoboChannelUrl(locale);
+  const loboLabel = getLoboChannelButtonLabel(locale);
+  const loboButtonClass =
+    "premium-button-ghost border border-ink/[0.18] bg-paper/[0.03] px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5";
 
   return (
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section id="home" className="home-hero premium-stage relative px-5 pb-20 pt-36 md:px-8 md:pb-28 md:pt-48 lg:px-12 xl:px-16">
+      <section id="home" className="home-hero premium-stage relative px-5 pb-16 pt-8 md:px-8 md:pb-28 md:pt-48 lg:px-12 xl:px-16">
         <div className="cinematic-noise" />
         <div className="finance-particles" />
         <div className="absolute right-[7%] top-24 h-[34rem] w-[34rem] rounded-full bg-gold/[0.08] blur-3xl" />
@@ -1599,7 +1609,7 @@ export default function Home() {
             }}
             className="hero-mascot-wrap order-2 mx-auto w-full max-w-[340px] sm:max-w-[520px] lg:order-2 lg:max-w-[640px] 2xl:max-w-[720px]"
           >
-            <div className="hero-image-wrapper relative mx-auto flex min-h-[24rem] items-center justify-center sm:min-h-[34rem] lg:min-h-[44rem] xl:min-h-[48rem]">
+            <div className="hero-image-wrapper relative mx-auto flex min-h-[15rem] items-center justify-center sm:min-h-[24rem] md:min-h-[34rem] lg:min-h-[44rem] xl:min-h-[48rem]">
               <Image
                 src="/characters/home-hero-official-20260527.png"
                 alt="Personagens oficiais Formiga, Lobo e Harpia do Varejo Investidor"
@@ -1613,25 +1623,37 @@ export default function Home() {
           </motion.div>
 
           <motion.div className="order-1 lg:order-1" initial="hidden" animate="visible" transition={{ staggerChildren: 0.08 }}>
-            <motion.h1 variants={fadeUp} className="hero-headline max-w-5xl text-balance font-serif text-[2.55rem] leading-[1.04] tracking-[-0.045em] text-ink md:text-[4.55rem] xl:text-[5.4rem]">
+            <motion.h1 variants={fadeUp} className="hero-headline max-w-5xl text-balance font-serif text-[clamp(1.875rem,7.8vw,2.375rem)] leading-[1.05] tracking-[-0.03em] text-ink md:text-[4.55rem] md:leading-[1.04] md:tracking-[-0.045em] xl:text-[5.4rem]">
               {copy.hero.title}
             </motion.h1>
             <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg font-light leading-9 text-ink/[0.7] md:text-xl">
               {copy.hero.text}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink shadow-premium transition hover:-translate-y-0.5">
+              <a href={formigaHref} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink shadow-premium transition hover:-translate-y-0.5">
                 {copy.hero.free}
               </a>
-              <a href={educationHref} onClick={() => trackVarejoClick("home_education_click", { locale })} className="premium-button-ghost border border-ink/[0.18] bg-paper/[0.03] px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5">
-                {copy.hero.services}
-              </a>
+              {loboHref ? (
+                <a
+                  href={loboHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackVarejoClick("home_lobo_click", { locale })}
+                  className={loboButtonClass}
+                >
+                  {loboLabel}
+                </a>
+              ) : (
+                <span className={`${loboButtonClass} cursor-not-allowed opacity-55`} aria-disabled="true" title={loboLabel}>
+                  {loboLabel}
+                </span>
+              )}
             </motion.div>
-            <motion.div variants={fadeUp} className="mt-9 grid max-w-3xl grid-cols-2 gap-3 md:grid-cols-4">
+            <motion.div variants={fadeUp} className="hero-stats-grid mt-9 grid w-full max-w-3xl grid-cols-2 gap-3 md:grid-cols-4">
               {heroStats.map((stat) => (
-                <div key={`${stat.value}-${stat.label}`} className="border border-gold/[0.18] bg-white/[0.04] px-4 py-4 shadow-fine backdrop-blur">
-                  <p className="font-serif text-2xl leading-none tracking-[-0.04em] text-gold md:text-3xl">{stat.value}</p>
-                  <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.16em] text-ink/[0.58]">{stat.label}</p>
+                <div key={`${stat.value}-${stat.label}`} className="hero-stat-card min-w-0 border border-gold/[0.18] bg-white/[0.04] px-3 py-3.5 shadow-fine backdrop-blur sm:px-4 sm:py-4">
+                  <p className="font-serif text-xl leading-none tracking-[-0.04em] text-gold sm:text-2xl md:text-3xl">{stat.value}</p>
+                  <p className="mt-2 text-balance text-[0.6875rem] font-bold uppercase leading-snug tracking-[0.1em] text-ink/[0.58] sm:text-[10px] sm:tracking-[0.14em]">{stat.label}</p>
                 </div>
               ))}
             </motion.div>
@@ -1903,7 +1925,7 @@ export default function Home() {
           </div>
 
           <div className="mt-10 grid items-stretch gap-5 lg:grid-cols-2">
-            <article className="broker-home-card broker-home-card-forex group relative flex h-full min-h-[360px] flex-col overflow-hidden border border-gold/[0.22] bg-white/[0.035] p-6 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:p-8">
+            <article className="broker-home-card broker-home-card-forex group relative flex h-full min-h-0 flex-col overflow-hidden border border-gold/[0.22] bg-white/[0.035] p-6 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:min-h-[360px] md:p-8">
               <div className="absolute inset-0 terminal-grid opacity-20" />
               <div className="relative flex h-full flex-col">
                 <div className="mb-8 flex items-center justify-between gap-4">
@@ -1920,7 +1942,7 @@ export default function Home() {
               </div>
             </article>
 
-            <article className="broker-home-card broker-home-card-crypto group relative flex h-full min-h-[360px] flex-col overflow-hidden border border-gold/[0.22] bg-white/[0.035] p-6 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:p-8">
+            <article className="broker-home-card broker-home-card-crypto group relative flex h-full min-h-0 flex-col overflow-hidden border border-gold/[0.22] bg-white/[0.035] p-6 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.55] hover:shadow-premium md:min-h-[360px] md:p-8">
               <div className="absolute inset-0 terminal-grid opacity-20" />
               <div className="relative flex h-full flex-col">
                 <div className="mb-8 flex items-center justify-between gap-4">

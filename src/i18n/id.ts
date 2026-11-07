@@ -6,7 +6,7 @@ export const id = {
   nav: {
     home: "Beranda",
     signals: "Sinyal",
-    education: "Edukasi",
+    education: "Formasi",
     terminal: "Terminal",
     plans: "Paket",
     services: "Layanan",

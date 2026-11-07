@@ -3,7 +3,7 @@
   nav: {
     home: "Home",
     signals: "Signale",
-    education: "Bildung",
+    education: "Formation",
     terminal: "Terminal",
     plans: "Plaene",
     services: "Services",

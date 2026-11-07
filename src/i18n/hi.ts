@@ -3,7 +3,7 @@ export const hi = {
   nav: {
     home: "होम",
     signals: "सिग्नल",
-    education: "शिक्षा",
+    education: "प्रशिक्षण",
     terminal: "टर्मिनल",
     plans: "पैकेज",
     services: "सेवाएँ",
@@ -258,7 +258,7 @@ export const hi = {
 Object.assign(hi.nav, {
   home: "होम",
   signals: "सिग्नल",
-  education: "शिक्षा",
+  education: "प्रशिक्षण",
   services: "सेवाएँ",
   about: "हमारे बारे में",
   access: "Elite चैनल में प्रवेश करें",

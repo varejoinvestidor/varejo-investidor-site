@@ -10,6 +10,7 @@ import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/mark
 import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/insightsContent";
 import { getPlatformPath, platformSlugs } from "../data/platformContent";
 import { languageMeta, persistLanguageChoice } from "../i18n/languageCatalog";
+import { getYoutubeChannelUrl } from "../config/youtubeChannels";
 import { eliteReportPaths } from "./EliteReportHub";
 import { LocaleFlagIcon } from "./LocaleFlagIcon";
 
@@ -314,18 +315,28 @@ export function SiteChrome({
 
   useEffect(() => {
     setMobileLanguageOpen(false);
-    document.documentElement.style.setProperty(
-      "--mobile-header-height",
-      "0px",
-    );
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--mobile-header-height",
-      "0px",
-    );
-  }, [mobileLanguageOpen]);
+    const chrome = document.querySelector<HTMLElement>(".site-chrome");
+    if (!chrome || typeof ResizeObserver === "undefined") return;
+
+    const syncChromeHeight = () => {
+      const height = Math.ceil(chrome.getBoundingClientRect().height);
+      document.documentElement.style.setProperty("--vi-site-chrome-height", `${height}px`);
+      document.documentElement.style.setProperty("--mobile-header-height", `${height}px`);
+    };
+
+    syncChromeHeight();
+    const observer = new ResizeObserver(syncChromeHeight);
+    observer.observe(chrome);
+    window.addEventListener("resize", syncChromeHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncChromeHeight);
+    };
+  }, [mobileLanguageOpen, mobileMenuOpen]);
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -1115,7 +1126,7 @@ export function SupportFooter({
     },
     {
       label: "YouTube",
-      href: "https://www.youtube.com/@Varejoinvestidor",
+      href: getYoutubeChannelUrl(locale),
       icon: (
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
           <path

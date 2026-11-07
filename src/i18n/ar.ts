@@ -6,7 +6,7 @@ export const ar = {
   nav: {
     home: "الرئيسية",
     signals: "الإشارات",
-    education: "التعليم",
+    education: "التكوين",
     terminal: "المنصة",
     plans: "الباقات",
     services: "الخدمات",

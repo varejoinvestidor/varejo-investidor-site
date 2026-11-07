@@ -7,7 +7,7 @@ export const ja = {
     ...en.nav,
     home: "ホーム",
     signals: "シグナル",
-    education: "教育",
+    education: "研修",
     services: "サービス",
     about: "概要",
     access: "Eliteに参加",

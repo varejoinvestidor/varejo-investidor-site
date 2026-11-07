@@ -6,7 +6,7 @@ export const tr = {
   nav: {
     home: "Ana Sayfa",
     signals: "Sinyaller",
-    education: "Eğitim",
+    education: "Formasyon",
     terminal: "Terminal",
     plans: "Paketler",
     services: "Hizmetler",

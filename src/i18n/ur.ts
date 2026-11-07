@@ -7,7 +7,7 @@ export const ur = {
     ...en.nav,
     home: "ہوم",
     signals: "سگنلز",
-    education: "تعلیم",
+    education: "تربیت",
     services: "خدمات",
     about: "ہمارے بارے میں",
     access: "Elite چینل میں شامل ہوں",

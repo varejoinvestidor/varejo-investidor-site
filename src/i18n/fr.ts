@@ -7,7 +7,7 @@ export const fr = {
     ...en.nav,
     home: "Accueil",
     signals: "Signaux",
-    education: "Éducation",
+    education: "Formation",
     services: "Services",
     about: "À propos",
     access: "Rejoindre le Canal Elite",
@@ -25,6 +25,7 @@ export const fr = {
     title: "Canal Formiga gratuit",
     text: "Recevez gratuitement des analyses économiques, des contenus éducatifs et des mises à jour sur les marchés mondiaux directement sur WhatsApp.",
     button: "ENTRER DANS LE CANAL FORMIGA",
+    link: "https://whatsapp.com/channel/0029VbDxJEI6BIEmo6T8tD34",
     eyebrow: "Entrée gratuite",
   },
   brokers: {

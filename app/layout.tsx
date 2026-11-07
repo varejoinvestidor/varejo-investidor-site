@@ -5,6 +5,7 @@ import { SiteJsonLd } from "../src/components/SiteJsonLd";
 import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, localeToHtmlLang, type Locale } from "../src/i18n";
 import "./globals.css";
 import "./institutional.css";
+import "./mobile-system.css";
 
 const siteTitle = "Varejo Investidor | Sinais, Educação e Mercado Global";
 const siteDescription = SITE_DESCRIPTION;

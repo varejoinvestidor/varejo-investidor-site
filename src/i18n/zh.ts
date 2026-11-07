@@ -3,7 +3,7 @@
   nav: {
     home: "\u9996\u9875",
     signals: "\u4FE1\u53F7",
-    education: "\u6559\u80B2",
+    education: "培训",
     terminal: "Terminal",
     plans: "\u65B9\u6848",
     services: "\u670D\u52A1",

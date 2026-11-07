@@ -19,6 +19,7 @@ import {
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 import { eliteReportPaths } from "../../src/components/EliteReportHub";
+import { ELITE_LASTLINK_HERO_MONTHLY_PT, ELITE_LASTLINK_PLANS_PT } from "../../src/data/eliteLastlinkPricingPt";
 
 const howItWorks = [
   "2 a 5 sinais por dia",
@@ -469,12 +470,6 @@ export default function SignalsPage() {
   const isPt = locale === "pt";
   const ptHeroSubtitle =
     "Nossa equipe acompanha os mercados globais diariamente para identificar oportunidades em Forex, ouro, petróleo, índices, criptomoedas e moedas globais. Você recebe as análises e sinais diretamente no WhatsApp com todas as informações necessárias para execução na sua própria conta.";
-  const brazilElitePrices = [
-    ["Mensal", "R$ 149,90"],
-    ["Trimestral", "R$ 397,90"],
-    ["Semestral", "R$ 697,90"],
-    ["Anual", "R$ 1.197,90"],
-  ];
   const internationalElitePrices = [
     ["Monthly", "US$ 30"],
     ["3 Months", "US$ 80"],
@@ -521,7 +516,7 @@ export default function SignalsPage() {
     <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="signals-hero premium-stage relative px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-44">
+      <section className="signals-hero premium-stage relative px-5 pb-16 pt-8 md:px-8 md:pb-24 md:pt-44">
         <div className="finance-particles" />
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.12] blur-3xl" />
         <div className="absolute left-0 top-36 h-80 w-80 rounded-full bg-gold/[0.08] blur-3xl" />
@@ -887,19 +882,33 @@ export default function SignalsPage() {
                   <p className="mt-4 leading-8 text-paper/[0.68]">
                     Assine o Canal Elite em reais, com checkout nacional seguro pela Lastlink.
                   </p>
-                  <p className="mt-6 font-serif text-3xl tracking-[-0.04em] text-gold">A partir de R$149,90/mês</p>
+                  <p className="mt-6 font-serif text-3xl tracking-[-0.04em] text-gold">
+                    A partir de {ELITE_LASTLINK_HERO_MONTHLY_PT}
+                  </p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-paper/[0.48]">no plano anual</p>
                   <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {brazilElitePrices.map(([period, price], index) => (
-                      <div key={period} className="border border-gold/[0.22] bg-paper/[0.04] p-4">
+                    {ELITE_LASTLINK_PLANS_PT.map((plan) => (
+                      <div
+                        key={plan.period}
+                        className={`border p-4 ${
+                          plan.featured
+                            ? "border-gold/[0.55] bg-gradient-to-br from-gold/[0.16] to-paper/[0.04] shadow-[0_0_0_1px_rgba(201,155,62,0.14)]"
+                            : "border-gold/[0.22] bg-paper/[0.04]"
+                        }`}
+                      >
                         <div className="flex items-start justify-between gap-3">
-                          <p className="text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.62]">{period}</p>
-                          {index === 3 ? (
-                            <span className="shrink-0 border border-gold/[0.42] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-gold">
-                              Maior economia
+                          <div>
+                            <p className="text-xs font-bold uppercase tracking-[0.18em] text-paper/[0.62]">{plan.period}</p>
+                            <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-paper/[0.44]">{plan.validity}</p>
+                          </div>
+                          {plan.badge ? (
+                            <span className="shrink-0 border border-gold/[0.42] bg-gold/[0.1] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-gold">
+                              {plan.badge}
                             </span>
                           ) : null}
                         </div>
-                        <p className="mt-3 font-mono text-xl font-bold text-paper">{price}</p>
+                        <p className="mt-3 font-mono text-xl font-bold text-paper">{plan.total}</p>
+                        <p className="mt-1 text-xs font-semibold tracking-[0.05em] text-paper/[0.55]">{plan.monthlyEquivalent}</p>
                       </div>
                     ))}
                   </div>
