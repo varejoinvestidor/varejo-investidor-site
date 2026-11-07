@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
+import { absoluteSiteUrl } from "../config/site";
 import { getForexLibraryContent } from "./forexLibraryContent";
 import { getMarketContent, type MarketSlug } from "./marketContent";
-
-const siteUrl = "https://varejo-investidor-site.vercel.app";
 
 export function createMarketMetadata(slug: MarketSlug): Metadata {
   const content = slug === "forex" ? getForexLibraryContent("pt") : getMarketContent(slug, "pt");
   const path = `/${slug}`;
-  const url = `${siteUrl}${path}`;
+  const url = absoluteSiteUrl(path);
 
   return {
     title: content.metaTitle,

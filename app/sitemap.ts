@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
+import { absoluteSiteUrl } from "../src/config/site";
 import { insightPosts, getInsightsPath, insightsBasePath } from "../src/data/insightsContent";
 import { getPlatformPath, platformSlugs } from "../src/data/platformContent";
 import type { Locale } from "../src/i18n";
 
-const siteUrl = "https://varejo-investidor-site.vercel.app";
-
 const staticPaths = [
+  "/idioma",
   "/",
   "/pt",
   "/en",
@@ -354,14 +354,14 @@ const sitemapLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = staticPaths.map((path) => ({
-    url: `${siteUrl}${path}`,
+    url: absoluteSiteUrl(path),
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: path === "/" ? 1 : 0.8,
   }));
 
   const insightEntries = insightPosts.map((post) => ({
-    url: `${siteUrl}${getInsightsPath(post.locale, post.slug)}`,
+    url: absoluteSiteUrl(getInsightsPath(post.locale, post.slug)),
     lastModified: new Date(post.date),
     changeFrequency: "monthly" as const,
     priority: 0.7,
@@ -369,7 +369,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const platformEntries = sitemapLocales.flatMap((locale) =>
     platformSlugs.map((slug) => ({
-      url: `${siteUrl}${getPlatformPath(locale, slug)}`,
+      url: absoluteSiteUrl(getPlatformPath(locale, slug)),
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.72,

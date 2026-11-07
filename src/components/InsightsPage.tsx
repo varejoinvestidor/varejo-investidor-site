@@ -11,6 +11,7 @@ import {
 } from "./SiteSections";
 import { BrokerAccessBlock } from "./BrokerAccessBlock";
 import type { Locale } from "../i18n";
+import { absoluteSiteUrl } from "../config/site";
 import {
   getInsightMarketLinks,
   getInsightsPath,
@@ -34,13 +35,13 @@ function SchemaScripts({ locale }: { locale: Locale }) {
     name: hero.title,
     description: hero.metaDescription,
     inLanguage: locale === "pt" ? "pt-BR" : locale,
-    url: `https://varejo-investidor-site.vercel.app${getInsightsPath(locale)}`,
+    url: absoluteSiteUrl(getInsightsPath(locale)),
     publisher: { "@type": "Organization", name: "Varejo Investidor" },
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       description: post.description,
-      url: `https://varejo-investidor-site.vercel.app${getInsightsPath(locale, post.slug)}`,
+      url: absoluteSiteUrl(getInsightsPath(locale, post.slug)),
       datePublished: post.date,
       author: { "@type": "Organization", name: post.author },
     })),

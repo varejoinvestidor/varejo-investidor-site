@@ -48,8 +48,8 @@ const homeLiteCopy = {
       eyebrow: "Varejo Investidor",
       title: "Everything you need to invest and build wealth on a global level.",
       text: "Understand global markets, follow economic analysis, and develop a strategy to build wealth beyond the borders of your country.",
-      free: "Start free",
-      services: "View education",
+      free: "JOIN THE FORMIGA CHANNEL",
+      services: "EXPLORE EDUCATION",
     },
     intro: {
       eyebrow: "What it is",
@@ -80,8 +80,8 @@ const homeLiteCopy = {
       eyebrow: "Varejo Investidor",
       title: "Todo lo que necesitas para invertir y construir patrimonio a nivel global.",
       text: "Comprende los mercados globales, sigue an\u00e1lisis econ\u00f3micos y desarrolla una estrategia para construir patrimonio m\u00e1s all\u00e1 de las fronteras de tu pa\u00eds.",
-      free: "Empezar gratis",
-      services: "Ver educaci\u00f3n",
+      free: "ENTRAR AL CANAL FORMIGA",
+      services: "CONOCER LA EDUCACI\u00d3N",
     },
     intro: {
       eyebrow: "Qu\u00e9 es",
@@ -1991,16 +1991,27 @@ export default function Home() {
               <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_final_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition">
                 {copy.final.free}
               </a>
-              <a href={localizedPage("/sinais")} onClick={() => trackVarejoClick("home_elite_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
-                {copy.final.elite}
-              </a>
-              <a href={localizedPage("/select")} onClick={() => trackVarejoClick("home_final_select_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
-                {finalCtas.select}
-              </a>
-              <a href={localizedPage("/private")} onClick={() => trackVarejoClick("home_final_private_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
-                {finalCtas.private}
+              <a href={educationHref} onClick={() => trackVarejoClick("home_final_education_click", { locale })} className="premium-button-ghost border border-paper/[0.25] bg-paper/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.16em] text-paper transition">
+                {copy.hero.services}
               </a>
             </div>
+            <nav aria-label={locale === "pt" ? "Outros níveis do ecossistema" : "Other ecosystem levels"} className="relative mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+              <a href={localizedPage("/sinais")} onClick={() => trackVarejoClick("home_elite_click", { locale })} className="text-[11px] font-bold uppercase tracking-[0.14em] text-paper/[0.52] transition hover:text-gold">
+                {copy.final.elite}
+              </a>
+              <span className="hidden text-paper/[0.25] sm:inline" aria-hidden="true">
+                ·
+              </span>
+              <a href={localizedPage("/select")} onClick={() => trackVarejoClick("home_final_select_click", { locale })} className="text-[11px] font-bold uppercase tracking-[0.14em] text-paper/[0.52] transition hover:text-gold">
+                {finalCtas.select}
+              </a>
+              <span className="hidden text-paper/[0.25] sm:inline" aria-hidden="true">
+                ·
+              </span>
+              <a href={localizedPage("/private")} onClick={() => trackVarejoClick("home_final_private_click", { locale })} className="text-[11px] font-bold uppercase tracking-[0.14em] text-paper/[0.52] transition hover:text-gold">
+                {finalCtas.private}
+              </a>
+            </nav>
           </div>
         </motion.div>
       </section>

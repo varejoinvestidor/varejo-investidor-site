@@ -5,6 +5,7 @@ import { BrokerAccessBlock } from "./BrokerAccessBlock";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "./SiteSections";
 import type { Locale } from "../i18n";
 import { getForexLibraryContent, type ForexLibraryContent } from "../data/forexLibraryContent";
+import { absoluteSiteUrl } from "../config/site";
 import { getMarketContent, getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 
 const pageLabels: Record<Locale, {
@@ -175,7 +176,7 @@ const forexUiLabels: Record<Locale, {
 function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {
   const content = getMarketContent(slug, locale);
   const forexContent = slug === "forex" ? getForexLibraryContent(locale) : null;
-  const url = `https://varejo-investidor-site.vercel.app/${slug}`;
+  const url = absoluteSiteUrl(`/${slug}`);
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -186,7 +187,7 @@ function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {
     publisher: {
       "@type": "Organization",
       name: "Varejo Investidor",
-      url: "https://varejo-investidor-site.vercel.app/",
+      url: absoluteSiteUrl("/"),
     },
   };
   const faqSchema = {
@@ -202,7 +203,7 @@ function SchemaScripts({ slug, locale }: { slug: MarketSlug; locale: Locale }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Varejo Investidor", item: "https://varejo-investidor-site.vercel.app/" },
+      { "@type": "ListItem", position: 1, name: "Varejo Investidor", item: absoluteSiteUrl("/") },
       { "@type": "ListItem", position: 2, name: content.title, item: url },
     ],
   };

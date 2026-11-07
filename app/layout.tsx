@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { SITE_DESCRIPTION, SITE_URL } from "../src/config/site";
+import { SiteJsonLd } from "../src/components/SiteJsonLd";
 import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, localeToHtmlLang, type Locale } from "../src/i18n";
 import "./globals.css";
 import "./institutional.css";
 
 const siteTitle = "Varejo Investidor | Sinais, Educação e Mercado Global";
-const siteDescription =
-  "Ecossistema global com sinais ao vivo, educação por níveis, análises de mercado e estrutura estratégica para investidores de varejo.";
+const siteDescription = SITE_DESCRIPTION;
 
 const languageAlternates: Record<string, string> = {
   "x-default": "/en",
@@ -34,6 +35,7 @@ const languageAlternates: Record<string, string> = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: siteTitle,
   description: siteDescription,
   openGraph: {
@@ -42,6 +44,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "Varejo Investidor",
+    url: "/",
   },
   twitter: {
     card: "summary_large_image",
@@ -71,7 +74,10 @@ export default function RootLayout({
       <head>
         <meta charSet="UTF-8" />
       </head>
-      <body>{children}</body>
+      <body>
+        <SiteJsonLd />
+        {children}
+      </body>
     </html>
   );
 }

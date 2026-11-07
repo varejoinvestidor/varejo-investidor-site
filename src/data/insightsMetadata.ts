@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import type { Locale } from "../i18n";
+import { absoluteSiteUrl } from "../config/site";
 import { getInsightsPath, getPost, insightsBasePath, insightsHero, insightLocales } from "./insightsContent";
-
-const siteUrl = "https://varejo-investidor-site.vercel.app";
 
 function languageAlternates(slug?: string) {
   return Object.fromEntries(
@@ -27,7 +26,7 @@ export function createInsightsMetadata(locale: Locale): Metadata {
     openGraph: {
       title: `${hero.title} | Varejo Investidor`,
       description: hero.metaDescription,
-      url: `${siteUrl}${path}`,
+      url: absoluteSiteUrl(path),
       siteName: "Varejo Investidor",
       type: "website",
       locale: locale === "pt" ? "pt_BR" : locale,
@@ -57,7 +56,7 @@ export function createInsightPostMetadata(locale: Locale, slug: string): Metadat
     openGraph: {
       title: post.seoTitle,
       description: post.seoDescription,
-      url: `${siteUrl}${path}`,
+      url: absoluteSiteUrl(path),
       siteName: "Varejo Investidor",
       type: "article",
       locale: locale === "pt" ? "pt_BR" : locale,

@@ -10,6 +10,7 @@ import {
 } from "./SiteSections";
 import { BrokerAccessBlock } from "./BrokerAccessBlock";
 import type { Locale } from "../i18n";
+import { absoluteSiteUrl } from "../config/site";
 import {
   getInsightsPath,
   getPost,
@@ -20,7 +21,7 @@ import {
 } from "../data/insightsContent";
 
 function SchemaScripts({ post }: { post: InsightPost }) {
-  const url = `https://varejo-investidor-site.vercel.app${getInsightsPath(post.locale, post.slug)}`;
+  const url = absoluteSiteUrl(getInsightsPath(post.locale, post.slug));
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",

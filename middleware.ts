@@ -1,6 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { DEFAULT_LOCALE, isSupportedLocale } from "./src/i18n/locales";
-import { localeFromPublicPath, normalizeUrlLocaleSegment } from "./src/i18n/routing";
+import {
+  LANGUAGE_GATE_COOKIE,
+  LANGUAGE_GATE_PATH,
+} from "./src/i18n/languageCatalog";
+import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "./src/i18n/locales";
+import { localeFromPublicPath, localizedPath, normalizeUrlLocaleSegment } from "./src/i18n/routing";
 
 function localeFromAcceptLanguage(header: string | null) {
   if (!header) return DEFAULT_LOCALE;
@@ -20,6 +24,45 @@ function localeFromAcceptLanguage(header: string | null) {
   return DEFAULT_LOCALE;
 }
 
+function isSearchBot(userAgent: string | null) {
+  if (!userAgent) return false;
+  return /googlebot|bingbot|slurp|duckduckbot|baiduspider|yandex|facebookexternalhit|twitterbot|linkedinbot|lighthouse|bot|crawler|spider|preview/i.test(
+    userAgent,
+  );
+}
+
+function hasCompletedLanguageGate(request: NextRequest) {
+  return (
+    request.cookies.get(LANGUAGE_GATE_COOKIE)?.value === "1" ||
+    request.cookies.get("varejo_language_selected")?.value === "true"
+  );
+}
+
+function getSavedLocaleFromCookies(request: NextRequest): SupportedLocale | null {
+  const saved =
+    request.cookies.get("varejo_language")?.value ??
+    request.cookies.get("language")?.value ??
+    request.cookies.get("varejo-investidor-locale")?.value;
+  return isSupportedLocale(saved) ? saved : null;
+}
+
+function isLocalizedHomePath(pathname: string) {
+  const parts = pathname.split("/").filter(Boolean);
+  if (parts.length === 0) return true;
+
+  if (parts.length === 1) {
+    const locale = normalizeUrlLocaleSegment(parts[0]);
+    if (locale) return true;
+    if (parts[0] === "home") return true;
+  }
+
+  if (parts.length === 2 && parts[1] === "home" && normalizeUrlLocaleSegment(parts[0])) {
+    return true;
+  }
+
+  return false;
+}
+
 function getLocaleFromRequest(request: NextRequest) {
   const firstSegment = request.nextUrl.pathname.split("/").filter(Boolean)[0];
   const urlLocale = normalizeUrlLocaleSegment(firstSegment);
@@ -28,17 +71,36 @@ function getLocaleFromRequest(request: NextRequest) {
   const publicPathLocale = localeFromPublicPath(request.nextUrl.pathname);
   if (publicPathLocale) return publicPathLocale;
 
-  const savedLocale =
-    request.cookies.get("varejo_language")?.value ??
-    request.cookies.get("language")?.value ??
-    request.cookies.get("varejo-investidor-locale")?.value;
-
-  if (isSupportedLocale(savedLocale)) return savedLocale;
+  const savedLocale = getSavedLocaleFromCookies(request);
+  if (savedLocale) return savedLocale;
 
   return localeFromAcceptLanguage(request.headers.get("accept-language"));
 }
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname !== LANGUAGE_GATE_PATH && !isSearchBot(request.headers.get("user-agent"))) {
+    if (!hasCompletedLanguageGate(request) && isLocalizedHomePath(pathname)) {
+      const gateUrl = request.nextUrl.clone();
+      gateUrl.pathname = LANGUAGE_GATE_PATH;
+      if (pathname !== "/") {
+        gateUrl.searchParams.set("returnTo", pathname);
+      }
+      return NextResponse.redirect(gateUrl);
+    }
+
+    if (hasCompletedLanguageGate(request) && pathname === "/") {
+      const saved = getSavedLocaleFromCookies(request);
+      if (saved) {
+        const target = localizedPath("/", saved);
+        if (target !== pathname) {
+          return NextResponse.redirect(new URL(target, request.url));
+        }
+      }
+    }
+  }
+
   const requestHeaders = new Headers(request.headers);
   const locale = getLocaleFromRequest(request);
   requestHeaders.set("x-varejo-locale", locale);
@@ -74,6 +136,7 @@ export function middleware(request: NextRequest) {
       "relatorio-elite",
       "elite-report",
       "reporte-elite",
+      "idioma",
     ]);
 
     if (firstPageSegment && localizedPageAliases[firstPageSegment]) {
