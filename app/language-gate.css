@@ -12,6 +12,10 @@
     inset 0 1px 0 rgba(198, 153, 74, 0.12);
 }
 
+.language-gate-mobile-mascots-image {
+  max-height: clamp(5.25rem, 26vw, 7.25rem);
+}
+
 .language-gate-option:focus-visible {
   outline: 2px solid #c6994a;
   outline-offset: 2px;

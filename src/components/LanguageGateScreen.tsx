@@ -96,6 +96,23 @@ export function LanguageGateScreen() {
           transition={{ duration: reduceMotion ? 0 : 0.7, delay: reduceMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
           className="order-1 md:order-2"
         >
+          <div className="language-gate-mobile-mascots mb-5 flex justify-center md:hidden">
+            <div className="relative w-full max-w-[17.5rem] sm:max-w-[19.5rem]">
+              <div
+                className="pointer-events-none absolute inset-x-4 bottom-0 h-10 bg-gold/[0.08] blur-2xl"
+                aria-hidden="true"
+              />
+              <Image
+                src="/characters/varejo-investidor-personagens.png"
+                alt="Formiga, Lobo e Harpia — personagens oficiais Varejo Investidor"
+                width={640}
+                height={360}
+                sizes="(max-width: 640px) 280px, 312px"
+                className="language-gate-mobile-mascots-image relative mx-auto h-auto w-full object-contain opacity-[0.94]"
+                priority
+              />
+            </div>
+          </div>
           <div
             className="language-gate-panel border border-gold/[0.22] bg-[#050505]/90 p-4 shadow-premium backdrop-blur-md md:p-6"
             role="list"
