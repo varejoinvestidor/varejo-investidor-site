@@ -10,14 +10,23 @@ import {
   getLoboChannelUrl,
 } from "../src/data/whatsappChannels";
 import type { Locale } from "../src/i18n";
+import type { SupportedLocale } from "../src/i18n/locales";
 import { localeToUrlSegment, localizedPath } from "../src/i18n/routing";
+import { getHomeHeroSubtext, homeHeroSubtext } from "../src/data/homeHeroSubtext";
+import {
+  getAuthorityLanguageCard,
+  getHomeHeroLanguageStat,
+  getIntroLanguageStat,
+} from "../src/data/languageCountCopy";
+import { homeLiteCopyHe } from "../src/data/homeLiteCopyHe";
+import { isRtlLocale } from "../src/i18n";
 
 const homeLiteCopy = {
   pt: {
     hero: {
       eyebrow: "Varejo Investidor",
       title: "Tudo o que voc\u00ea precisa para investir e construir patrim\u00f4nio em n\u00edvel global.",
-      text: "Entenda os mercados globais, acompanhe an\u00e1lises econ\u00f4micas e desenvolva uma estrat\u00e9gia para construir patrim\u00f4nio al\u00e9m das fronteiras do seu pa\u00eds.",
+      text: homeHeroSubtext.pt,
       free: "ENTRAR NO CANAL FORMIGA",
       services: "CONHECER A FORMA\u00c7\u00c3O",
     },
@@ -33,7 +42,7 @@ const homeLiteCopy = {
         "Select \u2014 Estrutura operacional automatizada para investidores que desejam exposi\u00e7\u00e3o internacional sem acompanhar opera\u00e7\u00f5es diariamente.",
         "Private \u2014 Estrutura patrimonial internacional voltada para prote\u00e7\u00e3o, organiza\u00e7\u00e3o, crescimento e continuidade do patrim\u00f4nio.",
       ],
-      stats: ["Desde 2018", "Milh\u00f5es de d\u00f3lares movimentados", "21 idiomas", "Mercados globais"],
+      stats: ["Desde 2018", "Milh\u00f5es de d\u00f3lares movimentados", "22 idiomas", "Mercados globais"],
     },
     cards: [
       { code: "FORMIGA", title: "Base financeira", text: "Educa\u00e7\u00e3o por n\u00edveis para sair da base, organizar risco e construir os primeiros pilares.", href: "/nivel-formiga" },
@@ -668,6 +677,13 @@ Object.assign(homeEliteCopy, {
     cards: ["ライブシグナル", "WhatsAppで受信", "エントリー・目標・ストップ", "市場分析", "レベル別教育", "グローバル読解"],
     cta: "Eliteチャンネルを見る",
   },
+  he: {
+    title: "ערוץ Elite",
+    subtitle: "קבלו ניתוח וסיגנלים ישירות ב-WhatsApp.",
+    text: "ערוץ Elite נבנה למשקיעים שרוצים לעקוב אחר שווקים גלובליים באמצעות סיגנלים מובנים, ניתוח וקריאת שוק. מאז 2018 נשלחו יותר מ-4,200 סיגנלים חיים ב-Forex, זהב, נפט, מדדים, קריפטו ומטבעות.",
+    cards: ["סיגנלים חיים", "קבלה ב-WhatsApp", "כניסה, יעד וסטופ", "ניתוח שוק", "הכשרה לפי רמות", "קריאה גלובלית"],
+    cta: "גלו את ערוץ Elite",
+  },
   ko: {
     title: "Elite 채널",
     subtitle: "분석과 신호를 WhatsApp으로 직접 받아보세요.",
@@ -738,6 +754,18 @@ Object.assign(homeSelectCopy, {
   ja: { ...homeSelectCopy.en, text: "すでに一定の資産を持ち、日々の取引を追わずに世界市場へのエクスポージャーを得たい投資家向けの運用構造です。", cta: "SELECTを見る", cards: [{ label: "最低運用額", value: "R$ 250,000" }, { label: "海外投資家", value: "US$ 50,000" }, { label: "Forex" }, { label: "株式" }, { label: "暗号資産" }] },
   ko: { ...homeSelectCopy.en, text: "이미 의미 있는 자산을 보유하고 있으며 매일 거래를 따라가지 않고 글로벌 시장 노출을 원하는 투자자를 위한 운영 구조입니다.", cta: "SELECT 보기", cards: [{ label: "최소 운용금액", value: "R$ 250,000" }, { label: "국제 투자자", value: "US$ 50,000" }, { label: "Forex" }, { label: "주식" }, { label: "암호화폐" }] },
   pl: { ...homeSelectCopy.en, text: "Struktura operacyjna dla inwestorów z istotnym kapitałem, którzy chcą ekspozycji na rynki globalne bez codziennego śledzenia transakcji.", cta: "POZNAJ SELECT", cards: [{ label: "Minimalna alokacja", value: "R$ 250.000" }, { label: "Inwestor międzynarodowy", value: "US$ 50.000" }, { label: "Forex" }, { label: "Akcje" }, { label: "Krypto" }] },
+  he: {
+    ...homeSelectCopy.en,
+    text: "מבנה תפעולי למשקיעים עם הון משמעותי שרוצים חשיפה לשווקים גלובליים בלי לעקוב אחרי עסקאות מדי יום.",
+    cta: "הכירו את Select",
+    cards: [
+      { label: "הקצאה מינימלית", value: "R$ 250.000" },
+      { label: "משקיע בינלאומי", value: "US$ 50.000" },
+      { label: "Forex" },
+      { label: "מניות" },
+      { label: "קריפטו" },
+    ],
+  },
 });
 
 const homePrivateCopy: Record<string, HomePrivateCopy> = {
@@ -801,6 +829,18 @@ Object.assign(homePrivateCopy, {
   ja: { ...homePrivateCopy.en, subtitle: "US$1,000,000超の投資家向けの機関投資家レベルの資産構造。", text: "国際資本を持つ投資家、ファミリー、起業家のためのグローバルな資産整理、保護、拡大。", cta: "PRIVATEを見る" },
   ko: { ...homePrivateCopy.en, subtitle: "US$1,000,000 이상의 투자자를 위한 기관 수준 자산 구조.", text: "국제 자본을 보유한 투자자, 가족, 기업가를 위한 글로벌 자산 조직, 보호, 확장.", cta: "PRIVATE 보기" },
   pl: { ...homePrivateCopy.en, subtitle: "Instytucjonalna struktura majątkowa dla inwestorów powyżej US$1,000,000.", text: "Globalna organizacja, ochrona i rozwój majątku dla inwestorów, rodzin i przedsiębiorców z kapitałem międzynarodowym.", cta: "POZNAJ PRIVATE" },
+  he: {
+    ...homePrivateCopy.en,
+    subtitle: "מבנה הון מוסדי למשקיעים מעל US$1,000,000.",
+    text: "ארגון, הגנה והתרחבות גלובלית של הון למשקיעים, משפחות ויזמים עם הון בינלאומי.",
+    cta: "הכירו את Private",
+    cards: [
+      { label: "כניסה", value: "US$1,000,000+" },
+      { label: "פרופיל", value: "הון בקנה מידה גבוה" },
+      { label: "מיקוד", value: "הגנה גלובלית" },
+      { label: "מבנה", value: "מוסדי" },
+    ],
+  },
 });
 
 homeEliteCopy.pt = {
@@ -1168,6 +1208,16 @@ const homeSeoLabels: Record<Locale, Record<"forex" | "stocks" | "crypto" | "etfs
   bn: { forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", formiga: "Ant Level", lobo: "Wolf Level", harpia: "Harpy Level", articles: "Articles" },
   ja: { forex: "Forex", stocks: "株式", crypto: "暗号資産", etfs: "ETF", formiga: "アリレベル", lobo: "オオカミレベル", harpia: "ハーピーレベル", articles: "記事" },
   ko: { forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETF", formiga: "개미 레벨", lobo: "늑대 레벨", harpia: "하피 레벨", articles: "기사" },
+  he: {
+    forex: "Forex",
+    stocks: "מניות",
+    crypto: "קריפטו",
+    etfs: "ETFs",
+    formiga: "רמת Formiga",
+    lobo: "רמת Lobo",
+    harpia: "רמת Harpia",
+    articles: "מאמרים",
+  },
 };
 
 type HomeMarketKey = "forex" | "stocks" | "crypto" | "etfs" | "fiis" | "platforms" | "tools" | "articles";
@@ -1225,19 +1275,19 @@ const homeHeroStats: Record<string, Array<{ value: string; label: string }>> = {
   pt: [
     { value: "2018", label: "Desde" },
     { value: "Milhões", label: "de dólares movimentados" },
-    { value: "21", label: "idiomas" },
+    { value: "22", label: "idiomas" },
     { value: "Global", label: "mercados globais" },
   ],
   en: [
     { value: "2018", label: "Since" },
     { value: "Millions", label: "of dollars moved" },
-    { value: "21", label: "languages" },
+    { value: "22", label: "languages" },
     { value: "Global", label: "markets" },
   ],
   es: [
     { value: "2018", label: "Desde" },
     { value: "Millones", label: "de dólares movilizados" },
-    { value: "21", label: "idiomas" },
+    { value: "22", label: "idiomas" },
     { value: "Global", label: "mercados globales" },
   ],
 };
@@ -1295,7 +1345,7 @@ const homeAuthorityCopy: Record<string, {
     text: "O Varejo Investidor conecta educação, sinais, mercados globais e soluções patrimoniais para diferentes fases da jornada financeira.",
     cards: [
       { title: "Milhões de dólares movimentados", text: "Experiência operacional conectada a mercados e estruturas internacionais." },
-      { title: "21 idiomas ativos", text: "Estrutura internacional preparada para investidores globais." },
+      { title: "22 idiomas ativos", text: "Estrutura internacional preparada para investidores globais." },
       { title: "Mercados globais", text: "Forex, ações, ETFs, criptoativos e commodities." },
       { title: "Educação estruturada", text: "Base educacional pela metodologia Formiga, Lobo e Harpia." },
       { title: "Atendimento patrimonial", text: "Select e Private para patrimônio internacional e gestão estratégica." },
@@ -1307,7 +1357,7 @@ const homeAuthorityCopy: Record<string, {
     text: "Varejo Investidor connects education, signals, global markets, and wealth solutions for different stages of the financial journey.",
     cards: [
       { title: "+4,200 signals sent", text: "Operational history followed live since 2018." },
-      { title: "21 active languages", text: "International structure prepared for global investors." },
+      { title: "22 active languages", text: "International structure prepared for global investors." },
       { title: "Global markets", text: "Forex, stocks, ETFs, crypto assets, and commodities." },
       { title: "Structured education", text: "Educational foundation through the Formiga, Lobo, and Harpia methodology." },
       { title: "Wealth support", text: "Select and Private for international wealth and strategic guidance." },
@@ -1319,7 +1369,7 @@ const homeAuthorityCopy: Record<string, {
     text: "Varejo Investidor conecta educación, señales, mercados globales y soluciones patrimoniales para diferentes etapas financieras.",
     cards: [
       { title: "+4.200 señales enviadas", text: "Historial operativo acompañado en vivo desde 2018." },
-      { title: "21 idiomas activos", text: "Estructura internacional preparada para inversores globales." },
+      { title: "22 idiomas activos", text: "Estructura internacional preparada para inversores globales." },
       { title: "Mercados globales", text: "Forex, acciones, ETFs, criptoactivos y commodities." },
       { title: "Educación estructurada", text: "Base educativa por la metodología Formiga, Lobo y Harpia." },
       { title: "Atención patrimonial", text: "Select y Private para patrimonio internacional y estrategia." },
@@ -1375,19 +1425,25 @@ const homeFinalCtas: Record<string, { select: string; private: string }> = {
   es: { select: "CONOCER SELECT", private: "CONOCER PRIVATE" },
 };
 
-homeLiteCopy.pt.hero.text = "Construa patrimônio através da educação, dos mercados globais e de estruturas criadas para cada etapa da sua evolução financeira.";
+Object.assign(homeLiteCopy, { he: homeLiteCopyHe });
+
+(Object.keys(homeHeroSubtext) as SupportedLocale[]).forEach((locale) => {
+  const entry = homeLiteCopy[locale as keyof typeof homeLiteCopy];
+  if (entry) {
+    entry.hero.text = homeHeroSubtext[locale];
+  }
+});
+
 homeLiteCopy.pt.final = {
   title: "Escolha o próximo passo da sua evolução patrimonial.",
   text: "Comece pela educação, acompanhe análises e sinais, avance para uma estrutura Select ou organize patrimônio global com o Private.",
   free: "CANAL FORMIGA",
   elite: "CANAL ELITE",
 };
-homeLiteCopy.en.hero.text = "Build wealth through education, global markets, and structures created for each stage of your financial evolution.";
 homeLiteCopy.en.final.title = "Choose the next step in your wealth evolution.";
 (homeLiteCopy.en.final as { title: string; text?: string; free: string; elite: string }).text = "Start with education, follow analysis and signals, move toward Select, or organize global wealth through Private.";
 homeLiteCopy.en.final.free = "FORMIGA CHANNEL";
 homeLiteCopy.en.final.elite = "ELITE CHANNEL";
-homeLiteCopy.es.hero.text = "Construye patrimonio a través de educación, mercados globales y estructuras creadas para cada etapa de tu evolución financiera.";
 homeLiteCopy.es.final.title = "Elige el próximo paso de tu evolución patrimonial.";
 (homeLiteCopy.es.final as { title: string; text?: string; free: string; elite: string }).text = "Empieza con educación, acompaña análisis y señales, avanza hacia Select u organiza patrimonio global con Private.";
 homeLiteCopy.es.final.free = "CANAL FORMIGA";
@@ -1570,9 +1626,19 @@ const homeFlowCopy: Record<Locale, {
 export default function Home() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = homeLiteCopy[locale as keyof typeof homeLiteCopy] ?? homeLiteCopy.en;
-  const heroStats = homeHeroStats[locale] ?? homeHeroStats.en;
+  const heroStats = (homeHeroStats[locale] ?? homeHeroStats.en).map((stat, index) =>
+    index === 2 ? getHomeHeroLanguageStat(locale) : stat,
+  );
   const journey = homeJourneyCopy[locale] ?? homeJourneyCopy.en;
-  const authority = homeAuthorityCopy[locale] ?? homeAuthorityCopy.en;
+  const authorityBase = homeAuthorityCopy[locale] ?? homeAuthorityCopy.en;
+  const languageAuthorityCard = getAuthorityLanguageCard(locale);
+  const authority = {
+    ...authorityBase,
+    cards: authorityBase.cards.map((card, index) => (index === 1 ? languageAuthorityCard : card)),
+  };
+  const introStats = copy.intro.stats.map((stat) =>
+    /^\d+\s+idiomas$/i.test(stat) || /^\d+\s+languages$/i.test(stat) ? getIntroLanguageStat(locale) : stat,
+  );
   const educationBase = homeEducationBaseCopy[locale] ?? homeEducationBaseCopy.en;
   const institutions = homeInstitutionsCopy[locale] ?? homeInstitutionsCopy.en;
   const finalCtas = homeFinalCtas[locale] ?? homeFinalCtas.en;
@@ -1590,7 +1656,7 @@ export default function Home() {
     "premium-button-ghost border border-ink/[0.18] bg-paper/[0.03] px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5";
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={locale === "pt" ? "pt-BR" : locale} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section id="home" className="home-hero premium-stage relative px-5 pb-16 pt-8 md:px-8 md:pb-28 md:pt-48 lg:px-12 xl:px-16">
@@ -1627,7 +1693,7 @@ export default function Home() {
               {copy.hero.title}
             </motion.h1>
             <motion.p variants={fadeUp} className="mt-7 max-w-2xl text-lg font-light leading-9 text-ink/[0.7] md:text-xl">
-              {copy.hero.text}
+              {getHomeHeroSubtext(locale)}
             </motion.p>
             <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-3 sm:flex-row">
               <a href={formigaHref} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("home_formiga_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink shadow-premium transition hover:-translate-y-0.5">
@@ -1709,7 +1775,7 @@ export default function Home() {
               {copy.intro.title}
             </h2>
             <div className="home-stats mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-              {copy.intro.stats.map((stat) => (
+              {introStats.map((stat) => (
                 <div key={stat} className="strategic-stat border-l-2 border-gold/[0.68] bg-paper px-4 py-4 shadow-fine">
                   <p className="text-sm font-bold uppercase tracking-[0.16em] text-ink">{stat}</p>
                 </div>
@@ -1967,12 +2033,13 @@ export default function Home() {
                 {account.bannerText}
               </p>
             </div>
-            <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("fxpro_click", { locale, source: "home_banner" })} className="group mx-auto mt-6 block w-full max-w-[1324px] overflow-hidden rounded-sm transition duration-300 hover:-translate-y-0.5">
-              <img
+            <a href={homeFxproLinks[locale]} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("fxpro_click", { locale, source: "home_banner" })} className="group relative mx-auto mt-6 block w-full max-w-[1324px] overflow-hidden rounded-sm transition duration-300 hover:-translate-y-0.5">
+              <Image
                 src={homeFxproBanners[locale]}
                 alt="FxPro Banner"
                 width={1324}
                 height={150}
+                sizes="(max-width: 1324px) 100vw, 1324px"
                 loading="lazy"
                 className="block h-auto w-full transition duration-300 group-hover:scale-[1.006]"
               />

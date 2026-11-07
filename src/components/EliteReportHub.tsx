@@ -11,6 +11,7 @@ import {
   fadeUp,
 } from "./SiteSections";
 import { translations, type Locale } from "../i18n";
+import { isRtlLocale, localeToHtmlLang } from "../i18n/locales";
 import { normalizedEliteReports } from "../data/eliteReports";
 import { ForexBrokerBannerWide } from "./ForexBrokerBannerWide";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
@@ -34,6 +35,10 @@ export const eliteReportPaths: Record<Locale, string> = {
   ja: "/ja/elite-report",
   ko: "/ko/elite-report",
   zh: "/zh/elite-report",
+  pl: "/pl/elite-report",
+  tl: "/tl/elite-report",
+  fa: "/fa/elite-report",
+  he: "/he/elite-report",
 };
 
 type Direction = "Compra" | "Venda";
@@ -755,7 +760,7 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
   const setFilter = (key: keyof typeof filters, value: string) => setFilters((current) => ({ ...current, [key]: value }));
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-black text-ink">
+    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-black text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="page-hero premium-stage relative px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">

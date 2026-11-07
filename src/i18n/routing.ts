@@ -26,6 +26,7 @@ const PUBLIC_LOCALE_SEGMENTS: Record<SupportedLocale, string> = {
   ja: "ja",
   ko: "ko",
   pl: "pl",
+  he: "he",
 };
 
 const MAIN_PAGE_ALIASES: Record<string, string> = {

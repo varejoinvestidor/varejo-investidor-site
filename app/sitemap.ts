@@ -28,6 +28,8 @@ const staticPaths = [
   "/fa",
   "/pl",
   "/tl",
+  "/he",
+  "/he/home",
   "/it/home",
   "/it/education",
   "/it/signals",
@@ -203,6 +205,23 @@ const staticPaths = [
   "/ar/oil",
   "/ar/commodities",
   "/ar/elite-report",
+  "/he/forex",
+  "/he/stocks",
+  "/he/crypto",
+  "/he/etfs",
+  "/he/gold",
+  "/he/oil",
+  "/he/commodities",
+  "/he/education",
+  "/he/signals",
+  "/he/services",
+  "/he/about",
+  "/he/elite-report",
+  "/he/global-articles",
+  "/he/global-insights",
+  "/he/formiga",
+  "/he/lobo",
+  "/he/harpia",
   "/tr/forex",
   "/tr/stocks",
   "/tr/crypto",
@@ -350,7 +369,7 @@ const staticPaths = [
   ...Object.values(insightsBasePath),
 ];
 
-const sitemapLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko", "zh", "pl", "tl"];
+const sitemapLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi", "ar", "he", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko", "zh", "pl", "tl"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries = staticPaths.map((path) => ({

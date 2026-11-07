@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { Locale } from "../i18n";
+import { isRtlLocale } from "../i18n/locales";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { fadeUp } from "./SiteSections";
 
@@ -186,7 +187,7 @@ export function BrokerAccessBlock({ locale }: { locale: Locale }) {
   const data = copy[locale] ?? copy.en;
   const banner = fxproBanners[locale] ?? fxproBanners.en;
   const forexLink = fxproLinks[locale] ?? fxproLinks.en;
-  const isRtl = locale === "ar" || locale === "ur" || locale === "fa";
+  const isRtl = isRtlLocale(locale);
   const cards = [
     {
       label: data.forexLabel,

@@ -17,6 +17,7 @@ import {
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 import { eliteReportPaths } from "../../src/components/EliteReportHub";
+import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 import { ElitePaymentCards } from "../../src/components/ElitePaymentCards";
 
 const howItWorks = [
@@ -246,6 +247,48 @@ const signalCopyByLocale = {
     benefits: ["100% من الإشارات", "مجموعة حصرية", "تحليلات السوق", "دروس مسجلة", "محتوى مستوى الهاربي", "هيكل كامل للسوق"],
     best: "أفضل قيمة",
     now: "اشترك الآن",
+  },
+  he: {
+    howEyebrow: "ערוץ Elite",
+    howTitle: "איך הסיגנלים ב-WhatsApp עובדים",
+    howText: "הצוות שלנו עוקב אחרי השווקים הגלובליים ושולח ניתוח וסיגנלים ישירות ב-WhatsApp. אתם מקבלים את פרטי העסקה ומבצעים בחשבון שלכם.",
+    howItems: ["2 עד 5 סיגנלים ביום", "משלוח ישיר ב-WhatsApp", "כניסה, יעד וסטופ מוגדרים", "ניתוח שוק והקשר תפעולי"],
+    scheduleEyebrow: "שעות מסחר",
+    scheduleTitle: "שעות שליחה",
+    scheduleText: "הסיגנלים נשלחים בדרך כלל בחלונות הנזילות המרכזיים בשוק, בין 08:00 ל-15:00 ובין 21:00 ל-00:00 בשעון ברזília.",
+    scheduleNote: "השעות עשויות להשתנות לפי תנודתיות, נזילות והזדמנויות אמיתיות בשוק.",
+    scheduleCards: [["בוקר ואחר הצהריים", "08:00–15:00"], ["לילה", "21:00–00:00"]],
+    methodEyebrow: "שיטה תפעולית",
+    methodTitle: "סיגנלים על בסיס Ichimoku",
+    methodText: "כל הסיגנלים של Varejo Investidor מבוססים על קריאת Ichimoku — הענן, הממוצעים, מיקום המחיר, תמיכה, התנגדות והקשר הנכס.",
+    ichimokuItems: ["קריאת הענן", "ממוצעי Ichimoku", "כיוון מחיר", "יעד וסטופ", "הקשר נכס", "ניהול סיכון"],
+    historyEyebrow: "היסטוריה",
+    historyTitle: "דוח Elite מאז אוגוסט 2018",
+    historyText: "עקבו אחרי ערוץ Elite דרך הדוחות ההיסטוריים ששלחנו מאז אוגוסט 2018.",
+    tableHeadings: ["תאריך", "דוח Elite", "סיגנלים", "תוצאה", "סטטוס", "צפייה"],
+    reports: [["אוג/2018", "דוח Elite", "124 סיגנלים", "+18.4%", "זמין"], ["ינו/2021", "דוח Elite", "98 סיגנלים", "+11.2%", "זמין"], ["מרץ/2024", "דוח Elite", "137 סיגנלים", "+22.7%", "זמין"]],
+    view: "צפייה",
+    docsEyebrow: "מבנה תיעודי",
+    docsTitle: "מבנה שליחה אמיתי",
+    docsText: "סיגנלים חיים ב-WhatsApp מאז 2018.",
+    levelsEyebrow: "רמות",
+    levelsTitle: "בחרו את הרמה שלכם",
+    levelsText: "התחילו בערוץ Formiga החינמי או הצטרפו ל-Elite Harpia למבנה תפעולי מלא.",
+    freeTitle: "ערוץ Formiga",
+    freePrice: "חינם",
+    freeButton: "כניסה לערוץ Formiga",
+    formigaItems: ["חינם", "תוכן לימודי", "ניתוח בסיסי", "מבט מבוא", "בניית בסיס", "סיגנלים מוגבלים"],
+    eliteTitle: "ערוץ Elite Harpia",
+    eliteStructure: "מבנה Elite",
+    eliteButton: "הצטרפו ל-Elite",
+    eliteItems: ["סיגנלים מלאים", "2–5 סיגנלים ביום", "כניסה, יעד וסטופ", "ניתוח שוק", "Forex", "זהב", "נפט", "מדדים", "קריפטו", "קריאה מוסדית", "קהילה סגורה", "שיעורים מוקלטים Formiga", "שיעורים מוקלטים Lobo", "שיעורים מוקלטים Harpia", "מבנה Elite"],
+    packagesEyebrow: "חבילות",
+    packagesTitle: "גישה ל-Elite",
+    packagesText: "בחרו חבילה לגישה ל-100% מהסיגנלים, קבוצה בלעדית, ניתוחים, שיעורים מוקלטים ותוכן ברמת Harpia.",
+    benefitsTitle: "מה מקבלים בערוץ Elite",
+    benefits: ["100% מהסיגנלים", "קבוצה בלעדית", "ניתוח שוק", "שיעורים מוקלטים", "תוכן Harpia", "מבנה שוק מלא"],
+    best: "התמורה הטובה ביותר",
+    now: "הירשמו עכשיו",
   },
   tr: {
     howEyebrow: "WhatsApp",
@@ -496,6 +539,13 @@ export default function SignalsPage() {
           ["6 أشهر", "US$ 145", ""],
           ["سنوي", "US$ 240", ""],
         ]
+      : locale === "he"
+        ? [
+            ["חודשי", "US$ 30", ""],
+            ["3 חודשים", "US$ 80", ""],
+            ["6 חודשים", "US$ 145", ""],
+            ["שנתי", "US$ 240", ""],
+          ]
     : locale === "tr"
       ? [
           ["AYLIK", "US$ 30", ""],
@@ -505,7 +555,7 @@ export default function SignalsPage() {
         ]
     : prices;
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="signals-hero premium-stage relative px-5 pb-16 pt-8 md:px-8 md:pb-24 md:pt-44">

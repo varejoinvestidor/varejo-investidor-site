@@ -189,6 +189,15 @@ const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
     oil: "petroleo",
     commodities: "commodities",
   },
+  he: {
+    forex: "forex",
+    stocks: "acoes",
+    crypto: "cripto",
+    etfs: "etfs",
+    gold: "ouro",
+    oil: "petroleo",
+    commodities: "commodities",
+  },
 };
 
 function isLocale(value: string): value is Locale {

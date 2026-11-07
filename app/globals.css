@@ -445,6 +445,57 @@ html {
   letter-spacing: 0.04em;
 }
 
+[lang="he"],
+[lang="ar"],
+[lang="fa"],
+[lang="ur"] {
+  font-family: Arial, "Segoe UI", "Noto Sans Hebrew", "Noto Naskh Arabic", "Arial Hebrew", sans-serif;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.62;
+}
+
+[lang="he"] h1,
+[lang="he"] h2,
+[lang="he"] h3,
+[lang="he"] .font-serif,
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3,
+[lang="ar"] .font-serif,
+[lang="fa"] h1,
+[lang="fa"] h2,
+[lang="fa"] h3,
+[lang="fa"] .font-serif,
+[lang="ur"] h1,
+[lang="ur"] h2,
+[lang="ur"] h3,
+[lang="ur"] .font-serif {
+  font-family: Georgia, "Noto Serif Hebrew", "Times New Roman", serif;
+  line-height: 1.14;
+}
+
+[dir="rtl"] .tracking-\[-0\.05em\],
+[dir="rtl"] .tracking-\[-0\.04em\],
+[dir="rtl"] .tracking-\[-0\.035em\] {
+  letter-spacing: 0;
+}
+
+[dir="rtl"] .header-dropdown-chevron,
+[dir="rtl"] .mobile-drawer-chevron {
+  transform: scaleX(-1);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid rgba(184, 137, 45, 0.92);
+  outline-offset: 3px;
+}
+
 body {
   margin: 0;
   min-height: 100vh;

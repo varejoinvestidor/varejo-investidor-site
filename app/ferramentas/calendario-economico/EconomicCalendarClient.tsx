@@ -5,6 +5,7 @@ import {
   SupportFooter,
   useSiteLocale,
 } from "../../../src/components/SiteSections";
+import { isRtlLocale, localeToHtmlLang } from "../../../src/i18n/locales";
 
 const INVESTING_CALENDAR_URL = "https://br.investing.com/economic-calendar/";
 
@@ -41,17 +42,27 @@ const calendarCopy: Record<string, CalendarCopy> = {
   ja: { eyebrow: "グローバルマクロ経済", title: "経済カレンダー", subtitle: "世界市場を動かす経済イベント、政策金利、インフレ、雇用、主要指標を確認できます。", panelTitle: "リアルタイム経済日程", panelText: "Investingのカレンダーで発表時刻、予想、前回値、最新結果を確認できます。", button: "Investingでカレンダーを開く", source: "外部情報源：Investing.com", focus: ["政策金利", "インフレ", "雇用", "経済活動"] },
   ko: { eyebrow: "글로벌 거시경제", title: "경제 캘린더", subtitle: "글로벌 시장에 영향을 주는 경제 일정, 금리 결정, 물가, 고용 및 주요 지표를 확인하세요.", panelTitle: "실시간 경제 일정", panelText: "Investing 캘린더에서 발표 시간, 전망치, 이전 수치와 최신 결과를 확인할 수 있습니다.", button: "Investing에서 캘린더 열기", source: "외부 출처: Investing.com", focus: ["금리 결정", "물가", "고용", "경제 활동"] },
   pl: { eyebrow: "Globalna makroekonomia", title: "Kalendarz ekonomiczny", subtitle: "Śledź wydarzenia makroekonomiczne, decyzje o stopach, inflację, zatrudnienie i wskaźniki wpływające na światowe rynki.", panelTitle: "Agenda gospodarcza w czasie rzeczywistym", panelText: "Sprawdzaj terminy, prognozy, poprzednie odczyty i publikowane dane w kalendarzu Investing.", button: "Otwórz kalendarz Investing", source: "Źródło zewnętrzne: Investing.com", focus: ["Stopy procentowe", "Inflacja", "Zatrudnienie", "Aktywność gospodarcza"] },
+  he: {
+    eyebrow: "מאקרו גלובלי",
+    title: "לוח אירועים כלכליים",
+    subtitle: "עקבו אחרי אירועים מאקרו, החלטות ריבית, אינפלציה, תעסוקה ומדדים שמזיזים שווקים גלובליים.",
+    panelTitle: "סדר יום כלכלי בזמן אמת",
+    panelText: "בדקו זמנים, תחזיות, נתונים קודמים ופרסומים ישירות בלוח של Investing. הלוח נפתח בלשונית חדשה.",
+    button: "פתיחת הלוח ב-Investing",
+    source: "מקור חיצוני: Investing.com",
+    focus: ["החלטות ריבית", "אינפלציה", "תעסוקה", "פעילות כלכלית"],
+  },
 };
 
 export default function EconomicCalendarClient() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = calendarCopy[locale] ?? calendarCopy.en;
-  const isRtl = locale === "ar" || locale === "fa" || locale === "ur";
+  const isRtl = isRtlLocale(locale);
 
   return (
     <>
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
-      <main lang={locale === "pt" ? "pt-BR" : locale} dir={isRtl ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-ink text-paper">
+      <main lang={localeToHtmlLang(locale)} dir={isRtl ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-ink text-paper">
         <section className="page-hero relative overflow-hidden px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-44">
           <div className="absolute inset-0 terminal-grid opacity-30" />
           <div className="relative mx-auto max-w-7xl">

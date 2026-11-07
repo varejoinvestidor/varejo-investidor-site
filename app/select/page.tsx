@@ -407,9 +407,46 @@ const localizedCopy: Partial<Record<string, Copy>> = {
       secondary: "Planifier un appel",
     },
   },
+  he: {
+    ...enCopy,
+    hero: {
+      ...enCopy.hero,
+      tag: "אסטרטגיה פטימונית גלובלית",
+      title: "Varejo Investidor Select",
+      subtitle: "מבנה תפעולי למשקיעים עם הון משמעותי שרוצים חשיפה לשווקים גלובליים בלי לעקוב אחרי עסקאות מדי יום.",
+      text: "בעוד ערוץ Elite מיועד לביצוע ידני, Select נבנה למבנה אוטומטי עם ליווי מקצועי וגישה לשווקים גלובליים.",
+      primary: "בקשת מצגת",
+      secondary: "תיאום שיחה",
+      cards: [
+        ["השקעה מינימלית", "R$ 250,000", "לקוח ברזיל"],
+        ["משקיע בינלאומי", "US$ 50,000", "סכום מעוגל"],
+        ["דמי ניהול", "0.70% לשנה", "ליווי מתמשך"],
+        ["השתתפות ברווח עודף", "30%", "מעל 14% לשנה"],
+      ],
+    },
+    comparison: {
+      ...enCopy.comparison,
+      title: "אין חובה להעתיק סיגנלים",
+      eliteTitle: "ערוץ Elite",
+      eliteSubtitle: "ביצוע ידני ושליטה מלאה",
+      selectTitle: "Select",
+      selectSubtitle: "מבנה אוטומטי עם ליווי",
+    },
+    simulator: {
+      ...enCopy.simulator,
+      title: "סימולציה חינוכית",
+      minimumAlert: "השקעה מינימלית ב-Select: R$ 250,000.",
+      disclaimer: "סימולציה לימודית בלבד. אינה הבטחה לתשואות עתידיות.",
+    },
+    cta: {
+      ...enCopy.cta,
+      title: "בנו מבנה גלובלי להון שלכם",
+      text: "הכירו את Varejo Investidor Select ובדקו אם המבנה מתאים לפרופיל ההון שלכם.",
+    },
+  },
 };
 
-const rtlLocales = new Set(["ar", "ur", "fa"]);
+const rtlLocales = new Set(["ar", "ur", "fa", "he"]);
 
 function getCopy(locale: string): Copy {
   return localizedCopy[locale] ?? enCopy;

@@ -22,6 +22,7 @@ export const fxproLinks: Record<Locale, string> = {
   zh: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   pl: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   tl: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  he: "https://direct.fxpro.group/en/partner/77014650?platform=web",
 };
 
 export const fxproButtonLabels: Record<Locale, string> = {
@@ -46,4 +47,5 @@ export const fxproButtonLabels: Record<Locale, string> = {
   zh: "\u5f00\u8bbe FXPro \u8d26\u6237",
   pl: "Otworz konto FXPro",
   tl: "Magbukas ng FXPro Account",
+  he: "פתחו חשבון FXPro",
 };

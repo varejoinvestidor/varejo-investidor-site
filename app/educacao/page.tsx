@@ -12,6 +12,8 @@ import {
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 import { FormationPricingSection } from "../../src/components/FormationPricingSection";
+import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
+import { tracksHe } from "../../src/data/educationTracks";
 
 type Track = {
   id: "formiga" | "lobo" | "harpia";
@@ -343,6 +345,40 @@ const localizedEducationCopy = {
       },
     ] satisfies Track[],
   },
+  he: {
+    ...educationCopy.en,
+    eyebrow: "הכשרה",
+    title: "הכשרת Varejo Investidor",
+    text: "מסלול של 15 רמות לפיתוח ראייה פיננסית, קריאת שוק, פעולה, סיכון, בניית הון ומבנה גלובלי.",
+    seal: "FORMIGA 1-5 • LOBO 1-5 • HARPIA 1-5",
+    matrixEyebrow: "מטריצת התפתחות",
+    matrixTitle: "FORMIGA → LOBO → HARPIA",
+    tableEyebrow: "תכנית אקדמית",
+    tableTitle: "תכנית ההכשרה המלאה",
+    tableText: "מטריצת ההתפתחות מאורגנת לפי רמה, שלב, מטרה, תוכן מרכזי והתקדמות.",
+    tableHeaders: ["רמה", "שלב", "מטרה", "תוכן מרכזי", "התקדמות"],
+    expansionTitle: "ההכשרה מתרחבת",
+    expansionText: "מסלול Formiga, Lobo ו-Harpia יושק בהדרגה במערכת Varejo Investidor.",
+    expansionNote: "שיעורים, מודולים וחומרים חדשים יתווספו בכל שלב.",
+    expansionUpdate: "עדכונים שוטפים למבנה ההכשרה הגלובלי.",
+    nextStepsEyebrow: "אחרי Harpia",
+    nextStepsTitle: "השלבים הבאים",
+    nextStepsText: "מסלול ההכשרה מסתיים ברמת Harpia. מכאן Elite, Select ו-Private הם פתרונות במערכת — לא רמות הכשרה נוספות.",
+    nextSteps: [
+      { name: "ערוץ Elite", description: "סיגנלים וביצוע ידני", href: "/sinais" },
+      { name: "Select", description: "מבנה תפעולי אוטומטי", href: "/select" },
+      { name: "Private", description: "מבנה הון גלובלי", href: "/private" },
+    ],
+    tracks: tracksHe.map((track) => ({
+      id: track.id,
+      name: track.name,
+      subtitle: track.subtitle,
+      seal: track.subtitle,
+      difficulty: educationCopy.en.tracks.find((t) => t.id === track.id)?.difficulty ?? "★★★☆☆",
+      tone: track.id === "formiga" ? ("rise" as const) : track.id === "lobo" ? ("gold" as const) : ("elite" as const),
+      levels: track.levels as unknown as Track["levels"],
+    })) satisfies Track[],
+  },
   tr: {
     ...educationCopy.en,
     eyebrow: "Eğitim",
@@ -442,7 +478,7 @@ export default function EducationPage() {
   );
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section id="topo" className="education-hero premium-stage px-5 pb-8 pt-32 md:px-8 md:pb-10 md:pt-40">

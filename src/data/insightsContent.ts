@@ -50,9 +50,10 @@ export const insightsBasePath: Record<Locale, string> = {
   zh: "/zh/articles",
   pl: "/pl/articles",
   tl: "/tl/articles",
+  he: "/he/global-articles",
 };
 
-export const insightLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko", "zh", "pl", "tl"];
+export const insightLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko", "zh", "pl", "tl", "he"];
 
 export const insightsHero: Record<Locale, { title: string; subtitle: string; metaDescription: string }> = {
   pt: {
@@ -159,6 +160,11 @@ export const insightsHero: Record<Locale, { title: string; subtitle: string; met
     title: "Mga Pandaigdigang Artikulo",
     subtitle: "Editorial analysis tungkol sa Forex, stocks, crypto, commodities, ETFs, economic cycles, at global financial structure.",
     metaDescription: "Global Articles ng Varejo Investidor: analysis tungkol sa Forex, stocks, crypto, commodities, ETFs, economic cycles, at global financial structure.",
+  },
+  he: {
+    title: "מאמרים גלובליים",
+    subtitle: "ניתוח עריכה על Forex, מניות, קריפטו, סחורות, ETFs, מחזורי כלכלה ומבנה פיננסי גלובלי.",
+    metaDescription: "מאמרים גלובליים של Varejo Investidor: ניתוח על Forex, מניות, קריפטו, סחורות, ETFs, מחזורי כלכלה ומבנה פיננסי גלובלי למשקיעים קמעונאיים.",
   },
 };
 
@@ -315,6 +321,31 @@ export const insightLabels: Record<
     postCtaTitle: "عمق قراءتك داخل مسار التعليم",
     postCtaText: "اربط هذه الرؤية برحلة Formiga وLobo وHarpia للتطور بمنهجية.",
   },
+  he: {
+    nav: "מאמרים",
+    content: "תוכן",
+    latest: "הניתוח האחרון",
+    recent: "פוסטים אחרונים",
+    categories: "קטגוריות",
+    all: "הכל",
+    read: "קראו ניתוח",
+    whatsappTitle: "הצטרפו לערוץ Formiga",
+    newsletterTitle: "קבלו מאמרים גלובליים",
+    newsletterText: "ניתוחים, מחזורים ותוכן אסטרטגי מ-Varejo Investidor במייל או ב-WhatsApp.",
+    email: "אימייל",
+    newsletterButton: "קבלו מאמרים",
+    newsletterSuccess: "בוצע. הבקשה שלכם נרשמה.",
+    markets: "שווקים מקושרים",
+    faq: "שאלות נפוצות",
+    related: "פוסטים קשורים",
+    education: "צפו בהכשרה",
+    levelBlockTitle: "איך כל רמה קוראת נושא זה",
+    formiga: "מבין את ההשפעה הבסיסית על הכנסה, מטבע, ארגון והון ראשוני.",
+    lobo: "מנתח תרחיש, סיכון, נזילות והזדמנות אופרטיבית.",
+    harpia: "רואה הון, הגנה, מטבעות חזקים ומבנה בינלאומי.",
+    postCtaTitle: "העמיקו את הקריאה במסלול ההכשרה",
+    postCtaText: "חברו את התובנה הזו למסע Formiga, Lobo ו-Harpia ולהתפתחות עם מתודולוגיה.",
+  },
   tr: {
     nav: "Makaleler",
     content: "Icerik",
@@ -407,6 +438,7 @@ export const insightCategories: Record<Locale, Record<InsightCategoryKey, string
   bn: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
   ja: { macro: "グローバルマクロ", forex: "Forex", stocks: "株式", crypto: "暗号資産", commodities: "商品", etfs: "ETF", risk: "リスク", wealth: "資産" },
   ko: { macro: "글로벌 매크로", forex: "Forex", stocks: "주식", crypto: "암호화폐", commodities: "원자재", etfs: "ETF", risk: "리스크", wealth: "자산" },
+  he: { macro: "מאקרו גלובלי", forex: "Forex", stocks: "מניות", crypto: "קריפטו", commodities: "סחורות", etfs: "ETFs", risk: "סיכון", wealth: "הון" },
 };
 
 const titleSets: Record<Locale, Array<[string, string, InsightCategoryKey, string]>> = {
@@ -508,6 +540,13 @@ const titleSets: Record<Locale, Array<[string, string, InsightCategoryKey, strin
     ["bitcoin-liquidity-risk", "Bitcoin, 유동성, 리스크: 무엇을 봐야 하는가", "crypto", "암호화폐는 유동성, 보안, 사이클, 리스크 선호도를 읽는 능력이 필요합니다."],
     ["etfs-global-stocks-wealth", "ETF와 글로벌 주식으로 만드는 자산", "wealth", "글로벌 포트폴리오는 분산, 강한 통화, 장기 구조에서 시작됩니다."],
   ],
+  he: [
+    ["dollar-rates-global-markets", "מה הדולר חושף על השווקים הגלובליים", "macro", "דולר, ריבית, נזילות וסיכון הם שפת המחזורים הגלובליים."],
+    ["forex-gold-oil", "Forex, זהב ונפט: איך השווקים מתחברים", "forex", "מטבעות, אנרגיה ומתכות מספרים את אותה סיפור גלובלי מזוויות שונות."],
+    ["economic-cycles-retail", "למה משקיעים קמעונאיים צריכים מחזורים כלכליים", "risk", "מחזורים מסבירים סיכון, הזדמנות, נזילות ובניית הון."],
+    ["bitcoin-liquidity-risk", "Bitcoin, נזילות וסיכון: מה לעקוב", "crypto", "קריפטו דורש קריאת נזילות, אבטחה, מחזור ותיאבון סיכון."],
+    ["etfs-global-stocks-wealth", "ETFs ומניות גלובליות בבניית הון", "wealth", "תיקים גלובליים מתחילים בגיוון, מטבע חזק ומבנה לטווח ארוך."],
+  ],
 };
 
 function bodyCopy(locale: Locale) {
@@ -520,6 +559,7 @@ function bodyCopy(locale: Locale) {
     tr: "Kurumsal okuma likidite, faiz, para birimi ve risk istahi iliskisiyle baslar. Bu vektorler degistiginde kuresel piyasalar erken konumlanir.",
     id: "Pembacaan institusional dimulai dari hubungan antara likuiditas, suku bunga, mata uang dan selera risiko. Saat vektor ini berubah, pasar global sering bergerak lebih dahulu sebelum investor umum menyadarinya.",
     vi: "Cách đọc theo hướng tổ chức bắt đầu từ mối quan hệ giữa thanh khoản, lãi suất, tiền tệ và khẩu vị rủi ro. Khi các yếu tố này thay đổi, thị trường toàn cầu thường tái định vị trước khi nhà đầu tư phổ thông nhận ra.",
+    he: "הקריאה המוסדית מתחילה בקשר בין נזילות, ריבית, מטבע ותיאבון סיכון. כשהגורמים האלה משתנים, השווקים הגלובליים מתמקמים מחדש לפני שהמשקיע הרגיל מבחין.",
   };
   const second: Record<Locale, string> = {
     pt: "Dentro da metodologia Formiga, Lobo e Harpia, a analise nao serve apenas para prever preco. Ela organiza comportamento financeiro, risco operacional e construcao patrimonial global.",
@@ -527,6 +567,7 @@ function bodyCopy(locale: Locale) {
     es: "Dentro de la metodologia Formiga, Lobo y Harpia, el analisis no sirve solo para prever precio. Organiza comportamiento financiero, riesgo operativo y construccion patrimonial global.",
     hi: "Formiga, Lobo और Harpia methodology में analysis केवल price predict करने के लिए नहीं है। यह financial behavior, operational risk और global wealth building को organize करता है।",
     ar: "ضمن منهجية Formiga وLobo وHarpia، لا يهدف التحليل فقط الى توقع السعر، بل ينظم السلوك المالي والمخاطر التشغيلية وبناء الثروة العالمية.",
+    he: "במתודולוגיית Formiga, Lobo ו-Harpia, הניתוח אינו רק לחיזוי מחיר — הוא מסדר התנהגות פיננסית, סיכון תפעולי ובניית הון גלובלית.",
     tr: "Formiga, Lobo ve Harpia metodolojisinde analiz sadece fiyat tahmini degildir. Finansal davranisi, operasyonel riski ve kuresel varlik insasini duzenler.",
     id: "Dalam metodologi Semut, Serigala dan Elang Harpy, analisis bukan hanya soal memprediksi harga. Analisis mengatur perilaku finansial, risiko operasional dan pembangunan kekayaan global.",
     vi: "Trong phương pháp Kiến, Sói và Đại Bàng Harpy, phân tích không chỉ để dự đoán giá. Nó tổ chức hành vi tài chính, rủi ro vận hành và quá trình xây dựng tài sản toàn cầu.",
@@ -581,6 +622,7 @@ export function localeFromInsightsPath(pathname: string | null): Locale | null {
   if (pathname.startsWith("/global-articles")) return "en";
   if (pathname.startsWith("/articulos-globales")) return "es";
   if (pathname.startsWith("/ar/global-articles")) return "ar";
+  if (pathname.startsWith("/he/global-articles")) return "he";
   if (pathname.startsWith("/tr/global-articles")) return "tr";
   if (pathname.startsWith("/id/articles")) return "id";
   if (pathname.startsWith("/vi/articles")) return "vi";
@@ -589,6 +631,7 @@ export function localeFromInsightsPath(pathname: string | null): Locale | null {
   if (pathname.startsWith("/global-insights")) return "en";
   if (pathname.startsWith("/insights-globales")) return "es";
   if (pathname.startsWith("/ar/global-insights")) return "ar";
+  if (pathname.startsWith("/he/global-insights")) return "he";
   if (pathname.startsWith("/tr/global-insights")) return "tr";
   if (pathname.startsWith("/id/insights")) return "id";
   if (pathname.startsWith("/vi/insights")) return "vi";
@@ -639,5 +682,9 @@ export const insightsFaq: Record<Locale, Array<{ question: string; answer: strin
   vi: [
     { question: "Góc Nhìn Toàn Cầu là gì?", answer: "Phân tích chuyên sâu về thị trường, chu kỳ, tiền tệ, rủi ro và tài sản dành cho nhà đầu tư cá nhân." },
     { question: "Newsletter có thay thế tư vấn không?", answer: "Không. Nội dung chỉ mang tính giáo dục và không thay thế phân tích cá nhân, lập kế hoạch hoặc quản trị rủi ro." },
+  ],
+  he: [
+    { question: "מהם המאמרים הגלובליים?", answer: "ניתוחים עריכה על שווקים, מחזורים, מטבעות, סיכון והון למשקיעים קמעונאיים." },
+    { question: "האם הניוזלטר מחליף ייעוץ?", answer: "לא. התוכן לימודי ואינו מחליף ניתוח אישי, תכנון או ניהול סיכונים." },
   ],
 };

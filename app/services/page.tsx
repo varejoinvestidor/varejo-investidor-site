@@ -16,6 +16,7 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
+import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
 const SELECT_CONTACT_URL =
@@ -170,6 +171,26 @@ const wealthServicesByLocale: Record<string, WealthServiceCard[]> = {
       cta: "Explore Private",
       href: "/private",
       highlights: ["US$ 1,000,000+", "Global protection", "Multi-jurisdiction", "International capital", "Long term", "Wealth continuity"],
+    },
+  ],
+  he: [
+    {
+      eyebrow: "מבנה תפעולי",
+      title: "Varejo Investidor Select",
+      subtitle: "ניהול תפעולי למשקיעים שרוצים חשיפה לשווקים גלובליים.",
+      description: "מבנה למשקיעים עם הקצאה מינימלית של US$50,000 — חשיפה ל-Forex, מניות, קריפטו ושווקים בינלאומיים.",
+      cta: "הכירו את Select",
+      href: "/select",
+      highlights: ["הקצאה מינימלית US$50,000", "Forex", "מניות", "קריפטו", "העתקה אוטומטית"],
+    },
+    {
+      eyebrow: "מבנה הון",
+      title: "Varejo Investidor Private",
+      subtitle: "מבנה הון גלובלי למשקיעים מעל US$1,000,000.",
+      description: "ארגון, הגנה והתרחבות בינלאומית של הון למשקיעים, עסקים ומשפחות עם הון גלובלי.",
+      cta: "הכירו את Private",
+      href: "/private",
+      highlights: ["US$1,000,000+", "הגנה גלובלית", "ריבוי תחומי שיפוט", "הון בינלאומי", "טווח ארוך", "המשכיות הון"],
     },
   ],
   tr: [
@@ -446,6 +467,11 @@ const elitePackagesByLocale = {
     cta: "اشترك الآن",
     items: [["شهري", "US$ 30", ""], ["3 أشهر", "US$ 80", ""], ["6 أشهر", "US$ 145", ""], ["سنوي", "US$ 240", "أفضل قيمة"]],
   },
+  he: {
+    title: "חבילות זמינות",
+    cta: "הירשמו עכשיו",
+    items: [["חודשי", "US$ 30", ""], ["3 חודשים", "US$ 80", ""], ["6 חודשים", "US$ 145", ""], ["שנתי", "US$ 240", "התמורה הטובה ביותר"]],
+  },
   tr: {
     title: "Mevcut paketler",
     cta: "Şimdi abone ol",
@@ -605,6 +631,7 @@ const internationalServicesIntro = {
   es: "Conoce los canales de Varejo Investidor para señales, educación y lectura de mercado global.",
   hi: "Varejo Investidor ?? ?????? ?????: WhatsApp ?? ??????, ??????? ??????, ??????? ????? ???????? ?? ????-?????? ????? ?????????",
   ar: "تعرّف إلى قنوات Varejo Investidor للإشارات والتعليم وقراءة السوق العالمية.",
+  he: "גלו את ערוצי Varejo Investidor לסיגנלים, הכשרה וקריאת שוק גלובלית.",
   tr: "Sinyaller, eğitim ve küresel piyasa okuma için Varejo Investidor kanallarını keşfedin.",
   id: "Jelajahi kanal Varejo Investidor untuk sinyal, edukasi, dan pembacaan pasar global.",
   vi: "Khám phá các kênh của Varejo Investidor dành cho tín hiệu, giáo dục và đọc thị trường toàn cầu.",
@@ -623,7 +650,10 @@ function institutionalCardTone(kind: string): "platinum" | "mentorship" | "elite
 export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const isPt = locale === "pt";
-  const servicesIntro = isPt ? t.servicesPage.text : internationalServicesIntro[locale as keyof typeof internationalServicesIntro] ?? internationalServicesIntro.en;
+  const servicesIntro =
+    isPt || locale === "he"
+      ? t.servicesPage.text
+      : internationalServicesIntro[locale as keyof typeof internationalServicesIntro] ?? internationalServicesIntro.en;
   const productLabel =
     locale === "en"
       ? "Product"
@@ -639,7 +669,7 @@ export default function ServicesPage() {
               ? "Sản phẩm"
               : "Produto";
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="services-hero premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-44">

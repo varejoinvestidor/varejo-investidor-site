@@ -10,6 +10,7 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import type { Locale } from "../../src/i18n";
+import { isRtlLocale } from "../../src/i18n/locales";
 
 type Currency = "USD" | "BRL" | "EUR" | "GBP";
 type RiskLevel = "harpia" | "lobo" | "formiga" | "extreme";
@@ -500,7 +501,7 @@ export default function RiskCalculatorPage() {
   });
 
   return (
-    <main lang={c.lang} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={c.lang} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="premium-stage relative px-5 pb-14 pt-36 md:px-8 md:pb-20 md:pt-48">

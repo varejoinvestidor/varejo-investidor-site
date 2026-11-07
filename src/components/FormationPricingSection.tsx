@@ -13,17 +13,28 @@ import {
   formationSavingsCents,
   productsByTrack,
 } from "../data/formationPricing";
+import type { Locale } from "../i18n";
+import { getFormationPricingUi } from "../data/formationPricingUi";
 import { fadeUp } from "./SiteSections";
 
 const trackOrder: FormationTrackId[] = ["formiga", "lobo", "harpia"];
 
+type FormationPricingSectionProps = {
+  locale?: Locale;
+  trackFilter?: FormationTrackId;
+  showCompleteOffer?: boolean;
+  showAllTracks?: boolean;
+};
+
 function BuyAction({
   checkoutUrl,
   label,
+  pendingLabel,
   emphasis = false,
 }: {
   checkoutUrl: string | null;
   label: string;
+  pendingLabel: string;
   emphasis?: boolean;
 }) {
   if (checkoutUrl) {
@@ -45,12 +56,20 @@ function BuyAction({
 
   return (
     <span className="inline-flex w-full cursor-not-allowed items-center justify-center border border-gold/[0.35] bg-gold/[0.12] px-5 py-4 text-xs font-black uppercase tracking-[0.16em] text-gold/80">
-      Checkout em breve
+      {pendingLabel}
     </span>
   );
 }
 
-function LevelCard({ product }: { product: FormationLevelProduct }) {
+function LevelCard({
+  product,
+  buyLabel,
+  pendingLabel,
+}: {
+  product: FormationLevelProduct;
+  buyLabel: string;
+  pendingLabel: string;
+}) {
   return (
     <div className="border border-gold/[0.12] bg-ink/[0.42] p-4 transition duration-300 hover:border-gold/[0.32]">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -59,16 +78,26 @@ function LevelCard({ product }: { product: FormationLevelProduct }) {
           <p className="mt-2 font-serif text-3xl tracking-[-0.04em] text-gold">{formatFormationBRL(product.priceCents)}</p>
         </div>
         <div className="w-full sm:w-[148px]">
-          <BuyAction checkoutUrl={product.checkoutUrl} label="Comprar nível" />
+          <BuyAction checkoutUrl={product.checkoutUrl} label={buyLabel} pendingLabel={pendingLabel} />
         </div>
       </div>
     </div>
   );
 }
 
-export function FormationPricingSection() {
+export function FormationPricingSection({
+  locale = "pt",
+  trackFilter,
+  showCompleteOffer = true,
+  showAllTracks = true,
+}: FormationPricingSectionProps = {}) {
   const reduceMotion = useReducedMotion();
+  const copy = getFormationPricingUi(locale);
   const complete = FORMATION_COMPLETE_OFFER;
+  const visibleTracks = trackFilter ? [trackFilter] : showAllTracks ? trackOrder : trackOrder;
+  const visiblePackages = trackFilter
+    ? FORMATION_CHARACTER_PACKAGES.filter((pack) => pack.id === trackFilter)
+    : FORMATION_CHARACTER_PACKAGES;
   const completeSavings = formationSavingsCents(complete.referencePriceCents, complete.promoPriceCents);
   const completeDiscount = formationDiscountPercent(complete.referencePriceCents, complete.promoPriceCents);
 
@@ -77,20 +106,16 @@ export function FormationPricingSection() {
       <section className="formation-pricing relative overflow-hidden border border-gold/[0.45] bg-ink/[0.88] px-5 py-8 shadow-premium md:px-8 md:py-10">
         <div className="absolute inset-0 terminal-grid opacity-20" />
         <div className="relative mx-auto max-w-4xl text-center">
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Formação Varejo Investidor</p>
-          <h2 className="mt-4 font-serif text-4xl tracking-[-0.05em] text-gold md:text-6xl">INVESTIMENTO NA SUA JORNADA</h2>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
-            Escolha um nível, um personagem completo ou a formação integral com Formiga, Lobo e Harpia.
-          </p>
+          <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">{copy.eyebrow}</p>
+          <h2 className="mt-4 font-serif text-4xl tracking-[-0.05em] text-gold md:text-6xl">{copy.title}</h2>
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">{copy.intro}</p>
         </div>
 
         <div className="relative mt-10 border-t border-gold/[0.16] pt-10">
-          <p className="text-center text-xs font-black uppercase tracking-[0.28em] text-gold">Área 1 · Cursos individuais</p>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-7 text-paper/[0.6]">
-            Compre apenas o nível que você precisa agora e evolua no seu ritmo.
-          </p>
-          <div className="mt-8 grid gap-6 xl:grid-cols-3">
-            {trackOrder.map((trackId) => {
+          <p className="text-center text-xs font-black uppercase tracking-[0.28em] text-gold">{copy.area1}</p>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-7 text-paper/[0.6]">{copy.area1Text}</p>
+          <div className={`mt-8 grid gap-6 ${visibleTracks.length > 1 ? "xl:grid-cols-3" : "max-w-xl mx-auto"}`}>
+            {visibleTracks.map((trackId) => {
               const ui = FORMATION_TRACK_UI[trackId];
               const products = productsByTrack(trackId);
 
@@ -115,11 +140,16 @@ export function FormationPricingSection() {
                   </div>
                   <div className="flex items-center justify-between gap-4 border-b border-gold/[0.14] pb-4">
                     <h3 className="font-serif text-3xl tracking-[-0.035em] text-paper">{ui.title}</h3>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">5 níveis</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">{copy.levelsCount}</span>
                   </div>
                   <div className="mt-5 grid gap-3">
                     {products.map((product) => (
-                      <LevelCard key={product.id} product={product} />
+                      <LevelCard
+                        key={product.id}
+                        product={product}
+                        buyLabel={copy.buyLevel}
+                        pendingLabel={copy.checkoutSoon}
+                      />
                     ))}
                   </div>
                 </motion.article>
@@ -129,12 +159,10 @@ export function FormationPricingSection() {
         </div>
 
         <div className="relative mt-12 border-t border-gold/[0.16] pt-10">
-          <p className="text-center text-xs font-black uppercase tracking-[0.28em] text-gold">Área 2 · Pacotes completos</p>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-7 text-paper/[0.6]">
-            Adquira os cinco níveis de cada personagem com economia em relação à compra individual.
-          </p>
-          <div className="mt-6 grid gap-5 lg:grid-cols-3">
-            {FORMATION_CHARACTER_PACKAGES.map((pack) => {
+          <p className="text-center text-xs font-black uppercase tracking-[0.28em] text-gold">{copy.area2}</p>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-7 text-paper/[0.6]">{copy.area2Text}</p>
+          <div className={`mt-6 grid gap-5 ${visiblePackages.length > 1 ? "lg:grid-cols-3" : "max-w-md mx-auto"}`}>
+            {visiblePackages.map((pack) => {
               const savings = formationSavingsCents(pack.individualTotalCents, pack.priceCents);
               const discount = formationDiscountPercent(pack.individualTotalCents, pack.priceCents);
 
@@ -147,18 +175,22 @@ export function FormationPricingSection() {
                   viewport={{ once: true }}
                   className="flex h-full flex-col border border-gold/[0.2] bg-paper/[0.04] p-5 shadow-fine transition duration-300 hover:-translate-y-1 hover:border-gold/[0.5]"
                 >
-                  <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">{pack.levelCount} níveis</p>
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-gold">{copy.levelsCount}</p>
                   <h3 className="mt-3 font-serif text-3xl tracking-[-0.035em] text-paper">{pack.name}</h3>
                   <p className="mt-4 text-xs uppercase tracking-[0.16em] text-paper/[0.5]">
-                    Individual: <span className="line-through">{formatFormationBRL(pack.individualTotalCents)}</span>
+                    {copy.individual}: <span className="line-through">{formatFormationBRL(pack.individualTotalCents)}</span>
                   </p>
                   <p className="mt-2 font-serif text-4xl tracking-[-0.05em] text-gold">{formatFormationBRL(pack.priceCents)}</p>
                   <p className="mt-3 text-sm text-paper/[0.62]">
-                    Economia de <span className="font-semibold text-gold">{formatFormationBRL(savings)}</span> (
+                    {copy.savings} <span className="font-semibold text-gold">{formatFormationBRL(savings)}</span> (
                     {discount.toFixed(1).replace(".", ",")}%)
                   </p>
                   <div className="mt-auto pt-6">
-                    <BuyAction checkoutUrl={pack.checkoutUrl} label="Adquirir pacote" />
+                    <BuyAction
+                      checkoutUrl={pack.checkoutUrl}
+                      label={copy.buyPackage}
+                      pendingLabel={copy.checkoutSoon}
+                    />
                   </div>
                 </motion.article>
               );
@@ -166,6 +198,7 @@ export function FormationPricingSection() {
           </div>
         </div>
 
+        {showCompleteOffer ? (
         <motion.article
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -174,7 +207,7 @@ export function FormationPricingSection() {
           className="relative mt-12 overflow-hidden border-2 border-gold bg-gradient-to-br from-gold/[0.22] via-paper/[0.06] to-ink p-6 shadow-[0_0_48px_rgba(201,155,62,0.18)] md:p-8"
         >
           <div className="absolute -right-24 -top-24 h-72 w-72 bg-gold/[0.14] blur-3xl" />
-          <p className="text-center text-[10px] font-black uppercase tracking-[0.34em] text-gold">Área 3 · Formação completa</p>
+          <p className="text-center text-[10px] font-black uppercase tracking-[0.34em] text-gold">{copy.area3}</p>
           <div className="relative mt-6 grid gap-8 lg:grid-cols-[1fr_0.85fr] lg:items-center">
             <div>
               <h3 className="font-serif text-4xl leading-[0.95] tracking-[-0.055em] text-paper md:text-6xl">{complete.name}</h3>
@@ -195,7 +228,7 @@ export function FormationPricingSection() {
               <p className="text-xs uppercase tracking-[0.18em] text-paper/[0.52]">
                 Preço de referência: <span className="line-through">{formatFormationBRL(complete.referencePriceCents)}</span>
               </p>
-              <p className="mt-3 text-xs font-black uppercase tracking-[0.22em] text-gold">Preço promocional</p>
+              <p className="mt-3 text-xs font-black uppercase tracking-[0.22em] text-gold">{copy.promoLabel}</p>
               <p className="mt-2 font-serif text-5xl tracking-[-0.06em] text-paper md:text-6xl">
                 {formatFormationBRL(complete.promoPriceCents)}
               </p>
@@ -209,11 +242,17 @@ export function FormationPricingSection() {
                 </p>
               </div>
               <div className="mt-6">
-                <BuyAction checkoutUrl={complete.checkoutUrl} label="Adquirir formação completa" emphasis />
+                <BuyAction
+                  checkoutUrl={complete.checkoutUrl}
+                  label={copy.buyComplete}
+                  pendingLabel={copy.checkoutSoon}
+                  emphasis
+                />
               </div>
             </div>
           </div>
         </motion.article>
+        ) : null}
       </section>
     </div>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { absoluteSiteUrl } from "../config/site";
+import { buildHreflangMap } from "./localeMetadata";
 import { getForexLibraryContent } from "./forexLibraryContent";
 import { getMarketContent, type MarketSlug } from "./marketContent";
 import { getInstitutionalMarketPage } from "./institutionalMarketPages";
@@ -19,18 +20,7 @@ export function createMarketMetadata(slug: MarketSlug): Metadata {
     description: content.metaDescription,
     alternates: {
       canonical: path,
-      languages: slug === "fundos-imobiliarios"
-        ? { "pt-BR": path }
-        : {
-            "pt-BR": path,
-            en: path,
-            es: path,
-            hi: path,
-            ar: path,
-            tr: path,
-            id: path,
-            vi: path,
-          },
+      languages: slug === "fundos-imobiliarios" ? { "pt-BR": path } : buildHreflangMap(path),
     },
     openGraph: {
       title: content.metaTitle,

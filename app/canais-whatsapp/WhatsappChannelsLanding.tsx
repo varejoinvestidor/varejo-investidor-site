@@ -22,7 +22,7 @@ const WHATSAPP_CHARACTER_IMAGES: Record<WhatsAppChannelLevel, string> = {
 };
 
 const STORAGE_KEY = "varejo_whatsapp_landing_language";
-const RTL_LOCALES = new Set<WhatsAppLandingLocale>(["ar", "fa", "ur"]);
+const RTL_LOCALES = new Set<WhatsAppLandingLocale>(["ar", "fa", "ur", "he"]);
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 

@@ -104,6 +104,7 @@ export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   const locale = getLocaleFromRequest(request);
   requestHeaders.set("x-varejo-locale", locale);
+  requestHeaders.set("x-varejo-pathname", pathname);
 
   const parts = request.nextUrl.pathname.split("/").filter(Boolean);
   const firstSegment = parts[0];

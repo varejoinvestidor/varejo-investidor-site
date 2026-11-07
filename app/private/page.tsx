@@ -8,6 +8,8 @@ import {
   trackVarejoClick,
   useSiteLocale,
 } from "../../src/components/SiteSections";
+import { hePrivateCopy } from "../../src/data/copy/privateCopyHe";
+import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 
 const PRIVATE_CONTACT_URL =
   "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20solicitar%20uma%20an%C3%A1lise%20privada%20do%20Varejo%20Investidor%20Private.";
@@ -299,6 +301,7 @@ const enCopy: PrivateCopy = {
 const copyByLocale: Record<string, PrivateCopy> = {
   pt: ptCopy,
   en: enCopy,
+  he: hePrivateCopy as PrivateCopy,
   es: {
     ...enCopy,
     hero: {
@@ -450,6 +453,15 @@ const labelsByLocale: Record<string, PrivateLabels> = {
     clientControl: "Client control",
     profile: "Profile",
   },
+  he: {
+    wealthManagement: "ניהול הון",
+    wealth: "הון",
+    managementFee: "ניהול",
+    performance: "ביצועים",
+    step: "שלב",
+    clientControl: "שליטת הלקוח",
+    profile: "פרופיל",
+  },
   es: {
     wealthManagement: "Gestión patrimonial",
     wealth: "Patrimonio",
@@ -520,10 +532,10 @@ export default function PrivatePage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = usePrivateCopy(locale);
   const labels = usePrivateLabels(locale);
-  const isRtl = locale === "ar" || locale === "ur" || locale === "fa";
+  const isRtl = isRtlLocale(locale);
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={isRtl ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-ink text-paper">
+    <main lang={localeToHtmlLang(locale)} dir={isRtl ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-ink text-paper">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="private-hero premium-stage relative overflow-hidden border-b border-gold/[0.14] bg-ink px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-44 lg:px-12 xl:px-16">

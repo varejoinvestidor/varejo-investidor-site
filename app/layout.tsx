@@ -1,62 +1,25 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { SITE_DESCRIPTION, SITE_URL } from "../src/config/site";
 import { SiteJsonLd } from "../src/components/SiteJsonLd";
+import { buildPageMetadata } from "../src/data/localeMetadata";
 import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, localeToHtmlLang, type Locale } from "../src/i18n";
 import "./globals.css";
 import "./institutional.css";
 import "./mobile-system.css";
 
-const siteTitle = "Varejo Investidor | Research, Formação e Mercado Global";
-const siteDescription = SITE_DESCRIPTION;
-
-const languageAlternates: Record<string, string> = {
-  "x-default": "/en",
-  "pt-BR": "/",
-  en: "/en",
-  es: "/es",
-  fr: "/fr",
-  de: "/de",
-  it: "/it",
-  ar: "/ar",
-  fa: "/fa",
-  hi: "/hi",
-  ur: "/ur",
-  bn: "/bn",
-  tr: "/tr",
-  ru: "/ru",
-  id: "/id",
-  vi: "/vi",
-  th: "/th",
-  fil: "/fil",
-  zh: "/zh",
-  ja: "/ja",
-  ko: "/ko",
-  pl: "/pl",
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#030303",
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: siteTitle,
-  description: siteDescription,
-  openGraph: {
-    title: siteTitle,
-    description: siteDescription,
-    type: "website",
-    locale: "pt_BR",
-    siteName: "Varejo Investidor",
-    url: "/",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteTitle,
-    description: siteDescription,
-  },
-  alternates: {
-    canonical: "/",
-    languages: languageAlternates,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headerStore = headers();
+  const pathname = headerStore.get("x-varejo-pathname") ?? "/";
+  const requestedLocale = headerStore.get("x-varejo-locale");
+  const locale: Locale = isSupportedLocale(requestedLocale) ? requestedLocale : DEFAULT_LOCALE;
+  return buildPageMetadata(pathname, locale);
+}
 
 function getRequestLocale(): Locale {
   const requestedLocale = headers().get("x-varejo-locale");

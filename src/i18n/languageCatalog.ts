@@ -9,7 +9,7 @@ export type TranslationTier = "primary" | "global" | "expanding";
 
 /** Locales with reviewed primary-market copy (nav + core pages). */
 const PRIMARY_LOCALES = new Set<SupportedLocale>(["pt", "en", "es"]);
-const GLOBAL_LOCALES = new Set<SupportedLocale>(["fr", "de", "it", "ar", "hi", "tr", "id", "ja", "ko", "zh", "pl", "tl", "fa"]);
+const GLOBAL_LOCALES = new Set<SupportedLocale>(["fr", "de", "it", "ar", "hi", "tr", "id", "ja", "ko", "zh", "pl", "tl", "fa", "he"]);
 
 export type LanguageCatalogEntry = {
   locale: SupportedLocale;
@@ -41,6 +41,7 @@ const languageMetaRecord: Record<SupportedLocale, { code: string; nativeName: st
   zh: { code: "ZH", nativeName: "中文", englishName: "Chinese" },
   pl: { code: "PL", nativeName: "Polski", englishName: "Polish" },
   tl: { code: "TL", nativeName: "Filipino", englishName: "Filipino" },
+  he: { code: "HE", nativeName: "עברית", englishName: "Hebrew" },
 };
 
 export const LANGUAGE_CATALOG: LanguageCatalogEntry[] = SUPPORTED_LOCALES.map((locale) => {

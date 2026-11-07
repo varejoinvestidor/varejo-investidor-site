@@ -307,6 +307,17 @@ export function SiteChrome({
   const pathname = usePathname();
   const safeT = t ?? translations.en;
   const insightNavLabel = insightLabels[locale]?.nav ?? insightLabels.en.nav;
+
+  const menuA11y =
+    locale === "he"
+      ? { open: "פתיחת תפריט", close: "סגירת תפריט" }
+      : locale === "ar"
+        ? { open: "فتح القائمة", close: "إغلاق القائمة" }
+        : locale === "pt"
+          ? { open: "Abrir menu", close: "Fechar menu" }
+          : locale === "es"
+            ? { open: "Abrir menú", close: "Cerrar menú" }
+            : { open: "Open menu", close: "Close menu" };
   const [mobileLanguageOpen, setMobileLanguageOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileMarketsOpen, setMobileMarketsOpen] = useState(false);
@@ -374,6 +385,8 @@ export function SiteChrome({
           ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
           : locale === "ar"
             ? "الأسواق العالمية للمستثمر الفردي"
+            : locale === "he"
+              ? "שווקים גלובליים למשקיע הקמעונאי"
             : locale === "tr"
               ? "Bireysel Yatırımcı için Küresel Piyasalar"
               : "Mercado Global para o Investidor de Varejo";
@@ -393,6 +406,7 @@ export function SiteChrome({
     bn: { markets: "বাজার", forex: "Forex", stocks: "শেয়ার", crypto: "ক্রিপ্টো", etfs: "ETFs", funds: "রিয়েল এস্টেট ফান্ড" },
     ja: { markets: "マーケット", forex: "Forex", stocks: "株式", crypto: "暗号資産", etfs: "ETFs", funds: "不動産ファンド" },
     ko: { markets: "시장", forex: "Forex", stocks: "주식", crypto: "암호화폐", etfs: "ETFs", funds: "부동산 펀드" },
+    he: { markets: "שווקים", forex: "Forex", stocks: "מניות", crypto: "קריפטו", etfs: "ETFs", funds: "קרנות נדלן" },
   };
   const marketLabels = marketDropdownLabels[locale] ?? marketDropdownLabels.en;
   const localePrefix = localeToUrlSegment(locale);
@@ -467,7 +481,7 @@ export function SiteChrome({
             className="mobile-menu-button xl:hidden"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation-drawer"
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={mobileMenuOpen ? menuA11y.close : menuA11y.open}
             onClick={() => setMobileMenuOpen((open) => !open)}
           >
             <span className="mobile-menu-icon" aria-hidden="true">
@@ -508,7 +522,7 @@ export function SiteChrome({
         <button
           type="button"
           className="mobile-drawer-overlay"
-          aria-label="Close menu"
+          aria-label={menuA11y.close}
           tabIndex={mobileMenuOpen ? 0 : -1}
           onClick={() => setMobileMenuOpen(false)}
         />
@@ -518,7 +532,7 @@ export function SiteChrome({
               <span>VI</span>
               <strong>Varejo Investidor</strong>
             </a>
-            <button type="button" className="mobile-drawer-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
+            <button type="button" className="mobile-drawer-close" onClick={() => setMobileMenuOpen(false)} aria-label={menuA11y.close}>
               <span aria-hidden="true" />
               <span aria-hidden="true" />
             </button>
@@ -894,6 +908,8 @@ export function SupportFooter({
           ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
           : locale === "ar"
             ? "\u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u0639\u0627\u0644\u0645\u064A\u0629 \u0644\u0644\u0645\u0633\u062A\u062B\u0645\u0631 \u0627\u0644\u0641\u0631\u062F\u064A"
+            : locale === "he"
+              ? "שווקים גלובליים למשקיע הקמעונאי"
             : locale === "tr"
               ? "Bireysel Yat\u0131r\u0131mc\u0131 \u0130\u00E7in K\u00FCresel Piyasa"
           : "Mercado Global para o Investidor de Varejo";
@@ -968,6 +984,20 @@ export function SupportFooter({
                 forexCalculator: "\u062D\u0627\u0633\u0628\u0629 Forex",
                 compoundInterestTool: "\u062D\u0627\u0633\u0628\u0629 \u0627\u0644\u0641\u0627\u0626\u062F\u0629 \u0627\u0644\u0645\u0631\u0643\u0628\u0629",
               }
+            : locale === "he"
+              ? {
+                  social: "רשתות",
+                  levels: "רמות",
+                  markets: "שווקים",
+                  content: "שווקים",
+                  platforms: "פלטפורמות",
+                  tools: "כלים",
+                  language: "שפה",
+                  marketLine: "Forex | Crypto | Commodities | Global Markets",
+                  levelLinks: ["רמת Formiga", "רמת Lobo", "רמת Harpia", "Select"],
+                  forexCalculator: "מחשבון Forex",
+                  compoundInterestTool: "מחשבון ריבית דריבית",
+                }
             : locale === "tr"
               ? {
                   social: "Sosyal",

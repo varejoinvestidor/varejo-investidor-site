@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "./SiteSections";
 import type { Locale } from "../i18n";
+import { isRtlLocale, localeToHtmlLang } from "../i18n/locales";
 import { getForexLibraryContent, type ForexLibraryContent } from "../data/forexLibraryContent";
 import { absoluteSiteUrl } from "../config/site";
 import { getMarketContent, getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
@@ -99,6 +100,19 @@ const pageLabels: Record<Locale, {
     educationButton: "عرض التكوين",
     faq: "الأسئلة الشائعة",
     internalLinks: "تابع الدراسة",
+  },
+  he: {
+    eyebrow: "ספריית שווקים",
+    levelsTitle: "איך כל רמה משתמשת בשוק זה",
+    formigaTitle: "Formiga: מה לומדת",
+    loboTitle: "Lobo: איך פועל",
+    harpiaTitle: "Harpia: איך בונה הון",
+    characteristics: "מאפיינים עיקריים",
+    educationTitle: "התפתחו במתודולוגיית Varejo Investidor",
+    educationText: "העמיקו את הפרספקטיבה בהכשרה וחברו שוק זה למסע Formiga, Lobo ו-Harpia.",
+    educationButton: "צפו בהכשרה",
+    faq: "שאלות נפוצות",
+    internalLinks: "המשיכו ללמוד",
   },
   tr: {
     eyebrow: "Piyasa Kütüphanesi",
@@ -229,7 +243,7 @@ function ForexLibrarySections({
   freeChannelLink: string;
 }) {
   const sections = content.sections;
-  const isRtl = locale === "ar" || locale === "ur" || locale === "fa";
+  const isRtl = isRtlLocale(locale);
   const ui = forexUiLabels[locale] ?? forexUiLabels.en;
 
   return (
@@ -472,7 +486,7 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
   const content = getMarketContent(slug, pageLocale);
   const forexContent = slug === "forex" ? getForexLibraryContent(pageLocale) : null;
   const labels = pageLabels[pageLocale] ?? pageLabels.en;
-  const direction = pageLocale === "ar" || pageLocale === "ur" || pageLocale === "fa" ? "rtl" : "ltr";
+  const direction = isRtlLocale(pageLocale) ? "rtl" : "ltr";
   const relatedMarkets = content.related.filter((market) => market !== "fundos-imobiliarios" || pageLocale === "pt");
 
   const levelCards = [
@@ -485,7 +499,7 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
     <>
       <SiteChrome t={t} locale={locale} onLocaleChange={changeLocale} />
       <SchemaScripts slug={slug} locale={pageLocale} />
-      <main lang={pageLocale === "pt" ? "pt-BR" : pageLocale} dir={direction} className="min-h-screen bg-ink text-paper">
+      <main lang={localeToHtmlLang(pageLocale)} dir={direction} className="min-h-screen bg-ink text-paper">
         {institutionalPage ? (
           <>
             <MarketInstitutionalHero page={institutionalPage} locale={pageLocale} />

@@ -19,6 +19,7 @@ import { th } from "./th";
 import { tl } from "./tl";
 import { tr } from "./tr";
 import { vi } from "./vi";
+import { he } from "./he";
 export {
   DEFAULT_LOCALE,
   RTL_LOCALES,
@@ -55,6 +56,7 @@ const translationMap = {
   zh,
   pl,
   tl,
+  he,
 } satisfies Record<SupportedLocale, TranslationSchema>;
 
 export const translations: Record<string, TranslationSchema> = translationMap;

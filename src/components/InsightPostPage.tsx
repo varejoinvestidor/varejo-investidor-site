@@ -10,6 +10,7 @@ import {
 } from "./SiteSections";
 import { BrokerAccessBlock } from "./BrokerAccessBlock";
 import type { Locale } from "../i18n";
+import { isRtlLocale, localeToHtmlLang } from "../i18n/locales";
 import { absoluteSiteUrl } from "../config/site";
 import {
   getInsightsPath,
@@ -40,7 +41,7 @@ function SchemaScripts({ post }: { post: InsightPost }) {
 export function InsightPostPage({ pageLocale, slug }: { pageLocale: Locale; slug: string }) {
   const { locale, t, changeLocale } = useSiteLocale();
   const post = getPost(pageLocale, slug);
-  const labels = insightLabels[pageLocale];
+  const labels = insightLabels[pageLocale] ?? insightLabels.en;
 
   if (!post) {
     return null;
@@ -61,7 +62,7 @@ export function InsightPostPage({ pageLocale, slug }: { pageLocale: Locale; slug
     <>
       <SiteChrome t={t} locale={locale} onLocaleChange={changeLocale} />
       <SchemaScripts post={post} />
-      <main lang={pageLocale === "pt" ? "pt-BR" : pageLocale} dir={pageLocale === "ar" || pageLocale === "ur" || pageLocale === "fa" ? "rtl" : "ltr"} className="min-h-screen bg-ink text-paper">
+      <main lang={localeToHtmlLang(pageLocale)} dir={isRtlLocale(pageLocale) ? "rtl" : "ltr"} className="min-h-screen bg-ink text-paper">
         <article>
           <section className="page-hero relative overflow-hidden px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-36">
             <div className="absolute inset-0 terminal-grid opacity-55" />

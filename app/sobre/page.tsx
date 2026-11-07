@@ -9,6 +9,7 @@ import {
   fadeUp,
   useSiteLocale,
 } from "../../src/components/SiteSections";
+import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 
 const aboutCopy = {
   pt: {
@@ -427,7 +428,7 @@ export default function SobrePage() {
   const copy = localizedAboutCopy[locale as keyof typeof localizedAboutCopy] ?? localizedAboutCopy.en;
 
   return (
-    <main lang={locale === "pt" ? "pt-BR" : locale} dir={locale === "ar" || locale === "ur" || locale === "fa" ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="about-hero premium-stage relative px-5 pb-20 pt-32 md:px-8 md:pb-28 md:pt-44">

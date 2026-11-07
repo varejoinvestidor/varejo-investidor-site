@@ -9,6 +9,7 @@ import { LocaleFlagIcon } from "./LocaleFlagIcon";
 import { LANGUAGE_CATALOG, persistLanguageChoice } from "../i18n/languageCatalog";
 import { isRtlLocale, localeToHtmlLang, type SupportedLocale } from "../i18n/locales";
 import { localizedPath } from "../i18n/routing";
+import { getLanguageGateBadge } from "../data/languageCountCopy";
 
 const tierHint: Record<string, string> = {
   primary: "",
@@ -50,7 +51,9 @@ export function LanguageGateScreen() {
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#f4f0e8]/45">Global financial platform</p>
           </div>
         </div>
-        <p className="hidden text-[10px] font-bold uppercase tracking-[0.22em] text-gold/80 md:block">21 languages</p>
+        <p className="hidden text-[10px] font-bold uppercase tracking-[0.22em] text-gold/80 md:block">
+          {getLanguageGateBadge(suggested)}
+        </p>
       </header>
 
       <section className="relative z-10 mx-auto grid w-full max-w-6xl flex-1 gap-10 px-6 pb-16 md:grid-cols-[0.95fr_1.05fr] md:items-center md:px-12">

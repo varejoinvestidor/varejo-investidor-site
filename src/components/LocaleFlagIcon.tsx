@@ -64,6 +64,20 @@ export function LocaleFlagIcon({ locale, className }: { locale: Locale; classNam
     );
   }
 
+  if (locale === "he") {
+    return (
+      <svg viewBox="0 0 16 12" className={common} aria-hidden="true">
+        <rect width="16" height="12" fill="#f7f3eb" />
+        <rect width="16" height="1.6" fill="#0038b8" />
+        <rect y="10.4" width="16" height="1.6" fill="#0038b8" />
+        <path
+          d="M8 5.2 8.55 6.85h1.75l-1.42 1.05.54 1.65L8 8.95l-1.42 1.6.54-1.65-1.42-1.05h1.75Z"
+          fill="#0038b8"
+        />
+      </svg>
+    );
+  }
+
   if (locale === "fa") {
     return (
       <svg viewBox="0 0 16 12" className={common} aria-hidden="true">

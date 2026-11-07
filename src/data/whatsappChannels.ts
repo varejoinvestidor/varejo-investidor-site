@@ -20,7 +20,8 @@ export type WhatsAppLandingLocale =
   | "th"
   | "bn"
   | "zh"
-  | "ur";
+  | "ur"
+  | "he";
 
 export type WhatsAppChannelLevel = "formiga" | "lobo";
 
@@ -51,6 +52,7 @@ export const whatsappLandingLocales: Array<{
   { locale: "bn", label: "বাংলা", short: "BN" },
   { locale: "zh", label: "中文", short: "ZH" },
   { locale: "ur", label: "اردو", short: "UR", rtl: true },
+  { locale: "he", label: "עברית", short: "HE", rtl: true },
 ];
 
 export const whatsappChannels: Partial<Record<WhatsAppLandingLocale, Partial<Record<WhatsAppChannelLevel, string>>>> = {
@@ -77,6 +79,10 @@ export const whatsappChannels: Partial<Record<WhatsAppLandingLocale, Partial<Rec
   ar: {
     formiga: "https://whatsapp.com/channel/0029VbCvKci7IUYSbfKjGz0b",
     lobo: "https://whatsapp.com/channel/0029VbCvKci7IUYSbfKjGz0b",
+  },
+  he: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
   },
   tr: {
     formiga: "https://whatsapp.com/channel/0029VbDQWKCFsn0WOGEqUz2T",
@@ -267,6 +273,12 @@ export const whatsappGateUiCopy: Record<
     gateSubtitle: "Varejo Investidor کے سرکاری چینلز تک رسائی کے لیے زبان منتخب کریں۔",
     searchPlaceholder: "زبان تلاش کریں...",
     channelsEyebrow: "چیونٹی / بھیڑیا",
+  },
+  he: {
+    gateTitle: "בחרו שפה",
+    gateSubtitle: "בחרו שפה כדי לגשת לערוצים הרשמיים של Varejo Investidor.",
+    searchPlaceholder: "חיפוש שפה...",
+    channelsEyebrow: "Formiga / Lobo",
   },
 };
 
@@ -579,6 +591,25 @@ export const whatsappLandingCopy: Record<
     preparedText: "اس زبان کے سرکاری چینلز تیار کیے جا رہے ہیں۔ دستیاب ہوتے ہی لنکس یہاں شامل کیے جائیں گے۔",
     formiga: { title: "چیونٹی", description: "مالی بنیاد، نظم و ضبط اور مارکیٹ کی واضح سمجھ بنانے کا ابتدائی مرحلہ۔", button: "چیونٹی چینل میں شامل ہوں", unavailable: "چیونٹی چینل تیار ہو رہا ہے" },
     lobo: { title: "بھیڑیا", description: "مارکیٹ ویژن، حکمت عملی، تجزیہ اور سرمایہ کار کے سفر میں ترقی کا مرحلہ۔", button: "بھیڑیا چینل میں شامل ہوں", unavailable: "بھیڑیا چینل تیار ہو رہا ہے" },
+  },
+  he: {
+    title: "הצטרפו לערוץ ה-WhatsApp הרשמי שלנו",
+    subtitle: "בחרו את הרמה שלכם והצטרפו לקהילת Varejo Investidor.",
+    languageLabel: "שפה",
+    preparedTitle: "הערוצים בהכנה",
+    preparedText: "הערוצים הרשמיים בשפה זו בהכנה. הקישורים יתווספו כאן כשיהיו זמינים.",
+    formiga: {
+      title: "Formiga",
+      description: "נקודת הכניסה לבניית בסיס פיננסי, משמעת והבנת שווקים.",
+      button: "כניסה לערוץ Formiga",
+      unavailable: "ערוץ Formiga בהכנה",
+    },
+    lobo: {
+      title: "Lobo",
+      description: "רמה לפיתוח ראיית שוק, אסטרטגיה, ניתוח והתקדמות כמשקיע.",
+      button: "כניסה לערוץ Lobo",
+      unavailable: "ערוץ Lobo בהכנה",
+    },
   },
 };
 
