@@ -16,7 +16,7 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
-import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
+import { isRtlLocale, localeToHtmlLang, type Locale } from "../../src/i18n/locales";
 
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
 const SELECT_CONTACT_URL =
@@ -135,22 +135,24 @@ const wealthServicesByLocale: Record<string, WealthServiceCard[]> = {
   ],
   hi: [
     {
-      eyebrow: "??????? ??????",
+      eyebrow: "परिचालन संरचना",
       title: "Varejo Investidor Select",
-      subtitle: "??????? ??????? ??? ????????? ????? ???? ???????? ?? ??? ??????? ????????",
-      description: "US$ 50,000 ?? ??????? ????? ???? ???? ???????? ?? ??? ??????, ?????? Forex, ????, ???????? ?????? ?? ????????????? ??????? ?? ????????? ????? ???",
-      cta: "Select ?????",
+      subtitle: "वैश्विक बाजार एक्सपोज़र चाहने वाले निवेशकों के लिए परिचालन प्रबंधन।",
+      description:
+        "न्यूनतम US$50,000 से Forex, शेयर, क्रिप्टो और अंतर्राष्ट्रीय बाजारों तक पहुँच।",
+      cta: "Select देखें",
       href: "/select",
-      highlights: ["US$ 50,000 ??????? ?????", "Forex", "????", "???????? ??????", "???????? ????", "?????? ?? ??? ?? ????"],
+      highlights: ["न्यूनतम US$50,000", "Forex", "शेयर", "क्रिप्टो एसेट", "स्वचालित कॉपी"],
     },
     {
-      eyebrow: "???????? ??????? ??????",
+      eyebrow: "संपत्ति संरचना",
       title: "Varejo Investidor Private",
-      subtitle: "US$ 1,000,000 ?? ???? ????? ???? ???????? ?? ??? ??????? ??????? ???????",
-      description: "??????? ????? ???? ????????, ????????? ?? ???????? ?? ??? ????????????? ??????? ?? ?????, ??????? ?? ????????",
-      cta: "Private ?????",
+      subtitle: "US$1,000,000 से अधिक निवेशकों के लिए वैश्विक संपत्ति संरचना।",
+      description:
+        "अंतर्राष्ट्रीय पूंजी वाले निवेशकों, उद्यमियों और परिवारों के लिए संगठन, सुरक्षा और विस्तार।",
+      cta: "Private देखें",
       href: "/private",
-      highlights: ["US$ 1,000,000+", "??????? ???????", "??????? ???????", "????????????? ?????", "?? ????????????", "?????????? ?????"],
+      highlights: ["US$1,000,000+", "वैश्विक सुरक्षा", "कई अधिकार-क्षेत्र", "अंतर्राष्ट्रीय पूंजी", "दीर्घकाल", "संपत्ति निरंतरता"],
     },
   ],
   ar: [
@@ -335,22 +337,24 @@ const wealthServicesByLocale: Record<string, WealthServiceCard[]> = {
   ],
   ja: [
     {
-      eyebrow: "Operational structure",
+      eyebrow: "運用構造",
       title: "Varejo Investidor Select",
-      subtitle: "Operational management for investors seeking exposure to global markets.",
-      description: "A structure for investors with a minimum allocation of US$ 50,000, with exposure to Forex, stocks, crypto assets, and international markets.",
-      cta: "Explore Select",
+      subtitle: "世界市場へのエクスポージャーを求める投資家向けの運用管理。",
+      description:
+        "最低US$50,000から、Forex、株式、暗号資産、国際市場へ配分できる構造です。",
+      cta: "Selectを見る",
       href: "/select",
-      highlights: ["US$ 50,000 minimum allocation", "Forex", "Stocks", "Crypto assets", "Automated copy"],
+      highlights: ["最低配分 US$50,000", "Forex", "株式", "暗号資産", "自動コピー"],
     },
     {
-      eyebrow: "Wealth structure",
+      eyebrow: "資産構造",
       title: "Varejo Investidor Private",
-      subtitle: "Global wealth structure for investors above US$ 1,000,000.",
-      description: "International wealth organization, protection, and expansion for investors, business owners, and families with global capital.",
-      cta: "Explore Private",
+      subtitle: "US$1,000,000超の投資家向けグローバル資産構造。",
+      description:
+        "国際資本をお持ちの投資家、事業家、ファミリーのための、資産の整理・保護・拡大。",
+      cta: "Privateを見る",
       href: "/private",
-      highlights: ["US$ 1,000,000+", "Global protection", "Multi-jurisdiction", "International capital", "Long term", "Wealth continuity"],
+      highlights: ["US$1,000,000+", "グローバル保護", "複数法域", "国際資本", "長期", "資産の継続性"],
     },
   ],
   ko: [
@@ -629,7 +633,7 @@ const internationalServicesIntro = {
   en: "Explore Varejo Investidor channels for signals, education, and global market reading.",
   de: "Entdecken Sie die Angebote von Varejo Investidor fuer Signale, Ausbildung und globale Markteinordnung.",
   es: "Conoce los canales de Varejo Investidor para señales, educación y lectura de mercado global.",
-  hi: "Varejo Investidor ?? ?????? ?????: WhatsApp ?? ??????, ??????? ??????, ??????? ????? ???????? ?? ????-?????? ????? ?????????",
+  hi: "",
   ar: "تعرّف إلى قنوات Varejo Investidor للإشارات والتعليم وقراءة السوق العالمية.",
   he: "גלו את ערוצי Varejo Investidor לסיגנלים, הכשרה וקריאת שוק גלובלית.",
   tr: "Sinyaller, eğitim ve küresel piyasa okuma için Varejo Investidor kanallarını keşfedin.",
@@ -647,11 +651,45 @@ function institutionalCardTone(kind: string): "platinum" | "mentorship" | "elite
   return "mentorship";
 }
 
+const servicesIntlSections: Partial<
+  Record<
+    Locale,
+    {
+      eliteBadge: string;
+      eliteTitle: string;
+      eliteText: string;
+      wealthTitle: string;
+      wealthText: string;
+      heroAlt: string;
+    }
+  >
+> = {
+  hi: {
+    eliteBadge: "एलीट चैनल",
+    eliteTitle: "WhatsApp पर एलीट सिग्नल",
+    eliteText:
+      "एलीट सदस्यता का भुगतान तरीका चुनें। अंतर्राष्ट्रीय ग्राहक Stripe के माध्यम से अमेरिकी डॉलर में सदस्यता लेते हैं।",
+    wealthTitle: "Varejo Investidor संपत्ति संरचनाएँ",
+    wealthText:
+      "वैश्विक एक्सपोज़र, परिचालन स्वचालन या संस्थागत संपत्ति संरचना चाहने वाले निवेशकों के लिए दो स्तर।",
+    heroAlt: "संस्थागत मेज़ पर चींटी, भेड़िया और गरुड़ के पात्र",
+  },
+  ja: {
+    eliteBadge: "エリートチャンネル",
+    eliteTitle: "WhatsAppでのエリートシグナル",
+    eliteText: "エリートのお支払い方法を選択してください。海外のお客様はStripeで米ドル決済です。",
+    wealthTitle: "Varejo Investidorの資産構造",
+    wealthText: "グローバルエクスポージャー、運用自動化、または機関的資産構造を求める投資家向けの2層。",
+    heroAlt: "機関デスクの蚁・狼・鷹キャラクター",
+  },
+};
+
 export default function ServicesPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const isPt = locale === "pt";
+  const intlSections = servicesIntlSections[locale];
   const servicesIntro =
-    isPt || locale === "he"
+    isPt || locale === "he" || locale === "hi"
       ? t.servicesPage.text
       : internationalServicesIntro[locale as keyof typeof internationalServicesIntro] ?? internationalServicesIntro.en;
   const productLabel =
@@ -689,7 +727,7 @@ export default function ServicesPage() {
             <div className="services-hero-floor" />
             <Image
               src="/characters/services-hero-institutional.png"
-              alt="Personagens Formiga, Lobo e Harpia em mesa institucional"
+              alt={intlSections?.heroAlt ?? "Personagens Formiga, Lobo e Harpia em mesa institucional"}
               width={1536}
               height={1024}
               sizes="(min-width: 1280px) 50vw, (min-width: 1024px) 48vw, 96vw"
@@ -704,14 +742,17 @@ export default function ServicesPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_12%,rgba(201,155,62,0.08),transparent_42%)]" />
         <div className="relative mx-auto max-w-7xl">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Canal Elite</p>
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">{intlSections?.eliteBadge ?? "Canal Elite"}</p>
             <h2 className="mt-4 font-serif text-4xl leading-[1.02] tracking-[-0.045em] text-ink md:text-6xl">
-              {isPt ? "Research Elite no WhatsApp" : "Elite Research on WhatsApp"}
+              {isPt
+                ? "Research Elite no WhatsApp"
+                : intlSections?.eliteTitle ?? "Elite Research on WhatsApp"}
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-ink/[0.66] md:text-lg">
               {isPt
                 ? "Escolha a forma de pagamento do Canal Elite. Clientes no Brasil pagam em reais via Lastlink. Clientes internacionais assinam em dólar via Stripe."
-                : "Choose how to subscribe to Elite Research. International clients pay in dollars through Stripe."}
+                : intlSections?.eliteText ??
+                  "Choose how to subscribe to Elite Research. International clients pay in dollars through Stripe."}
             </p>
           </div>
 
@@ -727,12 +768,15 @@ export default function ServicesPage() {
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">Select | Private</p>
             <h2 className="mt-5 font-serif text-4xl leading-[1.03] tracking-[-0.045em] md:text-6xl">
-              {isPt ? "Estruturas patrimoniais do Varejo Investidor" : "Varejo Investidor wealth structures"}
+              {isPt
+                ? "Estruturas patrimoniais do Varejo Investidor"
+                : intlSections?.wealthTitle ?? "Varejo Investidor wealth structures"}
             </h2>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-paper/[0.68] md:text-lg">
               {isPt
                 ? "Duas camadas para investidores que desejam exposição global, automação operacional ou estrutura patrimonial institucional."
-                : "Two layers for investors seeking global exposure, operational automation, or institutional wealth structure."}
+                : intlSections?.wealthText ??
+                  "Two layers for investors seeking global exposure, operational automation, or institutional wealth structure."}
             </p>
           </div>
 

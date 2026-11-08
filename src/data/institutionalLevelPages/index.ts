@@ -16,6 +16,8 @@ import {
   levelPageUiPt,
 } from "./pt";
 import { evolutionCompareHe, levelPackHe, levelPageUiHe } from "./he";
+import { evolutionCompareJa, levelPackJa, levelPageUiJa } from "./ja";
+import { evolutionCompareHi, levelPackHi, levelPageUiHi } from "./hi";
 import type { EvolutionCompareStep, LevelCharacterCopy, LevelId, LevelPageUi } from "./types";
 
 export type { LevelId } from "./types";
@@ -26,6 +28,8 @@ const levelPacks: Partial<Record<SupportedLocale, typeof levelPackEn>> = {
   en: levelPackEn,
   es: levelPackEs,
   he: levelPackHe,
+  ja: levelPackJa,
+  hi: levelPackHi,
 };
 
 const levelUi: Partial<Record<SupportedLocale, LevelPageUi>> = {
@@ -39,7 +43,7 @@ const levelUi: Partial<Record<SupportedLocale, LevelPageUi>> = {
   fa: { ...levelPageUiEn, competenciesTitle: "آنچه این سطح پرورش می‌دهد", philosophyTitle: "فلسفه", coreMessageLabel: "پیام اصلی", evolutionTitle: "تحول مورد انتظار", formationTitle: "ساختار آموزشی", compareProgression: "مبانی ← استراتژی ← چشم‌انداز جهانی" },
   tr: { ...levelPageUiEn, competenciesTitle: "Bu seviyenin geliştirdikleri", philosophyTitle: "Felsefe", coreMessageLabel: "Ana mesaj", evolutionTitle: "Beklenen gelişim", formationTitle: "Eğitim yapısı", compareTitle: "Üç karakterin evrimi", compareProgression: "Temeller → Strateji → Küresel vizyon", pricingEyebrow: "Eğitime yatırım", viewEducation: "Tam müfredatı gör", levelLobo: "Kurt Seviyesi", levelHarpia: "Harpia Seviyesi" },
   ru: { ...levelPageUiEn, competenciesTitle: "Что развивает этот уровень", philosophyTitle: "Философия", coreMessageLabel: "Ключевое сообщение", evolutionTitle: "Ожидаемая эволюция", formationTitle: "Образовательная структура", compareTitle: "Эволюция трёх персонажей", compareProgression: "Основы → Стратегия → Глобальное видение" },
-  hi: { ...levelPageUiEn, competenciesTitle: "यह स्तर क्या विकसित करता है", philosophyTitle: "दर्शन", coreMessageLabel: "मुख्य संदेश", evolutionTitle: "अपेक्षित विकास", formationTitle: "शैक्षिक संरचना", compareTitle: "तीन पात्रों का विकास", compareProgression: "आधार → रणनीति → वैश्विक दृष्टि" },
+  hi: levelPageUiHi,
   ur: { ...levelPageUiEn, competenciesTitle: "یہ سطح کیا پروان چڑھاتی ہے", philosophyTitle: "فلسفہ", coreMessageLabel: "مرکزی پیغام", evolutionTitle: "متوقع ارتقا", formationTitle: "تعلیمی ڈھانچہ", compareProgression: "بنیادیں → حکمت عملی → عالمی نظر" },
   bn: { ...levelPageUiEn, competenciesTitle: "এই স্তর কী গড়ে তোলে", philosophyTitle: "দর্শন", coreMessageLabel: "মূল বার্তা", evolutionTitle: "প্রত্যাশিত বিবর্তন", formationTitle: "শিক্ষাগত কাঠামো", compareProgression: "ভিত্তি → কৌশল → বৈশ্বিক দৃষ্টি" },
   id: { ...levelPageUiEn, competenciesTitle: "Apa yang dikembangkan level ini", philosophyTitle: "Filosofi", coreMessageLabel: "Pesan inti", evolutionTitle: "Evolusi yang diharapkan", formationTitle: "Struktur pendidikan", compareProgression: "Dasar → Strategi → Visi global" },
@@ -47,7 +51,7 @@ const levelUi: Partial<Record<SupportedLocale, LevelPageUi>> = {
   th: { ...levelPageUiEn, competenciesTitle: "ระดับนี้พัฒนาอะไร", philosophyTitle: "ปรัชญา", coreMessageLabel: "ข้อความหลัก", evolutionTitle: "วิวัฒนาการที่คาดหวัง", formationTitle: "โครงสร้างการศึกษา", compareProgression: "รากฐาน → กลยุทธ์ → วิสัยทัศน์โลก" },
   tl: { ...levelPageUiEn, competenciesTitle: "Ano ang binubuo ng level na ito", philosophyTitle: "Pilosopiya", coreMessageLabel: "Pangunahing mensahe", evolutionTitle: "Inaasahang ebolusyon", formationTitle: "Istraktura ng edukasyon", compareProgression: "Pundasyon → Estratehiya → Global na pananaw" },
   zh: { ...levelPageUiEn, competenciesTitle: "本级别培养什么", philosophyTitle: "理念", coreMessageLabel: "核心信息", evolutionTitle: "预期成长", formationTitle: "教育结构", compareTitle: "三个角色的演进", compareProgression: "基础 → 策略 → 全球视野" },
-  ja: { ...levelPageUiEn, competenciesTitle: "このレベルが育むもの", philosophyTitle: "哲学", coreMessageLabel: "核となるメッセージ", evolutionTitle: "期待される成長", formationTitle: "教育構造", compareTitle: "三人のキャラクターの進化", compareProgression: "基礎 → 戦略 → グローバル視座" },
+  ja: levelPageUiJa,
   ko: { ...levelPageUiEn, competenciesTitle: "이 레벨이 키우는 것", philosophyTitle: "철학", coreMessageLabel: "핵심 메시지", evolutionTitle: "기대되는 성장", formationTitle: "교육 구조", compareTitle: "세 캐릭터의 진화", compareProgression: "기초 → 전략 → 글로벌 시야" },
   pl: { ...levelPageUiEn, competenciesTitle: "Co rozwija ten poziom", philosophyTitle: "Filozofia", coreMessageLabel: "Przesłanie główne", evolutionTitle: "Oczekiwana ewolucja", formationTitle: "Struktura edukacyjna", compareTitle: "Ewolucja trzech postaci", compareProgression: "Fundamenty → Strategia → Wizja globalna" },
   he: levelPageUiHe,
@@ -58,6 +62,8 @@ const evolutionByLocale: Partial<Record<SupportedLocale, EvolutionCompareStep[]>
   en: evolutionCompareEn,
   es: evolutionCompareEs,
   he: evolutionCompareHe,
+  ja: evolutionCompareJa,
+  hi: evolutionCompareHi,
 };
 
 function resolveLocale(locale: Locale): SupportedLocale {

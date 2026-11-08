@@ -11,6 +11,7 @@ import {
 } from "../../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../../src/components/ForexBrokerBannerWide";
 import { fxproButtonLabels, fxproLinks } from "../../../src/data/fxproLinks";
+import { forexCalculatorCopyHi } from "../../../src/data/forexCalculatorCopyHi";
 import type { Locale } from "../../../src/i18n";
 
 type Currency =
@@ -406,7 +407,7 @@ const copyByLocale: Partial<Record<Locale, ToolCopy>> = {
     signalsButton: "Recibir señales en WhatsApp",
   },
   fr: { ...enCopy, lang: "fr", eyebrow: "Outil Forex", h1: "Calculateur Forex", freeButton: "Entrer dans le Canal Formiga" },
-  hi: { ...enCopy, lang: "hi", eyebrow: "Forex टूल", h1: "Forex Calculator", freeButton: "Formiga Channel में प्रवेश करें" },
+  hi: { ...enCopy, ...forexCalculatorCopyHi },
   ar: { ...enCopy, lang: "ar", eyebrow: "أداة الفوركس", h1: "حاسبة الفوركس", freeButton: "الدخول إلى قناة Formiga" },
   tr: { ...enCopy, lang: "tr", eyebrow: "Forex Aracı", h1: "Forex Hesaplayıcı", freeButton: "Formiga Kanalına Gir" },
   id: { ...enCopy, lang: "id", eyebrow: "Alat Forex", h1: "Kalkulator Forex", freeButton: "Masuk ke Kanal Formiga" },

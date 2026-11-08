@@ -93,14 +93,27 @@ const mt5: Record<Locale, Omit<PlatformContent, "slug" | "label" | "ctaLabel" | 
     ],
   },
   hi: {
-    title: "\u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u0928\u093F\u0937\u094D\u092A\u093E\u0926\u0928 \u0915\u0947 \u0932\u093F\u090F MetaTrader 5",
-    subtitle: "Forex, \u0907\u0902\u0921\u093F\u0938\u0947\u091C, \u0917\u094B\u0932\u094D\u0921, \u0911\u092F\u0932 \u0914\u0930 \u0911\u0930\u094D\u0921\u0930 \u0928\u093F\u0937\u094D\u092A\u093E\u0926\u0928 \u0915\u0947 \u0932\u093F\u090F desktop, mobile \u0914\u0930 web \u091F\u0930\u094D\u092E\u093F\u0928\u0932.",
-    metaDescription: "MetaTrader 5, order execution, Forex, indices, gold, oil \u0914\u0930 broker connection \u0915\u094B \u0938\u092E\u091D\u0947\u0902.",
-    intro: "MetaTrader 5 \u0935\u0948\u0936\u094D\u0935\u093F\u0915 traders \u0915\u0947 \u0932\u093F\u090F charts \u0926\u0947\u0916\u0928\u0947, orders \u092D\u0947\u091C\u0928\u0947, positions manage \u0915\u0930\u0928\u0947 \u0914\u0930 broker accounts \u091C\u094B\u0921\u093C\u0928\u0947 \u0915\u093E platform \u0939\u0948.",
+    title: "वैश्विक निष्पादन के लिए MetaTrader 5",
+    subtitle: "Forex, सूचकांक, सोना, तेल और ऑर्डर निष्पादन — डेस्कटॉप, मोबाइल और वेब टर्मिनल।",
+    metaDescription: "MetaTrader 5, ऑर्डर निष्पादन, Forex, सूचकांक, सोना, तेल और ब्रोकर कनेक्शन समझें।",
+    intro:
+      "MetaTrader 5 वैश्विक ट्रेडरों के लिए चार्ट देखने, ऑर्डर भेजने, पोजिशन प्रबंधित करने और ब्रोकर खाते जोड़ने का मंच है।",
     sections: [
-      { title: "\u092F\u0939 \u0915\u094D\u092F\u093E \u0939\u0948", text: "Forex, indices, gold \u0914\u0930 oil \u092E\u0947\u0902 market reading \u0914\u0930 execution \u0915\u0947 \u0932\u093F\u090F operational terminal.", bullets: ["Forex", "Indices", "Gold", "Oil"] },
-      { title: "\u0915\u0948\u0938\u0947 \u0915\u093E\u092E \u0915\u0930\u0924\u093E \u0939\u0948", text: "Platform broker account \u0915\u094B trading environment \u0938\u0947 \u091C\u094B\u0921\u093C\u0924\u093E \u0939\u0948 \u0924\u093E\u0915\u093F orders \u0914\u0930 positions manage \u0939\u094B \u0938\u0915\u0947\u0902.", bullets: ["Order execution", "Desktop", "Mobile", "Web"] },
-      { title: "\u0932\u093E\u092D", text: "Charts, history, indicators \u0914\u0930 risk control \u0915\u094B \u090F\u0915 disciplined execution process \u092E\u0947\u0902 \u091C\u094B\u0921\u093C\u0924\u093E \u0939\u0948.", bullets: ["Indicators", "History", "Risk", "Brokers"] },
+      {
+        title: "यह क्या है",
+        text: "Forex, सूचकांक, सोना और तेल में बाजार-पठन और निष्पादन के लिए परिचालन टर्मिनल।",
+        bullets: ["Forex", "सूचकांक", "सोना", "तेल"],
+      },
+      {
+        title: "कैसे काम करता है",
+        text: "मंच आपके ब्रोकर खाते को ट्रेडिंग वातावरण से जोड़ता है — मार्केट और लंबित ऑर्डर तथा पोजिशन प्रबंधन।",
+        bullets: ["ऑर्डर निष्पादन", "डेस्कटॉप", "मोबाइल", "वेब"],
+      },
+      {
+        title: "लाभ",
+        text: "चार्ट, इतिहास, संकेतक और जोखिम नियंत्रण को अनुशासित निष्पादन प्रक्रिया में जोड़ता है।",
+        bullets: ["संकेतक", "इतिहास", "जोखिम", "ब्रोकर"],
+      },
     ],
   },
   ar: {

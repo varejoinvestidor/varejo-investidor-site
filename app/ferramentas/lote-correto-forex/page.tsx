@@ -318,33 +318,85 @@ copy.es = {
 copy.hi = {
   ...copy.en,
   lang: "hi",
-  eyebrow: "Forex टूल",
-  h1: "अपने Forex खाते के लिए सही lot size चुनें।",
-  h2: "समझें कि हर 100 pips की चाल आपके capital पर कितना प्रभाव डालती है और कौन सा lot size आपके खाते के लिए उपयुक्त है।",
-  form: { capital: "ब्रोकर में जमा पूंजी", capitalHelp: "उदाहरण: 500, 1000, 2000 या 5000.", lot: "वांछित lot size", lotHelp: "उदाहरण: 0.01, 0.02, 0.05 या 0.10.", pips: "pips में गणना आधार", pipsHelp: "लॉट के प्रभाव की तुलना के लिए निश्चित आधार।", currency: "खाता मुद्रा", currencyHelp: "परिणाम दिखाने के लिए मुद्रा चुनें।", button: "Lot की गणना करें" },
-  introEyebrow: "ट्रेड से पहले",
-  introTitle: "ट्रेड खोलने से पहले lot को समझें।",
-  introParagraphs: ["Forex में lot आपके trade का आकार तय करता है।", "Lot जितना बड़ा होगा, हर बाजार चाल पर gain या loss उतना बड़ा होगा।", "बड़ा lot खाते को गलतियों के लिए कम जगह देता है।"],
-  beginnerCards: [["जमा पूंजी", "ब्रोकर में मौजूद राशि।"], ["Lot size", "ऑपरेशन का वॉल्यूम।"], ["100 pips की चाल", "हर 100 pips का प्रभाव दिखाता है।"], ["जोखिम वर्गीकरण", "बताता है कि lot conservative, moderate, aggressive या critical है।"]],
-  resultEyebrow: "टूल परिणाम",
-  labels: { ...copy.en.labels, pipValue: "प्रति पिप मूल्य", result100: "100 pips में परिणाम", impact: "खाते पर प्रभाव", pipsToDouble: "दोगुना करने के pips", pipsToZero: "शून्य तक pips", classification: "वर्गीकरण", table: ["Capital", "Lot", "प्रति pip मूल्य", "100 pips परिणाम", "प्रभाव", "दोगुना या शून्य pips", "वर्गीकरण"] },
-  profiles: {
-    harpiaConservative: ["गरुड़ Conservador", "यह lot capital को मजबूत रूप से सुरक्षित रखता है।"],
-    harpia: ["गरुड़", "नियंत्रित जोखिम और अधिक शांति।"],
-    loboConservative: ["भेड़िया Conservador", "नियंत्रण के साथ विकास के लिए संतुलित lot."],
-    lobo: ["भेड़िया", "मध्यम जोखिम। गलती का प्रभाव भी बढ़ता है।"],
-    loboAggressive: ["भेड़िया Aggressive", "Lot खाते पर दबाव डालना शुरू करता है।"],
-    formiga: ["चींटी", "उच्च जोखिम। कुछ गलत trades बड़ा नुकसान दे सकते हैं।"],
-    formigaAggressive: ["चींटी Aggressive", "बहुत उच्च जोखिम। खाता vulnerable होता है।"],
-    megaAggressive: ["Mega Aggressive", "बेहद उच्च exposure."],
-    ultraAggressive: ["Ultra Aggressive", "Critical zone. Capital preservation के विपरीत।"],
+  eyebrow: "Forex उपकरण",
+  h1: "अपने Forex खाते के लिए सही लॉट आकार चुनें।",
+  h2: "समझें प्रत्येक 100 पिप की चाल आपकी पूंजी पर कितना प्रभाव डालती है और आपके खाते के लिए कौन-सा लॉट उपयुक्त है।",
+  form: {
+    capital: "ब्रोकर में जमा पूंजी",
+    capitalHelp: "उदाहरण: 500, 1000, 2000 या 5000।",
+    lot: "वांछित लॉट आकार",
+    lotHelp: "उदाहरण: 0.01, 0.02, 0.05 या 0.10।",
+    pips: "पिप में गणना आधार",
+    pipsHelp: "लॉट प्रभाव की तुलना के लिए निश्चित मानक।",
+    currency: "खाता मुद्रा",
+    currencyHelp: "परिणाम दिखाने की मुद्रा चुनें।",
+    button: "लॉट की गणना करें",
   },
+  introEyebrow: "ट्रेड से पहले",
+  introTitle: "ट्रेड खोलने से पहले लॉट समझें।",
+  introParagraphs: [
+    "Forex में लॉट ट्रेड का आकार तय करता है। लॉट बड़ा होने पर हर बाजार चाल पर लाभ या हानि भी बढ़ती है।",
+    "यदि आपने US$500 जमा किए और 0.01 लॉट ट्रेड करते हैं, तो प्रत्येक 100 पिप लगभग US$10 दर्शाते हैं। 0.02 लॉट पर यह लगभग US$20 होता है।",
+    "लॉट जितना बड़ा, गलतियों सहन करने की जगह उतनी कम।",
+  ],
+  beginnerCards: [
+    ["जमा पूंजी", "ब्रोकर में राशि — लॉट प्रभाव मापने का आधार।"],
+    ["लॉट आकार", "ट्रेड का वॉल्यूम। लॉट बड़ा होने पर प्रति पिप मौद्रिक मूल्य बढ़ता है।"],
+    ["100 पिप की चाल", "प्रत्येक 100 पिप पर खाते का लाभ/हानि दिखाता है।"],
+    ["जोखिम वर्गीकरण", "लॉट संरक्षित, मध्यम, आक्रामक या गंभीर है या नहीं, बताता है।"],
+  ],
+  resultEyebrow: "उपकरण परिणाम",
+  labels: {
+    pipValue: "प्रति पिप मूल्य",
+    result100: "100 पिप में परिणाम",
+    impact: "खाता प्रभाव",
+    pipsToDouble: "दोगुना करने हेतु पिप",
+    pipsToZero: "शून्य तक पिप",
+    classification: "वर्गीकरण",
+    table: ["पूंजी", "लॉट", "प्रति पिप", "100 पिप परिणाम", "प्रभाव", "दोगुना/शून्य पिप", "वर्गीकरण"],
+  },
+  profiles: {
+    harpiaConservative: ["गरुड़ — अत्यंत संरक्षित", "पूंजी मजबूती से सुरक्षित रहती है और टिकाऊपन की अधिक गुंजाइश मिलती है।"],
+    harpia: ["गरुड़", "नियंत्रित जोखिम — अधिक शांति से बाजार अपनाना।"],
+    loboConservative: ["भेड़िया — संरक्षित", "नियंत्रण के साथ विकास के लिए संतुलित लॉट।"],
+    lobo: ["भेड़िया", "मध्यम जोखिम — लाभ और गलतियों दोनों का प्रभाव बढ़ता है।"],
+    loboAggressive: ["भेड़िया — आक्रामक", "लॉट खाते पर दबाव बढ़ाने लगता है — अनुशासन जरूरी।"],
+    formiga: ["चींटी", "उच्च जोखिम — कुछ गलत ट्रेड बड़ा नुकसान दे सकते हैं।"],
+    formigaAggressive: ["चींटी — अत्यधिक आक्रामक", "बहुत उच्च जोखिम — खाता कमजोर पड़ता है।"],
+    megaAggressive: ["अत्यधिक आक्रामक", "अत्यधिक एक्सपोज़र — खाता शीघ्र दोगुना या शून्य हो सकता है।"],
+    ultraAggressive: ["गंभीर क्षेत्र", "पूंजी संरक्षण के विपरीत लॉट — तुरंत समायोजन पर विचार करें।"],
+  },
+  referenceEyebrow: "संदर्भ",
+  referenceTitle: "लॉट प्रभाव तालिका",
+  referenceText: "100 पिप की सरल गणना से समान लॉट विभिन्न पूंजी पर कैसे बदलता है, तुलना करें।",
+  comparisonEyebrow: "तुलना",
+  comparisonTitle: "वही लॉट, अलग खाता आकार",
+  comparisonText: "लॉट अपने आप संरक्षित या आक्रामक नहीं होता — यह खाते के आकार पर निर्भर करता है।",
+  comparisonCards: [
+    ["छोटा खाता", "कम पूंजी में लॉट छोटा रखना चाहिए ताकि खाता सुरक्षित रहे।"],
+    ["मध्यम खाता", "अधिक लचीलापन, फिर भी नियंत्रण जरूरी।"],
+    ["बड़ा खाता", "बड़ा लॉट भी पूंजी के प्रतिशत पर कम दबाव डाल सकता है।"],
+  ],
+  brokerEyebrow: "Forex खाता",
+  brokerTitle: "अपना खाता खोलें और Forex बाजार में प्रवेश करें।",
+  brokerText: "लॉट प्रबंधन लागू करने के लिए अपने ब्रोकर खाते से ही ट्रेड करें।",
+  brokerCardTitle: "Forex ब्रोकर",
+  brokerCardText: "नीचे बटन या बैनर से अपनी भाषा में ब्रोकर तक पहुँचें।",
+  ctaEyebrow: "लॉट और जोखिम",
+  ctaTitle: "नियंत्रित लॉट और जोखिम के साथ ट्रेड करना सीखें।",
+  ctaText: "Varejo Investidor में पूंजी सुरक्षा, लॉट गणना, पिप समझ और चींटी, भेड़िया, गरुड़ स्तरों में विकास सीखें।",
   levelsEyebrow: "चींटी • भेड़िया • गरुड़",
-  levelsTitle: "हर स्तर lot size को कैसे समझता है",
-  levels: [["चींटी", "सिर्फ संभावित profit देखती है।", "border-fall/[0.38] text-fall"], ["भेड़िया", "ट्रेड से पहले calculate करता है।", "border-gold/[0.42] text-gold"], ["गरुड़", "survival और capital preservation को प्राथमिकता देता है।", "border-rise/[0.34] text-rise"]],
-  freeButton: "Formiga चैनल में प्रवेश करें",
+  levelsTitle: "प्रत्येक स्तर लॉट को कैसे समझता है",
+  levels: [
+    ["चींटी", "अक्सर केवल संभावित लाभ देखती है और विपरीत चाल का प्रभाव नजरअंदाज करती है।", "border-fall/[0.38] text-fall"],
+    ["भेड़िया", "ट्रेड से पहले गणना करता है — लॉट, स्टॉप और कुल जोखिम का सम्मान।", "border-gold/[0.42] text-gold"],
+    ["गरुड़", "टिकाऊपन, पूंजी संरक्षण और दीर्घकाल को प्राथमिकता देता है।", "border-rise/[0.34] text-rise"],
+  ],
+  freeButton: "मुफ्त चींटी चैनल में प्रवेश करें",
   signalsButton: "WhatsApp पर सिग्नल प्राप्त करें",
-  disclaimer: "यह टूल शैक्षिक है और pip value का सरल नियम उपयोग करता है। Forex, crypto, indices और अन्य assets में जोखिम होता है।",
+  disclaimer:
+    "शैक्षिक उपकरण। सरल पिप-मूल्य नियम का उपयोग। वास्तविक मूल्य एसेट, ब्रोकर, खाता प्रकार और बाजार पर निर्भर करता है। Forex, क्रिप्टो, सूचकांक और अन्य बाजारों में जोखिम और हानि संभव है।",
+  pips: "पिप",
 };
 
 copy.ar = {
@@ -413,17 +465,56 @@ copy.vi = {
 };
 
 function formatMoney(value: number, currency: Currency, locale: Locale) {
-  const intlLocale = locale === "pt" ? "pt-BR" : locale === "es" ? "es-ES" : locale === "tr" ? "tr-TR" : locale === "id" ? "id-ID" : locale === "vi" ? "vi-VN" : "en-US";
+  const intlLocale =
+    locale === "pt"
+      ? "pt-BR"
+      : locale === "es"
+        ? "es-ES"
+        : locale === "hi"
+          ? "hi-IN"
+          : locale === "tr"
+            ? "tr-TR"
+            : locale === "id"
+              ? "id-ID"
+              : locale === "vi"
+                ? "vi-VN"
+                : "en-US";
   return `${currencySymbols[currency]} ${value.toLocaleString(intlLocale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 function formatNumber(value: number, locale: Locale, digits = 2) {
-  const intlLocale = locale === "pt" ? "pt-BR" : locale === "es" ? "es-ES" : locale === "tr" ? "tr-TR" : locale === "id" ? "id-ID" : locale === "vi" ? "vi-VN" : "en-US";
+  const intlLocale =
+    locale === "pt"
+      ? "pt-BR"
+      : locale === "es"
+        ? "es-ES"
+        : locale === "hi"
+          ? "hi-IN"
+          : locale === "tr"
+            ? "tr-TR"
+            : locale === "id"
+              ? "id-ID"
+              : locale === "vi"
+                ? "vi-VN"
+                : "en-US";
   return value.toLocaleString(intlLocale, { minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 
 function formatPips(value: number, c: LotCopy, locale: Locale) {
-  const intlLocale = locale === "pt" ? "pt-BR" : locale === "es" ? "es-ES" : locale === "tr" ? "tr-TR" : locale === "id" ? "id-ID" : locale === "vi" ? "vi-VN" : "en-US";
+  const intlLocale =
+    locale === "pt"
+      ? "pt-BR"
+      : locale === "es"
+        ? "es-ES"
+        : locale === "hi"
+          ? "hi-IN"
+          : locale === "tr"
+            ? "tr-TR"
+            : locale === "id"
+              ? "id-ID"
+              : locale === "vi"
+                ? "vi-VN"
+                : "en-US";
   return `${Math.round(value).toLocaleString(intlLocale)} ${c.pips}`;
 }
 

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import {
   getIntroLanguageStat,
 } from "../src/data/languageCountCopy";
 import { homeLiteCopyHe } from "../src/data/homeLiteCopyHe";
+import { homePrivateCopyByLocale, homeSelectCopyByLocale } from "../src/data/homeSelectPrivateCopy";
 import { isRtlLocale } from "../src/i18n";
 
 type HomeLiteLocaleCopy = {
@@ -509,7 +510,7 @@ const homeLiteCopy = {
       { code: "ハーピー", title: "グローバル資産", text: "資産保全、継承、強い通貨、国際的な構造。", href: "/nivel-harpia" },
     ],
     cardCta: "詳しく見る",
-    final: { title: "あなたの旅はアリレベルから始まります。", text: "無料で始め、世界市場を追跡し、アリ、オオカミ、ハーピーの各レベルで金融進化を進めましょう。", free: "アリチャンネルに参加", elite: "Elite Harpiaを見る" },
+    final: { title: "あなたの旅はアリレベルから始まります。", text: "無料で始め、世界市場を追跡し、アリ、オオカミ、ハーピーの各レベルで金融進化を進めましょう。", free: "アリチャンネルに参加", elite: "Eliteハーピーを見る" },
   },
   ko: {
     hero: {
@@ -713,23 +714,6 @@ type HomeEliteCopy = {
   cta: string;
 };
 
-type HomeSelectCopy = {
-  eyebrow: string;
-  title: string;
-  text: string;
-  cta: string;
-  cards: Array<{ label: string; value?: string }>;
-};
-
-type HomePrivateCopy = {
-  eyebrow: string;
-  title: string;
-  subtitle: string;
-  text: string;
-  cta: string;
-  cards: Array<{ label: string; value?: string }>;
-};
-
 const homeEliteCopy: Record<string, HomeEliteCopy> = {
   pt: {
     title: "Canal Elite",
@@ -890,301 +874,6 @@ Object.assign(homeEliteCopy, {
   },
 });
 
-const homeSelectCopy: Record<string, HomeSelectCopy> = {
-  pt: {
-    eyebrow: "VAREJO INVESTIDOR SELECT",
-    title: "Varejo Investidor Select",
-    text: "Estrutura operacional voltada para investidores que já possuem patrimônio relevante e desejam exposição aos mercados globais sem necessidade de acompanhar operações diariamente.",
-    cta: "CONHECER SELECT",
-    cards: [
-      { label: "Aplicação mínima", value: "R$ 250.000" },
-      { label: "Investidor internacional", value: "US$ 50.000" },
-      { label: "Forex" },
-      { label: "Ações" },
-      { label: "Criptomoedas" },
-    ],
-  },
-  en: {
-    eyebrow: "VAREJO INVESTIDOR SELECT",
-    title: "Varejo Investidor Select",
-    text: "An operational structure for investors who already have meaningful wealth and want exposure to global markets without following trades every day.",
-    cta: "EXPLORE SELECT",
-    cards: [
-      { label: "Minimum allocation", value: "R$ 250,000" },
-      { label: "International investor", value: "US$ 50,000" },
-      { label: "Forex" },
-      { label: "Stocks" },
-      { label: "Crypto" },
-    ],
-  },
-  es: {
-    eyebrow: "VAREJO INVESTIDOR SELECT",
-    title: "Varejo Investidor Select",
-    text: "Estructura operativa para inversores que ya poseen patrimonio relevante y desean exposición a mercados globales sin acompañar operaciones todos los días.",
-    cta: "CONOCER SELECT",
-    cards: [
-      { label: "Aplicación mínima", value: "R$ 250.000" },
-      { label: "Inversor internacional", value: "US$ 50.000" },
-      { label: "Forex" },
-      { label: "Acciones" },
-      { label: "Criptoactivos" },
-    ],
-  },
-};
-
-Object.assign(homeSelectCopy, {
-  fr: {
-    eyebrow: "VAREJO INVESTIDOR SELECT",
-    title: "Varejo Investidor Select",
-    text: "Structure opérationnelle pour investisseurs disposant déjà d’un patrimoine significatif et souhaitant une exposition aux marchés mondiaux sans suivre chaque opération au quotidien.",
-    cta: "DÉCOUVRIR SELECT",
-    cards: [
-      { label: "Investissement minimum", value: "R$ 250 000" },
-      { label: "Investisseur international", value: "US$ 50 000" },
-      { label: "Forex" },
-      { label: "Actions internationales" },
-      { label: "Cryptoactifs" },
-    ],
-  },
-  de: {
-    eyebrow: "VAREJO INVESTIDOR SELECT",
-    title: "Varejo Investidor Select",
-    text: "Operative Struktur für Anleger mit relevantem Vermögen, die globale Marktexponierung wünschen, ohne tägliche Trades manuell zu verfolgen.",
-    cta: "SELECT ENTDECKEN",
-    cards: [
-      { label: "Mindestanlage", value: "R$ 250.000" },
-      { label: "Internationaler Anleger", value: "US$ 50.000" },
-      { label: "Forex" },
-      { label: "Internationale Aktien" },
-      { label: "Krypto" },
-    ],
-  },
-  it: { ...homeSelectCopy.en, text: "Struttura operativa per investitori con patrimonio rilevante che desiderano esposizione ai mercati globali senza seguire le operazioni ogni giorno.", cta: "SCOPRI SELECT", cards: [{ label: "Investimento minimo", value: "R$ 250.000" }, { label: "Investitore internazionale", value: "US$ 50.000" }, { label: "Forex" }, { label: "Azioni" }, { label: "Cripto" }] },
-  ar: { ...homeSelectCopy.en, text: "هيكل تشغيلي للمستثمرين الذين يمتلكون ثروة مهمة ويرغبون في التعرض للأسواق العالمية دون متابعة العمليات يومياً.", cta: "تعرّف على Select", cards: [{ label: "الحد الأدنى", value: "R$ 250.000" }, { label: "مستثمر دولي", value: "US$ 50.000" }, { label: "الفوركس" }, { label: "الأسهم" }, { label: "الكريبتو" }] },
-  fa: { ...homeSelectCopy.en, text: "ساختار عملیاتی برای سرمایه‌گذارانی که دارایی قابل توجه دارند و می‌خواهند بدون پیگیری روزانه معاملات، در بازارهای جهانی قرار بگیرند.", cta: "آشنایی با Select", cards: [{ label: "حداقل سرمایه", value: "R$ 250.000" }, { label: "سرمایه‌گذار بین‌المللی", value: "US$ 50.000" }, { label: "Forex" }, { label: "سهام" }, { label: "رمزارزها" }] },
-  hi: { ...homeSelectCopy.en, text: "उन निवेशकों के लिए परिचालन संरचना जिनके पास महत्वपूर्ण पूंजी है और जो रोज़ाना ऑपरेशन देखे बिना वैश्विक बाजारों में एक्सपोज़र चाहते हैं।", cta: "SELECT देखें", cards: [{ label: "न्यूनतम निवेश", value: "R$ 250.000" }, { label: "अंतरराष्ट्रीय निवेशक", value: "US$ 50.000" }, { label: "Forex" }, { label: "शेयर" }, { label: "क्रिप्टो" }] },
-  ur: { ...homeSelectCopy.en, text: "ایسی آپریشنل ساخت جو ان سرمایہ کاروں کے لیے ہے جن کے پاس قابلِ ذکر سرمایہ ہے اور وہ روزانہ ٹریڈز دیکھے بغیر عالمی منڈیوں تک رسائی چاہتے ہیں۔", cta: "SELECT دیکھیں", cards: [{ label: "کم از کم سرمایہ", value: "R$ 250.000" }, { label: "بین الاقوامی سرمایہ کار", value: "US$ 50.000" }, { label: "Forex" }, { label: "Stocks" }, { label: "Crypto" }] },
-  bn: { ...homeSelectCopy.en, text: "যাদের ইতিমধ্যে উল্লেখযোগ্য পুঁজি আছে এবং প্রতিদিন অপারেশন না দেখে বৈশ্বিক বাজারে এক্সপোজার চান, তাদের জন্য অপারেশনাল কাঠামো।", cta: "SELECT দেখুন", cards: [{ label: "ন্যূনতম বিনিয়োগ", value: "R$ 250.000" }, { label: "আন্তর্জাতিক বিনিয়োগকারী", value: "US$ 50.000" }, { label: "Forex" }, { label: "Stocks" }, { label: "Crypto" }] },
-  tr: { ...homeSelectCopy.en, text: "Halihazırda anlamlı bir varlığa sahip olan ve işlemleri her gün takip etmeden küresel piyasalara maruz kalmak isteyen yatırımcılar için operasyonel yapı.", cta: "SELECT'İ TANIMA", cards: [{ label: "Minimum yatırım", value: "R$ 250.000" }, { label: "Uluslararası yatırımcı", value: "US$ 50.000" }, { label: "Forex" }, { label: "Hisseler" }, { label: "Kripto" }] },
-  ru: { ...homeSelectCopy.en, text: "Операционная структура для инвесторов с существенным капиталом, которым нужна экспозиция на глобальные рынки без ежедневного отслеживания сделок.", cta: "УЗНАТЬ SELECT", cards: [{ label: "Минимальный капитал", value: "R$ 250.000" }, { label: "Международный инвестор", value: "US$ 50.000" }, { label: "Forex" }, { label: "Акции" }, { label: "Крипто" }] },
-  id: { ...homeSelectCopy.en, text: "Struktur operasional untuk investor yang sudah memiliki kekayaan signifikan dan ingin eksposur ke pasar global tanpa memantau transaksi setiap hari.", cta: "LIHAT SELECT", cards: [{ label: "Alokasi minimum", value: "R$ 250.000" }, { label: "Investor internasional", value: "US$ 50.000" }, { label: "Forex" }, { label: "Saham" }, { label: "Kripto" }] },
-  vi: { ...homeSelectCopy.en, text: "Cấu trúc vận hành dành cho nhà đầu tư đã có tài sản đáng kể và muốn tiếp cận thị trường toàn cầu mà không cần theo dõi giao dịch hằng ngày.", cta: "TÌM HIỂU SELECT", cards: [{ label: "Mức tối thiểu", value: "R$ 250.000" }, { label: "Nhà đầu tư quốc tế", value: "US$ 50.000" }, { label: "Forex" }, { label: "Cổ phiếu" }, { label: "Crypto" }] },
-  th: { ...homeSelectCopy.en, text: "โครงสร้างการดำเนินงานสำหรับนักลงทุนที่มีสินทรัพย์สำคัญแล้ว และต้องการเข้าถึงตลาดโลกโดยไม่ต้องติดตามการเทรดทุกวัน", cta: "ดู SELECT", cards: [{ label: "เงินลงทุนขั้นต่ำ", value: "R$ 250.000" }, { label: "นักลงทุนต่างประเทศ", value: "US$ 50.000" }, { label: "Forex" }, { label: "หุ้น" }, { label: "คริปโต" }] },
-  tl: { ...homeSelectCopy.en, text: "Operational structure para sa investors na may malaking kapital at gustong magkaroon ng exposure sa global markets nang hindi kailangang bantayan ang trades araw-araw.", cta: "TINGNAN ANG SELECT", cards: [{ label: "Minimum allocation", value: "R$ 250,000" }, { label: "International investor", value: "US$ 50,000" }, { label: "Forex" }, { label: "Stocks" }, { label: "Crypto" }] },
-  zh: { ...homeSelectCopy.en, text: "面向已有较高资产、希望参与全球市场但不想每天跟踪交易的投资者的运营结构。", cta: "了解 SELECT", cards: [{ label: "最低配置", value: "R$ 250,000" }, { label: "国际投资者", value: "US$ 50,000" }, { label: "Forex" }, { label: "股票" }, { label: "加密资产" }] },
-  ja: { ...homeSelectCopy.en, text: "すでに一定の資産を持ち、日々の取引を追わずに世界市場へのエクスポージャーを得たい投資家向けの運用構造です。", cta: "SELECTを見る", cards: [{ label: "最低運用額", value: "R$ 250,000" }, { label: "海外投資家", value: "US$ 50,000" }, { label: "Forex" }, { label: "株式" }, { label: "暗号資産" }] },
-  ko: { ...homeSelectCopy.en, text: "이미 의미 있는 자산을 보유하고 있으며 매일 거래를 따라가지 않고 글로벌 시장 노출을 원하는 투자자를 위한 운영 구조입니다.", cta: "SELECT 보기", cards: [{ label: "최소 운용금액", value: "R$ 250,000" }, { label: "국제 투자자", value: "US$ 50,000" }, { label: "Forex" }, { label: "주식" }, { label: "암호화폐" }] },
-  pl: { ...homeSelectCopy.en, text: "Struktura operacyjna dla inwestorów z istotnym kapitałem, którzy chcą ekspozycji na rynki globalne bez codziennego śledzenia transakcji.", cta: "POZNAJ SELECT", cards: [{ label: "Minimalna alokacja", value: "R$ 250.000" }, { label: "Inwestor międzynarodowy", value: "US$ 50.000" }, { label: "Forex" }, { label: "Akcje" }, { label: "Krypto" }] },
-  he: {
-    ...homeSelectCopy.en,
-    text: "מבנה תפעולי למשקיעים עם הון משמעותי שרוצים חשיפה לשווקים גלובליים בלי לעקוב אחרי עסקאות מדי יום.",
-    cta: "הכירו את Select",
-    cards: [
-      { label: "הקצאה מינימלית", value: "R$ 250.000" },
-      { label: "משקיע בינלאומי", value: "US$ 50.000" },
-      { label: "Forex" },
-      { label: "מניות" },
-      { label: "קריפטו" },
-    ],
-  },
-});
-
-const homePrivateCopy: Record<string, HomePrivateCopy> = {
-  pt: {
-    eyebrow: "VAREJO INVESTIDOR PRIVATE",
-    title: "Varejo Investidor Private",
-    subtitle: "Estrutura patrimonial institucional para investidores acima de US$ 1.000.000.",
-    text: "Organização, proteção e expansão global de patrimônio para investidores, famílias e empresários com capital internacional.",
-    cta: "CONHECER PRIVATE",
-    cards: [
-      { label: "Entrada", value: "US$ 1.000.000+" },
-      { label: "Perfil", value: "Alta escala patrimonial" },
-      { label: "Foco", value: "Proteção global" },
-      { label: "Estrutura", value: "Institucional" },
-    ],
-  },
-  en: {
-    eyebrow: "VAREJO INVESTIDOR PRIVATE",
-    title: "Varejo Investidor Private",
-    subtitle: "Institutional wealth structure for investors above US$1,000,000.",
-    text: "Global wealth organization, protection, and expansion for investors, families, and business owners with international capital.",
-    cta: "EXPLORE PRIVATE",
-    cards: [
-      { label: "Entry", value: "US$1,000,000+" },
-      { label: "Profile", value: "High-scale wealth" },
-      { label: "Focus", value: "Global protection" },
-      { label: "Structure", value: "Institutional" },
-    ],
-  },
-  es: {
-    eyebrow: "VAREJO INVESTIDOR PRIVATE",
-    title: "Varejo Investidor Private",
-    subtitle: "Estructura patrimonial institucional para inversores por encima de US$ 1.000.000.",
-    text: "Organización, protección y expansión global de patrimonio para inversores, familias y empresarios con capital internacional.",
-    cta: "CONOCER PRIVATE",
-    cards: [
-      { label: "Entrada", value: "US$ 1.000.000+" },
-      { label: "Perfil", value: "Alta escala patrimonial" },
-      { label: "Foco", value: "Protección global" },
-      { label: "Estructura", value: "Institucional" },
-    ],
-  },
-};
-
-Object.assign(homePrivateCopy, {
-  fr: {
-    eyebrow: "VAREJO INVESTIDOR PRIVATE",
-    title: "Varejo Investidor Private",
-    subtitle: "Structure patrimoniale institutionnelle pour investisseurs au-dessus de US$ 1 000 000.",
-    text: "Organisation, protection et expansion mondiale du patrimoine pour investisseurs, familles et entrepreneurs disposant d’un capital international.",
-    cta: "DÉCOUVRIR PRIVATE",
-    cards: [
-      { label: "Seuil d’entrée", value: "US$ 1 000 000+" },
-      { label: "Profil", value: "Patrimoine à grande échelle" },
-      { label: "Priorité", value: "Protection internationale" },
-      { label: "Structure", value: "Institutionnelle" },
-    ],
-  },
-  de: {
-    eyebrow: "VAREJO INVESTIDOR PRIVATE",
-    title: "Varejo Investidor Private",
-    subtitle: "Institutionelle Vermögensstruktur für Anleger ab US$ 1.000.000.",
-    text: "Globale Organisation, Schutz und Ausbau von Vermögen für Anleger, Familien und Unternehmer mit internationalem Kapital.",
-    cta: "PRIVATE ENTDECKEN",
-    cards: [
-      { label: "Einstieg", value: "US$ 1.000.000+" },
-      { label: "Profil", value: "Großes Vermögen" },
-      { label: "Schwerpunkt", value: "Globaler Schutz" },
-      { label: "Struktur", value: "Institutionell" },
-    ],
-  },
-  it: { ...homePrivateCopy.en, subtitle: "Struttura patrimoniale istituzionale per investitori sopra US$ 1.000.000.", text: "Organizzazione, protezione ed espansione globale del patrimonio per investitori, famiglie e imprenditori con capitale internazionale.", cta: "SCOPRI PRIVATE" },
-  ar: { ...homePrivateCopy.en, subtitle: "هيكل ثروة مؤسسي للمستثمرين فوق US$1,000,000.", text: "تنظيم وحماية وتوسيع الثروة عالمياً للمستثمرين والعائلات ورواد الأعمال ذوي رأس المال الدولي.", cta: "تعرّف على Private" },
-  fa: { ...homePrivateCopy.en, subtitle: "ساختار ثروت نهادی برای سرمایه‌گذاران بالای US$1,000,000.", text: "سازمان‌دهی، حفاظت و گسترش جهانی دارایی برای سرمایه‌گذاران، خانواده‌ها و کارآفرینان دارای سرمایه بین‌المللی.", cta: "آشنایی با Private" },
-  hi: { ...homePrivateCopy.en, subtitle: "US$1,000,000 से अधिक पूंजी वाले निवेशकों के लिए संस्थागत संपत्ति संरचना.", text: "अंतरराष्ट्रीय पूंजी वाले निवेशकों, परिवारों और उद्यमियों के लिए वैश्विक संपत्ति संगठन, सुरक्षा और विस्तार.", cta: "PRIVATE देखें" },
-  ur: { ...homePrivateCopy.en, subtitle: "US$1,000,000 سے زائد سرمایہ رکھنے والے سرمایہ کاروں کے لیے ادارہ جاتی دولت کی ساخت۔", text: "بین الاقوامی سرمایہ رکھنے والے سرمایہ کاروں، خاندانوں اور کاروباری افراد کے لیے عالمی دولت کی تنظیم، تحفظ اور توسیع۔", cta: "PRIVATE دیکھیں" },
-  bn: { ...homePrivateCopy.en, subtitle: "US$1,000,000-এর বেশি মূলধনের বিনিয়োগকারীদের জন্য প্রাতিষ্ঠানিক সম্পদ কাঠামো।", text: "আন্তর্জাতিক মূলধন থাকা বিনিয়োগকারী, পরিবার ও উদ্যোক্তাদের জন্য বৈশ্বিক সম্পদ সংগঠন, সুরক্ষা ও সম্প্রসারণ।", cta: "PRIVATE দেখুন" },
-  tr: { ...homePrivateCopy.en, subtitle: "US$1.000.000 üzeri sermayeye sahip yatırımcılar için kurumsal varlık yapısı.", text: "Uluslararası sermayeye sahip yatırımcılar, aileler ve girişimciler için küresel varlık organizasyonu, koruma ve büyüme.", cta: "PRIVATE'I TANIMA" },
-  ru: { ...homePrivateCopy.en, subtitle: "Институциональная структура капитала для инвесторов свыше US$1,000,000.", text: "Глобальная организация, защита и расширение капитала для инвесторов, семей и предпринимателей с международным капиталом.", cta: "УЗНАТЬ PRIVATE" },
-  id: { ...homePrivateCopy.en, subtitle: "Struktur kekayaan institusional untuk investor di atas US$1.000.000.", text: "Organisasi, perlindungan, dan ekspansi kekayaan global untuk investor, keluarga, dan pengusaha dengan modal internasional.", cta: "LIHAT PRIVATE" },
-  vi: { ...homePrivateCopy.en, subtitle: "Cấu trúc tài sản cấp tổ chức cho nhà đầu tư trên US$1,000,000.", text: "Tổ chức, bảo vệ và mở rộng tài sản toàn cầu cho nhà đầu tư, gia đình và doanh nhân có vốn quốc tế.", cta: "TÌM HIỂU PRIVATE" },
-  th: { ...homePrivateCopy.en, subtitle: "โครงสร้างสินทรัพย์ระดับสถาบันสำหรับนักลงทุนมากกว่า US$1,000,000", text: "การจัดระเบียบ การปกป้อง และการขยายสินทรัพย์ระดับโลกสำหรับนักลงทุน ครอบครัว และผู้ประกอบการที่มีเงินทุนระหว่างประเทศ", cta: "ดู PRIVATE" },
-  tl: { ...homePrivateCopy.en, subtitle: "Institutional wealth structure para sa investors na higit US$1,000,000.", text: "Global wealth organization, protection, at expansion para sa investors, families, at entrepreneurs na may international capital.", cta: "TINGNAN ANG PRIVATE" },
-  zh: { ...homePrivateCopy.en, subtitle: "面向 US$1,000,000 以上投资者的机构级财富结构。", text: "为拥有国际资本的投资者、家族和企业家提供全球财富组织、保护与扩张。", cta: "了解 PRIVATE" },
-  ja: { ...homePrivateCopy.en, subtitle: "US$1,000,000超の投資家向けの機関投資家レベルの資産構造。", text: "国際資本を持つ投資家、ファミリー、起業家のためのグローバルな資産整理、保護、拡大。", cta: "PRIVATEを見る" },
-  ko: { ...homePrivateCopy.en, subtitle: "US$1,000,000 이상의 투자자를 위한 기관 수준 자산 구조.", text: "국제 자본을 보유한 투자자, 가족, 기업가를 위한 글로벌 자산 조직, 보호, 확장.", cta: "PRIVATE 보기" },
-  pl: { ...homePrivateCopy.en, subtitle: "Instytucjonalna struktura majątkowa dla inwestorów powyżej US$1,000,000.", text: "Globalna organizacja, ochrona i rozwój majątku dla inwestorów, rodzin i przedsiębiorców z kapitałem międzynarodowym.", cta: "POZNAJ PRIVATE" },
-  he: {
-    ...homePrivateCopy.en,
-    subtitle: "מבנה הון מוסדי למשקיעים מעל US$1,000,000.",
-    text: "ארגון, הגנה והתרחבות גלובלית של הון למשקיעים, משפחות ויזמים עם הון בינלאומי.",
-    cta: "הכירו את Private",
-    cards: [
-      { label: "כניסה", value: "US$1,000,000+" },
-      { label: "פרופיל", value: "הון בקנה מידה גבוה" },
-      { label: "מיקוד", value: "הגנה גלובלית" },
-      { label: "מבנה", value: "מוסדי" },
-    ],
-  },
-});
-
-homeEliteCopy.pt = {
-  title: "Canal Elite",
-  subtitle: "Receba análises e decisões estruturadas diretamente no WhatsApp.",
-  text: "Mais de 8 anos acompanhando os mercados globais através de sinais, leitura macroeconômica e gestão de risco.",
-  cards: ["Sinais ao vivo", "Recebimento no WhatsApp", "Entrada, alvo e stop", "Análises de mercado", "Educação por níveis", "Leitura global"],
-  cta: "Conhecer Canal Elite",
-};
-
-homeSelectCopy.pt = {
-  eyebrow: "VAREJO INVESTIDOR SELECT",
-  title: "Patrimônio em construção exige estratégia.",
-  text: "O Select foi desenvolvido para investidores que já possuem patrimônio relevante e desejam uma estrutura organizada para exposição global, proteção cambial e crescimento de longo prazo.",
-  cta: "CONHECER SELECT",
-  cards: [
-    { label: "Patrimônio mínimo", value: "US$ 50.000" },
-    { label: "Mercado global" },
-    { label: "Alocação em dólar" },
-    { label: "Relatórios periódicos" },
-    { label: "Controle do cliente" },
-  ],
-};
-
-homeSelectCopy.en = {
-  eyebrow: "VAREJO INVESTIDOR SELECT",
-  title: "Wealth in progress requires strategy.",
-  text: "Select was built for investors who already hold relevant capital and want an organized structure for global exposure, currency protection, and long-term growth.",
-  cta: "EXPLORE SELECT",
-  cards: [
-    { label: "Minimum wealth", value: "US$50,000" },
-    { label: "Global markets" },
-    { label: "Dollar allocation" },
-    { label: "Periodic reports" },
-    { label: "Client control" },
-  ],
-};
-
-homeSelectCopy.es = {
-  eyebrow: "VAREJO INVESTIDOR SELECT",
-  title: "El patrimonio en construcción exige estrategia.",
-  text: "Select fue desarrollado para inversores que ya poseen patrimonio relevante y desean una estructura organizada para exposición global, protección cambiaria y crecimiento de largo plazo.",
-  cta: "CONOCER SELECT",
-  cards: [
-    { label: "Patrimonio mínimo", value: "US$ 50.000" },
-    { label: "Mercado global" },
-    { label: "Asignación en dólar" },
-    { label: "Reportes periódicos" },
-    { label: "Control del cliente" },
-  ],
-};
-
-homePrivateCopy.pt = {
-  eyebrow: "VAREJO INVESTIDOR PRIVATE",
-  title: "Estrutura patrimonial global.",
-  subtitle: "Private para investidores acima de US$ 1.000.000.",
-  text: "Para investidores, empresários e famílias que buscam proteção, organização, continuidade e posicionamento internacional de patrimônio.",
-  cta: "CONHECER PRIVATE",
-  cards: [
-    { label: "Entrada", value: "US$ 1 milhão+" },
-    { label: "Alocação global" },
-    { label: "Proteção patrimonial" },
-    { label: "Visão internacional" },
-    { label: "Relatórios estratégicos" },
-    { label: "Controle do cliente" },
-  ],
-};
-
-homePrivateCopy.en = {
-  eyebrow: "VAREJO INVESTIDOR PRIVATE",
-  title: "Global wealth structure.",
-  subtitle: "Private for investors above US$1,000,000.",
-  text: "For investors, entrepreneurs, and families seeking protection, organization, continuity, and international wealth positioning.",
-  cta: "EXPLORE PRIVATE",
-  cards: [
-    { label: "Entry", value: "US$1 million+" },
-    { label: "Global allocation" },
-    { label: "Wealth protection" },
-    { label: "International view" },
-    { label: "Strategic reports" },
-    { label: "Client control" },
-  ],
-};
-
-homePrivateCopy.es = {
-  eyebrow: "VAREJO INVESTIDOR PRIVATE",
-  title: "Estructura patrimonial global.",
-  subtitle: "Private para inversores por encima de US$ 1.000.000.",
-  text: "Para inversores, empresarios y familias que buscan protección, organización, continuidad y posicionamiento patrimonial internacional.",
-  cta: "CONOCER PRIVATE",
-  cards: [
-    { label: "Entrada", value: "US$ 1 millón+" },
-    { label: "Asignación global" },
-    { label: "Protección patrimonial" },
-    { label: "Visión internacional" },
-    { label: "Reportes estratégicos" },
-    { label: "Control del cliente" },
-  ],
-};
 
 const homeFxproLinks: Record<Locale, string> = {
   pt: "https://direct.fxpro.group/pt/partner/77014650?platform=web",
@@ -1639,6 +1328,30 @@ const homeAuthorityCopy: Record<string, {
       { title: "Atención patrimonial", text: "Select y Private para patrimonio internacional y estrategia." },
     ],
   },
+  hi: {
+    eyebrow: "विश्वसनीयता",
+    title: "2018 से बनी हुई संरचना",
+    text: "Varejo Investidor शिक्षा, सिग्नल, वैश्विक बाजार और संपत्ति समाधान को वित्तीय यात्रा के विभिन्न चरणों से जोड़ता है।",
+    cards: [
+      { title: "4,200+ सिग्नल भेजे गए", text: "2018 से लाइव परिचालन इतिहास।" },
+      { title: "22 सक्रिय भाषाएँ", text: "वैश्विक निवेशकों के लिए अंतर्राष्ट्रीय संरचना।" },
+      { title: "वैश्विक बाजार", text: "Forex, शेयर, ETF, क्रिप्टो और कमोडिटी।" },
+      { title: "संरचित शिक्षा", text: "चींटी, भेड़िया और गरुड़ पद्धति की शैक्षिक आधार।" },
+      { title: "संपत्ति सहयोग", text: "अंतर्राष्ट्रीय संपत्ति के लिए Select और Private।" },
+    ],
+  },
+  ja: {
+    eyebrow: "実績",
+    title: "2018年から築いてきた構造",
+    text: "Varejo Investidorは、金融の旅の各段階に合わせて教育、シグナル、世界市場、資産ソリューションをつなぎます。",
+    cards: [
+      { title: "4,200件超のシグナル配信", text: "2018年からライブで追跡してきた運用履歴。" },
+      { title: "22言語対応", text: "世界の投資家向けの国際構造。" },
+      { title: "グローバル市場", text: "Forex、株式、ETF、暗号資産、コモディティ。" },
+      { title: "体系的教育", text: "アリ・オオカミ・ハーピーの方法論による教育基盤。" },
+      { title: "資産サポート", text: "国際資産と戦略ガイドのためのSelect・Private。" },
+    ],
+  },
 };
 
 const homeEducationBaseCopy: Record<string, { eyebrow: string; title: string; text: string; cta: string }> = {
@@ -1659,6 +1372,18 @@ const homeEducationBaseCopy: Record<string, { eyebrow: string; title: string; te
     title: "La metodología comienza con educación.",
     text: "Formiga, Lobo y Harpia organizan la base educativa de Varejo Investidor para ayudar al inversor a entender riesgo, mercados globales y visión patrimonial.",
     cta: "Ver Formación",
+  },
+  hi: {
+    eyebrow: "शैक्षिक आधार",
+    title: "पद्धति शिक्षा से शुरू होती है।",
+    text: "चींटी, भेड़िया और गरुड़ शैक्षिक आधार व्यवस्थित करते हैं — जोखिम, वैश्विक बाजार और संपत्ति दृष्टि समझने में मदद करते हैं।",
+    cta: "प्रशिक्षण कार्यक्रम देखें",
+  },
+  ja: {
+    eyebrow: "教育の基盤",
+    title: "方法論は教育から始まります。",
+    text: "アリ、オオカミ、ハーピーが教育基盤を組み立て、リスク、世界市場、資産視座の理解を支えます。",
+    cta: "教育プログラムを見る",
   },
 };
 
@@ -1681,6 +1406,18 @@ const homeInstitutionsCopy: Record<string, { eyebrow: string; title: string; tex
     text: "El cliente mantiene su patrimonio en la institución que ya utiliza.",
     institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
   },
+  hi: {
+    eyebrow: "संगत संस्थाएँ",
+    title: "प्रमुख वित्तीय संस्थाओं के साथ संगत।",
+    text: "ग्राहक अपनी मौजूदा संस्था में ही संपत्ति रख सकता है।",
+    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+  },
+  ja: {
+    eyebrow: "対応金融機関",
+    title: "主要金融機関と両立します。",
+    text: "お客様はこれまで利用している機関に資産を置いたままにできます。",
+    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+  },
 };
 
 const homeFinalCtas: Record<string, { select: string; private: string }> = {
@@ -1689,6 +1426,8 @@ const homeFinalCtas: Record<string, { select: string; private: string }> = {
   es: { select: "CONOCER SELECT", private: "CONOCER PRIVATE" },
   fr: { select: "DÉCOUVRIR SELECT", private: "DÉCOUVRIR PRIVATE" },
   de: { select: "SELECT ENTDECKEN", private: "PRIVATE ENTDECKEN" },
+  ja: { select: "SELECTを見る", private: "PRIVATEを見る" },
+  hi: { select: "SELECT देखें", private: "PRIVATE देखें" },
 };
 
 Object.assign(homeLiteCopy, { he: homeLiteCopyHe });
@@ -1728,6 +1467,8 @@ homeLiteCopy.de.final.title = "Wählen Sie den nächsten Schritt Ihrer Vermögen
   "Starten Sie mit Finanzbildung, folgen Sie Analysen und Signalen, entdecken Sie Select oder strukturieren Sie globales Vermögen mit Private.";
 homeLiteCopy.de.final.free = "FORMIGA-KANAL";
 homeLiteCopy.de.final.elite = "ELITE-KANAL";
+(homeLiteCopy.hi.final as { title: string; text?: string; free: string; elite: string }).text =
+  "शिक्षा से शुरू करें, विश्लेषण और सिग्नल अपनाएँ, Select की ओर बढ़ें या Private से वैश्विक संपत्ति व्यवस्थित करें।";
 
 const homeFinalCtasItFaPlZhTl: Partial<Record<SupportedLocale, { select: string; private: string }>> = {
   it: { select: "SCOPRI SELECT", private: "SCOPRI PRIVATE" },
@@ -1804,7 +1545,7 @@ const homeFlowCopy: Record<Locale, {
     eyebrow: "कैसे काम करता है",
     title: "Varejo Investidor कैसे काम करता है",
     text: "यात्रा निवेशक को तीन स्तरों में व्यवस्थित करती है: आधार, संचालन और वैश्विक संपत्ति।",
-    button: "FORMIGA चैनल से शुरू करें",
+    button: "मुफ्त चींटी चैनल से शुरू करें",
     steps: [
       { name: "चींटी", text: "बुनियाद सीखता है, बाजार समझता है और वित्तीय जागरूकता बनाना शुरू करता है।" },
       { name: "भेड़िया", text: "मेथड, जोखिम प्रबंधन और बाजार पढ़ने के साथ ऑपरेट करता है।" },
@@ -1903,7 +1644,7 @@ const homeFlowCopy: Record<Locale, {
     eyebrow: "仕組み",
     title: "Varejo Investidorの仕組み",
     text: "投資家の旅を基礎、運用、グローバル資産の三段階に整理します。",
-    button: "FORMIGAチャンネルから始める",
+    button: "アリチャンネルから始める",
     steps: [
       { name: "アリ", text: "基礎を学び、市場を理解し、金融意識を作り始めます。" },
       { name: "オオカミ", text: "方法、リスク管理、市場分析に基づいて行動します。" },
@@ -1944,8 +1685,8 @@ export default function Home() {
   const finalCtas = homeFinalCtas[locale] ?? homeFinalCtas.en;
   const account = homeAccountCopy[locale] ?? homeAccountCopy.en;
   const eliteHome = homeEliteCopy[locale] ?? homeEliteCopy.en;
-  const selectHome = homeSelectCopy[locale] ?? homeSelectCopy.en;
-  const privateHome = homePrivateCopy[locale] ?? homePrivateCopy.en;
+  const selectHome = isSupportedLocale(locale) ? homeSelectCopyByLocale[locale] : homeSelectCopyByLocale.en;
+  const privateHome = isSupportedLocale(locale) ? homePrivateCopyByLocale[locale] : homePrivateCopyByLocale.en;
   const finalText = "text" in copy.final ? copy.final.text : undefined;
   const localizedPage = (path: string) => localizedPath(path, locale);
   const educationHref = localizedPage("/educacao");

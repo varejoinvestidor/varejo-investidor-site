@@ -20,6 +20,8 @@ import { eliteReportPaths } from "../../src/components/EliteReportHub";
 import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 import { ElitePaymentCards } from "../../src/components/ElitePaymentCards";
 import { getLoboChannelUrlWithFallback } from "../../src/data/whatsappChannels";
+import { getSignalSelectCopy } from "../../src/data/signalsResearchCopy";
+import { localizedPath } from "../../src/i18n/routing";
 
 const howItWorks = [
   "2 a 5 sinais por dia",
@@ -333,9 +335,190 @@ const signalCopyByLocale = {
     best: "En iyi değer",
     now: "Şimdi abone ol",
   },
+  ja: {
+    howEyebrow: "WhatsApp",
+    howTitle: "WhatsAppで届くシグナルの仕組み",
+    howText:
+      "チームが世界市場を追跡し、分析とシグナルをWhatsAppで直接お届けします。取引情報を受け取り、ご自身の口座で実行できます。",
+    howItems: ["1日2〜5件のシグナル", "WhatsAppへ直接配信", "エントリー・目標・ストップを明示", "市場分析と背景"],
+    scheduleEyebrow: "配信時間",
+    scheduleTitle: "配信スケジュール",
+    scheduleText:
+      "シグナルは通常、ブラジリア時間の8時〜15時、および21時〜0時の主要な流動性時間帯に送信されます。",
+    scheduleNote: "ボラティリティ、流動性、実際の市場機会に応じて時間は変わる場合があります。",
+    scheduleCards: [
+      ["午前・午後", "8:00〜15:00"],
+      ["夜", "21:00〜0:00"],
+    ],
+    methodEyebrow: "分析手法",
+    methodTitle: "一目均衡表に基づくシグナル",
+    methodText:
+      "Varejo Investidorのすべてのシグナルは一目均衡表の読み方に基づき、雲、平均線、価格位置、サポート・レジスタンス、銘柄の文脈を重視しています。",
+    ichimokuItems: [
+      "雲の読み方",
+      "一目平均線",
+      "価格の方向",
+      "目標とストップ",
+      "銘柄の文脈",
+      "リスク管理",
+    ],
+    historyEyebrow: "履歴",
+    historyTitle: "2018年8月からのEliteレポート",
+    historyText: "2018年8月から送信してきた履歴レポートで、Eliteチャンネルの運用推移を追えます。",
+    tableHeadings: ["日付", "Eliteレポート", "シグナル数", "結果", "ステータス", "表示"],
+    reports: [
+      ["2018年8月", "Eliteレポート", "124件", "+18.4%", "閲覧可"],
+      ["2021年1月", "Eliteレポート", "98件", "+11.2%", "閲覧可"],
+      ["2024年3月", "Eliteレポート", "137件", "+22.7%", "閲覧可"],
+    ],
+    view: "表示",
+    docsEyebrow: "ドキュメント",
+    docsTitle: "実際の配信構造",
+    docsText: "2018年からWhatsAppでライブシグナルを直接配信しています。",
+    levelsEyebrow: "レベル",
+    levelsTitle: "レベルを選ぶ",
+    levelsText:
+      "無料のアリチャンネルから始めるか、Eliteハーピーで運用構造へフルアクセスしてください。",
+    freeTitle: "アリチャンネル",
+    freePrice: "無料",
+    freeButton: "アリチャンネルに参加",
+    formigaItems: [
+      "無料",
+      "教育コンテンツ",
+      "基礎分析",
+      "入門の視点",
+      "基礎づくり",
+      "限定シグナル",
+    ],
+    eliteTitle: "Eliteハーピーチャンネル",
+    eliteStructure: "Elite構造",
+    eliteButton: "Eliteに参加",
+    eliteItems: [
+      "フルシグナル",
+      "1日2〜5件",
+      "エントリー・目標・ストップ",
+      "市場分析",
+      "Forex",
+      "金",
+      "原油",
+      "指数",
+      "暗号資産",
+      "機関投資家視点のリーディング",
+      "限定コミュニティ",
+      "アリレベル録画講座",
+      "オオカミレベル録画講座",
+      "ハーピーレベル録画講座",
+      "Elite構造",
+    ],
+    packagesEyebrow: "プラン",
+    packagesTitle: "Eliteアクセス",
+    packagesText:
+      "100%のシグナル、限定グループ、分析、録画講座、ハーピーレベルコンテンツへアクセスするプランを選べます。",
+    benefitsTitle: "Eliteチャンネルで受け取れる内容",
+    benefits: [
+      "100%のシグナル",
+      "限定グループ",
+      "市場分析",
+      "録画講座",
+      "ハーピーレベルコンテンツ",
+      "市場構造の全体像",
+    ],
+    best: "最もお得",
+    now: "今すぐ申し込む",
+  },
+  hi: {
+    howEyebrow: "WhatsApp",
+    howTitle: "WhatsApp पर भेजे गए सिग्नल कैसे काम करते हैं",
+    howText:
+      "हमारी टीम वैश्विक बाजारों का अनुसरण करती है और विश्लेषण व सिग्नल सीधे WhatsApp पर भेजती है। आप ट्रेड जानकारी पाकर अपने खाते में निष्पादित करते हैं।",
+    howItems: ["दिन में 2–5 सिग्नल", "सीधे WhatsApp डिलीवरी", "एंट्री, लक्ष्य और स्टॉप तय", "बाजार विश्लेषण और संदर्भ"],
+    scheduleEyebrow: "भेजने का समय",
+    scheduleTitle: "सिग्नल भेजने का समय",
+    scheduleText:
+      "सिग्नल आमतौर पर ब्राज़ीलिया समय के अनुसार 8:00–15:00 और 21:00–00:00 की मुख्य तरलता अवधि में भेजे जाते हैं।",
+    scheduleNote: "समय वोलैटिलिटी, तरलता और वास्तविक बाजार अवसरों के अनुसार बदल सकता है।",
+    scheduleCards: [
+      ["सुबह और दोपहर", "8:00–15:00"],
+      ["रात", "21:00–00:00"],
+    ],
+    methodEyebrow: "विश्लेषण पद्धति",
+    methodTitle: "इचिमोकू पर आधारित सिग्नल",
+    methodText:
+      "Varejo Investidor के सभी सिग्नल इचिमोकू पढ़ने पर आधारित हैं — क्लाउड, औसत रेखाएँ, कीमत की स्थिति, सपोर्ट, रेजिस्टेंस और एसेट संदर्भ।",
+    ichimokuItems: [
+      "क्लाउड पढ़ना",
+      "इचिमोकू औसत",
+      "कीमत की दिशा",
+      "लक्ष्य और स्टॉप",
+      "एसेट संदर्भ",
+      "जोखिम प्रबंधन",
+    ],
+    historyEyebrow: "इतिहास",
+    historyTitle: "अगस्त 2018 से एलीट रिपोर्ट",
+    historyText: "अगस्त 2018 से भेजी गई ऐतिहासिक रिपोर्टों से एलीट चैनल की परिचालन यात्रा देखें।",
+    tableHeadings: ["तारीख", "एलीट रिपोर्ट", "सिग्नल", "परिणाम", "स्थिति", "देखें"],
+    reports: [
+      ["अग/2018", "एलीट रिपोर्ट", "124 सिग्नल", "+18.4%", "उपलब्ध"],
+      ["जन/2021", "एलीट रिपोर्ट", "98 सिग्नल", "+11.2%", "उपलब्ध"],
+      ["मार्च/2024", "एलीट रिपोर्ट", "137 सिग्नल", "+22.7%", "उपलब्ध"],
+    ],
+    view: "देखें",
+    docsEyebrow: "दस्तावेज़ी संरचना",
+    docsTitle: "वास्तविक भेजने की संरचना",
+    docsText: "2018 से WhatsApp पर सीधे लाइव सिग्नल।",
+    levelsEyebrow: "स्तर",
+    levelsTitle: "अपना स्तर चुनें",
+    levelsText: "मुफ्त चींटी चैनल से शुरू करें या पूर्ण परिचालन संरचना के लिए एलीट गरुड़ में प्रवेश करें।",
+    freeTitle: "चींटी चैनल",
+    freePrice: "मुफ्त",
+    freeButton: "मुफ्त चींटी चैनल में प्रवेश करें",
+    formigaItems: ["मुफ्त", "शैक्षिक सामग्री", "बुनियादी विश्लेषण", "प्रारंभिक दृष्टि", "आधार निर्माण", "सीमित सिग्नल"],
+    eliteTitle: "एलीट गरुड़ चैनल",
+    eliteStructure: "एलीट संरचना",
+    eliteButton: "एलीट में प्रवेश करें",
+    eliteItems: [
+      "पूर्ण सिग्नल",
+      "दिन में 2–5 सिग्नल",
+      "एंट्री, लक्ष्य, स्टॉप तय",
+      "बाजार विश्लेषण",
+      "Forex",
+      "सोना",
+      "तेल",
+      "सूचकांक",
+      "क्रिप्टो",
+      "संस्थागत पठन",
+      "बंद समुदाय",
+      "चींटी स्तर रिकॉर्डेड कक्षाएँ",
+      "भेड़िया स्तर रिकॉर्डेड कक्षाएँ",
+      "गरुड़ स्तर रिकॉर्डेड कक्षाएँ",
+      "एलीट संरचना",
+    ],
+    packagesEyebrow: "पैकेज",
+    packagesTitle: "एलीट एक्सेस",
+    packagesText:
+      "100% सिग्नल, विशेष समूह, विश्लेषण, रिकॉर्डेड कक्षाएँ और गरुड़ स्तर सामग्री — पैकेज चुनें।",
+    benefitsTitle: "एलीट चैनल में आपको क्या मिलता है",
+    benefits: [
+      "100% सिग्नल",
+      "विशेष समूह",
+      "बाजार विश्लेषण",
+      "रिकॉर्डेड कक्षाएँ",
+      "गरुड़ स्तर सामग्री",
+      "पूर्ण बाजार संरचना",
+    ],
+    best: "सबसे अधिक बचत",
+    now: "अभी सदस्यता लें",
+  },
 } as const;
 
-const whatsappPrints = [
+const whatsappPrintsByLocale: Record<string, { label: string; src: string }[]> = {
+  hi: [
+    { label: "WhatsApp स्क्रीनशॉट 01", src: "/signals/whatsapp-print-01.jpg" },
+    { label: "WhatsApp स्क्रीनशॉट 02", src: "/signals/whatsapp-print-02.jpg" },
+    { label: "WhatsApp स्क्रीनशॉट 03", src: "/signals/whatsapp-print-03.jpg" },
+  ],
+};
+const whatsappPrintsDefault = [
   { label: "WhatsApp print 01", src: "/signals/whatsapp-print-01.jpg" },
   { label: "WhatsApp print 02", src: "/signals/whatsapp-print-02.jpg" },
   { label: "WhatsApp print 03", src: "/signals/whatsapp-print-03.jpg" },
@@ -390,22 +573,6 @@ const localizedSignalFallbacks = {
     packagesText: "সব সিগন্যাল, এক্সক্লুসিভ গ্রুপ, বিশ্লেষণ, রেকর্ডেড ক্লাস এবং Harpy স্তরের কনটেন্ট পেতে প্যাকেজ বেছে নিন।",
     now: "এখন সাবস্ক্রাইব করুন",
   },
-  ja: {
-    ...signalCopyByLocale.en,
-    howTitle: "WhatsAppで届くシグナルの仕組み",
-    howText: "私たちのチームが世界市場を追跡し、分析とシグナルをWhatsAppで直接送信します。取引情報を受け取り、ご自身の口座で実行できます。",
-    howItems: ["1日2-5件のシグナル", "WhatsAppへ直接配信", "エントリー、目標、ストップを明示", "市場分析と背景"],
-    scheduleTitle: "配信時間",
-    scheduleText: "シグナルは通常、市場の流動性が高い時間帯に送信されます。実際の機会に応じて時間は変わる場合があります。",
-    scheduleCards: [["午前・午後", "8:00-15:00"], ["夜", "21:00-00:00"]],
-    freeTitle: "アリチャンネル",
-    freePrice: "無料",
-    freeButton: "アリチャンネルに参加",
-    eliteButton: "Eliteに参加",
-    packagesTitle: "Eliteアクセス",
-    packagesText: "すべてのシグナル、限定グループ、分析、録画講座、Harpyレベルのコンテンツへアクセスできます。",
-    now: "今すぐ購読",
-  },
   ko: {
     ...signalCopyByLocale.en,
     howTitle: "WhatsApp으로 전달되는 신호의 작동 방식",
@@ -428,7 +595,7 @@ const reportCtaLabels = {
   pt: "VER RELATÓRIOS E RESULTADOS",
   en: "VIEW REPORTS AND RESULTS",
   es: "VER REPORTES Y RESULTADOS",
-  hi: "REPORTS और RESULTS देखें",
+  hi: "रिपोर्ट और परिणाम देखें",
   ar: "عرض التقارير والنتائج",
   tr: "RAPORLARI VE SONUÇLARI GÖR",
   id: "LIHAT LAPORAN DAN HASIL",
@@ -444,6 +611,8 @@ export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const eliteCta = eliteLinkProps(locale, "/sinais");
   const freeSignalsTestUrl = getLoboChannelUrlWithFallback(locale);
+  const signalSelectCopy = getSignalSelectCopy(locale);
+  const selectPageHref = localizedPath("/select", locale);
   const shouldScrollToPackages = locale !== "pt";
   const scrollToPackages = () => {
     const section = document.getElementById("elite-packages");
@@ -455,50 +624,11 @@ export default function SignalsPage() {
     }
   };
   const isHi = locale === "hi";
-  const signalPageCopy: any = isHi
-    ? {
-        howEyebrow: "एलीट चैनल",
-        howTitle: "एलीट चैनल कैसे काम करता है",
-        howText: "एलीट चैनल जोखिम प्रबंधन और ऑपरेशनल संदर्भ के साथ लाइव संरचित ऑपरेशन सीधे WhatsApp पर भेजता है।",
-        howItems: ["दिन में 2 से 5 सिग्नल", "सीधे WhatsApp पर भेजना", "एंट्री, लक्ष्य और स्टॉप निर्धारित", "ऑपरेशनल संदर्भ और बाजार-पठन"],
-        scheduleEyebrow: "ऑपरेशनल समय",
-        scheduleTitle: "ऑपरेशनल समय",
-        scheduleText: "सिग्नल आम तौर पर बाजार की मुख्य लिक्विडिटी अवधि में भेजे जाते हैं: ब्राज़ीलिया समयानुसार 8h से 15h और 21h से 00h के बीच।",
-        scheduleNote: "समय बाजार की वोलैटिलिटी, लिक्विडिटी और वास्तविक अवसरों के अनुसार बदल सकता है।",
-        scheduleCards: [["सुबह और दोपहर", "8h से 15h"], ["रात", "21h से 00h"]],
-        methodEyebrow: "ऑपरेशनल पद्धति",
-        methodTitle: "Ichimoku पर आधारित सिग्नल",
-        methodText: "Varejo Investidor के सभी सिग्नल Ichimoku इंडिकेटर की पढ़ाई पर आधारित होते हैं, विशेष रूप से क्लाउड, औसत रेखाएँ, कीमत की स्थिति, सपोर्ट, रेजिस्टेंस और एसेट संदर्भ पर ध्यान देकर।",
-        ichimokuItems: ["क्लाउड रीडिंग", "Ichimoku औसत रेखाएँ", "कीमत की दिशा", "लक्ष्य और स्टॉप", "एसेट संदर्भ", "जोखिम प्रबंधन"],
-        historyEyebrow: "इतिहास",
-        historyTitle: "अगस्त 2018 से एलीट रिपोर्ट",
-        historyText: "अगस्त 2018 से भेजी गई ऐतिहासिक रिपोर्टों के माध्यम से एलीट चैनल की ऑपरेशनल यात्रा देखें।",
-        tableHeadings: ["तारीख", "एलीट रिपोर्ट", "सिग्नल", "परिणाम", "स्थिति", "देखें"],
-        reports: [["अग/2018", "एलीट रिपोर्ट", "124 सिग्नल", "+18.4%", "उपलब्ध"], ["जन/2021", "एलीट रिपोर्ट", "98 सिग्नल", "+11.2%", "उपलब्ध"], ["मार्च/2024", "एलीट रिपोर्ट", "137 सिग्नल", "+22.7%", "उपलब्ध"]],
-        view: "देखें",
-        docsEyebrow: "दस्तावेजी संरचना",
-        docsTitle: "भेजने की वास्तविक संरचना",
-        docsText: "2018 से WhatsApp पर सीधे लाइव भेजे गए सिग्नल।",
-        levelsEyebrow: "स्तर",
-        levelsTitle: "अपना स्तर चुनें",
-        levelsText: "मुफ्त चींटी चैनल से शुरू करें या पूर्ण ऑपरेशनल संरचना के लिए एलीट गरुड़ में प्रवेश करें।",
-        freeTitle: "चींटी चैनल",
-        freePrice: "मुफ्त",
-        freeButton: "मुफ्त में प्रवेश करें",
-        formigaItems: ["मुफ्त", "शैक्षिक सामग्री", "बुनियादी विश्लेषण", "प्रारंभिक दृष्टि", "आधार निर्माण", "सीमित सिग्नल"],
-        eliteTitle: "एलीट गरुड़ चैनल",
-        eliteStructure: "एलीट संरचना",
-        eliteButton: "एलीट में प्रवेश करें",
-        eliteItems: ["पूर्ण सिग्नल", "दिन में 2 से 5 सिग्नल", "संरचित ऑपरेशन", "ऑपरेशनल संदर्भ", "Forex", "सोना", "तेल", "सूचकांक", "क्रिप्टो", "संस्थागत पठन", "बंद समुदाय", "चींटी स्तर की रिकॉर्डेड कक्षाएँ", "भेड़िया स्तर की रिकॉर्डेड कक्षाएँ", "गरुड़ स्तर की रिकॉर्डेड कक्षाएँ", "एलीट संरचना"],
-        packagesEyebrow: "पैकेज",
-        packagesTitle: "एलीट एक्सेस",
-        packagesText: "लाइव सिग्नल, विश्लेषण, रिकॉर्डेड कक्षाएँ और पूर्ण बाजार संरचना प्राप्त करने के लिए एलीट गरुड़ चैनल का पैकेज चुनें।",
-        best: "सबसे अधिक बचत",
-        now: "\u0905\u092D\u0940 \u0938\u0926\u0938\u094D\u092F\u0924\u093E \u0932\u0947\u0902",
-      }
-    : signalCopyByLocale[locale as keyof typeof signalCopyByLocale] ??
-      localizedSignalFallbacks[locale as keyof typeof localizedSignalFallbacks] ??
-      signalCopyByLocale.en;
+  const signalPageCopy: any =
+    signalCopyByLocale[locale as keyof typeof signalCopyByLocale] ??
+    localizedSignalFallbacks[locale as keyof typeof localizedSignalFallbacks] ??
+    signalCopyByLocale.en;
+  const whatsappPrints = whatsappPrintsByLocale[locale] ?? whatsappPrintsDefault;
   const howItems: string[] = signalPageCopy?.howItems ?? howItWorks;
   const ichimokuItems: string[] = signalPageCopy?.ichimokuItems ?? ichimokuPoints;
   const freeItems: string[] = signalPageCopy?.formigaItems ?? formigaBullets;
@@ -814,25 +944,22 @@ export default function SignalsPage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp}>
               <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Varejo Investidor Select</p>
               <h2 className="mt-4 font-serif text-4xl leading-[1.02] tracking-[-0.045em] md:text-6xl">
-                Já possui patrimônio acima de R$250 mil?
+                {signalSelectCopy.title}
               </h2>
               <p className="mt-6 max-w-3xl text-base leading-8 text-paper/[0.72] md:text-lg">
-                Conheça o Varejo Investidor Select e tenha execução automática das operações sem necessidade de copiar sinais manualmente.
+                {signalSelectCopy.text}
               </p>
               <a
-                href="/select"
+                href={selectPageHref}
                 className="premium-button-gold mt-8 inline-flex border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
               >
-                Conhecer Select
+                {signalSelectCopy.cta}
               </a>
             </motion.div>
             <div className="grid gap-5 md:grid-cols-2">
-              {[
-                ["Canal Elite", ["Recebe sinal", "Executa operação", "Acompanha resultado"]],
-                ["Varejo Investidor Select", ["Capital aplicado", "Conta vinculada", "Cópia automática", "Equipe acompanha", "Relatórios periódicos"]],
-              ].map(([title, steps], cardIndex) => (
+              {signalSelectCopy.compare.map((block, cardIndex) => (
                 <motion.article
-                  key={title as string}
+                  key={block.title}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
@@ -846,12 +973,12 @@ export default function SignalsPage() {
                 >
                   <div className="absolute inset-0 terminal-grid opacity-20" />
                   <div className="relative">
-                    <h3 className="font-serif text-4xl tracking-[-0.05em] text-paper">{title as string}</h3>
+                    <h3 className="font-serif text-4xl tracking-[-0.05em] text-paper">{block.title}</h3>
                     <div className="mt-7 grid gap-2">
-                      {(steps as string[]).map((step, index) => (
+                      {block.steps.map((step, index) => (
                         <div key={step} className="border border-gold/[0.16] bg-ink/[0.36] p-3 text-center">
                           <p className="text-xs font-black uppercase tracking-[0.14em] text-paper/[0.78]">{step}</p>
-                          {index < (steps as string[]).length - 1 ? <p className="mt-2 text-gold">↓</p> : null}
+                          {index < block.steps.length - 1 ? <p className="mt-2 text-gold">↓</p> : null}
                         </div>
                       ))}
                     </div>
@@ -875,8 +1002,7 @@ export default function SignalsPage() {
               "Escolha seu pacote para acessar 100% dos sinais, grupo exclusivo, análises, aulas gravadas e conteúdo nível Harpia dentro do Varejo Investidor."
             }
           />
-          {!isHi ? (
-            <div className="mt-8 border border-gold/[0.22] bg-ink p-5 shadow-premium md:p-6">
+          <div className="mt-8 border border-gold/[0.22] bg-ink p-5 shadow-premium md:p-6">
               <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">{signalPageCopy?.eliteTitle ?? "Canal Elite Harpia"}</p>
@@ -896,7 +1022,6 @@ export default function SignalsPage() {
                 </div>
               </div>
             </div>
-          ) : null}
           {isPt ? (
             <div className="mt-8">
               <ElitePaymentCards isPt />

@@ -10,6 +10,16 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { fxproButtonLabels, fxproLinks } from "../../src/data/fxproLinks";
+import {
+  selectBrokerCopyJa,
+  selectPageCopyJa,
+  selectSimulatorNotesJa,
+} from "../../src/data/copy/selectPageCopyJa";
+import {
+  selectBrokerCopyHi,
+  selectPageCopyHi,
+  selectSimulatorNotesHi,
+} from "../../src/data/copy/selectPageCopyHi";
 
 const SELECT_CONTACT_URL =
   "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20solicitar%20uma%20apresenta%C3%A7%C3%A3o%20do%20Varejo%20Investidor%20Select.";
@@ -402,6 +412,8 @@ const localizedCopy: Partial<Record<string, Copy>> = {
       cta: "Planifier un entretien",
     },
   },
+  ja: selectPageCopyJa as Copy,
+  hi: selectPageCopyHi as Copy,
   he: {
     ...enCopy,
     hero: {
@@ -623,6 +635,10 @@ export default function SelectPage() {
         exampleSimpleTitle: "Exemplo simplificado",
         referenceSimple: "Faixa sem performance",
       }
+    : locale === "ja"
+      ? selectSimulatorNotesJa
+    : locale === "hi"
+      ? selectSimulatorNotesHi
     : {
         fixedTitle: "Fixed Select structure parameters",
         capitalHint: "Minimum amount: R$ 250,000",
@@ -641,10 +657,18 @@ export default function SelectPage() {
         exampleSimpleTitle: "Simplified example",
         referenceSimple: "Range without performance",
       };
+  const fixedParameterHints =
+    locale === "ja"
+      ? ["モニタリングとサポート", "この水準までは成功報酬なし", "超過利益に対する報酬"]
+      : locale === "hi"
+        ? ["निगरानी और सहयोग", "इस सीमा तक प्रदर्शन शुल्क नहीं", "अधिशेष लाभ पर शुल्क"]
+      : isBrazilian
+        ? ["Acompanhamento e suporte", "Sem performance até essa faixa", "Sobre lucro excedente"]
+        : ["Monitoring and support", "No performance up to this range", "On excess profit"];
   const fixedParameters = [
-    [copy.simulator.managementFee, formatPercent(SELECT_MANAGEMENT_FEE), isBrazilian ? "Acompanhamento e suporte" : "Monitoring and support"],
-    [copy.simulator.referenceRate, formatPercent(SELECT_REFERENCE_RATE), isBrazilian ? "Sem performance até essa faixa" : "No performance up to this range"],
-    [copy.simulator.performanceRate, formatPercent(SELECT_PERFORMANCE_RATE), isBrazilian ? "Sobre lucro excedente" : "On excess profit"],
+    [copy.simulator.managementFee, formatPercent(SELECT_MANAGEMENT_FEE), fixedParameterHints[0]],
+    [copy.simulator.referenceRate, formatPercent(SELECT_REFERENCE_RATE), fixedParameterHints[1]],
+    [copy.simulator.performanceRate, formatPercent(SELECT_PERFORMANCE_RATE), fixedParameterHints[2]],
   ];
   const quickCapitalOptions = [250000, 500000, 750000, 1000000, 5000000];
   const waterfallRows = [
@@ -669,6 +693,16 @@ export default function SelectPage() {
         binanceButton: "Abrir conta Binance",
         notice: "O Select utiliza corretoras parceiras para execução operacional. A disponibilidade pode variar conforme país, perfil e regras da corretora.",
       }
+    : locale === "ja"
+      ? {
+          ...selectBrokerCopyJa,
+          fxproButton: fxproButtonLabels.ja,
+        }
+    : locale === "hi"
+      ? {
+          ...selectBrokerCopyHi,
+          fxproButton: fxproButtonLabels.hi,
+        }
     : {
         eyebrow: "Brokers used in the structure",
         title: "The account remains in your name.",
@@ -683,7 +717,7 @@ export default function SelectPage() {
       };
 
   return (
-    <main lang={isBrazilian ? "pt-BR" : locale} dir={rtlLocales.has(locale) ? "rtl" : "ltr"} className="select-page min-h-screen overflow-hidden bg-ink text-paper">
+    <main lang={isBrazilian ? "pt-BR" : locale === "ja" ? "ja" : locale} dir={rtlLocales.has(locale) ? "rtl" : "ltr"} className="select-page min-h-screen overflow-hidden bg-ink text-paper">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="select-hero premium-stage relative px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40">

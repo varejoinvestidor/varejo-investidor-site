@@ -10,6 +10,7 @@ import {
   useSiteLocale,
 } from "../../../src/components/SiteSections";
 import type { Locale } from "../../../src/i18n";
+import { portfolioXRayHiPack } from "../../../src/data/portfolioXRayHi";
 
 type AssetId =
   | "fixedIncome"
@@ -486,7 +487,7 @@ const copyByLocale: Record<Locale, Copy> = {
   },
   es: undefined as never,
   fr: undefined as never,
-  hi: undefined as never,
+  hi: portfolioXRayHiPack.copy as Copy,
   ar: undefined as never,
   tr: undefined as never,
   id: undefined as never,
@@ -499,7 +500,7 @@ const copyByLocale: Record<Locale, Copy> = {
   ko: undefined as never,
 };
 
-for (const locale of ["es", "fr", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"] as Locale[]) {
+for (const locale of ["es", "fr", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"] as Locale[]) {
   copyByLocale[locale] = copyByLocale.en;
 }
 
@@ -553,7 +554,8 @@ function getCustodyCategory(custody: string): keyof typeof custodyCategoryLabels
 }
 
 function formatPercent(value: number, locale: Locale) {
-  return `${new Intl.NumberFormat(locale === "pt" ? "pt-BR" : locale, {
+  const intlLocale = locale === "pt" ? "pt-BR" : locale === "hi" ? "hi-IN" : locale;
+  return `${new Intl.NumberFormat(intlLocale, {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   }).format(value || 0)}%`;
@@ -730,20 +732,27 @@ function assetTone(id: AssetId) {
 export default function PortfolioXRayPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = copyByLocale[locale] ?? copyByLocale.en;
+  const activeAssets = locale === "hi" ? portfolioXRayHiPack.assetDefinitions : assetDefinitions;
+  const activeCustodyLabels = locale === "hi" ? portfolioXRayHiPack.custodyCategoryLabels : custodyCategoryLabels;
+  const activeRegionNames = locale === "hi" ? portfolioXRayHiPack.regionNames : regionNames;
+  const activeCountries = locale === "hi" ? portfolioXRayHiPack.countries : countries;
+  const activeAssetTypeOptions = locale === "hi" ? portfolioXRayHiPack.assetTypeOptions : assetTypeOptions;
+  const activeCustodyOptions = locale === "hi" ? portfolioXRayHiPack.custodyOptions : custodyOptions;
+  const hiRuntime = locale === "hi" ? portfolioXRayHiPack.runtime : null;
 
   const initialInputs = useMemo<AssetInput[]>(
     () =>
-      assetDefinitions.map((asset) => ({
+      activeAssets.map((asset) => ({
         id: asset.id,
         value: 0,
         valueText: "",
         currency: locale === "pt" ? "BRL" : "USD",
         country: locale === "pt" ? "BR" : "US",
-        assetType: assetTypeOptions[asset.id][0],
-        custody: custodyOptions[asset.id][0],
+        assetType: activeAssetTypeOptions[asset.id][0],
+        custody: activeCustodyOptions[asset.id][0],
         note: "",
       })),
-    [locale],
+    [locale, activeAssets, activeAssetTypeOptions, activeCustodyOptions],
   );
 
   const [items, setItems] = useState<AssetInput[]>(initialInputs);
@@ -759,8 +768,8 @@ export default function PortfolioXRayPage() {
   const custodyCategoryGroups = useMemo(() => sumGroups(populatedItems, (item) => getCustodyCategory(item.custody)), [populatedItems]);
   const regionGroups = useMemo(
     () =>
-      sumGroups(populatedItems, (item) => countries.find((country) => country.code === item.country)?.region ?? "global"),
-    [populatedItems],
+      sumGroups(populatedItems, (item) => activeCountries.find((country) => country.code === item.country)?.region ?? "global"),
+    [populatedItems, activeCountries],
   );
 
   const topAsset = assetGroups[0];
@@ -782,7 +791,7 @@ export default function PortfolioXRayPage() {
 
   const diversificationScore = useMemo(() => {
     if (total <= 0) return 0;
-    const classScore = clamp((assetGroups.length / assetDefinitions.length) * 35, 0, 35);
+    const classScore = clamp((assetGroups.length / activeAssets.length) * 35, 0, 35);
     const countryScore = clamp((countryGroups.length / 8) * 18, 0, 18);
     const currencyScore = clamp((currencyGroups.length / 6) * 14, 0, 14);
     const sectorScore = clamp((assetTypeGroups.length / 7) * 14, 0, 14);
@@ -794,11 +803,17 @@ export default function PortfolioXRayPage() {
   const levelKey = getTone(diversificationScore);
   const behavior = useMemo(() => {
     if (total <= 0) return copy.noData;
+    if (hiRuntime) {
+      if (riskAssetShare >= 55) return hiRuntime.behavior.growth;
+      if (strongCurrencyShare >= 35 && internationalShare >= 30) return hiRuntime.behavior.global;
+      if ((currencyGroups[0]?.[1] ?? 0) / total >= 0.72) return hiRuntime.behavior.singleCurrency;
+      return hiRuntime.behavior.balanced;
+    }
     if (riskAssetShare >= 55) return locale === "pt" ? "Busca crescimento e aceita oscilação mais alta." : "Growth-oriented with higher tolerance for volatility.";
     if (strongCurrencyShare >= 35 && internationalShare >= 30) return locale === "pt" ? "Carteira com foco em proteção global e moedas fortes." : "Portfolio prioritizes global protection and strong currencies.";
     if ((currencyGroups[0]?.[1] ?? 0) / total >= 0.72) return locale === "pt" ? "Carteira ainda depende bastante de uma única moeda." : "Portfolio still depends heavily on a single currency.";
     return locale === "pt" ? "Carteira equilibrada entre liquidez, crescimento e exposição internacional." : "Balanced mix of liquidity, growth and international exposure.";
-  }, [copy.noData, currencyGroups, internationalShare, locale, riskAssetShare, strongCurrencyShare, total]);
+  }, [copy.noData, currencyGroups, hiRuntime, internationalShare, locale, riskAssetShare, strongCurrencyShare, total]);
 
   const alerts = useMemo(() => {
     const list: string[] = [];
@@ -807,37 +822,39 @@ export default function PortfolioXRayPage() {
     const topCurrencyPct = total > 0 && topCurrency ? (topCurrency[1] / total) * 100 : 0;
     const topCustodyPct = total > 0 && topCustody ? (topCustody[1] / total) * 100 : 0;
 
-    if (topAssetPct >= 60) list.push(locale === "pt" ? "Mais de 60% da carteira está concentrada em uma única classe de ativo." : "More than 60% of the portfolio is concentrated in a single asset class.");
-    if (topCountryPct >= 70) list.push(locale === "pt" ? "A exposição geográfica está muito concentrada em um único país." : "Geographic exposure is highly concentrated in a single country.");
-    if (topCurrencyPct >= 75) list.push(locale === "pt" ? "A carteira depende fortemente de uma única moeda." : "The portfolio depends heavily on a single currency.");
-    if (riskAssetShare >= 60) list.push(locale === "pt" ? "Ativos de risco representam mais de 60% do capital informado." : "Risk assets represent more than 60% of the reported capital.");
-    if (internationalShare <= 10) list.push(locale === "pt" ? "A exposição internacional ainda está baixa para uma visão patrimonial global." : "International exposure is still low for a global wealth approach.");
-    if (topCustodyPct > 80) list.push(locale === "pt" ? "Alta concentração em uma única instituição." : "High concentration in a single institution.");
-    if (exchangeShare > 70) list.push(locale === "pt" ? "Alta dependência de exchange." : "High dependence on crypto exchanges.");
-    if (bankShare > 70) list.push(locale === "pt" ? "Alta dependência do sistema financeiro local." : "High dependence on the local financial system.");
-    if (selfCustodyShare > 0) list.push(locale === "pt" ? "Exposição com autocustódia identificada." : "Self-custody exposure identified.");
+    const A = hiRuntime?.alerts;
+    if (topAssetPct >= 60) list.push(A ? A.asset60 : locale === "pt" ? "Mais de 60% da carteira está concentrada em uma única classe de ativo." : "More than 60% of the portfolio is concentrated in a single asset class.");
+    if (topCountryPct >= 70) list.push(A ? A.country70 : locale === "pt" ? "A exposição geográfica está muito concentrada em um único país." : "Geographic exposure is highly concentrated in a single country.");
+    if (topCurrencyPct >= 75) list.push(A ? A.currency75 : locale === "pt" ? "A carteira depende fortemente de uma única moeda." : "The portfolio depends heavily on a single currency.");
+    if (riskAssetShare >= 60) list.push(A ? A.risk60 : locale === "pt" ? "Ativos de risco representam mais de 60% do capital informado." : "Risk assets represent more than 60% of the reported capital.");
+    if (internationalShare <= 10) list.push(A ? A.intlLow : locale === "pt" ? "A exposição internacional ainda está baixa para uma visão patrimonial global." : "International exposure is still low for a global wealth approach.");
+    if (topCustodyPct > 80) list.push(A ? A.custody80 : locale === "pt" ? "Alta concentração em uma única instituição." : "High concentration in a single institution.");
+    if (exchangeShare > 70) list.push(A ? A.exchange70 : locale === "pt" ? "Alta dependência de exchange." : "High dependence on crypto exchanges.");
+    if (bankShare > 70) list.push(A ? A.bank70 : locale === "pt" ? "Alta dependência do sistema financeiro local." : "High dependence on the local financial system.");
+    if (selfCustodyShare > 0) list.push(A ? A.selfCustody : locale === "pt" ? "Exposição com autocustódia identificada." : "Self-custody exposure identified.");
     return list;
-  }, [bankShare, exchangeShare, internationalShare, locale, riskAssetShare, selfCustodyShare, topAsset, topCountry, topCurrency, topCustody, total]);
+  }, [bankShare, exchangeShare, hiRuntime, internationalShare, locale, riskAssetShare, selfCustodyShare, topAsset, topCountry, topCurrency, topCustody, total]);
 
   const recommendations = useMemo(() => {
     const list: string[] = [];
+    const R = hiRuntime?.recommendations;
     if (diversificationScore < 45) {
-      list.push(locale === "pt" ? "Comece aumentando o número de classes de ativo antes de buscar mais retorno." : "Start by increasing the number of asset classes before chasing more return.");
+      list.push(R ? R.diversify : locale === "pt" ? "Comece aumentando o número de classes de ativo antes de buscar mais retorno." : "Start by increasing the number of asset classes before chasing more return.");
     }
     if (internationalShare < 20) {
-      list.push(locale === "pt" ? "Considere estudar exposição internacional para reduzir dependência do mesmo ambiente econômico." : "Consider studying international exposure to reduce dependence on the same economic environment.");
+      list.push(R ? R.international : locale === "pt" ? "Considere estudar exposição internacional para reduzir dependência do mesmo ambiente econômico." : "Consider studying international exposure to reduce dependence on the same economic environment.");
     }
     if (strongCurrencyShare < 20) {
-      list.push(locale === "pt" ? "Moedas fortes podem ajudar na proteção patrimonial em cenários de enfraquecimento local." : "Strong currencies can support wealth protection when the local currency weakens.");
+      list.push(R ? R.strongCurrency : locale === "pt" ? "Moedas fortes podem ajudar na proteção patrimonial em cenários de enfraquecimento local." : "Strong currencies can support wealth protection when the local currency weakens.");
     }
     if (riskAssetShare > 65) {
-      list.push(locale === "pt" ? "Uma parcela maior de caixa ou renda fixa pode reduzir pressão emocional em fases de oscilação." : "A larger allocation to cash or fixed income can reduce emotional pressure during volatile periods.");
+      list.push(R ? R.riskHigh : locale === "pt" ? "Uma parcela maior de caixa ou renda fixa pode reduzir pressão emocional em fases de oscilação." : "A larger allocation to cash or fixed income can reduce emotional pressure during volatile periods.");
     }
     if (!list.length) {
-      list.push(locale === "pt" ? "Sua carteira já mostra boa distribuição. O próximo passo é revisar a estrutura com frequência e ajustar conforme seus objetivos." : "Your portfolio already shows good distribution. The next step is reviewing the structure regularly and adjusting it to your objectives.");
+      list.push(R ? R.good : locale === "pt" ? "Sua carteira já mostra boa distribuição. O próximo passo é revisar a estrutura com frequência e ajustar conforme seus objetivos." : "Your portfolio already shows good distribution. The next step is reviewing the structure regularly and adjusting it to your objectives.");
     }
     return list;
-  }, [diversificationScore, internationalShare, locale, riskAssetShare, strongCurrencyShare]);
+  }, [diversificationScore, hiRuntime, internationalShare, locale, riskAssetShare, strongCurrencyShare]);
 
   const pillarScores = useMemo(() => {
     const liquidity = total > 0 ? ((assetGroups.find(([id]) => id === "cash")?.[1] ?? 0) / total) * 100 : 0;
@@ -847,25 +864,26 @@ export default function PortfolioXRayPage() {
     const globalExposure = internationalShare;
     const risk = riskAssetShare;
     const diversification = diversificationScore;
+    const P = hiRuntime?.pillars;
     return [
-      { label: locale === "pt" ? "Liquidez" : "Liquidity", value: liquidity },
-      { label: locale === "pt" ? "Renda" : "Income", value: income },
-      { label: locale === "pt" ? "Crescimento" : "Growth", value: growth },
-      { label: locale === "pt" ? "Protecao" : "Protection", value: protection },
-      { label: locale === "pt" ? "Exposicao global" : "Global exposure", value: globalExposure },
-      { label: locale === "pt" ? "Risco" : "Risk", value: risk },
-      { label: locale === "pt" ? "Diversificacao" : "Diversification", value: diversification },
+      { label: P ? P.liquidity : locale === "pt" ? "Liquidez" : "Liquidity", value: liquidity },
+      { label: P ? P.income : locale === "pt" ? "Renda" : "Income", value: income },
+      { label: P ? P.growth : locale === "pt" ? "Crescimento" : "Growth", value: growth },
+      { label: P ? P.protection : locale === "pt" ? "Protecao" : "Protection", value: protection },
+      { label: P ? P.globalExposure : locale === "pt" ? "Exposicao global" : "Global exposure", value: globalExposure },
+      { label: P ? P.risk : locale === "pt" ? "Risco" : "Risk", value: risk },
+      { label: P ? P.diversification : locale === "pt" ? "Diversificacao" : "Diversification", value: diversification },
     ];
-  }, [assetGroups, diversificationScore, internationalShare, locale, riskAssetShare, total]);
+  }, [assetGroups, diversificationScore, hiRuntime, internationalShare, locale, riskAssetShare, total]);
 
   const assetChartData = assetGroups.map(([id, value], index) => ({
-    label: assetDefinitions.find((asset) => asset.id === id)?.label ?? id,
+    label: activeAssets.find((asset) => asset.id === id)?.label ?? id,
     value,
     color: colorScale[index % colorScale.length],
   }));
 
   const countryChartData = countryGroups.slice(0, 6).map(([code, value], index) => ({
-    label: countries.find((country) => country.code === code)?.name ?? code,
+    label: activeCountries.find((country) => country.code === code)?.name ?? code,
     value,
     color: colorScale[index % colorScale.length],
   }));
@@ -883,13 +901,13 @@ export default function PortfolioXRayPage() {
   }));
 
   const custodyChartData = custodyCategoryGroups.map(([category, value], index) => ({
-    label: custodyCategoryLabels[category],
+    label: activeCustodyLabels[category],
     value,
     color: colorScale[index % colorScale.length],
   }));
 
   const regionChartData = regionGroups.map(([region, value], index) => ({
-    label: regionNames[region],
+    label: activeRegionNames[region],
     value,
     color: colorScale[index % colorScale.length],
   }));
@@ -981,7 +999,7 @@ export default function PortfolioXRayPage() {
             ))}
           </div>
           <div className="mt-8 grid gap-4">
-            {assetDefinitions.map((asset) => {
+            {activeAssets.map((asset) => {
               const item = items.find((entry) => entry.id === asset.id)!;
               const isExpanded = expandedAssets.includes(asset.id);
               const toggleAsset = () =>
@@ -1064,7 +1082,7 @@ export default function PortfolioXRayPage() {
                             onChange={(event) => updateItem(asset.id, "assetType", event.target.value)}
                             className="w-full border border-gold/22 bg-ink px-4 py-3 text-sm font-semibold text-paper outline-none transition focus:border-gold"
                           >
-                            {assetTypeOptions[asset.id].map((option) => (
+                            {activeAssetTypeOptions[asset.id].map((option) => (
                               <option key={option} value={option}>
                                 {option}
                               </option>
@@ -1077,7 +1095,7 @@ export default function PortfolioXRayPage() {
                             onChange={(event) => updateItem(asset.id, "custody", event.target.value)}
                             className="w-full border border-gold/22 bg-ink px-4 py-3 text-sm font-semibold text-paper outline-none transition focus:border-gold"
                           >
-                            {custodyOptions[asset.id].map((option) => (
+                            {activeCustodyOptions[asset.id].map((option) => (
                               <option key={option} value={option}>
                                 {option}
                               </option>
@@ -1109,7 +1127,7 @@ export default function PortfolioXRayPage() {
           <p className="mt-4 max-w-4xl text-base leading-8 text-paper/68">{copy.resultsText}</p>
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <ResultCard label={copy.totalCapital} value={formatCurrency(total, topCurrency?.[0] ?? (locale === "pt" ? "BRL" : "USD"), locale)} />
-            <ResultCard label={copy.topAsset} value={topAsset ? `${assetDefinitions.find((asset) => asset.id === topAsset[0])?.label} · ${formatPercent((topAsset[1] / total) * 100, locale)}` : copy.noData} />
+            <ResultCard label={copy.topAsset} value={topAsset ? `${activeAssets.find((asset) => asset.id === topAsset[0])?.label} · ${formatPercent((topAsset[1] / total) * 100, locale)}` : copy.noData} />
             <ResultCard label={copy.topCountry} value={topCountry ? `${countries.find((country) => country.code === topCountry[0])?.name} · ${formatPercent((topCountry[1] / total) * 100, locale)}` : copy.noData} />
             <ResultCard label={copy.topCurrency} value={topCurrency ? `${topCurrency[0]} · ${formatPercent((topCurrency[1] / total) * 100, locale)}` : copy.noData} />
             <ResultCard label={copy.topSector} value={topAssetType ? `${topAssetType[0]} · ${formatPercent((topAssetType[1] / total) * 100, locale)}` : copy.noData} />

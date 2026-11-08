@@ -15,6 +15,8 @@ import { isRtlLocale, localeToHtmlLang } from "../i18n/locales";
 import { normalizedEliteReports } from "../data/eliteReports";
 import { ForexBrokerBannerWide } from "./ForexBrokerBannerWide";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
+import { eliteReportCopyJa } from "../data/eliteReportCopyJa";
+import { eliteReportCopyHi } from "../data/eliteReportCopyHi";
 
 export const eliteReportPaths: Record<Locale, string> = {
   pt: "/relatorio-elite",
@@ -373,7 +375,7 @@ const copyByLocale: Record<Locale, Copy> = {
     disclaimer: "El contenido de esta página tiene finalidad educativa e informativa. El histórico, las señales y los datos públicos no constituyen promesa de rentabilidad, recomendación individual ni garantía de resultado. Forex, criptoactivos, commodities, índices y otros mercados implican riesgo y pueden generar pérdidas.",
   },
   fr: undefined as never,
-  hi: undefined as never,
+  hi: eliteReportCopyHi as Copy,
   ar: undefined as never,
   tr: undefined as never,
   id: undefined as never,
@@ -382,11 +384,11 @@ const copyByLocale: Record<Locale, Copy> = {
   ru: undefined as never,
   ur: undefined as never,
   bn: undefined as never,
-  ja: undefined as never,
+  ja: eliteReportCopyJa as Copy,
   ko: undefined as never,
 };
 
-for (const locale of ["fr", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko"] as Locale[]) {
+for (const locale of ["fr", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ko"] as Locale[]) {
   copyByLocale[locale] = copyByLocale.en;
 }
 

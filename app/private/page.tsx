@@ -9,6 +9,8 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { hePrivateCopy } from "../../src/data/copy/privateCopyHe";
+import { jaPrivateCopy } from "../../src/data/copy/privateCopyJa";
+import { hiPrivateCopy } from "../../src/data/copy/privateCopyHi";
 import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 
 const PRIVATE_CONTACT_URL =
@@ -298,6 +300,8 @@ const enCopy: PrivateCopy = {
 const copyByLocale: Record<string, PrivateCopy> = {
   pt: ptCopy,
   en: enCopy,
+  ja: jaPrivateCopy as PrivateCopy,
+  hi: hiPrivateCopy as PrivateCopy,
   he: hePrivateCopy as PrivateCopy,
   es: {
     ...enCopy,
@@ -467,6 +471,15 @@ const labelsByLocale: Record<string, PrivateLabels> = {
     step: "Paso",
     clientControl: "Control del cliente",
     profile: "Perfil",
+  },
+  ja: {
+    wealthManagement: "資産管理",
+    wealth: "資産",
+    managementFee: "管理",
+    performance: "成功報酬",
+    step: "ステップ",
+    clientControl: "クライアントのコントロール",
+    profile: "プロフィール",
   },
 };
 

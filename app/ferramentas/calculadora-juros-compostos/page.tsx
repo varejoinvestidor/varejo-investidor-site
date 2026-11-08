@@ -263,17 +263,78 @@ const copyByLocale: Record<Locale, CompoundCopy> = {
   hi: {
     ...baseCopy,
     lang: "hi",
-    eyebrow: "शैक्षिक टूल",
-    title: "कंपाउंड इंटरेस्ट और वेल्थ बिल्डिंग कैलकुलेटर",
-    subtitle: "सिंपल और कंपाउंड इंटरेस्ट की तुलना करें, मासिक निवेश सिमुलेट करें और डॉलर में अपनी संपत्ति की प्रगति देखें।",
-    form: { initial: "शुरुआती निवेश", monthly: "मासिक निवेश", annualReturn: "वार्षिक रिटर्न", years: "वर्षों की संख्या", currency: "बेस करेंसी", dollarRate: "आज का डॉलर रेट", dollarHelp: "ऑटो अपडेट उपलब्ध न हो तो रेट मैनुअली भरें।", button: "संपत्ति की गणना करें" },
-    results: { title: "सिमुलेशन परिणाम", totalContributed: "कुल निवेश", simpleFinal: "सिंपल इंटरेस्ट अंतिम मूल्य", compoundFinal: "कंपाउंड इंटरेस्ट अंतिम मूल्य", difference: "अंतर", usdFinal: "डॉलर में अंतिम मूल्य", totalYears: "कुल समय", annualReturn: "उपयोग किया गया वार्षिक रिटर्न", level: "प्राप्त वेल्थ स्तर" },
-    tableHeaders: ["वर्ष", "कुल निवेश", "सिंपल", "कंपाउंड", "डॉलर मूल्य", "स्तर"],
-    fxpro: "FXPro Account खोलें",
-    binance: "Binance Account खोलें",
-    formigaButton: "Formiga चैनल में शामिल हों",
+    eyebrow: "शैक्षिक उपकरण",
+    title: "चक्रवृद्धि ब्याज और संपत्ति निर्माण कैलकुलेटर",
+    subtitle: "सरल और चक्रवृद्धि ब्याज की तुलना करें, मासिक निवेश सिमुलेट करें और स्थानीय मुद्रा तथा डॉलर में अपनी संपत्ति की प्रगति देखें।",
+    form: {
+      initial: "शुरुआती निवेश",
+      monthly: "मासिक निवेश",
+      annualReturn: "वार्षिक रिटर्न",
+      years: "वर्षों की संख्या",
+      currency: "बेस मुद्रा",
+      dollarRate: "वर्तमान डॉलर दर",
+      dollarHelp: "स्वचालित उद्धरण उपलब्ध न हो तो दर मैन्युअली भरें।",
+      button: "संपत्ति की गणना करें",
+    },
+    results: {
+      title: "सिमुलेशन परिणाम",
+      totalContributed: "कुल निवेश",
+      simpleFinal: "सरल ब्याज पर अंतिम मूल्य",
+      compoundFinal: "चक्रवृद्धि ब्याज पर अंतिम मूल्य",
+      difference: "सरल और चक्रवृद्धि का अंतर",
+      usdFinal: "डॉलर में अंतिम मूल्य",
+      totalYears: "कुल अवधि",
+      annualReturn: "उपयोग किया गया वार्षिक रिटर्न",
+      level: "प्राप्त संपत्ति स्तर",
+    },
+    how: {
+      title: "इस कैलकुलेटर का उपयोग कैसे करें",
+      text: "यह उपकरण दिखाता है कि समय के साथ पैसा कैसे बढ़ सकता है। मौजूदा राशि, मासिक निवेश, अपेक्षित वार्षिक रिटर्न और समयावधि भरें।",
+      simpleTitle: "सरल ब्याज",
+      simpleText: "रिटर्न केवल शुरुआती राशि पर गणना होता है — अधिक रैखिक सिमुलेशन।",
+      compoundTitle: "चक्रवृद्धि ब्याज",
+      compoundText: "रिटर्न शुरुआती राशि, निवेश और जमा हुए रिटर्न पर भी बढ़ता है — इसलिए लंबी अवधि में संपत्ति तेजी से बढ़ती है।",
+      cards: [
+        ["शुरुआती निवेश", "शुरू करने के लिए उपलब्ध राशि — बचत, निवेशित पूंजी या खाते का प्रारंभिक शेष।"],
+        ["मासिक निवेश", "हर महीने निवेश की जाने वाली राशि। नियमित निवेश संपत्ति निर्माण की नींव है।"],
+        ["वार्षिक रिटर्न", "अपेक्षित वार्षिक वृद्धि प्रतिशत — एसेट, बाजार और जोखिम के अनुसार बदल सकता है।"],
+        ["समय", "अवधि जितनी लंबी, चक्रवृद्धि का प्रभाव उतना मजबूत। समय अनुशासन को संपत्ति में बदलता है।"],
+        ["डॉलर दर", "डॉलर रूपांतरण से संपत्ति की वैश्विक तुलना करना आसान होता है।"],
+      ],
+    },
+    levelsTitle: "स्तर संपत्ति निर्माण को कैसे समझते हैं",
+    levels: {
+      formiga: {
+        name: "चींटी",
+        text: "चींटी नींव बना रही है — आय व्यवस्थित करना, बुरे कर्ज से बचना, आपात निधि, निवेश सीखना और नियमित निवेश।",
+        pillars: ["वित्तीय व्यवस्था", "आपात निधि", "मासिक निवेश", "वित्तीय शिक्षा", "पहले निवेश"],
+      },
+      lobo: {
+        name: "भेड़िया",
+        text: "भेड़िया विधि से बना रहा है — संपत्ति के लिए रणनीति, विविधीकरण, जोखिम प्रबंधन और वैश्विक बाजार एक्सपोज़र।",
+        pillars: ["विविधीकरण", "जोखिम प्रबंधन", "अंतर्राष्ट्रीय एसेट", "निष्क्रिय आय", "दीर्घकालिक योजना"],
+      },
+      harpia: {
+        name: "गरुड़",
+        text: "गरुड़ दशकों की सोचता है — संपत्ति सुरक्षा, वैश्विक संरचना, उत्तराधिकार, कर दक्षता और पूंजी संरक्षण।",
+        pillars: ["संपत्ति सुरक्षा", "वैश्विक संरचना", "उत्तराधिकार", "मजबूत मुद्राएँ", "विरासत"],
+      },
+    },
+    chartTitle: "वर्षों में संपत्ति का विकास",
+    tableTitle: "वार्षिक तालिका",
+    tableHeaders: ["वर्ष", "कुल निवेश", "सरल ब्याज", "चक्रवृद्धि", "डॉलर मूल्य", "स्तर"],
+    globalAccountTitle: "अपना खाता खोलें और वैश्विक बाजारों तक पहुँचें।",
+    globalAccountText:
+      "स्थानीय मुद्रा से आगे संपत्ति बनाने के लिए Forex, सोना, तेल, सूचकांक, शेयर, ETF और क्रिप्टो Varejo Investidor के साझेदार प्लेटफॉर्म पर देखें।",
+    fxpro: "FXPro खाता खोलें",
+    binance: "Binance खाता खोलें",
+    ctaTitle: "वैश्विक दृष्टि से संपत्ति बनाएँ।",
+    ctaText:
+      "कैलकुलेटर से रास्ता देखें, फिर मुफ्त चींटी चैनल में आर्थिक विश्लेषण, शिक्षा और वैश्विक बाजार अपडेट पाएँ।",
+    formigaButton: "मुफ्त चींटी चैनल में शामिल हों",
     educationButton: "प्रशिक्षण देखें",
-    disclaimer: "यह कैलकुलेटर केवल शैक्षिक उद्देश्य के लिए गणितीय सिमुलेशन प्रस्तुत करता है। भविष्य के रिटर्न की गारंटी नहीं है।",
+    disclaimer:
+      "शैक्षिक उपकरण — केवल गणितीय सिमुलेशन। भविष्य के रिटर्न, मुद्रास्फीति और विनिमय दरों की गारंटी नहीं। कर, शुल्क, व्यवहार और बाजार से परिणाम बदल सकते हैं। निवेश के लिए आप स्वयं जिम्मेदार हैं।",
   },
   ar: {
     ...baseCopy,
@@ -709,8 +770,86 @@ function getEnhancedLabels(locale: Locale) {
       capitalDoesNotEndUntil: "Capital does not end until",
       tableHeaders: ["Year", "Total contributed", "Simple interest", "Nominal compound", "Real compound", "Dollar value", "Wealth level"],
     },
+    hi: {
+      inflation: "अनुमानित वार्षिक मुद्रास्फीति",
+      inflationHelp: "वास्तविक रिटर्न के लिए वार्षिक मुद्रास्फीति का अनुमान उपयोग करें।",
+      nominalReturn: "नाममात्र रिटर्न",
+      projectedInflation: "अनुमानित मुद्रास्फीति",
+      realReturn: "वास्तविक रिटर्न",
+      nominalFinal: "नाममात्र अंतिम मूल्य",
+      realFinal: "वास्तविक अंतिम मूल्य",
+      purchasingLoss: "क्रय शक्ति की हानि",
+      simple: "सरल",
+      compound: "चक्रवृद्धि",
+      realCompound: "वास्तविक चक्रवृद्धि",
+      nextPathTitle: "अगले स्तर का मार्ग",
+      currentLevel: "वर्तमान स्तर",
+      nextLevel: "अगला स्तर",
+      milestone: "मील का पत्थर",
+      missingUsd: "डॉलर में शेष",
+      missingLocal: "बेस मुद्रा में शेष",
+      monthlyNeeded: "आवश्यक मासिक निवेश",
+      initialNeeded: "आवश्यक शुरुआती निवेश",
+      alreadyOnTrackInitial: "दर्ज शुरुआती निवेश से चयनित अवधि में यह स्तर संभव है।",
+      alreadyOnTrackMonthly: "दर्ज मासिक निवेश से शुरुआती राशि बढ़ाने की जरूरत नहीं।",
+      noNextLevel: "आप पहले से गरुड़ स्तर पर हैं — अगला कदम संरक्षण, उत्तराधिकार और वैश्विक संरचना।",
+      notReached: "चयनित अवधि में अगला स्तर अभी तक नहीं मिलता।",
+      inflationTitle: "मुद्रास्फीति परिणाम क्यों बदलती है?",
+      inflationText:
+        "नाममात्र रिटर्न कागज पर वृद्धि दिखाता है; मुद्रास्फीति समय पर क्रय शक्ति घटाती है। वास्तविक रिटर्न मुद्रा के क्षरण के बाद वास्तविक वृद्धि दिखाता है।",
+      inflationExample: "यदि निवेश 11% और मुद्रास्फीति 4% है, वास्तविक लाभ लगभग 6.73% प्रति वर्ष है — 11% नहीं।",
+      pillarsTitle: "हर स्तर को क्या बनाना चाहिए",
+      crossing: "स्तर पार करना",
+      noCrossing: "चयनित अवधि में कोई स्तर पार नहीं होता।",
+      lineChart: "लाइन चार्ट",
+      barChart: "बार चार्ट",
+      showMilestones: "स्तर मील के पत्थर दिखाएँ",
+      yearsSuffix: "वर्ष",
+      retirementTitle: "सेवानिवृत्ति कैलकुलेटर",
+      retirementIntro: "जानें आय से जीने या मासिक निकासी के लिए कितनी संपत्ति चाहिए और वह कितने समय तक टिकेगी।",
+      desiredWealth: "वांछित सेवानिवृत्ति संपत्ति",
+      desiredIncome: "वांछित मासिक आय",
+      retirementReturn: "सेवानिवृत्ति के बाद अपेक्षित वार्षिक रिटर्न",
+      retirementInflation: "अनुमानित वार्षिक मुद्रास्फीति",
+      retirementStrategy: "सेवानिवृत्ति रणनीति",
+      liveIncome: "आय से जीवन",
+      spendWealth: "समय के साथ संपत्ति खर्च",
+      withdrawalYears: "निकासी के वर्ष",
+      neededWealth: "आवश्यक संपत्ति",
+      chosenStrategy: "चुनी गई रणनीति",
+      estimatedDuration: "अनुमानित अवधि",
+      retirementExplanationTitle: "संपत्ति-आधारित सेवानिवृत्ति कैसे काम करती है?",
+      retirementExplanationText:
+        "दो मुख्य तरीके: आय से जीवन — पर्याप्त संपत्ति जिससे रिटर्न जीवन खर्च चुकाए बिना मूलधन खपत; या समय के साथ संपत्ति खर्च — हर महीने पूंजी की कुछ राशि निकालना। उच्च मुद्रास्फीति या कम रिटर्न पर पूंजी जल्दी समाप्त हो सकती है।",
+      retirementAlert: "इस मासिक निकासी से पूंजी चयनित अवधि से पहले समाप्त हो सकती है।",
+      retirementOk: "दर्ज आंकड़ों से यह आय चयनित अवधि तक संभव है।",
+      retirementCtaTitle: "वैश्विक दृष्टि से वित्तीय स्वतंत्रता की योजना बनाएँ।",
+      retirementCtaText:
+        "वित्तीय सेवानिवृत्ति स्पष्टता से शुरू होती है — जरूरी राशि, स्तर और दीर्घकालिक रणनीति शिक्षा और विश्लेषण से विकसित करें।",
+      projectedResult: "अनुमानित परिणाम",
+      simulationPeriod: "अवधि",
+      finalYear: "अंतिम वर्ष",
+      levelMilestones: "स्तर मील के पत्थर",
+      harpiaMilestone: "गरुड़ मील का पत्थर: US$ 10,000,000 से ऊपर",
+      loboMilestone: "भेड़िया मील का पत्थर: US$ 600,000 से ऊपर",
+      retirementProjection: "सेवानिवृत्ति प्रक्षेपण",
+      generatedIncome: "संपत्ति से उत्पन्न आय",
+      incomeGap: "मासिक अंतर",
+      remainingWealth: "शेष संपत्ति",
+      capitalEnds: "पूंजी समाप्त होने का वर्ष",
+      capitalDoesNotEnd: "चयनित अवधि में समाप्त नहीं होती",
+      birthYear: "जन्म वर्ष",
+      birthYearPlaceholder: "उदाहरण: 1990",
+      birthYearHelp: "प्रक्षेपण के हर चरण में अपनी उम्र देखने के लिए जन्म वर्ष भरें।",
+      currentAge: "वर्तमान आयु",
+      finalProjectionAge: "प्रक्षेपण अंत में आयु",
+      age: "आयु",
+      ageAtCapitalEnd: "अनुमानित आयु",
+      capitalDoesNotEndUntil: "पूंजी समाप्त नहीं होती जब तक",
+      tableHeaders: ["वर्ष", "कुल निवेश", "सरल ब्याज", "नाममात्र चक्रवृद्धि", "वास्तविक चक्रवृद्धि", "डॉलर मूल्य", "संपत्ति स्तर"],
+    },
   };
-  return labels[locale === "pt" ? "pt" : "en"];
+  return labels[locale === "pt" ? "pt" : locale === "hi" ? "hi" : "en"];
 }
 
 function calculateYear(initial: number, monthly: number, annualReturn: number, inflation: number, year: number) {
@@ -753,8 +892,8 @@ function EvolutionChart({
   const padding = 42;
   const levelToLocal = (usd: number) => currency === "USD" ? usd : usd * Math.max(dollarRate, 0.01);
   const milestones = [
-    { label: "Lobo", value: levelToLocal(600_000) },
-    { label: "Harpia", value: levelToLocal(10_000_000) },
+    { label: copy.levels.lobo.name, value: levelToLocal(600_000) },
+    { label: copy.levels.harpia.name, value: levelToLocal(10_000_000) },
   ];
   const maxCalculated = Math.max(...rows.flatMap((row) => [row.simpleFinal, row.compoundFinal, row.realFinal, row.totalContributed]), 1);
   const maxValue = maxCalculated * 1.16;
@@ -900,7 +1039,7 @@ function EvolutionChart({
         <div className="mt-4 grid gap-2 sm:grid-cols-2">
           {hiddenMilestones.map((milestone) => (
             <div key={milestone.label} className="border border-gold/[0.12] bg-ink/[0.32] px-3 py-2 text-xs font-semibold text-paper/[0.58]">
-              {milestone.label === "Harpia" ? labels.harpiaMilestone : labels.loboMilestone}
+              {milestone.label === copy.levels.harpia.name ? labels.harpiaMilestone : labels.loboMilestone}
             </div>
           ))}
         </div>
@@ -1037,6 +1176,8 @@ export default function CompoundInterestCalculatorPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = copyByLocale[locale] ?? copyByLocale.en;
   const enhanced = getEnhancedLabels(locale);
+  const educationHref = locale === "hi" ? "/hi/education" : locale === "pt" ? "/educacao" : "/en/education";
+  const globalAccountEyebrow = locale === "hi" ? "वैश्विक खाता" : locale === "pt" ? "Conta global" : "Global account";
   const currentYear = new Date().getFullYear();
   const maxYears = Math.max(1, 2100 - currentYear);
   const defaultCurrency = defaultCurrencyByLocale[locale] ?? "USD";
@@ -1378,8 +1519,12 @@ export default function CompoundInterestCalculatorPage() {
           <EvolutionChart rows={rows} currency={currency} locale={locale} copy={copy} dollarRate={dollarRate} labels={enhanced} startYear={currentYear} birthYear={birthYear} />
           <div className="mt-4 border border-gold/[0.16] bg-paper/[0.035] p-4 text-sm leading-6 text-paper/[0.68]">
             <span className="font-bold text-gold">{enhanced.crossing}: </span>
-            {loboCrossYear ? `Formiga → Lobo: ${currentYear + loboCrossYear}. ` : `Formiga → Lobo: ${enhanced.noCrossing} `}
-            {harpiaCrossYear ? `Lobo → Harpia: ${currentYear + harpiaCrossYear}.` : `Lobo → Harpia: ${enhanced.noCrossing}`}
+            {loboCrossYear
+              ? `${copy.levels.formiga.name} → ${copy.levels.lobo.name}: ${currentYear + loboCrossYear}. `
+              : `${copy.levels.formiga.name} → ${copy.levels.lobo.name}: ${enhanced.noCrossing} `}
+            {harpiaCrossYear
+              ? `${copy.levels.lobo.name} → ${copy.levels.harpia.name}: ${currentYear + harpiaCrossYear}.`
+              : `${copy.levels.lobo.name} → ${copy.levels.harpia.name}: ${enhanced.noCrossing}`}
           </div>
         </div>
       </section>
@@ -1642,7 +1787,7 @@ export default function CompoundInterestCalculatorPage() {
 
           <div className="mt-8 border border-rise/[0.28] bg-rise/[0.07] p-6 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-rise">Formiga</p>
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-rise">{copy.levels.formiga.name}</p>
               <h3 className="mt-4 font-serif text-3xl tracking-[-0.04em] md:text-5xl">{enhanced.retirementCtaTitle}</h3>
               <p className="mt-4 max-w-3xl text-base leading-7 text-paper/[0.72]">{enhanced.retirementCtaText}</p>
             </div>
@@ -1650,7 +1795,7 @@ export default function CompoundInterestCalculatorPage() {
               <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" className="bg-rise px-5 py-4 text-center text-xs font-black uppercase tracking-[0.14em] text-ink transition hover:bg-paper">
                 {copy.formigaButton}
               </a>
-              <a href="/educacao" className="border border-gold/[0.35] px-5 py-4 text-center text-xs font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink">
+              <a href={educationHref} className="border border-gold/[0.35] px-5 py-4 text-center text-xs font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink">
                 {copy.educationButton}
               </a>
             </div>
@@ -1660,7 +1805,7 @@ export default function CompoundInterestCalculatorPage() {
 
       <section className="px-5 py-12 md:px-8">
         <div className="mx-auto max-w-7xl border border-gold/[0.2] bg-paper/[0.04] p-6 md:p-8">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">Conta global</p>
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{globalAccountEyebrow}</p>
           <h2 className="mt-4 font-serif text-4xl tracking-[-0.04em] md:text-5xl">{copy.globalAccountTitle}</h2>
           <p className="mt-5 max-w-4xl text-lg leading-8 text-paper/[0.72]">{copy.globalAccountText}</p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -1677,7 +1822,7 @@ export default function CompoundInterestCalculatorPage() {
       <section className="px-5 py-12 md:px-8 md:py-16">
         <div className="mx-auto max-w-7xl border border-rise/[0.28] bg-rise/[0.07] p-6 md:flex md:items-center md:justify-between md:gap-8 md:p-8">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-rise">Formiga</p>
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-rise">{copy.levels.formiga.name}</p>
             <h2 className="mt-4 font-serif text-4xl tracking-[-0.04em] md:text-5xl">{copy.ctaTitle}</h2>
             <p className="mt-4 max-w-3xl text-base leading-7 text-paper/[0.72]">{copy.ctaText}</p>
           </div>
@@ -1685,7 +1830,7 @@ export default function CompoundInterestCalculatorPage() {
             <a href={t.freeChannel.link} target="_blank" rel="noopener noreferrer" className="bg-rise px-5 py-4 text-center text-xs font-black uppercase tracking-[0.14em] text-ink transition hover:bg-paper">
               {copy.formigaButton}
             </a>
-            <a href="/educacao" className="border border-gold/[0.35] px-5 py-4 text-center text-xs font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink">
+            <a href={educationHref} className="border border-gold/[0.35] px-5 py-4 text-center text-xs font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold hover:text-ink">
               {copy.educationButton}
             </a>
           </div>

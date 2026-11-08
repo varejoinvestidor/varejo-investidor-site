@@ -2,7 +2,7 @@ export const ja = {
   locale: "JA",
   nav: {
     home: "ホーム",
-    signals: "Research",
+    signals: "シグナル",
     education: "研修",
     terminal: "ターミナル",
     plans: "プラン",
@@ -60,7 +60,7 @@ export const ja = {
     title: "シグナル、市場、リスクのための実践的な体験。",
     text: "Eliteチャンネルは、グローバルリーディング、シグナル、講座をプロの市場分析構造に集約します。",
     cards: [
-      ["Research", "銘柄、方向、エントリー、目標、ストップを含む取引。"],
+      ["リサーチ", "銘柄、方向、エントリー、目標、ストップを含む取引。"],
       ["分析", "マクロ、テクニカル、グローバル市場リーディング。"],
       ["市場", "Forex、金、原油、暗号資産、指数、通貨。"],
     ],
@@ -128,8 +128,8 @@ export const ja = {
     cta: "Eliteチャンネルでシグナルを受け取る",
     signal: "シグナル：4.169",
     asset: "GBP/USD 買い 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    takeProfit: "利確目標: 1.34766",
+    stopLoss: "損切り: 1.34123",
     analysisTitle: "分析",
     analysis: "GBP/USD、4時間足。銘柄は雲の内側にあり、目標は雲の上限。",
   },
@@ -196,7 +196,7 @@ export const ja = {
   servicesPage: {
     eyebrow: "サービス",
     title: "Varejo Investidorサービス",
-    text: "Research、教育、市場ビジョン、資産形成のためのチャンネル、メンタリング、コンサルティング。",
+    text: "シグナル、教育、市場ビジョン、資産形成のためのチャンネル、メンタリング、コンサルティング。",
     items: [
       {
         title: "Eliteチャンネル",
