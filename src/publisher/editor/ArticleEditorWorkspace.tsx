@@ -1,0 +1,418 @@
+"use client";
+
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  changeArticleStatus,
+  deleteArticle,
+  listArticleRevisions,
+  restoreRevision,
+  saveArticle,
+  type ArticleRecord,
+  type SaveArticleInput,
+} from "../articles/actions";
+import { STATUS_BADGE, STATUS_LABELS } from "../articles/labels";
+import { slugifyTitle } from "../articles/slug";
+import type { CategoryRow, TagRow } from "../taxonomy/actions";
+import type { PublisherProfile } from "../types";
+import { canPublish } from "../permissions";
+import { PublisherRichTextEditor } from "./PublisherRichTextEditor";
+
+type Props = {
+  initial: ArticleRecord;
+  categories: CategoryRow[];
+  tags: TagRow[];
+  profile: PublisherProfile;
+};
+
+type SaveState = "idle" | "saving" | "saved" | "error";
+
+export function ArticleEditorWorkspace({ initial, categories, tags, profile }: Props) {
+  const [article, setArticle] = useState(initial);
+  const [saveState, setSaveState] = useState<SaveState>("idle");
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [preview, setPreview] = useState(false);
+  const [scheduledLocal, setScheduledLocal] = useState("");
+  const [revisions, setRevisions] = useState<{ id: string; revision_number: number; created_at: string }[]>([]);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
+
+  const payload: SaveArticleInput = useMemo(
+    () => ({
+      id: article.id,
+      title: article.title,
+      slug: article.slug,
+      subtitle: article.subtitle,
+      excerpt: article.excerpt,
+      content: article.content,
+      cover_image: article.cover_image,
+      category_id: article.category_id,
+      language: article.language,
+      seo_title: article.seo_title,
+      seo_description: article.seo_description,
+      references_text: article.references_text,
+      sources: article.sources,
+      tag_ids: article.tag_ids,
+    }),
+    [article],
+  );
+
+  const sourcesText = article.sources.map((s) => `${s.label} | ${s.url}`).join("\n");
+
+  function onSourcesChange(raw: string) {
+    const sources = raw
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((line) => {
+        const [label, ...rest] = line.split("|");
+        const url = rest.join("|").trim();
+        return { label: label.trim(), url };
+      })
+      .filter((s) => s.label && s.url);
+    patchArticle({ sources });
+  }
+
+  const persist = useCallback(
+    async (input: SaveArticleInput, snapshot = true) => {
+      setSaveState("saving");
+      setSaveError(null);
+      const result = await saveArticle(input, { snapshot });
+      if (!result.ok) {
+        setSaveState("error");
+        setSaveError(result.error);
+        return;
+      }
+      setIsDirty(false);
+      setSaveState("saved");
+      if (result.data?.updated_at) {
+        setArticle((prev) => ({ ...prev, updated_at: result.data!.updated_at }));
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!isDirty) return;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      void persist(payload);
+    }, 2000);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [payload, persist, isDirty]);
+
+  useEffect(() => {
+    void listArticleRevisions(article.id).then((res) => {
+      if (res.ok) {
+        setRevisions(
+          res.data.map((row) => ({
+            id: row.id as string,
+            revision_number: row.revision_number as number,
+            created_at: row.created_at as string,
+          })),
+        );
+      }
+    });
+  }, [article.id, article.updated_at]);
+
+  function patchArticle(update: Partial<ArticleRecord> | ((prev: ArticleRecord) => ArticleRecord)) {
+    setIsDirty(true);
+    setSaveState("idle");
+    setArticle((prev) => (typeof update === "function" ? update(prev) : { ...prev, ...update }));
+  }
+
+  async function onStatus(status: ArticleRecord["status"]) {
+    const scheduledAt =
+      status === "scheduled" && scheduledLocal ? new Date(scheduledLocal).toISOString() : undefined;
+    const result = await changeArticleStatus(article.id, status, scheduledAt ?? null);
+    if (!result.ok) {
+      setSaveError(result.error);
+      return;
+    }
+    setArticle((prev) => ({
+      ...prev,
+      status,
+      scheduled_at: scheduledAt ?? prev.scheduled_at,
+      published_at: status === "published" ? new Date().toISOString() : prev.published_at,
+    }));
+  }
+
+  async function onDelete() {
+    if (!window.confirm("Excluir este artigo permanentemente?")) return;
+    const result = await deleteArticle(article.id);
+    if (!result.ok) {
+      setSaveError(result.error);
+      return;
+    }
+    window.location.href = "/admin/artigos";
+  }
+
+  function toggleTag(tagId: string) {
+    patchArticle((prev) => ({
+      ...prev,
+      tag_ids: prev.tag_ids.includes(tagId) ? prev.tag_ids.filter((id) => id !== tagId) : [...prev.tag_ids, tagId],
+    }));
+  }
+
+  return (
+    <div className="mx-auto max-w-6xl space-y-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <Link href="/admin/artigos" className="text-xs text-paper/50 hover:text-paper">
+            ← Artigos
+          </Link>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <span className={`rounded border px-2 py-0.5 text-xs uppercase tracking-wider ${STATUS_BADGE[article.status]}`}>
+              {STATUS_LABELS[article.status]}
+            </span>
+            <span className="text-xs text-paper/45">
+              {saveState === "saving" && "Salvando…"}
+              {saveState === "saved" && "Salvo"}
+              {saveState === "error" && "Erro ao salvar"}
+              {saveState === "idle" && isDirty && "Alterações pendentes…"}
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => void persist(payload, true)}
+            className="rounded border border-line/25 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-paper/80"
+          >
+            Salvar agora
+          </button>
+          <button
+            type="button"
+            onClick={() => setPreview((p) => !p)}
+            className="rounded border border-line/25 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-paper/80"
+          >
+            {preview ? "Editar" : "Pré-visualizar"}
+          </button>
+          {article.status === "draft" || article.status === "review" ? (
+            <button
+              type="button"
+              onClick={() => void onStatus("review")}
+              className="rounded border border-gold/40 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-gold"
+            >
+              Enviar revisão
+            </button>
+          ) : null}
+          {canPublish(profile.role) ? (
+            <>
+              <button
+                type="button"
+                onClick={() => void onStatus("published")}
+                className="rounded bg-gold px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-ink"
+              >
+                Publicar
+              </button>
+              <button
+                type="button"
+                onClick={() => void onStatus("scheduled")}
+                className="rounded border border-line/25 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider"
+              >
+                Agendar
+              </button>
+              <button type="button" onClick={() => void onStatus("archived")} className="text-xs text-paper/50 hover:text-paper">
+                Arquivar
+              </button>
+            </>
+          ) : null}
+          {profile.role === "admin" ? (
+            <button type="button" onClick={() => void onDelete()} className="text-xs text-fall hover:underline">
+              Excluir
+            </button>
+          ) : null}
+        </div>
+      </div>
+
+      {saveError ? (
+        <p className="rounded border border-fall/40 bg-fall/10 px-4 py-2 text-sm" role="alert">
+          {saveError}
+        </p>
+      ) : null}
+
+      <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
+        <div className="space-y-6">
+          <input
+            value={article.title}
+            onChange={(e) => patchArticle({ title: e.target.value })}
+            placeholder="Título"
+            disabled={preview}
+            className="w-full border-b border-line/15 bg-transparent py-2 font-serif text-4xl tracking-tight text-paper outline-none"
+          />
+          <input
+            value={article.subtitle}
+            onChange={(e) => patchArticle({ subtitle: e.target.value })}
+            placeholder="Subtítulo"
+            disabled={preview}
+            className="w-full border-b border-line/10 bg-transparent py-2 text-lg text-paper/70 outline-none"
+          />
+          <PublisherRichTextEditor
+            content={article.content}
+            editable={!preview}
+            onChange={(json) => patchArticle({ content: json })}
+          />
+        </div>
+
+        <aside className="space-y-6">
+          <section className="rounded-lg border border-line/12 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">URL e resumo</h3>
+            <label className="mt-3 block text-xs text-paper/45">Slug</label>
+            <div className="mt-1 flex gap-2">
+              <input
+                value={article.slug}
+                disabled={preview}
+                onChange={(e) => patchArticle({ slug: e.target.value })}
+                className="w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+              />
+              <button
+                type="button"
+                disabled={preview}
+                onClick={() => patchArticle((p) => ({ ...p, slug: slugifyTitle(p.title) || p.slug }))}
+                className="shrink-0 text-xs text-gold"
+              >
+                Gerar
+              </button>
+            </div>
+            <label className="mt-3 block text-xs text-paper/45">Resumo</label>
+            <textarea
+              rows={4}
+              disabled={preview}
+              value={article.excerpt}
+              onChange={(e) => patchArticle({ excerpt: e.target.value })}
+              className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+            />
+          </section>
+
+          <section className="rounded-lg border border-line/12 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Metadados</h3>
+            <label className="mt-3 block text-xs text-paper/45">Idioma</label>
+            <select
+              value={article.language}
+              disabled={preview}
+              onChange={(e) => patchArticle({ language: e.target.value })}
+              className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+            >
+              <option value="pt">Português</option>
+              <option value="en">English</option>
+            </select>
+            <label className="mt-3 block text-xs text-paper/45">Categoria</label>
+            <select
+              value={article.category_id ?? ""}
+              disabled={preview}
+              onChange={(e) => patchArticle({ category_id: e.target.value || null })}
+              className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+            >
+              <option value="">—</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name_pt}
+                </option>
+              ))}
+            </select>
+            <label className="mt-3 block text-xs text-paper/45">Capa (URL)</label>
+            <input
+              value={article.cover_image ?? ""}
+              disabled={preview}
+              onChange={(e) => patchArticle({ cover_image: e.target.value || null })}
+              className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+            />
+          </section>
+
+          <section className="rounded-lg border border-line/12 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Fontes</h3>
+            <p className="mt-1 text-xs text-paper/40">Um por linha: Rótulo | https://…</p>
+            <textarea
+              rows={4}
+              disabled={preview}
+              value={sourcesText}
+              onChange={(e) => onSourcesChange(e.target.value)}
+              className="mt-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm font-mono"
+            />
+          </section>
+
+          <section className="rounded-lg border border-line/12 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">SEO</h3>
+            <input
+              placeholder="SEO title"
+              disabled={preview}
+              value={article.seo_title ?? ""}
+              onChange={(e) => patchArticle({ seo_title: e.target.value || null })}
+              className="mt-3 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+            />
+            <textarea
+              placeholder="Meta description"
+              rows={3}
+              disabled={preview}
+              value={article.seo_description ?? ""}
+              onChange={(e) => patchArticle({ seo_description: e.target.value || null })}
+              className="mt-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+            />
+          </section>
+
+          <section className="rounded-lg border border-line/12 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Tags</h3>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {tags.map((tag) => {
+                const on = article.tag_ids.includes(tag.id);
+                return (
+                  <button
+                    key={tag.id}
+                    type="button"
+                    disabled={preview}
+                    onClick={() => toggleTag(tag.id)}
+                    className={`rounded-full border px-2 py-0.5 text-xs ${on ? "border-gold/50 text-gold" : "border-line/20 text-paper/50"}`}
+                  >
+                    {tag.name}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {canPublish(profile.role) ? (
+            <section className="rounded-lg border border-line/12 p-4">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Agendamento</h3>
+              <input
+                type="datetime-local"
+                value={scheduledLocal}
+                onChange={(e) => setScheduledLocal(e.target.value)}
+                className="mt-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+              />
+              <p className="mt-1 text-xs text-paper/40">Horário local; salvo em UTC no banco.</p>
+            </section>
+          ) : null}
+
+          <section className="rounded-lg border border-line/12 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Histórico</h3>
+            <ul className="mt-2 max-h-48 space-y-2 overflow-y-auto text-xs text-paper/60">
+              {revisions.map((rev) => (
+                <li key={rev.id} className="flex items-center justify-between gap-2">
+                  <span>
+                    v{rev.revision_number} · {new Date(rev.created_at).toLocaleString("pt-BR")}
+                  </span>
+                  <button
+                    type="button"
+                    className="text-gold hover:underline"
+                    onClick={() => {
+                      void restoreRevision(article.id, rev.id).then((res) => {
+                        if (res.ok) window.location.reload();
+                        else setSaveError(res.error);
+                      });
+                    }}
+                  >
+                    Restaurar
+                  </button>
+                </li>
+              ))}
+              {!revisions.length ? <li>Nenhuma revisão ainda.</li> : null}
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </div>
+  );
+}

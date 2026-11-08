@@ -5,6 +5,11 @@ import {
 } from "./src/i18n/languageCatalog";
 import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "./src/i18n/locales";
 import { localeFromPublicPath, localizedPath, normalizeUrlLocaleSegment } from "./src/i18n/routing";
+import { refreshPublisherSession } from "./src/publisher/supabase/middleware";
+
+function isPublisherPath(pathname: string) {
+  return pathname === "/admin" || pathname.startsWith("/admin/") || pathname.startsWith("/auth/");
+}
 
 function localeFromAcceptLanguage(header: string | null) {
   if (!header) return DEFAULT_LOCALE;
@@ -77,10 +82,14 @@ function getLocaleFromRequest(request: NextRequest) {
   return localeFromAcceptLanguage(request.headers.get("accept-language"));
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname !== LANGUAGE_GATE_PATH && !isSearchBot(request.headers.get("user-agent"))) {
+  if (
+    pathname !== LANGUAGE_GATE_PATH &&
+    !isPublisherPath(pathname) &&
+    !isSearchBot(request.headers.get("user-agent"))
+  ) {
     if (!hasCompletedLanguageGate(request) && isLocalizedHomePath(pathname)) {
       const gateUrl = request.nextUrl.clone();
       gateUrl.pathname = LANGUAGE_GATE_PATH;
@@ -138,6 +147,8 @@ export function middleware(request: NextRequest) {
       "elite-report",
       "reporte-elite",
       "idioma",
+      "admin",
+      "auth",
     ]);
 
     if (firstPageSegment && localizedPageAliases[firstPageSegment]) {
@@ -158,11 +169,17 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next({
+  let response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   });
+
+  if (isPublisherPath(pathname) || pathname.startsWith("/api/")) {
+    response = await refreshPublisherSession(request, response);
+  }
+
+  return response;
 }
 
 export const config = {

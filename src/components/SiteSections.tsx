@@ -8,6 +8,7 @@ import { localeFromPublicPath, localeToUrlSegment, localizedPath } from "../i18n
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/insightsContent";
+import { getPublisherHubPath, publisherHubActivePaths } from "../publisher/public/paths";
 import { getPlatformPath, platformSlugs } from "../data/platformContent";
 import { languageMeta, persistLanguageChoice } from "../i18n/languageCatalog";
 import { getYoutubeChannelUrl } from "../config/youtubeChannels";
@@ -465,7 +466,11 @@ export function SiteChrome({
   const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
   const mobilePrimaryItems = [
     ...firstNavItems,
-    { label: insightNavLabel, href: getInsightsPath(locale), activePaths: [getInsightsPath(locale)] },
+    {
+      label: insightNavLabel,
+      href: getPublisherHubPath(locale),
+      activePaths: publisherHubActivePaths(locale),
+    },
     { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
   ];
   return (
@@ -1184,7 +1189,10 @@ export function SupportFooter({
   ];
   const companyFooterLinks = [
     { href: localizedFooterHref("about"), label: t.nav.about },
-    { href: getInsightsPath(locale), label: locale === "pt" ? "Artigos" : locale === "es" ? "Artículos" : "Articles" },
+    {
+      href: getPublisherHubPath(locale),
+      label: locale === "pt" ? "Artigos" : locale === "es" ? "Artículos" : "Articles",
+    },
     { href: marketFooterLinks[0]?.href ?? "/forex", label: footerLabels.content },
     { href: "/eventos", label: locale === "pt" ? "Eventos" : locale === "es" ? "Eventos" : "Events" },
     { href: t.support.link, label: locale === "pt" ? "Contato" : locale === "es" ? "Contacto" : "Contact" },

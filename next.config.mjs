@@ -10,6 +10,23 @@ const securityHeaders = [
   },
 ];
 
+function supabaseStoragePattern() {
+  const raw = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!raw) return null;
+  try {
+    const host = new URL(raw).hostname;
+    return {
+      protocol: "https",
+      hostname: host,
+      pathname: "/storage/v1/object/public/publisher-media/**",
+    };
+  } catch {
+    return null;
+  }
+}
+
+const supabasePattern = supabaseStoragePattern();
+
 const nextConfig = {
   poweredByHeader: false,
   experimental: {
@@ -22,6 +39,7 @@ const nextConfig = {
         hostname: "fxpro-cdn.cloud",
         pathname: "/**",
       },
+      ...(supabasePattern ? [supabasePattern] : []),
     ],
     formats: ["image/avif", "image/webp"],
   },

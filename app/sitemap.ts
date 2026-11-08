@@ -3,6 +3,7 @@ import { absoluteSiteUrl } from "../src/config/site";
 import { insightPosts, getInsightsPath, insightsBasePath } from "../src/data/insightsContent";
 import { getPlatformPath, platformSlugs } from "../src/data/platformContent";
 import type { Locale } from "../src/i18n";
+import { getPublisherSitemapEntries } from "../src/publisher/public/queries";
 
 const staticPaths = [
   "/idioma",
@@ -371,7 +372,7 @@ const staticPaths = [
 
 const sitemapLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi", "ar", "he", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko", "zh", "pl", "tl"];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries = staticPaths.map((path) => ({
     url: absoluteSiteUrl(path),
     lastModified: new Date(),
@@ -406,5 +407,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...staticEntries, ...insightEntries, ...rssEntries, ...platformEntries];
+  const publisherEntries = await getPublisherSitemapEntries();
+  const publisherSitemap = publisherEntries.map((entry) => ({
+    url: entry.url,
+    lastModified: entry.lastModified,
+    changeFrequency: "weekly" as const,
+    priority: entry.url.endsWith("/artigos") ? 0.82 : 0.74,
+  }));
+
+  return [...staticEntries, ...insightEntries, ...rssEntries, ...platformEntries, ...publisherSitemap];
 }

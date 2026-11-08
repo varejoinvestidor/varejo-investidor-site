@@ -7,9 +7,26 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export:reel:pos-padrao-ouro": "node scripts/export-reel-pos-padrao-ouro.mjs"
+    "export:reel:pos-padrao-ouro": "node scripts/export-reel-pos-padrao-ouro.mjs",
+    "test:publisher": "playwright test tests/publisher-smoke.spec.ts",
+    "import:legacy-insights": "npx tsx scripts/import-legacy-insights.ts",
+    "verify:publisher": "npx tsx scripts/verify-publisher-env.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.119.0",
+    "@tiptap/extension-character-count": "^2.27.3",
+    "@tiptap/extension-image": "^2.27.3",
+    "@tiptap/extension-link": "^2.27.3",
+    "@tiptap/extension-placeholder": "^2.27.3",
+    "@tiptap/extension-table": "^2.27.3",
+    "@tiptap/extension-table-cell": "^2.27.3",
+    "@tiptap/extension-table-header": "^2.27.3",
+    "@tiptap/extension-table-row": "^2.27.3",
+    "@tiptap/extension-youtube": "^2.27.3",
+    "@tiptap/pm": "^2.27.3",
+    "@tiptap/react": "^2.27.3",
+    "@tiptap/starter-kit": "^2.27.3",
     "framer-motion": "^11.18.2",
     "next": "^14.2.23",
     "react": "^18.3.1",
@@ -17,16 +34,19 @@
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@playwright/test": "^1.65.0",
     "@types/node": "^20.17.16",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "autoprefixer": "^10.4.20",
+    "dotenv": "^18.0.9",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.23",
     "node-edge-tts": "^1.2.12",
     "playwright": "^1.65.0",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.15",
     "typescript": "^5.7.3"
   }
 }

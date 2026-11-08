@@ -1,0 +1,54 @@
+/* Painel VI Publisher — escopo local (não altera o site público) */
+
+.admin-login-backdrop {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(184, 137, 45, 0.12), transparent 40rem),
+    #030303;
+}
+
+.publisher-editor h1 {
+  font-size: 1.75rem;
+  font-family: Georgia, "Times New Roman", serif;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.publisher-editor h2 {
+  font-size: 1.35rem;
+  font-family: Georgia, "Times New Roman", serif;
+  margin: 1rem 0 0.5rem;
+}
+
+.publisher-editor h3 {
+  font-size: 1.1rem;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.publisher-editor ul,
+.publisher-editor ol {
+  padding-left: 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.publisher-editor blockquote {
+  border-left: 3px solid rgba(184, 137, 45, 0.5);
+  padding-left: 1rem;
+  color: rgba(251, 250, 247, 0.65);
+  margin: 1rem 0;
+}
+
+.publisher-editor table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.publisher-editor th,
+.publisher-editor td {
+  border: 1px solid rgba(233, 228, 218, 0.15);
+  padding: 0.5rem;
+}
+
+.publisher-editor a {
+  color: #b8892d;
+  text-decoration: underline;
+}
