@@ -20,7 +20,7 @@ export const id = {
     proof: [
       ["8 tahun", "di pasar global"],
       ["Sejak 2018", "melewati siklus nyata"],
-      ["+4.200", "sinyal live terkirim"],
+      ["+4.500", "sinyal live terkirim"],
       ["Global", "Forex, emas, minyak, kripto dan indeks"],
     ],
   },
@@ -36,7 +36,7 @@ export const id = {
     title: "Terima analisis dan sinyal trading langsung di WhatsApp Anda.",
     text: "Serahkan analisis kepada kami. Terima sinyal langsung di WhatsApp dengan entry, target, dan stop yang sudah ditentukan. Cukup salin informasinya dan masukkan transaksi di akun Anda sendiri.",
     cta: "COBA SINYAL GRATIS",
-    stats: ["8 tahun di pasar", "Sejak 2018", "+4.200 sinyal live", "Forex, emas, minyak, kripto, indeks dan mata uang global"],
+    stats: ["8 tahun di pasar", "Sejak 2018", "+4.500 sinyal live", "Forex, emas, minyak, kripto, indeks dan mata uang global"],
     example: {
       title: "Contoh sinyal yang dikirim di WhatsApp",
       asset: "Aset",
@@ -201,7 +201,7 @@ export const id = {
       {
         title: "Kanal Elite",
         description: "Produk utama dengan 100% sinyal, analisis, kelas rekaman, dan pembacaan pasar global.",
-        bullets: ["Sinyal live sejak 2018", "Lebih dari 4.200 sinyal terkirim", "Aset, arah, entry, target, stop, dan konteks", "Forex, emas, minyak, kripto, indeks, dan mata uang global", "Edukasi level Semut, Serigala, dan Elang Harpy"],
+        bullets: ["Sinyal live sejak 2018", "Lebih dari 4.500 sinyal terkirim", "Aset, arah, entry, target, stop, dan konteks", "Forex, emas, minyak, kripto, indeks, dan mata uang global", "Edukasi level Semut, Serigala, dan Elang Harpy"],
         cta: "Jelajahi Kanal Elite",
         href: "/sinais",
         kind: "paid",

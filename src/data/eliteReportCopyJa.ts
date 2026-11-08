@@ -3,12 +3,12 @@ export const eliteReportCopyJa = {
   label: "Elite履歴",
   heroTitle: "8年間のWhatsAppライブシグナル",
   heroSubtitle:
-    "2018年8月からのEliteチャンネル推移を、4,200件超の送信、月次レポート、集計結果とともに追えます。",
+    "2018年8月からのEliteチャンネル推移を、4,500件超の送信、月次レポート、集計結果とともに追えます。",
   centralMessage:
     "2018年8月以降、Varejo Investidorは世界市場を監視し、シグナルをWhatsAppで直接配信してきました。このページでは公開履歴、月次レポート、結果の推移を整理しています。",
   primaryButton: "結果履歴を見る",
   secondaryButton: "Eliteチャンネルに参加",
-  heroStats: ["2018年8月から", "4,200件超のシグナル", "Forex、金、原油、指数、暗号資産、世界通貨", "月次レポートを集計"],
+  heroStats: ["2018年8月から", "4,500件超のシグナル", "Forex、金、原油、指数、暗号資産、世界通貨", "月次レポートを集計"],
   authorityTitle: "差別化要因は履歴にある",
   authorityText:
     "運用をこれほど長期間公開で追跡する教育構造は少ありません。Eliteチャンネルは2018年に始まり、シグナル、分析、市場リーディング、月次レポートとともに進化しました。",

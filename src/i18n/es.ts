@@ -20,7 +20,7 @@ export const es = {
     proof: [
       ["8 años", "en mercados globales"],
       ["Desde 2018", "en ciclos reales"],
-      ["+4.200", "señales en vivo enviadas"],
+      ["+4.500", "señales en vivo enviadas"],
       ["Global", "Forex, oro, petróleo, cripto e índices"],
     ],
   },
@@ -36,7 +36,7 @@ export const es = {
     title: "Recibe análisis y señales directamente en tu WhatsApp.",
     text: "Deja el análisis con nosotros. Recibe señales directamente en WhatsApp con entrada, objetivo y stop definidos. Solo copia la información e inserta la operación en tu propia cuenta.",
     cta: "PRUEBA LAS SEÑALES GRATIS",
-    stats: ["8 años de mercado", "Desde 2018", "+4.200 señales en vivo", "Forex, oro, petróleo, cripto, índices y divisas globales"],
+    stats: ["8 años de mercado", "Desde 2018", "+4.500 señales en vivo", "Forex, oro, petróleo, cripto, índices y divisas globales"],
     example: {
       title: "Ejemplo de señal enviada por WhatsApp",
       asset: "Activo",
@@ -201,7 +201,7 @@ export const es = {
       {
         title: "Canal Elite",
         description: "Producto principal con 100% de las señales, análisis, clases grabadas y lectura global de mercado.",
-        bullets: ["Señales en vivo desde 2018", "Más de 4.200 señales enviadas", "Activo, dirección, entrada, objetivo, stop y contexto", "Forex, oro, petróleo, cripto, índices y divisas globales", "Educación por niveles Hormiga, Lobo y Harpía"],
+        bullets: ["Señales en vivo desde 2018", "Más de 4.500 señales enviadas", "Activo, dirección, entrada, objetivo, stop y contexto", "Forex, oro, petróleo, cripto, índices y divisas globales", "Educación por niveles Hormiga, Lobo y Harpía"],
         cta: "Conocer el Canal Elite",
         href: "/sinais",
         kind: "paid",

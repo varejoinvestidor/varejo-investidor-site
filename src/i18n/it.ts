@@ -20,7 +20,7 @@
     proof: [
       ["8 anni", "sui mercati globali"],
       ["Dal 2018", "attraverso cicli reali"],
-      ["+4.200", "segnali live inviati"],
+      ["+4.500", "segnali live inviati"],
       ["Globale", "Forex, oro, petrolio, crypto e indici"],
     ],
   },
@@ -36,7 +36,7 @@
     title: "Ricevi analisi e segnali di trading direttamente su WhatsApp.",
     text: "Lascia l'analisi a noi. Ricevi su WhatsApp segnali con ingresso, obiettivo e stop definiti. Copia le informazioni ed esegui l'operazione sul tuo conto.",
     cta: "PROVA I SEGNALI GRATIS",
-    stats: ["8 anni di mercato", "Dal 2018", "+4.200 segnali live", "Forex, oro, petrolio, crypto, indici e valute globali"],
+    stats: ["8 anni di mercato", "Dal 2018", "+4.500 segnali live", "Forex, oro, petrolio, crypto, indici e valute globali"],
     example: {
       title: "Esempio di segnale inviato su WhatsApp",
       asset: "Attivo",
@@ -201,7 +201,7 @@
       {
         title: "Canale Elite",
         description: "Prodotto principale con 100% segnali, analisi, lezioni registrate e lettura globale del mercato.",
-        bullets: ["Segnali live dal 2018", "Oltre 4.200 segnali inviati", "Attivo, direzione, ingresso, obiettivo, stop e contesto", "Forex, oro, petrolio, crypto, indici e valute", "Formazione per livelli Formiga, Lupo e Arpia"],
+        bullets: ["Segnali live dal 2018", "Oltre 4.500 segnali inviati", "Attivo, direzione, ingresso, obiettivo, stop e contesto", "Forex, oro, petrolio, crypto, indici e valute", "Formazione per livelli Formiga, Lupo e Arpia"],
         cta: "Scopri il Canale Elite",
         href: "/sinais",
         kind: "paid",

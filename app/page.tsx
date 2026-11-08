@@ -80,7 +80,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor is a global financial structure for people who want to move beyond the basics, understand international markets, and build their financial life in layers.",
       text: [
-        "Since 2018, we have delivered more than 4,200 live signals while following Forex, gold, oil, crypto, indices, and global currencies.",
+        "Since 2018, we have delivered more than 4,500 live signals while following Forex, gold, oil, crypto, indices, and global currencies.",
         "The journey is divided into levels: Ant, Wolf, and Harpy.",
         "The Ant level builds the foundation. The Wolf level develops strategy and market reading. The Harpy level expands vision toward wealth, protection, and global structure.",
       ],
@@ -112,7 +112,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor es una estructura financiera global para quien desea salir de lo b\u00e1sico, entender el mercado internacional y construir su vida financiera por capas.",
       text: [
-        "Desde 2018, entregamos m\u00e1s de 4.200 se\u00f1ales en vivo, acompa\u00f1ando Forex, oro, petr\u00f3leo, cripto, \u00edndices y monedas globales.",
+        "Desde 2018, entregamos m\u00e1s de 4.500 se\u00f1ales en vivo, acompa\u00f1ando Forex, oro, petr\u00f3leo, cripto, \u00edndices y monedas globales.",
         "La jornada se divide en niveles: Hormiga, Lobo y Harp\u00eda.",
         "El nivel Hormiga construye la base. El nivel Lobo desarrolla estrategia y lectura de mercado. El nivel Harp\u00eda ampl\u00eda la visi\u00f3n hacia patrimonio, protecci\u00f3n y estructura global.",
       ],
@@ -210,7 +210,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor \u0909\u0928 \u0932\u094b\u0917\u094b\u0902 \u0915\u0947 \u0932\u093f\u090f \u090f\u0915 \u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u0935\u093f\u0924\u094d\u0924\u0940\u092f \u0938\u0902\u0930\u091a\u0928\u093e \u0939\u0948 \u091c\u094b \u092c\u0941\u0928\u093f\u092f\u093e\u0926\u0940 \u0938\u094d\u0924\u0930 \u0938\u0947 \u0906\u0917\u0947 \u092c\u0922\u093c\u0915\u0930 \u0905\u0902\u0924\u0930\u0930\u093e\u0937\u094d\u091f\u094d\u0930\u0940\u092f \u092c\u093e\u091c\u093e\u0930 \u0915\u094b \u0938\u092e\u091d\u0928\u093e \u0914\u0930 \u0905\u092a\u0928\u0940 \u0935\u093f\u0924\u094d\u0924\u0940\u092f \u091c\u093f\u0902\u0926\u0917\u0940 \u0915\u094b \u091a\u0930\u0923\u094b\u0902 \u092e\u0947\u0902 \u092c\u0928\u093e\u0928\u093e \u091a\u093e\u0939\u0924\u0947 \u0939\u0948\u0902\u0964",
       text: [
-        "2018 \u0938\u0947 \u0939\u092e Forex, \u0938\u094b\u0928\u093e, \u0924\u0947\u0932, \u0915\u094d\u0930\u093f\u092a\u094d\u091f\u094b, \u0938\u0942\u091a\u0915\u093e\u0902\u0915 \u0914\u0930 \u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u092e\u0941\u0926\u094d\u0930\u093e\u0913\u0902 \u0915\u093e \u0905\u0928\u0941\u0938\u0930\u0923 \u0915\u0930\u0924\u0947 \u0939\u0941\u090f 4,200 \u0938\u0947 \u0905\u0927\u093f\u0915 \u0932\u093e\u0907\u0935 \u0938\u093f\u0917\u094d\u0928\u0932 \u092d\u0947\u091c \u091a\u0941\u0915\u0947 \u0939\u0948\u0902\u0964",
+        "2018 \u0938\u0947 \u0939\u092e Forex, \u0938\u094b\u0928\u093e, \u0924\u0947\u0932, \u0915\u094d\u0930\u093f\u092a\u094d\u091f\u094b, \u0938\u0942\u091a\u0915\u093e\u0902\u0915 \u0914\u0930 \u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u092e\u0941\u0926\u094d\u0930\u093e\u0913\u0902 \u0915\u093e \u0905\u0928\u0941\u0938\u0930\u0923 \u0915\u0930\u0924\u0947 \u0939\u0941\u090f 4,500 \u0938\u0947 \u0905\u0927\u093f\u0915 \u0932\u093e\u0907\u0935 \u0938\u093f\u0917\u094d\u0928\u0932 \u092d\u0947\u091c \u091a\u0941\u0915\u0947 \u0939\u0948\u0902\u0964",
         "\u092f\u0939 \u092f\u093e\u0924\u094d\u0930\u093e \u0924\u0940\u0928 \u0938\u094d\u0924\u0930\u094b\u0902 \u092e\u0947\u0902 \u0935\u093f\u092d\u093e\u091c\u093f\u0924 \u0939\u0948: \u091a\u0940\u0902\u091f\u0940, \u092d\u0947\u0921\u093c\u093f\u092f\u093e \u0914\u0930 \u0917\u0930\u0941\u0921\u093c\u0964",
         "\u091a\u0940\u0902\u091f\u0940 \u0938\u094d\u0924\u0930 \u0906\u0927\u093e\u0930 \u092c\u0928\u093e\u0924\u093e \u0939\u0948\u0964 \u092d\u0947\u0921\u093c\u093f\u092f\u093e \u0938\u094d\u0924\u0930 \u0930\u0923\u0928\u0940\u0924\u093f \u0914\u0930 \u092c\u093e\u091c\u093e\u0930-\u092a\u0920\u0928 \u0935\u093f\u0915\u0938\u093f\u0924 \u0915\u0930\u0924\u093e \u0939\u0948\u0964 \u0917\u0930\u0941\u0921\u093c \u0938\u094d\u0924\u0930 \u0938\u0902\u092a\u0924\u094d\u0924\u093f, \u0938\u0941\u0930\u0915\u094d\u0937\u093e \u0914\u0930 \u0935\u0948\u0936\u094d\u0935\u093f\u0915 \u0938\u0902\u0930\u091a\u0928\u093e \u0915\u0940 \u0926\u0943\u0937\u094d\u091f\u093f \u0915\u094b \u0935\u093f\u0938\u094d\u0924\u0943\u0924 \u0915\u0930\u0924\u093e \u0939\u0948\u0964",
       ],
@@ -242,7 +242,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor \u0647\u0648 \u0647\u064a\u0643\u0644 \u0645\u0627\u0644\u064a \u0639\u0627\u0644\u0645\u064a \u0644\u0645\u0646 \u064a\u0631\u064a\u062f \u062a\u062c\u0627\u0648\u0632 \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0627\u062a \u0648\u0641\u0647\u0645 \u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u062f\u0648\u0644\u064a\u0629 \u0648\u0628\u0646\u0627\u0621 \u062d\u064a\u0627\u062a\u0647 \u0627\u0644\u0645\u0627\u0644\u064a\u0629 \u0639\u0644\u0649 \u0637\u0628\u0642\u0627\u062a.",
       text: [
-        "\u0645\u0646\u0630 2018\u060c \u0623\u0631\u0633\u0644\u0646\u0627 \u0623\u0643\u062b\u0631 \u0645\u0646 4,200 \u0625\u0634\u0627\u0631\u0629 \u0645\u0628\u0627\u0634\u0631\u0629 \u0645\u0639 \u0645\u062a\u0627\u0628\u0639\u0629 \u0627\u0644\u0641\u0648\u0631\u0643\u0633 \u0648\u0627\u0644\u0630\u0647\u0628 \u0648\u0627\u0644\u0646\u0641\u0637 \u0648\u0627\u0644\u0643\u0631\u064a\u0628\u062a\u0648 \u0648\u0627\u0644\u0645\u0624\u0634\u0631\u0627\u062a \u0648\u0627\u0644\u0639\u0645\u0644\u0627\u062a \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629.",
+        "\u0645\u0646\u0630 2018\u060c \u0623\u0631\u0633\u0644\u0646\u0627 \u0623\u0643\u062b\u0631 \u0645\u0646 4,500 \u0625\u0634\u0627\u0631\u0629 \u0645\u0628\u0627\u0634\u0631\u0629 \u0645\u0639 \u0645\u062a\u0627\u0628\u0639\u0629 \u0627\u0644\u0641\u0648\u0631\u0643\u0633 \u0648\u0627\u0644\u0630\u0647\u0628 \u0648\u0627\u0644\u0646\u0641\u0637 \u0648\u0627\u0644\u0643\u0631\u064a\u0628\u062a\u0648 \u0648\u0627\u0644\u0645\u0624\u0634\u0631\u0627\u062a \u0648\u0627\u0644\u0639\u0645\u0644\u0627\u062a \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629.",
         "\u062a\u0646\u0642\u0633\u0645 \u0627\u0644\u0631\u062d\u0644\u0629 \u0625\u0644\u0649 \u0645\u0633\u062a\u0648\u064a\u0627\u062a: \u0627\u0644\u0646\u0645\u0644\u0629\u060c \u0627\u0644\u0630\u0626\u0628\u060c \u0648\u0627\u0644\u0647\u0627\u0631\u0628\u064a.",
         "\u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0646\u0645\u0644\u0629 \u064a\u0628\u0646\u064a \u0627\u0644\u0623\u0633\u0627\u0633. \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0630\u0626\u0628 \u064a\u0637\u0648\u0631 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u0648\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u0633\u0648\u0642. \u0645\u0633\u062a\u0648\u0649 \u0627\u0644\u0647\u0627\u0631\u0628\u064a \u064a\u0648\u0633\u0639 \u0627\u0644\u0631\u0624\u064a\u0629 \u0646\u062d\u0648 \u0627\u0644\u062b\u0631\u0648\u0629 \u0648\u0627\u0644\u062d\u0645\u0627\u064a\u0629 \u0648\u0627\u0644\u0647\u064a\u0643\u0644 \u0627\u0644\u0639\u0627\u0644\u0645\u064a.",
       ],
@@ -274,7 +274,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor, temel seviyeyi a\u015fmak, uluslararas\u0131 piyasalar\u0131 anlamak ve finansal hayat\u0131n\u0131 katmanlar halinde kurmak isteyenler i\u00e7in k\u00fcresel bir finansal yap\u0131d\u0131r.",
       text: [
-        "2018'den beri Forex, alt\u0131n, petrol, kripto, endeksler ve k\u00fcresel para birimlerini takip ederek 4.200'den fazla canl\u0131 sinyal g\u00f6nderdik.",
+        "2018'den beri Forex, alt\u0131n, petrol, kripto, endeksler ve k\u00fcresel para birimlerini takip ederek 4.500'den fazla canl\u0131 sinyal g\u00f6nderdik.",
         "Yolculuk \u00fc\u00e7 seviyeye ayr\u0131l\u0131r: Kar\u0131nca, Kurt ve Harpia.",
         "Kar\u0131nca seviyesi temeli kurar. Kurt seviyesi strateji ve piyasa okuma geli\u015ftirir. Harpia seviyesi varl\u0131k, koruma ve k\u00fcresel yap\u0131 vizyonunu geni\u015fletir.",
       ],
@@ -306,7 +306,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor adalah struktur finansial global untuk orang yang ingin keluar dari dasar, memahami pasar internasional, dan membangun kehidupan finansial secara bertahap.",
       text: [
-        "Sejak 2018, kami telah mengirim lebih dari 4.200 sinyal live sambil mengikuti Forex, emas, minyak, kripto, indeks, dan mata uang global.",
+        "Sejak 2018, kami telah mengirim lebih dari 4.500 sinyal live sambil mengikuti Forex, emas, minyak, kripto, indeks, dan mata uang global.",
         "Perjalanan ini dibagi menjadi level: Semut, Serigala, dan Elang Harpy.",
         "Level Semut membangun fondasi. Level Serigala mengembangkan strategi dan pembacaan pasar. Level Elang Harpy memperluas visi menuju kekayaan, perlindungan, dan struktur global.",
       ],
@@ -338,7 +338,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor l\u00e0 m\u1ed9t c\u1ea5u tr\u00fac t\u00e0i ch\u00ednh to\u00e0n c\u1ea7u d\u00e0nh cho ng\u01b0\u1eddi mu\u1ed1n v\u01b0\u1ee3t qua n\u1ec1n t\u1ea3ng c\u01a1 b\u1ea3n, hi\u1ec3u th\u1ecb tr\u01b0\u1eddng qu\u1ed1c t\u1ebf v\u00e0 x\u00e2y d\u1ef1ng \u0111\u1eddi s\u1ed1ng t\u00e0i ch\u00ednh theo t\u1eebng l\u1edbp.",
       text: [
-        "T\u1eeb n\u0103m 2018, ch\u00fang t\u00f4i \u0111\u00e3 g\u1eedi h\u01a1n 4.200 t\u00edn hi\u1ec7u tr\u1ef1c ti\u1ebfp, theo d\u00f5i Forex, v\u00e0ng, d\u1ea7u, crypto, ch\u1ec9 s\u1ed1 v\u00e0 ti\u1ec1n t\u1ec7 to\u00e0n c\u1ea7u.",
+        "T\u1eeb n\u0103m 2018, ch\u00fang t\u00f4i \u0111\u00e3 g\u1eedi h\u01a1n 4.500 t\u00edn hi\u1ec7u tr\u1ef1c ti\u1ebfp, theo d\u00f5i Forex, v\u00e0ng, d\u1ea7u, crypto, ch\u1ec9 s\u1ed1 v\u00e0 ti\u1ec1n t\u1ec7 to\u00e0n c\u1ea7u.",
         "H\u00e0nh tr\u00ecnh \u0111\u01b0\u1ee3c chia th\u00e0nh c\u00e1c c\u1ea5p \u0111\u1ed9: Ki\u1ebfn, S\u00f3i v\u00e0 \u0110\u1ea1i B\u00e0ng Harpy.",
         "C\u1ea5p \u0111\u1ed9 Ki\u1ebfn x\u00e2y d\u1ef1ng n\u1ec1n t\u1ea3ng. C\u1ea5p \u0111\u1ed9 S\u00f3i ph\u00e1t tri\u1ec3n chi\u1ebfn l\u01b0\u1ee3c v\u00e0 kh\u1ea3 n\u0103ng \u0111\u1ecdc th\u1ecb tr\u01b0\u1eddng. C\u1ea5p \u0111\u1ed9 \u0110\u1ea1i B\u00e0ng Harpy m\u1edf r\u1ed9ng t\u1ea7m nh\u00ecn v\u1ec1 t\u00e0i s\u1ea3n, b\u1ea3o v\u1ec7 v\u1ed1n v\u00e0 c\u1ea5u tr\u00fac to\u00e0n c\u1ea7u.",
       ],
@@ -370,7 +370,7 @@ const homeLiteCopy = {
       manifesto:
         "Varejo Investidor \u0e04\u0e37\u0e2d\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e01\u0e32\u0e23\u0e40\u0e07\u0e34\u0e19\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01\u0e2a\u0e33\u0e2b\u0e23\u0e31\u0e1a\u0e1c\u0e39\u0e49\u0e17\u0e35\u0e48\u0e15\u0e49\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e2d\u0e2d\u0e01\u0e08\u0e32\u0e01\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19 \u0e40\u0e02\u0e49\u0e32\u0e43\u0e08\u0e15\u0e25\u0e32\u0e14\u0e15\u0e48\u0e32\u0e07\u0e1b\u0e23\u0e30\u0e40\u0e17\u0e28 \u0e41\u0e25\u0e30\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e0a\u0e35\u0e27\u0e34\u0e15\u0e01\u0e32\u0e23\u0e40\u0e07\u0e34\u0e19\u0e40\u0e1b\u0e47\u0e19\u0e02\u0e31\u0e49\u0e19\u0e40\u0e1b\u0e47\u0e19\u0e15\u0e2d\u0e19",
       text: [
-        "\u0e15\u0e31\u0e49\u0e07\u0e41\u0e15\u0e48\u0e1b\u0e35 2018 \u0e40\u0e23\u0e32\u0e2a\u0e48\u0e07\u0e2a\u0e31\u0e0d\u0e0d\u0e32\u0e13\u0e2a\u0e14\u0e21\u0e32\u0e01\u0e01\u0e27\u0e48\u0e32 4,200 \u0e04\u0e23\u0e31\u0e49\u0e07 \u0e42\u0e14\u0e22\u0e15\u0e34\u0e14\u0e15\u0e32\u0e21 Forex \u0e17\u0e2d\u0e07\u0e04\u0e33 \u0e19\u0e49\u0e33\u0e21\u0e31\u0e19 \u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15 \u0e14\u0e31\u0e0a\u0e19\u0e35 \u0e41\u0e25\u0e30\u0e2a\u0e01\u0e38\u0e25\u0e40\u0e07\u0e34\u0e19\u0e17\u0e31\u0e48\u0e27\u0e42\u0e25\u0e01",
+        "\u0e15\u0e31\u0e49\u0e07\u0e41\u0e15\u0e48\u0e1b\u0e35 2018 \u0e40\u0e23\u0e32\u0e2a\u0e48\u0e07\u0e2a\u0e31\u0e0d\u0e0d\u0e32\u0e13\u0e2a\u0e14\u0e21\u0e32\u0e01\u0e01\u0e27\u0e48\u0e32 4,500 \u0e04\u0e23\u0e31\u0e49\u0e07 \u0e42\u0e14\u0e22\u0e15\u0e34\u0e14\u0e15\u0e32\u0e21 Forex \u0e17\u0e2d\u0e07\u0e04\u0e33 \u0e19\u0e49\u0e33\u0e21\u0e31\u0e19 \u0e04\u0e23\u0e34\u0e1b\u0e42\u0e15 \u0e14\u0e31\u0e0a\u0e19\u0e35 \u0e41\u0e25\u0e30\u0e2a\u0e01\u0e38\u0e25\u0e40\u0e07\u0e34\u0e19\u0e17\u0e31\u0e48\u0e27\u0e42\u0e25\u0e01",
         "\u0e40\u0e2a\u0e49\u0e19\u0e17\u0e32\u0e07\u0e16\u0e39\u0e01\u0e41\u0e1a\u0e48\u0e07\u0e40\u0e1b\u0e47\u0e19\u0e23\u0e30\u0e14\u0e31\u0e1a: \u0e21\u0e14 \u0e2b\u0e21\u0e32\u0e1b\u0e48\u0e32 \u0e41\u0e25\u0e30\u0e2e\u0e32\u0e23\u0e4c\u0e1b\u0e35",
         "\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e21\u0e14\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e1e\u0e37\u0e49\u0e19\u0e10\u0e32\u0e19 \u0e23\u0e30\u0e14\u0e31\u0e1a\u0e2b\u0e21\u0e32\u0e1b\u0e48\u0e32\u0e1e\u0e31\u0e12\u0e19\u0e32\u0e01\u0e25\u0e22\u0e38\u0e17\u0e18\u0e4c\u0e41\u0e25\u0e30\u0e01\u0e32\u0e23\u0e2d\u0e48\u0e32\u0e19\u0e15\u0e25\u0e32\u0e14 \u0e23\u0e30\u0e14\u0e31\u0e1a\u0e2e\u0e32\u0e23\u0e4c\u0e1b\u0e35\u0e02\u0e22\u0e32\u0e22\u0e21\u0e38\u0e21\u0e21\u0e2d\u0e07\u0e44\u0e1b\u0e2a\u0e39\u0e48\u0e04\u0e27\u0e32\u0e21\u0e21\u0e31\u0e48\u0e07\u0e04\u0e31\u0e48\u0e07 \u0e01\u0e32\u0e23\u0e1b\u0e01\u0e1b\u0e49\u0e2d\u0e07 \u0e41\u0e25\u0e30\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e23\u0e30\u0e14\u0e31\u0e1a\u0e42\u0e25\u0e01",
       ],
@@ -402,11 +402,11 @@ const homeLiteCopy = {
       title: "Что такое Varejo Investidor",
       manifesto: "Varejo Investidor, это глобальная финансовая структура для частных инвесторов, которые хотят выйти за рамки базового уровня, понять международные рынки и строить капитал поэтапно.",
       text: [
-        "С 2018 года проект сопровождает Forex, золото, нефть, индексы, криптоактивы и мировые валюты, уже отправив более 4 200 сигналов в WhatsApp.",
+        "С 2018 года проект сопровождает Forex, золото, нефть, индексы, криптоактивы и мировые валюты, уже отправив более 4 500 сигналов в WhatsApp.",
         "Методология построена вокруг трех уровней развития: Formiga, Wolf и Harpy.",
         "Formiga формирует базу. Wolf развивает стратегию и чтение рынка. Harpy фокусируется на капитале, защите и глобальной структуре.",
       ],
-      stats: ["С 2018 года", "4 200+ сигналов", "Formiga / Wolf / Harpy"],
+      stats: ["С 2018 года", "4 500+ сигналов", "Formiga / Wolf / Harpy"],
     },
     cards: [
       { code: "FORMIGA", title: "Финансовая база", text: "Организация, дисциплина, первые рынки и фундамент для осознанного роста.", href: "/nivel-formiga" },
@@ -434,11 +434,11 @@ const homeLiteCopy = {
       title: "Varejo Investidor کیا ہے",
       manifesto: "Varejo Investidor عام سرمایہ کاروں کے لیے ایک عالمی مالیاتی ڈھانچہ ہے جو بین الاقوامی منڈیوں کو سمجھنا، مالی نظم بنانا اور مرحلہ وار ترقی کرنا چاہتے ہیں۔",
       text: [
-        "2018 سے یہ منصوبہ Forex، سونا، تیل، انڈیکس، کرپٹو اثاثوں اور عالمی کرنسیوں کو روزانہ فالو کرتا ہے اور WhatsApp پر 4,200 سے زائد سگنلز بھیج چکا ہے۔",
+        "2018 سے یہ منصوبہ Forex، سونا، تیل، انڈیکس، کرپٹو اثاثوں اور عالمی کرنسیوں کو روزانہ فالو کرتا ہے اور WhatsApp پر 4,500 سے زائد سگنلز بھیج چکا ہے۔",
         "طریقہ کار تین سطحوں پر قائم ہے: Formiga، Wolf اور Harpy۔",
         "Formiga بنیاد بناتا ہے۔ Wolf حکمت عملی اور مارکیٹ ریڈنگ کو مضبوط کرتا ہے۔ Harpy سرمایہ، تحفظ اور عالمی ساخت پر توجہ دیتا ہے۔",
       ],
-      stats: ["2018 سے", "4,200+ سگنلز", "Formiga / Wolf / Harpy"],
+      stats: ["2018 سے", "4,500+ سگنلز", "Formiga / Wolf / Harpy"],
     },
     cards: [
       { code: "FORMIGA", title: "مالی بنیاد", text: "تنظیم، نظم و ضبط، پہلی منڈیاں اور شعوری ترقی کی بنیاد۔", href: "/nivel-formiga" },
@@ -498,7 +498,7 @@ const homeLiteCopy = {
       title: "Varejo Investidorとは",
       manifesto: "Varejo Investidorは、基礎から抜け出し、国際市場を理解し、資産形成を段階的に構築したい人のためのグローバル金融構造です。",
       text: [
-        "2018年から、Forex、金、原油、暗号資産、指数、世界の通貨を追跡し、4,200件以上のライブシグナルを配信してきました。",
+        "2018年から、Forex、金、原油、暗号資産、指数、世界の通貨を追跡し、4,500件以上のライブシグナルを配信してきました。",
         "旅はアリ、オオカミ、ハーピーの3つのレベルに分かれています。",
         "アリは基礎を築き、オオカミは戦略と市場読解を磨き、ハーピーは資産、保護、グローバル構造へ視野を広げます。",
       ],
@@ -525,7 +525,7 @@ const homeLiteCopy = {
       title: "Varejo Investidor란 무엇인가",
       manifesto: "Varejo Investidor는 기초를 넘어 국제 시장을 이해하고 자산 형성을 단계적으로 구축하려는 사람들을 위한 글로벌 금융 구조입니다.",
       text: [
-        "2018년부터 Forex, 금, 원유, 암호화폐, 지수, 글로벌 통화를 추적하며 4,200개 이상의 실시간 신호를 전달했습니다.",
+        "2018년부터 Forex, 금, 원유, 암호화폐, 지수, 글로벌 통화를 추적하며 4,500개 이상의 실시간 신호를 전달했습니다.",
         "여정은 개미, 늑대, 하피 세 단계로 나뉩니다.",
         "개미는 기반을 만들고, 늑대는 전략과 시장 읽기를 개발하며, 하피는 자산, 보호, 글로벌 구조로 시야를 확장합니다.",
       ],
@@ -725,70 +725,70 @@ const homeEliteCopy: Record<string, HomeEliteCopy> = {
   en: {
     title: "Elite Channel",
     subtitle: "Receive analysis and signals directly on WhatsApp.",
-    text: "The Elite Channel was designed for investors who want to follow global markets through structured signals, analysis, and market reading. Since 2018, more than 4,200 live signals have been sent across Forex, gold, oil, indices, crypto, and global currencies.",
+    text: "The Elite Channel was designed for investors who want to follow global markets through structured signals, analysis, and market reading. Since 2018, more than 4,500 live signals have been sent across Forex, gold, oil, indices, crypto, and global currencies.",
     cards: ["Live Signals", "WhatsApp Delivery", "Entry, Target and Stop", "Market Analysis", "Level-Based Education", "Global Reading"],
     cta: "Explore Elite Channel",
   },
   es: {
     title: "Canal Elite",
     subtitle: "Recibe análisis y señales directamente en WhatsApp.",
-    text: "El Canal Elite fue creado para inversores que desean seguir los mercados globales mediante señales estructuradas, análisis y lectura de mercado. Desde 2018, se han enviado más de 4.200 señales en vivo sobre Forex, oro, petróleo, índices, criptoactivos y monedas globales.",
+    text: "El Canal Elite fue creado para inversores que desean seguir los mercados globales mediante señales estructuradas, análisis y lectura de mercado. Desde 2018, se han enviado más de 4.500 señales en vivo sobre Forex, oro, petróleo, índices, criptoactivos y monedas globales.",
     cards: ["Señales en vivo", "Recepción por WhatsApp", "Entrada, objetivo y stop", "Análisis de mercado", "Educación por niveles", "Lectura global"],
     cta: "Conocer Canal Elite",
   },
   fr: {
     title: "Canal Elite",
     subtitle: "Recevez analyses et signaux directement sur WhatsApp.",
-    text: "Le Canal Elite s’adresse aux investisseurs qui souhaitent suivre les marchés mondiaux grâce à des signaux structurés, des analyses et une lecture de marché claire. Depuis 2018, plus de 4 200 signaux en direct ont été envoyés sur le Forex, l’or, le pétrole, les indices, les cryptoactifs et les devises mondiales.",
+    text: "Le Canal Elite s’adresse aux investisseurs qui souhaitent suivre les marchés mondiaux grâce à des signaux structurés, des analyses et une lecture de marché claire. Depuis 2018, plus de 4 500 signaux en direct ont été envoyés sur le Forex, l’or, le pétrole, les indices, les cryptoactifs et les devises mondiales.",
     cards: ["Signaux en direct", "Réception sur WhatsApp", "Entrée, objectif et stop", "Analyse de marché", "Éducation par niveaux", "Lecture globale"],
     cta: "Découvrir Canal Elite",
   },
   de: {
     title: "Elite-Kanal",
     subtitle: "Erhalten Sie Analysen und Signale direkt über WhatsApp.",
-    text: "Der Elite-Kanal wurde für Anleger entwickelt, die globale Märkte über strukturierte Signale, Analysen und Markteinordnung begleiten möchten. Seit 2018 wurden mehr als 4.200 Live-Signale zu Forex, Gold, Öl, Indizes, Kryptowährungen und globalen Währungen versendet.",
+    text: "Der Elite-Kanal wurde für Anleger entwickelt, die globale Märkte über strukturierte Signale, Analysen und Markteinordnung begleiten möchten. Seit 2018 wurden mehr als 4.500 Live-Signale zu Forex, Gold, Öl, Indizes, Kryptowährungen und globalen Währungen versendet.",
     cards: ["Live-Signale", "Versand per WhatsApp", "Einstieg, Ziel und Stop", "Marktanalyse", "Ausbildung nach Stufen", "Globale Marktsicht"],
     cta: "Elite-Kanal ansehen",
   },
   it: {
     title: "Canale Elite",
     subtitle: "Ricevi analisi e segnali direttamente su WhatsApp.",
-    text: "Il Canale Elite è stato creato per investitori che vogliono seguire i mercati globali tramite segnali strutturati, analisi e lettura del mercato. Dal 2018 sono stati inviati oltre 4.200 segnali live su Forex, oro, petrolio, indici, crypto e valute globali.",
+    text: "Il Canale Elite è stato creato per investitori che vogliono seguire i mercati globali tramite segnali strutturati, analisi e lettura del mercato. Dal 2018 sono stati inviati oltre 4.500 segnali live su Forex, oro, petrolio, indici, crypto e valute globali.",
     cards: ["Segnali live", "Invio su WhatsApp", "Entrata, target e stop", "Analisi di mercato", "Educazione per livelli", "Lettura globale"],
     cta: "Scopri il Canale Elite",
   },
   tr: {
     title: "Elite Kanalı",
     subtitle: "Analizleri ve sinyalleri doğrudan WhatsApp üzerinden alın.",
-    text: "Elite Kanalı, küresel piyasaları yapılandırılmış sinyaller, analizler ve piyasa okuması ile takip etmek isteyen yatırımcılar için geliştirildi. 2018’den bu yana Forex, altın, petrol, endeksler, kripto ve küresel para birimlerinde 4.200’den fazla canlı sinyal gönderildi.",
+    text: "Elite Kanalı, küresel piyasaları yapılandırılmış sinyaller, analizler ve piyasa okuması ile takip etmek isteyen yatırımcılar için geliştirildi. 2018’den bu yana Forex, altın, petrol, endeksler, kripto ve küresel para birimlerinde 4.500’den fazla canlı sinyal gönderildi.",
     cards: ["Canlı Sinyaller", "WhatsApp ile teslim", "Giriş, hedef ve stop", "Piyasa analizi", "Seviyeli eğitim", "Küresel okuma"],
     cta: "Elite Kanalını Tanı",
   },
   id: {
     title: "Kanal Elite",
     subtitle: "Terima analisis dan sinyal langsung melalui WhatsApp.",
-    text: "Kanal Elite dibuat untuk investor yang ingin mengikuti pasar global melalui sinyal terstruktur, analisis, dan pembacaan pasar. Sejak 2018, lebih dari 4.200 sinyal live telah dikirim untuk Forex, emas, minyak, indeks, kripto, dan mata uang global.",
+    text: "Kanal Elite dibuat untuk investor yang ingin mengikuti pasar global melalui sinyal terstruktur, analisis, dan pembacaan pasar. Sejak 2018, lebih dari 4.500 sinyal live telah dikirim untuk Forex, emas, minyak, indeks, kripto, dan mata uang global.",
     cards: ["Sinyal live", "Dikirim via WhatsApp", "Entry, target dan stop", "Analisis pasar", "Edukasi bertingkat", "Pembacaan global"],
     cta: "Lihat Kanal Elite",
   },
   vi: {
     title: "Kênh Elite",
     subtitle: "Nhận phân tích và tín hiệu trực tiếp qua WhatsApp.",
-    text: "Kênh Elite được xây dựng cho nhà đầu tư muốn theo dõi thị trường toàn cầu thông qua tín hiệu có cấu trúc, phân tích và đọc thị trường. Từ năm 2018, hơn 4.200 tín hiệu trực tiếp đã được gửi trên Forex, vàng, dầu, chỉ số, crypto và tiền tệ toàn cầu.",
+    text: "Kênh Elite được xây dựng cho nhà đầu tư muốn theo dõi thị trường toàn cầu thông qua tín hiệu có cấu trúc, phân tích và đọc thị trường. Từ năm 2018, hơn 4.500 tín hiệu trực tiếp đã được gửi trên Forex, vàng, dầu, chỉ số, crypto và tiền tệ toàn cầu.",
     cards: ["Tín hiệu trực tiếp", "Nhận qua WhatsApp", "Điểm vào, mục tiêu và stop", "Phân tích thị trường", "Giáo dục theo cấp độ", "Đọc thị trường toàn cầu"],
     cta: "Tìm hiểu Kênh Elite",
   },
   ru: {
     title: "Канал Elite",
     subtitle: "Получайте аналитику и сигналы напрямую в WhatsApp.",
-    text: "Канал Elite создан для инвесторов, которые хотят следить за глобальными рынками через структурированные сигналы, аналитику и рыночное чтение. С 2018 года отправлено более 4 200 live-сигналов по Forex, золоту, нефти, индексам, криптовалютам и мировым валютам.",
+    text: "Канал Elite создан для инвесторов, которые хотят следить за глобальными рынками через структурированные сигналы, аналитику и рыночное чтение. С 2018 года отправлено более 4 500 live-сигналов по Forex, золоту, нефти, индексам, криптовалютам и мировым валютам.",
     cards: ["Live-сигналы", "Получение в WhatsApp", "Вход, цель и стоп", "Рыночная аналитика", "Обучение по уровням", "Глобальное чтение"],
     cta: "Узнать о канале Elite",
   },
   pl: {
     title: "Kanał Elite",
     subtitle: "Otrzymuj analizy i sygnały bezpośrednio na WhatsApp.",
-    text: "Kanał Elite powstał dla inwestorów, którzy chcą śledzić globalne rynki przez uporządkowane sygnały, analizę i czytanie rynku. Od 2018 roku wysłano ponad 4 200 sygnałów live na Forex, złocie, ropie, indeksach, krypto i walutach globalnych.",
+    text: "Kanał Elite powstał dla inwestorów, którzy chcą śledzić globalne rynki przez uporządkowane sygnały, analizę i czytanie rynku. Od 2018 roku wysłano ponad 4 500 sygnałów live na Forex, złocie, ropie, indeksach, krypto i walutach globalnych.",
     cards: ["Sygnały live", "Odbiór na WhatsApp", "Wejście, cel i stop", "Analiza rynku", "Edukacja poziomami", "Globalna perspektywa"],
     cta: "Poznaj Kanał Elite",
   },
@@ -798,7 +798,7 @@ Object.assign(homeEliteCopy, {
   ar: {
     title: "قناة Elite",
     subtitle: "استلم التحليلات والإشارات مباشرة عبر واتساب.",
-    text: "تم تطوير قناة Elite للمستثمرين الذين يرغبون في متابعة الأسواق العالمية من خلال إشارات منظمة وتحليلات وقراءة للسوق. منذ عام 2018 تم إرسال أكثر من 4,200 إشارة مباشرة على الفوركس والذهب والنفط والمؤشرات والعملات الرقمية والعملات العالمية.",
+    text: "تم تطوير قناة Elite للمستثمرين الذين يرغبون في متابعة الأسواق العالمية من خلال إشارات منظمة وتحليلات وقراءة للسوق. منذ عام 2018 تم إرسال أكثر من 4,500 إشارة مباشرة على الفوركس والذهب والنفط والمؤشرات والعملات الرقمية والعملات العالمية.",
     cards: ["إشارات مباشرة", "استلام عبر واتساب", "دخول وهدف ووقف", "تحليل السوق", "تعليم حسب المستويات", "قراءة عالمية"],
     cta: "تعرف على قناة Elite",
   },
@@ -812,14 +812,14 @@ Object.assign(homeEliteCopy, {
   hi: {
     title: "Elite चैनल",
     subtitle: "विश्लेषण और सिग्नल सीधे WhatsApp पर प्राप्त करें।",
-    text: "Elite चैनल उन निवेशकों के लिए बनाया गया है जो संरचित सिग्नल, विश्लेषण और मार्केट रीडिंग के माध्यम से वैश्विक बाजारों का अनुसरण करना चाहते हैं। 2018 से Forex, सोना, तेल, इंडेक्स, क्रिप्टो और वैश्विक मुद्राओं पर 4,200 से अधिक लाइव सिग्नल भेजे जा चुके हैं।",
+    text: "Elite चैनल उन निवेशकों के लिए बनाया गया है जो संरचित सिग्नल, विश्लेषण और मार्केट रीडिंग के माध्यम से वैश्विक बाजारों का अनुसरण करना चाहते हैं। 2018 से Forex, सोना, तेल, इंडेक्स, क्रिप्टो और वैश्विक मुद्राओं पर 4,500 से अधिक लाइव सिग्नल भेजे जा चुके हैं।",
     cards: ["लाइव सिग्नल", "WhatsApp पर प्राप्ति", "एंट्री, लक्ष्य और स्टॉप", "मार्केट विश्लेषण", "स्तर आधारित शिक्षा", "वैश्विक रीडिंग"],
     cta: "Elite चैनल देखें",
   },
   ur: {
     title: "Elite چینل",
     subtitle: "تجزیے اور سگنلز براہ راست WhatsApp پر حاصل کریں۔",
-    text: "Elite چینل ان سرمایہ کاروں کے لیے بنایا گیا ہے جو منظم سگنلز، تجزیات اور مارکیٹ ریڈنگ کے ذریعے عالمی منڈیوں کو فالو کرنا چاہتے ہیں۔ 2018 سے Forex، سونا، تیل، انڈیکس، کرپٹو اور عالمی کرنسیوں پر 4,200 سے زائد لائیو سگنلز بھیجے جا چکے ہیں۔",
+    text: "Elite چینل ان سرمایہ کاروں کے لیے بنایا گیا ہے جو منظم سگنلز، تجزیات اور مارکیٹ ریڈنگ کے ذریعے عالمی منڈیوں کو فالو کرنا چاہتے ہیں۔ 2018 سے Forex، سونا، تیل، انڈیکس، کرپٹو اور عالمی کرنسیوں پر 4,500 سے زائد لائیو سگنلز بھیجے جا چکے ہیں۔",
     cards: ["لائیو سگنلز", "WhatsApp پر موصول", "انٹری، ہدف اور اسٹاپ", "مارکیٹ تجزیہ", "سطحی تعلیم", "عالمی ریڈنگ"],
     cta: "Elite چینل دیکھیں",
   },
@@ -833,42 +833,42 @@ Object.assign(homeEliteCopy, {
   th: {
     title: "ช่อง Elite",
     subtitle: "รับบทวิเคราะห์และสัญญาณโดยตรงผ่าน WhatsApp",
-    text: "ช่อง Elite ถูกสร้างขึ้นสำหรับนักลงทุนที่ต้องการติดตามตลาดโลกผ่านสัญญาณที่มีโครงสร้าง บทวิเคราะห์ และการอ่านตลาด ตั้งแต่ปี 2018 มีการส่งสัญญาณสดมากกว่า 4,200 ครั้งใน Forex ทองคำ น้ำมัน ดัชนี คริปโต และสกุลเงินโลก",
+    text: "ช่อง Elite ถูกสร้างขึ้นสำหรับนักลงทุนที่ต้องการติดตามตลาดโลกผ่านสัญญาณที่มีโครงสร้าง บทวิเคราะห์ และการอ่านตลาด ตั้งแต่ปี 2018 มีการส่งสัญญาณสดมากกว่า 4,500 ครั้งใน Forex ทองคำ น้ำมัน ดัชนี คริปโต และสกุลเงินโลก",
     cards: ["สัญญาณสด", "รับผ่าน WhatsApp", "เข้า เป้าหมาย และ Stop", "วิเคราะห์ตลาด", "การศึกษาตามระดับ", "มุมมอง global"],
     cta: "ดูช่อง Elite",
   },
   tl: {
     title: "Elite Channel",
     subtitle: "Tumanggap ng analysis at signals direkta sa WhatsApp.",
-    text: "Ang Elite Channel ay ginawa para sa investors na gustong sundan ang global markets gamit ang structured signals, analysis, at market reading. Mula 2018, mahigit 4,200 live signals ang naipadala sa Forex, gold, oil, indices, crypto, at global currencies.",
+    text: "Ang Elite Channel ay ginawa para sa investors na gustong sundan ang global markets gamit ang structured signals, analysis, at market reading. Mula 2018, mahigit 4,500 live signals ang naipadala sa Forex, gold, oil, indices, crypto, at global currencies.",
     cards: ["Live signals", "WhatsApp delivery", "Entry, target at stop", "Market analysis", "Level-based education", "Global reading"],
     cta: "Tingnan ang Elite Channel",
   },
   zh: {
     title: "Elite 频道",
     subtitle: "通过 WhatsApp 直接接收分析和交易信号。",
-    text: "Elite 频道面向希望通过结构化信号、市场分析和全球视角跟踪市场的投资者。自 2018 年以来，已在 Forex、黄金、原油、指数、加密资产和全球货币中发送超过 4,200 条实时信号。",
+    text: "Elite 频道面向希望通过结构化信号、市场分析和全球视角跟踪市场的投资者。自 2018 年以来，已在 Forex、黄金、原油、指数、加密资产和全球货币中发送超过 4,500 条实时信号。",
     cards: ["实时信号", "WhatsApp 接收", "入场、目标和止损", "市场分析", "分级教育", "全球市场解读"],
     cta: "了解 Elite 频道",
   },
   ja: {
     title: "Elite チャンネル",
     subtitle: "分析とシグナルをWhatsAppで直接受け取れます。",
-    text: "Eliteチャンネルは、構造化されたシグナル、分析、市場読解を通じて世界市場を追いたい投資家のために設計されています。2018年以降、Forex、金、原油、指数、暗号資産、世界通貨で4,200件以上のライブシグナルを配信してきました。",
+    text: "Eliteチャンネルは、構造化されたシグナル、分析、市場読解を通じて世界市場を追いたい投資家のために設計されています。2018年以降、Forex、金、原油、指数、暗号資産、世界通貨で4,500件以上のライブシグナルを配信してきました。",
     cards: ["ライブシグナル", "WhatsAppで受信", "エントリー・目標・ストップ", "市場分析", "レベル別教育", "グローバル読解"],
     cta: "Eliteチャンネルを見る",
   },
   he: {
     title: "ערוץ Elite",
     subtitle: "קבלו ניתוח וסיגנלים ישירות ב-WhatsApp.",
-    text: "ערוץ Elite נבנה למשקיעים שרוצים לעקוב אחר שווקים גלובליים באמצעות סיגנלים מובנים, ניתוח וקריאת שוק. מאז 2018 נשלחו יותר מ-4,200 סיגנלים חיים ב-Forex, זהב, נפט, מדדים, קריפטו ומטבעות.",
+    text: "ערוץ Elite נבנה למשקיעים שרוצים לעקוב אחר שווקים גלובליים באמצעות סיגנלים מובנים, ניתוח וקריאת שוק. מאז 2018 נשלחו יותר מ-4,500 סיגנלים חיים ב-Forex, זהב, נפט, מדדים, קריפטו ומטבעות.",
     cards: ["סיגנלים חיים", "קבלה ב-WhatsApp", "כניסה, יעד וסטופ", "ניתוח שוק", "הכשרה לפי רמות", "קריאה גלובלית"],
     cta: "גלו את ערוץ Elite",
   },
   ko: {
     title: "Elite 채널",
     subtitle: "분석과 신호를 WhatsApp으로 직접 받아보세요.",
-    text: "Elite 채널은 구조화된 신호, 분석, 시장 해석을 통해 글로벌 시장을 따라가고 싶은 투자자를 위해 설계되었습니다. 2018년부터 Forex, 금, 원유, 지수, 암호화폐, 글로벌 통화에서 4,200개 이상의 실시간 신호가 전송되었습니다.",
+    text: "Elite 채널은 구조화된 신호, 분석, 시장 해석을 통해 글로벌 시장을 따라가고 싶은 투자자를 위해 설계되었습니다. 2018년부터 Forex, 금, 원유, 지수, 암호화폐, 글로벌 통화에서 4,500개 이상의 실시간 신호가 전송되었습니다.",
     cards: ["실시간 신호", "WhatsApp 수신", "진입, 목표, 손절", "시장 분석", "레벨별 교육", "글로벌 리딩"],
     cta: "Elite 채널 보기",
   },
@@ -1309,7 +1309,7 @@ const homeAuthorityCopy: Record<string, {
     title: "A structure built since 2018",
     text: "Varejo Investidor connects education, signals, global markets, and wealth solutions for different stages of the financial journey.",
     cards: [
-      { title: "+4,200 signals sent", text: "Operational history followed live since 2018." },
+      { title: "+4,500 signals sent", text: "Operational history followed live since 2018." },
       { title: "22 active languages", text: "International structure prepared for global investors." },
       { title: "Global markets", text: "Forex, stocks, ETFs, crypto assets, and commodities." },
       { title: "Structured education", text: "Educational foundation through the Formiga, Lobo, and Harpia methodology." },
@@ -1321,7 +1321,7 @@ const homeAuthorityCopy: Record<string, {
     title: "Una estructura construida desde 2018",
     text: "Varejo Investidor conecta educación, señales, mercados globales y soluciones patrimoniales para diferentes etapas financieras.",
     cards: [
-      { title: "+4.200 señales enviadas", text: "Historial operativo acompañado en vivo desde 2018." },
+      { title: "+4.500 señales enviadas", text: "Historial operativo acompañado en vivo desde 2018." },
       { title: "22 idiomas activos", text: "Estructura internacional preparada para inversores globales." },
       { title: "Mercados globales", text: "Forex, acciones, ETFs, criptoactivos y commodities." },
       { title: "Educación estructurada", text: "Base educativa por la metodología Formiga, Lobo y Harpia." },
@@ -1333,7 +1333,7 @@ const homeAuthorityCopy: Record<string, {
     title: "2018 से बनी हुई संरचना",
     text: "Varejo Investidor शिक्षा, सिग्नल, वैश्विक बाजार और संपत्ति समाधान को वित्तीय यात्रा के विभिन्न चरणों से जोड़ता है।",
     cards: [
-      { title: "4,200+ सिग्नल भेजे गए", text: "2018 से लाइव परिचालन इतिहास।" },
+      { title: "4,500+ सिग्नल भेजे गए", text: "2018 से लाइव परिचालन इतिहास।" },
       { title: "22 सक्रिय भाषाएँ", text: "वैश्विक निवेशकों के लिए अंतर्राष्ट्रीय संरचना।" },
       { title: "वैश्विक बाजार", text: "Forex, शेयर, ETF, क्रिप्टो और कमोडिटी।" },
       { title: "संरचित शिक्षा", text: "चींटी, भेड़िया और गरुड़ पद्धति की शैक्षिक आधार।" },
@@ -1345,7 +1345,7 @@ const homeAuthorityCopy: Record<string, {
     title: "2018年から築いてきた構造",
     text: "Varejo Investidorは、金融の旅の各段階に合わせて教育、シグナル、世界市場、資産ソリューションをつなぎます。",
     cards: [
-      { title: "4,200件超のシグナル配信", text: "2018年からライブで追跡してきた運用履歴。" },
+      { title: "4,500件超のシグナル配信", text: "2018年からライブで追跡してきた運用履歴。" },
       { title: "22言語対応", text: "世界の投資家向けの国際構造。" },
       { title: "グローバル市場", text: "Forex、株式、ETF、暗号資産、コモディティ。" },
       { title: "体系的教育", text: "アリ・オオカミ・ハーピーの方法論による教育基盤。" },

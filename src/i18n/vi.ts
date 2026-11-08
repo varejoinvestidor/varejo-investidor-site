@@ -20,7 +20,7 @@ export const vi = {
     proof: [
       ["8 năm", "trên thị trường toàn cầu"],
       ["Từ 2018", "qua nhiều chu kỳ thực tế"],
-      ["+4.200", "tín hiệu live đã gửi"],
+      ["+4.500", "tín hiệu live đã gửi"],
       ["Toàn cầu", "Forex, vàng, dầu, crypto và chỉ số"],
     ],
   },
@@ -36,7 +36,7 @@ export const vi = {
     title: "Nhận phân tích và tín hiệu giao dịch trực tiếp trên WhatsApp của bạn.",
     text: "Hãy để chúng tôi phân tích thị trường. Bạn nhận tín hiệu trực tiếp trên WhatsApp với điểm vào lệnh, mục tiêu và mức dừng lỗ đã xác định. Chỉ cần sao chép thông tin và nhập giao dịch vào tài khoản của riêng bạn.",
     cta: "THỬ TÍN HIỆU MIỄN PHÍ",
-    stats: ["8 năm trên thị trường", "Từ 2018", "+4.200 tín hiệu live", "Forex, vàng, dầu, crypto, chỉ số và tiền tệ toàn cầu"],
+    stats: ["8 năm trên thị trường", "Từ 2018", "+4.500 tín hiệu live", "Forex, vàng, dầu, crypto, chỉ số và tiền tệ toàn cầu"],
     example: {
       title: "Ví dụ tín hiệu được gửi trên WhatsApp",
       asset: "Tài sản",
@@ -201,7 +201,7 @@ export const vi = {
       {
         title: "Kênh Elite",
         description: "Sản phẩm chính với 100% tín hiệu, phân tích, lớp học ghi hình và đọc thị trường toàn cầu.",
-        bullets: ["Tín hiệu live từ 2018", "Hơn 4.200 tín hiệu đã gửi", "Tài sản, hướng, điểm vào, mục tiêu, dừng lỗ và bối cảnh", "Forex, vàng, dầu, crypto, chỉ số và tiền tệ toàn cầu", "Giáo dục cấp Kiến, Sói và Đại Bàng Harpy"],
+        bullets: ["Tín hiệu live từ 2018", "Hơn 4.500 tín hiệu đã gửi", "Tài sản, hướng, điểm vào, mục tiêu, dừng lỗ và bối cảnh", "Forex, vàng, dầu, crypto, chỉ số và tiền tệ toàn cầu", "Giáo dục cấp Kiến, Sói và Đại Bàng Harpy"],
         cta: "Khám phá Kênh Elite",
         href: "/sinais",
         kind: "paid",

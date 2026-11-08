@@ -20,7 +20,7 @@
     proof: [
       ["8 anos", "de mercado global"],
       ["Desde 2018", "operando ciclos reais"],
-      ["+4.200", "sinais ao vivo enviados"],
+      ["+4.500", "sinais ao vivo enviados"],
       ["Global", "Forex, ouro, petróleo, cripto e índices"],
     ],
   },
@@ -36,7 +36,7 @@
     title: "Receba análises e sinais diretamente no seu WhatsApp.",
     text: "Deixe a análise conosco. Receba sinais diretamente no WhatsApp com entrada, alvo e stop definidos. Basta copiar e inserir a operação na sua própria conta.",
     cta: "TESTE OS SINAIS GRATUITAMENTE",
-    stats: ["8 anos de mercado", "Desde 2018", "+4.200 sinais enviados", "Forex, ouro, petróleo, índices, criptomoedas e moedas globais"],
+    stats: ["8 anos de mercado", "Desde 2018", "+4.500 sinais enviados", "Forex, ouro, petróleo, índices, criptomoedas e moedas globais"],
     example: {
       title: "Exemplo de sinal enviado no WhatsApp",
       asset: "Ativo",
@@ -198,7 +198,7 @@
     title: "Serviços Varejo Investidor",
     text: "Conheça os canais, mentorias e consultorias do Varejo Investidor para Research, educação, visão de mercado e desenvolvimento patrimonial.",
     items: [
-      { title: "Canal Elite Harpia", description: "Produto principal com 100% dos sinais, análises, aulas gravadas e leitura global de mercado.", bullets: ["Sinais ao vivo desde 2018", "Mais de 4.200 sinais enviados", "Ativo, direção, entrada, alvo, stop e contexto", "Forex, ouro, petróleo, cripto, índices e moedas globais", "Educação por níveis Formiga, Lobo e Harpia"], cta: "Conhecer Canal Elite Harpia", href: "/sinais", kind: "paid" },
+      { title: "Canal Elite Harpia", description: "Produto principal com 100% dos sinais, análises, aulas gravadas e leitura global de mercado.", bullets: ["Sinais ao vivo desde 2018", "Mais de 4.500 sinais enviados", "Ativo, direção, entrada, alvo, stop e contexto", "Forex, ouro, petróleo, cripto, índices e moedas globais", "Educação por níveis Formiga, Lobo e Harpia"], cta: "Conhecer Canal Elite Harpia", href: "/sinais", kind: "paid" },
       { title: "Canal Formiga", description: "Porta de entrada gratuita no WhatsApp para receber análises econômicas, educação financeira e atualizações dos mercados globais.", bullets: ["Entrada gratuita pelo WhatsApp", "Análises econômicas", "Conteúdos educacionais", "Primeiro passo antes dos níveis Lobo e Harpia"], cta: "Entrar no Canal Formiga", href: "free", kind: "free" },
       { title: "Mentoria Individual 4 horas", description: "Sessão individual para análise de perfil, visão de mercado, estrutura operacional, risco e direcionamento estratégico.", bullets: ["Análise de perfil", "Visão de mercado", "Estrutura operacional", "Risco e direcionamento estratégico"], cta: "Solicitar mentoria", href: "#contato", kind: "paid" },
       { title: "Mentoria Individual 10 horas", description: "Acompanhamento individual mais profundo para construção de método, organização operacional, leitura de cenário e evolução no mercado global.", bullets: ["Construção de método", "Organização operacional", "Leitura de cenário", "Evolução no mercado global"], cta: "Solicitar mentoria", href: "#contato", kind: "paid" },

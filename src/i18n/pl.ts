@@ -20,7 +20,7 @@ export const pl = {
     proof: [
       ["8 lat", "na rynkach globalnych"],
       ["Od 2018", "przez realne cykle"],
-      ["+4 200", "wysłanych sygnałów live"],
+      ["+4 500", "wysłanych sygnałów live"],
       ["Globalnie", "Forex, złoto, ropa, krypto i indeksy"],
     ],
   },
@@ -36,7 +36,7 @@ export const pl = {
     title: "Otrzymuj analizy i sygnały transakcyjne bezpośrednio na WhatsApp.",
     text: "Analizę zostaw nam. Otrzymujesz na WhatsApp sygnały z określonym wejściem, celem i stopem, a transakcję wykonujesz na własnym rachunku.",
     cta: "PRZETESTUJ SYGNAŁY ZA DARMO",
-    stats: ["8 lat na rynku", "Od 2018", "+4 200 sygnałów live", "Forex, złoto, ropa, krypto, indeksy i waluty globalne"],
+    stats: ["8 lat na rynku", "Od 2018", "+4 500 sygnałów live", "Forex, złoto, ropa, krypto, indeksy i waluty globalne"],
     example: {
       title: "Przykład sygnału wysłanego na WhatsApp",
       asset: "Aktywo",
@@ -201,7 +201,7 @@ export const pl = {
       {
         title: "Kanał Elite",
         description: "Główny produkt z 100% sygnałów, analiz, nagranych lekcji i globalnego odczytu rynku.",
-        bullets: ["Sygnały na żywo od 2018", "Ponad 4 200 wysłanych sygnałów", "Aktywo, kierunek, wejście, cel, stop i kontekst", "Forex, złoto, ropa, krypto, indeksy i waluty", "Edukacja przez poziomy Formiga, Wilk i Harpia"],
+        bullets: ["Sygnały na żywo od 2018", "Ponad 4 500 wysłanych sygnałów", "Aktywo, kierunek, wejście, cel, stop i kontekst", "Forex, złoto, ropa, krypto, indeksy i waluty", "Edukacja przez poziomy Formiga, Wilk i Harpia"],
         cta: "Poznaj kanał Elite",
         href: "/sinais",
         kind: "paid",

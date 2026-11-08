@@ -1,4 +1,4 @@
-﻿export const tl = {
+export const tl = {
   locale: "TL",
   nav: {
     "home": "Home",
@@ -27,7 +27,7 @@
         "sa tunay na market cycles"
       ],
       [
-        "+4,200",
+        "+4,500",
         "live signals na naipadala"
       ],
       [
@@ -48,7 +48,7 @@
     title: "Tumanggap ng analysis at trading signals direkta sa WhatsApp.",
     text: "Iwan sa amin ang market analysis. Makakatanggap ka ng signals sa WhatsApp na may entry, target, at stop, at ikaw ang mag-eexecute sa sarili mong account.",
     cta: "SUBUKAN ANG SIGNALS NANG LIBRE",
-    stats: ["8 taon sa merkado","Mula 2018","+4,200 live signals","Forex, gold, oil, crypto, indices, at global currencies"],
+    stats: ["8 taon sa merkado","Mula 2018","+4,500 live signals","Forex, gold, oil, crypto, indices, at global currencies"],
     example: {
       title: "Signal example sent on WhatsApp",
       asset: "Asset",
@@ -177,7 +177,7 @@
     title: "Varejo Investidor Services",
     text: "Explore Varejo Investidor channels, mentorships, and consulting programs for Research, education, market vision, and wealth development.",
     items: [
-      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,200 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
+      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,500 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
       { title: "Ant Free Channel", description: "Free WhatsApp channel for signals, analysis, and daily content.", bullets: ["Free signals", "Market analysis", "Daily content", "Free WhatsApp entry"], cta: "Join Free Channel", href: "free", kind: "free" },
       { title: "Individual Mentorship 4 hours", description: "Individual session for profile analysis, market vision, operational structure, risk, and strategic direction.", bullets: ["Profile analysis", "Market vision", "Operational structure", "Risk and strategic direction"], cta: "Request mentorship", href: "#contato", kind: "paid" },
       { title: "Individual Mentorship 10 hours", description: "Deeper individual guidance for building method, operational organization, scenario reading, and global market evolution.", bullets: ["Method building", "Operational organization", "Scenario reading", "Global market evolution"], cta: "Request mentorship", href: "#contato", kind: "paid" },
@@ -208,7 +208,7 @@ tl.servicesPage = {
   title: "Mga Serbisyo ng Varejo Investidor",
   text: "Tuklasin ang ecosystem ng Varejo Investidor: WhatsApp signals, financial education, global market analysis, at structures para sa investors na may international capital.",
   items: [
-    { title: "Elite Channel", description: "Core product na may live signals, market analysis, recorded classes, at global market reading.", bullets: ["Live signals mula 2018", "Mahigit 4,200 signals na naipadala", "Asset, direction, entry, target, stop, at context", "Forex, gold, oil, crypto, indices, at global currencies", "Education by Formiga, Lobo, and Harpia levels"], cta: "Tingnan ang Elite Channel", href: "/sinais", kind: "paid" },
+    { title: "Elite Channel", description: "Core product na may live signals, market analysis, recorded classes, at global market reading.", bullets: ["Live signals mula 2018", "Mahigit 4,500 signals na naipadala", "Asset, direction, entry, target, stop, at context", "Forex, gold, oil, crypto, indices, at global currencies", "Education by Formiga, Lobo, and Harpia levels"], cta: "Tingnan ang Elite Channel", href: "/sinais", kind: "paid" },
     { title: "Free Formiga Channel", description: "Free WhatsApp channel para sa market analysis, financial education, at daily global updates.", bullets: ["Free content", "Market analysis", "Daily updates", "WhatsApp entry"], cta: "Pumasok sa Formiga Channel", href: "free", kind: "free" },
     { title: "Individual Mentorship", description: "One-on-one guidance para sa investor profile, market reading, operational structure, risk, at strategic direction.", bullets: ["Profile analysis", "Market reading", "Operational structure", "Risk and strategy"], cta: "Request contact", href: "#contato", kind: "paid" },
     { title: "Gold Consulting", description: "Strategic structure para sa financial organization, institutional market reading, risk management, at operational development.", bullets: ["Financial structure", "Institutional reading", "Risk management", "Strategic clarity"], cta: "Request Gold consulting", href: "#contato", kind: "gold" },

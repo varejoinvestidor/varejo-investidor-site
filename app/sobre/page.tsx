@@ -18,7 +18,7 @@ const aboutCopy = {
       "Tudo o que o investidor comum precisa para entender, operar e construir patrimônio no mercado global.",
     heroText:
       "Do básico ao avançado. Educação, sinais ao vivo, leitura de mercado e construção financeira em camadas.",
-    indicators: ["Desde 2018", "+4.200 sinais ao vivo", "Forex • Ouro • Índices • Cripto", "Conteúdo em múltiplos idiomas"],
+    indicators: ["Desde 2018", "+4.500 sinais ao vivo", "Forex • Ouro • Índices • Cripto", "Conteúdo em múltiplos idiomas"],
     pillars: [
       ["Leitura de mercado", "Entender movimentos globais"],
       ["Operação", "Forex, ouro, índices e cripto"],
@@ -82,7 +82,7 @@ const aboutCopy = {
     heroEyebrow: "About Varejo Investidor",
     heroTitle: "Everything retail investors need to understand, operate, and build wealth in global markets.",
     heroText: "From basics to advanced vision. Education, live signals, market reading, and layered financial construction.",
-    indicators: ["Since 2018", "+4,200 live signals", "Forex • Gold • Indices • Crypto", "Content in multiple languages"],
+    indicators: ["Since 2018", "+4,500 live signals", "Forex • Gold • Indices • Crypto", "Content in multiple languages"],
     pillars: [
       ["Market reading", "Understand global movements"],
       ["Trading", "Forex, gold, indices, and crypto"],
@@ -130,7 +130,7 @@ const aboutCopy = {
     heroEyebrow: "Sobre Varejo Investidor",
     heroTitle: "Todo lo que el inversor común necesita para entender, operar y construir patrimonio en el mercado global.",
     heroText: "De lo básico a lo avanzado. Educación, señales en vivo, lectura de mercado y construcción financiera por capas.",
-    indicators: ["Desde 2018", "+4.200 señales en vivo", "Forex • Oro • Índices • Cripto", "Contenido en múltiples idiomas"],
+    indicators: ["Desde 2018", "+4.500 señales en vivo", "Forex • Oro • Índices • Cripto", "Contenido en múltiples idiomas"],
     pillars: [
       ["Lectura de mercado", "Entender movimientos globales"],
       ["Operación", "Forex, oro, índices y cripto"],
@@ -178,7 +178,7 @@ const aboutCopy = {
     heroEyebrow: "Varejo Investidor का परिचय",
     heroTitle: "सामान्य निवेशक को वैश्विक बाजार समझने, ऑपरेट करने और संपत्ति बनाने के लिए पूरी संरचना।",
     heroText: "बुनियादी से उन्नत तक। शिक्षा, लाइव सिग्नल, बाजार-पठन और चरणों में वित्तीय निर्माण।",
-    indicators: ["2018 से", "4,200+ लाइव सिग्नल", "Forex • सोना • सूचकांक • क्रिप्टो", "कई भाषाओं में सामग्री"],
+    indicators: ["2018 से", "4,500+ लाइव सिग्नल", "Forex • सोना • सूचकांक • क्रिप्टो", "कई भाषाओं में सामग्री"],
     pillars: [
       ["बाजार-पठन", "वैश्विक चालों को समझना"],
       ["ऑपरेशन", "Forex, सोना, सूचकांक और क्रिप्टो"],
@@ -231,7 +231,7 @@ const localizedAboutCopy = {
     heroEyebrow: "Tentang Varejo Investidor",
     heroTitle: "Semua yang dibutuhkan investor ritel untuk memahami, beroperasi, dan membangun kekayaan di pasar global.",
     heroText: "Dari dasar hingga visi lanjutan. Edukasi, sinyal live, pembacaan pasar, dan pembangunan finansial bertahap.",
-    indicators: ["Sejak 2018", "+4.200 sinyal live", "Forex • Emas • Indeks • Kripto", "Konten multibahasa"],
+    indicators: ["Sejak 2018", "+4.500 sinyal live", "Forex • Emas • Indeks • Kripto", "Konten multibahasa"],
     pillars: [
       ["Pembacaan pasar", "Memahami pergerakan global"],
       ["Operasi", "Forex, emas, indeks, dan kripto"],
@@ -275,7 +275,7 @@ const localizedAboutCopy = {
     heroEyebrow: "Về Varejo Investidor",
     heroTitle: "Tất cả những gì nhà đầu tư phổ thông cần để hiểu, vận hành và xây dựng tài sản trên thị trường toàn cầu.",
     heroText: "Từ nền tảng đến tầm nhìn nâng cao. Giáo dục, tín hiệu trực tiếp, đọc thị trường và xây dựng tài chính theo từng lớp.",
-    indicators: ["Từ năm 2018", "+4.200 tín hiệu trực tiếp", "Forex • Vàng • Chỉ số • Crypto", "Nội dung đa ngôn ngữ"],
+    indicators: ["Từ năm 2018", "+4.500 tín hiệu trực tiếp", "Forex • Vàng • Chỉ số • Crypto", "Nội dung đa ngôn ngữ"],
     pillars: [
       ["Đọc thị trường", "Hiểu các chuyển động toàn cầu"],
       ["Vận hành", "Forex, vàng, chỉ số và crypto"],
@@ -319,7 +319,7 @@ const localizedAboutCopy = {
     heroEyebrow: "من نحن",
     heroTitle: "كل ما يحتاجه المستثمر الفردي لفهم الأسواق العالمية والتشغيل وبناء الثروة.",
     heroText: "من الأساسيات إلى الرؤية المتقدمة. تعليم، إشارات مباشرة، قراءة سوق وبناء مالي على طبقات.",
-    indicators: ["منذ 2018", "+4,200 إشارة مباشرة", "Forex • ذهب • مؤشرات • كريبتو", "محتوى متعدد اللغات"],
+    indicators: ["منذ 2018", "+4,500 إشارة مباشرة", "Forex • ذهب • مؤشرات • كريبتو", "محتوى متعدد اللغات"],
     pillars: [
       ["قراءة السوق", "فهم الحركات العالمية"],
       ["التشغيل", "فوركس، ذهب، مؤشرات وكريبتو"],
@@ -363,7 +363,7 @@ const localizedAboutCopy = {
     heroEyebrow: "Varejo Investidor Hakkında",
     heroTitle: "Bireysel yatırımcının küresel piyasaları anlamak, işlem yapmak ve varlık inşa etmek için ihtiyaç duyduğu her şey.",
     heroText: "Temelden ileri vizyona. Eğitim, canlı sinyaller, piyasa okuma ve katmanlı finansal inşa.",
-    indicators: ["2018'den beri", "+4.200 canlı sinyal", "Forex • Altın • Endeksler • Kripto", "Çok dilli içerik"],
+    indicators: ["2018'den beri", "+4.500 canlı sinyal", "Forex • Altın • Endeksler • Kripto", "Çok dilli içerik"],
     pillars: [
       ["Piyasa okuma", "Küresel hareketleri anlamak"],
       ["İşlem", "Forex, altın, endeksler ve kripto"],

@@ -20,7 +20,7 @@ export const tr = {
     proof: [
       ["8 yıl", "küresel piyasalarda"],
       ["2018'den beri", "gerçek döngülerde"],
-      ["+4.200", "canlı sinyal gönderildi"],
+      ["+4.500", "canlı sinyal gönderildi"],
       ["Küresel", "Forex, altın, petrol, kripto ve endeksler"],
     ],
   },
@@ -36,7 +36,7 @@ export const tr = {
     title: "Analizleri ve işlem sinyallerini doğrudan WhatsApp üzerinden alın.",
     text: "Analizi bize bırakın. Giriş, hedef ve stop seviyeleri belirlenmiş sinyalleri doğrudan WhatsApp üzerinden alın. Bilgileri kopyalayın ve işlemi kendi hesabınıza girin.",
     cta: "SİNYALLERİ ÜCRETSİZ DENE",
-    stats: ["8 yıl piyasa deneyimi", "2018'den beri", "+4.200 canlı sinyal", "Forex, altın, petrol, kripto, endeksler ve küresel para birimleri"],
+    stats: ["8 yıl piyasa deneyimi", "2018'den beri", "+4.500 canlı sinyal", "Forex, altın, petrol, kripto, endeksler ve küresel para birimleri"],
     example: {
       title: "WhatsApp üzerinden gönderilen sinyal örneği",
       asset: "Varlık",
@@ -201,7 +201,7 @@ export const tr = {
       {
         title: "Elite Kanalı",
         description: "Sinyallerin, analizlerin, kayıtlı derslerin ve küresel piyasa okumasının tamamını içeren ana ürün.",
-        bullets: ["2018'den beri canlı sinyaller", "4.200'den fazla sinyal gönderildi", "Varlık, yön, giriş, hedef, stop ve bağlam", "Forex, altın, petrol, kripto, endeksler ve küresel para birimleri", "Karınca, Kurt ve Harpia seviyelerinde eğitim"],
+        bullets: ["2018'den beri canlı sinyaller", "4.500'den fazla sinyal gönderildi", "Varlık, yön, giriş, hedef, stop ve bağlam", "Forex, altın, petrol, kripto, endeksler ve küresel para birimleri", "Karınca, Kurt ve Harpia seviyelerinde eğitim"],
         cta: "Elite Kanalını keşfet",
         href: "/sinais",
         kind: "paid",

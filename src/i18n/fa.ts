@@ -17,7 +17,7 @@
     text: "\u0628\u0627\u0632\u0627\u0631\u0647\u0627\u06cc \u062c\u0647\u0627\u0646\u06cc \u0631\u0627 \u0628\u0641\u0647\u0645\u06cc\u062f \u0648 \u0628\u0631\u0627\u06cc \u0633\u0627\u062e\u062a \u062b\u0631\u0648\u062a \u0641\u0631\u0627\u062a\u0631 \u0627\u0632 \u0645\u0631\u0632\u0647\u0627\u06cc \u06a9\u0634\u0648\u0631 \u062e\u0648\u062f \u0628\u0631\u0646\u0627\u0645\u0647\u200c\u0631\u06cc\u0632\u06cc \u06a9\u0646\u06cc\u062f.",
     primary: "\u0648\u0631\u0648\u062f \u0628\u0647 \u06a9\u0627\u0646\u0627\u0644 Formiga",
     secondary: "\u0645\u0634\u0627\u0647\u062f\u0647 \u062e\u062f\u0645\u0627\u062a \u0645\u0627",
-    proof: [["8", "\u0633\u0627\u0644 \u062f\u0631 \u0628\u0627\u0632\u0627\u0631"], ["2018", "\u0627\u0632"], ["+4,200", "\u0633\u06cc\u06af\u0646\u0627\u0644 \u0632\u0646\u062f\u0647"], ["Global", "Forex, gold, oil, crypto"]],
+    proof: [["8", "\u0633\u0627\u0644 \u062f\u0631 \u0628\u0627\u0632\u0627\u0631"], ["2018", "\u0627\u0632"], ["+4,500", "\u0633\u06cc\u06af\u0646\u0627\u0644 \u0632\u0646\u062f\u0647"], ["Global", "Forex, gold, oil, crypto"]],
   },
   freeChannel: {
     title: "\u06a9\u0627\u0646\u0627\u0644 \u0631\u0627\u06cc\u06af\u0627\u0646 Formiga",
@@ -31,7 +31,7 @@
     title: "\u062a\u062d\u0644\u06cc\u0644 \u0648 \u0633\u06cc\u06af\u0646\u0627\u0644 \u0631\u0627 \u0645\u0633\u062a\u0642\u06cc\u0645 \u062f\u0631 WhatsApp \u062f\u0631\u06cc\u0627\u0641\u062a \u06a9\u0646\u06cc\u062f.",
     text: "\u062a\u062d\u0644\u06cc\u0644 \u0628\u0627\u0632\u0627\u0631 \u0628\u0627 \u0645\u0627. \u0633\u06cc\u06af\u0646\u0627\u0644 \u0628\u0627 \u0648\u0631\u0648\u062f\u060c \u0647\u062f\u0641 \u0648 \u062d\u062f \u0636\u0631\u0631 \u0645\u0634\u062e\u0635 \u062f\u0631 WhatsApp \u0627\u0631\u0633\u0627\u0644 \u0645\u06cc\u200c\u0634\u0648\u062f.",
     cta: "\u062a\u0633\u062a \u0631\u0627\u06cc\u06af\u0627\u0646 \u0633\u06cc\u06af\u0646\u0627\u0644\u200c\u0647\u0627",
-    stats: ["8 \u0633\u0627\u0644", "2018", "+4,200", "Forex, gold, oil, crypto"],
+    stats: ["8 \u0633\u0627\u0644", "2018", "+4,500", "Forex, gold, oil, crypto"],
     example: {
       title: "Signal example sent on WhatsApp",
       asset: "Asset",
@@ -160,7 +160,7 @@
     title: "Varejo Investidor Services",
     text: "Explore Varejo Investidor channels, mentorships, and consulting programs for Research, education, market vision, and wealth development.",
     items: [
-      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,200 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
+      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,500 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
       { title: "Ant Free Channel", description: "Free WhatsApp channel for signals, analysis, and daily content.", bullets: ["Free signals", "Market analysis", "Daily content", "Free WhatsApp entry"], cta: "Join Free Channel", href: "free", kind: "free" },
       { title: "Individual Mentorship 4 hours", description: "Individual session for profile analysis, market vision, operational structure, risk, and strategic direction.", bullets: ["Profile analysis", "Market vision", "Operational structure", "Risk and strategic direction"], cta: "Request mentorship", href: "#contato", kind: "paid" },
       { title: "Individual Mentorship 10 hours", description: "Deeper individual guidance for building method, operational organization, scenario reading, and global market evolution.", bullets: ["Method building", "Operational organization", "Scenario reading", "Global market evolution"], cta: "Request mentorship", href: "#contato", kind: "paid" },

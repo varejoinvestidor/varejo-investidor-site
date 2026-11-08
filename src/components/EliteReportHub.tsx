@@ -164,11 +164,11 @@ const copyByLocale: Record<Locale, Copy> = {
   pt: {
     label: "Histórico Elite",
     heroTitle: "8 anos de sinais ao vivo no WhatsApp",
-    heroSubtitle: "Acompanhe a evolução histórica do Canal Elite desde agosto de 2018, com mais de 4.200 sinais enviados, relatórios mensais e resultados consolidados.",
+    heroSubtitle: "Acompanhe a evolução histórica do Canal Elite desde agosto de 2018, com mais de 4.500 sinais enviados, relatórios mensais e resultados consolidados.",
     centralMessage: "Desde agosto de 2018, o Varejo Investidor acompanha mercados globais e envia sinais ao vivo diretamente no WhatsApp. Esta página organiza o histórico público, os relatórios mensais e a evolução dos resultados ao longo dos anos.",
     primaryButton: "VER HISTÓRICO DE RESULTADOS",
     secondaryButton: "ENTRAR NO CANAL ELITE",
-    heroStats: ["Desde agosto de 2018", "+4.200 sinais enviados", "Forex, ouro, petróleo, índices, cripto e moedas globais", "Relatórios mensais consolidados"],
+    heroStats: ["Desde agosto de 2018", "+4.500 sinais enviados", "Forex, ouro, petróleo, índices, cripto e moedas globais", "Relatórios mensais consolidados"],
     authorityTitle: "O diferencial está no histórico",
     authorityText: "Poucas estruturas educacionais mantêm um histórico público tão longo de acompanhamento operacional. O Canal Elite nasceu em 2018 e evoluiu com sinais, análises, leitura de mercado e relatórios mensais. Esta central foi criada para organizar o passado e preparar o acompanhamento futuro com mais transparência, contexto e leitura visual.",
     dashboardTitle: "Painel histórico do Canal Elite",
@@ -235,11 +235,11 @@ const copyByLocale: Record<Locale, Copy> = {
   en: {
     label: "Elite History",
     heroTitle: "8 years of live WhatsApp signals",
-    heroSubtitle: "Follow the historical evolution of the Elite Channel since August 2018, with more than 4,200 signals sent, monthly reports, and consolidated results.",
+    heroSubtitle: "Follow the historical evolution of the Elite Channel since August 2018, with more than 4,500 signals sent, monthly reports, and consolidated results.",
     centralMessage: "Since August 2018, Varejo Investidor has monitored global markets and sent live signals directly on WhatsApp. This page organizes the public history, monthly reports, and result evolution over the years.",
     primaryButton: "VIEW RESULTS HISTORY",
     secondaryButton: "JOIN ELITE CHANNEL",
-    heroStats: ["Since August 2018", "+4,200 signals sent", "Forex, gold, oil, indices, crypto, and global currencies", "Consolidated monthly reports"],
+    heroStats: ["Since August 2018", "+4,500 signals sent", "Forex, gold, oil, indices, crypto, and global currencies", "Consolidated monthly reports"],
     authorityTitle: "The difference is in the history",
     authorityText: "Few educational structures keep such a long public record of operational monitoring. The Elite Channel started in 2018 and evolved with signals, analysis, market reading, and monthly reports. This center was created to organize the past and prepare future monitoring with more transparency, context, and visual reading.",
     dashboardTitle: "Elite Channel historical dashboard",
@@ -306,11 +306,11 @@ const copyByLocale: Record<Locale, Copy> = {
   es: {
     label: "Histórico Elite",
     heroTitle: "8 años de señales en vivo por WhatsApp",
-    heroSubtitle: "Sigue la evolución histórica del Canal Elite desde agosto de 2018, con más de 4.200 señales enviadas, reportes mensuales y resultados consolidados.",
+    heroSubtitle: "Sigue la evolución histórica del Canal Elite desde agosto de 2018, con más de 4.500 señales enviadas, reportes mensuales y resultados consolidados.",
     centralMessage: "Desde agosto de 2018, Varejo Investidor acompaña los mercados globales y envía señales en vivo directamente por WhatsApp. Esta página organiza el histórico público, los reportes mensuales y la evolución de los resultados.",
     primaryButton: "VER HISTÓRICO DE RESULTADOS",
     secondaryButton: "ENTRAR AL CANAL ELITE",
-    heroStats: ["Desde agosto de 2018", "+4.200 señales enviadas", "Forex, oro, petróleo, índices, cripto y monedas globales", "Reportes mensuales consolidados"],
+    heroStats: ["Desde agosto de 2018", "+4.500 señales enviadas", "Forex, oro, petróleo, índices, cripto y monedas globales", "Reportes mensuales consolidados"],
     authorityTitle: "El diferencial está en el historial",
     authorityText: "Pocas estructuras educativas mantienen un historial público tan largo de seguimiento operativo. El Canal Elite nació en 2018 y evolucionó con señales, análisis, lectura de mercado y reportes mensuales.",
     dashboardTitle: "Panel histórico del Canal Elite",
@@ -424,7 +424,7 @@ const completedOperations: Operation[] = [
 
 const timelineStats = [
   { value: "2018", label: "Início dos sinais" },
-  { value: "4.200+", label: "Sinais enviados" },
+  { value: "4.500+", label: "Sinais enviados" },
   { value: "8 anos", label: "Histórico operacional" },
   { value: "600 mil+", label: "Seguidores globais" },
 ];
@@ -438,7 +438,7 @@ const timelineEvents: TimelineEvent[] = [
     marker: "Nascimento da estrutura operacional que serviria de base para milhares de sinais enviados ao longo dos anos.",
     context: "O mercado de educação financeira ainda era dominado por cursos gravados e promessas de resultado. A proposta do Canal Elite foi diferente: acompanhar mercados reais diariamente, compartilhar operações e construir um histórico público de longo prazo.",
     impact: "Início da construção de um dos maiores históricos de sinais ao vivo enviados pelo WhatsApp para investidores de varejo.",
-    result: "Criação da metodologia operacional e início do histórico que mais tarde ultrapassaria 4.200 sinais enviados.",
+    result: "Criação da metodologia operacional e início do histórico que mais tarde ultrapassaria 4.500 sinais enviados.",
     tone: "gold",
   },
   {
@@ -523,7 +523,7 @@ const timelineEvents: TimelineEvent[] = [
     title: "Expansão Internacional",
     shortTitle: "Expansão Internacional",
     summary: "O projeto alcança múltiplos idiomas e amplia sua presença para diferentes regiões do mundo.",
-    marker: "Mais de 4.200 sinais enviados ao vivo desde 2018 e aproximadamente 600 mil seguidores.",
+    marker: "Mais de 4.500 sinais enviados ao vivo desde 2018 e aproximadamente 600 mil seguidores.",
     context: "O conteúdo passa a ser distribuído em diversos idiomas, atingindo públicos da América Latina, Europa, Ásia e Oriente Médio.",
     impact: "Transformação do Varejo Investidor em uma estrutura internacional de educação financeira, sinais e relatórios.",
     result: "Consolidação da marca como plataforma global voltada ao investidor de varejo.",

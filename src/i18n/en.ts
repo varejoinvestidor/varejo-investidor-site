@@ -1,4 +1,4 @@
-﻿export const en = {
+export const en = {
   locale: "EN",
   nav: {
     home: "Home",
@@ -20,7 +20,7 @@
     proof: [
       ["8 years", "in global markets"],
       ["Since 2018", "through real cycles"],
-      ["+4,200", "live signals sent"],
+      ["+4,500", "live signals sent"],
       ["Global", "forex, gold, oil, crypto, and indices"],
     ],
   },
@@ -36,7 +36,7 @@
     title: "Receive analysis and trading signals directly on WhatsApp.",
     text: "Leave the analysis to us. Receive signals directly on WhatsApp with entry, target and stop defined. Just copy the information and place the trade in your own account.",
     cta: "TEST SIGNALS FOR FREE",
-    stats: ["8 years in market", "Since 2018", "+4,200 live signals", "Forex, gold, oil, crypto, indices, and global currencies"],
+    stats: ["8 years in market", "Since 2018", "+4,500 live signals", "Forex, gold, oil, crypto, indices, and global currencies"],
     example: {
       title: "Signal example sent on WhatsApp",
       asset: "Asset",
@@ -165,7 +165,7 @@
     title: "Varejo Investidor Services",
     text: "Explore Varejo Investidor channels, mentorships, and consulting programs for Research, education, market vision, and wealth development.",
     items: [
-      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,200 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
+      { title: "Elite Channel", description: "Main product with 100% of signals, analysis, recorded classes, and global market reading.", bullets: ["Live signals since 2018", "More than 4,500 signals sent", "Asset, direction, entry, target, stop, and context", "Forex, gold, oil, crypto, indices, and global currencies", "Education by Ant, Wolf, and Harpy levels"], cta: "Explore Elite Channel", href: "/sinais", kind: "paid" },
       { title: "Ant Free Channel", description: "Free WhatsApp channel for signals, analysis, and daily content.", bullets: ["Free signals", "Market analysis", "Daily content", "Free WhatsApp entry"], cta: "Join Free Channel", href: "free", kind: "free" },
       { title: "Individual Mentorship 4 hours", description: "Individual session for profile analysis, market vision, operational structure, risk, and strategic direction.", bullets: ["Profile analysis", "Market vision", "Operational structure", "Risk and strategic direction"], cta: "Request mentorship", href: "#contato", kind: "paid" },
       { title: "Individual Mentorship 10 hours", description: "Deeper individual guidance for building method, operational organization, scenario reading, and global market evolution.", bullets: ["Method building", "Operational organization", "Scenario reading", "Global market evolution"], cta: "Request mentorship", href: "#contato", kind: "paid" },
