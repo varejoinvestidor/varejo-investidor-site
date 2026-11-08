@@ -49,14 +49,13 @@ Após alterar env: **Redeploy** o último deployment.
 - **Sign-up público:** desligado
 - Criar usuário admin + SQL `update profiles set role = 'admin'`
 
-## 5. Cron Vercel
+## 5. Cron de publicação agendada
 
-O `vercel.json` na raiz declara:
+**Plano Hobby:** não use `crons` no `vercel.json` com intervalo &lt; 1 dia (o deploy falha).
 
-- Path: `/api/cron/publish-scheduled`
-- Schedule: `*/5 * * * *`
+Use o workflow **`.github/workflows/publisher-cron.yml`** (a cada 5 min) com o secret **`CRON_SECRET`** em GitHub → Settings → Secrets → Actions (mesmo valor da Vercel).
 
-A Vercel envia automaticamente `Authorization: Bearer <CRON_SECRET>` quando a variável existe.
+**Vercel Pro:** pode declarar `crons` em `vercel.json` apontando para `/api/cron/publish-scheduled`.
 
 Teste pós-deploy:
 

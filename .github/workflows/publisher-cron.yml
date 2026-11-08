@@ -1,0 +1,19 @@
+# Publica artigos agendados (substitui cron Vercel no plano Hobby).
+# Em GitHub → Settings → Secrets → Actions, defina CRON_SECRET (mesmo valor da Vercel).
+name: Publisher scheduled publish
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger publish-scheduled
+        run: |
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "https://www.varejoinvestidor.com/api/cron/publish-scheduled"
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
