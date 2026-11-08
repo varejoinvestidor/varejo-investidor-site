@@ -19,6 +19,10 @@ function sceneAtTime(t: number): ReelScene {
   );
 }
 
+function sceneIndex(scene: ReelScene): number {
+  return REEL_SCENES.findIndex((s) => s.id === scene.id) + 1;
+}
+
 function Stars({ seed }: { seed: number }) {
   const dots = useMemo(() => {
     const items: { x: number; y: number; s: number; o: number }[] = [];
@@ -206,18 +210,29 @@ function SceneVisual({ sceneId, localProgress }: { sceneId: string; localProgres
   switch (sceneId) {
     case "hook":
       return (
-        <div className="flex h-full items-center justify-center rounded-2xl border border-[#2a2640] bg-[#12101c] p-8">
-          <div className="text-center">
-            <p className="text-sm font-semibold text-[#9a9288]">15 ago 1971</p>
+        <motion.div
+          className="relative flex h-full items-center justify-center overflow-hidden rounded-2xl border-2 border-[#7a4a2e] bg-[#120e18] p-6"
+          animate={{ scale: [1, 1.03, 1] }}
+          transition={{ duration: 0.55, repeat: Infinity, repeatDelay: 0.2 }}
+        >
+          <motion.div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(232,197,106,0.14),transparent_55%)]"
+            animate={{ opacity: [0.35, 0.75, 0.35] }}
+            transition={{ duration: 0.9, repeat: Infinity }}
+          />
+          <div className="relative text-center">
+            <p className="text-base font-black tracking-[0.35em] text-[#c4a24a]">15 · AGO · 1971</p>
             <motion.p
-              className="mt-2 text-6xl font-black text-[#e8c56a]"
-              animate={{ scale: 1 + localProgress * 0.04 }}
+              className="mt-3 text-[5.5rem] font-black leading-none text-[#f7f3eb]"
+              animate={{ scale: 1 + localProgress * 0.08, x: [0, -4, 4, 0] }}
+              transition={{ x: { duration: 0.35, repeat: Infinity, repeatDelay: 0.5 } }}
             >
-              Nixon Shock
+              FIM
             </motion.p>
-            <p className="mt-4 text-lg text-[#c8c0b4]">janela de conversão fechada</p>
+            <p className="mt-2 text-3xl font-extrabold uppercase text-[#e8c56a]">Conversão zero</p>
+            <p className="mt-2 text-lg font-semibold text-[#9a9288]">lastro metálico · desligado</p>
           </div>
-        </div>
+        </motion.div>
       );
     case "bretton":
       return <BrettonChart progress={localProgress} />;
@@ -230,7 +245,7 @@ function SceneVisual({ sceneId, localProgress }: { sceneId: string; localProgres
               className="flex flex-col justify-center rounded-xl border border-[#2a2640] bg-[#12101c] p-4"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.06 }}
+              transition={{ delay: i * 0.028, type: "spring", stiffness: 420, damping: 22 }}
             >
               <p className="text-2xl font-bold text-[#e8c56a]">{label}</p>
               <p className="mt-1 text-xs text-[#8a8494]">variáveis locais</p>
@@ -295,6 +310,9 @@ function ReelFrame({ time }: { time: number }) {
   const scene = sceneAtTime(time);
   const duration = scene.endSec - scene.startSec;
   const localProgress = duration > 0 ? (time - scene.startSec) / duration : 0;
+  const idx = sceneIndex(scene);
+  const beat = Math.min(1, localProgress * 1.35);
+  const bgShift = (idx / REEL_SCENES.length) * 28;
 
   return (
     <div
@@ -302,9 +320,16 @@ function ReelFrame({ time }: { time: number }) {
       style={{
         width: W,
         height: H,
-        background: "linear-gradient(165deg, #1a1230 0%, #2d2450 42%, #1e1838 100%)",
+        background: `linear-gradient(155deg, #14101f 0%, hsl(258 38% ${22 + bgShift}%) 48%, #18122a 100%)`,
       }}
     >
+      <motion.div
+        key={`flash-${scene.id}`}
+        className="pointer-events-none absolute inset-0 z-20 bg-[#f7f3eb]"
+        initial={{ opacity: 0.22 }}
+        animate={{ opacity: 0 }}
+        transition={{ duration: 0.18 }}
+      />
       <Stars seed={scene.id.length * 7919} />
 
       {/* Guias de zona segura Instagram (ocultas na exportação) */}
@@ -328,49 +353,87 @@ function ReelFrame({ time }: { time: number }) {
           paddingRight: 64,
         }}
       >
+        <div className="mb-2 flex items-center justify-between">
+          <span className="rounded-full bg-[#2a1f3d] px-4 py-1 text-sm font-black tracking-widest text-[#e8c56a]">
+            {String(idx).padStart(2, "0")}/{String(REEL_SCENES.length).padStart(2, "0")}
+          </span>
+          {scene.stat ? (
+            <motion.span
+              key={scene.stat}
+              className="rounded-full border border-[#8b5a35] bg-[#3d2818] px-4 py-1 text-xs font-extrabold uppercase tracking-[0.16em] text-[#fce8d8]"
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 500, damping: 18 }}
+            >
+              {scene.stat}
+            </motion.span>
+          ) : null}
+        </div>
+
         <AnimatePresence mode="wait">
           <motion.div
             key={scene.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: 56, scale: 0.94, filter: "blur(6px)" }}
+            animate={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, x: -48, scale: 0.96, filter: "blur(4px)" }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="flex min-h-0 flex-1 flex-col"
           >
-            <p className="text-center text-[22px] font-bold uppercase tracking-[0.22em] text-[#d8d0c4]">
+            <motion.p
+              className="text-center text-[24px] font-black uppercase tracking-[0.28em] text-[#e0d8cc]"
+              animate={{ letterSpacing: ["0.22em", "0.32em", "0.22em"] }}
+              transition={{ duration: 0.6, repeat: Infinity }}
+            >
               {scene.kicker}
-            </p>
-            <div className="mt-6 text-center">
-              <h1 className="text-[56px] font-extrabold leading-[1.05] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
+            </motion.p>
+            <div className="mt-4 text-center">
+              <motion.h1
+                className="text-[64px] font-black leading-[0.98] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.55)]"
+                initial={{ y: 16 }}
+                animate={{ y: 0 }}
+                transition={{ type: "spring", stiffness: 480, damping: 20 }}
+              >
                 {scene.headline}
-              </h1>
+              </motion.h1>
               {scene.headlineAccent ? (
-                <h2 className="mt-1 text-[52px] font-extrabold leading-[1.05] text-[#e8c56a] drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+                <motion.h2
+                  className="mt-1 text-[58px] font-black leading-[0.98] text-[#e8c56a] drop-shadow-[0_3px_10px_rgba(0,0,0,0.45)]"
+                  animate={{ scale: [1, 1.035, 1] }}
+                  transition={{ duration: 0.45, repeat: Infinity, repeatDelay: 0.15 }}
+                >
                   {scene.headlineAccent}
-                </h2>
+                </motion.h2>
               ) : null}
             </div>
 
             <motion.div
-              className="mt-8 min-h-[340px] flex-1"
-              animate={{ scale: 1 + Math.sin(localProgress * Math.PI) * 0.012 }}
-              transition={{ duration: 0.3 }}
+              className="mt-6 min-h-[320px] flex-1"
+              animate={{
+                scale: 1 + Math.sin(beat * Math.PI) * 0.028,
+                rotate: Math.sin(beat * Math.PI * 2) * 0.35,
+              }}
+              transition={{ duration: 0.15 }}
             >
-              <SceneVisual sceneId={scene.id} localProgress={localProgress} />
+              <SceneVisual sceneId={scene.id} localProgress={beat} />
             </motion.div>
 
             {scene.body ? (
-              <p className="mt-6 text-center text-[26px] font-medium leading-snug text-[#c8c0b4]">
+              <motion.p
+                className="mt-4 text-center text-[25px] font-bold leading-tight text-[#d4cbbf]"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05, duration: 0.18 }}
+              >
                 {scene.body}
-              </p>
+              </motion.p>
             ) : null}
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-auto flex justify-center pb-2">
-          <div className="h-1 w-48 overflow-hidden rounded-full bg-white/10">
+        <div className="mt-auto pb-2">
+          <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
             <motion.div
-              className="h-full bg-[#e8c56a]"
+              className="h-full bg-gradient-to-r from-[#c49a3a] to-[#e8c56a]"
               style={{ width: `${(time / REEL_DURATION_SEC) * 100}%` }}
             />
           </div>
@@ -444,7 +507,7 @@ export default function PosPadraoOuroReel({ exportMode = false }: { exportMode?:
 
   useEffect(() => {
     if (!exportMode) return;
-    const t = window.setTimeout(() => setPlaying(true), 400);
+    const t = window.setTimeout(() => setPlaying(true), 150);
     return () => window.clearTimeout(t);
   }, [exportMode]);
 
@@ -523,7 +586,7 @@ export default function PosPadraoOuroReel({ exportMode = false }: { exportMode?:
       </div>
 
       {!showUi && playing && (
-        <p className="sr-only">Gravando animação — oculte esta aba na captura se necessário.</p>
+        <p className="sr-only">Gravando animação, oculte esta aba na captura se necessário.</p>
       )}
     </div>
   );

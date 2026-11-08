@@ -73,7 +73,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         title: "O que move os preços das ações",
         paragraphs: [
           "Resultados trimestrais, guidance de gestão e revisões de analistas redefinem expectativas de lucro por ação. Surpresas positivas ou negativas deslocam múltiplos de valuation de forma assimétrica.",
-          "Fatores macro — juros, inflação, crescimento do PIB e política fiscal — alteram a taxa de desconto aplicada aos fluxos de caixa futuros. Choques geopolíticos, cadeias de suprimentos e regulação setorial adicionam prêmios de risco temporários ou estruturais.",
+          "Fatores macro, juros, inflação, crescimento do PIB e política fiscal, alteram a taxa de desconto aplicada aos fluxos de caixa futuros. Choques geopolíticos, cadeias de suprimentos e regulação setorial adicionam prêmios de risco temporários ou estruturais.",
         ],
       },
       {
@@ -161,11 +161,11 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
           "Majors envolvem o dólar americano com euro, iene, libra e franco, entre outros. Crosses negociam duas moedas fortes sem USD no par. Exóticos combinam moedas de mercados emergentes, incluindo o real, com menor liquidez e custos variáveis.",
         ],
         bullets: [
-          "EUR/USD — maior par global por volume.",
-          "GBP/USD — sensível a dados do Reino Unido e ao ciclo do Banco da Inglaterra.",
-          "USD/JPY — reflete diferencial de juros e fluxo para o Japão.",
-          "USD/CHF — frequentemente associado a busca por qualidade.",
-          "USD/BRL — exposição ao Brasil, volatilidade macro e fiscal.",
+          "EUR/USD, maior par global por volume.",
+          "GBP/USD, sensível a dados do Reino Unido e ao ciclo do Banco da Inglaterra.",
+          "USD/JPY, reflete diferencial de juros e fluxo para o Japão.",
+          "USD/CHF, frequentemente associado a busca por qualidade.",
+          "USD/BRL, exposição ao Brasil, volatilidade macro e fiscal.",
         ],
       },
       {
@@ -243,7 +243,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         title: "ETFs como veículos de alocação",
         paragraphs: [
           "Exchange Traded Funds (ETFs) são cotas negociadas em bolsa que replicam ou seguem índices, setores, fatores ou baskets de ativos. Combinam diversificação típica de fundos com liquidez intradiária e transparência de composição publicada.",
-          "Gestoras e authorized participants mantêm o preço de mercado alinhado ao valor patrimonial líquido por meio de criação e resgate de cotas, reduzindo — sem eliminar — desvios persistentes.",
+          "Gestoras e authorized participants mantêm o preço de mercado alinhado ao valor patrimonial líquido por meio de criação e resgate de cotas, reduzindo, sem eliminar, desvios persistentes.",
         ],
       },
       {
@@ -317,10 +317,10 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         ],
         visualGrid: [
           { label: "Índice EUA", detail: "Ex.: famílias que seguem S&P 500 (SPY, VOO como referência)." },
-          { label: "Tecnologia", detail: "Ex.: QQQ — growth e Nasdaq em formato cotizado." },
-          { label: "Ouro", detail: "Ex.: GLD — exposição ao metal com regras do prospecto." },
-          { label: "Prata", detail: "Ex.: SLV — commodity metálica em estrutura ETF." },
-          { label: "Emergentes", detail: "Ex.: EEM — cesta diversificada fora dos EUA desenvolvidos." },
+          { label: "Tecnologia", detail: "Ex.: QQQ, growth e Nasdaq em formato cotizado." },
+          { label: "Ouro", detail: "Ex.: GLD, exposição ao metal com regras do prospecto." },
+          { label: "Prata", detail: "Ex.: SLV, commodity metálica em estrutura ETF." },
+          { label: "Emergentes", detail: "Ex.: EEM, cesta diversificada fora dos EUA desenvolvidos." },
           { label: "Renda fixa", detail: "Treasuries, corporativos e inflação via índices." },
         ],
       },
@@ -409,7 +409,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         ],
       },
       {
-        title: "Relação ouro–dólar e reservas",
+        title: "Relação ouro-dólar e reservas",
         paragraphs: [
           "Como grande parte das reservas é denominada em dólar, política monetária americana e força da moeda influenciam o metal globalmente. Diversificação de reservas por países emergentes pode alterar gradualmente fluxos oficiais, tema acompanhado em relatórios multilaterais públicos.",
         ],
@@ -464,7 +464,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         title: "Oferta, demanda e estoques",
         paragraphs: [
           "Demanda de transporte e atividade industrial move consumo de derivados. Sazonalidade de gasolina e aquecimento influencia curvas sazonais. Relatórios semanais de estoques em grandes economias geram volatilidade quando divergem do consenso.",
-          "Capacidade de produção marginal — custo do último barril necessário — ancora debates de piso de longo prazo, sujeitos a tecnologia e política energética.",
+          "Capacidade de produção marginal, custo do último barril necessário, ancora debates de piso de longo prazo, sujeitos a tecnologia e política energética.",
         ],
       },
       {
@@ -495,7 +495,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         eyebrow: "Cadeia",
         title: "Da extração ao consumidor final",
         paragraphs: [
-          "Compreender etapas ajuda a identificar gargalos — gargalos que frequentemente explicam spikes de preço em momentos de stress logístico.",
+          "Compreender etapas ajuda a identificar gargalos, gargalos que frequentemente explicam spikes de preço em momentos de stress logístico.",
         ],
         visualGrid: [
           { label: "Exploração", detail: "Perfuração onshore e offshore, licenças e capex." },
@@ -537,7 +537,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "Como funciona a blockchain",
         paragraphs: [
-          "Transações são agrupadas em blocos encadeados por hashes criptográficos. Consenso — proof-of-work, proof-of-stake ou variantes — define quem pode propor novos blocos. Nós completos verificam regras, preservando resistência à censura enquanto a rede permanece saudável.",
+          "Transações são agrupadas em blocos encadeados por hashes criptográficos. Consenso, proof-of-work, proof-of-stake ou variantes, define quem pode propor novos blocos. Nós completos verificam regras, preservando resistência à censura enquanto a rede permanece saudável.",
         ],
         bullets: [
           "Chaves públicas e privadas controlam titularidade.",
@@ -562,7 +562,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         title: "Drivers de preço e adoção",
         paragraphs: [
           "Liquidez global, halving do Bitcoin, upgrades de rede e fluxos para ETFs ou produtos listados influenciam narrativas de mercado. Stablecoins medem demanda por dólares on-chain; despejos de emissão ou resgates afetam spreads em momentos de stress.",
-          "Regulação — aprovações, proibições ou exigências de reserva — redefine acesso institucional. Hacks e falhas de ponte entre cadeias destroem confiança de forma abrupta.",
+          "Regulação, aprovações, proibições ou exigências de reserva, redefine acesso institucional. Hacks e falhas de ponte entre cadeias destroem confiança de forma abrupta.",
         ],
       },
       {
@@ -601,11 +601,11 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
         eyebrow: "Arquitetura",
         title: "Camadas da economia digital",
         paragraphs: [
-          "Visualizar camadas ajuda a distinguir infraestrutura, aplicação e interface — cada uma com vetores de risco distintos.",
+          "Visualizar camadas ajuda a distinguir infraestrutura, aplicação e interface, cada uma com vetores de risco distintos.",
         ],
         visualGrid: [
           { label: "Camada 0", detail: "Hardware, energia e conectividade." },
-          { label: "Camada 1", detail: "Blockchains base — Bitcoin, Ethereum e pares." },
+          { label: "Camada 1", detail: "Blockchains base, Bitcoin, Ethereum e pares." },
           { label: "Camada 2", detail: "Rollups e canais de escalabilidade." },
           { label: "Protocolos", detail: "DeFi, NFTs e identidade descentralizada." },
           { label: "Aplicações", detail: "Carteiras, front-ends e aggregators." },

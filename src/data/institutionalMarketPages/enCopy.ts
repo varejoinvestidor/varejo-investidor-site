@@ -23,7 +23,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
         title: "How stock trading works",
         paragraphs: [
           "Listed securities trade on regulated venues where buy and sell orders meet in a central limit order book. Primary issuance funds businesses; secondary trading transfers stakes among investors.",
-          "Corporate actions—dividends, buybacks, splits, and follow-on offerings—reshape capital structure and should be read in the context of management strategy.",
+          "Corporate actions, dividends, buybacks, splits, and follow-on offerings, reshape capital structure and should be read in the context of management strategy.",
         ],
         bullets: [
           "Primary market: IPOs and follow-on capital raises.",
@@ -49,7 +49,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "Instruments and issuer profiles",
         paragraphs: [
-          "Common stock typically carries voting rights and residual cash-flow rights; preferred shares may prioritize dividends or fixed claims. Capitalization tiers—large, mid, and small—affect liquidity, analyst coverage, and sensitivity to news.",
+          "Common stock typically carries voting rights and residual cash-flow rights; preferred shares may prioritize dividends or fixed claims. Capitalization tiers, large, mid, and small, affect liquidity, analyst coverage, and sensitivity to news.",
         ],
         bullets: [
           "Common vs. preferred equity classes.",
@@ -61,7 +61,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "What drives equity prices",
         paragraphs: [
-          "Earnings beats or misses, guidance changes, and analyst revisions reset fair-value estimates. Macro variables—rates, inflation, GDP growth, and fiscal policy—move discount rates applied to future cash flows.",
+          "Earnings beats or misses, guidance changes, and analyst revisions reset fair-value estimates. Macro variables, rates, inflation, GDP growth, and fiscal policy, move discount rates applied to future cash flows.",
           "Geopolitical shocks, supply-chain disruptions, and regulatory shifts add risk premia that can persist beyond a single earnings cycle.",
         ],
       },
@@ -94,7 +94,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
         eyebrow: "Sector map",
         title: "Major global economic sectors",
         paragraphs: [
-          "Sector dashboards help align portfolio tilts with cyclical and structural themes—from technology-led productivity to energy transition and demographic health-care demand.",
+          "Sector dashboards help align portfolio tilts with cyclical and structural themes, from technology-led productivity to energy transition and demographic health-care demand.",
         ],
         visualGrid: [
           { label: "Technology", detail: "Software, semiconductors, and digital platforms." },
@@ -110,7 +110,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "Research and next steps",
         paragraphs: [
-          "Continue with macro scenarios, sector notes, and risk education in Varejo Investidor Research. Educational content only—not personalized investment advice.",
+          "Continue with macro scenarios, sector notes, and risk education in Varejo Investidor Research. Educational content only, not personalized investment advice.",
         ],
         disclaimer:
           "Past performance does not guarantee future results. Review costs, tax treatment, and cross-border rules before investing internationally.",
@@ -148,11 +148,11 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
           "Majors pair the U.S. dollar with other liquid currencies. Crosses trade two majors without USD. Exotics include emerging-market units such as BRL, often with higher transaction costs and lower depth.",
         ],
         bullets: [
-          "EUR/USD — highest global turnover.",
-          "GBP/USD — UK data and Bank of England cycles.",
-          "USD/JPY — rate differentials and safe-haven flows.",
-          "USD/CHF — frequently correlated with risk-off episodes.",
-          "USD/BRL — Brazil macro, policy, and capital flows.",
+          "EUR/USD, highest global turnover.",
+          "GBP/USD, UK data and Bank of England cycles.",
+          "USD/JPY, rate differentials and safe-haven flows.",
+          "USD/CHF, frequently correlated with risk-off episodes.",
+          "USD/BRL, Brazil macro, policy, and capital flows.",
         ],
       },
       {
@@ -189,7 +189,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "Technical, fundamental, and carry frameworks",
         paragraphs: [
-          "Technicians map trends and liquidity pools; fundamental desks weigh growth differentials and event risk. Carry exposure requires discipline—adverse spot moves can overwhelm coupon pickup, especially with leverage.",
+          "Technicians map trends and liquidity pools; fundamental desks weigh growth differentials and event risk. Carry exposure requires discipline, adverse spot moves can overwhelm coupon pickup, especially with leverage.",
         ],
       },
       {
@@ -276,7 +276,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "Educational ticker examples",
         paragraphs: [
-          "Well-known tickers illustrate categories—not model portfolios. SPY and VOO reference broad U.S. large-cap indices; QQQ emphasizes Nasdaq growth; GLD and SLV illustrate precious-metals vehicles; EEM represents emerging-market equity exposure.",
+          "Well-known tickers illustrate categories, not model portfolios. SPY and VOO reference broad U.S. large-cap indices; QQQ emphasizes Nasdaq growth; GLD and SLV illustrate precious-metals vehicles; EEM represents emerging-market equity exposure.",
         ],
         disclaimer:
           "SPY, QQQ, VOO, GLD, SLV, and EEM are cited solely as educational examples of ETF categories. They are not recommendations, solicitations, or personalized advice.",
@@ -301,10 +301,10 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
         ],
         visualGrid: [
           { label: "U.S. equity", detail: "e.g., S&P 500 trackers (SPY, VOO as references)." },
-          { label: "Technology", detail: "e.g., QQQ — growth exposure via Nasdaq-linked indices." },
-          { label: "Gold", detail: "e.g., GLD — bullion-backed rules per prospectus." },
-          { label: "Silver", detail: "e.g., SLV — listed precious-metal commodity ETF." },
-          { label: "Emerging markets", detail: "e.g., EEM — diversified non-U.S. developing exposure." },
+          { label: "Technology", detail: "e.g., QQQ, growth exposure via Nasdaq-linked indices." },
+          { label: "Gold", detail: "e.g., GLD, bullion-backed rules per prospectus." },
+          { label: "Silver", detail: "e.g., SLV, listed precious-metal commodity ETF." },
+          { label: "Emerging markets", detail: "e.g., EEM, diversified non-U.S. developing exposure." },
           { label: "Bonds", detail: "Treasury, corporate, and inflation-linked index ETFs." },
         ],
       },
@@ -330,7 +330,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
         title: "Gold in the modern monetary order",
         paragraphs: [
           "Gold backed historical currency systems; today it remains a reserve asset for sovereigns and a perceived hedge against uncertainty. Annual supply depends on mining and recycling; demand spans jewelry, technology, investment, and official-sector purchases.",
-          "Unlike equities or bonds, bullion pays no coupon—its price reflects views on real rates, fiat credibility, and crisis risk.",
+          "Unlike equities or bonds, bullion pays no coupon, its price reflects views on real rates, fiat credibility, and crisis risk.",
         ],
       },
       {
@@ -395,13 +395,13 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "Gold, the dollar, and reserves",
         paragraphs: [
-          "Because reserves are largely dollar-denominated, U.S. monetary policy and USD strength influence global bullion. Emerging-market reserve diversification can gradually shift official flows—tracked in public multilateral reports.",
+          "Because reserves are largely dollar-denominated, U.S. monetary policy and USD strength influence global bullion. Emerging-market reserve diversification can gradually shift official flows, tracked in public multilateral reports.",
         ],
       },
       {
         title: "Research",
         paragraphs: [
-          "Deepen inflation, geopolitical, and wealth-preservation reading in Varejo Investidor Research. Educational tone—no simulated live quotes.",
+          "Deepen inflation, geopolitical, and wealth-preservation reading in Varejo Investidor Research. Educational tone, no simulated live quotes.",
         ],
         disclaimer:
           "Gold and related derivatives are volatile and involve custody costs. Assess suitability, tax, and regulation.",
@@ -513,13 +513,13 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
         title: "Digital assets on open networks",
         paragraphs: [
           "Cryptocurrencies are native tokens of distributed ledgers secured by cryptography rather than a single centralized issuer. Bitcoin introduced programmatic scarcity; Ethereum generalized execution via smart contracts.",
-          "The stack includes exchanges, custodians, validators, developers, and DeFi protocols that recreate financial functions permissionlessly—with material technical and regulatory risk.",
+          "The stack includes exchanges, custodians, validators, developers, and DeFi protocols that recreate financial functions permissionlessly, with material technical and regulatory risk.",
         ],
       },
       {
         title: "How blockchain works",
         paragraphs: [
-          "Transactions batch into blocks linked by cryptographic hashes. Consensus rules—proof-of-work, proof-of-stake, or variants—determine who may propose blocks. Full nodes enforce protocol rules.",
+          "Transactions batch into blocks linked by cryptographic hashes. Consensus rules, proof-of-work, proof-of-stake, or variants, determine who may propose blocks. Full nodes enforce protocol rules.",
         ],
         bullets: [
           "Public-private key pairs control ownership.",
@@ -550,7 +550,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
       {
         title: "On-chain and macro context",
         paragraphs: [
-          "Metrics such as active addresses, hash rate, staked supply, and DeFi TVL describe usage—not price forecasts. Correlation with traditional risk assets can rise during broad deleveraging.",
+          "Metrics such as active addresses, hash rate, staked supply, and DeFi TVL describe usage, not price forecasts. Correlation with traditional risk assets can rise during broad deleveraging.",
         ],
         bullets: [
           "Network fees and congestion.",
@@ -566,7 +566,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
         ],
       },
       {
-        title: "Educational opportunity—and limits",
+        title: "Educational opportunities and limits",
         paragraphs: [
           "Studying tokenomics, governance, and audits reduces information asymmetry but not risk. Long-horizon views require adoption conviction; short-term trading demands rigorous volatility control.",
         ],
@@ -587,7 +587,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
         ],
         visualGrid: [
           { label: "Layer 0", detail: "Hardware, power, and connectivity." },
-          { label: "Layer 1", detail: "Base chains—Bitcoin, Ethereum, peers." },
+          { label: "Layer 1", detail: "Base chains, Bitcoin, Ethereum, peers." },
           { label: "Layer 2", detail: "Rollups and scaling channels." },
           { label: "Protocols", detail: "DeFi, NFTs, and decentralized identity." },
           { label: "Applications", detail: "Wallets, front ends, aggregators." },

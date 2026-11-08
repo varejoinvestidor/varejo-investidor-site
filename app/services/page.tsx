@@ -178,7 +178,7 @@ const wealthServicesByLocale: Record<string, WealthServiceCard[]> = {
       eyebrow: "מבנה תפעולי",
       title: "Varejo Investidor Select",
       subtitle: "ניהול תפעולי למשקיעים שרוצים חשיפה לשווקים גלובליים.",
-      description: "מבנה למשקיעים עם הקצאה מינימלית של US$50,000 — חשיפה ל-Forex, מניות, קריפטו ושווקים בינלאומיים.",
+      description: "מבנה למשקיעים עם הקצאה מינימלית של US$50,000, חשיפה ל-Forex, מניות, קריפטו ושווקים בינלאומיים.",
       cta: "הכירו את Select",
       href: "/select",
       highlights: ["הקצאה מינימלית US$50,000", "Forex", "מניות", "קריפטו", "העתקה אוטומטית"],

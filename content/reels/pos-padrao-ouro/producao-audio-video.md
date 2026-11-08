@@ -2,6 +2,12 @@
 
 Formato **9:16** · **1080×1920** · **até 1:40** · sem neon · estética roxo/dourado editorial (referência: moedas do Brasil).
 
+## Arquivo pronto (MP4)
+
+- **Entrega:** `content/reels/pos-padrao-ouro/pos-padrao-ouro-instagram.mp4`
+- **Formato:** 1080×1920 · H.264 · **~1:08** · cortes rápidos · voz **pt-BR-AntonioNeural** (+12%, impacto)
+- **Regenerar:** `npm run export:reel:pos-padrao-ouro` (use `SKIP_BUILD=1` para pular build se o site já estiver compilado)
+
 ## Prévia e gravação do vídeo
 
 1. Subir o site: `npm run dev`

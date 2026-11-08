@@ -6,7 +6,7 @@ export const levelPageUiEn: LevelPageUi = {
   coreMessageLabel: "Core message",
   evolutionTitle: "Expected evolution",
   formationTitle: "Educational structure",
-  formationText: "Five progressive levels — content, prices, and links already registered in the Varejo Investidor ecosystem.",
+  formationText: "Five progressive levels, content, prices, and links already registered in the Varejo Investidor ecosystem.",
   formationStepLabel: "Level",
   compareTitle: "The evolution of the three characters",
   compareSubtitle: "Formiga, Wolf, and Harpy are not isolated courses: they are complementary stages of one methodology.",
@@ -78,7 +78,7 @@ export const levelPackEn: LevelLocalePack = {
     eyebrow: "Wolf Level",
     heroTitle: "Strategy, structure, and market intelligence.",
     heroSubtitle:
-      "Wolf bridges understanding the market and acting strategically — reading the environment, patterns, and coordinated decisions.",
+      "Wolf bridges understanding the market and acting strategically, reading the environment, patterns, and coordinated decisions.",
     conceptTitle: "What does the Wolf level represent?",
     conceptIntro: "While Formiga builds foundations, Wolf interprets scenarios, moves, and relationships between economic and financial variables.",
     competencies: [
@@ -138,7 +138,7 @@ export const levelPackEn: LevelLocalePack = {
     ],
     philosophyParagraphs: [
       "Harpy does not observe a single asset, chart, or economy in isolation. It seeks to understand the system those elements belong to.",
-      "Central bank decisions, energy crises, and geopolitical shifts reshape flows, inflation, and supply chains — Harpy embodies systemic, international thinking.",
+      "Central bank decisions, energy crises, and geopolitical shifts reshape flows, inflation, and supply chains, Harpy embodies systemic, international thinking.",
     ],
     coreMessage: "The market is only part of the system. To understand capital, you must understand the world.",
     evolutionText:

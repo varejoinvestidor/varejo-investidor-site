@@ -6,7 +6,7 @@ export const levelPageUiPt: LevelPageUi = {
   coreMessageLabel: "Mensagem central",
   evolutionTitle: "Evolução esperada",
   formationTitle: "Estrutura educacional",
-  formationText: "Cinco níveis progressivos da formação — conteúdos, preços e links já cadastrados no ecossistema Varejo Investidor.",
+  formationText: "Cinco níveis progressivos da formação, conteúdos, preços e links já cadastrados no ecossistema Varejo Investidor.",
   formationStepLabel: "Nível",
   compareTitle: "A evolução dos três personagens",
   compareSubtitle: "Formiga, Lobo e Harpia não são cursos isolados: são estágios complementares de uma mesma metodologia.",
@@ -142,7 +142,7 @@ export const levelPackPt: LevelLocalePack = {
     ],
     philosophyParagraphs: [
       "A Harpia não observa apenas um ativo, um gráfico ou uma economia isoladamente. Ela procura compreender o sistema no qual esses elementos estão inseridos.",
-      "Decisões de bancos centrais, crises energéticas e mudanças geopolíticas alteram fluxos, inflação e cadeias produtivas — a Harpia representa o pensamento sistêmico e internacional do investidor.",
+      "Decisões de bancos centrais, crises energéticas e mudanças geopolíticas alteram fluxos, inflação e cadeias produtivas, a Harpia representa o pensamento sistêmico e internacional do investidor.",
     ],
     coreMessage: "O mercado é apenas uma parte do sistema. Para compreender o capital, é necessário compreender o mundo.",
     evolutionText:

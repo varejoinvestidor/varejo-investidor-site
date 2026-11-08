@@ -76,12 +76,12 @@ export function LanguageGateScreen() {
             <span className="font-semibold text-gold">
               {LANGUAGE_CATALOG.find((item) => item.locale === suggested)?.nativeName ?? "English"}
             </span>
-            <span className="text-[#f4f0e8]/40"> — not selected until you confirm below.</span>
+            <span className="text-[#f4f0e8]/40">. Not selected until you confirm below.</span>
           </p>
           <div className="mt-10 hidden gap-4 md:flex">
             <Image
               src="/characters/varejo-investidor-personagens.png"
-              alt="Formiga, Lobo e Harpia — personagens oficiais Varejo Investidor"
+              alt="Formiga, Lobo e Harpia, personagens oficiais Varejo Investidor"
               width={640}
               height={360}
               className="h-auto w-full max-w-md opacity-90"
@@ -104,7 +104,7 @@ export function LanguageGateScreen() {
               />
               <Image
                 src="/characters/varejo-investidor-personagens.png"
-                alt="Formiga, Lobo e Harpia — personagens oficiais Varejo Investidor"
+                alt="Formiga, Lobo e Harpia, personagens oficiais Varejo Investidor"
                 width={640}
                 height={360}
                 sizes="(max-width: 640px) 280px, 312px"

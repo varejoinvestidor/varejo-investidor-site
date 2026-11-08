@@ -58,19 +58,19 @@ export type LevelHeroMedia = {
 export const LEVEL_HERO_MEDIA: Record<LevelId, LevelHeroMedia> = {
   formiga: {
     hero: "/characters/education-formation-premium.png",
-    heroAlt: "Formiga — fundação educacional Varejo Investidor",
+    heroAlt: "Formiga, fundação educacional Varejo Investidor",
     philosophy: "/characters/home-structure-horizontal-cutout.png",
-    philosophyAlt: "Formiga, Lobo e Harpia — progressão da formação",
+    philosophyAlt: "Formiga, Lobo e Harpia, progressão da formação",
   },
   lobo: {
     hero: "/characters/home-hero-official-20260527.png",
-    heroAlt: "Lobo — estratégia e leitura de mercado",
+    heroAlt: "Lobo, estratégia e leitura de mercado",
     philosophy: "/characters/home-hero-institutional.png",
     philosophyAlt: "Visão institucional de mercados e estratégia",
   },
   harpia: {
     hero: "/characters/services-hero-institutional.png",
-    heroAlt: "Harpia — visão global e patrimônio",
+    heroAlt: "Harpia, visão global e patrimônio",
     philosophy: "/characters/about-hero-institutional.png",
     philosophyAlt: "Macroeconomia e estrutura patrimonial global",
   },

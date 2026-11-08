@@ -567,7 +567,7 @@ function bodyCopy(locale: Locale) {
     es: "Dentro de la metodologia Formiga, Lobo y Harpia, el analisis no sirve solo para prever precio. Organiza comportamiento financiero, riesgo operativo y construccion patrimonial global.",
     hi: "Formiga, Lobo और Harpia methodology में analysis केवल price predict करने के लिए नहीं है। यह financial behavior, operational risk और global wealth building को organize करता है।",
     ar: "ضمن منهجية Formiga وLobo وHarpia، لا يهدف التحليل فقط الى توقع السعر، بل ينظم السلوك المالي والمخاطر التشغيلية وبناء الثروة العالمية.",
-    he: "במתודולוגיית Formiga, Lobo ו-Harpia, הניתוח אינו רק לחיזוי מחיר — הוא מסדר התנהגות פיננסית, סיכון תפעולי ובניית הון גלובלית.",
+    he: "במתודולוגיית Formiga, Lobo ו-Harpia, הניתוח אינו רק לחיזוי מחיר, הוא מסדר התנהגות פיננסית, סיכון תפעולי ובניית הון גלובלית.",
     tr: "Formiga, Lobo ve Harpia metodolojisinde analiz sadece fiyat tahmini degildir. Finansal davranisi, operasyonel riski ve kuresel varlik insasini duzenler.",
     id: "Dalam metodologi Semut, Serigala dan Elang Harpy, analisis bukan hanya soal memprediksi harga. Analisis mengatur perilaku finansial, risiko operasional dan pembangunan kekayaan global.",
     vi: "Trong phương pháp Kiến, Sói và Đại Bàng Harpy, phân tích không chỉ để dự đoán giá. Nó tổ chức hành vi tài chính, rủi ro vận hành và quá trình xây dựng tài sản toàn cầu.",

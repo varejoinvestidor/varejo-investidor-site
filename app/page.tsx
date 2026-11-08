@@ -37,10 +37,10 @@ const homeLiteCopy = {
         "O Varejo Investidor \u00e9 uma estrutura financeira global criada para acompanhar a evolu\u00e7\u00e3o do investidor desde os primeiros passos da educa\u00e7\u00e3o financeira at\u00e9 a constru\u00e7\u00e3o de patrim\u00f4nio internacional.",
       text: [
         "Desde 2018, desenvolvemos uma jornada composta por educa\u00e7\u00e3o, sinais, gest\u00e3o operacional e estrutura patrimonial, permitindo que cada investidor avance de acordo com seu momento financeiro.",
-        "Formiga \u2014 Educa\u00e7\u00e3o financeira, organiza\u00e7\u00e3o, disciplina e constru\u00e7\u00e3o de base patrimonial.",
-        "Elite \u2014 An\u00e1lises, sinais e acompanhamento dos mercados globais.",
-        "Select \u2014 Estrutura operacional automatizada para investidores que desejam exposi\u00e7\u00e3o internacional sem acompanhar opera\u00e7\u00f5es diariamente.",
-        "Private \u2014 Estrutura patrimonial internacional voltada para prote\u00e7\u00e3o, organiza\u00e7\u00e3o, crescimento e continuidade do patrim\u00f4nio.",
+        "Formiga: educação financeira, organização, disciplina e construção de base patrimonial.",
+        "Elite: análises, sinais e acompanhamento dos mercados globais.",
+        "Select: estrutura operacional automatizada para investidores que desejam exposição internacional sem acompanhar operações diariamente.",
+        "Private: estrutura patrimonial internacional voltada para proteção, organização, crescimento e continuidade do patrimônio.",
       ],
       stats: ["Desde 2018", "Milh\u00f5es de d\u00f3lares movimentados", "22 idiomas", "Mercados globais"],
     },
@@ -358,7 +358,7 @@ const homeLiteCopy = {
     intro: {
       eyebrow: "О проекте",
       title: "Что такое Varejo Investidor",
-      manifesto: "Varejo Investidor — это глобальная финансовая структура для частных инвесторов, которые хотят выйти за рамки базового уровня, понять международные рынки и строить капитал поэтапно.",
+      manifesto: "Varejo Investidor, это глобальная финансовая структура для частных инвесторов, которые хотят выйти за рамки базового уровня, понять международные рынки и строить капитал поэтапно.",
       text: [
         "С 2018 года проект сопровождает Forex, золото, нефть, индексы, криптоактивы и мировые валюты, уже отправив более 4 200 сигналов в WhatsApp.",
         "Методология построена вокруг трех уровней развития: Formiga, Wolf и Harpy.",

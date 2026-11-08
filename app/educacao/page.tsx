@@ -363,7 +363,7 @@ const localizedEducationCopy = {
     expansionUpdate: "עדכונים שוטפים למבנה ההכשרה הגלובלי.",
     nextStepsEyebrow: "אחרי Harpia",
     nextStepsTitle: "השלבים הבאים",
-    nextStepsText: "מסלול ההכשרה מסתיים ברמת Harpia. מכאן Elite, Select ו-Private הם פתרונות במערכת — לא רמות הכשרה נוספות.",
+    nextStepsText: "מסלול ההכשרה מסתיים ברמת Harpia. מכאן Elite, Select ו-Private הם פתרונות במערכת, לא רמות הכשרה נוספות.",
     nextSteps: [
       { name: "ערוץ Elite", description: "סיגנלים וביצוע ידני", href: "/sinais" },
       { name: "Select", description: "מבנה תפעולי אוטומטי", href: "/select" },
@@ -770,41 +770,6 @@ export default function EducationPage() {
 
         {true ? (
           <>
-        <div id="grade" className="mx-auto mt-16 max-w-7xl">
-          <SectionHeader eyebrow={copy.tableEyebrow} title={copy.tableTitle} text={copy.tableText} />
-          <div className="education-table mt-8 overflow-x-auto border border-ink/[0.12] bg-white shadow-fine">
-            <table className="w-full min-w-[980px] border-collapse text-left">
-              <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.18em] text-gold">
-                <tr>
-                  {copy.tableHeaders.map((heading) => (
-                    <th key={heading} className="px-5 py-5 font-bold">
-                      {heading}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {formationRows.map((row) => (
-                  <tr key={row.code} className="border-b border-ink/[0.06] transition hover:bg-gold/[0.045]">
-                    <td className="px-5 py-5 font-mono text-sm font-bold text-gold">{row.code}</td>
-                    <td className="px-5 py-5 text-sm font-bold uppercase tracking-[0.14em] text-ink/[0.72]">
-                      <span className="mr-2 text-gold">✦</span>
-                      {row.phase}
-                    </td>
-                    <td className="px-5 py-5 text-sm text-ink">{row.title}</td>
-                    <td className="px-5 py-5 text-sm leading-7 text-ink/[0.68]">{row.objective}</td>
-                    <td className="px-5 py-5">
-                      <ProgressMarks value={row.progress} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {locale === "pt" ? <FormationPricingSection /> : null}
-
         {locale === "pt" ? (
           <motion.section
             id="domine-ichimoku"
@@ -900,6 +865,41 @@ export default function EducationPage() {
             </div>
           </motion.section>
         ) : null}
+
+        <div id="grade" className="mx-auto mt-16 max-w-7xl">
+          <SectionHeader eyebrow={copy.tableEyebrow} title={copy.tableTitle} text={copy.tableText} />
+          <div className="education-table mt-8 overflow-x-auto border border-ink/[0.12] bg-white shadow-fine">
+            <table className="w-full min-w-[980px] border-collapse text-left">
+              <thead className="border-b border-ink/[0.1] bg-paper/[0.04] text-xs uppercase tracking-[0.18em] text-gold">
+                <tr>
+                  {copy.tableHeaders.map((heading) => (
+                    <th key={heading} className="px-5 py-5 font-bold">
+                      {heading}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {formationRows.map((row) => (
+                  <tr key={row.code} className="border-b border-ink/[0.06] transition hover:bg-gold/[0.045]">
+                    <td className="px-5 py-5 font-mono text-sm font-bold text-gold">{row.code}</td>
+                    <td className="px-5 py-5 text-sm font-bold uppercase tracking-[0.14em] text-ink/[0.72]">
+                      <span className="mr-2 text-gold">✦</span>
+                      {row.phase}
+                    </td>
+                    <td className="px-5 py-5 text-sm text-ink">{row.title}</td>
+                    <td className="px-5 py-5 text-sm leading-7 text-ink/[0.68]">{row.objective}</td>
+                    <td className="px-5 py-5">
+                      <ProgressMarks value={row.progress} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {locale === "pt" ? <FormationPricingSection /> : null}
 
         {false && locale === "pt" ? (
           <div className="mx-auto mt-6 max-w-7xl">

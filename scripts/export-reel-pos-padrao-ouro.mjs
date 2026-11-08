@@ -1,6 +1,5 @@
 import { spawn } from "node:child_process";
-import { createWriteStream } from "node:fs";
-import { mkdir, readFile, rename, rm } from "node:fs/promises";
+import { mkdir, readFile, rm } from "node:fs/promises";
 import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,8 +12,17 @@ const root = path.resolve(__dirname, "..");
 const outDir = path.join(root, "content", "reels", "pos-padrao-ouro");
 const mp4Out = path.join(outDir, "pos-padrao-ouro-instagram.mp4");
 const PORT = 3199;
-const REEL_DURATION_SEC = 100;
 const FFMPEG = ffmpegInstaller.path;
+
+function readReelDurationSec() {
+  const src = path.join(root, "src", "data", "reels", "posPadraoOuroReel.ts");
+  const match = readFile(src, "utf8").then((text) => {
+    const m = text.match(/REEL_DURATION_SEC\s*=\s*(\d+)/);
+    if (!m) throw new Error("REEL_DURATION_SEC não encontrado");
+    return Number(m[1]);
+  });
+  return match;
+}
 
 function waitForPort(port, timeoutMs = 120_000) {
   const started = Date.now();
@@ -62,15 +70,15 @@ async function synthNarration() {
     voice: "pt-BR-AntonioNeural",
     lang: "pt-BR",
     outputFormat: "audio-24khz-48kbitrate-mono-mp3",
-    rate: "-4%",
-    pitch: "-2Hz",
+    rate: "+12%",
+    pitch: "+1Hz",
     timeout: 120_000,
   });
   await tts.ttsPromise(text.trim(), voiceMp3);
   return voiceMp3;
 }
 
-async function recordReel(tmpDir) {
+async function recordReel(tmpDir, reelDurationSec) {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     viewport: { width: 1080, height: 1920 },
@@ -85,7 +93,7 @@ async function recordReel(tmpDir) {
     waitUntil: "networkidle",
   });
   await page.waitForSelector("#reel-export-root", { timeout: 30_000 });
-  await page.waitForTimeout(REEL_DURATION_SEC * 1000 + 800);
+  await page.waitForTimeout(reelDurationSec * 1000 + 600);
   await page.close();
   await context.close();
   await browser.close();
@@ -97,13 +105,13 @@ async function recordReel(tmpDir) {
   return path.join(tmpDir, webm);
 }
 
-async function muxVideo(webmPath, narrationMp3, videoOnlyPath, finalPath) {
+async function muxVideo(webmPath, narrationMp3, videoOnlyPath, finalPath, reelDurationSec) {
   await run(FFMPEG, [
     "-y",
     "-i",
     webmPath,
     "-t",
-    String(REEL_DURATION_SEC),
+    String(reelDurationSec),
     "-vf",
     "fps=30,scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1",
     "-c:v",
@@ -121,13 +129,13 @@ async function muxVideo(webmPath, narrationMp3, videoOnlyPath, finalPath) {
     "-i",
     narrationMp3,
     "-filter:a",
-    "atempo=1.08",
+    "atempo=1.15",
     "-map",
     "0:v",
     "-map",
     "1:a",
     "-t",
-    String(REEL_DURATION_SEC),
+    String(reelDurationSec),
     "-c:v",
     "libx264",
     "-pix_fmt",
@@ -143,6 +151,9 @@ async function muxVideo(webmPath, narrationMp3, videoOnlyPath, finalPath) {
 }
 
 async function main() {
+  const REEL_DURATION_SEC = await readReelDurationSec();
+  console.log(`→ Duração alvo: ${REEL_DURATION_SEC}s`);
+
   await mkdir(outDir, { recursive: true });
   const tmpDir = path.join(outDir, "_export_tmp");
   await rm(tmpDir, { recursive: true, force: true });
@@ -174,10 +185,10 @@ async function main() {
   try {
     await waitForPort(PORT);
     console.log("→ Gravando animação 1080×1920…");
-    const webm = await recordReel(tmpDir);
+    const webm = await recordReel(tmpDir, REEL_DURATION_SEC);
     const videoOnly = path.join(tmpDir, "video-only.mp4");
     console.log("→ Mix vídeo + áudio (MP4)…");
-    await muxVideo(webm, narrationMp3, videoOnly, mp4Out);
+    await muxVideo(webm, narrationMp3, videoOnly, mp4Out, REEL_DURATION_SEC);
     console.log(`\n✓ Entrega: ${mp4Out}`);
   } finally {
     server.kill("SIGTERM");

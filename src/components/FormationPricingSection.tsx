@@ -131,7 +131,7 @@ export function FormationPricingSection({
                   <div className="mb-4 overflow-hidden border border-gold/[0.14] bg-ink/[0.35]">
                     <Image
                       src={ui.image}
-                      alt={`Personagem ${ui.title} — Formação Varejo Investidor`}
+                      alt={`Personagem ${ui.title}, Formação Varejo Investidor`}
                       width={640}
                       height={360}
                       className="h-36 w-full object-cover object-top opacity-90"

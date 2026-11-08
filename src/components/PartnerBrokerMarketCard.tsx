@@ -34,7 +34,7 @@ const copyByLocale: Partial<Record<Locale, PartnerCopy>> = {
     cryptoFeatures: ["Mercado spot e derivativos", "Liquidez internacional", "Carteiras e autocustódia", "Acesso multimoeda"],
     openAccount: "Abrir conta",
     riskForex: "Operações alavancadas em Forex e CFDs envolvem alto risco de perda. Avalie sua tolerância a risco antes de operar.",
-    riskCrypto: "Criptoativos são voláteis e sujeitos a risco de custódia, liquidez e regulação. Conteúdo educacional — não é recomendação individual.",
+    riskCrypto: "Criptoativos são voláteis e sujeitos a risco de custódia, liquidez e regulação. Conteúdo educacional, não é recomendação individual.",
   },
   en: {
     eyebrow: "Operational partner",
@@ -48,7 +48,7 @@ const copyByLocale: Partial<Record<Locale, PartnerCopy>> = {
     cryptoFeatures: ["Spot and derivatives markets", "International liquidity", "Wallets and self-custody", "Multi-currency access"],
     openAccount: "Open account",
     riskForex: "Leveraged Forex and CFD trading involves substantial risk of loss. Assess your risk tolerance before trading.",
-    riskCrypto: "Crypto assets are volatile and subject to custody, liquidity and regulatory risk. Educational content — not personal advice.",
+    riskCrypto: "Crypto assets are volatile and subject to custody, liquidity and regulatory risk. Educational content, not personal advice.",
   },
   es: {
     eyebrow: "Socio operativo",

@@ -136,7 +136,7 @@ export const levelPackEs: LevelLocalePack = {
     ],
     philosophyParagraphs: [
       "La Harpía no observa un activo, gráfico o economía de forma aislada. Busca comprender el sistema en el que están inmersos.",
-      "Decisiones de bancos centrales, crisis energéticas y cambios geopolíticos alteran flujos e inflación — la Harpía encarna el pensamiento sistémico e internacional.",
+      "Decisiones de bancos centrales, crisis energéticas y cambios geopolíticos alteran flujos e inflación, la Harpía encarna el pensamiento sistémico e internacional.",
     ],
     coreMessage: "El mercado es solo una parte del sistema. Para comprender el capital, hay que comprender el mundo.",
     evolutionText:
