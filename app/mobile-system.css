@@ -208,6 +208,69 @@
 }
 
 @media (max-width: 767px) {
+  .home-hero .hero-stats-grid {
+    gap: 0.35rem 1.25rem !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .home-hero .hero-stat-card {
+    min-height: auto;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    padding: 0.25rem 0 !important;
+  }
+
+  .home-hero .hero-stat-card p:first-child {
+    font-size: 1.05rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .home-hero .hero-stat-card--solo p:first-child {
+    font-size: 1rem !important;
+    font-weight: 600;
+  }
+
+  .home-hero .hero-stat-card p:last-child {
+    margin-top: 0.2rem !important;
+    font-size: 0.625rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .home-tier-cards {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  .home-tier-card--primary {
+    margin-bottom: 0.35rem;
+  }
+
+  .home-tier-card--item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0.65rem 0 !important;
+    border-bottom: 1px solid rgba(198, 153, 74, 0.16) !important;
+  }
+
+  .home-tier-card--item::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 9999px;
+    background: rgba(198, 153, 74, 0.85);
+  }
+
+  .home-tier-card--item:last-child {
+    border-bottom: none !important;
+  }
+
   .premium-stage,
   .page-hero,
   .private-hero,
@@ -237,12 +300,6 @@
   }
 }
 
-@media (max-width: 359px) {
-  .home-hero .hero-stats-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
 @media (max-width: 430px) {
   :root {
     --vi-mobile-gutter: 1rem;
@@ -261,6 +318,16 @@
 [dir="rtl"] .premium-button-gold,
 [dir="rtl"] .premium-button-ghost {
   letter-spacing: 0.06em;
+}
+
+@media (min-width: 768px) {
+  .home-tier-card--item::before {
+    display: none;
+  }
+
+  .home-tier-card--item {
+    display: block;
+  }
 }
 
 .language-gate-panel {

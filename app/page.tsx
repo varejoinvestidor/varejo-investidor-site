@@ -1273,19 +1273,19 @@ function homeSeoLinks(locale: Locale) {
 
 const homeHeroStats: Record<string, Array<{ value: string; label: string }>> = {
   pt: [
-    { value: "2018", label: "Desde" },
+    { value: "Desde 2018", label: "" },
     { value: "Milhões", label: "de dólares movimentados" },
     { value: "22", label: "idiomas" },
     { value: "Global", label: "mercados globais" },
   ],
   en: [
-    { value: "2018", label: "Since" },
+    { value: "Since 2018", label: "" },
     { value: "Millions", label: "of dollars moved" },
     { value: "22", label: "languages" },
     { value: "Global", label: "markets" },
   ],
   es: [
-    { value: "2018", label: "Desde" },
+    { value: "Desde 2018", label: "" },
     { value: "Millones", label: "de dólares movilizados" },
     { value: "22", label: "idiomas" },
     { value: "Global", label: "mercados globales" },
@@ -1717,9 +1717,16 @@ export default function Home() {
             </motion.div>
             <motion.div variants={fadeUp} className="hero-stats-grid mt-9 grid w-full max-w-3xl grid-cols-2 gap-3 md:grid-cols-4">
               {heroStats.map((stat) => (
-                <div key={`${stat.value}-${stat.label}`} className="hero-stat-card min-w-0 border border-gold/[0.18] bg-white/[0.04] px-3 py-3.5 shadow-fine backdrop-blur sm:px-4 sm:py-4">
+                <div
+                  key={`${stat.value}-${stat.label}`}
+                  className={`hero-stat-card min-w-0 border border-gold/[0.18] bg-white/[0.04] px-3 py-3.5 shadow-fine backdrop-blur sm:px-4 sm:py-4${stat.label ? "" : " hero-stat-card--solo"}`}
+                >
                   <p className="font-serif text-xl leading-none tracking-[-0.04em] text-gold sm:text-2xl md:text-3xl">{stat.value}</p>
-                  <p className="mt-2 text-balance text-[0.6875rem] font-bold uppercase leading-snug tracking-[0.1em] text-ink/[0.58] sm:text-[10px] sm:tracking-[0.14em]">{stat.label}</p>
+                  {stat.label ? (
+                    <p className="mt-2 text-balance text-[0.6875rem] font-bold uppercase leading-snug tracking-[0.1em] text-ink/[0.58] sm:text-[10px] sm:tracking-[0.14em]">
+                      {stat.label}
+                    </p>
+                  ) : null}
                 </div>
               ))}
             </motion.div>
@@ -1902,18 +1909,28 @@ export default function Home() {
               {selectHome.cta}
             </a>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {selectHome.cards.map((item) => (
-              <article key={`${item.label}-${item.value ?? ""}`} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine">
-                <div className="absolute inset-0 luxury-grid opacity-20" />
-                <div className="relative">
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/[0.55]">{item.label}</p>
-                  {item.value ? (
+          <div className="home-tier-cards grid gap-4 sm:grid-cols-2">
+            {selectHome.cards.map((item) =>
+              item.value ? (
+                <article
+                  key={`${item.label}-${item.value}`}
+                  className="home-tier-card home-tier-card--primary relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine"
+                >
+                  <div className="absolute inset-0 luxury-grid opacity-20" />
+                  <div className="relative">
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/[0.55]">{item.label}</p>
                     <p className="mt-3 font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-gold">{item.value}</p>
-                  ) : null}
+                  </div>
+                </article>
+              ) : (
+                <div
+                  key={item.label}
+                  className="home-tier-card home-tier-card--item text-[11px] font-bold uppercase tracking-[0.18em] text-paper/[0.78] md:relative md:overflow-hidden md:border md:border-gold/[0.22] md:bg-paper/[0.04] md:p-6 md:shadow-fine md:text-[10px] md:tracking-[0.22em] md:text-paper/[0.55]"
+                >
+                  {item.label}
                 </div>
-              </article>
-            ))}
+              ),
+            )}
           </div>
         </motion.div>
       </section>
@@ -1946,17 +1963,27 @@ export default function Home() {
               {privateHome.cta}
             </a>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {privateHome.cards.map((item) => (
-              <article key={`${item.label}-${item.value ?? ""}`} className="relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine transition hover:-translate-y-1 hover:border-gold/[0.48]">
-                <div className="relative">
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/[0.55]">{item.label}</p>
-                  {item.value ? (
+          <div className="home-tier-cards grid gap-4 sm:grid-cols-2">
+            {privateHome.cards.map((item) =>
+              item.value ? (
+                <article
+                  key={`${item.label}-${item.value}`}
+                  className="home-tier-card home-tier-card--primary relative overflow-hidden border border-gold/[0.22] bg-paper/[0.04] p-6 shadow-fine transition hover:-translate-y-1 hover:border-gold/[0.48]"
+                >
+                  <div className="relative">
+                    <p className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/[0.55]">{item.label}</p>
                     <p className="mt-3 font-serif text-3xl leading-[1.04] tracking-[-0.04em] text-gold">{item.value}</p>
-                  ) : null}
+                  </div>
+                </article>
+              ) : (
+                <div
+                  key={item.label}
+                  className="home-tier-card home-tier-card--item text-[11px] font-bold uppercase tracking-[0.18em] text-paper/[0.78] md:relative md:overflow-hidden md:border md:border-gold/[0.22] md:bg-paper/[0.04] md:p-6 md:shadow-fine md:text-[10px] md:tracking-[0.22em] md:text-paper/[0.55]"
+                >
+                  {item.label}
                 </div>
-              </article>
-            ))}
+              ),
+            )}
           </div>
         </motion.div>
       </section>

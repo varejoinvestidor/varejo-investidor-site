@@ -16,6 +16,34 @@
   max-height: clamp(5.25rem, 26vw, 7.25rem);
 }
 
+@media (max-width: 767px) {
+  .language-gate-option {
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .language-gate-native-name {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .language-gate-suggested-badge {
+    background: rgba(198, 153, 74, 0.22) !important;
+    border-color: rgba(198, 153, 74, 0.72) !important;
+    color: #e8c778 !important;
+    box-shadow: 0 0 12px rgba(198, 153, 74, 0.2);
+  }
+
+  .language-gate-enter-label {
+    flex-shrink: 0;
+    padding-left: 0.25rem;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);
+  }
+}
+
 .language-gate-option:focus-visible {
   outline: 2px solid #c6994a;
   outline-offset: 2px;

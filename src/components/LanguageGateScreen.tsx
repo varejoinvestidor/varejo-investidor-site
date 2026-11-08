@@ -149,9 +149,11 @@ export function LanguageGateScreen() {
                     <LocaleFlagIcon locale={item.locale} className="h-4 w-6 shrink-0 overflow-hidden rounded-[3px] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]" />
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center gap-2">
-                        <span className="block truncate font-serif text-lg tracking-[-0.02em]">{item.nativeName}</span>
+                        <span className="language-gate-native-name block truncate font-serif text-lg tracking-[-0.02em]">
+                          {item.nativeName}
+                        </span>
                         {isSuggested ? (
-                          <span className="shrink-0 rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-gold">
+                          <span className="language-gate-suggested-badge shrink-0 rounded-full border border-gold/55 bg-gold/18 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-gold">
                             Suggested
                           </span>
                         ) : null}
@@ -166,7 +168,7 @@ export function LanguageGateScreen() {
                         ) : null}
                       </span>
                     </span>
-                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold/70 opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+                    <span className="language-gate-enter-label text-[10px] font-bold uppercase tracking-[0.18em] text-gold opacity-90 transition md:text-gold/70 md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100">
                       Enter
                     </span>
                   </motion.button>
