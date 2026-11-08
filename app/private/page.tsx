@@ -13,9 +13,6 @@ import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 
 const PRIVATE_CONTACT_URL =
   "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20solicitar%20uma%20an%C3%A1lise%20privada%20do%20Varejo%20Investidor%20Private.";
-const PRIVATE_MEETING_URL =
-  "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20agendar%20uma%20conversa%20institucional%20sobre%20o%20Varejo%20Investidor%20Private.";
-
 type Tier = {
   name: string;
   range: string;
@@ -552,12 +549,15 @@ export default function PrivatePage() {
             <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-8 text-paper/[0.68] md:text-lg">
               {copy.hero.text}
             </motion.p>
-            <motion.div variants={fadeUp} className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href={PRIVATE_CONTACT_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("private_analysis_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5">
+            <motion.div variants={fadeUp} className="mt-9">
+              <a
+                href={PRIVATE_CONTACT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackVarejoClick("private_analysis_click", { locale })}
+                className="premium-button-gold inline-flex w-full items-center justify-center border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 sm:w-auto"
+              >
                 {copy.hero.primary}
-              </a>
-              <a href={PRIVATE_MEETING_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("private_meeting_click", { locale })} className="border border-paper/[0.2] bg-paper/[0.04] px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-paper transition hover:-translate-y-0.5 hover:border-gold hover:text-gold">
-                {copy.hero.secondary}
               </a>
             </motion.div>
           </motion.div>
@@ -710,12 +710,15 @@ export default function PrivatePage() {
           <p className="mx-auto mt-6 w-fit border border-gold/[0.3] bg-paper/[0.04] px-5 py-3 text-xs font-black uppercase tracking-[0.18em] text-gold">
             {copy.cta.minimum}
           </p>
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={PRIVATE_CONTACT_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("private_final_analysis_click", { locale })} className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5">
+          <div className="mt-9 flex justify-center">
+            <a
+              href={PRIVATE_CONTACT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackVarejoClick("private_final_analysis_click", { locale })}
+              className="premium-button-gold inline-flex w-full max-w-md items-center justify-center border border-gold bg-gold px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 sm:w-auto"
+            >
               {copy.hero.primary}
-            </a>
-            <a href={PRIVATE_MEETING_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackVarejoClick("private_final_meeting_click", { locale })} className="border border-paper/[0.2] bg-paper/[0.04] px-7 py-4 text-center text-xs font-black uppercase tracking-[0.18em] text-paper transition hover:-translate-y-0.5 hover:border-gold hover:text-gold">
-              {copy.hero.secondary}
             </a>
           </div>
           <p className="mx-auto mt-8 max-w-2xl text-xs leading-6 text-paper/[0.48]">{copy.cta.disclaimer}</p>

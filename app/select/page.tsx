@@ -24,8 +24,7 @@ type Copy = {
     title: string;
     subtitle: string;
     text: string;
-    primary: string;
-    secondary: string;
+    cta: string;
     cards: [string, string, string][];
   };
   comparison: {
@@ -106,8 +105,7 @@ const ptCopy: Copy = {
       "Estrutura operacional para investidores que desejam exposição aos mercados globais sem acompanhar operações diariamente.",
     text:
       "Enquanto o Canal Elite foi criado para quem prefere executar operações manualmente, o Varejo Investidor Select foi desenvolvido para investidores que desejam uma estrutura operacional automatizada, com acompanhamento profissional e acesso aos mercados globais.",
-    primary: "Solicitar apresentação",
-    secondary: "Agendar conversa",
+    cta: "Agendar uma conversa",
     cards: [
       ["Aplicação mínima", "R$ 250.000", "Cliente Brasil"],
       ["Investidor internacional", "US$ 50.000", "Valor arredondado"],
@@ -270,8 +268,7 @@ const enCopy: Copy = {
     subtitle: "Operational structure for investors who want exposure to global markets without monitoring trades every day.",
     text:
       "While the Elite Channel was created for investors who prefer to execute trades manually, Varejo Investidor Select was designed for qualified investors who want an automated operational structure, professional monitoring, and access to global markets.",
-    primary: "Request presentation",
-    secondary: "Schedule a call",
+    cta: "Schedule a conversation",
     cards: [
       ["Minimum investment", "US$ 50,000", "International reference"],
       ["Brazilian investor", "R$ 250,000", "Local reference"],
@@ -393,8 +390,7 @@ const localizedCopy: Partial<Record<string, Copy>> = {
       ...enCopy.hero,
       tag: "Estrategia patrimonial global",
       subtitle: "Estructura operativa para inversores que desean exposición a mercados globales sin seguir operaciones diariamente.",
-      primary: "Solicitar presentación",
-      secondary: "Agendar conversación",
+      cta: "Agendar una conversación",
     },
   },
   fr: {
@@ -403,8 +399,7 @@ const localizedCopy: Partial<Record<string, Copy>> = {
       ...enCopy.hero,
       tag: "Stratégie patrimoniale globale",
       subtitle: "Structure opérationnelle pour investisseurs souhaitant une exposition aux marchés mondiaux sans suivre les opérations chaque jour.",
-      primary: "Demander une présentation",
-      secondary: "Planifier un appel",
+      cta: "Planifier un entretien",
     },
   },
   he: {
@@ -415,8 +410,7 @@ const localizedCopy: Partial<Record<string, Copy>> = {
       title: "Varejo Investidor Select",
       subtitle: "מבנה תפעולי למשקיעים עם הון משמעותי שרוצים חשיפה לשווקים גלובליים בלי לעקוב אחרי עסקאות מדי יום.",
       text: "בעוד ערוץ Elite מיועד לביצוע ידני, Select נבנה למבנה אוטומטי עם ליווי מקצועי וגישה לשווקים גלובליים.",
-      primary: "בקשת מצגת",
-      secondary: "תיאום שיחה",
+      cta: "לתיאום שיחה",
       cards: [
         ["השקעה מינימלית", "R$ 250,000", "לקוח ברזיל"],
         ["משקיע בינלאומי", "US$ 50,000", "סכום מעוגל"],
@@ -689,34 +683,53 @@ export default function SelectPage() {
       };
 
   return (
-    <main lang={isBrazilian ? "pt-BR" : locale} dir={rtlLocales.has(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-ink text-paper">
+    <main lang={isBrazilian ? "pt-BR" : locale} dir={rtlLocales.has(locale) ? "rtl" : "ltr"} className="select-page min-h-screen overflow-hidden bg-ink text-paper">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="select-hero premium-stage relative px-5 pb-14 pt-32 md:px-8 md:pb-20 md:pt-40">
-        <div className="absolute inset-0 terminal-grid opacity-5" />
-        <div className="absolute right-0 top-24 h-[520px] w-[520px] bg-gold/[0.08] blur-3xl" />
+      <section className="select-hero premium-stage relative px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40">
+        <div className="absolute inset-0 terminal-grid opacity-[0.07]" />
+        <div className="absolute right-0 top-16 h-[min(520px,70vw)] w-[min(520px,70vw)] bg-gold/[0.09] blur-3xl" />
         <div className="relative mx-auto max-w-7xl">
-          <motion.div initial="hidden" animate="visible" transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="max-w-6xl">
-            <p className="inline-flex border border-gold/[0.36] bg-gold/[0.08] px-4 py-2 text-[11px] font-black uppercase tracking-[0.24em] text-gold">{copy.hero.tag}</p>
-            <h1 className="mt-6 max-w-5xl font-serif text-6xl leading-[0.94] tracking-[-0.06em] text-paper md:text-8xl">{copy.hero.title}</h1>
-            <p className="mt-6 max-w-4xl font-serif text-3xl leading-[1.12] tracking-[-0.04em] text-gold md:text-5xl">{copy.hero.subtitle}</p>
-            <p className="mt-7 max-w-4xl text-base leading-8 text-paper/[0.7] md:text-lg">{copy.hero.text}</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href={SELECT_CONTACT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center border border-gold bg-gold px-7 py-4 text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52]">{copy.hero.primary}</a>
-              <a href={SELECT_CONTACT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center border border-gold/[0.38] bg-paper/[0.035] px-7 py-4 text-xs font-black uppercase tracking-[0.18em] text-paper transition hover:-translate-y-1 hover:border-gold">{copy.hero.secondary}</a>
+          <motion.div initial="hidden" animate="visible" transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="select-hero-editorial max-w-6xl pb-10 md:pb-12">
+            <p className="inline-flex border border-gold/[0.42] bg-gold/[0.1] px-4 py-2 text-[11px] font-black uppercase tracking-[0.28em] text-gold shadow-[0_0_24px_rgba(201,155,62,0.12)]">
+              {copy.hero.tag}
+            </p>
+            <h1 className="mt-7 max-w-5xl font-serif text-[clamp(2.75rem,8vw,5.75rem)] leading-[0.94] tracking-[-0.06em] text-paper">
+              {copy.hero.title}
+            </h1>
+            <p className="select-hero-subtitle mt-6 max-w-4xl font-serif text-[clamp(1.6rem,4.5vw,3.15rem)] leading-[1.14] tracking-[-0.04em] text-gold">
+              {copy.hero.subtitle}
+            </p>
+            <p className="mt-8 max-w-3xl text-base leading-[1.85] text-paper/[0.72] md:text-lg">{copy.hero.text}</p>
+            <div className="mt-10">
+              <a
+                href={SELECT_CONTACT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center border border-gold bg-gold px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-ink shadow-[0_0_32px_rgba(201,155,62,0.22)] transition hover:-translate-y-1 hover:bg-[#d8ad52] sm:w-auto"
+              >
+                {copy.hero.cta}
+              </a>
             </div>
           </motion.div>
-          <div className="mt-12 grid border border-gold/[0.22] bg-paper/[0.035] shadow-premium md:grid-cols-2 lg:grid-cols-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            className="select-metrics-strip mt-6 md:mt-10"
+          >
             {copy.hero.cards.map(([title, value, note]) => (
-              <div key={title} className="border-b border-gold/[0.14] p-6 md:border-r lg:border-b-0">
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-gold">{title}</p>
-                <p className="mt-5 font-serif text-4xl tracking-[-0.05em] text-paper md:text-5xl">{value}</p>
-                <p className="mt-3 text-sm leading-6 text-paper/[0.56]">{note}</p>
+              <div key={title} className="select-metric-cell">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-gold/90">{title}</p>
+                <p className="mt-4 font-serif text-4xl tracking-[-0.05em] text-paper md:text-[2.65rem]">{value}</p>
+                <p className="mt-3 max-w-xs text-sm leading-6 text-paper/[0.58]">{note}</p>
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
+
+      <div className="select-section-bridge" aria-hidden="true" />
 
       <section className="relative overflow-hidden border-y border-gold/[0.12] bg-ink px-5 py-16 text-paper md:px-8 md:py-24">
         <div className="absolute inset-0 terminal-grid opacity-5" />
@@ -742,9 +755,9 @@ export default function SelectPage() {
                     <h3 className="font-serif text-3xl tracking-[-0.05em] md:text-4xl">{card.title}</h3>
                     <p className="max-w-sm text-sm font-bold leading-6 text-paper/[0.68]">{card.message}</p>
                   </div>
-                  <div className="mt-7 grid gap-2 sm:grid-cols-3 xl:grid-cols-6">
+                  <div className="select-comparison-steps mt-7 grid gap-2 sm:grid-cols-3 xl:grid-cols-6">
                     {card.steps.map((step, index) => (
-                      <div key={step} className={`relative border p-3 text-center ${card.select ? "border-gold/[0.24] bg-gold/[0.06]" : "border-sky-300/[0.16] bg-white/[0.04]"}`}>
+                      <div key={step} className={`select-step-pill relative border p-3 text-center ${card.select ? "border-gold/[0.24] bg-gold/[0.06]" : "border-sky-300/[0.16] bg-white/[0.04]"}`}>
                         <p className="text-xs font-black uppercase tracking-[0.14em]">{step}</p>
                         {index < card.steps.length - 1 ? <p className={`mt-2 xl:absolute xl:-right-3 xl:top-1/2 xl:mt-0 xl:-translate-y-1/2 ${card.select ? "text-gold" : "text-sky-300"}`}>↓</p> : null}
                       </div>
@@ -892,7 +905,7 @@ export default function SelectPage() {
         <div className="absolute left-[10%] top-10 h-80 w-80 bg-gold/[0.08] blur-3xl" />
         <div className="relative mx-auto max-w-7xl">
           <SectionHeader title={copy.profile.title} text={copy.profile.subtitle} />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="select-profile-grid mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {copy.profile.cards.map((item, index) => (
               <motion.article
                 key={item}
@@ -1146,15 +1159,23 @@ export default function SelectPage() {
       </section>
 
       <section className="bg-ink px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto max-w-5xl border border-gold/[0.28] bg-paper/[0.045] p-7 text-center shadow-premium md:p-10">
-          <p className="text-xs font-black uppercase tracking-[0.26em] text-gold">Varejo Investidor Select</p>
-          <h2 className="mt-5 font-serif text-4xl leading-[1] tracking-[-0.045em] text-paper md:text-6xl">{copy.cta.title}</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-paper/[0.66]">{copy.cta.text}</p>
-          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={SELECT_CONTACT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center border border-gold bg-gold px-7 py-4 text-xs font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-1 hover:bg-[#d8ad52]">{copy.hero.primary}</a>
-            <a href={SELECT_CONTACT_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center border border-gold/[0.38] bg-paper/[0.035] px-7 py-4 text-xs font-black uppercase tracking-[0.18em] text-paper transition hover:-translate-y-1 hover:border-gold">{copy.hero.secondary}</a>
+        <div className="select-cta-slab relative mx-auto max-w-5xl p-7 text-center md:p-12">
+          <div className="relative">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-gold">Varejo Investidor Select</p>
+            <h2 className="mt-6 font-serif text-4xl leading-[1.02] tracking-[-0.045em] text-paper md:text-6xl">{copy.cta.title}</h2>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-paper/[0.68] md:text-lg">{copy.cta.text}</p>
+            <div className="mt-10 flex justify-center">
+              <a
+                href={SELECT_CONTACT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full max-w-md items-center justify-center border border-gold bg-gold px-8 py-4 text-xs font-black uppercase tracking-[0.2em] text-ink shadow-[0_0_32px_rgba(201,155,62,0.2)] transition hover:-translate-y-1 hover:bg-[#d8ad52] sm:w-auto"
+              >
+                {copy.hero.cta}
+              </a>
+            </div>
+            <p className="mx-auto mt-10 max-w-3xl border-t border-gold/[0.14] pt-6 text-xs leading-6 text-paper/[0.48]">{copy.cta.disclaimer}</p>
           </div>
-          <p className="mx-auto mt-8 max-w-3xl border-t border-gold/[0.14] pt-6 text-xs leading-6 text-paper/[0.48]">{copy.cta.disclaimer}</p>
         </div>
       </section>
 

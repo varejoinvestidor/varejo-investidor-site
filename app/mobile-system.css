@@ -223,19 +223,16 @@
   }
 
   .home-hero .hero-stat-card p:first-child {
-    font-size: 1.05rem !important;
-    line-height: 1.25 !important;
-  }
-
-  .home-hero .hero-stat-card--solo p:first-child {
-    font-size: 1rem !important;
-    font-weight: 600;
+    font-size: clamp(1.35rem, 5.4vw, 1.65rem) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -0.035em;
   }
 
   .home-hero .hero-stat-card p:last-child {
-    margin-top: 0.2rem !important;
+    margin-top: 0.35rem !important;
     font-size: 0.625rem !important;
     line-height: 1.35 !important;
+    letter-spacing: 0.1em;
   }
 
   .home-tier-cards {

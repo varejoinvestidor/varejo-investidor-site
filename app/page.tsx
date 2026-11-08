@@ -1273,19 +1273,19 @@ function homeSeoLinks(locale: Locale) {
 
 const homeHeroStats: Record<string, Array<{ value: string; label: string }>> = {
   pt: [
-    { value: "Desde 2018", label: "" },
+    { value: "2018", label: "Desde" },
     { value: "Milhões", label: "de dólares movimentados" },
     { value: "22", label: "idiomas" },
     { value: "Global", label: "mercados globais" },
   ],
   en: [
-    { value: "Since 2018", label: "" },
+    { value: "2018", label: "Since" },
     { value: "Millions", label: "of dollars moved" },
     { value: "22", label: "languages" },
     { value: "Global", label: "markets" },
   ],
   es: [
-    { value: "Desde 2018", label: "" },
+    { value: "2018", label: "Desde" },
     { value: "Millones", label: "de dólares movilizados" },
     { value: "22", label: "idiomas" },
     { value: "Global", label: "mercados globales" },

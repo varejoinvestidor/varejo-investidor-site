@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "./select-premium.css";
 
 export const metadata: Metadata = {
   title: "Varejo Investidor Select | Estratégia Patrimonial Global",
