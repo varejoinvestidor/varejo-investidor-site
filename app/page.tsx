@@ -10,7 +10,7 @@ import {
   getLoboChannelUrl,
 } from "../src/data/whatsappChannels";
 import type { Locale } from "../src/i18n";
-import type { SupportedLocale } from "../src/i18n/locales";
+import { isSupportedLocale, type SupportedLocale } from "../src/i18n/locales";
 import { localeToUrlSegment, localizedPath } from "../src/i18n/routing";
 import { getHomeHeroSubtext, homeHeroSubtext } from "../src/data/homeHeroSubtext";
 import {
@@ -20,6 +20,14 @@ import {
 } from "../src/data/languageCountCopy";
 import { homeLiteCopyHe } from "../src/data/homeLiteCopyHe";
 import { isRtlLocale } from "../src/i18n";
+
+type HomeLiteLocaleCopy = {
+  hero: { eyebrow: string; title: string; text: string; free: string; services: string };
+  intro: { eyebrow: string; title: string; manifesto: string; text: string[]; stats: string[] };
+  cards: { code: string; title: string; text: string; href: string }[];
+  cardCta: string;
+  final: { title: string; text?: string; free: string; elite: string };
+};
 
 const homeLiteCopy = {
   pt: {
@@ -124,34 +132,67 @@ const homeLiteCopy = {
   fr: {
     hero: {
       eyebrow: "Varejo Investidor",
-      title: "Tout ce dont vous avez besoin pour investir et construire un patrimoine a l'echelle mondiale.",
-      text: "Comprenez les marches mondiaux, suivez les analyses economiques et developpez une strategie pour construire un patrimoine au-dela des frontieres de votre pays.",
-      free: "ENTRER DANS LE CANAL FORMIGA",
-      services: "DECOUVRIR NOS SERVICES",
+      title: "Tout ce qu’il faut pour investir et construire un patrimoine à l’échelle mondiale.",
+      text: "Comprenez les marchés mondiaux, suivez les analyses économiques et développez une stratégie pour bâtir un patrimoine au-delà des frontières de votre pays.",
+      free: "REJOINDRE LE CANAL FORMIGA",
+      services: "DÉCOUVRIR LA FORMATION",
     },
     intro: {
-      eyebrow: "Ce que c'est",
-      title: "Qu'est-ce que Varejo Investidor",
+      eyebrow: "Notre approche",
+      title: "Qu’est-ce que Varejo Investidor",
       manifesto:
-        "Varejo Investidor est une structure financiere mondiale pour ceux qui veulent sortir des bases, comprendre les marches internationaux et construire leur vie financiere par etapes.",
+        "Varejo Investidor est une structure financière mondiale pour progresser au-delà des bases, comprendre les marchés internationaux et construire son parcours patrimonial par étapes.",
       text: [
-        "Depuis 2018, nous avons envoye plus de 4 200 signaux en direct en suivant le Forex, l'or, le petrole, les cryptos, les indices et les devises mondiales.",
-        "Le parcours est divise en niveaux : Fourmi, Loup et Harpie.",
-        "Le niveau Fourmi construit la base. Le niveau Loup developpe la strategie et la lecture de marche. Le niveau Harpie elargit la vision vers le patrimoine, la protection et la structure globale.",
+        "Depuis 2018, nous diffusons analyses, signaux et formation sur le Forex, l’or, le pétrole, les cryptoactifs, les indices et les devises internationales.",
+        "Le parcours s’organise en niveaux : Fourmi, Loup et Harpie.",
+        "Fourmi pose les fondations. Loup développe stratégie et lecture de marché. Harpie élargit la vision vers patrimoine, protection et structure internationale.",
       ],
       stats: ["Depuis 2018", "signaux en direct", "Fourmi / Loup / Harpie"],
     },
     cards: [
-      { code: "FOURMI", title: "Base financiere", text: "Education par niveaux pour construire la base, organiser le risque et creer les premiers piliers.", href: "/nivel-formiga" },
-      { code: "LOUP", title: "Strategie et expansion", text: "Signaux en direct, lecture de marche et decisions structurees pour operer avec discipline.", href: "/nivel-lobo" },
-      { code: "HARPIE", title: "Patrimoine mondial", text: "Services strategiques pour protection, positionnement, patrimoine et vision internationale.", href: "/nivel-harpia" },
+      { code: "FOURMI", title: "Éducation financière", text: "Formation par niveaux pour construire la base, organiser le risque et poser les premiers piliers.", href: "/nivel-formiga" },
+      { code: "LOUP", title: "Stratégie et marchés", text: "Signaux en direct, lecture de marché et décisions structurées pour opérer avec discipline.", href: "/nivel-lobo" },
+      { code: "HARPIE", title: "Patrimoine mondial", text: "Conseil stratégique pour protection, positionnement patrimonial et vision internationale.", href: "/nivel-harpia" },
     ],
     cardCta: "En savoir plus",
     final: {
-      title: "Votre parcours commence au Niveau Fourmi.",
-      text: "Commencez gratuitement, suivez les marches mondiaux et developpez votre evolution financiere a travers les niveaux Fourmi, Loup et Harpie.",
-      free: "ENTRER DANS LE CANAL FORMIGA",
-      elite: "DECOUVRIR LE CANAL ELITE HARPIA",
+      title: "Choisissez la prochaine étape de votre évolution patrimoniale.",
+      text: "Commencez par la formation, suivez analyses et signaux, explorez Select ou structurez votre patrimoine mondial avec Private.",
+      free: "CANAL FORMIGA",
+      elite: "CANAL ELITE",
+    },
+  },
+  de: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Alles, was Sie brauchen, um global zu investieren und Vermögen aufzubauen.",
+      text: "Verstehen Sie globale Märkte, folgen Sie Wirtschaftsanalysen und entwickeln Sie eine Strategie für Vermögensaufbau über Landesgrenzen hinaus.",
+      free: "FORMIGA-KANAL BEITRETEN",
+      services: "AUSBILDUNG ENTDECKEN",
+    },
+    intro: {
+      eyebrow: "Was wir sind",
+      title: "Was ist Varejo Investidor",
+      manifesto:
+        "Varejo Investidor ist eine globale Finanzstruktur für Anleger, die über Grundlagen hinausgehen, internationale Kapitalmärkte verstehen und ihr Vermögen stufenweise aufbauen möchten.",
+      text: [
+        "Seit 2018 begleiten wir Forex, Gold, Öl, Krypto, Indizes und globale Devisen mit Analysen, Signalen und Finanzbildung.",
+        "Der Weg gliedert sich in die Stufen Formiga, Wolf und Harpy.",
+        "Formiga legt die Basis. Wolf entwickelt Strategie und Markteinordnung. Harpy erweitert den Blick auf Vermögen, Schutz und internationale Struktur.",
+      ],
+      stats: ["Seit 2018", "Live-Signale", "Formiga / Wolf / Harpy"],
+    },
+    cards: [
+      { code: "FORMIGA", title: "Finanzielle Grundlagen", text: "Stufenweise Finanzbildung für Basis, Risikoorganisation und erste Vermögenspfeiler.", href: "/nivel-formiga" },
+      { code: "WOLF", title: "Strategie und Märkte", text: "Live-Signale, Markteinordnung und strukturierte Entscheidungen für diszipliniertes Handeln.", href: "/nivel-lobo" },
+      { code: "HARPY", title: "Globales Vermögen", text: "Strategische Beratung für Schutz, Positionierung und internationale Vermögensstruktur.", href: "/nivel-harpia" },
+    ],
+    cardCta: "Mehr erfahren",
+    final: {
+      title: "Wählen Sie den nächsten Schritt Ihrer Vermögensentwicklung.",
+      text: "Starten Sie mit Finanzbildung, folgen Sie Analysen und Signalen, entdecken Sie Select oder strukturieren Sie globales Vermögen mit Private.",
+      free: "FORMIGA-KANAL",
+      elite: "ELITE-KANAL",
     },
   },
   hi: {
@@ -497,16 +538,172 @@ const homeLiteCopy = {
     cardCta: "자세히 보기",
     final: { title: "당신의 여정은 개미 레벨에서 시작됩니다.", text: "무료로 시작하고 글로벌 시장을 따라가며 개미, 늑대, 하피 레벨을 통해 금융 성장을 발전시키세요.", free: "개미 채널 참여", elite: "Elite Harpia 보기" },
   },
-} satisfies Record<
-  Locale,
-  {
-    hero: { eyebrow: string; title: string; text: string; free: string; services: string };
-    intro: { eyebrow: string; title: string; manifesto: string; text: string[]; stats: string[] };
-    cards: { code: string; title: string; text: string; href: string }[];
-    cardCta: string;
-    final: { title: string; text?: string; free: string; elite: string };
-  }
->;
+  it: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Tutto ciò che serve per investire e costruire patrimonio a livello globale.",
+      text: homeHeroSubtext.it,
+      free: "ENTRA NEL CANALE FORMIGA",
+      services: "SCOPRI LA FORMAZIONE",
+    },
+    intro: {
+      eyebrow: "La nostra offerta",
+      title: "Cos'è Varejo Investidor",
+      manifesto:
+        "Varejo Investidor è una struttura finanziaria globale per chi vuole andare oltre le basi, comprendere i mercati internazionali e costruire il proprio percorso patrimoniale per fasi.",
+      text: [
+        "Dal 2018 accompagniamo Forex, oro, petrolio, crypto, indici e valute globali con analisi, segnali e formazione finanziaria.",
+        "Il percorso si organizza in livelli: Formica, Lupo e Arpia.",
+        "Formica pone le fondamenta. Lupo sviluppa strategia e lettura di mercato. Arpia amplia la visione verso patrimonio, protezione e struttura internazionale.",
+      ],
+      stats: ["Dal 2018", "segnali live", "Formica / Lupo / Arpia"],
+    },
+    cards: [
+      { code: "FORMICA", title: "Educazione finanziaria", text: "Formazione per livelli per costruire la base, organizzare il rischio e porre i primi pilastri.", href: "/nivel-formiga" },
+      { code: "LUPO", title: "Strategia e mercati", text: "Segnali live, lettura di mercato e decisioni strutturate per operare con disciplina.", href: "/nivel-lobo" },
+      { code: "ARPIA", title: "Patrimonio globale", text: "Consulenza strategica per protezione, posizionamento patrimoniale e visione internazionale.", href: "/nivel-harpia" },
+    ],
+    cardCta: "Scopri di più",
+    final: {
+      title: "Scegli il prossimo passo della tua evoluzione patrimoniale.",
+      text: "Inizia dalla formazione, segui analisi e segnali, esplora Select o struttura il patrimonio globale con Private.",
+      free: "CANALE FORMIGA",
+      elite: "CANALE ELITE",
+    },
+  },
+  fa: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "هر آنچه برای سرمایه‌گذاری و ساخت ثروت در سطح جهانی نیاز دارید.",
+      text: homeHeroSubtext.fa,
+      free: "عضویت در کانال Formiga",
+      services: "آشنایی با آموزش",
+    },
+    intro: {
+      eyebrow: "ما چه هستیم",
+      title: "Varejo Investidor چیست",
+      manifesto:
+        "Varejo Investidor یک ساختار مالی جهانی برای سرمایه‌گذارانی است که می‌خواهند فراتر از مبانی بروند، بازارهای بین‌المللی را بفهمند و ثروت خود را مرحله‌به‌مرحله بسازند.",
+      text: [
+        "از سال ۲۰۱۸ در Forex، طلا، نفت، رمزارزها، شاخص‌ها و ارزهای جهانی با تحلیل، سیگنال و آموزش مالی همراهیم.",
+        "مسیر به سطوح Formiga، Wolf و Harpy تقسیم می‌شود.",
+        "Formiga پایه را می‌سازد. Wolf استراتژی و خوانش بازار را توسعه می‌دهد. Harpy دید را به سمت ثروت، حفاظت و ساختار بین‌المللی گسترش می‌دهد.",
+      ],
+      stats: ["از ۲۰۱۸", "سیگنال زنده", "Formiga / Wolf / Harpy"],
+    },
+    cards: [
+      { code: "FORMIGA", title: "آموزش مالی", text: "آموزش مرحله‌ای برای ساخت پایه، سازماندهی ریسک و ایجاد اولین ستون‌های سرمایه.", href: "/nivel-formiga" },
+      { code: "WOLF", title: "استراتژی و بازار", text: "سیگنال زنده، خوانش بازار و تصمیم‌های ساختاریافته برای اجرای منضبط.", href: "/nivel-lobo" },
+      { code: "HARPY", title: "ثروت جهانی", text: "مشاوره راهبردی برای حفاظت، موقعیت‌یابی و ساختار بین‌المللی دارایی.", href: "/nivel-harpia" },
+    ],
+    cardCta: "بیشتر بدانید",
+    final: {
+      title: "گام بعدی تحول سرمایه خود را انتخاب کنید.",
+      text: "با آموزش شروع کنید، تحلیل و سیگنال‌ها را دنبال کنید، Select را بشناسید یا ثروت جهانی را با Private سامان دهید.",
+      free: "کانال FORMIGA",
+      elite: "کانال ELITE",
+    },
+  },
+  pl: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Wszystko, czego potrzebujesz, by inwestować i budować majątek na poziomie globalnym.",
+      text: homeHeroSubtext.pl,
+      free: "DOŁĄCZ DO KANAŁU FORMIGA",
+      services: "POZNAJ SZKOLENIE",
+    },
+    intro: {
+      eyebrow: "Kim jesteśmy",
+      title: "Czym jest Varejo Investidor",
+      manifesto:
+        "Varejo Investidor to globalna struktura finansowa dla inwestorów, którzy chcą wyjść poza podstawy, zrozumieć rynki międzynarodowe i budować majątek etapami.",
+      text: [
+        "Od 2018 roku towarzyszymy Forexowi, złotu, ropie, krypto, indeksom i walutom globalnym poprzez analizy, sygnały i edukację finansową.",
+        "Ścieżka dzieli się na poziomy: Formiga, Wolf i Harpy.",
+        "Formiga buduje fundament. Wolf rozwija strategię i czytanie rynku. Harpy poszerza wizję o majątek, ochronę i strukturę międzynarodową.",
+      ],
+      stats: ["Od 2018", "sygnały live", "Formiga / Wolf / Harpy"],
+    },
+    cards: [
+      { code: "FORMIGA", title: "Edukacja finansowa", text: "Szkolenie poziomowe, by zbudować bazę, uporządkować ryzyko i postawić pierwsze filary.", href: "/nivel-formiga" },
+      { code: "WOLF", title: "Strategia i rynki", text: "Sygnały live, czytanie rynku i uporządkowane decyzje dla zdyscyplinowanego działania.", href: "/nivel-lobo" },
+      { code: "HARPY", title: "Majątek globalny", text: "Doradztwo strategiczne w zakresie ochrony, pozycjonowania i międzynarodowej struktury majątku.", href: "/nivel-harpia" },
+    ],
+    cardCta: "Dowiedz się więcej",
+    final: {
+      title: "Wybierz kolejny krok w rozwoju swojego majątku.",
+      text: "Zacznij od edukacji, śledź analizy i sygnały, poznaj Select lub uporządkuj globalny majątek z Private.",
+      free: "KANAŁ FORMIGA",
+      elite: "KANAŁ ELITE",
+    },
+  },
+  zh: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "在全球层面投资与构建财富所需的一切。",
+      text: homeHeroSubtext.zh,
+      free: "加入 FORMIGA 频道",
+      services: "了解培训课程",
+    },
+    intro: {
+      eyebrow: "我们是谁",
+      title: "什么是 Varejo Investidor",
+      manifesto:
+        "Varejo Investidor 是一个全球金融结构，帮助投资者超越基础、理解国际市场，并分阶段构建财富路径。",
+      text: [
+        "自 2018 年以来，我们通过分析、信号与金融教育覆盖 Forex、黄金、原油、加密资产、指数与全球货币。",
+        "路径分为 Formiga、Wolf 与 Harpy 三个层级。",
+        "Formiga 奠定基础。Wolf 发展策略与市场解读。Harpy 将视野扩展到财富、保护与全球结构。",
+      ],
+      stats: ["自 2018 年", "实时信号", "Formiga / Wolf / Harpy"],
+    },
+    cards: [
+      { code: "FORMIGA", title: "金融教育", text: "分级培训，构建基础、组织风险并建立首批资产支柱。", href: "/nivel-formiga" },
+      { code: "WOLF", title: "策略与市场", text: "实时信号、市场解读与结构化决策，助力纪律化执行。", href: "/nivel-lobo" },
+      { code: "HARPY", title: "全球财富", text: "战略咨询，涵盖保护、定位与国际财富结构。", href: "/nivel-harpia" },
+    ],
+    cardCta: "了解更多",
+    final: {
+      title: "选择您财富演进的下一步。",
+      text: "从教育开始，关注分析与信号，了解 Select，或通过 Private 组织全球财富。",
+      free: "FORMIGA 频道",
+      elite: "ELITE 频道",
+    },
+  },
+  tl: {
+    hero: {
+      eyebrow: "Varejo Investidor",
+      title: "Lahat ng kailangan mo para mag-invest at magbuo ng kayamanan sa global na antas.",
+      text: homeHeroSubtext.tl,
+      free: "SUMALI SA FORMIGA CHANNEL",
+      services: "ALAMIN ANG FORMASYON",
+    },
+    intro: {
+      eyebrow: "Ano kami",
+      title: "Ano ang Varejo Investidor",
+      manifesto:
+        "Ang Varejo Investidor ay isang global financial structure para sa mga gustong lumampas sa basics, maintindihan ang international markets, at bumuo ng kanilang wealth journey nang paunti-unti.",
+      text: [
+        "Mula 2018, sinusundan namin ang Forex, gold, oil, crypto, indices, at global currencies sa pamamagitan ng analysis, signals, at financial education.",
+        "Ang journey ay nahahati sa mga level: Formiga, Wolf, at Harpy.",
+        "Ang Formiga ay nagtatayo ng pundasyon. Ang Wolf ay nagde-develop ng strategy at market reading. Ang Harpy ay nagpapalawak ng pananaw patungo sa wealth, protection, at global structure.",
+      ],
+      stats: ["Mula 2018", "live signals", "Formiga / Wolf / Harpy"],
+    },
+    cards: [
+      { code: "FORMIGA", title: "Financial education", text: "Level-based training para makabuo ng base, ayusin ang risk, at lumikha ng unang pillars.", href: "/nivel-formiga" },
+      { code: "WOLF", title: "Strategy at markets", text: "Live signals, market reading, at structured decisions para sa disiplinadong execution.", href: "/nivel-lobo" },
+      { code: "HARPY", title: "Global wealth", text: "Strategic consulting para sa protection, positioning, at international wealth structure.", href: "/nivel-harpia" },
+    ],
+    cardCta: "Alamin pa",
+    final: {
+      title: "Piliin ang susunod na hakbang sa pag-unlad ng iyong kayamanan.",
+      text: "Magsimula sa edukasyon, sundan ang analysis at signals, tuklasin ang Select, o ayusin ang global wealth sa pamamagitan ng Private.",
+      free: "FORMIGA CHANNEL",
+      elite: "ELITE CHANNEL",
+    },
+  },
+} satisfies Record<Locale, HomeLiteLocaleCopy>;
 
 type HomeEliteCopy = {
   title: string;
@@ -736,8 +933,32 @@ const homeSelectCopy: Record<string, HomeSelectCopy> = {
 };
 
 Object.assign(homeSelectCopy, {
-  fr: { ...homeSelectCopy.en, text: "Structure opérationnelle destinée aux investisseurs disposant déjà d’un patrimoine significatif et souhaitant une exposition aux marchés mondiaux sans suivre les opérations chaque jour.", cta: "DÉCOUVRIR SELECT", cards: [{ label: "Allocation minimale", value: "R$ 250 000" }, { label: "Investisseur international", value: "US$ 50 000" }, { label: "Forex" }, { label: "Actions" }, { label: "Cryptoactifs" }] },
-  de: { ...homeSelectCopy.en, text: "Operative Struktur für Anleger mit relevantem Vermögen, die globale Marktexponierung wünschen, ohne täglich Trades zu verfolgen.", cta: "SELECT ANSEHEN", cards: [{ label: "Mindestanlage", value: "R$ 250.000" }, { label: "Internationaler Anleger", value: "US$ 50.000" }, { label: "Forex" }, { label: "Aktien" }, { label: "Krypto" }] },
+  fr: {
+    eyebrow: "VAREJO INVESTIDOR SELECT",
+    title: "Varejo Investidor Select",
+    text: "Structure opérationnelle pour investisseurs disposant déjà d’un patrimoine significatif et souhaitant une exposition aux marchés mondiaux sans suivre chaque opération au quotidien.",
+    cta: "DÉCOUVRIR SELECT",
+    cards: [
+      { label: "Investissement minimum", value: "R$ 250 000" },
+      { label: "Investisseur international", value: "US$ 50 000" },
+      { label: "Forex" },
+      { label: "Actions internationales" },
+      { label: "Cryptoactifs" },
+    ],
+  },
+  de: {
+    eyebrow: "VAREJO INVESTIDOR SELECT",
+    title: "Varejo Investidor Select",
+    text: "Operative Struktur für Anleger mit relevantem Vermögen, die globale Marktexponierung wünschen, ohne tägliche Trades manuell zu verfolgen.",
+    cta: "SELECT ENTDECKEN",
+    cards: [
+      { label: "Mindestanlage", value: "R$ 250.000" },
+      { label: "Internationaler Anleger", value: "US$ 50.000" },
+      { label: "Forex" },
+      { label: "Internationale Aktien" },
+      { label: "Krypto" },
+    ],
+  },
   it: { ...homeSelectCopy.en, text: "Struttura operativa per investitori con patrimonio rilevante che desiderano esposizione ai mercati globali senza seguire le operazioni ogni giorno.", cta: "SCOPRI SELECT", cards: [{ label: "Investimento minimo", value: "R$ 250.000" }, { label: "Investitore internazionale", value: "US$ 50.000" }, { label: "Forex" }, { label: "Azioni" }, { label: "Cripto" }] },
   ar: { ...homeSelectCopy.en, text: "هيكل تشغيلي للمستثمرين الذين يمتلكون ثروة مهمة ويرغبون في التعرض للأسواق العالمية دون متابعة العمليات يومياً.", cta: "تعرّف على Select", cards: [{ label: "الحد الأدنى", value: "R$ 250.000" }, { label: "مستثمر دولي", value: "US$ 50.000" }, { label: "الفوركس" }, { label: "الأسهم" }, { label: "الكريبتو" }] },
   fa: { ...homeSelectCopy.en, text: "ساختار عملیاتی برای سرمایه‌گذارانی که دارایی قابل توجه دارند و می‌خواهند بدون پیگیری روزانه معاملات، در بازارهای جهانی قرار بگیرند.", cta: "آشنایی با Select", cards: [{ label: "حداقل سرمایه", value: "R$ 250.000" }, { label: "سرمایه‌گذار بین‌المللی", value: "US$ 50.000" }, { label: "Forex" }, { label: "سهام" }, { label: "رمزارزها" }] },
@@ -811,8 +1032,32 @@ const homePrivateCopy: Record<string, HomePrivateCopy> = {
 };
 
 Object.assign(homePrivateCopy, {
-  fr: { ...homePrivateCopy.en, subtitle: "Structure patrimoniale institutionnelle pour les investisseurs au-dessus de US$ 1 000 000.", text: "Organisation, protection et expansion mondiale du patrimoine pour investisseurs, familles et entrepreneurs disposant d’un capital international.", cta: "DÉCOUVRIR PRIVATE" },
-  de: { ...homePrivateCopy.en, subtitle: "Institutionelle Vermögensstruktur für Anleger ab US$1.000.000.", text: "Globale Organisation, Schutz und Ausbau von Vermögen für Anleger, Familien und Unternehmer mit internationalem Kapital.", cta: "PRIVATE ANSEHEN" },
+  fr: {
+    eyebrow: "VAREJO INVESTIDOR PRIVATE",
+    title: "Varejo Investidor Private",
+    subtitle: "Structure patrimoniale institutionnelle pour investisseurs au-dessus de US$ 1 000 000.",
+    text: "Organisation, protection et expansion mondiale du patrimoine pour investisseurs, familles et entrepreneurs disposant d’un capital international.",
+    cta: "DÉCOUVRIR PRIVATE",
+    cards: [
+      { label: "Seuil d’entrée", value: "US$ 1 000 000+" },
+      { label: "Profil", value: "Patrimoine à grande échelle" },
+      { label: "Priorité", value: "Protection internationale" },
+      { label: "Structure", value: "Institutionnelle" },
+    ],
+  },
+  de: {
+    eyebrow: "VAREJO INVESTIDOR PRIVATE",
+    title: "Varejo Investidor Private",
+    subtitle: "Institutionelle Vermögensstruktur für Anleger ab US$ 1.000.000.",
+    text: "Globale Organisation, Schutz und Ausbau von Vermögen für Anleger, Familien und Unternehmer mit internationalem Kapital.",
+    cta: "PRIVATE ENTDECKEN",
+    cards: [
+      { label: "Einstieg", value: "US$ 1.000.000+" },
+      { label: "Profil", value: "Großes Vermögen" },
+      { label: "Schwerpunkt", value: "Globaler Schutz" },
+      { label: "Struktur", value: "Institutionell" },
+    ],
+  },
   it: { ...homePrivateCopy.en, subtitle: "Struttura patrimoniale istituzionale per investitori sopra US$ 1.000.000.", text: "Organizzazione, protezione ed espansione globale del patrimonio per investitori, famiglie e imprenditori con capitale internazionale.", cta: "SCOPRI PRIVATE" },
   ar: { ...homePrivateCopy.en, subtitle: "هيكل ثروة مؤسسي للمستثمرين فوق US$1,000,000.", text: "تنظيم وحماية وتوسيع الثروة عالمياً للمستثمرين والعائلات ورواد الأعمال ذوي رأس المال الدولي.", cta: "تعرّف على Private" },
   fa: { ...homePrivateCopy.en, subtitle: "ساختار ثروت نهادی برای سرمایه‌گذاران بالای US$1,000,000.", text: "سازمان‌دهی، حفاظت و گسترش جهانی دارایی برای سرمایه‌گذاران، خانواده‌ها و کارآفرینان دارای سرمایه بین‌المللی.", cta: "آشنایی با Private" },
@@ -946,6 +1191,7 @@ const homeFxproLinks: Record<Locale, string> = {
   en: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   es: "https://direct.fxpro.group/es/partner/77014650?platform=web",
   fr: "https://direct.fxpro.group/en/partner/77014650?platform=web",
+  de: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   hi: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   ar: "https://direct.fxpro.group/en/partner/77014650?platform=web",
   tr: "https://direct.fxpro.group/en/partner/77014650?platform=web",
@@ -964,6 +1210,7 @@ const homeFxproBanners: Record<Locale, string> = {
   en: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   es: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-es-fscm-1324x150.png",
   fr: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
+  de: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   hi: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   ar: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
   tr: "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-en-fscm-1324x150.png",
@@ -1047,20 +1294,36 @@ const homeAccountCopy: Record<
     ecosystemLabel: "Explora el ecosistema",
   },
   fr: {
-    eyebrow: "Compte global",
-    title: "Ouvrez votre compte et accedez aux marches mondiaux",
-    text: "Forex, or, petrole, indices, actions, ETF et cryptomonnaies via les principales plateformes du marche international.",
+    eyebrow: "Compte mondial",
+    title: "Ouvrez votre compte et accédez aux marchés mondiaux",
+    text: "Forex, or, pétrole, indices, actions, ETF et cryptoactifs via les principales plateformes du marché international.",
     fxproLabel: "COURTIER FOREX",
-    fxproTitle: "Marches mondiaux avec FXPro",
-    fxproText: "Accedez au Forex, a l'or, au petrole et aux indices via le courtier utilise dans la structure operationnelle de Varejo Investidor.",
+    fxproTitle: "Marchés mondiaux avec FXPro",
+    fxproText: "Accédez au Forex, à l’or, au pétrole et aux indices via le courtier utilisé dans la structure opérationnelle de Varejo Investidor.",
     fxproCta: "Ouvrir un compte FXPro",
     binanceLabel: "COURTIER CRYPTO",
-    binanceTitle: "Marche mondial des cryptomonnaies",
-    binanceText: "Achetez, vendez et suivez les cryptomonnaies via l'une des plus grandes plateformes d'echange au monde.",
+    binanceTitle: "Marché mondial des cryptoactifs",
+    binanceText: "Achetez, vendez et suivez les cryptoactifs via l’une des plus grandes plateformes d’échange au monde.",
     binanceCta: "Ouvrir un compte Binance",
     bannerLabel: "OUVREZ VOTRE COMPTE FOREX",
-    bannerText: "Cliquez sur la banniere pour acceder au courtier dans la bonne langue.",
-    ecosystemLabel: "Explorer l'ecosysteme",
+    bannerText: "Cliquez sur la bannière pour accéder au courtier dans la bonne langue.",
+    ecosystemLabel: "Explorer l’écosystème",
+  },
+  de: {
+    eyebrow: "Globales Konto",
+    title: "Konto eröffnen und globale Märkte nutzen",
+    text: "Forex, Gold, Öl, Indizes, Aktien, ETFs und Krypto über führende internationale Handelsplattformen.",
+    fxproLabel: "FOREX-BROKER",
+    fxproTitle: "Globale Märkte mit FXPro",
+    fxproText: "Zugang zu Forex, Gold, Öl und Indizes über den Broker der operativen Struktur von Varejo Investidor.",
+    fxproCta: "FXPro-Konto eröffnen",
+    binanceLabel: "KRYPTO-BROKER",
+    binanceTitle: "Globaler Kryptomarkt",
+    binanceText: "Krypto kaufen, verkaufen und verfolgen über eine der größten Börsen weltweit.",
+    binanceCta: "Binance-Konto eröffnen",
+    bannerLabel: "FOREX-KONTO ERÖFFNEN",
+    bannerText: "Klicken Sie auf das Banner, um den Broker in der passenden Sprache zu öffnen.",
+    ecosystemLabel: "Ökosystem entdecken",
   },
   hi: {
     eyebrow: "\u0917\u094D\u0932\u094B\u092C\u0932 \u0905\u0915\u093E\u0909\u0902\u091F",
@@ -1196,7 +1459,8 @@ const homeSeoLabels: Record<Locale, Record<"forex" | "stocks" | "crypto" | "etfs
   pt: { forex: "Forex", stocks: "A\u00E7\u00F5es", crypto: "Criptomoedas", etfs: "ETFs", formiga: "N\u00EDvel Formiga", lobo: "N\u00EDvel Lobo", harpia: "N\u00EDvel Harpia", articles: "Artigos" },
   en: { forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", formiga: "Ant Level", lobo: "Wolf Level", harpia: "Harpy Level", articles: "Articles" },
   es: { forex: "Forex", stocks: "Acciones", crypto: "Cripto", etfs: "ETFs", formiga: "Nivel Formiga", lobo: "Nivel Lobo", harpia: "Nivel Harpia", articles: "Art\u00EDculos" },
-  fr: { forex: "Forex", stocks: "Actions", crypto: "Crypto", etfs: "ETF", formiga: "Niveau Fourmi", lobo: "Niveau Loup", harpia: "Niveau Harpie", articles: "Articles" },
+  fr: { forex: "Forex", stocks: "Actions", crypto: "Cryptoactifs", etfs: "ETF", formiga: "Niveau Fourmi", lobo: "Niveau Loup", harpia: "Niveau Harpie", articles: "Articles" },
+  de: { forex: "Forex", stocks: "Aktien", crypto: "Krypto", etfs: "ETFs", formiga: "Formiga-Stufe", lobo: "Wolf-Stufe", harpia: "Harpy-Stufe", articles: "Artikel" },
   hi: { forex: "Forex", stocks: "\u0936\u0947\u092F\u0930", crypto: "\u0915\u094D\u0930\u093F\u092A\u094D\u091F\u094B", etfs: "ETFs", formiga: "\u091A\u0940\u0902\u091F\u0940 \u0938\u094D\u0924\u0930", lobo: "\u092D\u0947\u0921\u093C\u093F\u092F\u093E \u0938\u094D\u0924\u0930", harpia: "\u0917\u0930\u0941\u0921\u093C \u0938\u094D\u0924\u0930", articles: "\u0932\u0947\u0916" },
   ar: { forex: "\u0627\u0644\u0641\u0648\u0631\u0643\u0633", stocks: "\u0627\u0644\u0623\u0633\u0647\u0645", crypto: "\u0627\u0644\u0643\u0631\u064A\u0628\u062A\u0648", etfs: "ETFs", formiga: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0646\u0645\u0644\u0629", lobo: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0630\u0626\u0628", harpia: "\u0645\u0633\u062A\u0648\u0649 \u0627\u0644\u0647\u0627\u0631\u0628\u064A", articles: "\u0627\u0644\u0645\u0642\u0627\u0644\u0627\u062A" },
   tr: { forex: "Forex", stocks: "Hisseler", crypto: "Kripto", etfs: "ETF'ler", formiga: "Kar\u0131nca Seviyesi", lobo: "Kurt Seviyesi", harpia: "Harpia Seviyesi", articles: "Makaleler" },
@@ -1423,9 +1687,15 @@ const homeFinalCtas: Record<string, { select: string; private: string }> = {
   pt: { select: "CONHECER SELECT", private: "CONHECER PRIVATE" },
   en: { select: "EXPLORE SELECT", private: "EXPLORE PRIVATE" },
   es: { select: "CONOCER SELECT", private: "CONOCER PRIVATE" },
+  fr: { select: "DÉCOUVRIR SELECT", private: "DÉCOUVRIR PRIVATE" },
+  de: { select: "SELECT ENTDECKEN", private: "PRIVATE ENTDECKEN" },
 };
 
 Object.assign(homeLiteCopy, { he: homeLiteCopyHe });
+
+function getHomeLiteCopy(locale: SupportedLocale): HomeLiteLocaleCopy {
+  return (homeLiteCopy as Record<SupportedLocale, HomeLiteLocaleCopy>)[locale];
+}
 
 (Object.keys(homeHeroSubtext) as SupportedLocale[]).forEach((locale) => {
   const entry = homeLiteCopy[locale as keyof typeof homeLiteCopy];
@@ -1448,6 +1718,25 @@ homeLiteCopy.es.final.title = "Elige el próximo paso de tu evolución patrimoni
 (homeLiteCopy.es.final as { title: string; text?: string; free: string; elite: string }).text = "Empieza con educación, acompaña análisis y señales, avanza hacia Select u organiza patrimonio global con Private.";
 homeLiteCopy.es.final.free = "CANAL FORMIGA";
 homeLiteCopy.es.final.elite = "CANAL ELITE";
+homeLiteCopy.fr.final.title = "Choisissez la prochaine étape de votre évolution patrimoniale.";
+(homeLiteCopy.fr.final as { title: string; text?: string }).text =
+  "Commencez par la formation, suivez analyses et signaux, explorez Select ou structurez votre patrimoine mondial avec Private.";
+homeLiteCopy.fr.final.free = "CANAL FORMIGA";
+homeLiteCopy.fr.final.elite = "CANAL ELITE";
+homeLiteCopy.de.final.title = "Wählen Sie den nächsten Schritt Ihrer Vermögensentwicklung.";
+(homeLiteCopy.de.final as { title: string; text?: string }).text =
+  "Starten Sie mit Finanzbildung, folgen Sie Analysen und Signalen, entdecken Sie Select oder strukturieren Sie globales Vermögen mit Private.";
+homeLiteCopy.de.final.free = "FORMIGA-KANAL";
+homeLiteCopy.de.final.elite = "ELITE-KANAL";
+
+const homeFinalCtasItFaPlZhTl: Partial<Record<SupportedLocale, { select: string; private: string }>> = {
+  it: { select: "SCOPRI SELECT", private: "SCOPRI PRIVATE" },
+  fa: { select: "آشنایی با Select", private: "آشنایی با Private" },
+  pl: { select: "POZNAJ SELECT", private: "POZNAJ PRIVATE" },
+  zh: { select: "了解 SELECT", private: "了解 PRIVATE" },
+  tl: { select: "TINGNAN ANG SELECT", private: "TINGNAN ANG PRIVATE" },
+};
+Object.assign(homeFinalCtas, homeFinalCtasItFaPlZhTl);
 
 const homeFlowCopy: Record<Locale, {
   eyebrow: string;
@@ -1492,12 +1781,23 @@ const homeFlowCopy: Record<Locale, {
   fr: {
     eyebrow: "Fonctionnement",
     title: "Comment fonctionne Varejo Investidor",
-    text: "Le parcours organise l'investisseur en trois niveaux : base, execution et patrimoine mondial.",
+    text: "Le parcours organise l’investisseur en trois niveaux : fondations, opération et patrimoine mondial.",
     button: "COMMENCER PAR LE CANAL FORMIGA",
     steps: [
-      { name: "Fourmi", text: "Apprend les bases, comprend le marche et construit une conscience financiere." },
-      { name: "Loup", text: "Opere avec methode, gestion du risque et lecture de marche." },
-      { name: "Harpie", text: "Construit un patrimoine mondial, protege le capital et pense long terme." },
+      { name: "Fourmi", text: "Acquiert les fondamentaux, comprend les marchés et construit une conscience financière." },
+      { name: "Loup", text: "Opère avec méthode, gestion des risques et lecture de marché." },
+      { name: "Harpie", text: "Construit un patrimoine mondial, protège le capital et raisonne à long terme." },
+    ],
+  },
+  de: {
+    eyebrow: "So funktioniert es",
+    title: "So funktioniert Varejo Investidor",
+    text: "Der Lernpfad ordnet Anleger in drei klare Stufen: Basis, operative Umsetzung und globales Vermögen.",
+    button: "MIT FORMIGA-KANAL STARTEN",
+    steps: [
+      { name: "Formiga", text: "Erlangt Grundlagen, versteht Märkte und baut finanzielle Bewusstheit auf." },
+      { name: "Wolf", text: "Handelt mit Methode, Risikomanagement und professioneller Markteinordnung." },
+      { name: "Harpy", text: "Baut globales Vermögen auf, schützt Kapital und denkt langfristig." },
     ],
   },
   hi: {
@@ -1625,7 +1925,7 @@ const homeFlowCopy: Record<Locale, {
 
 export default function Home() {
   const { locale, t, changeLocale } = useSiteLocale();
-  const copy = homeLiteCopy[locale as keyof typeof homeLiteCopy] ?? homeLiteCopy.en;
+  const copy = isSupportedLocale(locale) ? getHomeLiteCopy(locale) : getHomeLiteCopy("en");
   const heroStats = (homeHeroStats[locale] ?? homeHeroStats.en).map((stat, index) =>
     index === 2 ? getHomeHeroLanguageStat(locale) : stat,
   );

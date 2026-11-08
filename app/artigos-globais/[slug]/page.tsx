@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { InsightPostPage } from "../../../src/components/InsightPostPage";
+import "../../insights-research.css";
 import { getPost, getPostsByLocale } from "../../../src/data/insightsContent";
 import { createInsightPostMetadata } from "../../../src/data/insightsMetadata";
 

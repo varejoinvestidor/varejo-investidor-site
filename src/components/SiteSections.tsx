@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { SUPPORTED_LOCALES, isRtlLocale, isSupportedLocale, localeToHtmlLang, translations, type Locale } from "../i18n";
+import { SUPPORTED_LOCALES, isRtlLocale, isSupportedLocale, localeToHtmlLang, translations, type Locale, type SupportedLocale } from "../i18n";
 import { localeFromPublicPath, localeToUrlSegment, localizedPath } from "../i18n/routing";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
@@ -40,6 +40,31 @@ export const ELITE_STRIPE_LINKS = [
 
 export const ELITE_CHECKOUT_URL = ELITE_LASTLINK_URL;
 export const LOCALES = SUPPORTED_LOCALES;
+
+const brandTaglineByLocale: Record<SupportedLocale, string> = {
+  pt: "Mercado Global para o Investidor de Varejo",
+  en: "Global Markets for Retail Investors",
+  es: "Mercado Global para el Inversor Minorista",
+  fr: "Marchés mondiaux pour l'investisseur particulier",
+  de: "Globale Märkte für Privatanleger",
+  it: "Mercati globali per l'investitore al dettaglio",
+  ar: "الأسواق العالمية للمستثمر الفردي",
+  fa: "بازارهای جهانی برای سرمایه‌گذار خرد",
+  hi: "रिटेल निवेशक के लिए वैश्विक बाजार",
+  ur: "خوردہ سرمایہ کار کے لیے عالمی مارکیٹس",
+  bn: "খুচরা বিনিয়োগকারীদের জন্য বিশ্ববাজার",
+  tr: "Bireysel Yatırımcı için Küresel Piyasalar",
+  ru: "Глобальные рынки для частных инвесторов",
+  id: "Pasar Global untuk Investor Ritel",
+  vi: "Thị trường toàn cầu cho nhà đầu tư cá nhân",
+  th: "ตลาดโลกสำหรับนักลงทุนรายย่อย",
+  tl: "Pandaigdigang Merkado para sa Retail Investors",
+  zh: "面向散户投资者的全球市场",
+  ja: "個人投資家のためのグローバル市場",
+  ko: "개인 투자자를 위한 글로벌 시장",
+  pl: "Globalne rynki dla inwestorów detalicznych",
+  he: "שווקים גלובליים למשקיע הקמעונאי",
+};
 
 function resolveLanguageMeta(locale: Locale) {
   return isSupportedLocale(locale) ? languageMeta[locale] : languageMeta.en;
@@ -376,25 +401,18 @@ export function SiteChrome({
     setMobileMenuOpen(false);
   }
 
-  const brandTagline =
-    locale === "en"
-      ? "Global Markets for Retail Investors"
-      : locale === "es"
-        ? "Mercado Global para el Inversor Minorista"
-        : locale === "hi"
-          ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
-          : locale === "ar"
-            ? "الأسواق العالمية للمستثمر الفردي"
-            : locale === "he"
-              ? "שווקים גלובליים למשקיע הקמעונאי"
-            : locale === "tr"
-              ? "Bireysel Yatırımcı için Küresel Piyasalar"
-              : "Mercado Global para o Investidor de Varejo";
+  const brandTagline = isSupportedLocale(locale) ? brandTaglineByLocale[locale] : brandTaglineByLocale.pt;
   const marketDropdownLabels: Record<Locale, Record<"markets" | "forex" | "stocks" | "crypto" | "etfs" | "funds", string>> = {
     pt: { markets: "Mercados", forex: "Forex", stocks: "Ações", crypto: "Criptomoedas", etfs: "ETFs", funds: "Fundos Imobiliários" },
     en: { markets: "Markets", forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", funds: "Real Estate Funds" },
     es: { markets: "Mercados", forex: "Forex", stocks: "Acciones", crypto: "Criptomonedas", etfs: "ETFs", funds: "Fondos Inmobiliarios" },
-    fr: { markets: "Marchés", forex: "Forex", stocks: "Actions", crypto: "Crypto", etfs: "ETFs", funds: "Fonds immobiliers" },
+    fr: { markets: "Marchés", forex: "Forex", stocks: "Actions", crypto: "Cryptoactifs", etfs: "ETF", funds: "Fonds immobiliers" },
+    de: { markets: "Märkte", forex: "Forex", stocks: "Aktien", crypto: "Krypto", etfs: "ETFs", funds: "Immobilienfonds" },
+    it: { markets: "Mercati", forex: "Forex", stocks: "Azioni", crypto: "Crypto", etfs: "ETF", funds: "Fondi immobiliari" },
+    fa: { markets: "بازارها", forex: "فارکس", stocks: "سهام", crypto: "رمزارزها", etfs: "ETF", funds: "صندوق‌های املاک" },
+    pl: { markets: "Rynki", forex: "Forex", stocks: "Akcje", crypto: "Krypto", etfs: "ETF", funds: "Fundusze nieruchomości" },
+    zh: { markets: "市场", forex: "外汇", stocks: "股票", crypto: "加密资产", etfs: "ETF", funds: "房地产基金" },
+    tl: { markets: "Mga Merkado", forex: "Forex", stocks: "Stocks", crypto: "Crypto", etfs: "ETFs", funds: "Real estate funds" },
     hi: { markets: "बाज़ार", forex: "Forex", stocks: "शेयर", crypto: "क्रिप्टो", etfs: "ETFs", funds: "Real Estate Funds" },
     ar: { markets: "الأسواق", forex: "الفوركس", stocks: "الأسهم", crypto: "الكريبتو", etfs: "ETFs", funds: "صناديق عقارية" },
     tr: { markets: "Piyasalar", forex: "Forex", stocks: "Hisseler", crypto: "Kripto", etfs: "ETF'ler", funds: "Gayrimenkul Fonları" },
@@ -733,10 +751,13 @@ export function WhatsAppSignalExample({
   t,
   locale = "en",
   onEliteClick,
+  whatsappHref,
 }: {
   t: (typeof translations)[Locale];
   locale?: Locale;
   onEliteClick?: () => void;
+  /** Quando definido, o CTA de exemplo leva ao canal WhatsApp (ex.: Lobo gratuito). */
+  whatsappHref?: string;
 }) {
   const chartLabel = locale === "es" ? "Gr\u00E1fico 4H" : locale === "pt" ? "Gr\u00E1fico 4H" : "4H chart";
   const liveLabel = locale === "es" ? "En vivo" : locale === "pt" ? "Ao vivo" : "Live";
@@ -752,7 +773,16 @@ export function WhatsAppSignalExample({
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.84fr_1.16fr] lg:items-center">
         <div>
           <SectionHeader eyebrow={t.signalExample.eyebrow} title={t.signalExample.title} text={t.signalExample.text} />
-          {onEliteClick ? (
+          {whatsappHref ? (
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+            >
+              {t.signalExample.cta}
+            </a>
+          ) : onEliteClick ? (
             <button
               type="button"
               onClick={onEliteClick}
@@ -899,20 +929,7 @@ export function SupportFooter({
   locale: Locale;
   onLocaleChange: (locale: Locale) => void;
 }) {
-  const brandTagline =
-    locale === "en"
-      ? "Global Markets for Retail Investors"
-      : locale === "es"
-        ? "Mercado Global para el Inversor Minorista"
-        : locale === "hi"
-          ? "\u0930\u093F\u091F\u0947\u0932 \u0928\u093F\u0935\u0947\u0936\u0915 \u0915\u0947 \u0932\u093F\u090F \u0935\u0948\u0936\u094D\u0935\u093F\u0915 \u092C\u093E\u091C\u093E\u0930"
-          : locale === "ar"
-            ? "\u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u0639\u0627\u0644\u0645\u064A\u0629 \u0644\u0644\u0645\u0633\u062A\u062B\u0645\u0631 \u0627\u0644\u0641\u0631\u062F\u064A"
-            : locale === "he"
-              ? "שווקים גלובליים למשקיע הקמעונאי"
-            : locale === "tr"
-              ? "Bireysel Yat\u0131r\u0131mc\u0131 \u0130\u00E7in K\u00FCresel Piyasa"
-          : "Mercado Global para o Investidor de Varejo";
+  const brandTagline = isSupportedLocale(locale) ? brandTaglineByLocale[locale] : brandTaglineByLocale.pt;
   const footerLabels: {
     social: string;
     levels: string;

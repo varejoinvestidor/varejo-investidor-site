@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title">
+  <title id="title">Bitcoin e liquidez</title>
+  <rect width="1600" height="900" fill="#07080a"/>
+  <rect x="680" y="250" width="240" height="400" rx="8" fill="none" stroke="#c99b3e" stroke-width="3"/>
+  <text x="760" y="470" fill="#c99b3e" font-family="Georgia, serif" font-size="96">¿</text>
+  <text x="120" y="760" fill="#f4f0e8" font-family="Georgia, serif" font-size="50">Liquidez, ciclo e disciplina operacional</text>
+  <text x="120" y="815" fill="#9bb7d4" font-family="ui-sans-serif" font-size="20" letter-spacing="5">CRIPTOMOEDAS · VAREJO INVESTIDOR</text>
+</svg>

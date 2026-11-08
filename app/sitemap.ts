@@ -379,12 +379,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "/" ? 1 : 0.8,
   }));
 
-  const insightEntries = insightPosts.map((post) => ({
-    url: absoluteSiteUrl(getInsightsPath(post.locale, post.slug)),
-    lastModified: new Date(post.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const insightEntries = insightPosts
+    .filter((post) => post.status === "published")
+    .map((post) => ({
+      url: absoluteSiteUrl(getInsightsPath(post.locale, post.slug)),
+      lastModified: new Date(post.dateModified || post.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
+
+  const rssEntries = [
+    {
+      url: absoluteSiteUrl("/artigos-globais/feed.xml"),
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.55,
+    },
+  ];
 
   const platformEntries = sitemapLocales.flatMap((locale) =>
     platformSlugs.map((slug) => ({
@@ -395,5 +406,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...staticEntries, ...insightEntries, ...platformEntries];
+  return [...staticEntries, ...insightEntries, ...rssEntries, ...platformEntries];
 }

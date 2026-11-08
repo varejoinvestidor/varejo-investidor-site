@@ -1,0 +1,79 @@
+{
+  "slug": "forex-ouro-e-petroleo",
+  "locale": "pt",
+  "translationKey": "forex-gold-oil",
+  "status": "published",
+  "title": "Forex, ouro e petróleo: como os mercados se conectam",
+  "subtitle": "Moedas, energia e metais no mesmo mapa de liquidez global",
+  "description": "Moedas, energia e metais contam a mesma história por ângulos diferentes. Veja correlações operacionais sem confundir causa com consequência.",
+  "category": "forex",
+  "author": "Varejo Investidor Research",
+  "personaLead": "lobo",
+  "datePublished": "2026-02-18",
+  "dateModified": "2026-03-08",
+  "image": "/insights/covers/forex-ouro-e-petroleo.svg",
+  "imageAlt": "Três círculos editoriais representando câmbio, ouro e petróleo",
+  "imageCaption": "Arte editorial — corredores entre FX, metais e energia.",
+  "tags": ["Forex", "Ouro", "Petróleo", "Commodities", "Câmbio"],
+  "relatedPosts": ["dolar-juros-e-mercado-global", "bitcoin-liquidez-e-risco", "ciclos-economicos-varejo"],
+  "seoTitle": "Forex, ouro e petróleo: como os mercados se conectam | Varejo Investidor",
+  "seoDescription": "Leitura editorial sobre a conexão entre câmbio, ouro e energia, útil para diversificação e gestão de risco do investidor de varejo.",
+  "introduction": "Forex não opera em vácuo. Paridades cambiais refletem diferenciais de juros, balanço comercial e fluxos financeiros. Ouro e petróleo frequentemente dialogam com o ciclo do dólar e com expectativas sobre crescimento e inflação — mas cada ativo mantém dinâmica própria.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "eixo-dolar",
+      "level": 2,
+      "text": "O eixo dólar–commodities"
+    },
+    {
+      "type": "paragraph",
+      "text": "Grande parte das commodities estratégicas é cotada em dólar. Movimentos bruscos na moeda podem alterar o preço local de importação mesmo quando o mercado internacional parece estável. Para empresas e países importadores, isso afeta margens, inflação e decisões de hedge."
+    },
+    {
+      "type": "persona",
+      "persona": "lobo",
+      "title": "Leitura Lobo",
+      "text": "O Lobo separa sinal de ruído: verifica se o movimento começa no câmbio, no ativo físico ou no fluxo de capital especulativo antes de ajustar exposição."
+    },
+    {
+      "type": "heading",
+      "id": "ouro",
+      "level": 2,
+      "text": "Ouro: reserva, seguro ou ativo de trading?"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ouro ocupa papéis distintos na carteira. Alguns investidores usam como diversificador de longo prazo; outros operam ciclos mais curtos. O ponto central é definir o papel do metal no plano patrimonial, não apenas reagir a manchetes."
+    },
+    {
+      "type": "heading",
+      "id": "energia",
+      "level": 2,
+      "text": "Energia e cadeia de custos"
+    },
+    {
+      "type": "paragraph",
+      "text": "Petróleo permanece referência para custos energéticos e logística globais. Choques de oferta ou demanda propagam-se para transporte, fertilizantes e setores industriais. Leitura responsável combina dados publicados por organizações multilaterais com disciplina de tamanho de posição."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Identifique se sua exposição é direta (futuros, ETFs, ações) ou indireta (índices, setores).",
+        "Avalie sensibilidade cambial de cada ativo.",
+        "Registre o motivo da posição — tese macro, hedge ou trade táctico."
+      ]
+    }
+  ],
+  "sources": [
+    { "label": "Banco Mundial — commodities", "url": "https://www.worldbank.org/en/research/commodity-markets" },
+    { "label": "BIS — mercados de câmbio", "url": "https://www.bis.org/statistics/xrusd.htm" }
+  ],
+  "faq": [
+    {
+      "question": "Correlação garante proteção?",
+      "answer": "Não. Correlações mudam em crises. Diversificação exige limites de risco e rebalanceamento definidos com antecedência."
+    }
+  ]
+}

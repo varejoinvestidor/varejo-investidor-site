@@ -31,7 +31,7 @@ export const fxproButtonLabels: Record<Locale, string> = {
   es: "Abrir Cuenta FXPro",
   fr: "Ouvrir un compte FXPro",
   it: "Apri conto FXPro",
-  de: "FXPro Konto eroeffnen",
+  de: "FXPro-Konto eröffnen",
   fa: "\u0627\u0641\u062a\u062a\u0627\u062d \u062d\u0633\u0627\u0628 FXPro",
   hi: "FXPro Account \u0916\u094b\u0932\u0947\u0902",
   ar: "\u0641\u062a\u062d \u062d\u0633\u0627\u0628 FXPro",

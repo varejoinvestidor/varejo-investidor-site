@@ -19,6 +19,7 @@ import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWid
 import { eliteReportPaths } from "../../src/components/EliteReportHub";
 import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 import { ElitePaymentCards } from "../../src/components/ElitePaymentCards";
+import { getLoboChannelUrlWithFallback } from "../../src/data/whatsappChannels";
 
 const howItWorks = [
   "2 a 5 sinais por dia",
@@ -340,8 +341,6 @@ const whatsappPrints = [
   { label: "WhatsApp print 03", src: "/signals/whatsapp-print-03.jpg" },
 ];
 
-const PT_FREE_SIGNAL_TEST_URL = "https://whatsapp.com/channel/0029VasGTTE6RGJD46g47c1h";
-
 const localizedSignalFallbacks = {
   th: {
     ...signalCopyByLocale.en,
@@ -444,6 +443,7 @@ const reportCtaLabels = {
 export default function SignalsPage() {
   const { locale, t, changeLocale } = useSiteLocale();
   const eliteCta = eliteLinkProps(locale, "/sinais");
+  const freeSignalsTestUrl = getLoboChannelUrlWithFallback(locale);
   const shouldScrollToPackages = locale !== "pt";
   const scrollToPackages = () => {
     const section = document.getElementById("elite-packages");
@@ -577,24 +577,14 @@ export default function SignalsPage() {
                 </div>
               ))}
             </div>
-            {shouldScrollToPackages ? (
-              <button
-                type="button"
-                onClick={scrollToPackages}
-                className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
-              >
-                {t.signalBlock.cta}
-              </button>
-            ) : (
-              <a
-                href={PT_FREE_SIGNAL_TEST_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
-              >
-                {t.signalBlock.cta}
-              </a>
-            )}
+            <a
+              href={freeSignalsTestUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="premium-button-gold mt-8 inline-block border border-gold bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5"
+            >
+              {t.signalBlock.cta}
+            </a>
           </div>
 
           <motion.div
@@ -689,11 +679,7 @@ export default function SignalsPage() {
         </div>
       </section>
 
-      <WhatsAppSignalExample
-        t={t}
-        locale={locale}
-        onEliteClick={shouldScrollToPackages ? scrollToPackages : undefined}
-      />
+      <WhatsAppSignalExample t={t} locale={locale} whatsappHref={freeSignalsTestUrl} />
 
       <section className="px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-7xl">
@@ -967,12 +953,12 @@ export default function SignalsPage() {
               </p>
               <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
                 <a
-                  href={PT_FREE_SIGNAL_TEST_URL}
+                  href={freeSignalsTestUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="premium-button-gold border border-gold bg-gold px-7 py-4 text-center text-sm font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
                 >
-                  TESTE OS SINAIS GRATUITAMENTE
+                  {t.signalBlock.cta}
                 </a>
                 <a
                   href={t.freeChannel.link}

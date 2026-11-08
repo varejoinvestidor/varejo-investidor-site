@@ -1,0 +1,85 @@
+{
+  "slug": "bitcoin-liquidez-e-risco",
+  "locale": "pt",
+  "translationKey": "bitcoin-liquidity-risk",
+  "status": "published",
+  "title": "Bitcoin, liquidez e risco: o que observar",
+  "subtitle": "Criptoativos exigem leitura de mercado, custódia e governança",
+  "description": "Cripto exige leitura de liquidez, segurança, ciclo e apetite por risco — sem romantizar ou demonizar o ativo.",
+  "category": "crypto",
+  "author": "Varejo Investidor Research",
+  "personaLead": "lobo",
+  "datePublished": "2026-03-04",
+  "dateModified": "2026-03-08",
+  "image": "/insights/covers/bitcoin-liquidez-e-risco.svg",
+  "imageAlt": "Símbolo editorial de Bitcoin sobre fundo institucional escuro",
+  "imageCaption": "Arte editorial — liquidez e disciplina em criptoativos.",
+  "tags": ["Bitcoin", "Criptomoedas", "Liquidez", "Risco", "Custódia"],
+  "relatedPosts": ["forex-ouro-e-petroleo", "ciclos-economicos-varejo", "dolar-juros-e-mercado-global"],
+  "seoTitle": "Bitcoin, liquidez e risco: o que observar | Varejo Investidor",
+  "seoDescription": "Análise editorial sobre liquidez, risco e governança em Bitcoin e cripto — para investidores de varejo com método.",
+  "introduction": "Bitcoin consolidou-se como ativo negociado em mercados globais, com liquidez em diferentes horários e infraestrutura em constante evolução. Isso não elimina volatilidade nem risco operacional. Investir ou operar cripto sem definir custódia, tamanho de posição e liquidez de saída repete erros clássicos de mercados especulativos.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "liquidez-24-7",
+      "level": 2,
+      "text": "Liquidez e microestrutura"
+    },
+    {
+      "type": "paragraph",
+      "text": "Mercados de cripto funcionam em grande parte do tempo, mas liquidez varia conforme horário, par negociado e ambiente regulatório. Spreads podem se alargar exatamente quando o investidor mais precisa executar ordem. Por isso, planejamento inclui testar rotas de saída e limites de slippage aceitável."
+    },
+    {
+      "type": "persona",
+      "persona": "lobo",
+      "title": "Leitura Lobo",
+      "text": "O Lobo dimensiona risco por perda máxima tolerada e não por narrativa de retorno potencial. Volatilidade alta exige posição menor — matemática simples, execução difícil."
+    },
+    {
+      "type": "heading",
+      "id": "custodia",
+      "level": 2,
+      "text": "Custódia e segurança operacional"
+    },
+    {
+      "type": "paragraph",
+      "text": "Chaves privadas, autenticação, phishing e falhas de corretora fazem parte do risco não financeiro. Materiais educativos de autoridades financeiras enfatizam due diligence em provedores e segregação do que é investimento do que é experimentação."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Separe capital de longo prazo de capital experimental.",
+        "Documente onde os ativos estão custodiados.",
+        "Evite concentração em uma única plataforma sem plano de contingência."
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "macro-cripto",
+      "level": 2,
+      "text": "Macro e cripto no mesmo portfólio"
+    },
+    {
+      "type": "paragraph",
+      "text": "Bitcoin reage a liquidez global, ao ciclo de risco e, em alguns períodos, correlações com tecnologia. Posicioná-lo como diversificador exige entender que correlações não são permanentes. A Harpia olha o regime macro; a Formiga garante que a exposição não comprometa metas essenciais."
+    },
+    {
+      "type": "persona",
+      "persona": "harpia",
+      "title": "Leitura Harpia",
+      "text": "A Harpia conecta fluxos globais, regulação e adoção institucional sem tratar cada manchete como mudança estrutural imediata."
+    }
+  ],
+  "sources": [
+    { "label": "Banco Central do Brasil — educação financeira", "url": "https://www.bcb.gov.br/cidadaniafinanceira" },
+    { "label": "FCA (UK) — cryptoassets guidance", "url": "https://www.fca.org.uk/consumers/cryptoassets" }
+  ],
+  "faq": [
+    {
+      "question": "Bitcoin substitui reserva em moeda forte?",
+      "answer": "São funções diferentes. Reserva prioriza liquidez e previsibilidade; cripto é classe de risco elevado e deve respeitar limites pessoais claros."
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "slug": "dolar-juros-e-mercado-global",
+  "locale": "pt",
+  "translationKey": "dollar-global-markets",
+  "status": "published",
+  "featured": true,
+  "title": "O que o dólar revela sobre o mercado global",
+  "subtitle": "Taxas, liquidez e política monetária em uma leitura institucional para o investidor de varejo",
+  "description": "Dólar, juros, liquidez e risco continuam sendo a linguagem central dos ciclos globais. Entenda como leitura de câmbio e política monetária organiza decisões patrimoniais.",
+  "category": "monetary-policy",
+  "author": "Varejo Investidor Research",
+  "personaLead": "harpia",
+  "datePublished": "2026-02-10",
+  "dateModified": "2026-03-08",
+  "image": "/insights/covers/dolar-juros-e-mercado-global.svg",
+  "imageAlt": "Ilustração editorial com curva dourada sobre grade escura representando dólar, juros e liquidez",
+  "imageCaption": "Arte editorial Varejo Investidor Research — leitura de dólar como termômetro de liquidez internacional.",
+  "tags": ["Dólar", "Política monetária", "Liquidez", "Fed", "Geopolítica financeira"],
+  "relatedPosts": ["forex-ouro-e-petroleo", "ciclos-economicos-varejo", "etfs-acoes-globais-patrimonio"],
+  "seoTitle": "O que o dólar revela sobre o mercado global | Varejo Investidor",
+  "seoDescription": "Como taxas de juros, liquidez e política monetária nos EUA e no mundo reorganizam ativos — leitura editorial para o investidor de varejo.",
+  "introduction": "O dólar não é apenas uma moeda de cotação. Ele condensa expectativas sobre política monetária americana, fluxos internacionais e o apetite global por risco. Quando bancos centrais ajustam condições financeiras, ativos deixam de se mover de forma isolada: renda fixa, crédito, commodities e ações passam a responder em cascata.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "liquidez-e-juros",
+      "level": 2,
+      "text": "Liquidez, juros e o preço do dinheiro"
+    },
+    {
+      "type": "paragraph",
+      "text": "Política monetária funciona como preço do dinheiro no tempo. Quando autoridades elevam ou reduzem o custo dos empréstimos, alteram incentivos para consumo, investimento e especulação. O Federal Reserve publica orientações e dados que ajudam o mercado a formar expectativas — não como previsão de curso, mas como mapa de variáveis que costumam aparecer antes de movimentos relevantes em ativos."
+    },
+    {
+      "type": "persona",
+      "persona": "harpia",
+      "title": "Leitura Harpia",
+      "text": "A Harpia observa como o ciclo do dólar conversa com fluxos para mercados emergentes, reservas e tensões geopolíticas. O objetivo não é adivinhar um nível de câmbio, e sim entender se o cenário favorece ou penaliza ativos denominados em moeda forte."
+    },
+    {
+      "type": "heading",
+      "id": "indice-dolar",
+      "level": 2,
+      "text": "Índice do dólar e correlações práticas"
+    },
+    {
+      "type": "paragraph",
+      "text": "Índices amplos de dólar resumem a performance da moeda americana frente a um cesto. Esse movimento se conecta a commodities cotadas em dólar, ao custo de financiamento em moeda forte e ao diferencial de juros entre países. Para o investidor de varejo, a pergunta útil é: minha carteira está excessivamente concentrada em um único vetor macro?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Renda fixa global e duração passam a reagir com mais intensidade quando expectativas de juros mudam.",
+        "Moedas emergentes podem sofrer quando o dólar se fortalece e o crédito internacional fica mais caro.",
+        "Multimercados e estratégias flexíveis ganham importância como camada de adaptação a diferentes regimes."
+      ]
+    },
+    {
+      "type": "quote",
+      "text": "Entender macro não elimina volatilidade — organiza o lugar do risco dentro do patrimônio.",
+      "cite": "Metodologia Varejo Investidor"
+    },
+    {
+      "type": "heading",
+      "id": "implicacoes-patrimonio",
+      "level": 2,
+      "text": "Implicações para construção patrimonial"
+    },
+    {
+      "type": "paragraph",
+      "text": "Exposição internacional não se resume a comprar um ativo fora do país. Envolve moeda, liquidez, tributação e horizonte. Quando o dólar sobe rapidamente, investidores podem ter ganho em moeda e perda em preço de ativo ao mesmo tempo — ou o contrário. Uma alocação consciente separa convicção de longo prazo de aposta macro de curto prazo."
+    },
+    {
+      "type": "persona",
+      "persona": "formiga",
+      "title": "Leitura Formiga",
+      "text": "A Formiga traduz o cenário em organização: reserva em moeda forte, parcelamento de aportes e limites de exposição por classe, evitando concentração em um único narrativo de mercado."
+    },
+    {
+      "type": "table",
+      "caption": "Checklist editorial (sem recomendação individual)",
+      "headers": ["Dimensão", "Pergunta para o investidor"],
+      "rows": [
+        ["Liquidez", "Consigo sustentar a posição se o ciclo demorar mais que o esperado?"],
+        ["Moeda", "Qual parte da carteira depende da direção do dólar?"],
+        ["Correlação", "Meus ativos reagem da mesma forma em estresse?"],
+        ["Governança", "Tenho regras claras para rebalanceamento?"]
+      ]
+    }
+  ],
+  "sources": [
+    { "label": "Federal Reserve — painel de política monetária", "url": "https://www.federalreserve.gov/monetarypolicy.htm" },
+    { "label": "BIS — relatórios de mercados globais", "url": "https://www.bis.org/publ/index.htm" }
+  ],
+  "faq": [
+    {
+      "question": "Artigos Globais oferecem recomendação personalizada?",
+      "answer": "Não. O conteúdo é educativo e analítico. Não substitui planejamento financeiro, gestão de risco ou assessoria individual."
+    },
+    {
+      "question": "Devo usar o dólar como único indicador?",
+      "answer": "O dólar é um termômetro importante, mas incompleto. Combine leitura de juros, crédito, liquidez e fundamentos dos ativos que você realmente possui."
+    }
+  ]
+}

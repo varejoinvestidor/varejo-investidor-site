@@ -1,0 +1,87 @@
+{
+  "slug": "etfs-acoes-globais-patrimonio",
+  "locale": "pt",
+  "translationKey": "etfs-global-wealth",
+  "status": "published",
+  "title": "ETFs e ações globais na construção de patrimônio",
+  "subtitle": "Diversificação, moeda e horizonte em carteiras internacionais",
+  "description": "Carteiras globais começam com diversificação, moeda forte e estrutura de longo prazo — não com lista de tickers da semana.",
+  "category": "wealth",
+  "author": "Varejo Investidor Research",
+  "personaLead": "formiga",
+  "datePublished": "2026-03-08",
+  "dateModified": "2026-03-08",
+  "image": "/insights/covers/etfs-acoes-globais-patrimonio.svg",
+  "imageAlt": "Barras ascendentes representando diversificação em ETFs globais",
+  "imageCaption": "Arte editorial — alocação global com método.",
+  "tags": ["ETFs", "Ações internacionais", "Diversificação", "Patrimônio", "Moeda"],
+  "relatedPosts": ["dolar-juros-e-mercado-global", "ciclos-economicos-varejo", "forex-ouro-e-petroleo"],
+  "seoTitle": "ETFs e ações globais na construção de patrimônio | Varejo Investidor",
+  "seoDescription": "Como combinar ETFs e ações internacionais na construção patrimonial com diversificação, moeda e gestão de risco.",
+  "introduction": "ETFs democratizaram acesso a índices e temas globais. Ainda assim, escolher um ticker sem política de alocação transforma diversificação em aparência estética. Construção patrimonial exige combinação de geografia, setor, fator de risco e moeda.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "etfs-papel",
+      "level": 2,
+      "text": "O papel dos ETFs na carteira"
+    },
+    {
+      "type": "paragraph",
+      "text": "ETFs podem funcionar como núcleo de índice amplo, satélite temático ou camada de hedge. Custos, replicação, liquidez do fundo e diferença entre preço e valor patrimonial importam na execução. Prospectos e relatórios do gestor são a fonte primária — não títulos de blog genéricos."
+    },
+    {
+      "type": "persona",
+      "persona": "formiga",
+      "title": "Leitura Formiga",
+      "text": "A Formiga começa pelo plano: meta de horizonte, aporte mensal e limite de volatilidade aceitável. ETFs entram para cumprir o plano, não para substituí-lo."
+    },
+    {
+      "type": "heading",
+      "id": "acoes-globais",
+      "level": 2,
+      "text": "Ações internacionais e moeda"
+    },
+    {
+      "type": "paragraph",
+      "text": "Comprar empresa listada em outra bolsa adiciona exposição cambial. Em períodos de dólar forte, parte do retorno pode vir da moeda; em reversões, o efeito pode ser inverso. Relatórios anuais e demonstrações em moeda de listagem ajudam a entender o negócio além da cotação."
+    },
+    {
+      "type": "table",
+      "caption": "Camadas típicas de uma arquitetura patrimonial (ilustrativo)",
+      "headers": ["Camada", "Função"],
+      "rows": [
+        ["Liquidez", "Reserva e compromissos de curto prazo"],
+        ["Núcleo global", "Índices amplos ou ETFs equivalentes"],
+        ["Satélites", "Temas, setores ou fatores com limite de peso"],
+        ["Proteção", "Hedge cambial ou ativos de baixa correlação quando pertinente"]
+      ]
+    },
+    {
+      "type": "heading",
+      "id": "rebalanceamento",
+      "level": 2,
+      "text": "Rebalanceamento com disciplina"
+    },
+    {
+      "type": "paragraph",
+      "text": "Rebalancear não é prever o futuro. É realinhar pesos quando mercados desviam a carteira dos limites acordados. A cadência pode ser por calendário ou por bandas — o essencial é registrar regras antes do estresse."
+    },
+    {
+      "type": "persona",
+      "persona": "lobo",
+      "title": "Leitura Lobo",
+      "text": "O Lobo revisa satélites com mais frequência que o núcleo, evitando que experimentos de curto prazo contaminem o horizonte estrutural."
+    }
+  ],
+  "sources": [
+    { "label": "IOSCO — principles for ETFs", "url": "https://www.iosco.org/" },
+    { "label": "CVM — fundos e ETFs (educação)", "url": "https://www.gov.br/cvm/pt-br/canais_atendimento/investidor" }
+  ],
+  "faq": [
+    {
+      "question": "Quantos ETFs são suficientes?",
+      "answer": "Não existe número mágico. O critério é cobertura intencional sem sobreposição redundante e com custos agregados controlados."
+    }
+  ]
+}

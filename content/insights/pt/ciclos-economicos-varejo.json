@@ -1,0 +1,81 @@
+{
+  "slug": "ciclos-economicos-varejo",
+  "locale": "pt",
+  "translationKey": "economic-cycles-retail",
+  "status": "published",
+  "title": "Por que o varejo precisa entender ciclos econômicos",
+  "subtitle": "Liquidez, risco e oportunidade em perspectivas de médio prazo",
+  "description": "Ciclos explicam risco, oportunidade, liquidez e construção patrimonial. Aprenda a posicionar decisões sem repetir erros de fase.",
+  "category": "risk",
+  "author": "Varejo Investidor Research",
+  "personaLead": "formiga",
+  "datePublished": "2026-02-26",
+  "dateModified": "2026-03-08",
+  "image": "/insights/covers/ciclos-economicos-varejo.svg",
+  "imageAlt": "Curvas sobrepostas representando ciclos de liquidez",
+  "imageCaption": "Arte editorial — ciclos como mapa de risco, não como bola de cristal.",
+  "tags": ["Ciclos", "Liquidez", "Gestão de risco", "Macro", "Patrimônio"],
+  "relatedPosts": ["dolar-juros-e-mercado-global", "etfs-acoes-globais-patrimonio", "bitcoin-liquidez-e-risco"],
+  "seoTitle": "Por que o varejo precisa entender ciclos econômicos | Varejo Investidor",
+  "seoDescription": "Ciclos econômicos organizam risco, liquidez e construção patrimonial para o investidor de varejo — metodologia Formiga, Lobo e Harpia.",
+  "introduction": "Ciclos não são ferramenta de marketing. São a forma como economias alternam expansão, desaceleração e recuperação. O investidor que ignora o estágio do ciclo tende a comprar euforia e vender pânico — comportamento documentado em estudos comportamentais, mas evitável com processo.",
+  "blocks": [
+    {
+      "type": "heading",
+      "id": "fases",
+      "level": 2,
+      "text": "Fases que importam para o varejo"
+    },
+    {
+      "type": "paragraph",
+      "text": "Em fases de expansão, o crédito fica mais acessível e o mercado recompensa risco. Em desacelerações, fluxos migram para qualidade, liquidez e proteção. Nenhuma fase dura para sempre, e cronometrar o topo é improdutivo. O foco é adequar alavancagem, prazos e reservas."
+    },
+    {
+      "type": "persona",
+      "persona": "formiga",
+      "title": "Leitura Formiga",
+      "text": "A Formiga prioriza reserva de emergência, aportes programados e metas escritas. Ciclos mudam o humor do mercado, mas não mudam a necessidade de base patrimonial."
+    },
+    {
+      "type": "heading",
+      "id": "liquidez-comportamento",
+      "level": 2,
+      "text": "Liquidez e comportamento"
+    },
+    {
+      "type": "paragraph",
+      "text": "Liquidez não é só dinheiro parado na conta. É capacidade de agir quando o mercado oferece preços diferentes do consenso. Sem liquidez, o investidor vira refém do calendário — vende quando deveria manter ou congela quando deveria rebalancear com método."
+    },
+    {
+      "type": "persona",
+      "persona": "lobo",
+      "title": "Leitura Lobo",
+      "text": "O Lobo traduz o ciclo em cenários: base, adverso e otimista. Cada um exige tamanho de posição diferente e gatilhos de revisão explícitos."
+    },
+    {
+      "type": "quote",
+      "text": "Processo protege quando a narrativa da mídia empurra decisões impulsivas.",
+      "cite": "Varejo Investidor"
+    },
+    {
+      "type": "heading",
+      "id": "patrimonio-longo-prazo",
+      "level": 2,
+      "text": "Patrimônio e horizonte"
+    },
+    {
+      "type": "paragraph",
+      "text": "Construir patrimônio atravessa múltiplos ciclos. Estratégias que funcionaram em um único período de queda de juros podem sofrer quando o regime muda. Por isso, artigos desta série enfatizam diversificação geográfica, moeda e classe de ativos — sempre alinhadas ao perfil real do investidor."
+    }
+  ],
+  "sources": [
+    { "label": "IMF — World Economic Outlook", "url": "https://www.imf.org/en/Publications/WEO" },
+    { "label": "OECD — Economic outlook", "url": "https://www.oecd.org/economic-outlook/" }
+  ],
+  "faq": [
+    {
+      "question": "É possível prever o próximo ciclo com exatidão?",
+      "answer": "Não com exatidão. O objetivo é reconhecer sinais de fase e ajustar risco — não acertar o dia do virada."
+    }
+  ]
+}

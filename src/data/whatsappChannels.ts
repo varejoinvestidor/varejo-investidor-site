@@ -118,6 +118,13 @@ export function getLoboChannelUrl(locale: string): string | null {
   return getWhatsAppChannelUrl(locale, "lobo");
 }
 
+const PT_LOBO_CHANNEL_FALLBACK = whatsappChannels.pt?.lobo ?? "https://whatsapp.com/channel/0029VasGTTE6RGJD46g47c1h";
+
+/** Canal Lobo do idioma do site, com fallback EN → PT. */
+export function getLoboChannelUrlWithFallback(locale: string): string {
+  return getLoboChannelUrl(locale) ?? getLoboChannelUrl("en") ?? PT_LOBO_CHANNEL_FALLBACK;
+}
+
 export function getLoboChannelButtonLabel(locale: string): string {
   const mapped = siteLocaleToWhatsAppLocale(locale);
   if (!mapped) return "JOIN THE WOLF CHANNEL";

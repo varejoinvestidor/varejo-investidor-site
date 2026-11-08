@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
 import type { Locale } from "../i18n";
 import { absoluteSiteUrl } from "../config/site";
-import { getInsightsPath, getPost, insightsBasePath, insightsHero, insightLocales } from "./insightsContent";
+import { getTranslationAlternates } from "./insights/registry";
+import { getInsightsPath, getPost, getPostsByLocale, insightsBasePath, insightsHero } from "./insightsContent";
 
-function languageAlternates(slug?: string) {
+function hubLanguageAlternates() {
   return Object.fromEntries(
-    insightLocales.map((locale) => {
+    (Object.keys(insightsBasePath) as Locale[])
+      .filter((locale) => getPostsByLocale(locale).length > 0)
+      .map((locale) => {
+        const hreflang = locale === "pt" ? "pt-BR" : locale;
+        return [hreflang, getInsightsPath(locale)];
+      }),
+  );
+}
+
+function postLanguageAlternates(post: NonNullable<ReturnType<typeof getPost>>) {
+  const alternates = getTranslationAlternates(post.translationKey);
+  if (!alternates.length) return undefined;
+  return Object.fromEntries(
+    alternates.map(({ locale, slug }) => {
       const hreflang = locale === "pt" ? "pt-BR" : locale;
       return [hreflang, getInsightsPath(locale, slug)];
     }),
@@ -15,22 +29,30 @@ function languageAlternates(slug?: string) {
 export function createInsightsMetadata(locale: Locale): Metadata {
   const hero = insightsHero[locale];
   const path = insightsBasePath[locale];
+  const url = absoluteSiteUrl(path);
 
   return {
     title: `${hero.title} | Varejo Investidor`,
     description: hero.metaDescription,
     alternates: {
       canonical: path,
-      languages: languageAlternates(),
+      languages: hubLanguageAlternates(),
+      ...(locale === "pt" ? { types: { "application/rss+xml": "/artigos-globais/feed.xml" } } : {}),
     },
     openGraph: {
       title: `${hero.title} | Varejo Investidor`,
       description: hero.metaDescription,
-      url: absoluteSiteUrl(path),
+      url,
       siteName: "Varejo Investidor",
       type: "website",
       locale: locale === "pt" ? "pt_BR" : locale,
     },
+    twitter: {
+      card: "summary_large_image",
+      title: `${hero.title} | Varejo Investidor`,
+      description: hero.metaDescription,
+    },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -39,19 +61,21 @@ export function createInsightPostMetadata(locale: Locale, slug: string): Metadat
 
   if (!post) {
     return {
-      title: "Insight | Varejo Investidor",
+      title: "Artigo | Varejo Investidor",
       description: insightsHero[locale].metaDescription,
+      robots: { index: false, follow: false },
     };
   }
 
   const path = getInsightsPath(locale, slug);
+  const languages = postLanguageAlternates(post);
 
   return {
     title: post.seoTitle,
     description: post.seoDescription,
     alternates: {
       canonical: path,
-      languages: languageAlternates(slug),
+      ...(languages ? { languages } : {}),
     },
     openGraph: {
       title: post.seoTitle,
@@ -61,7 +85,16 @@ export function createInsightPostMetadata(locale: Locale, slug: string): Metadat
       type: "article",
       locale: locale === "pt" ? "pt_BR" : locale,
       publishedTime: post.date,
+      modifiedTime: post.dateModified,
       authors: [post.author],
+      images: [{ url: absoluteSiteUrl(post.image), alt: post.imageAlt }],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: post.seoTitle,
+      description: post.seoDescription,
+      images: [absoluteSiteUrl(post.image)],
+    },
+    robots: { index: true, follow: true },
   };
 }

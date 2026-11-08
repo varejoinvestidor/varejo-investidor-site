@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title">
+  <title id="title">Dólar, juros e liquidez global</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0c10"/>
+      <stop offset="100%" stop-color="#141820"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8b6a2b"/>
+      <stop offset="50%" stop-color="#c99b3e"/>
+      <stop offset="100%" stop-color="#6e5424"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity="0.12" stroke="#c99b3e" stroke-width="1">
+    <path d="M0 120H1600M0 240H1600M0 360H1600M0 480H1600M0 600H1600M0 720H1600M0 840H1600"/>
+    <path d="M200 0V900M400 0V900M600 0V900M800 0V900M1000 0V900M1200 0V900M1400 0V900"/>
+  </g>
+  <path d="M120 680 C 320 520, 420 760, 620 590 S 980 420, 1480 300" fill="none" stroke="url(#gold)" stroke-width="4"/>
+  <rect x="120" y="120" width="420" height="8" fill="url(#gold)"/>
+  <text x="120" y="210" fill="#f4f0e8" font-family="Georgia, serif" font-size="56">Dólar · Juros · Liquidez</text>
+  <text x="120" y="270" fill="#c99b3e" font-family="ui-sans-serif, system-ui" font-size="22" letter-spacing="6">VAREJO INVESTIDOR RESEARCH</text>
+</svg>

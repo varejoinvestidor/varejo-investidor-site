@@ -1,32 +1,11 @@
 import type { Locale } from "../i18n";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "./marketContent";
+import { getCategoryLabel, migrateLegacyCategory } from "./insights/categories";
+import { editorialPosts } from "./insights/registry";
+import type { InsightCategoryKey, InsightPost } from "./insights/types";
 
-export type InsightCategoryKey =
-  | "macro"
-  | "forex"
-  | "stocks"
-  | "crypto"
-  | "commodities"
-  | "etfs"
-  | "risk"
-  | "wealth";
-
-export type InsightPost = {
-  slug: string;
-  locale: Locale;
-  title: string;
-  description: string;
-  category: InsightCategoryKey;
-  author: string;
-  date: string;
-  readingTime: string;
-  image: string;
-  tags: string[];
-  content: string[];
-  relatedPosts: string[];
-  seoTitle: string;
-  seoDescription: string;
-};
+export type { InsightCategoryKey, InsightPost, InsightContentBlock } from "./insights/types";
+export { getCategoryLabel, insightCategories, insightCategoryKeys } from "./insights/categories";
 
 export const insightsBasePath: Record<Locale, string> = {
   pt: "/artigos-globais",
@@ -194,6 +173,16 @@ export const insightLabels: Record<
     harpia: string;
     postCtaTitle: string;
     postCtaText: string;
+    search?: string;
+    searchPlaceholder?: string;
+    noResults?: string;
+    loadMore?: string;
+    share?: string;
+    toc?: string;
+    sources?: string;
+    updated?: string;
+    editorialDesk?: string;
+    marketsNav?: string;
   }
 > = {
   pt: {
@@ -220,6 +209,16 @@ export const insightLabels: Record<
     harpia: "Observa patrim\u00F4nio, prote\u00E7\u00E3o, moedas fortes e estrutura internacional.",
     postCtaTitle: "Aprofunde sua leitura dentro da forma\u00E7\u00E3o",
     postCtaText: "Conecte este artigo \u00E0 jornada Formiga, Lobo e Harpia para evoluir com m\u00E9todo.",
+    search: "Buscar",
+    searchPlaceholder: "Buscar por título, tag ou tema…",
+    noResults: "Nenhum artigo encontrado para este filtro.",
+    loadMore: "Carregar mais artigos",
+    share: "Compartilhar",
+    toc: "Neste artigo",
+    sources: "Fontes e referências",
+    updated: "Atualizado em",
+    editorialDesk: "Mesa de pesquisa",
+    marketsNav: "Navegar por mercados",
   },
   en: {
     nav: "Articles",
@@ -245,6 +244,16 @@ export const insightLabels: Record<
     harpia: "Sees wealth, protection, strong currencies and international structure.",
     postCtaTitle: "Deepen your reading inside the education path",
     postCtaText: "Connect this article to the Formiga, Lobo and Harpia journey to evolve with method.",
+    search: "Search",
+    searchPlaceholder: "Search by title, tag or topic…",
+    noResults: "No articles found for this filter.",
+    loadMore: "Load more articles",
+    share: "Share",
+    toc: "In this article",
+    sources: "Sources and references",
+    updated: "Updated on",
+    editorialDesk: "Research desk",
+    marketsNav: "Browse markets",
   },
   es: {
     nav: "Art\u00EDculos",
@@ -270,6 +279,86 @@ export const insightLabels: Record<
     harpia: "Observa patrimonio, proteccion, monedas fuertes y estructura internacional.",
     postCtaTitle: "Profundiza tu lectura dentro de la formacion",
     postCtaText: "Conecta este art\u00EDculo con la jornada Formiga, Lobo y Harpia para evolucionar con metodo.",
+    search: "Buscar",
+    searchPlaceholder: "Buscar por titulo, etiqueta o tema…",
+    noResults: "No se encontraron articulos para este filtro.",
+    loadMore: "Cargar mas articulos",
+    share: "Compartir",
+    toc: "En este articulo",
+    sources: "Fuentes y referencias",
+    updated: "Actualizado el",
+    editorialDesk: "Mesa de investigacion",
+    marketsNav: "Explorar mercados",
+  },
+  fr: {
+    nav: "Articles",
+    content: "Analyses",
+    latest: "Dernière publication",
+    recent: "Publications récentes",
+    categories: "Catégories",
+    all: "Tous",
+    read: "Lire l’analyse",
+    whatsappTitle: "Commencer par le Canal Formiga",
+    newsletterTitle: "Recevoir les articles mondiaux",
+    newsletterText: "Analyses, cycles et contenus stratégiques Varejo Investidor par e-mail ou WhatsApp.",
+    email: "E-mail",
+    newsletterButton: "Recevoir les articles",
+    newsletterSuccess: "Demande enregistrée.",
+    markets: "Marchés liés",
+    faq: "Questions fréquentes",
+    related: "Articles liés",
+    education: "Voir la formation",
+    levelBlockTitle: "Comment chaque niveau aborde ce thème",
+    formiga: "Comprend l’impact sur les revenus, la devise, l’organisation et le premier capital.",
+    lobo: "Analyse scénario, risque, liquidité et opportunité opérationnelle.",
+    harpia: "Observe patrimoine, protection, devises fortes et structure internationale.",
+    postCtaTitle: "Approfondir dans le parcours de formation",
+    postCtaText: "Reliez cet article au parcours Fourmi, Loup et Harpie pour évoluer avec méthode.",
+    search: "Rechercher",
+    searchPlaceholder: "Rechercher par titre, tag ou thème…",
+    noResults: "Aucun article ne correspond à ce filtre.",
+    loadMore: "Charger plus d’articles",
+    share: "Partager",
+    toc: "Dans cet article",
+    sources: "Sources et références",
+    updated: "Mis à jour le",
+    editorialDesk: "Desk de recherche",
+    marketsNav: "Parcourir les marchés",
+  },
+  de: {
+    nav: "Artikel",
+    content: "Analysen",
+    latest: "Neueste Analyse",
+    recent: "Aktuelle Beiträge",
+    categories: "Kategorien",
+    all: "Alle",
+    read: "Analyse lesen",
+    whatsappTitle: "Mit dem Formiga-Kanal starten",
+    newsletterTitle: "Globale Artikel erhalten",
+    newsletterText: "Analysen, Zyklen und strategische Inhalte von Varejo Investidor per E-Mail oder WhatsApp.",
+    email: "E-Mail",
+    newsletterButton: "Artikel erhalten",
+    newsletterSuccess: "Ihre Anfrage wurde registriert.",
+    markets: "Verbundene Märkte",
+    faq: "Häufige Fragen",
+    related: "Verwandte Artikel",
+    education: "Ausbildung ansehen",
+    levelBlockTitle: "Wie jede Stufe dieses Thema liest",
+    formiga: "Versteht die Basiswirkung auf Einkommen, Währung, Organisation und erstes Kapital.",
+    lobo: "Analysiert Szenario, Risiko, Liquidität und operative Chancen.",
+    harpia: "Beobachtet Vermögen, Schutz, starke Währungen und internationale Struktur.",
+    postCtaTitle: "Vertiefung im Ausbildungsweg",
+    postCtaText: "Verknüpfen Sie diesen Artikel mit Formiga, Wolf und Harpy für methodisches Wachstum.",
+    search: "Suchen",
+    searchPlaceholder: "Nach Titel, Tag oder Thema suchen…",
+    noResults: "Keine Artikel für diesen Filter.",
+    loadMore: "Weitere Artikel laden",
+    share: "Teilen",
+    toc: "In diesem Artikel",
+    sources: "Quellen und Referenzen",
+    updated: "Aktualisiert am",
+    editorialDesk: "Research Desk",
+    marketsNav: "Märkte erkunden",
   },
   hi: {
     nav: "\u0932\u0947\u0916",
@@ -420,28 +509,407 @@ export const insightLabels: Record<
     harpia: "Nhìn vào tài sản, bảo vệ, tiền tệ mạnh và cấu trúc quốc tế.",
     postCtaTitle: "Đào sâu góc nhìn trong lộ trình giáo dục",
     postCtaText: "Kết nối góc nhìn này với hành trình Kiến, Sói và Đại Bàng Harpy để phát triển có phương pháp.",
+    search: "Tìm kiếm",
+    searchPlaceholder: "Tìm theo tiêu đề, thẻ hoặc chủ đề…",
+    noResults: "Không có bài viết nào cho bộ lọc này.",
+    loadMore: "Tải thêm bài viết",
+    share: "Chia sẻ",
+    toc: "Trong bài viết này",
+    sources: "Nguồn và tham chiếu",
+    updated: "Cập nhật",
+    editorialDesk: "Ban biên tập",
+    marketsNav: "Duyệt thị trường",
+  },
+  it: {
+    nav: "Articoli",
+    content: "Analisi",
+    latest: "Ultima analisi",
+    recent: "Articoli recenti",
+    categories: "Categorie",
+    all: "Tutti",
+    read: "Leggi analisi",
+    whatsappTitle: "Inizia dal Canale Formiga",
+    newsletterTitle: "Ricevi articoli globali",
+    newsletterText: "Analisi, cicli e contenuti strategici di Varejo Investidor via e-mail o WhatsApp.",
+    email: "E-mail",
+    newsletterButton: "Ricevi articoli",
+    newsletterSuccess: "Richiesta registrata.",
+    markets: "Mercati collegati",
+    faq: "Domande frequenti",
+    related: "Articoli correlati",
+    education: "Vedi formazione",
+    levelBlockTitle: "Come ogni livello legge questo tema",
+    formiga: "Comprende l'impatto di base su reddito, valuta, organizzazione e primo capitale.",
+    lobo: "Analizza scenario, rischio, liquidità e opportunità operativa.",
+    harpia: "Osserva patrimonio, protezione, valute forti e struttura internazionale.",
+    postCtaTitle: "Approfondisci nella formazione",
+    postCtaText: "Collega questo articolo al percorso Formica, Lupo e Arpia per evolvere con metodo.",
+    search: "Cerca",
+    searchPlaceholder: "Cerca per titolo, tag o tema…",
+    noResults: "Nessun articolo per questo filtro.",
+    loadMore: "Carica altri articoli",
+    share: "Condividi",
+    toc: "In questo articolo",
+    sources: "Fonti e riferimenti",
+    updated: "Aggiornato il",
+    editorialDesk: "Desk di ricerca",
+    marketsNav: "Sfoglia i mercati",
+  },
+  fa: {
+    nav: "مقالات",
+    content: "تحلیل‌ها",
+    latest: "آخرین تحلیل",
+    recent: "مطالب اخیر",
+    categories: "دسته‌ها",
+    all: "همه",
+    read: "خواندن تحلیل",
+    whatsappTitle: "شروع با کانال Formiga",
+    newsletterTitle: "دریافت مقالات جهانی",
+    newsletterText: "تحلیل‌ها، چرخه‌ها و محتوای راهبردی Varejo Investidor از طریق ایمیل یا واتساپ.",
+    email: "ایمیل",
+    newsletterButton: "دریافت مقالات",
+    newsletterSuccess: "درخواست شما ثبت شد.",
+    markets: "بازارهای مرتبط",
+    faq: "سوالات متداول",
+    related: "مطالب مرتبط",
+    education: "مشاهده آموزش",
+    levelBlockTitle: "هر سطح این موضوع را چگونه می‌خواند",
+    formiga: "اثر پایه بر درآمد، ارز، سازماندهی و سرمایه اول را درک می‌کند.",
+    lobo: "سناریو، ریسک، نقدشوندگی و فرصت عملیاتی را تحلیل می‌کند.",
+    harpia: "ثروت، حفاظت، ارزهای قوی و ساختار بین‌المللی را می‌بیند.",
+    postCtaTitle: "عمیق‌تر در مسیر آموزش بخوانید",
+    postCtaText: "این مقاله را به مسیر Formiga، Wolf و Harpy وصل کنید تا با روش پیش بروید.",
+    search: "جستجو",
+    searchPlaceholder: "جستجو بر اساس عنوان، برچسب یا موضوع…",
+    noResults: "مقاله‌ای برای این فیلتر یافت نشد.",
+    loadMore: "بارگذاری مقالات بیشتر",
+    share: "اشتراک‌گذاری",
+    toc: "در این مقاله",
+    sources: "منابع و مراجع",
+    updated: "به‌روزرسانی",
+    editorialDesk: "میز تحقیق",
+    marketsNav: "مرور بازارها",
+  },
+  pl: {
+    nav: "Artykuły",
+    content: "Analizy",
+    latest: "Najnowsza analiza",
+    recent: "Ostatnie artykuły",
+    categories: "Kategorie",
+    all: "Wszystkie",
+    read: "Czytaj analizę",
+    whatsappTitle: "Zacznij od kanału Formiga",
+    newsletterTitle: "Otrzymuj artykuły globalne",
+    newsletterText: "Analizy, cykle i treści strategiczne Varejo Investidor e-mailem lub WhatsApp.",
+    email: "E-mail",
+    newsletterButton: "Otrzymuj artykuły",
+    newsletterSuccess: "Zapytanie zarejestrowane.",
+    markets: "Powiązane rynki",
+    faq: "FAQ",
+    related: "Powiązane artykuły",
+    education: "Zobacz szkolenie",
+    levelBlockTitle: "Jak każdy poziom czyta ten temat",
+    formiga: "Rozumie podstawowy wpływ na dochód, walutę, organizację i pierwszy kapitał.",
+    lobo: "Analizuje scenariusz, ryzyko, płynność i okazje operacyjne.",
+    harpia: "Widzi majątek, ochronę, silne waluty i strukturę międzynarodową.",
+    postCtaTitle: "Pogłęb czytanie w ścieżce edukacji",
+    postCtaText: "Połącz ten artykuł ze ścieżką Formiga, Wolf i Harpy, by rozwijać się metodycznie.",
+    search: "Szukaj",
+    searchPlaceholder: "Szukaj po tytule, tagu lub temacie…",
+    noResults: "Brak artykułów dla tego filtru.",
+    loadMore: "Załaduj więcej artykułów",
+    share: "Udostępnij",
+    toc: "W tym artykule",
+    sources: "Źródła i odniesienia",
+    updated: "Zaktualizowano",
+    editorialDesk: "Biuro analiz",
+    marketsNav: "Przeglądaj rynki",
+  },
+  zh: {
+    nav: "文章",
+    content: "分析",
+    latest: "最新分析",
+    recent: "近期文章",
+    categories: "分类",
+    all: "全部",
+    read: "阅读分析",
+    whatsappTitle: "从 Formiga 频道开始",
+    newsletterTitle: "接收全球文章",
+    newsletterText: "通过邮件或 WhatsApp 获取 Varejo Investidor 的分析、周期与战略内容。",
+    email: "电子邮箱",
+    newsletterButton: "订阅文章",
+    newsletterSuccess: "您的请求已记录。",
+    markets: "相关市场",
+    faq: "常见问题",
+    related: "相关文章",
+    education: "查看培训",
+    levelBlockTitle: "各层级如何阅读该主题",
+    formiga: "理解对收入、货币、组织与首笔资本的基础影响。",
+    lobo: "分析情景、风险、流动性与操作机会。",
+    harpia: "关注财富、保护、强势货币与国际结构。",
+    postCtaTitle: "在教育路径中深入阅读",
+    postCtaText: "将本文与 Formiga、Wolf、Harpy 旅程连接，以方法化方式成长。",
+    search: "搜索",
+    searchPlaceholder: "按标题、标签或主题搜索…",
+    noResults: "此筛选条件下没有文章。",
+    loadMore: "加载更多文章",
+    share: "分享",
+    toc: "本文目录",
+    sources: "来源与参考",
+    updated: "更新于",
+    editorialDesk: "研究编辑台",
+    marketsNav: "浏览市场",
+  },
+  tl: {
+    nav: "Mga Artikulo",
+    content: "Analysis",
+    latest: "Pinakabagong analysis",
+    recent: "Kamakailang posts",
+    categories: "Mga Kategorya",
+    all: "Lahat",
+    read: "Basahin ang analysis",
+    whatsappTitle: "Magsimula sa Formiga Channel",
+    newsletterTitle: "Tumanggap ng Global Articles",
+    newsletterText: "Analysis, cycles at strategic content mula sa Varejo Investidor sa email o WhatsApp.",
+    email: "Email",
+    newsletterButton: "Kumuha ng artikulo",
+    newsletterSuccess: "Naitala ang iyong request.",
+    markets: "Konektadong markets",
+    faq: "FAQ",
+    related: "Kaugnay na posts",
+    education: "Tingnan ang Formasyon",
+    levelBlockTitle: "Paano binabasa ng bawat level ang paksang ito",
+    formiga: "Nauunawaan ang pangunahing epekto sa kita, currency, organisasyon at unang kapital.",
+    lobo: "Sinusuri ang scenario, risk, liquidity at operational opportunity.",
+    harpia: "Tumingin sa wealth, protection, malalakas na currencies at international structure.",
+    postCtaTitle: "Palalimin ang pagbasa sa education path",
+    postCtaText: "Ikonekta ang artikulong ito sa Formiga, Lobo at Harpia journey para lumago nang may metodo.",
+    search: "Maghanap",
+    searchPlaceholder: "Maghanap ayon sa title, tag o paksa…",
+    noResults: "Walang artikulo para sa filter na ito.",
+    loadMore: "Mag-load pa ng artikulo",
+    share: "Ibahagi",
+    toc: "Sa artikulong ito",
+    sources: "Mga source at reference",
+    updated: "Na-update noong",
+    editorialDesk: "Research desk",
+    marketsNav: "Mag-browse ng markets",
+  },
+  th: {
+    nav: "บทความ",
+    content: "บทวิเคราะห์",
+    latest: "การวิเคราะห์ล่าสุด",
+    recent: "โพสต์ล่าสุด",
+    categories: "หมวดหมู่",
+    all: "ทั้งหมด",
+    read: "อ่านบทวิเคราะห์",
+    whatsappTitle: "เริ่มจากช่อง Formiga",
+    newsletterTitle: "รับบทความระดับโลก",
+    newsletterText: "บทวิเคราะห์ วัฏจักร และเนื้อหาเชิงกลยุทธ์จาก Varejo Investidor ทางอีเมลหรือ WhatsApp",
+    email: "อีเมล",
+    newsletterButton: "รับบทความ",
+    newsletterSuccess: "บันทึกคำขอของคุณแล้ว",
+    markets: "ตลาดที่เชื่อมโยง",
+    faq: "คำถามที่พบบ่อย",
+    related: "โพสต์ที่เกี่ยวข้อง",
+    education: "ดูการฝึกอบรม",
+    levelBlockTitle: "แต่ละระดับอ่านหัวข้อนี้อย่างไร",
+    formiga: "เข้าใจผลกระทบพื้นฐานต่อรายได้ สกุลเงิน การจัดระเบียบ และทุนเริ่มต้น",
+    lobo: "วิเคราะห์สถานการณ์ ความเสี่ยง สภาพคล่อง และโอกาสเชิงปฏิบัติการ",
+    harpia: "มองเห็นความมั่งคั่ง การปกป้อง สกุลเงินแข็งแกร่ง และโครงสร้างระหว่างประเทศ",
+    postCtaTitle: "เจาะลึกการอ่านในเส้นทางการศึกษา",
+    postCtaText: "เชื่อมบทความนี้กับเส้นทาง Formiga, Lobo และ Harpia เพื่อพัฒนาอย่างมีวิธี",
+    search: "ค้นหา",
+    searchPlaceholder: "ค้นหาตามชื่อเรื่อง แท็ก หรือหัวข้อ…",
+    noResults: "ไม่พบบทความสำหรับตัวกรองนี้",
+    loadMore: "โหลดบทความเพิ่ม",
+    share: "แชร์",
+    toc: "ในบทความนี้",
+    sources: "แหล่งอ้างอิง",
+    updated: "อัปเดตเมื่อ",
+    editorialDesk: "ทีมวิจัย",
+    marketsNav: "เรียกดูตลาด",
+  },
+  ru: {
+    nav: "Статьи",
+    content: "Аналитика",
+    latest: "Последний анализ",
+    recent: "Недавние публикации",
+    categories: "Категории",
+    all: "Все",
+    read: "Читать анализ",
+    whatsappTitle: "Начните с канала Formiga",
+    newsletterTitle: "Получать глобальные статьи",
+    newsletterText: "Аналитика, циклы и стратегический контент Varejo Investidor по e-mail или WhatsApp.",
+    email: "E-mail",
+    newsletterButton: "Получать статьи",
+    newsletterSuccess: "Запрос зарегистрирован.",
+    markets: "Связанные рынки",
+    faq: "Частые вопросы",
+    related: "Похожие статьи",
+    education: "Смотреть обучение",
+    levelBlockTitle: "Как каждый уровень читает эту тему",
+    formiga: "Понимает базовое влияние на доход, валюту, организацию и первый капитал.",
+    lobo: "Анализирует сценарий, риск, ликвидность и операционные возможности.",
+    harpia: "Видит капитал, защиту, сильные валюты и международную структуру.",
+    postCtaTitle: "Углубите чтение в образовательном пути",
+    postCtaText: "Свяжите эту статью с путём Formiga, Lobo и Harpy для методичного роста.",
+    search: "Поиск",
+    searchPlaceholder: "Искать по заголовку, тегу или теме…",
+    noResults: "Нет статей для этого фильтра.",
+    loadMore: "Загрузить ещё статьи",
+    share: "Поделиться",
+    toc: "В этой статье",
+    sources: "Источники и ссылки",
+    updated: "Обновлено",
+    editorialDesk: "Аналитическая редакция",
+    marketsNav: "Обзор рынков",
+  },
+  ur: {
+    nav: "مضامین",
+    content: "تجزیات",
+    latest: "تازہ ترین تجزیہ",
+    recent: "حالیہ پوسٹس",
+    categories: "زمرے",
+    all: "سب",
+    read: "تجزیہ پڑھیں",
+    whatsappTitle: "Formiga چینل سے شروع کریں",
+    newsletterTitle: "عالمی مضامین حاصل کریں",
+    newsletterText: "Varejo Investidor کے تجزیے، چکر اور اسٹریٹجک مواد ای میل یا WhatsApp پر۔",
+    email: "ای میل",
+    newsletterButton: "مضامین حاصل کریں",
+    newsletterSuccess: "آپ کی درخواست درج ہو گئی۔",
+    markets: "منسلک مارکیٹس",
+    faq: "اکثر پوچھے گئے سوالات",
+    related: "متعلقہ پوسٹس",
+    education: "تعلیم دیکھیں",
+    levelBlockTitle: "ہر سطح یہ موضوع کیسے پڑھتی ہے",
+    formiga: "آمدنی، کرنسی، تنظیم اور پہلے سرمائے پر بنیادی اثر سمجھتا ہے۔",
+    lobo: "منظرنامہ، خطرہ، لیکویڈیٹی اور آپریشنل موقع کا تجزیہ کرتا ہے۔",
+    harpia: "دولت، تحفظ، مضبوط کرنسیوں اور بین الاقوامی ڈھانچے کو دیکھتا ہے۔",
+    postCtaTitle: "تعلیمی راستے میں مطالعہ گہرا کریں",
+    postCtaText: "اس مضمون کو Formiga، Lobo اور Harpia کے سفر سے جوڑیں تاکہ منظم طور پر ترقی کریں۔",
+    search: "تلاش",
+    searchPlaceholder: "عنوان، ٹیگ یا موضوع سے تلاش کریں…",
+    noResults: "اس فلٹر کے لیے کوئی مضمون نہیں ملا۔",
+    loadMore: "مزید مضامین لوڈ کریں",
+    share: "شیئر کریں",
+    toc: "اس مضمون میں",
+    sources: "ذرائع و حوالہ جات",
+    updated: "اپ ڈیٹ",
+    editorialDesk: "تحقیقی ڈیسک",
+    marketsNav: "مارکیٹس دیکھیں",
+  },
+  bn: {
+    nav: "আর্টিকেল",
+    content: "বিশ্লেষণ",
+    latest: "সর্বশেষ বিশ্লেষণ",
+    recent: "সাম্প্রতিক পোস্ট",
+    categories: "বিভাগ",
+    all: "সব",
+    read: "বিশ্লেষণ পড়ুন",
+    whatsappTitle: "Formiga চ্যানেল দিয়ে শুরু করুন",
+    newsletterTitle: "গ্লোবাল আর্টিকেল পান",
+    newsletterText: "Varejo Investidor-এর বিশ্লেষণ, চক্র ও কৌশলগত কনটেন্ট ইমেইল বা WhatsApp-এ।",
+    email: "ইমেইল",
+    newsletterButton: "আর্টিকেল পান",
+    newsletterSuccess: "আপনার অনুরোধ নথিভুক্ত হয়েছে।",
+    markets: "সংযুক্ত বাজার",
+    faq: "প্রায়শই জিজ্ঞাসিত প্রশ্ন",
+    related: "সম্পর্কিত পোস্ট",
+    education: "প্রশিক্ষণ দেখুন",
+    levelBlockTitle: "প্রতিটি স্তর এই বিষয় কীভাবে পড়ে",
+    formiga: "আয়, মুদ্রা, সংগঠন ও প্রথম পুঁজির মৌলিক প্রভাব বোঝে।",
+    lobo: "দৃশ্যপট, ঝুঁকি, তারল্য ও অপারেশনাল সুযোগ বিশ্লেষণ করে।",
+    harpia: "সম্পদ, সুরক্ষা, শক্তিশালী মুদ্রা ও আন্তর্জাতিক কাঠামো দেখে।",
+    postCtaTitle: "শিক্ষার পথে পড়া গভীর করুন",
+    postCtaText: "এই আর্টিকেলটি Formiga, Lobo ও Harpia যাত্রার সাথে যুক্ত করে পদ্ধতিগতভাবে এগিয়ে যান।",
+    search: "অনুসন্ধান",
+    searchPlaceholder: "শিরোনাম, ট্যাগ বা বিষয় অনুসারে খুঁজুন…",
+    noResults: "এই ফিল্টারের জন্য কোনো আর্টিকেল নেই।",
+    loadMore: "আরও আর্টিকেল লোড করুন",
+    share: "শেয়ার",
+    toc: "এই আর্টিকেলে",
+    sources: "উৎস ও রেফারেন্স",
+    updated: "আপডেট",
+    editorialDesk: "গবেষণা ডেস্ক",
+    marketsNav: "বাজার ব্রাউজ করুন",
+  },
+  ja: {
+    nav: "記事",
+    content: "分析",
+    latest: "最新の分析",
+    recent: "最近の投稿",
+    categories: "カテゴリ",
+    all: "すべて",
+    read: "分析を読む",
+    whatsappTitle: "Formigaチャンネルから始める",
+    newsletterTitle: "グローバル記事を受け取る",
+    newsletterText: "Varejo Investidorの分析、サイクル、戦略コンテンツをメールまたはWhatsAppで。",
+    email: "メール",
+    newsletterButton: "記事を受け取る",
+    newsletterSuccess: "リクエストを記録しました。",
+    markets: "関連マーケット",
+    faq: "よくある質問",
+    related: "関連記事",
+    education: "トレーニングを見る",
+    levelBlockTitle: "各レベルがこのテーマをどう読むか",
+    formiga: "所得、通貨、整理、最初の資本への基本的影響を理解する。",
+    lobo: "シナリオ、リスク、流動性、運用機会を分析する。",
+    harpia: "資産、保護、強い通貨、国際構造を見る。",
+    postCtaTitle: "教育パスで読みを深める",
+    postCtaText: "この記事をFormiga、Lobo、Harpiaの旅につなげ、方法論的に成長する。",
+    search: "検索",
+    searchPlaceholder: "タイトル、タグ、テーマで検索…",
+    noResults: "このフィルターに該当する記事がありません。",
+    loadMore: "さらに記事を読み込む",
+    share: "共有",
+    toc: "この記事の内容",
+    sources: "出典と参考",
+    updated: "更新日",
+    editorialDesk: "リサーチデスク",
+    marketsNav: "マーケットを見る",
+  },
+  ko: {
+    nav: "기사",
+    content: "분석",
+    latest: "최신 분석",
+    recent: "최근 게시물",
+    categories: "카테고리",
+    all: "전체",
+    read: "분석 읽기",
+    whatsappTitle: "Formiga 채널로 시작하기",
+    newsletterTitle: "글로벌 기사 받기",
+    newsletterText: "Varejo Investidor의 분석, 사이클, 전략 콘텐츠를 이메일 또는 WhatsApp으로.",
+    email: "이메일",
+    newsletterButton: "기사 받기",
+    newsletterSuccess: "요청이 등록되었습니다.",
+    markets: "연결된 시장",
+    faq: "자주 묻는 질문",
+    related: "관련 게시물",
+    education: "교육 보기",
+    levelBlockTitle: "각 레벨이 이 주제를 읽는 방식",
+    formiga: "소득, 통화, 조직, 첫 자본에 대한 기본 영향을 이해합니다.",
+    lobo: "시나리오, 리스크, 유동성, 운영 기회를 분석합니다.",
+    harpia: "자산, 보호, 강한 통화, 국제 구조를 봅니다.",
+    postCtaTitle: "교육 경로에서 읽기를 심화하세요",
+    postCtaText: "이 기사를 Formiga, Lobo, Harpy 여정과 연결해 방법적으로 성장하세요.",
+    search: "검색",
+    searchPlaceholder: "제목, 태그 또는 주제로 검색…",
+    noResults: "이 필터에 해당하는 기사가 없습니다.",
+    loadMore: "기사 더 불러오기",
+    share: "공유",
+    toc: "이 기사에서",
+    sources: "출처 및 참고",
+    updated: "업데이트",
+    editorialDesk: "리서치 데스크",
+    marketsNav: "시장 둘러보기",
   },
 };
 
-export const insightCategories: Record<Locale, Record<InsightCategoryKey, string>> = {
-  pt: { macro: "Macro Global", forex: "Forex", stocks: "Acoes", crypto: "Cripto", commodities: "Commodities", etfs: "ETFs", risk: "Risco", wealth: "Patrimonio" },
-  en: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
-  es: { macro: "Macro Global", forex: "Forex", stocks: "Acciones", crypto: "Cripto", commodities: "Commodities", etfs: "ETFs", risk: "Riesgo", wealth: "Patrimonio" },
-  hi: { macro: "ग्लोबल मैक्रो", forex: "Forex", stocks: "शेयर", crypto: "क्रिप्टो", commodities: "कमोडिटी", etfs: "ETFs", risk: "जोखिम", wealth: "संपत्ति" },
-  ar: { macro: "ماكرو عالمي", forex: "الفوركس", stocks: "الاسهم", crypto: "الكريبتو", commodities: "السلع", etfs: "ETFs", risk: "المخاطر", wealth: "الثروة" },
-  tr: { macro: "Kuresel Makro", forex: "Forex", stocks: "Hisseler", crypto: "Kripto", commodities: "Emtialar", etfs: "ETF'ler", risk: "Risk", wealth: "Varlik" },
-  id: { macro: "Makro Global", forex: "Forex", stocks: "Saham", crypto: "Kripto", commodities: "Komoditas", etfs: "ETF", risk: "Risiko", wealth: "Kekayaan" },
-  vi: { macro: "Vĩ mô toàn cầu", forex: "Forex", stocks: "Cổ Phiếu", crypto: "Tiền Điện Tử", commodities: "Hàng Hóa", etfs: "ETF", risk: "Rủi ro", wealth: "Tài sản" },
-  th: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
-  ru: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
-  ur: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
-  bn: { macro: "Global Macro", forex: "Forex", stocks: "Stocks", crypto: "Crypto", commodities: "Commodities", etfs: "ETFs", risk: "Risk", wealth: "Wealth" },
-  ja: { macro: "グローバルマクロ", forex: "Forex", stocks: "株式", crypto: "暗号資産", commodities: "商品", etfs: "ETF", risk: "リスク", wealth: "資産" },
-  ko: { macro: "글로벌 매크로", forex: "Forex", stocks: "주식", crypto: "암호화폐", commodities: "원자재", etfs: "ETF", risk: "리스크", wealth: "자산" },
-  he: { macro: "מאקרו גלובלי", forex: "Forex", stocks: "מניות", crypto: "קריפטו", commodities: "סחורות", etfs: "ETFs", risk: "סיכון", wealth: "הון" },
-};
+type LegacyCategory = InsightCategoryKey | "macro" | "commodities";
 
-const titleSets: Record<Locale, Array<[string, string, InsightCategoryKey, string]>> = {
+const titleSets: Record<Locale, Array<[string, string, LegacyCategory, string]>> = {
   pt: [
     ["dolar-juros-e-mercado-global", "O que o dolar revela sobre o mercado global", "macro", "Dolar, juros, liquidez e risco continuam sendo a linguagem central dos ciclos globais."],
     ["forex-ouro-e-petroleo", "Forex, ouro e petroleo: como os mercados se conectam", "forex", "Moedas, energia e metais contam a mesma historia por angulos diferentes."],
@@ -575,40 +1043,89 @@ function bodyCopy(locale: Locale) {
   return [first[locale] ?? first.en, second[locale] ?? second.en];
 }
 
-function makePost(locale: Locale, item: [string, string, InsightCategoryKey, string], index: number): InsightPost {
-  const [slug, title, category, description] = item;
+const translationKeys = [
+  "dollar-global-markets",
+  "forex-gold-oil",
+  "economic-cycles-retail",
+  "bitcoin-liquidity-risk",
+  "etfs-global-wealth",
+] as const;
+
+const editorialSlugByLocale = editorialPosts.reduce<Record<string, Set<string>>>((acc, post) => {
+  if (!acc[post.locale]) acc[post.locale] = new Set();
+  acc[post.locale].add(post.slug);
+  return acc;
+}, {});
+
+function makePost(locale: Locale, item: [string, string, InsightCategoryKey | "macro" | "commodities", string], index: number): InsightPost {
+  const [slug, title, rawCategory, description] = item;
+  const category = migrateLegacyCategory(rawCategory);
   const date = `2026-0${Math.min(index + 1, 5)}-0${index + 2}`;
   const read = locale === "pt" ? `${6 + index} min de leitura` : locale === "es" ? `${6 + index} min de lectura` : `${6 + index} min read`;
+  const intro = bodyCopy(locale)[0] ?? description;
 
   return {
     slug,
     locale,
+    translationKey: translationKeys[index] ?? slug,
+    status: "published",
     title,
+    subtitle: description,
     description,
     category,
     author: "Varejo Investidor",
     date,
+    dateModified: date,
     readingTime: read,
-    image: `/insights/${slug}.jpg`,
-    tags: [insightCategories[locale][category], "Varejo Investidor", "Global Markets"],
+    image: `/insights/covers/${slug}.svg`,
+    imageAlt: title,
+    tags: [getCategoryLabel(locale, category), "Varejo Investidor", "Global Markets"],
     content: [description, ...bodyCopy(locale)],
+    blocks: [],
+    introduction: intro,
     relatedPosts: titleSets[locale].filter((entry) => entry[0] !== slug).slice(0, 3).map((entry) => entry[0]),
     seoTitle: `${title} | Varejo Investidor`,
     seoDescription: description,
   };
 }
 
-export const insightPosts: InsightPost[] = Object.entries(titleSets).flatMap(([locale, posts]) =>
-  posts.map((post, index) => makePost(locale as Locale, post, index)),
+const generatedPosts: InsightPost[] = Object.entries(titleSets).flatMap(([locale, posts]) =>
+  posts
+    .map((post, index) => makePost(locale as Locale, post, index))
+    .filter((post) => !(editorialSlugByLocale[post.locale]?.has(post.slug))),
 );
+
+function sortByPublishedDesc(posts: InsightPost[]) {
+  return [...posts].sort((a, b) => b.date.localeCompare(a.date));
+}
+
+export const insightPosts: InsightPost[] = sortByPublishedDesc([...editorialPosts, ...generatedPosts]);
 
 export function getInsightsPath(locale: Locale, slug?: string) {
   return `${insightsBasePath[locale] ?? insightsBasePath.en}${slug ? `/${slug}` : ""}`;
 }
 
 export function getPostsByLocale(locale: Locale) {
-  const posts = insightPosts.filter((post) => post.locale === locale);
-  return posts.length ? posts : insightPosts.filter((post) => post.locale === "en");
+  const posts = sortByPublishedDesc(insightPosts.filter((post) => post.locale === locale && post.status === "published"));
+  return posts.length ? posts : sortByPublishedDesc(insightPosts.filter((post) => post.locale === "en" && post.status === "published"));
+}
+
+export function getFeaturedPost(locale: Locale) {
+  const posts = getPostsByLocale(locale);
+  return posts.find((post) => post.featured) ?? posts[0];
+}
+
+export function filterInsightPosts(
+  posts: InsightPost[],
+  options: { query?: string; category?: InsightCategoryKey | "all" },
+) {
+  const query = options.query?.trim().toLowerCase();
+  return posts.filter((post) => {
+    if (options.category && options.category !== "all" && post.category !== options.category) return false;
+    if (!query) return true;
+    const haystack = [post.title, post.subtitle, post.description, ...post.tags].join(" ").toLowerCase();
+    return haystack.includes(query);
+  });
 }
 
 export function getPost(locale: Locale, slug: string) {
