@@ -1,6 +1,8 @@
 # VI Publisher 1.0 — links de entrega
 
-Código publicado em: `https://github.com/varejoinvestidor/varejo-investidor-site` (branch `main`, commit com módulo Publisher).
+Código publicado em: `https://github.com/varejoinvestidor/varejo-investidor-site` (branch `main`). Deploy de produção no projeto Vercel `varejo-investidor-site-m9uy` (domínio **www.varejoinvestidor.com**).
+
+**Correção 404:** o cron `*/5` no `vercel.json` quebrava deploy no plano Hobby; cron passou para GitHub Actions (`.github/workflows/publisher-cron.yml`).
 
 ## Links oficiais (produção)
 
