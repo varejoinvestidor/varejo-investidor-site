@@ -1,3 +1,4 @@
+import { parseEliteSignalTier, type EliteSignalTier } from "../signalTier";
 import type { EliteOperationRow } from "../types";
 import { tradeResultFromRow, type TradeResultKey } from "./tradeResult";
 
@@ -15,6 +16,7 @@ export type OperationDraft = {
   updatedLabel: string;
   sortOrder: string;
   showPublic: boolean;
+  signalTier: EliteSignalTier;
 };
 
 export const emptyOperationDraft = (): OperationDraft => ({
@@ -31,6 +33,7 @@ export const emptyOperationDraft = (): OperationDraft => ({
   updatedLabel: "Atualizado hoje",
   sortOrder: "0",
   showPublic: true,
+  signalTier: "elite",
 });
 
 export function draftFromRow(row: EliteOperationRow): OperationDraft {
@@ -48,5 +51,6 @@ export function draftFromRow(row: EliteOperationRow): OperationDraft {
     updatedLabel: row.updated_label,
     sortOrder: String(row.sort_order),
     showPublic: row.show_public,
+    signalTier: parseEliteSignalTier(row.signal_tier),
   };
 }

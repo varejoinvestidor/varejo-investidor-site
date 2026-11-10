@@ -8,14 +8,21 @@ export const ARTICLE_BANNERS_MIGRATION_FILES = ["20260310120000_article_banners.
 export const ELITE_MIGRATION_FILES = [
   "20260310130000_elite_report.sql",
   "20260311120000_elite_operations_levels.sql",
+  "20260317120000_elite_signal_tier.sql",
+  "20260316120000_supabase_api_grants.sql",
+] as const;
+
+export const SUPABASE_INCREMENTAL_MIGRATION_FILES = [
+  "20260310120000_article_banners.sql",
+  ...ELITE_MIGRATION_FILES,
+  "20260316120000_supabase_api_grants.sql",
 ] as const;
 
 export const FULL_PUBLISHER_MIGRATION_FILES = [
   "20260308120000_publisher_foundation.sql",
   "20260308120001_storage_publisher_media.sql",
   "20260308130000_publisher_public_views.sql",
-  "20260310120000_article_banners.sql",
-  ...ELITE_MIGRATION_FILES,
+  ...SUPABASE_INCREMENTAL_MIGRATION_FILES,
 ] as const;
 
 export async function runSqlMigrationFiles(

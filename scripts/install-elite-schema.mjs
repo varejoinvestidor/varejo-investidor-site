@@ -6,7 +6,12 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import pg from "pg";
 
-const files = ["20260310130000_elite_report.sql", "20260311120000_elite_operations_levels.sql"];
+const files = [
+  "20260310130000_elite_report.sql",
+  "20260311120000_elite_operations_levels.sql",
+  "20260317120000_elite_signal_tier.sql",
+  "20260316120000_supabase_api_grants.sql",
+];
 
 function resolveConn() {
   const ordered = [

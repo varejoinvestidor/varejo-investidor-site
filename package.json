@@ -11,7 +11,8 @@
     "test:publisher": "playwright test tests/publisher-smoke.spec.ts",
     "import:legacy-insights": "npx tsx scripts/import-legacy-insights.ts",
     "verify:publisher": "npx tsx scripts/verify-publisher-env.ts",
-    "install:elite": "node --env-file=.env.vercel.production scripts/install-elite-schema.mjs"
+    "install:elite": "node --env-file=.env.vercel.production scripts/install-elite-schema.mjs",
+    "verify:supabase": "node --env-file=.env.local scripts/verify-supabase-schema.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

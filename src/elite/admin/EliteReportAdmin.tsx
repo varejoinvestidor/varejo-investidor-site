@@ -2,7 +2,6 @@
 
 import { FormEvent, useMemo, useRef, useState } from "react";
 import { deleteEliteOperation, upsertEliteMonthly, upsertEliteOperation } from "../actions";
-import { formatUsd, lotTableRows } from "../lotPips";
 import { computeSignalPips, formatPipsLabel } from "../pips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
 import { parseWhatsAppSignal } from "../whatsappParse";
@@ -53,16 +52,6 @@ function WhatsappPreview({
     [draft.asset, draft.direction, draft.tradeResult, draft.manualPips, draftStatus, draftClose, entry, take, stop],
   );
 
-  const lotRows = useMemo(() => {
-    const pips =
-      draft.tradeResult === "in_progress"
-        ? calc.takePips
-        : draft.tradeResult === "manual"
-          ? toNum(draft.manualPips) ?? 0
-          : calc.resultPips;
-    return lotTableRows(draft.asset, pips);
-  }, [draft.asset, draft.tradeResult, draft.manualPips, calc]);
-
   if (!draft.asset || entry === null) return null;
 
   return (
@@ -88,19 +77,6 @@ function WhatsappPreview({
             </dd>
           </div>
         </dl>
-        <p className="mt-3 text-[11px] font-bold uppercase tracking-wider text-paper/45">USD por lote (aprox.)</p>
-        <table className="mt-2 w-full text-xs">
-          <tbody>
-            {lotRows.map((row) => (
-              <tr key={row.lot} className="border-t border-white/6">
-                <td className="py-1 font-mono text-paper/55">Lote {row.lot}</td>
-                <td className={`py-1 text-right font-mono tabular-nums ${row.usd >= 0 ? "text-rise/90" : "text-fall/90"}`}>
-                  {formatUsd(row.usd)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );
@@ -207,6 +183,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
       updated_label: String(form.get("updated_label") ?? "Atualizado"),
       sort_order: Number(form.get("sort_order") ?? 0),
       show_public: form.get("show_public") === "on",
+      signal_tier: (String(form.get("signal_tier") ?? "elite") === "free" ? "free" : "elite") as "free" | "elite",
     });
     if (!result.ok) setMessage(result.error ?? "Erro ao salvar.");
     else window.location.reload();
@@ -436,6 +413,20 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
               className={`${fieldClass} mt-1`}
             />
           </label>
+          <label className="block text-xs text-paper/50 sm:col-span-2">
+            Visibilidade no site
+            <select
+              name="signal_tier"
+              value={draft.signalTier}
+              onChange={(e) =>
+                setDraft((p) => ({ ...p, signalTier: e.target.value === "free" ? "free" : "elite" }))
+              }
+              className={`${fieldClass} mt-1`}
+            >
+              <option value="elite">Elite — entrada visível; alvo e stop ocultos (badge ELITE)</option>
+              <option value="free">Free — entrada, alvo e stop visíveis no relatório</option>
+            </select>
+          </label>
           <label className="flex items-center gap-2 text-sm text-paper/70 sm:col-span-2">
             <input
               type="checkbox"
@@ -478,6 +469,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
               <tr>
                 <th className="px-3 py-2 text-left">Sinal</th>
                 <th className="px-3 py-2 text-left">Ativo</th>
+                <th className="px-3 py-2">Tipo</th>
                 <th className="px-3 py-2">Dir.</th>
                 <th className="px-3 py-2">Entrada</th>
                 <th className="px-3 py-2">Take</th>
@@ -491,7 +483,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
             <tbody>
               {filteredOps.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-3 py-8 text-center text-paper/40">
+                  <td colSpan={11} className="px-3 py-8 text-center text-paper/40">
                     {operations.length === 0
                       ? "Nenhum sinal cadastrado ainda."
                       : "Nenhum resultado para esta busca."}
@@ -505,6 +497,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
                   >
                     <td className="px-3 py-2 font-mono tabular-nums text-gold">{row.signal_number ?? "—"}</td>
                     <td className="px-3 py-2 font-mono font-semibold">{row.asset}</td>
+                    <td className="px-3 py-2 text-xs uppercase text-paper/55">{row.signal_tier === "free" ? "Free" : "Elite"}</td>
                     <td className="px-3 py-2">{row.direction}</td>
                     <td className="px-3 py-2 font-mono text-xs">{row.entry_price ?? "—"}</td>
                     <td className="px-3 py-2 font-mono text-xs text-rise/90">{row.take_price ?? "—"}</td>

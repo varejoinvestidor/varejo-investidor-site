@@ -1,4 +1,5 @@
 import { computeSignalPips } from "./pips";
+import { parseEliteSignalTier } from "./signalTier";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "./types";
 
 export type HubOperation = {
@@ -16,6 +17,7 @@ export type HubOperation = {
   stopPrice: number | null;
   takePips: number;
   stopPips: number;
+  signalTier: "free" | "elite";
 };
 
 export type HubMonthlyReport = {
@@ -56,6 +58,7 @@ export function mapOperations(rows: EliteOperationRow[]): { active: HubOperation
       stopPrice: row.stop_price,
       takePips: levels.takePips,
       stopPips: levels.stopPips,
+      signalTier: parseEliteSignalTier(row.signal_tier),
     };
   };
 

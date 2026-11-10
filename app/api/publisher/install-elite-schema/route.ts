@@ -3,13 +3,20 @@ import pg from "pg";
 import { ELITE_MIGRATION_FILES, runSqlMigrationFiles } from "../../../../src/publisher/schema/runSqlMigrations";
 import { resolvePostgresConnectionString } from "../../../../src/publisher/schema/postgresConnection";
 import { assertCronBearer } from "../../../../src/publisher/security/cronAuth";
+import { getPublisherSession } from "../../../../src/publisher/supabase/server";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
-/** Aplica só migrations Elite + recarrega cache PostgREST (Bearer CRON_SECRET). */
+async function authorized(request: Request) {
+  if (assertCronBearer(request)) return true;
+  const { profile } = await getPublisherSession();
+  return profile?.role === "admin" || profile?.role === "editor";
+}
+
+/** Aplica migrations Elite + recarrega cache PostgREST (CRON_SECRET ou sessão admin/editor). */
 export async function POST(request: Request) {
-  if (!assertCronBearer(request)) {
+  if (!(await authorized(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

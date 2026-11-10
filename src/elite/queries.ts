@@ -43,7 +43,11 @@ export async function fetchStaffEliteData() {
     supabase.from("elite_monthly_reports").select("*").order("year").order("month_index"),
   ]);
 
-  const error = opError?.message ?? monthError?.message ?? null;
+  const raw = opError?.message ?? monthError?.message ?? null;
+  const error =
+    raw && (opError?.code === "PGRST205" || /could not find the table/i.test(raw))
+      ? `${raw} — execute o SQL do Relatório Elite no Supabase (botão Copiar SQL) e recarregue.`
+      : raw;
 
   return {
     operations: (operations ?? []) as EliteOperationRow[],

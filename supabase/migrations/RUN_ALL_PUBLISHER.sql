@@ -513,5 +513,5 @@ $$;
 
 grant execute on function public.increment_article_views (uuid) to anon, authenticated;
 
--- Relatório Elite: execute no SQL Editor os arquivos 20260310130000_elite_report.sql e
--- 20260311120000_elite_operations_levels.sql (ou use Copiar SQL no admin / POST bootstrap-schema).
+-- Depois de RUN_ALL: execute supabase/migrations/RUN_SUPABASE_INCREMENTAL.sql
+-- (banners + Relatório Elite). Ver docs/supabase-elite.md e Admin → Relatório Elite → Copiar SQL.

@@ -10,11 +10,14 @@ export type EliteMonthlyReportRow = {
   assets: string[];
 };
 
+export type EliteSignalTier = "free" | "elite";
+
 export type EliteOperationRow = {
   id: string;
   asset: string;
   direction: "Compra" | "Venda";
   status: "active" | "closed";
+  signal_tier?: EliteSignalTier | null;
   result_pips: number;
   result_label: string;
   report_month: string;

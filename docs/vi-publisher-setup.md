@@ -30,7 +30,7 @@ Na Vercel, replique as mesmas variáveis no projeto do site.
 
 > Produção: após migrations (`RUN_ALL_PUBLISHER.sql` no SQL Editor, ou `POST /api/publisher/bootstrap-schema` com `Authorization: Bearer CRON_SECRET`), use o dashboard Supabase ou `POST /api/publisher/bootstrap-admin` (mesmo token) uma vez, depois prefira criar usuários pelo Auth.
 
-**Relatório Elite** (`elite_operations`, `elite_monthly_reports`): no admin **Relatório Elite → Copiar SQL para Supabase** (SQL Editor), ou `POST /api/publisher/install-elite-schema` com o mesmo `CRON_SECRET` (requer `POSTGRES_URL` na Vercel). O botão **Instalar tabelas Elite** usa a mesma conexão Postgres do servidor.
+**Relatório Elite** — guia completo em [`docs/supabase-elite.md`](./supabase-elite.md). Resumo: **Copiar SQL** no admin, ou `RUN_ELITE.sql` / `RUN_SUPABASE_INCREMENTAL.sql` no SQL Editor; na Vercel use `POSTGRES_URL_NON_POOLING` + botão **Instalar tabelas Elite**.
 
 1. **Authentication → Users → Add user** (e-mail + senha).
 2. No SQL Editor:

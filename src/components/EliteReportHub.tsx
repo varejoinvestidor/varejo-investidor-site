@@ -18,7 +18,10 @@ import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { eliteReportCopyJa } from "../data/eliteReportCopyJa";
 import { eliteReportCopyHi } from "../data/eliteReportCopyHi";
 import type { HubMonthlyReport, HubOperation } from "../elite/mapToHub";
+import type { EliteSignalTier } from "../elite/signalTier";
 import type { PeriodPerformance } from "../elite/traderPerformance";
+import { PremiumAnnualBarChart, PremiumCumulativeAreaChart, PremiumDonutChart } from "./elite/EliteHubCharts";
+import { SignalLevelRows } from "./elite/SignalLevelRows";
 
 export const eliteReportPaths: Record<Locale, string> = {
   pt: "/relatorio-elite",
@@ -73,6 +76,7 @@ type Operation = {
   stopPrice?: number | null;
   takePips?: number;
   stopPips?: number;
+  signalTier?: EliteSignalTier;
 };
 
 type TimelineEvent = {
@@ -120,11 +124,10 @@ type Copy = {
   date: string;
   update: string;
   protectedFields: string;
+  levelsPublic: string;
   entry: string;
   target: string;
   stop: string;
-  volume: string;
-  lot: string;
   buy: string;
   sell: string;
   live: string;
@@ -195,7 +198,7 @@ const copyByLocale: Record<Locale, Copy> = {
     reports: "Relatórios",
     viewReport: "Ver relatório",
     activeTitle: "Operações ativas acompanhadas",
-    activeText: "Acompanhe uma visão resumida das operações em andamento. Entrada, alvo, stop, lote e demais detalhes completos são liberados apenas dentro do Canal Elite.",
+    activeText: "Sinais marcados como Free exibem entrada, alvo e stop no site. Sinais Elite mantêm alvo e stop reservados ao WhatsApp do Canal Elite.",
     asset: "Ativo",
     direction: "Direção",
     status: "Status",
@@ -203,11 +206,10 @@ const copyByLocale: Record<Locale, Copy> = {
     date: "Data",
     update: "Atualização",
     protectedFields: "Campos protegidos",
+    levelsPublic: "Níveis do sinal",
     entry: "Entrada",
     target: "Alvo",
     stop: "Stop",
-    volume: "Volume",
-    lot: "Lote",
     buy: "Compra",
     sell: "Venda",
     live: "Ao vivo",
@@ -266,7 +268,7 @@ const copyByLocale: Record<Locale, Copy> = {
     reports: "Reports",
     viewReport: "View report",
     activeTitle: "Monitored active operations",
-    activeText: "Follow a summarized view of ongoing operations. Entry, target, stop, lot size, and full details are released only inside the Elite Channel.",
+    activeText: "Signals marked Free show entry, target, and stop on the site. Elite signals keep target and stop for the Elite WhatsApp channel.",
     asset: "Asset",
     direction: "Direction",
     status: "Status",
@@ -274,11 +276,10 @@ const copyByLocale: Record<Locale, Copy> = {
     date: "Date",
     update: "Update",
     protectedFields: "Protected fields",
+    levelsPublic: "Signal levels",
     entry: "Entry",
     target: "Target",
     stop: "Stop",
-    volume: "Volume",
-    lot: "Lot",
     buy: "Buy",
     sell: "Sell",
     live: "Live",
@@ -337,7 +338,7 @@ const copyByLocale: Record<Locale, Copy> = {
     reports: "Reportes",
     viewReport: "Ver reporte",
     activeTitle: "Operaciones activas acompañadas",
-    activeText: "Acompaña una visión resumida de las operaciones en curso. Entrada, objetivo, stop, lote y demás detalles completos se liberan solo dentro del Canal Elite.",
+    activeText: "Las señales Free muestran entrada, objetivo y stop en el sitio. Las Elite reservan objetivo y stop para el WhatsApp del Canal Elite.",
     asset: "Activo",
     direction: "Dirección",
     status: "Estado",
@@ -345,11 +346,10 @@ const copyByLocale: Record<Locale, Copy> = {
     date: "Fecha",
     update: "Actualización",
     protectedFields: "Campos protegidos",
+    levelsPublic: "Niveles de la señal",
     entry: "Entrada",
     target: "Objetivo",
     stop: "Stop",
-    volume: "Volumen",
-    lot: "Lote",
     buy: "Compra",
     sell: "Venta",
     live: "En vivo",
@@ -577,125 +577,6 @@ function reportHref(year: number | string) {
   return available ? `/historico/${year}` : "#";
 }
 
-function EliteBadge() {
-  return (
-    <span className="inline-flex min-w-[82px] items-center justify-center border border-gold/[0.45] bg-gold/[0.12] px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.2em] text-gold shadow-[0_0_24px_rgba(201,155,62,0.12)]">
-      ELITE
-    </span>
-  );
-}
-
-function MiniBarChart({ data, copy, locale, onSelect }: { data: Array<{ year: number; signals: number; assets: string[] }>; copy: Copy; locale: Locale; onSelect: (year: number) => void }) {
-  const max = Math.max(...data.map((item) => item.signals), 1);
-  return (
-    <div className="grid h-full content-end gap-4">
-      <div className="flex min-h-[260px] items-end gap-3 overflow-x-auto pb-2">
-        {data.map((item) => (
-          <button
-            key={item.year}
-            type="button"
-            title={`${item.year}: ${item.signals} sinais | ${item.assets.join(", ")}`}
-            onClick={() => onSelect(item.year)}
-            className="group flex min-w-[58px] flex-1 flex-col items-center justify-end gap-3"
-          >
-            <span className="text-xs font-black text-paper/70">{formatNumber(item.signals, locale)}</span>
-            <span
-              className="w-full rounded-t-sm bg-gradient-to-t from-gold/75 to-rise/75 transition group-hover:from-gold group-hover:to-rise"
-              style={{ height: `${Math.max(22, (item.signals / max) * 210)}px` }}
-            />
-            <span className="font-mono text-xs font-black text-gold">{item.year}</span>
-          </button>
-        ))}
-      </div>
-      <p className="text-xs leading-6 text-paper/54">{copy.chartSignals}: {copy.totalSignals} + {copy.mainAssets.toLowerCase()} no tooltip.</p>
-    </div>
-  );
-}
-
-function AreaChart({ data, locale }: { data: Array<{ year: number; value: number; signals: number }>; locale: Locale }) {
-  const max = Math.max(...data.map((item) => item.value), 1);
-  const points = data.map((item, index) => {
-    const x = data.length === 1 ? 0 : (index / (data.length - 1)) * 100;
-    const y = 100 - (item.value / max) * 82 - 8;
-    return `${x},${y}`;
-  });
-  const area = `0,100 ${points.join(" ")} 100,100`;
-
-  return (
-    <div>
-      <svg viewBox="0 0 100 100" className="h-72 w-full overflow-visible">
-        <defs>
-          <linearGradient id="eliteArea" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="rgba(198,153,74,0.55)" />
-            <stop offset="100%" stopColor="rgba(15,143,86,0.02)" />
-          </linearGradient>
-        </defs>
-        <polygon points={area} fill="url(#eliteArea)" />
-        <polyline points={points.join(" ")} fill="none" stroke="#c6994a" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-        {data.map((item, index) => {
-          const [x, y] = points[index].split(",").map(Number);
-          return (
-            <g key={item.year}>
-              <circle cx={x} cy={y} r="2.4" fill="#0f8f56" stroke="#c6994a" strokeWidth="1" />
-              <title>{`${item.year}: ${formatPips(item.value, locale)} | ${item.signals} sinais`}</title>
-            </g>
-          );
-        })}
-      </svg>
-      <div className="mt-2 flex justify-between gap-3 font-mono text-xs font-bold text-paper/52">
-        {data.map((item) => <span key={item.year}>{item.year}</span>)}
-      </div>
-    </div>
-  );
-}
-
-function DonutChart({ data }: { data: Array<{ label: string; value: number; color: string }> }) {
-  const total = data.reduce((sum, item) => sum + item.value, 0);
-  const radius = 58;
-  const circumference = 2 * Math.PI * radius;
-  let offset = 0;
-
-  return (
-    <div className="grid gap-6 md:grid-cols-[180px_1fr] md:items-center">
-      <svg viewBox="0 0 160 160" className="mx-auto h-44 w-44">
-        <circle cx="80" cy="80" r={radius} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="18" />
-        {data.map((slice) => {
-          const length = total > 0 ? (slice.value / total) * circumference : 0;
-          const node = (
-            <circle
-              key={slice.label}
-              cx="80"
-              cy="80"
-              r={radius}
-              fill="none"
-              stroke={slice.color}
-              strokeWidth="18"
-              strokeDasharray={`${length} ${circumference - length}`}
-              strokeDashoffset={-offset}
-              transform="rotate(-90 80 80)"
-              strokeLinecap="round"
-            />
-          );
-          offset += length;
-          return node;
-        })}
-        <text x="80" y="83" textAnchor="middle" className="fill-paper text-[13px] font-black">Ativos</text>
-      </svg>
-      <div className="grid gap-3">
-        {data.map((item) => (
-          <div key={item.label} className="flex items-center justify-between gap-4 border border-white/10 bg-white/[0.03] px-4 py-3">
-            <span className="flex items-center gap-3 text-sm font-bold text-paper/76">
-              <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
-              {item.label}
-            </span>
-            <span className="font-mono text-sm font-black text-paper">{Math.round((item.value / total) * 100)}%</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function SelectField({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
   return (
     <label className="grid gap-2">
@@ -892,18 +773,15 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Dashboard" title={copy.dashboardTitle} text={copy.dashboardText} />
           <div className="mt-8 grid gap-5 xl:grid-cols-2">
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartSignals}</p>
-              <MiniBarChart data={annualData} copy={copy} locale={locale} onSelect={setSelectedYear} />
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartPerformance}</p>
-              <AreaChart data={performanceData} locale={locale} />
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartAssets}</p>
-              <div className="mt-6"><DonutChart data={assetDistribution} /></div>
-            </div>
+            <PremiumAnnualBarChart
+              data={annualData}
+              locale={locale}
+              onSelect={setSelectedYear}
+              title={copy.chartSignals}
+              footer={`${copy.chartSignals}: ${copy.totalSignals} + ${copy.mainAssets.toLowerCase()} no tooltip.`}
+            />
+            <PremiumCumulativeAreaChart data={performanceData} locale={locale} title={copy.chartPerformance} />
+            <PremiumDonutChart data={assetDistribution} title={copy.chartAssets} />
             <div className="border border-white/10 bg-white/[0.03] p-6">
               <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartHeatmap}</p>
               <div className="mt-6 overflow-x-auto">
@@ -1004,26 +882,20 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                       {formatPips(operation.stopPips ?? 0, locale)}
                     </p>
                   ) : null}
-                  <div className="mt-2 border-t border-gold/16 pt-4">
-                    <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-gold">{copy.protectedFields}</p>
-                    {(
-                      [
-                        [copy.entry, operation.entryPrice],
-                        [copy.target, operation.takePrice],
-                        [copy.stop, operation.stopPrice],
-                        [copy.volume, null],
-                        [copy.lot, null],
-                      ] as const
-                    ).map(([label, price]) => {
-                      const formatted = formatLevel(price, locale);
-                      return (
-                        <div key={label} className="flex items-center justify-between gap-4 border-t border-white/8 py-3">
-                          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/48">{label}</span>
-                          {formatted ? <span className="font-mono text-sm font-bold text-paper">{formatted}</span> : <EliteBadge />}
-                        </div>
-                      );
-                    })}
-                  </div>
+                  <SignalLevelRows
+                    tier={operation.signalTier ?? "elite"}
+                    labels={{
+                      sectionTitle: copy.protectedFields,
+                      sectionTitleFree: copy.levelsPublic,
+                      entry: copy.entry,
+                      target: copy.target,
+                      stop: copy.stop,
+                    }}
+                    entryPrice={operation.entryPrice}
+                    takePrice={operation.takePrice}
+                    stopPrice={operation.stopPrice}
+                    formatLevel={(value) => formatLevel(value, locale)}
+                  />
                 </div>
               </motion.article>
             ))}

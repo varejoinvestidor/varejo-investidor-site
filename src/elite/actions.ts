@@ -4,8 +4,9 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { getPublisherSession } from "../publisher/supabase/server";
 import { computeSignalPips } from "./pips";
-import { ELITE_MIGRATION_FILES, runSqlMigrationFiles } from "../publisher/schema/runSqlMigrations";
+import { installEliteSchemaFromAdmin as installEliteSchemaCore } from "../publisher/schema/installFromAdmin";
 import { syncEliteMonthlyForReportMonth } from "./syncMonthly";
+import { parseEliteSignalTier } from "./signalTier";
 import type { EliteMonthlyInput, EliteOperationInput } from "./types";
 
 async function requireEditor() {
@@ -64,6 +65,7 @@ function buildOperationRow(input: EliteOperationInput) {
     updated_label: input.updated_label.trim(),
     sort_order: input.sort_order,
     show_public: input.show_public,
+    signal_tier: parseEliteSignalTier(input.signal_tier),
     updated_at: new Date().toISOString(),
   };
 }
@@ -76,42 +78,12 @@ async function afterOperationMutation(supabase: SupabaseClient, reportMonth: str
   revalidatePath("/admin/relatorio-elite/desempenho");
 }
 
-/** Cria/atualiza tabelas Elite no Supabase (admin). */
+/** Cria/atualiza tabelas Elite no Supabase (admin/editor com Postgres na Vercel). */
 export async function installEliteSchemaFromAdmin() {
-  const { supabase, profile } = await getPublisherSession();
-  if (!supabase || !profile) return { ok: false as const, error: "Sessão inválida." };
-  if (profile.role !== "admin") {
-    return { ok: false as const, error: "Somente administradores podem instalar o schema Elite." };
-  }
-
-  const migrated = await runSqlMigrationFiles(ELITE_MIGRATION_FILES);
-  if (!migrated.ok) return { ok: false as const, error: migrated.error };
-
-  let lastError: string | null = null;
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const check = await supabase.from("elite_operations").select("id").limit(1);
-    if (!check.error) {
-      lastError = null;
-      break;
-    }
-    lastError = check.error.message;
-    if (attempt < 4) {
-      await new Promise((resolve) => setTimeout(resolve, attempt === 0 ? 2000 : 12000));
-    }
-  }
-
-  if (lastError) {
-    return {
-      ok: false as const,
-      error: `SQL aplicado, mas a API ainda retorna: ${lastError}. Aguarde ~1 min, use Copiar SQL no alerta ou POST /api/publisher/install-elite-schema com CRON_SECRET.`,
-    };
-  }
-
-  revalidatePath("/admin/relatorio-elite");
-  revalidatePath("/admin/relatorio-elite/desempenho");
-  revalidatePath("/relatorio-elite");
-  return { ok: true as const };
+  return installEliteSchemaCore();
 }
+
+export { installFullSupabaseSchemaFromAdmin } from "../publisher/schema/installFromAdmin";
 
 export async function upsertEliteOperation(input: EliteOperationInput) {
   const ctx = await requireEditor();

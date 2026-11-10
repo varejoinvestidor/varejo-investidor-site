@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { installEliteSchemaFromAdmin } from "../actions";
+import { installEliteSchemaFromAdmin, installFullSupabaseSchemaFromAdmin } from "../actions";
 import { ELITE_SCHEMA_SQL } from "../schemaInstallSql";
 import { supabaseSqlEditorUrl } from "../supabaseDashboard";
 
@@ -15,6 +15,7 @@ function needsEliteSchema(message: string) {
 export function EliteSchemaAlert({ message }: { message: string }) {
   const [text, setText] = useState(message);
   const [busy, setBusy] = useState(false);
+  const [busyFull, setBusyFull] = useState(false);
   const [copied, setCopied] = useState(false);
   const showInstall = needsEliteSchema(message);
   const showSqlFallback = showInstall || /POSTGRES|Conexão Postgres/i.test(text);
@@ -26,6 +27,14 @@ export function EliteSchemaAlert({ message }: { message: string }) {
     setBusy(false);
     if (result.ok) window.location.reload();
     else setText(result.error ?? "Falha ao instalar schema.");
+  }
+
+  async function onInstallFull() {
+    setBusyFull(true);
+    const result = await installFullSupabaseSchemaFromAdmin();
+    setBusyFull(false);
+    if (result.ok) window.location.reload();
+    else setText(result.error ?? "Falha na instalação completa.");
   }
 
   async function onCopySql() {
@@ -76,6 +85,14 @@ export function EliteSchemaAlert({ message }: { message: string }) {
                 Abrir SQL Editor
               </a>
             ) : null}
+            <button
+              type="button"
+              disabled={busyFull}
+              onClick={() => void onInstallFull()}
+              className="rounded border border-paper/20 px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-paper/70 disabled:opacity-50"
+            >
+              {busyFull ? "Instalando tudo…" : "Instalar Publisher + Elite (admin)"}
+            </button>
           </div>
           {showSqlFallback ? (
             <p className="text-paper/45">
