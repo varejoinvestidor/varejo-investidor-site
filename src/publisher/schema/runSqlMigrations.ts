@@ -37,6 +37,7 @@ export async function runSqlMigrationFiles(
       const sql = readFileSync(join(root, "supabase", "migrations", file), "utf8");
       await client.query(sql);
     }
+    await client.query(`NOTIFY pgrst, 'reload schema';`);
     return { ok: true };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : "Falha ao aplicar migrations" };

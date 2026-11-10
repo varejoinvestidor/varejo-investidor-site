@@ -1,0 +1,4 @@
+-- Relatório Elite — no SQL Editor do Supabase, cole o conteúdo de:
+--   src/elite/schemaInstallSql.ts (constante ELITE_SCHEMA_SQL)
+-- ou use Admin → Relatório Elite → "Copiar SQL para Supabase".
+-- Arquivos de referência: 20260310130000_elite_report.sql e 20260311120000_elite_operations_levels.sql

@@ -37,22 +37,26 @@ create index if not exists elite_operations_report_month_idx on public.elite_ope
 alter table public.elite_monthly_reports enable row level security;
 alter table public.elite_operations enable row level security;
 
+drop policy if exists "Public read elite monthly reports" on public.elite_monthly_reports;
 create policy "Public read elite monthly reports"
 on public.elite_monthly_reports for select
 to anon, authenticated
 using (true);
 
+drop policy if exists "Staff manage elite monthly reports" on public.elite_monthly_reports;
 create policy "Staff manage elite monthly reports"
 on public.elite_monthly_reports for all
 to authenticated
 using (public.is_publisher_staff ())
 with check (public.is_publisher_staff ());
 
+drop policy if exists "Public read elite operations" on public.elite_operations;
 create policy "Public read elite operations"
 on public.elite_operations for select
 to anon, authenticated
 using (show_public);
 
+drop policy if exists "Staff manage elite operations" on public.elite_operations;
 create policy "Staff manage elite operations"
 on public.elite_operations for all
 to authenticated

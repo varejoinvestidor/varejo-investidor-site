@@ -10,7 +10,8 @@
     "export:reel:pos-padrao-ouro": "node scripts/export-reel-pos-padrao-ouro.mjs",
     "test:publisher": "playwright test tests/publisher-smoke.spec.ts",
     "import:legacy-insights": "npx tsx scripts/import-legacy-insights.ts",
-    "verify:publisher": "npx tsx scripts/verify-publisher-env.ts"
+    "verify:publisher": "npx tsx scripts/verify-publisher-env.ts",
+    "install:elite": "node --env-file=.env.vercel.production scripts/install-elite-schema.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

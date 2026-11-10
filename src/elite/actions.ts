@@ -87,11 +87,23 @@ export async function installEliteSchemaFromAdmin() {
   const migrated = await runSqlMigrationFiles(ELITE_MIGRATION_FILES);
   if (!migrated.ok) return { ok: false as const, error: migrated.error };
 
-  const check = await supabase.from("elite_operations").select("id").limit(1);
-  if (check.error) {
+  let lastError: string | null = null;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const check = await supabase.from("elite_operations").select("id").limit(1);
+    if (!check.error) {
+      lastError = null;
+      break;
+    }
+    lastError = check.error.message;
+    if (attempt < 4) {
+      await new Promise((resolve) => setTimeout(resolve, attempt === 0 ? 2000 : 12000));
+    }
+  }
+
+  if (lastError) {
     return {
       ok: false as const,
-      error: `Migrations aplicadas, mas a API ainda retorna: ${check.error.message}. Aguarde ~1 min e recarregue.`,
+      error: `SQL aplicado, mas a API ainda retorna: ${lastError}. Aguarde ~1 min, use Copiar SQL no alerta ou POST /api/publisher/install-elite-schema com CRON_SECRET.`,
     };
   }
 

@@ -73,8 +73,9 @@ export function EliteSchemaAlert({ message }: { message: string }) {
             </p>
           ) : null}
           <p className="text-paper/45">
-            Alternativa: <code className="text-gold">POST /api/publisher/bootstrap-schema</code> com Bearer{" "}
-            <code>CRON_SECRET</code> (inclui Publisher + Elite).
+            Alternativa (servidor com <code className="text-gold">POSTGRES_URL</code>):{" "}
+            <code className="text-gold">POST /api/publisher/install-elite-schema</code> ou{" "}
+            <code className="text-gold">POST /api/publisher/bootstrap-schema</code> com Bearer <code>CRON_SECRET</code>.
           </p>
         </div>
       ) : null}
