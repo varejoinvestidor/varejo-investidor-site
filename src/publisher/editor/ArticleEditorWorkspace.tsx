@@ -17,6 +17,7 @@ import { slugifyTitle } from "../articles/slug";
 import type { CategoryRow, TagRow } from "../taxonomy/actions";
 import type { PublisherProfile } from "../types";
 import { AdminPasswordDialog } from "../admin/AdminPasswordDialog";
+import { ArticleBannersSchemaAlert } from "../admin/ArticleBannersSchemaAlert";
 import { canPublish } from "../permissions";
 import {
   applyAutoTranslateToArticle,
@@ -224,7 +225,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       setPublishStep(12, "Preparando publicação…");
     }
 
-    const input = payloadRef.current ?? payload;
+    const input = payload;
     const scheduledAt =
       status === "scheduled" && scheduledLocal ? new Date(scheduledLocal).toISOString() : undefined;
 
@@ -469,11 +470,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
         </p>
       ) : null}
 
-      {saveError ? (
-        <p className="rounded border border-fall/40 bg-fall/10 px-4 py-2 text-sm" role="alert">
-          {saveError}
-        </p>
-      ) : null}
+      {saveError ? <ArticleBannersSchemaAlert message={saveError} /> : null}
 
       <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
         <div className="space-y-6">

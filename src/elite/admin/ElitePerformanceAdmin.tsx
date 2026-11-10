@@ -6,6 +6,7 @@ import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
 import { computeTraderPerformance } from "../traderPerformance";
 import { tradeResultFromRow, tradeResultLabel } from "./tradeResult";
 import { EliteSchemaAlert } from "./EliteSchemaAlert";
+import { ElitePerformanceCharts } from "./ElitePerformanceCharts";
 
 type Props = {
   operations: EliteOperationRow[];
@@ -78,6 +79,12 @@ export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props)
           Em andamento agora: <span className="font-mono text-gold">{activeCount}</span> sinal(is) público(s).
         </p>
       </section>
+
+      <ElitePerformanceCharts
+        operations={operations}
+        monthly={monthly}
+        schemaMissing={Boolean(loadError && /elite_operations|schema cache/i.test(loadError))}
+      />
 
       <section className="space-y-3 rounded-xl border border-line/12 p-4">
         <h3 className="text-sm font-bold uppercase tracking-wider text-paper/55">Últimos trades fechados (público)</h3>

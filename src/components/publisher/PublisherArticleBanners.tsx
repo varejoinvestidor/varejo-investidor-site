@@ -5,17 +5,23 @@ export function PublisherArticleBanners({
   banners,
   placement,
   language = "pt",
+  compact = false,
 }: {
   banners: ArticleBanner[];
   placement: ArticleBanner["placement"];
   language?: string;
+  /** Sem padding de seção (ex.: banner no meio do texto). */
+  compact?: boolean;
 }) {
   const items = banners.filter((b) => b.placement === placement).map((b) => resolveArticleBanner(b, language));
   if (!items.length) return null;
 
+  const outer = compact ? "py-2" : "px-5 py-6 md:px-8";
+  const inner = compact ? "flex flex-col gap-6" : "mx-auto flex max-w-5xl flex-col gap-6";
+
   return (
-    <section className="px-5 py-6 md:px-8">
-      <div className="mx-auto flex max-w-5xl flex-col gap-6">
+    <section className={outer}>
+      <div className={inner}>
         {items.map((banner) => {
           const image = (
             // eslint-disable-next-line @next/next/no-img-element

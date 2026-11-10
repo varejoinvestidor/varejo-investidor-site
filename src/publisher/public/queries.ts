@@ -1,7 +1,7 @@
 import { absoluteSiteUrl } from "../../config/site";
 import { getPublisherArticlePath } from "./paths";
 import { createPublisherPublicClient } from "../supabase/public";
-import { parseArticleBanners } from "../types/banner";
+import { resolveArticleBannersList } from "../types/banner";
 import type { PublicArticleDetail, PublicArticleSummary } from "./types";
 
 const PUBLIC_ARTICLE_PATH = "/artigos";
@@ -88,7 +88,7 @@ function mapDetail(row: ArticleRow, summary: PublicArticleSummary): PublicArticl
     content: (row.content as Record<string, unknown>) ?? { type: "doc", content: [] },
     references_text: row.references_text,
     sources,
-    banners: parseArticleBanners(row.banners),
+    banners: resolveArticleBannersList(row.banners, row.content),
   };
 }
 
@@ -146,6 +146,14 @@ export async function getPublishedArticleBySlug(slug: string, language = "pt"): 
   }
 
   if (!row) return null;
+
+  if (!row.banners && row.id) {
+    const { data: bannerOnly } = await client.from("articles").select("banners").eq("id", row.id).maybeSingle();
+    if (bannerOnly && typeof bannerOnly === "object" && "banners" in bannerOnly) {
+      row = { ...row, banners: bannerOnly.banners };
+    }
+  }
+
   const [summary] = await hydrateSummaries([row]);
   return mapDetail(row, summary);
 }

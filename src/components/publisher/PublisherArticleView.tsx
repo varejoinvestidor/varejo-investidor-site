@@ -8,6 +8,7 @@ import { estimateReadingTimeMinutes } from "../../publisher/public/tiptapPlainTe
 import type { PublicArticleDetail, PublicArticleSummary } from "../../publisher/public/types";
 import { getPublisherArticlePath, getPublisherHubPath } from "../../publisher/public/paths";
 import { publisherArticleUrl } from "../../publisher/public/queries";
+import { getSiteSocialLinksForLanguage, socialFollowLabel } from "../../config/siteSocialLinks";
 import { PublisherArticleBanners } from "./PublisherArticleBanners";
 
 export function PublisherArticleView({
@@ -19,11 +20,14 @@ export function PublisherArticleView({
 }) {
   const { locale, t, changeLocale } = useSiteLocale();
   const reading = estimateReadingTimeMinutes(article.content);
-  const language = article.language === "en" ? "en" : "pt";
-  const url = publisherArticleUrl(article.slug, language);
-  const hubPath = getPublisherHubPath(language);
-  const articlePath = (slug: string) => getPublisherArticlePath(language, slug);
-  const hubLabel = language === "en" ? "Articles" : "Artigos";
+  const lang = article.language || "pt";
+  const pageLang = lang === "en" ? "en" : lang === "es" ? "es" : "pt";
+  const url = publisherArticleUrl(article.slug, lang);
+  const hubPath = getPublisherHubPath(lang);
+  const articlePath = (slug: string) => getPublisherArticlePath(lang, slug);
+  const hubLabel = pageLang === "en" ? "Articles" : pageLang === "es" ? "Artículos" : "Artigos";
+  const shareLabel = pageLang === "en" ? "Share" : pageLang === "es" ? "Compartir" : "Compartilhar";
+  const siteSocials = getSiteSocialLinksForLanguage(lang);
 
   return (
     <>
@@ -40,7 +44,10 @@ export function PublisherArticleView({
               </nav>
               <p className="mt-6 text-xs font-bold uppercase tracking-[0.28em] text-gold">
                 {article.category_name ?? "Editorial"} ·{" "}
-                {new Date(article.published_at).toLocaleDateString(language === "en" ? "en-US" : "pt-BR")} · {reading} min
+                {new Date(article.published_at).toLocaleDateString(
+                  pageLang === "en" ? "en-US" : pageLang === "es" ? "es-ES" : "pt-BR",
+                )}{" "}
+                · {reading} min
               </p>
               <h1 className="mt-5 font-serif text-5xl leading-[0.96] tracking-[-0.05em] text-paper md:text-7xl">{article.title}</h1>
               {article.subtitle ? (
@@ -59,21 +66,27 @@ export function PublisherArticleView({
             </section>
           ) : null}
 
-          <PublisherArticleBanners banners={article.banners} placement="top" language={article.language} />
+          <PublisherArticleBanners banners={article.banners} placement="top" language={lang} />
 
           <section className="px-5 pb-12 md:px-8 md:pb-16">
             <div className="mx-auto max-w-3xl">
               {article.excerpt ? (
                 <p className="border-b border-gold/[0.12] pb-8 text-xl leading-[1.85] text-paper/[0.82]">{article.excerpt}</p>
               ) : null}
-              <PublisherArticleBanners banners={article.banners} placement="inline" language={article.language} />
               <div className={article.excerpt ? "mt-8" : "mt-10"}>
-                <TipTapArticleBody document={article.content} />
+                <TipTapArticleBody
+                  document={article.content}
+                  inlineSlot={
+                    <PublisherArticleBanners banners={article.banners} placement="inline" language={lang} compact />
+                  }
+                />
               </div>
 
               {article.sources.length ? (
                 <div className="mt-14 border-t border-gold/[0.14] pt-10">
-                  <h2 className="font-serif text-3xl tracking-[-0.04em]">{language === "en" ? "Sources" : "Fontes"}</h2>
+                  <h2 className="font-serif text-3xl tracking-[-0.04em]">
+                    {pageLang === "en" ? "Sources" : pageLang === "es" ? "Fuentes" : "Fontes"}
+                  </h2>
                   <ul className="mt-5 space-y-3">
                     {article.sources.map((source) => (
                       <li key={source.url}>
@@ -92,37 +105,53 @@ export function PublisherArticleView({
                 </div>
               ) : null}
 
-              <PublisherArticleBanners banners={article.banners} placement="bottom" language={article.language} />
+              <PublisherArticleBanners banners={article.banners} placement="bottom" language={lang} />
 
-              <div className="insight-share mt-12">
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">
-                  {language === "en" ? "Share" : "Compartilhar"}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {[
-                    {
-                      name: "LinkedIn",
-                      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-                    },
-                    {
-                      name: "X",
-                      href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(article.title)}`,
-                    },
-                    {
-                      name: "WhatsApp",
-                      href: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${url}`)}`,
-                    },
-                  ].map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-paper/[0.72] transition hover:border-gold hover:text-gold"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
+              <div className="insight-share mt-12 space-y-8">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">{shareLabel}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {[
+                      {
+                        name: "LinkedIn",
+                        href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+                      },
+                      {
+                        name: "X",
+                        href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(article.title)}`,
+                      },
+                      {
+                        name: "WhatsApp",
+                        href: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${url}`)}`,
+                      },
+                    ].map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-paper/[0.72] transition hover:border-gold hover:text-gold"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">{socialFollowLabel(lang)}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {siteSocials.map((item) => (
+                      <a
+                        key={item.id}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-paper/[0.72] transition hover:border-gold hover:text-gold"
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,7 +161,7 @@ export function PublisherArticleView({
             <section className="border-t border-gold/[0.14] px-5 py-14 md:px-8">
               <div className="mx-auto max-w-5xl">
                 <h2 className="font-serif text-3xl tracking-tight">
-                  {language === "en" ? "Related articles" : "Artigos relacionados"}
+                  {pageLang === "en" ? "Related articles" : pageLang === "es" ? "Artículos relacionados" : "Artigos relacionados"}
                 </h2>
                 <ul className="mt-8 grid gap-4 md:grid-cols-3">
                   {related.map((item) => (

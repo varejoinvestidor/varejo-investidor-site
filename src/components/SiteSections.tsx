@@ -453,16 +453,16 @@ export function SiteChrome({
   const firstNavItems = useMemo(
     () => [
       { label: safeT.nav.home, href: localizedHref("home"), activePaths: ["/", ...SUPPORTED_LOCALES.map((item) => `/${item}`)] },
-      { label: safeT.nav.signals, href: localizedHref("signals"), activePaths: ["/sinais", "/signals", `/${locale}/signals`] },
-      { label: safeT.nav.education, href: localizedHref("education"), activePaths: ["/educacao", `/${locale}/education`] },
-      { label: "Select", href: localizedPage("/select"), activePaths: ["/select", ...(localePrefix ? [`/${localePrefix}/select`] : []), "/servicos/select"] },
-      { label: "Private", href: localizedPage("/private"), activePaths: ["/private", ...(localePrefix ? [`/${localePrefix}/private`] : [])] },
-      { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
       {
         label: insightNavLabel,
         href: getPublisherHubPath(locale),
         activePaths: publisherHubActivePaths(locale),
       },
+      { label: safeT.nav.signals, href: localizedHref("signals"), activePaths: ["/sinais", "/signals", `/${locale}/signals`] },
+      { label: safeT.nav.education, href: localizedHref("education"), activePaths: ["/educacao", `/${locale}/education`] },
+      { label: "Select", href: localizedPage("/select"), activePaths: ["/select", ...(localePrefix ? [`/${localePrefix}/select`] : []), "/servicos/select"] },
+      { label: "Private", href: localizedPage("/private"), activePaths: ["/private", ...(localePrefix ? [`/${localePrefix}/private`] : [])] },
+      { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
     ],
     [locale, safeT, insightNavLabel],
   );

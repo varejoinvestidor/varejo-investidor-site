@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import pg from "pg";
 
+export const ARTICLE_BANNERS_MIGRATION_FILES = ["20260310120000_article_banners.sql"] as const;
+
 export const ELITE_MIGRATION_FILES = [
   "20260310130000_elite_report.sql",
   "20260311120000_elite_operations_levels.sql",

@@ -5,8 +5,15 @@ import { revalidatePath } from "next/cache";
 import { requireAdminPassword } from "../admin/adminAuth";
 import { canEditArticle, canPublish } from "../permissions";
 import { sanitizeTipTapForSave } from "../editor/youtubeEmbed";
-import { parseArticleBanners, type ArticleBanner } from "../types/banner";
+import {
+  embedBannersInContent,
+  resolveArticleBannersList,
+  serializeArticleBannersForSave,
+  type ArticleBanner,
+} from "../types/banner";
+import { ARTICLE_BANNERS_MIGRATION_FILES, runSqlMigrationFiles } from "../schema/runSqlMigrations";
 import { getPublisherSession } from "../supabase/server";
+import { getPublisherArticlePath, getPublisherHubPath } from "../public/paths";
 import type { ArticleStatus } from "../types";
 import { emptyTipTapDocument, slugifyTitle } from "./slug";
 
@@ -75,12 +82,80 @@ function revalidateArticlePaths(slug?: string, language?: string) {
   revalidatePath("/admin");
   revalidatePath("/admin/artigos");
   revalidatePath("/admin/agendamentos");
-  revalidatePath("/artigos");
-  if (language === "en") revalidatePath("/en/artigos");
-  if (slug) {
-    revalidatePath(`/artigos/${slug}`);
-    if (language === "en") revalidatePath(`/en/artigos/${slug}`);
+  if (language) {
+    revalidatePath(getPublisherHubPath(language));
+    if (slug) revalidatePath(getPublisherArticlePath(language, slug));
+  } else {
+    revalidatePath("/artigos");
+    revalidatePath("/en/artigos");
+    if (slug) {
+      revalidatePath(`/artigos/${slug}`);
+      revalidatePath(`/en/artigos/${slug}`);
+    }
   }
+}
+
+const ARTICLE_BANNERS_SCHEMA_ERROR =
+  "A coluna `articles.banners` não existe no Supabase. Instale a coluna (botão abaixo, admin) ou rode POST /api/publisher/bootstrap-schema.";
+
+function isArticleBannersSchemaError(message: string | undefined): boolean {
+  if (!message) return false;
+  const m = message.toLowerCase();
+  return m.includes("banners") || (m.includes("column") && m.includes("articles"));
+}
+
+async function updateArticlePersistingBanners(
+  supabase: NonNullable<Awaited<ReturnType<typeof requireStaff>>["supabase"]>,
+  articleId: string,
+  patch: Record<string, unknown>,
+  banners: ArticleBanner[],
+) {
+  const serialized = serializeArticleBannersForSave(banners);
+  const withBanners = { ...patch, banners: serialized };
+
+  let result = await supabase.from("articles").update(withBanners).eq("id", articleId).select("updated_at, slug").single();
+
+  if (!result.error) return result;
+
+  if (!isArticleBannersSchemaError(result.error.message)) return result;
+
+  if (serialized.length > 0) {
+    const { banners: _b, ...withoutBanners } = withBanners;
+    const fallback = await supabase
+      .from("articles")
+      .update(withoutBanners)
+      .eq("id", articleId)
+      .select("updated_at, slug")
+      .single();
+    if (!fallback.error) return fallback;
+    return { data: null, error: { message: ARTICLE_BANNERS_SCHEMA_ERROR } };
+  }
+
+  const { banners: _b, ...withoutBanners } = withBanners;
+  return supabase.from("articles").update(withoutBanners).eq("id", articleId).select("updated_at, slug").single();
+}
+
+/** Cria coluna `articles.banners` (admin). */
+export async function installArticleBannersSchemaFromAdmin() {
+  const { supabase, profile } = await getPublisherSession();
+  if (!supabase || !profile) return { ok: false as const, error: "Sessão inválida." };
+  if (profile.role !== "admin") {
+    return { ok: false as const, error: "Somente administradores podem instalar a coluna de banners." };
+  }
+
+  const migrated = await runSqlMigrationFiles(ARTICLE_BANNERS_MIGRATION_FILES);
+  if (!migrated.ok) return { ok: false as const, error: migrated.error };
+
+  const check = await supabase.from("articles").select("banners").limit(1);
+  if (check.error) {
+    return {
+      ok: false as const,
+      error: `Migration aplicada, mas a API ainda retorna: ${check.error.message}. Aguarde ~1 min e salve de novo.`,
+    };
+  }
+
+  revalidatePath("/admin/artigos");
+  return { ok: true as const };
 }
 
 async function requireStaff() {
@@ -263,7 +338,7 @@ export async function getArticle(id: string): Promise<ActionResult<ArticleRecord
       scheduled_at: data.scheduled_at,
       updated_at: data.updated_at,
       view_count: data.view_count ?? 0,
-      banners: parseArticleBanners(data.banners),
+      banners: resolveArticleBannersList(data.banners, data.content),
       tag_ids: (tagRows ?? []).map((t) => t.tag_id),
     },
   };
@@ -349,7 +424,7 @@ export async function saveArticle(
     slug = await uniqueSlugForArticle(supabase, input.language, slug, input.id);
   }
 
-  const safeContent = sanitizeTipTapForSave(input.content);
+  const safeContent = embedBannersInContent(sanitizeTipTapForSave(input.content), input.banners);
   const basePatch = {
     title,
     slug,
@@ -363,15 +438,9 @@ export async function saveArticle(
     seo_description: input.seo_description,
     references_text: input.references_text,
     sources: input.sources,
-    banners: input.banners,
   };
 
-  let { data, error } = await supabase.from("articles").update(basePatch).eq("id", input.id).select("updated_at, slug").single();
-
-  if (error?.message?.includes("banners")) {
-    const { banners: _b, ...withoutBanners } = basePatch;
-    ({ data, error } = await supabase.from("articles").update(withoutBanners).eq("id", input.id).select("updated_at, slug").single());
-  }
+  const { data, error } = await updateArticlePersistingBanners(supabase, input.id, basePatch, input.banners);
 
   if (error || !data) return { ok: false, error: error?.message ?? "Falha ao salvar." };
 
@@ -441,7 +510,7 @@ export async function saveAndPublishArticle(
   const validation = validatePublishableTitleSlug(title, slug);
   if (validation) return { ok: false, error: validation };
 
-  const safeContent = sanitizeTipTapForSave(input.content);
+  const safeContent = embedBannersInContent(sanitizeTipTapForSave(input.content), input.banners);
   const basePatch = {
     title,
     slug,
@@ -455,18 +524,12 @@ export async function saveAndPublishArticle(
     seo_description: input.seo_description,
     references_text: input.references_text,
     sources: input.sources,
-    banners: input.banners,
     status: "published" as const,
     published_at: new Date().toISOString(),
     scheduled_at: null,
   };
 
-  let { data, error } = await supabase.from("articles").update(basePatch).eq("id", input.id).select("updated_at, slug").single();
-
-  if (error?.message?.includes("banners")) {
-    const { banners: _b, ...withoutBanners } = basePatch;
-    ({ data, error } = await supabase.from("articles").update(withoutBanners).eq("id", input.id).select("updated_at, slug").single());
-  }
+  const { data, error } = await updateArticlePersistingBanners(supabase, input.id, basePatch, input.banners);
 
   if (error || !data) return { ok: false, error: error?.message ?? "Falha ao publicar." };
 

@@ -207,12 +207,33 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
   }
 }
 
-export function TipTapArticleBody({ document }: { document: Record<string, unknown> }) {
+export function TipTapArticleBody({
+  document,
+  inlineSlot,
+}: {
+  document: Record<string, unknown>;
+  /** Renderizado no meio do fluxo (metade dos blocos), ex.: banners “inline”. */
+  inlineSlot?: ReactNode;
+}) {
   const root = normalizeDocForDisplay(document as TipTapNode);
   if (!root.content?.length) return null;
+
+  const nodes = root.content;
+  if (!inlineSlot) {
+    return (
+      <div className={PROSE_STACK_CLASS}>
+        {nodes.map((node, index) => renderNode(node, index))}
+      </div>
+    );
+  }
+
+  const splitAt = Math.max(1, Math.ceil(nodes.length / 2));
+
   return (
     <div className={PROSE_STACK_CLASS}>
-      {root.content.map((node, index) => renderNode(node, index))}
+      {nodes.slice(0, splitAt).map((node, index) => renderNode(node, index))}
+      <div className="my-4">{inlineSlot}</div>
+      {nodes.slice(splitAt).map((node, index) => renderNode(node, splitAt + index))}
     </div>
   );
 }
