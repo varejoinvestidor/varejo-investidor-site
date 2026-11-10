@@ -41,9 +41,7 @@ export function ArticleHeroVideo({
     <section className="vi-article-videos px-5 py-8 md:px-8 md:py-10" aria-label={labels.watch}>
       <div
         className={`mx-auto flex max-w-7xl flex-col gap-12 ${
-          layers.length === 1 && layers[0]?.key === "vertical"
-            ? "items-center lg:max-w-lg"
-            : "lg:grid lg:grid-cols-2 lg:items-start lg:gap-10"
+          layers.length === 1 && layers[0]?.key === "vertical" ? "items-center max-w-lg" : ""
         }`}
       >
         {layers.map((layer) => (
