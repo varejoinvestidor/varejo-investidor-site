@@ -127,12 +127,13 @@ export const he = {
     title: "הסיגנל מגיע במבנה לקריאה מהירה.",
     text: "כל התראה מארגנת נכס, כיוון, כניסה, טייק פרופיט, סטופ וניתוח קצר של התרחיש.",
     cta: "קבלו סיגנלים בערוץ Elite",
-    signal: "סיגנל: 4.169",
-    asset: "GBP/USD קנייה 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 מכירה 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "ניתוח",
-    analysis: "GBP/USD, גרף 4 שעות. הנכס בתוך הענן, היעד בגבול הענן.",
+    analysis:
+      "גרף יומי: ממוצע אדום כלפי מטה, ממוצע כחול כהתנגדות. רעיון ירידה ליד Tenkan האדומה, יעד באזור take profit.",
   },
   brokers: {
     eyebrow: "מבנה תפעולי",

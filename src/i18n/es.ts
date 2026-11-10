@@ -126,12 +126,13 @@ export const es = {
     title: "La señal llega estructurada para una lectura rápida.",
     text: "Cada envío organiza activo, dirección, entrada, take profit, stop loss y un análisis breve del escenario.",
     cta: "Recibir señales en el Canal Elite",
-    signal: "Señal: 4.169",
-    asset: "GBP/USD COMPRA 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 VENTA 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Análisis",
-    analysis: "GBP/USD, gráfico de 4 horas. El activo se encuentra dentro de la nube, con objetivo en el límite de la nube.",
+    analysis:
+      "Gráfico diario: media roja apuntando a la baja, media azul como resistencia. Idea bajista cerca de la Tenkan (roja), con objetivo en la zona de take profit.",
   },
   brokers: {
     eyebrow: "Estructura operativa",

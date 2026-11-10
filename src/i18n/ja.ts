@@ -126,12 +126,13 @@ export const ja = {
     title: "シグナルは素早く読めるよう構造化されて届きます。",
     text: "各アラートに銘柄、方向、エントリー、テイクプロフィット、ストップロス、短いシナリオ分析が含まれます。",
     cta: "Eliteチャンネルでシグナルを受け取る",
-    signal: "シグナル：4.169",
-    asset: "GBP/USD 買い 1.34497",
-    takeProfit: "利確目標: 1.34766",
-    stopLoss: "損切り: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 売り 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "分析",
-    analysis: "GBP/USD、4時間足。銘柄は雲の内側にあり、目標は雲の上限。",
+    analysis:
+      "日足：赤い平均線は下向き、青い平均線は抵抗。赤い転換線付近での下落想定、テイクプロフィット圏を目標。",
   },
   brokers: {
     eyebrow: "運用構造",

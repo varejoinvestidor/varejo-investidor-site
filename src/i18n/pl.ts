@@ -126,12 +126,13 @@ export const pl = {
     title: "Sygnał jest ustrukturyzowany do szybkiego odczytu.",
     text: "Każdy alert zawiera aktywo, kierunek, wejście, take profit, stop loss i krótką analizę scenariusza.",
     cta: "Otrzymuj sygnały w kanale Elite",
-    signal: "Sygnał: 4.169",
-    asset: "GBP/USD KUPNO 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 SPRZEDAŻ 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Analiza",
-    analysis: "GBP/USD, wykres 4-godzinny. Aktywo jest w chmurze, cel przy granicy chmury.",
+    analysis:
+      "Wykres dzienny: czerwona średnia skierowana w dół, niebieska średnia jako opór. Pomysł na spadek przy czerwonej Tenkan, cel w strefie take profit.",
   },
   brokers: {
     eyebrow: "Struktura operacyjna",

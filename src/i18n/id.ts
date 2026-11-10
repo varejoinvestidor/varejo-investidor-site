@@ -126,12 +126,13 @@ export const id = {
     title: "Sinyal tiba terstruktur untuk dibaca cepat.",
     text: "Setiap alert memuat aset, arah, entry, take profit, stop loss, dan analisis skenario singkat.",
     cta: "Terima sinyal di Kanal Elite",
-    signal: "Sinyal: 4.169",
-    asset: "GBP/USD BELI 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 JUAL 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Analisis",
-    analysis: "GBP/USD, grafik 4 jam. Aset berada di dalam cloud, dengan target di batas cloud.",
+    analysis:
+      "Grafik harian: rata-rata merah menurun, rata-rata biru sebagai resistensi. Skenario turun dekat Tenkan merah, target zona take profit.",
   },
   brokers: {
     eyebrow: "Struktur operasional",

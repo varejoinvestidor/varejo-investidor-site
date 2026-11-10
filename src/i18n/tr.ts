@@ -126,12 +126,13 @@ export const tr = {
     title: "Sinyal hızlı okuma için yapılandırılmış gelir.",
     text: "Her gönderimde varlık, yön, giriş, take profit, stop loss ve kısa senaryo analizi yer alır.",
     cta: "Elite Kanalında sinyal al",
-    signal: "Sinyal: 4.169",
-    asset: "GBP/USD ALIŞ 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 SATIŞ 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Analiz",
-    analysis: "GBP/USD, 4 saatlik grafik. Varlık bulut içinde; hedef bulut sınırında.",
+    analysis:
+      "Günlük grafik: kırmızı ortalama aşağı, mavi ortalama direnç. Kırmızı Tenkan yakınında düşüş fikri, hedef take profit bölgesi.",
   },
   brokers: {
     eyebrow: "Operasyonel yapı",

@@ -126,12 +126,13 @@ export const vi = {
     title: "Tín hiệu được cấu trúc để đọc nhanh.",
     text: "Mỗi thông báo gồm tài sản, hướng, điểm vào, take profit, stop loss và phân tích kịch bản ngắn.",
     cta: "Nhận tín hiệu tại Kênh Elite",
-    signal: "Tín hiệu: 4.169",
-    asset: "GBP/USD MUA 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 BÁN 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Phân tích",
-    analysis: "GBP/USD, biểu đồ 4 giờ. Tài sản nằm trong cloud, mục tiêu tại biên cloud.",
+    analysis:
+      "Biểu đồ ngày: đường trung bình đỏ hướng xuống, đường xanh là kháng cự. Kịch bản giảm gần Tenkan đỏ, mục tiêu vùng take profit.",
   },
   brokers: {
     eyebrow: "Cấu trúc vận hành",

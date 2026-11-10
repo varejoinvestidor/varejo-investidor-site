@@ -126,12 +126,13 @@
     title: "Il segnale arriva strutturato per una lettura rapida.",
     text: "Ogni alert organizza attivo, direzione, ingresso, take profit, stop loss e un breve analisi di scenario.",
     cta: "Ricevi i segnali nel Canale Elite",
-    signal: "Segnale: 4.169",
-    asset: "GBP/USD ACQUISTO 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 VENDITA 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Analisi",
-    analysis: "GBP/USD, grafico 4 ore. L'attivo è dentro la nuvola, con obiettivo al limite della nuvola.",
+    analysis:
+      "Grafico giornaliero: media rossa verso il basso, media blu come resistenza. Idea ribassista vicino alla Tenkan (rossa), obiettivo nella zona di take profit.",
   },
   brokers: {
     eyebrow: "Struttura operativa",

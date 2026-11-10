@@ -126,12 +126,13 @@ export const ko = {
     title: "신호는 빠르게 읽을 수 있도록 구조화되어 도착합니다.",
     text: "각 알림에 자산, 방향, 진입, 테이크프로핏, 스탑로스, 짧은 시나리오 분석이 포함됩니다.",
     cta: "Elite 채널에서 신호 받기",
-    signal: "신호: 4.169",
-    asset: "GBP/USD 매수 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 매도 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "분석",
-    analysis: "GBP/USD, 4시간 차트. 자산은 구름 안에 있으며 목표는 구름 상단.",
+    analysis:
+      "일봉: 빨간 이동평균은 하향, 파란 이동평균은 저항. 빨간 전환선 부근 하락 시나리오, 테이크프로핏 구간을 목표.",
   },
   brokers: {
     eyebrow: "운용 구조",

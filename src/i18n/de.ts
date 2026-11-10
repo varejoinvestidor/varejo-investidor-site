@@ -126,12 +126,13 @@
     title: "Signale kommen klar strukturiert an.",
     text: "Jedes Signal enthält Instrument, Richtung, Einstieg, Take Profit, Stop Loss und eine kurze Szenarioanalyse.",
     cta: "Signale im Elite-Kanal erhalten",
-    signal: "Signal: 4.169",
-    asset: "GBP/USD KAUF 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 VERKAUF 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Analyse",
-    analysis: "GBP/USD, 4-Stunden-Chart. Das Instrument liegt in der Wolke, Ziel am Wolkenrand.",
+    analysis:
+      "Tageschart: roter Durchschnitt nach unten, blauer Durchschnitt als Widerstand. Abwärtsidee nahe der roten Tenkan, Ziel im Take-Profit-Bereich.",
   },
   brokers: {
     eyebrow: "Operative Infrastruktur",

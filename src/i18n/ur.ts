@@ -126,12 +126,13 @@ export const ur = {
     title: "سگنل تیزی سے پڑھنے کے لیے منظم آتا ہے۔",
     text: "ہر الرٹ میں اثاثہ، سمت، انٹری، ٹیک پرافٹ، اسٹاپ لاس اور مختصر منظرنامہ تجزیہ ہوتا ہے۔",
     cta: "Elite چینل میں سگنلز حاصل کریں",
-    signal: "سگنل: 4.169",
-    asset: "GBP/USD خرید 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 فروخت 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "تجزیہ",
-    analysis: "GBP/USD، 4 گھنٹے کا چارٹ۔ اثاثہ بادل کے اندر، ہدف بادل کی حد پر۔",
+    analysis:
+      "روزانہ چارٹ: سرخ اوسط نیچے، نیلی اوسط مزاحمت۔ سرخ Tenkan کے قریب نیچے کا خیال، ہدف take profit زون۔",
   },
   brokers: {
     eyebrow: "آپریشنل ساخت",

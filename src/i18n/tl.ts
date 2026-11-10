@@ -105,12 +105,13 @@ export const tl = {
     title: "The signal arrives structured for quick reading.",
     text: "Each alert organizes asset, direction, entry, take profit, stop loss, and a short scenario analysis.",
     cta: "Receive signals in Elite Channel",
-    signal: "Signal: 4,169",
-    asset: "GBP/USD BUY 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 SELL 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Analysis",
-    analysis: "GBP/USD, 4-hour chart. The asset is inside the cloud, with target at the cloud limit.",
+    analysis:
+      "Daily chart: red average pointing down, blue average as resistance. Downside idea near the red Tenkan, targeting the take-profit zone.",
   },
   brokers: {
     eyebrow: "Operational structure",
