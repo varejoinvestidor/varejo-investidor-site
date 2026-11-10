@@ -13,6 +13,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin/autores", label: "Autores" },
   { href: "/admin/midia", label: "Biblioteca de mídia" },
   { href: "/admin/agendamentos", label: "Agendamentos" },
+  { href: "/admin/relatorio-elite", label: "Relatório Elite" },
   { href: "/admin/usuarios", label: "Usuários" },
   { href: "/admin/configuracoes", label: "Configurações" },
 ];

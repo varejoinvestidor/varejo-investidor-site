@@ -17,6 +17,7 @@ import { ForexBrokerBannerWide } from "./ForexBrokerBannerWide";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { eliteReportCopyJa } from "../data/eliteReportCopyJa";
 import { eliteReportCopyHi } from "../data/eliteReportCopyHi";
+import type { HubMonthlyReport, HubOperation } from "../elite/mapToHub";
 
 export const eliteReportPaths: Record<Locale, string> = {
   pt: "/relatorio-elite",
@@ -539,8 +540,8 @@ function formatPips(value: number, locale: Locale) {
   return `${value >= 0 ? "+" : ""}${formatNumber(value, locale)} pips`;
 }
 
-function getYearSummary(year: number) {
-  const yearReports = reports.filter((report) => report.year === year);
+function getYearSummary(year: number, reportSource: MonthlyReport[]) {
+  const yearReports = reportSource.filter((report) => report.year === year);
   const signals = yearReports.reduce((sum, report) => sum + report.signals, 0);
   const pips = yearReports.reduce((sum, report) => sum + report.pips, 0);
   const percentReports = yearReports.filter((report) => report.result.includes("%"));
@@ -693,24 +694,49 @@ function SelectField({ label, value, options, onChange }: { label: string; value
   );
 }
 
-export default function EliteReportHub({ initialLocale }: { initialLocale: Locale }) {
+type EliteHubData = {
+  monthly: HubMonthlyReport[];
+  activeOperations: HubOperation[];
+  completedOperations: HubOperation[];
+  stats?: { totalSignals: number; totalPips: number; winRate: string; closedCount: number };
+};
+
+export default function EliteReportHub({ initialLocale, hubData }: { initialLocale: Locale; hubData?: EliteHubData }) {
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const [selectedYear, setSelectedYear] = useState(2026);
   const [selectedMonthKey, setSelectedMonthKey] = useState("2026-4");
   const [selectedTimelineYear, setSelectedTimelineYear] = useState("2026");
   const [filters, setFilters] = useState({ year: "Todos", month: "Todos", asset: "Todos", direction: "Todos", status: "Todos" });
 
+  const reportsData: MonthlyReport[] = hubData?.monthly?.length ? (hubData.monthly as MonthlyReport[]) : reports;
+  const activeOperationsData: Operation[] = hubData?.activeOperations?.length
+    ? (hubData.activeOperations as Operation[])
+    : activeOperations;
+  const completedOperationsData: Operation[] = hubData?.completedOperations?.length
+    ? (hubData.completedOperations as Operation[])
+    : completedOperations;
+
   const t = translations[locale] ?? translations.en;
   const copy = copyByLocale[locale] ?? copyByLocale.en;
   const ctaHref = locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[3];
-  const selectedYearSummary = getYearSummary(selectedYear);
-  const selectedMonth = reports.find((report) => `${report.year}-${report.monthIndex}` === selectedMonthKey) ?? reports[reports.length - 1];
+  const selectedYearSummary = getYearSummary(selectedYear, reportsData);
+  const selectedMonth =
+    reportsData.find((report) => `${report.year}-${report.monthIndex}` === selectedMonthKey) ?? reportsData[reportsData.length - 1];
+  const heroStats =
+    hubData?.stats && hubData.stats.closedCount > 0
+      ? [
+          "Desde agosto de 2018",
+          `${hubData.stats.totalSignals.toLocaleString("pt-BR")} sinais no consolidado`,
+          `${hubData.stats.totalPips >= 0 ? "+" : ""}${hubData.stats.totalPips.toLocaleString("pt-BR")} pips públicos`,
+          `Taxa de acerto (amostra): ${hubData.stats.winRate}`,
+        ]
+      : copy.heroStats;
   const selectedTimelineEvent = timelineEvents.find((event) => event.year === selectedTimelineYear) ?? timelineEvents[timelineEvents.length - 1];
 
   const annualData = useMemo(() => {
     const years = Array.from({ length: 9 }, (_, index) => 2018 + index);
     return years.map((year) => {
-      const summary = getYearSummary(year);
+      const summary = getYearSummary(year, reportsData);
       const inferredSignals = summary.signals || (year === 2018 ? 232 : 420 + ((year - 2018) % 5) * 18);
       return {
         year,
@@ -718,30 +744,30 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
         assets: summary.assets.length ? summary.assets : ["XAU/USD", "EUR/USD", "GBP/JPY"],
       };
     });
-  }, []);
+  }, [reportsData]);
 
   const performanceData = useMemo(() => {
     let accumulated = 0;
     return annualData.map((item) => {
-      const yearPips = reports.filter((report) => report.year === item.year).reduce((sum, report) => sum + report.pips, 0);
+      const yearPips = reportsData.filter((report) => report.year === item.year).reduce((sum, report) => sum + report.pips, 0);
       accumulated += yearPips || Math.round(item.signals * 4.2);
       return { year: item.year, value: accumulated, signals: item.signals };
     });
-  }, [annualData]);
+  }, [annualData, reportsData]);
 
   const assetDistribution = useMemo(() => {
     const colors = ["#c6994a", "#16a34a", "#3b82f6", "#ef4444", "#8b5cf6", "#f97316", "#14b8a6", "#94a3b8"];
     const map = new Map<string, number>();
-    for (const report of reports) {
+    for (const report of reportsData) {
       for (const asset of report.assets) map.set(asset, (map.get(asset) ?? 0) + report.signals / report.assets.length);
     }
     return Array.from(map.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 8)
       .map(([label, value], index) => ({ label, value, color: colors[index % colors.length] }));
-  }, []);
+  }, [reportsData]);
 
-  const filteredOperations = completedOperations.filter((operation) => {
+  const filteredOperations = completedOperationsData.filter((operation) => {
     const [monthName, yearText] = operation.reportMonth.split("/");
     return (
       (filters.year === "Todos" || filters.year === yearText) &&
@@ -762,13 +788,14 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
   const setFilter = (key: keyof typeof filters, value: string) => setFilters((current) => ({ ...current, [key]: value }));
 
   return (
-    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-black text-ink">
+    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-ink text-paper">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="page-hero premium-stage relative px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">
+      <section className="page-hero premium-stage relative border-b border-gold/[0.14] px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">
+        <div className="absolute inset-0 terminal-grid opacity-35" />
         <div className="finance-particles" />
-        <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.1] blur-3xl" />
-        <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-gold/[0.08] blur-3xl" />
+        <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.12] blur-3xl" />
+        <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-gold/[0.1] blur-3xl" />
         <div className="relative mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-end">
             <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.55 }}>
@@ -782,9 +809,9 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
               </div>
             </motion.div>
             <div className="grid gap-3 sm:grid-cols-2">
-              {copy.heroStats.map((stat) => (
-                <article key={stat} className="terminal-module border border-gold/16 bg-white/[0.03] p-5 shadow-[0_0_50px_rgba(198,153,74,0.06)]">
-                  <p className="font-mono text-sm font-bold uppercase tracking-[0.16em] text-paper/72">{stat}</p>
+              {heroStats.map((stat) => (
+                <article key={stat} className="terminal-module border border-gold/[0.22] bg-paper/[0.04] p-5 backdrop-blur-sm shadow-[0_0_40px_rgba(198,153,74,0.08)]">
+                  <p className="text-sm font-semibold leading-relaxed tracking-[0.04em] text-paper/80">{stat}</p>
                 </article>
               ))}
             </div>
@@ -824,7 +851,7 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
                     <div key={year} className="contents">
                       <button type="button" onClick={() => setSelectedYear(year)} className="text-left font-mono text-xs font-black text-gold">{year}</button>
                       {monthNames.map((month, index) => {
-                        const report = reports.find((entry) => entry.year === year && entry.monthIndex === index);
+                        const report = reportsData.find((entry) => entry.year === year && entry.monthIndex === index);
                         return (
                           <button
                             key={`${year}-${month}`}
@@ -874,7 +901,7 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Elite" title={copy.activeTitle} text={copy.activeText} />
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {activeOperations.map((operation, index) => (
+            {activeOperationsData.map((operation, index) => (
               <motion.article key={`${operation.asset}-${index}`} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="terminal-module relative overflow-hidden border border-rise/20 bg-white/[0.03] p-6">
                 <div className="absolute inset-0 terminal-grid opacity-20" />
                 <div className="relative flex items-start justify-between gap-4">
@@ -912,9 +939,9 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Pips" title={copy.resultsTitle} text={copy.resultsText} />
           <div className="mt-8 grid gap-4 md:grid-cols-5">
-            <SelectField label={copy.filters.year} value={filters.year} options={[copy.filters.all, ...Array.from(new Set(completedOperations.map((operation) => operation.reportMonth.split("/")[1])))]} onChange={(value) => setFilter("year", value === copy.filters.all ? "Todos" : value)} />
-            <SelectField label={copy.filters.month} value={filters.month} options={[copy.filters.all, ...Array.from(new Set(completedOperations.map((operation) => operation.reportMonth.split("/")[0])))]} onChange={(value) => setFilter("month", value === copy.filters.all ? "Todos" : value)} />
-            <SelectField label={copy.filters.asset} value={filters.asset} options={[copy.filters.all, ...Array.from(new Set(completedOperations.map((operation) => operation.asset)))]} onChange={(value) => setFilter("asset", value === copy.filters.all ? "Todos" : value)} />
+            <SelectField label={copy.filters.year} value={filters.year} options={[copy.filters.all, ...Array.from(new Set(completedOperationsData.map((operation) => operation.reportMonth.split("/")[1])))]} onChange={(value) => setFilter("year", value === copy.filters.all ? "Todos" : value)} />
+            <SelectField label={copy.filters.month} value={filters.month} options={[copy.filters.all, ...Array.from(new Set(completedOperationsData.map((operation) => operation.reportMonth.split("/")[0])))]} onChange={(value) => setFilter("month", value === copy.filters.all ? "Todos" : value)} />
+            <SelectField label={copy.filters.asset} value={filters.asset} options={[copy.filters.all, ...Array.from(new Set(completedOperationsData.map((operation) => operation.asset)))]} onChange={(value) => setFilter("asset", value === copy.filters.all ? "Todos" : value)} />
             <SelectField label={copy.filters.direction} value={filters.direction} options={[copy.filters.all, "Compra", "Venda"]} onChange={(value) => setFilter("direction", value === copy.filters.all ? "Todos" : value)} />
             <SelectField label={copy.filters.status} value={filters.status} options={[copy.filters.all, copy.finished]} onChange={(value) => setFilter("status", value === copy.filters.all ? "Todos" : value)} />
           </div>
@@ -944,7 +971,7 @@ export default function EliteReportHub({ initialLocale }: { initialLocale: Local
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Elite" title={copy.monthlyTitle} text={copy.monthlyText} />
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {reports.slice().reverse().map((report) => (
+            {reportsData.slice().reverse().map((report) => (
               <article key={`${report.year}-${report.month}`} className="terminal-module border border-gold/18 bg-white/[0.03] p-6 shadow-[0_0_50px_rgba(198,153,74,0.05)]">
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{report.status}</p>
                 <h3 className="mt-3 font-serif text-3xl tracking-[-0.04em] text-paper">{report.month}/{report.year}</h3>

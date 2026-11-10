@@ -346,7 +346,6 @@ export function SiteChrome({
             : { open: "Open menu", close: "Close menu" };
   const [mobileLanguageOpen, setMobileLanguageOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileMarketsOpen, setMobileMarketsOpen] = useState(false);
 
   useEffect(() => {
     setMobileLanguageOpen(false);
@@ -459,18 +458,17 @@ export function SiteChrome({
       { label: "Select", href: localizedPage("/select"), activePaths: ["/select", ...(localePrefix ? [`/${localePrefix}/select`] : []), "/servicos/select"] },
       { label: "Private", href: localizedPage("/private"), activePaths: ["/private", ...(localePrefix ? [`/${localePrefix}/private`] : [])] },
       { label: safeT.nav.services, href: localizedHref("services"), activePaths: ["/servicos", "/services", `/${locale}/services`] },
+      {
+        label: insightNavLabel,
+        href: getPublisherHubPath(locale),
+        activePaths: publisherHubActivePaths(locale),
+      },
     ],
-    [locale, safeT],
+    [locale, safeT, insightNavLabel],
   );
   const isActivePath = (paths: string[]) => paths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
-  const marketsActive = isActivePath(["/forex", "/acoes", "/cripto", "/etfs", "/fundos-imobiliarios", `/${locale}/forex`, `/${locale}/stocks`, `/${locale}/crypto`, `/${locale}/etfs`]);
   const mobilePrimaryItems = [
     ...firstNavItems,
-    {
-      label: insightNavLabel,
-      href: getPublisherHubPath(locale),
-      activePaths: publisherHubActivePaths(locale),
-    },
     { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
   ];
   return (
@@ -518,7 +516,6 @@ export function SiteChrome({
               const isActive = isActivePath(item.activePaths);
               return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
             })}
-            <HeaderDropdown label={marketLabels.markets} items={marketItems} active={marketsActive} />
           </div>
 
           <div className="desktop-language-area hidden items-center justify-end xl:flex">
@@ -562,22 +559,13 @@ export function SiteChrome({
           </div>
 
           <nav className="mobile-drawer-nav" aria-label="Mobile navigation">
-            {mobilePrimaryItems.slice(0, 6).map((item) => (
+            {mobilePrimaryItems.slice(0, 7).map((item) => (
               <a key={`${item.href}-${item.label}`} href={item.href} className={isActivePath(item.activePaths) ? "is-active" : ""}>
                 <span>{item.label}</span>
               </a>
             ))}
 
-            <div className={`mobile-drawer-group ${mobileMarketsOpen ? "is-open" : ""}`}>
-              <button type="button" aria-expanded={mobileMarketsOpen} onClick={() => setMobileMarketsOpen((open) => !open)}>
-                <span>{marketLabels.markets}</span><span className="mobile-drawer-chevron" aria-hidden="true">›</span>
-              </button>
-              <div className="mobile-drawer-submenu">
-                {marketItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-              </div>
-            </div>
-
-            {mobilePrimaryItems.slice(6).map((item) => (
+            {mobilePrimaryItems.slice(7).map((item) => (
               <a key={`${item.href}-${item.label}`} href={item.href} className={isActivePath(item.activePaths) ? "is-active" : ""}>
                 <span>{item.label}</span>
               </a>
@@ -982,7 +970,7 @@ export function SupportFooter({
               social: "Redes",
               levels: "N\u00EDveis",
               markets: "Mercados",
-              content: "Mercados",
+              content: "Artigos",
               platforms: "Plataformas",
               tools: "Ferramentas",
               language: "Idioma",
