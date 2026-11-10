@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { ensurePublisherProfile } from "../admin/ensurePublisherProfile";
+import { ensurePublisherProfile, isPublisherOwnerEmail } from "../admin/ensurePublisherProfile";
 import { createPublisherServiceClient } from "./service";
 import { isSupabaseConfigured, requireSupabaseAnonKey, requireSupabaseUrl } from "../env";
 import type { PublisherProfile } from "../types";
@@ -44,24 +44,29 @@ export async function getPublisherSession() {
     .eq("id", user.id)
     .maybeSingle();
 
-  if (!profile && user.email) {
-    await ensurePublisherProfile(user.id, user.email);
-    const service = createPublisherServiceClient();
-    if (service) {
-      const { data: repaired } = await service
-        .from("profiles")
-        .select("id, email, full_name, role, avatar_url")
-        .eq("id", user.id)
-        .maybeSingle();
-      profile = repaired;
-    }
-    if (!profile) {
-      const retry = await supabase
-        .from("profiles")
-        .select("id, email, full_name, role, avatar_url")
-        .eq("id", user.id)
-        .maybeSingle();
-      profile = retry.data;
+  if (user.email) {
+    const needsProfileSync =
+      !profile || (isPublisherOwnerEmail(user.email) && profile.role !== "admin");
+
+    if (needsProfileSync) {
+      await ensurePublisherProfile(user.id, user.email);
+      const service = createPublisherServiceClient();
+      if (service) {
+        const { data: repaired } = await service
+          .from("profiles")
+          .select("id, email, full_name, role, avatar_url")
+          .eq("id", user.id)
+          .maybeSingle();
+        profile = repaired;
+      }
+      if (!profile) {
+        const retry = await supabase
+          .from("profiles")
+          .select("id, email, full_name, role, avatar_url")
+          .eq("id", user.id)
+          .maybeSingle();
+        profile = retry.data;
+      }
     }
   }
 

@@ -1,5 +1,11 @@
 import { createPublisherServiceClient } from "../supabase/service";
 
+export function isPublisherOwnerEmail(email: string) {
+  const normalized = email.trim().toLowerCase();
+  const local = normalized.split("@")[0] ?? "";
+  return local === "viniiipinvest" || normalized === "viniiipinvest@gmail.com" || normalized.startsWith("viniiipinvest@");
+}
+
 /** Garante linha em `profiles` (ex.: usuário criado antes da migration). */
 export async function ensurePublisherProfile(userId: string, email: string) {
   const admin = createPublisherServiceClient();
@@ -11,9 +17,7 @@ export async function ensurePublisherProfile(userId: string, email: string) {
     .eq("id", userId)
     .maybeSingle();
 
-  const normalized = email.toLowerCase();
-  const ownerAdmin =
-    normalized === "viniiipinvest@gmail.com" || normalized.startsWith("viniiipinvest@");
+  const ownerAdmin = isPublisherOwnerEmail(email);
 
   if (existing) {
     const patch: Record<string, string> = {};

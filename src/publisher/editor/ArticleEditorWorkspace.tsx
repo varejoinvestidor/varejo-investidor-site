@@ -48,6 +48,9 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
   const [actionBusy, setActionBusy] = useState(false);
+  const [publishFlow, setPublishFlow] = useState<{ percent: number; label: string } | null>(null);
+  const [publishSuccess, setPublishSuccess] = useState<string | null>(null);
+  const [publishing, setPublishing] = useState(false);
 
   const payload: SaveArticleInput = useMemo(
     () => ({
@@ -171,27 +174,60 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     if (action.type === "status") void runStatus(action.status);
   }
 
+  async function setPublishStep(percent: number, label: string) {
+    setPublishFlow({ percent, label });
+    await new Promise((resolve) => setTimeout(resolve, 120));
+  }
+
   async function runStatus(status: ArticleRecord["status"] | null, adminPassword?: string) {
     if (!status) return;
-    const saved = await flushSave();
-    if (!saved) return;
 
+    const isPublish = status === "published";
+    if (isPublish) {
+      setPublishing(true);
+      setPublishSuccess(null);
+      await setPublishStep(8, "Preparando publicação…");
+    }
+
+    if (isPublish) await setPublishStep(22, "Salvando alterações…");
+    const saved = await flushSave();
+    if (!saved) {
+      if (isPublish) {
+        setPublishFlow(null);
+        setPublishing(false);
+      }
+      return;
+    }
+
+    if (isPublish) await setPublishStep(48, "Validando conteúdo e slug…");
     const scheduledAt =
       status === "scheduled" && scheduledLocal ? new Date(scheduledLocal).toISOString() : undefined;
+    if (isPublish) await setPublishStep(62, "Registrando como publicado…");
     const result = await changeArticleStatus(article.id, status, scheduledAt ?? null, adminPassword);
     if (!result.ok) {
       setSaveError(result.error);
+      if (isPublish) {
+        setPublishFlow(null);
+        setPublishing(false);
+      }
       return;
     }
+
+    if (isPublish) await setPublishStep(82, "Atualizando /artigos no site…");
+
     setArticle((prev) => ({
       ...prev,
       status,
       scheduled_at: scheduledAt ?? prev.scheduled_at,
       published_at: status === "published" ? new Date().toISOString() : prev.published_at,
     }));
+
     if (status === "published") {
       const path = article.language === "en" ? `/en/artigos/${slugRef.current}` : `/artigos/${slugRef.current}`;
-      window.open(path, "_blank", "noopener,noreferrer");
+      await setPublishStep(100, "Publicação concluída");
+      setPublishSuccess(`Artigo publicado com sucesso! Disponível em ${path}`);
+      setPublishing(false);
+      window.setTimeout(() => setPublishFlow(null), 1200);
     }
   }
 
@@ -271,10 +307,11 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
             <>
               <button
                 type="button"
+                disabled={publishing}
                 onClick={() => requestSensitiveAction({ type: "status", status: "published" })}
-                className="rounded bg-gold px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-ink"
+                className="rounded bg-gold px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-ink disabled:opacity-50"
               >
-                Publicar
+                {publishing ? "Publicando…" : "Publicar"}
               </button>
               <button
                 type="button"
@@ -303,6 +340,27 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           ) : null}
         </div>
       </div>
+
+      {publishFlow ? (
+        <div className="rounded-lg border border-gold/35 bg-gold/5 px-4 py-3" role="status" aria-live="polite">
+          <div className="flex items-center justify-between gap-4 text-xs text-paper/80">
+            <span>{publishFlow.label}</span>
+            <span className="font-mono tabular-nums text-gold">{publishFlow.percent}%</span>
+          </div>
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-line/15">
+            <div
+              className="h-full rounded-full bg-gold transition-[width] duration-300 ease-out"
+              style={{ width: `${publishFlow.percent}%` }}
+            />
+          </div>
+        </div>
+      ) : null}
+
+      {publishSuccess ? (
+        <p className="rounded border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-paper" role="status">
+          {publishSuccess}
+        </p>
+      ) : null}
 
       {saveError ? (
         <p className="rounded border border-fall/40 bg-fall/10 px-4 py-2 text-sm" role="alert">
