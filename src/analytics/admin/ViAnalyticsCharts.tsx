@@ -24,8 +24,12 @@ export function AnalyticsAccessChart({
 }) {
   if (!data.length) {
     return (
-      <div className="flex min-h-[220px] items-center justify-center rounded-lg border border-dashed border-line/20 px-4 text-center text-sm text-paper/45">
-        Sem dados no período. Rode a migration VI Analytics e aguarde tráfego no site.
+      <div className="flex min-h-[220px] flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-line/20 px-4 text-center text-sm text-paper/45">
+        <p>Sem eventos de page view neste período.</p>
+        <p className="text-xs text-paper/40">
+          O schema é aplicado automaticamente (admin + cron). Navegue no site público fora de /admin para gerar dados;
+          o painel atualiza sozinho a cada ~90s.
+        </p>
       </div>
     );
   }

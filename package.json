@@ -12,6 +12,9 @@
     "import:legacy-insights": "npx tsx scripts/import-legacy-insights.ts",
     "verify:publisher": "npx tsx scripts/verify-publisher-env.ts",
     "install:elite": "node --env-file=.env.vercel.production scripts/install-elite-schema.mjs",
+    "install:vi-analytics": "node --env-file=.env.vercel.production scripts/install-vi-analytics.mjs",
+    "install:publisher-incremental": "node --env-file=.env.vercel.production scripts/install-publisher-incremental.mjs",
+    "bootstrap:vi-analytics-prod": "node --env-file=.env.vercel.production scripts/bootstrap-vi-analytics-production.mjs",
     "verify:supabase": "node --env-file=.env.local scripts/verify-supabase-schema.mjs"
   },
   "dependencies": {

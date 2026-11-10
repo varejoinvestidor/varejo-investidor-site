@@ -90,6 +90,12 @@ export default async function ViAdministradorOverviewPage({ searchParams }: Prop
       <section className="grid gap-4 lg:grid-cols-2">
         <div className="rounded-xl border border-line/12 bg-paper/[0.02] p-6">
           <h3 className="text-sm font-bold uppercase tracking-wider text-paper/70">Top páginas</h3>
+          {dashboard?.usingPublisherPaths ? (
+            <p className="mt-2 text-xs text-paper/45">
+              Fonte automática: views em artigos (Publisher). A telemetria do site preenche assim que houver tráfego
+              público.
+            </p>
+          ) : null}
           <div className="mt-5 grid gap-4">
             {dashboard?.topPaths.length ? (
               dashboard.topPaths.map((row) => (

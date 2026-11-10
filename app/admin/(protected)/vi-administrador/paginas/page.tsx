@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ViAnalyticsPeriodNav } from "../../../../../src/analytics/admin/ViAnalyticsPeriodNav";
 import { analyticsSchemaHasEvents } from "../../../../../src/analytics/admin/schemaState";
+import {
+  fetchPublisherArticlePathViews,
+  mergeTopPathsWithPublisherFallback,
+} from "../../../../../src/analytics/admin/publisherFallback";
 import { fetchTopPaths, probeAnalyticsSchema } from "../../../../../src/analytics/admin/queries";
 import { resolveAnalyticsRange } from "../../../../../src/analytics/periods";
 import type { AnalyticsPeriodKey } from "../../../../../src/analytics/types";
@@ -11,7 +15,10 @@ export default async function ViAdministradorPaginasPage({ searchParams }: Props
   const period = (searchParams?.period ?? "30d") as AnalyticsPeriodKey;
   const range = resolveAnalyticsRange(period);
   const schema = await probeAnalyticsSchema();
-  const rows = analyticsSchemaHasEvents(schema) ? await fetchTopPaths(range.from, range.to, 50) : [];
+  const telemetry = analyticsSchemaHasEvents(schema) ? await fetchTopPaths(range.from, range.to, 50) : [];
+  const publisher = await fetchPublisherArticlePathViews(50);
+  const rows = mergeTopPathsWithPublisherFallback(telemetry, publisher, 50);
+  const usingPublisher = rows.length > 0 && rows[0]?.source === "publisher";
 
   return (
     <div className="space-y-6">
@@ -19,7 +26,14 @@ export default async function ViAdministradorPaginasPage({ searchParams }: Props
         <ViAnalyticsPeriodNav />
       </Suspense>
 
-      <SectionIntro title="Páginas mais vistas" text={`Ranking por URL no período ${range.label}.`} />
+      <SectionIntro
+        title="Páginas mais vistas"
+        text={
+          usingPublisher
+            ? `Sem telemetria no período — exibindo ranking automático de artigos (Publisher). ${range.label}.`
+            : `Ranking por URL no período ${range.label}.`
+        }
+      />
 
       <div className="overflow-x-auto rounded-xl border border-line/12">
         <table className="min-w-full text-left text-sm">

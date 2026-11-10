@@ -1,14 +1,23 @@
 import { redirect } from "next/navigation";
+import { autoEnsureViAnalyticsForSession } from "../../../../src/analytics/actions";
+import { ViAnalyticsAutoInstall } from "../../../../src/analytics/admin/ViAnalyticsAutoInstall";
+import { ViAnalyticsLiveRefresh } from "../../../../src/analytics/admin/ViAnalyticsLiveRefresh";
 import { ViAnalyticsSchemaAlert } from "../../../../src/analytics/admin/ViAnalyticsSchemaAlert";
 import { ViAnalyticsSubnav } from "../../../../src/analytics/admin/ViAnalyticsSubnav";
 import { probeAnalyticsSchema } from "../../../../src/analytics/admin/queries";
 import { canViewSiteAnalytics } from "../../../../src/publisher/permissions";
 import { getPublisherSession } from "../../../../src/publisher/supabase/server";
 
+export const revalidate = 60;
+
 export default async function ViAdministradorLayout({ children }: { children: React.ReactNode }) {
   const { profile } = await getPublisherSession();
   if (!profile || !canViewSiteAnalytics(profile.role)) {
     redirect("/admin");
+  }
+
+  if (profile.role === "admin") {
+    await autoEnsureViAnalyticsForSession();
   }
 
   const schema = await probeAnalyticsSchema();
@@ -27,6 +36,12 @@ export default async function ViAdministradorLayout({ children }: { children: Re
       {schema !== "ok" ? (
         <ViAnalyticsSchemaAlert state={schema === "partial" ? "partial" : schema === "unconfigured" ? "unconfigured" : "missing"} />
       ) : null}
+
+      {profile.role === "admin" && schema !== "ok" && schema !== "unconfigured" ? (
+        <ViAnalyticsAutoInstall state={schema === "partial" ? "partial" : "missing"} />
+      ) : null}
+
+      <ViAnalyticsLiveRefresh enabled={schema === "ok" || schema === "partial"} />
 
       <ViAnalyticsSubnav />
       {children}

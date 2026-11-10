@@ -7,13 +7,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
+  publisher-automation:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger publish-scheduled
+      - name: Publish scheduled articles
         run: |
           curl -fsS -X GET \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "https://www.varejoinvestidor.com/api/cron/publish-scheduled"
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+      - name: Maintain VI Analytics schema
+        run: |
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "https://www.varejoinvestidor.com/api/cron/vi-analytics-maintain"
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}

@@ -1,4 +1,9 @@
 import { createPublisherServiceClient } from "../../publisher/supabase/service";
+import {
+  fetchPublisherArticlePathViews,
+  mergeTopPathsWithPublisherFallback,
+  type EnrichedTopPath,
+} from "./publisherFallback";
 import type {
   AnalyticsCountryRow,
   AnalyticsLocaleRow,
@@ -161,14 +166,17 @@ export async function fetchAnalyticsByLocale(from: Date, to: Date, limit = 25): 
 
 export async function loadAnalyticsDashboard(periodKey: AnalyticsPeriodKey | string | undefined) {
   const range = resolveAnalyticsRange(periodKey);
-  const [summary, topPaths, topClicks, series, byRegion] = await Promise.all([
+  const [summary, topPathsRaw, topClicks, series, byRegion, publisherPaths] = await Promise.all([
     fetchAnalyticsSummary(range.from, range.to),
     fetchTopPaths(range.from, range.to, 12),
     fetchTopClicks(range.from, range.to, 12),
     fetchAnalyticsTimeseries(range.from, range.to, range.grain),
     fetchAnalyticsByRegion(range.from, range.to, 9),
+    fetchPublisherArticlePathViews(12),
   ]);
-  return { range, summary, topPaths, topClicks, series, byRegion };
+  const topPaths: EnrichedTopPath[] = mergeTopPathsWithPublisherFallback(topPathsRaw, publisherPaths, 12);
+  const usingPublisherPaths = topPaths.length > 0 && topPaths[0]?.source === "publisher";
+  return { range, summary, topPaths, topClicks, series, byRegion, usingPublisherPaths };
 }
 
 export async function loadAnalyticsGeoReport(periodKey: AnalyticsPeriodKey | string | undefined) {
