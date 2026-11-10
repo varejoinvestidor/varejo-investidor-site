@@ -4,9 +4,10 @@ import { AdminLoginClient } from "../../../src/publisher/admin/AdminLoginClient"
 export default function AdminLoginPage({
   searchParams,
 }: {
-  searchParams?: { returnTo?: string };
+  searchParams?: { returnTo?: string; error?: string };
 }) {
   const returnTo = searchParams?.returnTo?.startsWith("/admin") ? searchParams.returnTo : "/admin";
+  const urlError = searchParams?.error;
 
   return (
     <div className="admin-login-backdrop flex min-h-screen items-center justify-center px-4 py-16">
@@ -18,7 +19,7 @@ export default function AdminLoginPage({
         </div>
         <div className="rounded-xl border border-line/15 bg-ink/80 p-8 shadow-premium backdrop-blur-sm">
           <Suspense fallback={<p className="text-sm text-paper/60">Carregando…</p>}>
-            <AdminLoginClient returnTo={returnTo} />
+            <AdminLoginClient returnTo={returnTo} urlError={urlError} />
           </Suspense>
         </div>
       </div>

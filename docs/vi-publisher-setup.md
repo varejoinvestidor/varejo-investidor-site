@@ -10,7 +10,7 @@
    - `supabase/migrations/20260308130000_publisher_public_views.sql`
 4. Em **Authentication → URL configuration**, adicione:
    - Site URL: `https://www.varejoinvestidor.com` (e `http://localhost:3000` em dev)
-   - Redirect URLs: `http://localhost:3000/auth/callback`, `https://www.varejoinvestidor.com/auth/callback`
+   - Redirect URLs: `http://localhost:3000/auth/callback`, `https://www.varejoinvestidor.com/auth/callback`, `https://www.varejoinvestidor.com/auth/callback?next=/admin/atualizar-senha`
 
 ## 2. Variáveis de ambiente
 

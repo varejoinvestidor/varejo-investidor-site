@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createPublisherServerClient } from "../supabase/server";
+import { ensurePublisherProfile } from "./ensurePublisherProfile";
 
 export type LoginState = { error?: string } | null;
 
@@ -23,9 +24,14 @@ export async function publisherLoginAction(
     return { error: "Supabase não configurado no servidor." };
   }
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
     return { error: "Credenciais inválidas ou usuário sem acesso ao Publisher." };
+  }
+
+  const user = signInData.user;
+  if (user?.id && user.email) {
+    await ensurePublisherProfile(user.id, user.email);
   }
 
   revalidatePath("/admin", "layout");
