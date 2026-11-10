@@ -1,27 +1,14 @@
-import { PublisherArtigosHub } from "../../../src/components/publisher/PublisherArtigosHub";
-import { getPublishedArticles } from "../../../src/publisher/public/queries";
-import { publisherHubJsonLd, publisherHubMetadata } from "../../../src/publisher/public/metadata";
-import { absoluteSiteUrl } from "../../../src/config/site";
+import {
+  createPublisherHubMetadata,
+  PublisherArticlesHubPage,
+  PUBLISHER_ARTICLE_REVALIDATE,
+} from "../../../src/publisher/public/articleRoutes";
 import "../../insights-research.css";
-import type { Metadata } from "next";
 
-export const revalidate = 60;
+export const revalidate = PUBLISHER_ARTICLE_REVALIDATE;
 
-export const metadata: Metadata = {
-  ...publisherHubMetadata(),
-  title: "Articles | Varejo Investidor",
-  description: "Editorial analysis on global economy, financial markets and investment strategy.",
-  alternates: { canonical: absoluteSiteUrl("/en/artigos") },
-};
+export const metadata = createPublisherHubMetadata("en", "en");
 
-export default async function EnArtigosHubPage() {
-  const articles = await getPublishedArticles("en");
-  const jsonLd = publisherHubJsonLd(articles);
-
-  return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <PublisherArtigosHub articles={articles} language="en" pageLocale="en" />
-    </>
-  );
+export default async function PublisherArticlesHub() {
+  return PublisherArticlesHubPage({ language: "en", pageLocale: "en" });
 }

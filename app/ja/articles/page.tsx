@@ -1,8 +1,14 @@
-import { InsightsPage } from "../../../src/components/InsightsPage";
-import { createInsightsMetadata } from "../../../src/data/insightsMetadata";
+import {
+  createPublisherHubMetadata,
+  PublisherArticlesHubPage,
+  PUBLISHER_ARTICLE_REVALIDATE,
+} from "../../../src/publisher/public/articleRoutes";
+import "../../insights-research.css";
 
-export const metadata = createInsightsMetadata("ja");
+export const revalidate = PUBLISHER_ARTICLE_REVALIDATE;
 
-export default function JapaneseArticlesPage() {
-  return <InsightsPage pageLocale="ja" />;
+export const metadata = createPublisherHubMetadata("ja", "ja");
+
+export default async function PublisherArticlesHub() {
+  return PublisherArticlesHubPage({ language: "ja", pageLocale: "ja" });
 }

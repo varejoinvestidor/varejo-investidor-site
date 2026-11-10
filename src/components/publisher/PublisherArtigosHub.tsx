@@ -5,51 +5,25 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../SiteSections";
 import type { Locale } from "../../i18n";
+import type { PublisherHubCopy } from "../../publisher/public/hubCopy";
+import { dateLocaleForArticles } from "../../publisher/public/hubCopy";
 import type { PublicArticleSummary } from "../../publisher/public/types";
 import { getPublisherArticlePath } from "../../publisher/public/paths";
 
 const PAGE_SIZE = 9;
 
-type HubCopy = {
-  title: string;
-  subtitle: string;
-  searchPlaceholder: string;
-  empty: string;
-  featured: string;
-  loadMore: string;
-};
-
-const COPY: Record<"pt" | "en", HubCopy> = {
-  pt: {
-    title: "Artigos",
-    subtitle:
-      "Análises editoriais sobre economia global, mercados financeiros, geopolítica e estratégias de investimento.",
-    searchPlaceholder: "Buscar artigos…",
-    empty: "Nenhum artigo publicado ainda. Volte em breve ou acompanhe pelo WhatsApp.",
-    featured: "Destaque",
-    loadMore: "Carregar mais",
-  },
-  en: {
-    title: "Articles",
-    subtitle: "Editorial analysis on global economy, financial markets, geopolitics and investment strategy.",
-    searchPlaceholder: "Search articles…",
-    empty: "No published articles yet. Check back soon.",
-    featured: "Featured",
-    loadMore: "Load more",
-  },
-};
-
 export function PublisherArtigosHub({
   articles,
   language,
   pageLocale,
+  copy,
 }: {
   articles: PublicArticleSummary[];
-  language: "pt" | "en";
+  language: string;
   pageLocale: Locale;
+  copy: PublisherHubCopy;
 }) {
   const { locale, t, changeLocale } = useSiteLocale();
-  const copy = COPY[language];
   const [query, setQuery] = useState("");
   const [visible, setVisible] = useState(PAGE_SIZE);
 
@@ -65,7 +39,7 @@ export function PublisherArtigosHub({
   }, [articles, featured?.slug, query]);
 
   const visiblePosts = filtered.slice(0, visible);
-  const dateLocale = language === "pt" ? "pt-BR" : "en-US";
+  const dateLocale = dateLocaleForArticles(language);
 
   return (
     <>

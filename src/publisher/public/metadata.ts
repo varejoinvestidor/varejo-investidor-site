@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
+import type { Locale } from "../../i18n";
 import { absoluteSiteUrl, SITE_NAME } from "../../config/site";
+import { getPublisherHubCopy } from "./hubCopy";
 import type { PublicArticleDetail, PublicArticleSummary } from "./types";
+import { getPublisherHubPath } from "./paths";
 import { publisherArticleUrl } from "./queries";
 
-const HUB_TITLE = "Artigos";
-const HUB_DESCRIPTION =
-  "Análises editoriais do Varejo Investidor: economia global, mercados, geopolítica e estratégias para o investidor de varejo.";
-
 export function publisherHubMetadata(): Metadata {
-  const url = absoluteSiteUrl("/artigos");
+  return publisherHubMetadataForLocale("pt", "pt", "/artigos");
+}
+
+export function publisherHubMetadataForLocale(language: string, _pageLocale: Locale, hubPath?: string): Metadata {
+  const copy = getPublisherHubCopy(language);
+  const url = absoluteSiteUrl(hubPath ?? getPublisherHubPath(language));
   return {
-    title: `${HUB_TITLE} | ${SITE_NAME}`,
-    description: HUB_DESCRIPTION,
+    title: `${copy.title} | ${SITE_NAME}`,
+    description: copy.subtitle,
     alternates: { canonical: url },
     openGraph: {
-      title: `${HUB_TITLE} | ${SITE_NAME}`,
-      description: HUB_DESCRIPTION,
+      title: `${copy.title} | ${SITE_NAME}`,
+      description: copy.subtitle,
       url,
       type: "website",
       siteName: SITE_NAME,
@@ -60,7 +64,7 @@ export function publisherArticleJsonLd(article: PublicArticleDetail) {
     "@type": "Article",
     headline: article.title,
     description: article.seo_description || article.excerpt,
-    inLanguage: "pt-BR",
+    inLanguage: article.language,
     datePublished: article.published_at,
     dateModified: article.updated_at,
     author: { "@type": "Organization", name: article.author_name ?? SITE_NAME },
@@ -71,18 +75,21 @@ export function publisherArticleJsonLd(article: PublicArticleDetail) {
   };
 }
 
-export function publisherHubJsonLd(articles: PublicArticleSummary[]) {
+export function publisherHubJsonLd(articles: PublicArticleSummary[], language = "pt") {
+  const copy = getPublisherHubCopy(language);
+  const hubUrl = absoluteSiteUrl(getPublisherHubPath(language));
   return {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: HUB_TITLE,
-    description: HUB_DESCRIPTION,
-    url: absoluteSiteUrl("/artigos"),
+    name: copy.title,
+    description: copy.subtitle,
+    url: hubUrl,
+    inLanguage: language,
     blogPost: articles.slice(0, 12).map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       description: post.excerpt,
-      url: publisherArticleUrl(post.slug),
+      url: publisherArticleUrl(post.slug, post.language),
       datePublished: post.published_at,
       dateModified: post.updated_at,
     })),

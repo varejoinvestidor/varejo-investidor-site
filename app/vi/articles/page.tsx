@@ -1,8 +1,14 @@
-import { InsightsPage } from "../../../src/components/InsightsPage";
-import { createInsightsMetadata } from "../../../src/data/insightsMetadata";
+import {
+  createPublisherHubMetadata,
+  PublisherArticlesHubPage,
+  PUBLISHER_ARTICLE_REVALIDATE,
+} from "../../../src/publisher/public/articleRoutes";
+import "../../insights-research.css";
 
-export const metadata = createInsightsMetadata("vi");
+export const revalidate = PUBLISHER_ARTICLE_REVALIDATE;
 
-export default function VietnameseArticlesPage() {
-  return <InsightsPage pageLocale="vi" />;
+export const metadata = createPublisherHubMetadata("vi", "vi");
+
+export default async function PublisherArticlesHub() {
+  return PublisherArticlesHubPage({ language: "vi", pageLocale: "vi" });
 }

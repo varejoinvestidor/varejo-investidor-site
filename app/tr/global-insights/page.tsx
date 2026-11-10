@@ -1,8 +1,14 @@
-import { InsightsPage } from "../../../src/components/InsightsPage";
-import { createInsightsMetadata } from "../../../src/data/insightsMetadata";
+import {
+  createPublisherHubMetadata,
+  PublisherArticlesHubPage,
+  PUBLISHER_ARTICLE_REVALIDATE,
+} from "../../../src/publisher/public/articleRoutes";
+import "../../insights-research.css";
 
-export const metadata = createInsightsMetadata("tr");
+export const revalidate = PUBLISHER_ARTICLE_REVALIDATE;
 
-export default function TurkishGlobalInsightsPage() {
-  return <InsightsPage pageLocale="tr" />;
+export const metadata = createPublisherHubMetadata("tr", "tr");
+
+export default async function PublisherArticlesHub() {
+  return PublisherArticlesHubPage({ language: "tr", pageLocale: "tr" });
 }

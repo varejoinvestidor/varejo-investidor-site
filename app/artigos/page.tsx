@@ -1,19 +1,14 @@
-import { PublisherArtigosHub } from "../../src/components/publisher/PublisherArtigosHub";
-import { getPublishedArticles } from "../../src/publisher/public/queries";
-import { publisherHubJsonLd, publisherHubMetadata } from "../../src/publisher/public/metadata";
+import {
+  createPublisherHubMetadata,
+  PublisherArticlesHubPage,
+  PUBLISHER_ARTICLE_REVALIDATE,
+} from "../../src/publisher/public/articleRoutes";
 import "../insights-research.css";
 
-export const metadata = publisherHubMetadata();
-export const revalidate = 60;
+export const revalidate = PUBLISHER_ARTICLE_REVALIDATE;
 
-export default async function ArtigosHubPage() {
-  const articles = await getPublishedArticles("pt");
-  const jsonLd = publisherHubJsonLd(articles);
+export const metadata = createPublisherHubMetadata("pt", "pt");
 
-  return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <PublisherArtigosHub articles={articles} language="pt" pageLocale="pt" />
-    </>
-  );
+export default async function PublisherArticlesHub() {
+  return PublisherArticlesHubPage({ language: "pt", pageLocale: "pt" });
 }

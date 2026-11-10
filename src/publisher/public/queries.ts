@@ -177,23 +177,30 @@ export function publisherArticleUrl(slug: string, language = "pt") {
 }
 
 export async function getPublisherSitemapEntries(): Promise<{ url: string; lastModified: Date }[]> {
-  const [ptArticles, enArticles] = await Promise.all([
-    getPublishedArticles("pt", 500),
-    getPublishedArticles("en", 500),
-  ]);
+  const { SUPPORTED_LOCALES } = await import("../../i18n/locales");
+  const { getPublisherHubPath } = await import("./paths");
 
-  return [
-    { url: absoluteSiteUrl(PUBLIC_ARTICLE_PATH), lastModified: new Date() },
-    ...ptArticles.map((a) => ({
-      url: publisherArticleUrl(a.slug),
-      lastModified: new Date(a.updated_at || a.published_at),
-    })),
-    { url: absoluteSiteUrl("/en/artigos"), lastModified: new Date() },
-    ...enArticles.map((a) => ({
-      url: absoluteSiteUrl(`/en/artigos/${a.slug}`),
-      lastModified: new Date(a.updated_at || a.published_at),
-    })),
-  ];
+  const byLocale = await Promise.all(SUPPORTED_LOCALES.map((lang) => getPublishedArticles(lang, 500)));
+  const hubSeen = new Set<string>();
+  const entries: { url: string; lastModified: Date }[] = [];
+
+  for (let i = 0; i < SUPPORTED_LOCALES.length; i++) {
+    const lang = SUPPORTED_LOCALES[i];
+    const articles = byLocale[i];
+    const hub = getPublisherHubPath(lang);
+    if (!hubSeen.has(hub)) {
+      hubSeen.add(hub);
+      entries.push({ url: absoluteSiteUrl(hub), lastModified: new Date() });
+    }
+    for (const a of articles) {
+      entries.push({
+        url: publisherArticleUrl(a.slug, a.language),
+        lastModified: new Date(a.updated_at || a.published_at),
+      });
+    }
+  }
+
+  return entries;
 }
 
 export async function incrementArticleViews(id: string) {

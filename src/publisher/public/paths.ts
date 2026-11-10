@@ -1,16 +1,14 @@
 import type { Locale } from "../../i18n";
-import { getInsightsPath } from "../../data/insightsContent";
+import { getInsightsPath, insightsBasePath } from "../../data/insightsContent";
 
-/** Hub editorial Publisher (conteúdo dinâmico). Posts legados continuam em `getInsightsPath(locale, slug)`. */
+/** Hub editorial Publisher (Supabase). PT e EN têm URL canônica dedicada; demais idiomas usam `insightsBasePath`. */
 export function getPublisherHubPath(locale: Locale | string) {
   if (locale === "pt") return "/artigos";
   if (locale === "en") return "/en/artigos";
-  return getInsightsPath(locale as Locale);
+  return insightsBasePath[locale as Locale] ?? insightsBasePath.en;
 }
 
 export function getPublisherArticlePath(locale: string, slug: string) {
-  if (locale === "pt") return `/artigos/${slug}`;
-  if (locale === "en") return `/en/artigos/${slug}`;
   return `${getPublisherHubPath(locale)}/${slug}`;
 }
 

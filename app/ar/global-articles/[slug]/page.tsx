@@ -1,17 +1,23 @@
-import { notFound } from "next/navigation";
-import { InsightPostPage } from "../../../../src/components/InsightPostPage";
-import { getPost, getPostsByLocale } from "../../../../src/data/insightsContent";
-import { createInsightPostMetadata } from "../../../../src/data/insightsMetadata";
+import {
+  createPublisherSlugMetadata,
+  PublisherArticleSlugPage,
+  PUBLISHER_ARTICLE_REVALIDATE,
+  staticParamsForPublisherAndLegacy,
+} from "../../../../src/publisher/public/articleRoutes";
+import "../../../insights-research.css";
+
+export const revalidate = PUBLISHER_ARTICLE_REVALIDATE;
+
+type Props = { params: { slug: string } };
 
 export async function generateStaticParams() {
-  return getPostsByLocale("ar").map((post) => ({ slug: post.slug }));
+  return staticParamsForPublisherAndLegacy("ar", "ar");
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  return createInsightPostMetadata("ar", params.slug);
+export async function generateMetadata({ params }: Props) {
+  return createPublisherSlugMetadata("ar", "ar", params.slug);
 }
 
-export default function ArabicGlobalArticlePostPage({ params }: { params: { slug: string } }) {
-  if (!getPost("ar", params.slug)) notFound();
-  return <InsightPostPage pageLocale="ar" slug={params.slug} />;
+export default async function PublisherArticleSlug({ params }: Props) {
+  return PublisherArticleSlugPage({ language: "ar", pageLocale: "ar", slug: params.slug });
 }
