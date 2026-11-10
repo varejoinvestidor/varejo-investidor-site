@@ -1,6 +1,6 @@
 import EliteReportHubEntry from "../../src/components/EliteReportHubEntry";
 import { aggregateStats, mapMonthly, mapOperations } from "../../src/elite/mapToHub";
-import { mergeSeptember2022IntoHub } from "../../src/elite/mergeSeptember2022";
+import { mergeStaticEliteMonthsIntoHub } from "../../src/elite/mergeStaticEliteMonths";
 import { fetchPublicEliteData } from "../../src/elite/queries";
 import { reconcileMonthlyFromOperations } from "../../src/elite/reconcileMonthly";
 import { computeTraderPerformance } from "../../src/elite/traderPerformance";
@@ -19,7 +19,7 @@ export default async function RelatorioElitePage() {
     ? (() => {
         const { active, closed } = mapOperations(remote.operations);
         const monthly = mapMonthly(reconcileMonthlyFromOperations(remote.monthly, remote.operations));
-        const merged = mergeSeptember2022IntoHub({ monthly, completedOperations: closed });
+        const merged = mergeStaticEliteMonthsIntoHub({ monthly, completedOperations: closed });
         return {
           monthly: merged.monthly,
           activeOperations: active,

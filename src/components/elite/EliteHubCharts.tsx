@@ -171,11 +171,15 @@ export function PremiumCumulativeAreaChart({
 export function PremiumDonutChart({
   data,
   title,
+  locale = "pt",
 }: {
   data: Array<{ label: string; value: number; color: string }>;
   title: string;
+  locale?: Locale;
 }) {
   const total = data.reduce((sum, item) => sum + item.value, 0);
+  const countLabel =
+    locale === "en" ? "signals" : locale === "es" ? "señales" : "sinais";
   const radius = 58;
   const circumference = 2 * Math.PI * radius;
   let offset = 0;
@@ -187,6 +191,7 @@ export function PremiumDonutChart({
           <circle cx="80" cy="80" r={radius} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="16" />
           {data.map((slice) => {
             const length = total > 0 ? (slice.value / total) * circumference : 0;
+            const pct = total ? Math.round((slice.value / total) * 100) : 0;
             const node = (
               <circle
                 key={slice.label}
@@ -200,7 +205,9 @@ export function PremiumDonutChart({
                 strokeDashoffset={-offset}
                 transform="rotate(-90 80 80)"
                 strokeLinecap="round"
-              />
+              >
+                <title>{`${slice.label}: ${formatNumber(slice.value, locale)} ${countLabel} (${pct}%)`}</title>
+              </circle>
             );
             offset += length;
             return node;
@@ -219,7 +226,11 @@ export function PremiumDonutChart({
                 <span className="h-2.5 w-2.5 rounded-full shadow-[0_0_12px_currentColor]" style={{ backgroundColor: item.color }} />
                 {item.label}
               </span>
-              <span className="font-mono text-sm font-black text-paper">{total ? Math.round((item.value / total) * 100) : 0}%</span>
+              <span className="shrink-0 text-right font-mono text-sm font-black tabular-nums text-paper">
+                <span className="text-paper/92">{formatNumber(item.value, locale)}</span>
+                <span className="mx-1.5 text-paper/35">·</span>
+                <span className="text-paper/55">{total ? Math.round((item.value / total) * 100) : 0}%</span>
+              </span>
             </div>
           ))}
         </div>

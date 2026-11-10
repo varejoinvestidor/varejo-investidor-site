@@ -22,9 +22,13 @@ import type { EliteSignalTier } from "../elite/signalTier";
 import type { PeriodPerformance } from "../elite/traderPerformance";
 import { PremiumAnnualBarChart, PremiumCumulativeAreaChart, PremiumDonutChart } from "./elite/EliteHubCharts";
 import { EliteOperationCard, EliteOperationsPager, paginateList } from "./elite/EliteOperationCard";
+import { applyLivePipsToActiveOperations, useEliteLiveQuotes } from "./elite/useEliteLiveQuotes";
 import { sortOperationsByRecency } from "./elite/eliteOperationSort";
+import { buildCumulativePerformanceByYear, historicYears } from "../elite/yearlyHubAggregates";
 import { useOperationsPageSize } from "./elite/useOperationsPageSize";
 import { operationReportHref } from "../elite/operationReportLink";
+import { eliteAugust2018HubOperations, eliteAugust2018Monthly } from "../data/eliteAugust2018";
+import { eliteSeptember2018HubOperations, eliteSeptember2018Monthly } from "../data/eliteSeptember2018";
 import { eliteSeptember2022HubOperations, eliteSeptember2022Monthly } from "../data/eliteSeptember2022";
 
 import { eliteReportPaths } from "../data/eliteReportPaths";
@@ -387,8 +391,26 @@ for (const locale of ["fr", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ko"
 const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
 const reports: MonthlyReport[] = [
-  { year: 2018, month: "Agosto", monthIndex: 7, signals: 124, result: "+18,4%", pips: 0, status: "Disponível", assets: ["XAU/USD", "EUR/USD", "GBP/JPY"] },
-  { year: 2018, month: "Setembro", monthIndex: 8, signals: 108, result: "+12,1%", pips: 0, status: "Disponível", assets: ["EUR/USD", "USD/JPY", "XAU/USD"] },
+  {
+    year: eliteAugust2018Monthly.year,
+    month: eliteAugust2018Monthly.month,
+    monthIndex: eliteAugust2018Monthly.monthIndex,
+    signals: eliteAugust2018Monthly.signals,
+    result: eliteAugust2018Monthly.result,
+    pips: eliteAugust2018Monthly.pips,
+    status: eliteAugust2018Monthly.status,
+    assets: eliteAugust2018Monthly.assets,
+  },
+  {
+    year: eliteSeptember2018Monthly.year,
+    month: eliteSeptember2018Monthly.month,
+    monthIndex: eliteSeptember2018Monthly.monthIndex,
+    signals: eliteSeptember2018Monthly.signals,
+    result: eliteSeptember2018Monthly.result,
+    pips: eliteSeptember2018Monthly.pips,
+    status: eliteSeptember2018Monthly.status,
+    assets: eliteSeptember2018Monthly.assets,
+  },
   { year: 2019, month: "Março", monthIndex: 2, signals: 96, result: "+9,8%", pips: 0, status: "Disponível", assets: ["GBP/JPY", "USOIL", "EUR/USD"] },
   { year: 2020, month: "Junho", monthIndex: 5, signals: 112, result: "+14,6%", pips: 0, status: "Disponível", assets: ["XAU/USD", "NASDAQ", "BTC/USD"] },
   { year: 2021, month: "Janeiro", monthIndex: 0, signals: 98, result: "+11,2%", pips: 0, status: "Disponível", assets: ["XAU/USD", "GBP/JPY"] },
@@ -456,6 +478,8 @@ const activeOperations: Operation[] = [
 ];
 
 const completedOperations: Operation[] = [
+  ...(eliteAugust2018HubOperations as Operation[]),
+  ...(eliteSeptember2018HubOperations as Operation[]),
   ...(eliteSeptember2022HubOperations as Operation[]),
   { asset: "XAU/USD", direction: "Compra", status: "closed", result: "+187 pips", pips: 187, date: "Fevereiro/2026", updatedAt: "Finalizado", reportMonth: "Fevereiro/2026" },
   { asset: "USOIL", direction: "Compra", status: "closed", result: "+713 pips", pips: 713, date: "Maio/2026", updatedAt: "Finalizado", reportMonth: "Maio/2026" },
@@ -581,10 +605,17 @@ function formatPips(value: number, locale: Locale) {
   return `${value >= 0 ? "+" : ""}${formatNumber(value, locale)} pips`;
 }
 
-function getYearSummary(year: number, reportSource: MonthlyReport[]) {
+function getYearSummary(year: number, reportSource: MonthlyReport[], completed: Operation[] = []) {
   const yearReports = reportSource.filter((report) => report.year === year);
-  const signals = yearReports.reduce((sum, report) => sum + report.signals, 0);
-  const pips = yearReports.reduce((sum, report) => sum + report.pips, 0);
+  const signalsFromReports = yearReports.reduce((sum, report) => sum + report.signals, 0);
+  const pipsFromReports = yearReports.reduce((sum, report) => sum + report.pips, 0);
+  const yearOps = completed.filter((op) => {
+    const parts = op.reportMonth.split("/");
+    return parts.length === 2 && Number(parts[1]) === year;
+  });
+  const signals = yearOps.length > 0 ? yearOps.length : signalsFromReports;
+  const pipsFromOps = yearOps.reduce((sum, op) => sum + (op.pips ?? 0), 0);
+  const pips = pipsFromOps > 0 ? pipsFromOps : pipsFromReports;
   const percentReports = yearReports.filter((report) => report.result.includes("%"));
   const assets = Array.from(new Set(yearReports.flatMap((report) => report.assets)));
 
@@ -641,27 +672,50 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
     : completedOperations;
 
   const reportsData = useMemo(() => {
-    if (baseReportsData.some((r) => r.year === 2022 && r.monthIndex === 8)) {
-      return baseReportsData.map((r) =>
-        r.year === 2022 && r.monthIndex === 8
-          ? ({ ...r, ...eliteSeptember2022Monthly } as MonthlyReport)
-          : r,
+    let next = baseReportsData;
+    if (next.some((r) => r.year === 2018 && r.monthIndex === 7)) {
+      next = next.map((r) =>
+        r.year === 2018 && r.monthIndex === 7 ? ({ ...r, ...eliteAugust2018Monthly } as MonthlyReport) : r,
       );
+    } else {
+      next = [...next, { ...eliteAugust2018Monthly } as MonthlyReport];
     }
-    return [...baseReportsData, { ...eliteSeptember2022Monthly } as MonthlyReport].sort(
-      (a, b) => a.year - b.year || a.monthIndex - b.monthIndex,
-    );
+    if (next.some((r) => r.year === 2018 && r.monthIndex === 8)) {
+      next = next.map((r) =>
+        r.year === 2018 && r.monthIndex === 8 ? ({ ...r, ...eliteSeptember2018Monthly } as MonthlyReport) : r,
+      );
+    } else {
+      next = [...next, { ...eliteSeptember2018Monthly } as MonthlyReport];
+    }
+    if (next.some((r) => r.year === 2022 && r.monthIndex === 8)) {
+      next = next.map((r) =>
+        r.year === 2022 && r.monthIndex === 8 ? ({ ...r, ...eliteSeptember2022Monthly } as MonthlyReport) : r,
+      );
+    } else {
+      next = [...next, { ...eliteSeptember2022Monthly } as MonthlyReport];
+    }
+    return next.sort((a, b) => a.year - b.year || a.monthIndex - b.monthIndex);
   }, [baseReportsData]);
 
   const completedOperationsData = useMemo(() => {
-    if (baseCompletedOperations.some((op) => op.reportMonth === "Setembro/2022")) return baseCompletedOperations;
-    return [...(eliteSeptember2022HubOperations as Operation[]), ...baseCompletedOperations];
+    const rest = baseCompletedOperations.filter(
+      (op) =>
+        op.reportMonth !== "Agosto/2018" &&
+        op.reportMonth !== "Setembro/2018" &&
+        op.reportMonth !== "Setembro/2022",
+    );
+    return [
+      ...(eliteAugust2018HubOperations as Operation[]),
+      ...(eliteSeptember2018HubOperations as Operation[]),
+      ...(eliteSeptember2022HubOperations as Operation[]),
+      ...rest,
+    ];
   }, [baseCompletedOperations]);
 
   const t = translations[locale] ?? translations.en;
   const copy = copyByLocale[locale] ?? copyByLocale.en;
   const ctaHref = locale === "pt" ? ELITE_LASTLINK_URL : ELITE_STRIPE_LINKS[3];
-  const selectedYearSummary = getYearSummary(selectedYear, reportsData);
+  const selectedYearSummary = getYearSummary(selectedYear, reportsData, completedOperationsData);
   const selectedMonth =
     reportsData.find((report) => `${report.year}-${report.monthIndex}` === selectedMonthKey) ?? reportsData[reportsData.length - 1];
   const heroStats =
@@ -675,43 +729,64 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       : copy.heroStats;
   const selectedTimelineEvent = timelineEvents.find((event) => event.year === selectedTimelineYear) ?? timelineEvents[timelineEvents.length - 1];
 
+  const yearlyPerformance = useMemo(
+    () => buildCumulativePerformanceByYear(completedOperationsData, reportsData, historicYears()),
+    [completedOperationsData, reportsData],
+  );
+
   const annualData = useMemo(() => {
-    const years = Array.from({ length: 9 }, (_, index) => 2018 + index);
-    return years.map((year) => {
-      const summary = getYearSummary(year, reportsData);
-      const inferredSignals = summary.signals || (year === 2018 ? 232 : 420 + ((year - 2018) % 5) * 18);
+    return yearlyPerformance.map((row) => {
+      const summary = getYearSummary(row.year, reportsData, completedOperationsData);
       return {
-        year,
-        signals: inferredSignals,
+        year: row.year,
+        signals: row.signals > 0 ? row.signals : summary.signals,
         assets: summary.assets.length ? summary.assets : ["XAU/USD", "EUR/USD", "GBP/JPY"],
       };
     });
-  }, [reportsData]);
+  }, [yearlyPerformance, reportsData, completedOperationsData]);
 
-  const performanceData = useMemo(() => {
-    let accumulated = 0;
-    return annualData.map((item) => {
-      const yearPips = reportsData.filter((report) => report.year === item.year).reduce((sum, report) => sum + report.pips, 0);
-      accumulated += yearPips || Math.round(item.signals * 4.2);
-      return { year: item.year, value: accumulated, signals: item.signals };
-    });
-  }, [annualData, reportsData]);
+  const performanceData = useMemo(
+    () => yearlyPerformance.map(({ year, value, signals }) => ({ year, value, signals })),
+    [yearlyPerformance],
+  );
 
   const assetDistribution = useMemo(() => {
     const colors = ["#c6994a", "#16a34a", "#3b82f6", "#ef4444", "#8b5cf6", "#f97316", "#14b8a6", "#94a3b8"];
     const map = new Map<string, number>();
-    for (const report of reportsData) {
-      for (const asset of report.assets) map.set(asset, (map.get(asset) ?? 0) + report.signals / report.assets.length);
+    const allSignals = [...completedOperationsData, ...activeOperationsData];
+    for (const op of allSignals) {
+      map.set(op.asset, (map.get(op.asset) ?? 0) + 1);
+    }
+    if (map.size === 0) {
+      for (const report of reportsData) {
+        for (const asset of report.assets) map.set(asset, (map.get(asset) ?? 0) + report.signals / report.assets.length);
+      }
     }
     return Array.from(map.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, 8)
-      .map(([label, value], index) => ({ label, value, color: colors[index % colors.length] }));
-  }, [reportsData]);
+      .map(([label, value], index) => ({
+        label,
+        value: Math.round(value),
+        color: colors[index % colors.length],
+      }));
+  }, [reportsData, completedOperationsData, activeOperationsData]);
 
   const sortedActiveOperations = useMemo(
     () => sortOperationsByRecency(activeOperationsData),
     [activeOperationsData],
+  );
+
+  const activeQuoteAssets = useMemo(
+    () => [...new Set(sortedActiveOperations.map((op) => op.asset))],
+    [sortedActiveOperations],
+  );
+
+  const { prices: livePrices } = useEliteLiveQuotes(activeQuoteAssets, sortedActiveOperations.length > 0);
+
+  const activeOperationsWithLivePips = useMemo(
+    () => applyLivePipsToActiveOperations(sortedActiveOperations, livePrices),
+    [sortedActiveOperations, livePrices],
   );
 
   const filteredOperations = useMemo(() => {
@@ -738,8 +813,8 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
   }, [operationsPageSize]);
 
   const activePagination = useMemo(
-    () => paginateList(sortedActiveOperations, activeOpsPage, operationsPageSize),
-    [sortedActiveOperations, activeOpsPage, operationsPageSize],
+    () => paginateList(activeOperationsWithLivePips, activeOpsPage, operationsPageSize),
+    [activeOperationsWithLivePips, activeOpsPage, operationsPageSize],
   );
 
   const closedPagination = useMemo(
@@ -879,7 +954,7 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
               footer={`${copy.chartSignals}: ${copy.totalSignals} + ${copy.mainAssets.toLowerCase()} no tooltip.`}
             />
             <PremiumCumulativeAreaChart data={performanceData} locale={locale} title={copy.chartPerformance} />
-            <PremiumDonutChart data={assetDistribution} title={copy.chartAssets} />
+            <PremiumDonutChart data={assetDistribution} title={copy.chartAssets} locale={locale} />
             <div className="rounded-sm border border-white/[0.08] bg-black/35 p-6">
               <p className="text-[10px] font-black uppercase tracking-[0.26em] text-gold">{copy.chartHeatmap}</p>
               <div className="mt-6 overflow-x-auto">

@@ -97,6 +97,7 @@ export function EliteOperationCard({
   const tier = operation.signalTier ?? "elite";
   const isElite = tier === "elite";
   const statusLabel = mode === "active" ? copy.live : copy.finished;
+  const isLivePips = mode === "active" && /pips/i.test(operation.result);
   const resultPositive = operation.result.startsWith("+") || (operation.pips ?? 0) > 0;
   const resultNegative = operation.result.startsWith("-") || (operation.pips ?? 0) < 0;
 
@@ -134,7 +135,16 @@ export function EliteOperationCard({
           operation.signalNumber ? [copy.table.signal, `#${formatNumber(operation.signalNumber, locale)}`] : null,
           [copy.direction, localizeDirection(operation.direction, copy)],
           [copy.status, statusLabel],
-          [copy.partialResult, operation.result],
+          [
+            copy.partialResult,
+            isLivePips
+              ? locale === "en"
+                ? `${operation.result} · live`
+                : locale === "es"
+                  ? `${operation.result} · en vivo`
+                  : `${operation.result} · ao vivo`
+              : operation.result,
+          ],
           [copy.date, operation.date],
           [copy.update, operation.updatedAt],
         ]

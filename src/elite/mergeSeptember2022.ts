@@ -1,11 +1,9 @@
 import { eliteSeptember2022HubOperations, eliteSeptember2022Monthly } from "../data/eliteSeptember2022";
 import type { HubMonthlyReport, HubOperation } from "./mapToHub";
 
-function operationKey(op: HubOperation) {
-  return `${op.reportMonth}|${op.asset}|${op.direction}|${op.pips}|${op.date}`;
-}
+const REPORT_MONTH = "Setembro/2022";
 
-/** Garante setembro/2022 no hub (fallback + merge com Supabase). */
+/** Garante setembro/2022 no hub (níveis + pips da planilha; substitui linhas antigas do Supabase). */
 export function mergeSeptember2022IntoHub<T extends { monthly: HubMonthlyReport[]; completedOperations: HubOperation[] }>(
   data: T,
 ): T {
@@ -25,12 +23,14 @@ export function mergeSeptember2022IntoHub<T extends { monthly: HubMonthlyReport[
       )
     : [...data.monthly, eliteSeptember2022Monthly].sort((a, b) => a.year - b.year || a.monthIndex - b.monthIndex);
 
-  const keys = new Set(data.completedOperations.map(operationKey));
-  const extra = eliteSeptember2022HubOperations.filter((op) => !keys.has(operationKey(op)));
+  const completedOperations = [
+    ...data.completedOperations.filter((op) => op.reportMonth !== REPORT_MONTH),
+    ...eliteSeptember2022HubOperations,
+  ];
 
   return {
     ...data,
     monthly,
-    completedOperations: [...data.completedOperations, ...extra],
+    completedOperations,
   };
 }
