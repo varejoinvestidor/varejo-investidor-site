@@ -2,21 +2,14 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { NextResponse } from "next/server";
 import pg from "pg";
+import { assertCronBearer } from "../../../../src/publisher/security/cronAuth";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
-function assertCron(request: Request) {
-  const secret = process.env.CRON_SECRET?.trim();
-  if (!secret) return false;
-  const authHeader = request.headers.get("authorization") ?? "";
-  const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
-  return token === secret;
-}
-
 /** Aplica migrations do Publisher (idempotente onde possível). */
 export async function POST(request: Request) {
-  if (!assertCron(request)) {
+  if (!assertCronBearer(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -36,6 +29,7 @@ export async function POST(request: Request) {
     "20260308130000_publisher_public_views.sql",
     "20260310120000_article_banners.sql",
     "20260310130000_elite_report.sql",
+    "20260311120000_elite_operations_levels.sql",
   ];
 
   const client = new pg.Client({ connectionString: conn, ssl: { rejectUnauthorized: false } });

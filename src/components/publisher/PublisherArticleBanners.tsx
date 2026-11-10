@@ -1,7 +1,16 @@
+import { resolveArticleBanner } from "../../publisher/data/articleBannerPresets";
 import type { ArticleBanner } from "../../publisher/types/banner";
 
-export function PublisherArticleBanners({ banners, placement }: { banners: ArticleBanner[]; placement: ArticleBanner["placement"] }) {
-  const items = banners.filter((b) => b.placement === placement);
+export function PublisherArticleBanners({
+  banners,
+  placement,
+  language = "pt",
+}: {
+  banners: ArticleBanner[];
+  placement: ArticleBanner["placement"];
+  language?: string;
+}) {
+  const items = banners.filter((b) => b.placement === placement).map((b) => resolveArticleBanner(b, language));
   if (!items.length) return null;
 
   return (

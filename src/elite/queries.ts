@@ -30,15 +30,24 @@ export async function fetchPublicEliteData(): Promise<{
 
 export async function fetchStaffEliteData() {
   const { supabase } = await getPublisherSession();
-  if (!supabase) return { operations: [] as EliteOperationRow[], monthly: [] as EliteMonthlyReportRow[] };
+  if (!supabase) {
+    return {
+      operations: [] as EliteOperationRow[],
+      monthly: [] as EliteMonthlyReportRow[],
+      error: "Supabase não configurado.",
+    };
+  }
 
-  const [{ data: operations }, { data: monthly }] = await Promise.all([
+  const [{ data: operations, error: opError }, { data: monthly, error: monthError }] = await Promise.all([
     supabase.from("elite_operations").select("*").order("sort_order").order("updated_at", { ascending: false }),
     supabase.from("elite_monthly_reports").select("*").order("year").order("month_index"),
   ]);
 
+  const error = opError?.message ?? monthError?.message ?? null;
+
   return {
     operations: (operations ?? []) as EliteOperationRow[],
     monthly: (monthly ?? []) as EliteMonthlyReportRow[],
+    error,
   };
 }

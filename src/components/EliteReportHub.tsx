@@ -66,6 +66,12 @@ type Operation = {
   date: string;
   updatedAt: string;
   reportMonth: string;
+  signalNumber?: number | null;
+  entryPrice?: number | null;
+  takePrice?: number | null;
+  stopPrice?: number | null;
+  takePips?: number;
+  stopPips?: number;
 };
 
 type TimelineEvent = {
@@ -134,6 +140,7 @@ type Copy = {
     all: string;
   };
   table: {
+    signal: string;
     date: string;
     asset: string;
     direction: string;
@@ -208,7 +215,7 @@ const copyByLocale: Record<Locale, Copy> = {
     resultsTitle: "Histórico de resultados",
     resultsText: "Resultados públicos resumidos, sem expor entrada, alvo ou stop completos.",
     filters: { year: "Ano", month: "Mês", asset: "Ativo", direction: "Direção", status: "Status", all: "Todos" },
-    table: { date: "Data", asset: "Ativo", direction: "Direção", result: "Resultado em pips", status: "Status", report: "Relatório" },
+    table: { signal: "Sinal", date: "Data", asset: "Ativo", direction: "Direção", result: "Resultado em pips", status: "Status", report: "Relatório" },
     monthlyTitle: "Relatório mensal do Canal Elite",
     monthlyText: "Resultados organizados por mês, com operações finalizadas e desempenho consolidado.",
     monthlyCardSignals: "Quantidade de sinais",
@@ -279,7 +286,7 @@ const copyByLocale: Record<Locale, Copy> = {
     resultsTitle: "Results history",
     resultsText: "Summarized public results without exposing complete entry, target, or stop details.",
     filters: { year: "Year", month: "Month", asset: "Asset", direction: "Direction", status: "Status", all: "All" },
-    table: { date: "Date", asset: "Asset", direction: "Direction", result: "Result in pips", status: "Status", report: "Report" },
+    table: { signal: "Signal", date: "Date", asset: "Asset", direction: "Direction", result: "Result in pips", status: "Status", report: "Report" },
     monthlyTitle: "Elite Channel monthly report",
     monthlyText: "Results organized by month, with completed operations and consolidated performance.",
     monthlyCardSignals: "Signal count",
@@ -350,7 +357,7 @@ const copyByLocale: Record<Locale, Copy> = {
     resultsTitle: "Histórico de resultados",
     resultsText: "Resultados públicos resumidos, sin exponer entrada, objetivo o stop completos.",
     filters: { year: "Año", month: "Mes", asset: "Activo", direction: "Dirección", status: "Estado", all: "Todos" },
-    table: { date: "Fecha", asset: "Activo", direction: "Dirección", result: "Resultado en pips", status: "Estado", report: "Reporte" },
+    table: { signal: "Señal", date: "Fecha", asset: "Activo", direction: "Dirección", result: "Resultado en pips", status: "Estado", report: "Reporte" },
     monthlyTitle: "Reporte mensual del Canal Elite",
     monthlyText: "Resultados organizados por mes, con operaciones finalizadas y desempeño consolidado.",
     monthlyCardSignals: "Cantidad de señales",
@@ -538,6 +545,11 @@ function formatNumber(value: number, locale: Locale) {
 
 function formatPips(value: number, locale: Locale) {
   return `${value >= 0 ? "+" : ""}${formatNumber(value, locale)} pips`;
+}
+
+function formatLevel(value: number | null | undefined, locale: Locale) {
+  if (value === null || value === undefined || Number.isNaN(value)) return null;
+  return new Intl.NumberFormat(locale === "pt" ? "pt-BR" : locale, { maximumFractionDigits: 5 }).format(value);
 }
 
 function getYearSummary(year: number, reportSource: MonthlyReport[]) {
@@ -913,20 +925,53 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                 </div>
                 <div className="relative mt-8 grid gap-3">
                   {[
+                    operation.signalNumber
+                      ? [copy.table.signal, `#${formatNumber(operation.signalNumber, locale)}`]
+                      : null,
                     [copy.direction, localizeDirection(operation.direction, copy)],
                     [copy.status, copy.live],
                     [copy.partialResult, operation.result],
                     [copy.date, operation.date],
                     [copy.update, operation.updatedAt],
-                  ].map(([label, value]) => <InfoRow key={label} label={label} value={value} positive={String(value).startsWith("+")} negative={String(value).startsWith("-")} />)}
+                  ]
+                    .filter(Boolean)
+                    .map((row) => {
+                      const [label, value] = row as [string, string];
+                      return (
+                        <InfoRow
+                          key={label}
+                          label={label}
+                          value={value}
+                          positive={String(value).startsWith("+")}
+                          negative={String(value).startsWith("-")}
+                        />
+                      );
+                    })}
+                  {operation.takePips !== undefined && operation.takePips !== 0 ? (
+                    <p className="text-[11px] text-paper/55">
+                      {copy.target}: {formatPips(operation.takePips, locale)} · {copy.stop}:{" "}
+                      {formatPips(operation.stopPips ?? 0, locale)}
+                    </p>
+                  ) : null}
                   <div className="mt-2 border-t border-gold/16 pt-4">
                     <p className="mb-3 text-[10px] font-black uppercase tracking-[0.22em] text-gold">{copy.protectedFields}</p>
-                    {[copy.entry, copy.target, copy.stop, copy.volume, copy.lot].map((label) => (
-                      <div key={label} className="flex items-center justify-between gap-4 border-t border-white/8 py-3">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/48">{label}</span>
-                        <EliteBadge />
-                      </div>
-                    ))}
+                    {(
+                      [
+                        [copy.entry, operation.entryPrice],
+                        [copy.target, operation.takePrice],
+                        [copy.stop, operation.stopPrice],
+                        [copy.volume, null],
+                        [copy.lot, null],
+                      ] as const
+                    ).map(([label, price]) => {
+                      const formatted = formatLevel(price, locale);
+                      return (
+                        <div key={label} className="flex items-center justify-between gap-4 border-t border-white/8 py-3">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/48">{label}</span>
+                          {formatted ? <span className="font-mono text-sm font-bold text-paper">{formatted}</span> : <EliteBadge />}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </motion.article>
@@ -948,11 +993,14 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
           <div className="mt-8 overflow-x-auto border border-white/10 bg-black/35">
             <table className="w-full min-w-[760px] border-collapse text-left">
               <thead className="border-b border-white/10 text-xs uppercase tracking-[0.18em] text-gold">
-                <tr>{[copy.table.date, copy.table.asset, copy.table.direction, copy.table.result, copy.table.status, copy.table.report].map((heading) => <th key={heading} className="px-5 py-4 font-bold">{heading}</th>)}</tr>
+                <tr>{[copy.table.signal, copy.table.date, copy.table.asset, copy.table.direction, copy.table.result, copy.table.status, copy.table.report].map((heading) => <th key={heading} className="px-5 py-4 font-bold">{heading}</th>)}</tr>
               </thead>
               <tbody>
                 {filteredOperations.map((row) => (
                   <tr key={`${row.date}-${row.asset}-${row.result}`} className="border-b border-white/8 transition hover:bg-rise/[0.05]">
+                    <td className="px-5 py-5 font-mono text-sm text-paper/68">
+                      {row.signalNumber ? `#${formatNumber(row.signalNumber, locale)}` : "—"}
+                    </td>
                     <td className="px-5 py-5 text-sm text-paper/68">{row.date}</td>
                     <td className="px-5 py-5 font-mono text-sm font-bold text-paper">{row.asset}</td>
                     <td className={`px-5 py-5 text-sm font-bold ${row.direction === "Compra" ? "text-rise" : "text-fall"}`}>{localizeDirection(row.direction, copy)}</td>

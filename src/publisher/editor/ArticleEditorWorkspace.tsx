@@ -7,6 +7,7 @@ import {
   deleteArticle,
   listArticleRevisions,
   restoreRevision,
+  saveAndPublishArticle,
   saveArticle,
   type ArticleRecord,
   type SaveArticleInput,
@@ -22,7 +23,9 @@ import {
   createTranslationDraft,
   listLinkedTranslations,
 } from "../translation/actions";
-import type { ArticleBanner } from "../types/banner";
+import { ARTICLE_BANNER_PRESETS, bannerFromPreset } from "../data/articleBannerPresets";
+import { PUBLISHER_LANGUAGE_OPTIONS } from "../locales";
+import type { ArticleBanner, ArticleBannerPreset } from "../types/banner";
 import { PublisherRichTextEditor } from "./PublisherRichTextEditor";
 
 type PendingAction =
@@ -47,6 +50,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   const [revisions, setRevisions] = useState<{ id: string; revision_number: number; created_at: string }[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const savingRef = useRef(false);
+  const saveFlightRef = useRef<Promise<boolean> | null>(null);
   const slugRef = useRef(initial.slug);
   const payloadRef = useRef<SaveArticleInput | null>(null);
   const isDirtyRef = useRef(false);
@@ -57,7 +61,9 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   const [publishFlow, setPublishFlow] = useState<{ percent: number; label: string } | null>(null);
   const [publishSuccess, setPublishSuccess] = useState<string | null>(null);
   const [publishing, setPublishing] = useState(false);
-  const [translateSource, setTranslateSource] = useState(initial.language === "en" ? "pt" : "en");
+  const [translateSource, setTranslateSource] = useState(
+    initial.language === "pt" ? "en" : "pt",
+  );
   const [translating, setTranslating] = useState(false);
   const [linkedVersions, setLinkedVersions] = useState<{ id: string; language: string; slug: string }[]>([]);
 
@@ -99,28 +105,38 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   }
 
   const persist = useCallback(async (input: SaveArticleInput, snapshot = false, revalidate = true) => {
-    if (savingRef.current) return false;
-    savingRef.current = true;
-    setSaveState("saving");
-    setSaveError(null);
-    const result = await saveArticle(input, { snapshot, revalidate });
-    savingRef.current = false;
-    if (!result.ok) {
-      setSaveState("error");
-      setSaveError(result.error);
-      return false;
-    }
-    setIsDirty(false);
-    isDirtyRef.current = false;
-    setSaveState("saved");
-    const nextSlug = result.data!.slug;
-    slugRef.current = nextSlug;
-    setArticle((prev) => ({
-      ...prev,
-      updated_at: result.data!.updated_at,
-      slug: nextSlug,
-    }));
-    return true;
+    if (saveFlightRef.current) return saveFlightRef.current;
+
+    const task = (async () => {
+      savingRef.current = true;
+      setSaveState("saving");
+      setSaveError(null);
+      try {
+        const result = await saveArticle(input, { snapshot, revalidate });
+        if (!result.ok) {
+          setSaveState("error");
+          setSaveError(result.error);
+          return false;
+        }
+        setIsDirty(false);
+        isDirtyRef.current = false;
+        setSaveState("saved");
+        const nextSlug = result.data!.slug;
+        slugRef.current = nextSlug;
+        setArticle((prev) => ({
+          ...prev,
+          updated_at: result.data!.updated_at,
+          slug: nextSlug,
+        }));
+        return true;
+      } finally {
+        savingRef.current = false;
+        saveFlightRef.current = null;
+      }
+    })();
+
+    saveFlightRef.current = task;
+    return task;
   }, []);
 
   const flushSave = useCallback(async () => {
@@ -144,15 +160,15 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   }, [isDirty]);
 
   useEffect(() => {
-    if (!isDirty) return;
+    if (!isDirty || publishing) return;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       void persist(payload, false, false);
-    }, 700);
+    }, 1100);
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [payload, persist, isDirty]);
+  }, [payload, persist, isDirty, publishing]);
 
   useEffect(() => {
     void listArticleRevisions(article.id).then((res) => {
@@ -206,46 +222,53 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       setPublishStep(12, "Preparando publicação…");
     }
 
-    if (isPublish) setPublishStep(35, "Salvando alterações…");
-    const saved = await flushSave();
-    if (!saved) {
-      if (isPublish) {
+    const input = payloadRef.current ?? payload;
+    const scheduledAt =
+      status === "scheduled" && scheduledLocal ? new Date(scheduledLocal).toISOString() : undefined;
+
+    if (isPublish) {
+      setPublishStep(40, "Salvando e publicando…");
+      const result = await saveAndPublishArticle(input);
+      if (!result.ok) {
+        setSaveError(result.error);
         setPublishFlow(null);
         setPublishing(false);
+        return;
       }
+      slugRef.current = result.data!.slug;
+      setIsDirty(false);
+      isDirtyRef.current = false;
+      setSaveState("saved");
+      setArticle((prev) => ({
+        ...prev,
+        status: "published",
+        slug: result.data!.slug,
+        updated_at: result.data!.updated_at,
+        published_at: new Date().toISOString(),
+        scheduled_at: null,
+      }));
+      const path = input.language === "en" ? `/en/artigos/${result.data!.slug}` : `/artigos/${result.data!.slug}`;
+      setPublishStep(100, "Publicação concluída");
+      setPublishSuccess(`Artigo publicado com sucesso! Disponível em ${path}`);
+      setPublishing(false);
+      window.setTimeout(() => setPublishFlow(null), 1200);
       return;
     }
 
-    if (isPublish) setPublishStep(58, "Validando conteúdo…");
-    const scheduledAt =
-      status === "scheduled" && scheduledLocal ? new Date(scheduledLocal).toISOString() : undefined;
-    if (isPublish) setPublishStep(75, "Publicando…");
+    const saved = await flushSave();
+    if (!saved) return;
+
     const result = await changeArticleStatus(article.id, status, scheduledAt ?? null);
     if (!result.ok) {
       setSaveError(result.error);
-      if (isPublish) {
-        setPublishFlow(null);
-        setPublishing(false);
-      }
       return;
     }
-
-    if (isPublish) setPublishStep(92, "Atualizando /artigos…");
 
     setArticle((prev) => ({
       ...prev,
       status,
       scheduled_at: scheduledAt ?? prev.scheduled_at,
-      published_at: status === "published" ? new Date().toISOString() : prev.published_at,
     }));
-
-    if (status === "published") {
-      const path = article.language === "en" ? `/en/artigos/${slugRef.current}` : `/artigos/${slugRef.current}`;
-      setPublishStep(100, "Publicação concluída");
-      setPublishSuccess(`Artigo publicado com sucesso! Disponível em ${path}`);
-      setPublishing(false);
-      window.setTimeout(() => setPublishFlow(null), 1200);
-    }
   }
 
   async function runDelete(adminPassword?: string) {
@@ -270,18 +293,8 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     setPendingAction(null);
   }
 
-  function newBannerId() {
-    return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `banner-${Date.now()}`;
-  }
-
-  function addBanner() {
-    const banner: ArticleBanner = {
-      id: newBannerId(),
-      image_url: "",
-      alt: "Banner",
-      href: "",
-      placement: "inline",
-    };
+  function addBannerPreset(preset: ArticleBannerPreset) {
+    const banner = bannerFromPreset(preset, "bottom");
     patchArticle((prev) => ({ ...prev, banners: [...prev.banners, banner] }));
   }
 
@@ -503,8 +516,11 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
               onChange={(e) => patchArticle({ language: e.target.value })}
               className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
             >
-              <option value="pt">Português</option>
-              <option value="en">English</option>
+              {PUBLISHER_LANGUAGE_OPTIONS.map((opt) => (
+                <option key={opt.code} value={opt.code}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
             <label className="mt-3 block text-xs text-paper/45">Categoria</label>
             <select
@@ -532,7 +548,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           <section className="rounded-lg border border-line/12 p-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Tradução</h3>
             <p className="mt-1 text-xs text-paper/40">
-              Defina o idioma do artigo acima. Traduz automaticamente ou crie uma versão vinculada.
+              Idioma deste artigo = destino da tradução. Origem padrão: português. Vídeos do YouTube não são retraduzidos.
             </p>
             <label className="mt-3 block text-xs text-paper/45">Traduzir a partir de</label>
             <select
@@ -541,91 +557,101 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
               onChange={(e) => setTranslateSource(e.target.value)}
               className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
             >
-              <option value="pt">Português</option>
-              <option value="en">English</option>
+              {PUBLISHER_LANGUAGE_OPTIONS.map((opt) => (
+                <option key={opt.code} value={opt.code}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
             <button
               type="button"
-              disabled={preview || translating}
+              disabled={preview || translating || translateSource === article.language}
               onClick={() => void onAutoTranslate()}
               className="mt-3 w-full rounded border border-gold/35 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gold disabled:opacity-50"
             >
-              {translating ? "Traduzindo…" : `Traduzir para ${article.language.toUpperCase()}`}
+              {translating
+                ? "Traduzindo…"
+                : `Traduzir ${translateSource.toUpperCase()} → ${article.language.toUpperCase()}`}
             </button>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {linkedVersions
-                .filter((v) => v.id !== article.id)
-                .map((v) => (
-                  <Link
-                    key={v.id}
-                    href={`/admin/artigos/${v.id}`}
-                    className="text-xs text-paper/60 hover:text-gold"
-                  >
-                    Versão {v.language.toUpperCase()}
-                  </Link>
-                ))}
-              {article.language === "pt" ? (
-                <button
-                  type="button"
-                  onClick={() => void openTranslation("en")}
-                  className="text-xs text-gold hover:underline"
-                >
-                  + Versão EN
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => void openTranslation("pt")}
-                  className="text-xs text-gold hover:underline"
-                >
-                  + Versão PT
-                </button>
-              )}
+            <div className="mt-4">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-paper/45">Versões vinculadas (21 idiomas)</p>
+              <div className="mt-2 flex max-h-40 flex-wrap gap-1.5 overflow-y-auto">
+                {PUBLISHER_LANGUAGE_OPTIONS.map((opt) => {
+                  const existing = linkedVersions.find((v) => v.language === opt.code && v.id !== article.id);
+                  if (existing) {
+                    return (
+                      <Link
+                        key={opt.code}
+                        href={`/admin/artigos/${existing.id}`}
+                        className="rounded border border-gold/30 bg-gold/10 px-2 py-1 text-[10px] font-semibold text-gold"
+                      >
+                        {opt.code.toUpperCase()} ✓
+                      </Link>
+                    );
+                  }
+                  if (opt.code === article.language) {
+                    return (
+                      <span
+                        key={opt.code}
+                        className="rounded border border-line/20 px-2 py-1 text-[10px] text-paper/50"
+                      >
+                        {opt.code.toUpperCase()} (atual)
+                      </span>
+                    );
+                  }
+                  return (
+                    <button
+                      key={opt.code}
+                      type="button"
+                      disabled={preview}
+                      onClick={() => void openTranslation(opt.code)}
+                      className="rounded border border-line/20 px-2 py-1 text-[10px] text-paper/60 transition hover:border-gold/40 hover:text-gold"
+                    >
+                      + {opt.code.toUpperCase()}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </section>
 
           <section className="rounded-lg border border-line/12 p-4">
-            <div className="flex items-center justify-between gap-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Banners</h3>
-              <button type="button" onClick={addBanner} disabled={preview} className="text-xs text-gold">
-                + Banner
-              </button>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Banners do site</h3>
+            <p className="mt-1 text-xs text-paper/40">
+              Escolha Formiga, Lobo, FxPro ou Binance. Links e imagens seguem o idioma do artigo.
+            </p>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {ARTICLE_BANNER_PRESETS.map((preset) => (
+                <button
+                  key={preset.id}
+                  type="button"
+                  disabled={preview}
+                  onClick={() => addBannerPreset(preset.id)}
+                  className="rounded border border-line/15 px-2 py-2 text-left text-[11px] transition hover:border-gold/40"
+                >
+                  <span className="font-semibold text-gold">{preset.label}</span>
+                  <span className="mt-0.5 block text-paper/45">{preset.description}</span>
+                </button>
+              ))}
             </div>
-            <p className="mt-1 text-xs text-paper/40">Inclua antes de publicar (topo, meio ou rodapé).</p>
             <ul className="mt-3 space-y-3">
               {article.banners.map((banner) => (
                 <li key={banner.id} className="rounded border border-line/12 p-2">
-                  <input
-                    placeholder="URL da imagem"
-                    value={banner.image_url}
-                    disabled={preview}
-                    onChange={(e) => updateBanner(banner.id, { image_url: e.target.value })}
-                    className="mb-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
-                  />
-                  <input
-                    placeholder="Texto alternativo"
-                    value={banner.alt}
-                    disabled={preview}
-                    onChange={(e) => updateBanner(banner.id, { alt: e.target.value })}
-                    className="mb-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
-                  />
-                  <input
-                    placeholder="Link (opcional)"
-                    value={banner.href ?? ""}
-                    disabled={preview}
-                    onChange={(e) => updateBanner(banner.id, { href: e.target.value || undefined })}
-                    className="mb-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
-                  />
+                  <p className="text-xs font-semibold text-paper/70">
+                    {banner.preset
+                      ? ARTICLE_BANNER_PRESETS.find((p) => p.id === banner.preset)?.label ?? banner.preset
+                      : banner.alt || "Banner personalizado"}
+                  </p>
                   <select
                     value={banner.placement}
                     disabled={preview}
                     onChange={(e) =>
                       updateBanner(banner.id, { placement: e.target.value as ArticleBanner["placement"] })
                     }
-                    className="w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
+                    className="mt-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
                   >
                     <option value="top">Topo</option>
-                    <option value="inline">Antes do texto</option>
+                    <option value="inline">Meio do artigo</option>
                     <option value="bottom">Rodapé</option>
                   </select>
                   <button

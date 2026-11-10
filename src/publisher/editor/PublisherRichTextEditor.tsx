@@ -11,7 +11,8 @@ import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import Youtube from "@tiptap/extension-youtube";
 import CharacterCount from "@tiptap/extension-character-count";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { parseYouTubeVideoId, sanitizeTipTapForSave, youtubeEmbedSrc } from "./youtubeEmbed";
 
 type Props = {
   content: Record<string, unknown>;
@@ -42,6 +43,7 @@ function ToolbarButton({
 }
 
 export function PublisherRichTextEditor({ content, onChange, editable = true }: Props) {
+  const syncingRef = useRef(false);
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
@@ -52,7 +54,15 @@ export function PublisherRichTextEditor({ content, onChange, editable = true }: 
       TableRow,
       TableHeader,
       TableCell,
-      Youtube.configure({ modestBranding: true }),
+      Youtube.configure({
+        modestBranding: true,
+        width: 640,
+        height: 360,
+        inline: false,
+        allowFullscreen: true,
+        controls: true,
+        HTMLAttributes: { class: "w-full rounded-sm" },
+      }),
       CharacterCount,
     ],
     content,
@@ -64,18 +74,20 @@ export function PublisherRichTextEditor({ content, onChange, editable = true }: 
       },
     },
     onUpdate: ({ editor: ed }) => {
-      if (!editable) return;
-      onChange(ed.getJSON() as Record<string, unknown>);
+      if (!editable || syncingRef.current) return;
+      const json = sanitizeTipTapForSave(ed.getJSON() as Record<string, unknown>);
+      onChange(json);
     },
   });
 
   useEffect(() => {
     if (!editor) return;
-    const current = JSON.stringify(editor.getJSON());
-    const incoming = JSON.stringify(content);
-    if (incoming !== current) {
-      editor.commands.setContent(content, false);
-    }
+    const incoming = sanitizeTipTapForSave(content);
+    const current = sanitizeTipTapForSave(editor.getJSON() as Record<string, unknown>);
+    if (JSON.stringify(incoming) === JSON.stringify(current)) return;
+    syncingRef.current = true;
+    editor.commands.setContent(incoming, false);
+    syncingRef.current = false;
   }, [content, editor]);
 
   if (!editor) {
@@ -119,8 +131,14 @@ export function PublisherRichTextEditor({ content, onChange, editable = true }: 
           <ToolbarButton
             label="Vídeo"
             onClick={() => {
-              const url = window.prompt("URL do YouTube");
-              if (url) editor.chain().focus().setYoutubeVideo({ src: url }).run();
+              const url = window.prompt("URL ou ID do YouTube");
+              if (!url?.trim()) return;
+              const id = parseYouTubeVideoId(url);
+              if (!id) {
+                window.alert("URL do YouTube inválida. Cole o link completo ou só o ID de 11 caracteres.");
+                return;
+              }
+              editor.chain().focus().setYoutubeVideo({ src: youtubeEmbedSrc(id) }).run();
             }}
           />
           <ToolbarButton label="—" onClick={() => editor.chain().focus().setHorizontalRule().run()} />

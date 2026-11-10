@@ -14,6 +14,10 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin/midia", label: "Biblioteca de mídia" },
   { href: "/admin/agendamentos", label: "Agendamentos" },
   { href: "/admin/relatorio-elite", label: "Relatório Elite" },
+];
+
+/** Rodapé da sidebar (perfil + gestão). */
+export const ADMIN_FOOTER_NAV: AdminNavItem[] = [
   { href: "/admin/usuarios", label: "Usuários" },
   { href: "/admin/configuracoes", label: "Configurações" },
 ];

@@ -13,7 +13,7 @@ export default async function AdminEliteReportPage() {
   return (
     <div className="space-y-6">
       <h2 className="font-serif text-3xl text-paper">Relatório Elite</h2>
-      <EliteReportAdmin operations={data.operations} monthly={data.monthly} />
+      <EliteReportAdmin operations={data.operations} monthly={data.monthly} loadError={data.error} />
     </div>
   );
 }

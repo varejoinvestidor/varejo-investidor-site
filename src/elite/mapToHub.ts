@@ -1,3 +1,4 @@
+import { computeSignalPips } from "./pips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "./types";
 
 export type HubOperation = {
@@ -9,6 +10,12 @@ export type HubOperation = {
   date: string;
   updatedAt: string;
   reportMonth: string;
+  signalNumber: number | null;
+  entryPrice: number | null;
+  takePrice: number | null;
+  stopPrice: number | null;
+  takePips: number;
+  stopPips: number;
 };
 
 export type HubMonthlyReport = {
@@ -23,16 +30,34 @@ export type HubMonthlyReport = {
 };
 
 export function mapOperations(rows: EliteOperationRow[]): { active: HubOperation[]; closed: HubOperation[] } {
-  const toHub = (row: EliteOperationRow): HubOperation => ({
-    asset: row.asset,
-    direction: row.direction,
-    status: row.status,
-    result: row.result_label,
-    pips: row.result_pips,
-    date: row.report_month,
-    updatedAt: row.updated_label,
-    reportMonth: row.report_month,
-  });
+  const toHub = (row: EliteOperationRow): HubOperation => {
+    const levels = computeSignalPips({
+      asset: row.asset,
+      direction: row.direction,
+      status: row.status,
+      entry: row.entry_price,
+      take: row.take_price,
+      stop: row.stop_price,
+      closeOutcome: row.close_outcome,
+      manualPips: row.result_pips,
+    });
+    return {
+      asset: row.asset,
+      direction: row.direction,
+      status: row.status,
+      result: row.result_label,
+      pips: row.result_pips,
+      date: row.report_month,
+      updatedAt: row.updated_label,
+      reportMonth: row.report_month,
+      signalNumber: row.signal_number ?? null,
+      entryPrice: row.entry_price,
+      takePrice: row.take_price,
+      stopPrice: row.stop_price,
+      takePips: levels.takePips,
+      stopPips: levels.stopPips,
+    };
+  };
 
   return {
     active: rows.filter((r) => r.status === "active").map(toHub),

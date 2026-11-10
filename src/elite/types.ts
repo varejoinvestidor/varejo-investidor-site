@@ -22,6 +22,11 @@ export type EliteOperationRow = {
   updated_label: string;
   sort_order: number;
   show_public: boolean;
+  signal_number: number | null;
+  entry_price: number | null;
+  take_price: number | null;
+  stop_price: number | null;
+  close_outcome: "take" | "stop" | "manual" | null;
 };
 
 export type EliteOperationInput = Omit<EliteOperationRow, "id"> & { id?: string };

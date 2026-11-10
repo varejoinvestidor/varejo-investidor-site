@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createPublisherServiceClient } from "../../../../src/publisher/supabase/service";
+import { assertCronBearer } from "../../../../src/publisher/security/cronAuth";
 
 export const dynamic = "force-dynamic";
 
@@ -9,14 +10,10 @@ export const dynamic = "force-dynamic";
  * Body: { "email": "...", "password": "...", "fullName"?: "..." }
  */
 export async function POST(request: Request) {
-  const secret = process.env.CRON_SECRET?.trim();
-  if (!secret) {
+  if (!process.env.CRON_SECRET?.trim()) {
     return NextResponse.json({ error: "CRON_SECRET not configured" }, { status: 503 });
   }
-
-  const authHeader = request.headers.get("authorization") ?? "";
-  const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : "";
-  if (token !== secret) {
+  if (!assertCronBearer(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

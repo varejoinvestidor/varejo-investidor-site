@@ -24,7 +24,30 @@ export async function translateText(text: string, langpair: string): Promise<str
 }
 
 export function langPairForTarget(target: string, source: string) {
-  const map: Record<string, string> = { pt: "pt-BR", en: "en", es: "es" };
+  const map: Record<string, string> = {
+    pt: "pt-BR",
+    en: "en",
+    es: "es",
+    fr: "fr",
+    de: "de",
+    it: "it",
+    ar: "ar",
+    fa: "fa",
+    hi: "hi",
+    ur: "ur",
+    bn: "bn",
+    tr: "tr",
+    ru: "ru",
+    id: "id",
+    vi: "vi",
+    th: "th",
+    tl: "tl",
+    zh: "zh-CN",
+    ja: "ja",
+    ko: "ko",
+    pl: "pl",
+    he: "he",
+  };
   const from = map[source] ?? source;
   const to = map[target] ?? target;
   return `${from}|${to}`;

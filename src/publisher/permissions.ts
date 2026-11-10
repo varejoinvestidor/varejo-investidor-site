@@ -24,3 +24,7 @@ export function canEditArticle(role: PublisherRole, authorId: string | null, use
   if (role === "author") return authorId === userId;
   return false;
 }
+
+export function isPublisherStaffRole(role: PublisherRole) {
+  return role === "admin" || role === "editor" || role === "author" || role === "reviewer";
+}

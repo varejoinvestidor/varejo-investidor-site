@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { requireAdminPassword } from "../admin/adminAuth";
 import { canEditArticle, canPublish } from "../permissions";
+import { sanitizeTipTapForSave } from "../editor/youtubeEmbed";
 import { parseArticleBanners, type ArticleBanner } from "../types/banner";
 import { getPublisherSession } from "../supabase/server";
 import type { ArticleStatus } from "../types";
@@ -174,8 +175,11 @@ export async function listArticles(filters?: {
   if (filters?.category_id) query = query.eq("category_id", filters.category_id);
   if (filters?.author_id) query = query.eq("author_id", filters.author_id);
   if (filters?.q?.trim()) {
-    const term = `%${filters.q.trim()}%`;
-    query = query.or(`title.ilike.${term},slug.ilike.${term}`);
+    const safe = filters.q.trim().replace(/[%,()]/g, " ").slice(0, 80);
+    if (safe) {
+      const term = `%${safe}%`;
+      query = query.or(`title.ilike.${term},slug.ilike.${term}`);
+    }
   }
 
   const { data, error } = await query;
@@ -265,6 +269,35 @@ export async function getArticle(id: string): Promise<ActionResult<ArticleRecord
   };
 }
 
+function validatePublishableTitleSlug(title: string, slug: string) {
+  if (title.trim() === "Sem título" || !title.trim()) {
+    return "Defina o título antes de publicar.";
+  }
+  if (slug.startsWith("rascunho-")) {
+    return "Gere o slug (ou salve o título) antes de publicar.";
+  }
+  return null;
+}
+
+async function syncArticleTags(
+  supabase: NonNullable<Awaited<ReturnType<typeof requireStaff>>["supabase"]>,
+  articleId: string,
+  tagIds: string[],
+) {
+  if (!tagIds.length) {
+    await supabase.from("article_tags").delete().eq("article_id", articleId);
+    return;
+  }
+  const { data: existing } = await supabase.from("article_tags").select("tag_id").eq("article_id", articleId);
+  const current = new Set((existing ?? []).map((t) => t.tag_id));
+  const next = new Set(tagIds);
+  const same = current.size === next.size && tagIds.every((id) => current.has(id));
+  if (same) return;
+
+  await supabase.from("article_tags").delete().eq("article_id", articleId);
+  await supabase.from("article_tags").insert(tagIds.map((tag_id) => ({ article_id: articleId, tag_id })));
+}
+
 async function uniqueSlugForArticle(
   supabase: NonNullable<Awaited<ReturnType<typeof requireStaff>>["supabase"]>,
   language: string,
@@ -316,12 +349,13 @@ export async function saveArticle(
     slug = await uniqueSlugForArticle(supabase, input.language, slug, input.id);
   }
 
+  const safeContent = sanitizeTipTapForSave(input.content);
   const basePatch = {
     title,
     slug,
     subtitle: input.subtitle,
     excerpt: input.excerpt,
-    content: input.content,
+    content: safeContent,
     cover_image: input.cover_image,
     category_id: input.category_id,
     language: input.language,
@@ -341,12 +375,7 @@ export async function saveArticle(
 
   if (error || !data) return { ok: false, error: error?.message ?? "Falha ao salvar." };
 
-  await supabase.from("article_tags").delete().eq("article_id", input.id);
-  if (input.tag_ids.length) {
-    await supabase.from("article_tags").insert(
-      input.tag_ids.map((tag_id) => ({ article_id: input.id, tag_id })),
-    );
-  }
+  await syncArticleTags(supabase, input.id, input.tag_ids);
 
   if (options?.snapshot === true) {
     const { data: revRows } = await supabase
@@ -362,7 +391,7 @@ export async function saveArticle(
       article_id: input.id,
       revision_number: nextNumber,
       title: input.title,
-      content: input.content,
+      content: safeContent,
       excerpt: input.excerpt,
       created_by: user.id,
     });
@@ -372,6 +401,78 @@ export async function saveArticle(
   if (options?.revalidate !== false) {
     revalidateArticlePaths(data.slug, input.language);
   }
+
+  return { ok: true, data: { updated_at: data.updated_at, slug: data.slug } };
+}
+
+/** Salva conteúdo + publica em uma única gravação (evita falha entre save e status). */
+export async function saveAndPublishArticle(
+  input: SaveArticleInput,
+): Promise<ActionResult<{ updated_at: string; slug: string }>> {
+  const ctx = await requireStaff();
+  if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
+
+  const { supabase, user, profile } = ctx;
+  if (!canPublish(profile.role)) {
+    return { ok: false, error: "Seu perfil não pode publicar." };
+  }
+
+  const { data: row, error: readError } = await supabase
+    .from("articles")
+    .select("id, author_id, slug, language, status")
+    .eq("id", input.id)
+    .maybeSingle();
+
+  if (readError) return { ok: false, error: readError.message };
+  if (!row) return { ok: false, error: "Artigo não encontrado." };
+  if (!canEditArticle(profile.role, row.author_id, user.id)) {
+    return { ok: false, error: "Sem permissão." };
+  }
+
+  const title = input.title.trim() || "Sem título";
+  let slug = input.slug.trim() || slugifyTitle(title) || row.slug;
+  if (slug.startsWith("rascunho-") && title !== "Sem título") {
+    slug = slugifyTitle(title) || slug;
+  }
+  if (slug !== row.slug) {
+    slug = await uniqueSlugForArticle(supabase, input.language, slug, input.id);
+  }
+
+  const validation = validatePublishableTitleSlug(title, slug);
+  if (validation) return { ok: false, error: validation };
+
+  const safeContent = sanitizeTipTapForSave(input.content);
+  const basePatch = {
+    title,
+    slug,
+    subtitle: input.subtitle,
+    excerpt: input.excerpt,
+    content: safeContent,
+    cover_image: input.cover_image,
+    category_id: input.category_id,
+    language: input.language,
+    seo_title: input.seo_title,
+    seo_description: input.seo_description,
+    references_text: input.references_text,
+    sources: input.sources,
+    banners: input.banners,
+    status: "published" as const,
+    published_at: new Date().toISOString(),
+    scheduled_at: null,
+  };
+
+  let { data, error } = await supabase.from("articles").update(basePatch).eq("id", input.id).select("updated_at, slug").single();
+
+  if (error?.message?.includes("banners")) {
+    const { banners: _b, ...withoutBanners } = basePatch;
+    ({ data, error } = await supabase.from("articles").update(withoutBanners).eq("id", input.id).select("updated_at, slug").single());
+  }
+
+  if (error || !data) return { ok: false, error: error?.message ?? "Falha ao publicar." };
+
+  await syncArticleTags(supabase, input.id, input.tag_ids);
+  void logActivity(supabase, user.id, "article.published", input.id);
+  revalidateArticlePaths(data.slug, input.language);
 
   return { ok: true, data: { updated_at: data.updated_at, slug: data.slug } };
 }
@@ -402,12 +503,8 @@ export async function changeArticleStatus(
     if (!canPublish(profile.role)) {
       return { ok: false, error: "Seu perfil não pode publicar." };
     }
-    if (article.title.trim() === "Sem título" || !article.title.trim()) {
-      return { ok: false, error: "Defina e salve o título antes de publicar." };
-    }
-    if (article.slug.startsWith("rascunho-")) {
-      return { ok: false, error: "Gere o slug (ou salve o título) antes de publicar." };
-    }
+    const validation = validatePublishableTitleSlug(article.title, article.slug);
+    if (validation) return { ok: false, error: validation };
   }
 
   const patch: Record<string, unknown> = { status };

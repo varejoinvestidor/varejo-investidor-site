@@ -16,6 +16,9 @@ export async function translateTipTapDocument(
   const clone = JSON.parse(JSON.stringify(doc)) as TipTapNode;
 
   async function walk(node: TipTapNode) {
+    if (node.type === "youtube" || node.type === "image") {
+      return;
+    }
     if (node.type === "text" && node.text?.trim()) {
       node.text = await translateText(node.text, langpair);
     }
