@@ -140,3 +140,71 @@
     padding: 0.65rem 0.45rem;
   }
 }
+
+/* Mapa global Select — fluxos e pulso */
+.select-global-map .select-map-flow-line {
+  stroke-dasharray: 6 14;
+  animation: select-map-flow-dash 2.8s linear infinite;
+}
+
+@keyframes select-map-flow-dash {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.select-global-map .select-map-pulse-ring {
+  transform-origin: center;
+  animation: select-map-hub-pulse 2.6s ease-out infinite;
+}
+
+@keyframes select-map-hub-pulse {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.select-global-map .select-map-land-path {
+  transition: fill 0.4s ease, stroke 0.4s ease;
+}
+
+.select-global-map:hover .select-map-land-path {
+  stroke: rgba(201, 155, 62, 0.32);
+}
+
+.select-global-map .select-map-scan {
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(201, 155, 62, 0.06) 50%,
+    transparent 60%
+  );
+  background-size: 220% 100%;
+  animation: select-map-scan 9s ease-in-out infinite;
+}
+
+@keyframes select-map-scan {
+  0%,
+  100% {
+    background-position: 120% 0;
+  }
+  50% {
+    background-position: -20% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .select-global-map .select-map-flow-line,
+  .select-global-map .select-map-pulse-ring,
+  .select-global-map .select-map-scan {
+    animation: none !important;
+  }
+}

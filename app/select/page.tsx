@@ -9,6 +9,8 @@ import {
   fadeUp,
   useSiteLocale,
 } from "../../src/components/SiteSections";
+import { SelectGlobalMap } from "../../src/components/select/SelectGlobalMap";
+import type { SelectMapHubId } from "../../src/components/select/selectMapData";
 import { fxproButtonLabels, fxproLinks } from "../../src/data/fxproLinks";
 import {
   selectBrokerCopyJa,
@@ -62,7 +64,7 @@ type Copy = {
   global: {
     title: string;
     text: string;
-    regions: { label: string; focus: string[]; position: string; labelPosition: string }[];
+    regions: { id?: SelectMapHubId; label: string; focus: string[]; position?: string; labelPosition?: string }[];
   };
   markets: {
     title: string;
@@ -195,12 +197,12 @@ const ptCopy: Copy = {
     text:
       "O patrimônio não fica dependente de uma única economia, moeda ou região. A estrutura busca oportunidades globais através de diferentes mercados e ciclos econômicos.",
     regions: [
-      { label: "Estados Unidos", focus: ["Tecnologia", "Índices", "Ações globais"], position: "left-[21%] top-[38%]", labelPosition: "left-[7%] top-[17%]" },
-      { label: "Reino Unido", focus: ["Moedas", "Mercados"], position: "left-[46%] top-[31%]", labelPosition: "left-[38%] top-[10%]" },
-      { label: "Europa", focus: ["Diversificação setorial"], position: "left-[51%] top-[36%]", labelPosition: "left-[54%] top-[17%]" },
-      { label: "Japão", focus: ["Exposição internacional"], position: "left-[79%] top-[43%]", labelPosition: "right-[3%] top-[24%]" },
-      { label: "Singapura", focus: ["Hub financeiro asiático"], position: "left-[71%] top-[61%]", labelPosition: "right-[5%] bottom-[15%]" },
-      { label: "América Latina", focus: ["Oportunidades regionais"], position: "left-[31%] top-[67%]", labelPosition: "left-[12%] bottom-[12%]" },
+      { id: "us", label: "Estados Unidos", focus: ["Tecnologia", "Índices", "Ações globais"] },
+      { id: "uk", label: "Reino Unido", focus: ["Moedas", "Mercados"] },
+      { id: "eu", label: "Europa", focus: ["Diversificação setorial"] },
+      { id: "jp", label: "Japão", focus: ["Exposição internacional"] },
+      { id: "sg", label: "Singapura", focus: ["Hub financeiro asiático"] },
+      { id: "latam", label: "América Latina", focus: ["Oportunidades regionais"] },
     ],
   },
   markets: {
@@ -505,74 +507,6 @@ function PremiumCard({ children, className = "" }: { children: ReactNode; classN
       <div className="absolute inset-0 terminal-grid opacity-5" />
       <div className="relative">{children}</div>
     </motion.article>
-  );
-}
-
-function WorldMapPanel({ copy }: { copy: Copy["global"] }) {
-  return (
-    <div className="relative min-h-[560px] overflow-hidden border border-gold/[0.24] bg-gradient-to-br from-[#050505] via-[#080807] to-[#020202] p-5 text-paper shadow-[0_0_55px_rgba(201,155,62,0.10)] md:p-7">
-      <div className="absolute inset-0 terminal-grid opacity-8" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_54%_45%,rgba(201,155,62,0.16),transparent_55%)]" />
-      <svg viewBox="0 0 1000 520" aria-label="Mapa mundi de exposição global" className="absolute inset-x-0 top-8 mx-auto h-[390px] w-[98%] opacity-100 drop-shadow-[0_18px_34px_rgba(0,0,0,0.6)]" role="img">
-        <defs>
-          <linearGradient id="selectMapLand" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stopColor="rgba(201,155,62,0.36)" />
-            <stop offset="45%" stopColor="rgba(70,70,64,0.42)" />
-            <stop offset="100%" stopColor="rgba(12,12,12,0.88)" />
-          </linearGradient>
-          <filter id="selectMapGlow">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <g transform="translate(8 10)" opacity="0.45">
-          <path d="M88 168 128 129 189 118 241 150 227 207 259 253 221 315 155 292 114 237Z" fill="rgba(0,0,0,0.75)" />
-          <path d="M253 318 308 329 329 397 307 479 263 446 238 376Z" fill="rgba(0,0,0,0.75)" />
-          <path d="M430 126 484 105 532 130 514 179 458 175Z" fill="rgba(0,0,0,0.75)" />
-          <path d="M476 196 545 185 614 231 607 315 548 340 488 298Z" fill="rgba(0,0,0,0.75)" />
-          <path d="M608 133 735 138 826 196 812 279 724 290 642 236Z" fill="rgba(0,0,0,0.75)" />
-          <path d="M799 324 857 344 884 402 842 441 789 409Z" fill="rgba(0,0,0,0.75)" />
-        </g>
-        <path d="M88 168 128 129 189 118 241 150 227 207 259 253 221 315 155 292 114 237Z" fill="url(#selectMapLand)" stroke="rgba(201,155,62,0.26)" strokeWidth="1" />
-        <path d="M253 318 308 329 329 397 307 479 263 446 238 376Z" fill="url(#selectMapLand)" stroke="rgba(201,155,62,0.26)" strokeWidth="1" />
-        <path d="M430 126 484 105 532 130 514 179 458 175Z" fill="url(#selectMapLand)" stroke="rgba(201,155,62,0.26)" strokeWidth="1" />
-        <path d="M476 196 545 185 614 231 607 315 548 340 488 298Z" fill="url(#selectMapLand)" stroke="rgba(201,155,62,0.26)" strokeWidth="1" />
-        <path d="M608 133 735 138 826 196 812 279 724 290 642 236Z" fill="url(#selectMapLand)" stroke="rgba(201,155,62,0.26)" strokeWidth="1" />
-        <path d="M799 324 857 344 884 402 842 441 789 409Z" fill="url(#selectMapLand)" stroke="rgba(201,155,62,0.26)" strokeWidth="1" />
-        <path d="M164 207 C260 128 383 121 474 148 C570 177 671 198 800 222" fill="none" stroke="rgba(201,155,62,0.48)" strokeWidth="1.8" />
-        <path d="M479 156 C559 213 619 260 724 319" fill="none" stroke="rgba(201,155,62,0.38)" strokeWidth="1.8" />
-        <path d="M506 182 C413 252 338 322 286 382" fill="none" stroke="rgba(201,155,62,0.34)" strokeWidth="1.8" />
-        {[
-          [210, 198],
-          [460, 160],
-          [508, 186],
-          [794, 224],
-          [716, 318],
-          [305, 386],
-        ].map(([cx, cy]) => (
-          <g key={`${cx}-${cy}`} filter="url(#selectMapGlow)">
-            <circle cx={cx} cy={cy} r="12" fill="rgba(201,155,62,0.18)" />
-            <circle cx={cx} cy={cy} r="4" fill="#c99b3e" />
-          </g>
-        ))}
-      </svg>
-      {copy.regions.map((region) => (
-        <article key={region.label} className={`absolute ${region.labelPosition} max-w-[210px] border border-gold/[0.18] bg-ink/80 p-3 shadow-[0_0_28px_rgba(201,155,62,0.08)] backdrop-blur`}>
-          <h3 className="text-xs font-black uppercase tracking-[0.14em] text-gold">{region.label}</h3>
-          <div className="mt-2 flex flex-wrap gap-1">
-            {region.focus.map((item) => (
-              <span key={item} className="text-[10px] font-bold uppercase tracking-[0.12em] text-paper/[0.62]">{item}</span>
-            ))}
-          </div>
-        </article>
-      ))}
-      {copy.regions.map((region) => (
-        <span key={`${region.label}-node`} className={`absolute ${region.position} h-3 w-3 rounded-full bg-gold shadow-[0_0_28px_rgba(201,155,62,0.75)]`} />
-      ))}
-    </div>
   );
 }
 
@@ -913,7 +847,7 @@ export default function SelectPage() {
             <h2 className="mt-4 font-serif text-4xl leading-[1] tracking-[-0.045em] md:text-6xl">{copy.global.title}</h2>
             <p className="mt-6 text-base leading-8 text-ink/[0.68] md:text-lg">{copy.global.text}</p>
           </motion.div>
-          <WorldMapPanel copy={copy.global} />
+          <SelectGlobalMap copy={copy.global} />
         </div>
       </section>
 
