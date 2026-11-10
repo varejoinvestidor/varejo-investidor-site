@@ -16,6 +16,15 @@ async function probeState(): Promise<AnalyticsSchemaState> {
     if (error.code === "PGRST205" || /could not find the table/i.test(msg)) return "missing";
     return "missing";
   }
+
+  const { error: geoColError } = await admin
+    .from("site_analytics_events")
+    .select("country_code, region_id", { head: true, count: "exact" })
+    .limit(0);
+  if (geoColError && /country_code|region_id|column|schema cache/i.test(geoColError.message)) {
+    return "partial";
+  }
+
   const from = new Date(0).toISOString();
   const to = new Date().toISOString();
   const { error: regionRpcError } = await admin.rpc("analytics_by_region", {
@@ -41,6 +50,7 @@ async function probeState(): Promise<AnalyticsSchemaState> {
 export async function ensureViAnalyticsSchema(): Promise<EnsureViAnalyticsResult> {
   const before = await probeState();
   if (before === "ok") return { ok: true, state: "ok", installed: false };
+  // partial: colunas/RPCs incompletos — reaplica migrations incrementais
   if (before === "unconfigured") {
     return { ok: false, error: "Supabase service role indisponível.", state: "unconfigured" };
   }

@@ -23,6 +23,7 @@ export const VI_ANALYTICS_MIGRATION_FILES = [
   "20260318120000_vi_analytics.sql",
   "20260319120000_vi_analytics_regions.sql",
   "20260320120000_vi_analytics_top_clicks_fix.sql",
+  "20260320140000_vi_analytics_backfill_geo.sql",
 ] as const;
 
 export const SUPABASE_INCREMENTAL_MIGRATION_FILES = [

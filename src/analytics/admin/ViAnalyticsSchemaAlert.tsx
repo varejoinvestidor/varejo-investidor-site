@@ -19,7 +19,7 @@ export function ViAnalyticsSchemaAlert({ state }: { state: "missing" | "unconfig
     state === "unconfigured"
       ? "Supabase não configurado neste ambiente — métricas locais desativadas."
       : state === "partial"
-        ? "Telemetria base ativa, mas a migration de regiões (país/macro-região) ainda não foi aplicada. Views e cliques funcionam; aba Regiões fica incompleta."
+        ? "Telemetria base ativa, mas colunas/RPCs de regiões ou cliques ainda não estão completos. Clique em instalar ou rode as migrations listadas abaixo (inclui backfill de geo)."
         : "Tabela site_analytics_events não encontrada. Instale a migration VI Analytics.";
 
   return (
