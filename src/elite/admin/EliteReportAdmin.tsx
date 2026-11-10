@@ -2,10 +2,19 @@
 
 import { FormEvent, useMemo, useRef, useState } from "react";
 import { deleteEliteOperation, upsertEliteMonthly, upsertEliteOperation } from "../actions";
+import { formatUsd, lotTableRows } from "../lotPips";
 import { computeSignalPips, formatPipsLabel } from "../pips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
 import { parseWhatsAppSignal } from "../whatsappParse";
+import { EliteAdminSubnav } from "./EliteAdminSubnav";
 import { draftFromRow, emptyOperationDraft, type OperationDraft } from "./operationFormState";
+import {
+  rowFromTradeResult,
+  tradeResultFromRow,
+  tradeResultLabel,
+  TRADE_RESULT_OPTIONS,
+  type TradeResultKey,
+} from "./tradeResult";
 
 type Props = {
   operations: EliteOperationRow[];
@@ -26,19 +35,32 @@ function WhatsappPreview({
   const entry = toNum(draft.entry);
   const take = toNum(draft.take);
   const stop = toNum(draft.stop);
+  const { status: draftStatus, closeOutcome: draftClose } = rowFromTradeResult(draft.tradeResult);
+
   const calc = useMemo(
     () =>
       computeSignalPips({
         asset: draft.asset || "EUR/USD",
         direction: draft.direction,
-        status: draft.status,
+        status: draftStatus,
         entry,
         take,
         stop,
-        closeOutcome: draft.status === "closed" ? draft.closeOutcome : null,
+        closeOutcome: draftClose,
+        manualPips: draft.tradeResult === "manual" ? toNum(draft.manualPips) ?? undefined : undefined,
       }),
-    [draft, entry, take, stop],
+    [draft.asset, draft.direction, draft.tradeResult, draft.manualPips, draftStatus, draftClose, entry, take, stop],
   );
+
+  const lotRows = useMemo(() => {
+    const pips =
+      draft.tradeResult === "in_progress"
+        ? calc.takePips
+        : draft.tradeResult === "manual"
+          ? toNum(draft.manualPips) ?? 0
+          : calc.resultPips;
+    return lotTableRows(draft.asset, pips);
+  }, [draft.asset, draft.tradeResult, draft.manualPips, calc]);
 
   if (!draft.asset || entry === null) return null;
 
@@ -60,9 +82,24 @@ function WhatsappPreview({
           </div>
           <div>
             <dt className="text-paper/50">Resultado</dt>
-            <dd className="font-mono tabular-nums font-bold">{calc.resultLabel}</dd>
+            <dd className="font-mono tabular-nums font-bold">
+              {draft.tradeResult === "in_progress" ? "Em andamento" : calc.resultLabel}
+            </dd>
           </div>
         </dl>
+        <p className="mt-3 text-[11px] font-bold uppercase tracking-wider text-paper/45">USD por lote (aprox.)</p>
+        <table className="mt-2 w-full text-xs">
+          <tbody>
+            {lotRows.map((row) => (
+              <tr key={row.lot} className="border-t border-white/6">
+                <td className="py-1 font-mono text-paper/55">Lote {row.lot}</td>
+                <td className={`py-1 text-right font-mono tabular-nums ${row.usd >= 0 ? "text-rise/90" : "text-fall/90"}`}>
+                  {formatUsd(row.usd)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -126,9 +163,9 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
     const entry = toNum(form.get("entry_price"));
     const take = toNum(form.get("take_price"));
     const stop = toNum(form.get("stop_price"));
-    const status = String(form.get("status") ?? "closed") as "active" | "closed";
-    const closeOutcome =
-      status === "closed" ? (String(form.get("close_outcome") ?? "take") as "take" | "stop" | "manual") : null;
+    const tradeResult = String(form.get("trade_result") ?? "take") as TradeResultKey;
+    const { status, closeOutcome } = rowFromTradeResult(tradeResult);
+    const manualPips = tradeResult === "manual" ? toNum(form.get("manual_pips")) : null;
 
     const calc = computeSignalPips({
       asset: String(form.get("asset") ?? ""),
@@ -138,6 +175,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
       take,
       stop,
       closeOutcome,
+      manualPips: manualPips ?? undefined,
     });
 
     const result = await upsertEliteOperation({
@@ -150,8 +188,13 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
       take_price: take,
       stop_price: stop,
       close_outcome: closeOutcome,
-      result_pips: calc.resultPips,
-      result_label: calc.resultLabel,
+      result_pips: tradeResult === "manual" && manualPips != null ? manualPips : calc.resultPips,
+      result_label:
+        status === "active"
+          ? "Em andamento"
+          : tradeResult === "manual" && manualPips != null
+            ? calc.resultLabel
+            : calc.resultLabel,
       report_month: String(form.get("report_month") ?? ""),
       traded_on: String(form.get("traded_on") ?? "") || null,
       updated_label: String(form.get("updated_label") ?? "Atualizado"),
@@ -188,6 +231,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
 
   return (
     <div className="mx-auto max-w-6xl space-y-10">
+      <EliteAdminSubnav />
       <p className="text-sm text-paper/60">
         Cadastre no mesmo formato do WhatsApp. Ao salvar, o consolidado do mês e{" "}
         <a href="/relatorio-elite" className="text-gold hover:underline" target="_blank" rel="noreferrer">
@@ -266,18 +310,6 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
                 <option value="Venda">Venda</option>
               </select>
             </label>
-            <label className="block text-xs text-paper/50">
-              Status
-              <select
-                name="status"
-                value={draft.status}
-                onChange={(e) => setDraft((p) => ({ ...p, status: e.target.value as "active" | "closed" }))}
-                className={`${fieldClass} mt-1`}
-              >
-                <option value="closed">Finalizado</option>
-                <option value="active">Ao vivo</option>
-              </select>
-            </label>
           </fieldset>
 
           <fieldset className="sm:col-span-2 grid gap-3 rounded-lg border border-rise/20 p-4 sm:grid-cols-3">
@@ -323,22 +355,37 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
             </label>
           </fieldset>
 
-          {draft.status === "closed" ? (
+          <label className="block text-xs text-paper/50 sm:col-span-2">
+            Resultado do trade
+            <select
+              name="trade_result"
+              value={draft.tradeResult}
+              onChange={(e) => setDraft((p) => ({ ...p, tradeResult: e.target.value as TradeResultKey }))}
+              className={`${fieldClass} mt-1`}
+            >
+              {TRADE_RESULT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          {draft.tradeResult === "manual" ? (
             <label className="block text-xs text-paper/50 sm:col-span-2">
-              Resultado do trade
-              <select
-                name="close_outcome"
-                value={draft.closeOutcome}
-                onChange={(e) => setDraft((p) => ({ ...p, closeOutcome: e.target.value as OperationDraft["closeOutcome"] }))}
-                className={`${fieldClass} mt-1`}
-              >
-                <option value="take">Fechou no take</option>
-                <option value="stop">Fechou no stop</option>
-              </select>
+              Pips manuais
+              <input
+                name="manual_pips"
+                type="number"
+                step={1}
+                required
+                value={draft.manualPips}
+                onChange={(e) => setDraft((p) => ({ ...p, manualPips: e.target.value }))}
+                placeholder="Ex: -120"
+                className={`${fieldClass} mt-1 font-mono`}
+              />
             </label>
-          ) : (
-            <input type="hidden" name="close_outcome" value="take" />
-          )}
+          ) : null}
 
           <WhatsappPreview draft={draft} />
 
@@ -448,7 +495,9 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
                     <td className="px-3 py-2 font-mono text-xs text-fall/90">{row.stop_price ?? "—"}</td>
                     <td className="px-3 py-2 tabular-nums">{row.result_label}</td>
                     <td className="px-3 py-2 text-paper/55">{row.report_month}</td>
-                    <td className="px-3 py-2 text-xs">{row.status === "active" ? "Ao vivo" : "Finalizado"}</td>
+                    <td className="px-3 py-2 text-xs">
+                      {tradeResultLabel(tradeResultFromRow(row))}
+                    </td>
                     <td className="px-3 py-2 text-right space-x-3">
                       <button type="button" className="text-xs text-gold hover:underline" onClick={() => startEdit(row)}>
                         Editar
@@ -502,13 +551,22 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
 }
 
 function DraftBanner({ message }: { message: string }) {
-  const needsSchema = message.includes("elite_operations") || message.includes("schema cache");
+  const needsSchema =
+    /elite_operations|elite_monthly|schema cache|PGRST205/i.test(message) ||
+    message.toLowerCase().includes("could not find the table");
   return (
     <div className="rounded-lg border border-fall/40 bg-fall/10 p-4 text-sm text-fall">
       <p>{message}</p>
       {needsSchema ? (
         <p className="mt-2 text-xs text-paper/70">
-          Rode <code className="text-gold">POST /api/publisher/bootstrap-schema</code> com Bearer CRON_SECRET.
+          As tabelas <code className="text-gold">elite_operations</code> e{" "}
+          <code className="text-gold">elite_monthly_reports</code> ainda não existem neste projeto Supabase. Rode{" "}
+          <code className="text-gold">POST /api/publisher/bootstrap-schema</code> com Bearer <code>CRON_SECRET</code>{" "}
+          (migrations Elite inclusas). Depois recarregue o admin — ao salvar,{" "}
+          <a href="/relatorio-elite" className="text-gold underline" target="_blank" rel="noreferrer">
+            /relatorio-elite
+          </a>{" "}
+          é revalidado automaticamente.
         </p>
       ) : null}
     </div>

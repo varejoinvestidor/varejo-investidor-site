@@ -43,15 +43,15 @@ export function computeSignalPips(input: {
     Number.isFinite(entry) && Number.isFinite(stop) ? -Math.abs(pipsBetween(input.asset, input.direction, entry, stop)) : 0;
 
   let resultPips = 0;
+  let resultLabel = "Em andamento";
+
   if (input.status === "closed") {
     if (input.closeOutcome === "stop") resultPips = stopPips;
     else if (input.closeOutcome === "manual" && input.manualPips !== undefined) resultPips = input.manualPips;
     else if (input.closeOutcome === "take" || (Number.isFinite(take) && takePips !== 0)) resultPips = takePips;
     else if (Number.isFinite(stop)) resultPips = stopPips;
-  } else {
-    resultPips = takePips;
+    resultLabel = formatPipsLabel(resultPips);
   }
 
-  const resultLabel = formatPipsLabel(resultPips);
   return { resultPips, takePips, stopPips, resultLabel };
 }

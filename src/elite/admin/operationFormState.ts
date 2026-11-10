@@ -1,11 +1,12 @@
 import type { EliteOperationRow } from "../types";
+import { tradeResultFromRow, type TradeResultKey } from "./tradeResult";
 
 export type OperationDraft = {
   signalNumber: string;
   asset: string;
   direction: "Compra" | "Venda";
-  status: "active" | "closed";
-  closeOutcome: "take" | "stop" | "manual";
+  tradeResult: TradeResultKey;
+  manualPips: string;
   entry: string;
   take: string;
   stop: string;
@@ -20,8 +21,8 @@ export const emptyOperationDraft = (): OperationDraft => ({
   signalNumber: "",
   asset: "",
   direction: "Compra",
-  status: "closed",
-  closeOutcome: "take",
+  tradeResult: "take",
+  manualPips: "",
   entry: "",
   take: "",
   stop: "",
@@ -37,8 +38,8 @@ export function draftFromRow(row: EliteOperationRow): OperationDraft {
     signalNumber: row.signal_number != null ? String(row.signal_number) : "",
     asset: row.asset,
     direction: row.direction,
-    status: row.status,
-    closeOutcome: row.close_outcome ?? "take",
+    tradeResult: tradeResultFromRow(row),
+    manualPips: row.close_outcome === "manual" ? String(row.result_pips) : "",
     entry: row.entry_price != null ? String(row.entry_price) : "",
     take: row.take_price != null ? String(row.take_price) : "",
     stop: row.stop_price != null ? String(row.stop_price) : "",

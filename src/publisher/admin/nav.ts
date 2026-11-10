@@ -13,7 +13,8 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin/autores", label: "Autores" },
   { href: "/admin/midia", label: "Biblioteca de mídia" },
   { href: "/admin/agendamentos", label: "Agendamentos" },
-  { href: "/admin/relatorio-elite", label: "Relatório Elite" },
+  { href: "/admin/relatorio-elite", label: "Relatório Elite", description: "Sinais e colar WhatsApp" },
+  { href: "/admin/relatorio-elite/desempenho", label: "Elite — Desempenho", description: "KPIs, consolidado e lotes" },
 ];
 
 /** Rodapé da sidebar (perfil + gestão). */

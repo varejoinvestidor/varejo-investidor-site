@@ -43,6 +43,8 @@ function buildOperationRow(input: EliteOperationInput) {
     input.result_pips !== undefined &&
     !Number.isNaN(input.result_pips);
 
+  const activeLabel = input.status === "active";
+
   return {
     asset: input.asset.trim(),
     direction: input.direction,
@@ -52,8 +54,10 @@ function buildOperationRow(input: EliteOperationInput) {
     take_price: take,
     stop_price: stop,
     close_outcome: input.status === "closed" ? input.close_outcome ?? "take" : null,
-    result_pips: useManual ? input.result_pips : resultPips,
-    result_label: input.result_label.trim() || (useManual ? `${input.result_pips >= 0 ? "+" : ""}${input.result_pips} pips` : resultLabel),
+    result_pips: activeLabel ? 0 : useManual ? input.result_pips : resultPips,
+    result_label:
+      input.result_label.trim() ||
+      (activeLabel ? "Em andamento" : useManual ? `${input.result_pips >= 0 ? "+" : ""}${input.result_pips} pips` : resultLabel),
     report_month: input.report_month.trim(),
     traded_on: input.traded_on,
     updated_label: input.updated_label.trim(),
@@ -68,6 +72,7 @@ async function afterOperationMutation(supabase: SupabaseClient, reportMonth: str
   revalidatePath("/relatorio-elite");
   revalidatePath("/elite-report");
   revalidatePath("/admin/relatorio-elite");
+  revalidatePath("/admin/relatorio-elite/desempenho");
 }
 
 export async function upsertEliteOperation(input: EliteOperationInput) {
@@ -100,6 +105,7 @@ export async function deleteEliteOperation(id: string) {
   else {
     revalidatePath("/relatorio-elite");
     revalidatePath("/admin/relatorio-elite");
+    revalidatePath("/admin/relatorio-elite/desempenho");
   }
   return { ok: true as const };
 }
