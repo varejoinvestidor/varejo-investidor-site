@@ -8,8 +8,26 @@ import pg from "pg";
 
 const files = ["20260310130000_elite_report.sql", "20260311120000_elite_operations_levels.sql"];
 
-const conn =
-  process.env.POSTGRES_URL_NON_POOLING ?? process.env.POSTGRES_URL ?? process.env.SUPABASE_DB_URL;
+function resolveConn() {
+  const ordered = [
+    process.env.POSTGRES_URL_NON_POOLING,
+    process.env.POSTGRES_URL,
+    process.env.SUPABASE_DB_URL,
+    process.env.DATABASE_URL,
+    process.env.POSTGRES_PRISMA_URL,
+  ];
+  for (const c of ordered) {
+    const v = c?.trim();
+    if (v && !v.includes("[SENSITIVE]") && !v.includes("base")) return v;
+  }
+  const { POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE } = process.env;
+  if (POSTGRES_HOST && POSTGRES_USER && POSTGRES_PASSWORD && POSTGRES_DATABASE) {
+    return `postgresql://${encodeURIComponent(POSTGRES_USER)}:${encodeURIComponent(POSTGRES_PASSWORD)}@${POSTGRES_HOST}:5432/${POSTGRES_DATABASE}?sslmode=require`;
+  }
+  return null;
+}
+
+const conn = resolveConn();
 
 if (!conn) {
   console.error(
@@ -29,6 +47,7 @@ try {
     console.log("Applying", file, "…");
     await client.query(sql);
   }
+  await client.query(`NOTIFY pgrst, 'reload schema';`);
   const { rows } = await client.query(
     "select to_regclass('public.elite_operations') as ops, to_regclass('public.elite_monthly_reports') as monthly",
   );

@@ -1,22 +1,5 @@
 -- Relatório Elite: operações e consolidados mensais (admin VI Publisher)
 
-create or replace function public.is_elite_editor ()
-returns boolean
-language sql
-security definer
-set search_path = public
-stable
-as $$
-  select exists (
-    select 1
-    from public.profiles
-    where id = auth.uid ()
-      and role in ('admin', 'editor')
-  );
-$$;
-
-grant execute on function public.is_elite_editor () to authenticated;
-
 create table if not exists public.elite_monthly_reports (
   id uuid primary key default gen_random_uuid (),
   year int not null,
@@ -50,6 +33,23 @@ create table if not exists public.elite_operations (
 
 create index if not exists elite_operations_status_idx on public.elite_operations (status);
 create index if not exists elite_operations_report_month_idx on public.elite_operations (report_month);
+
+create or replace function public.is_elite_editor ()
+returns boolean
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select exists (
+    select 1
+    from public.profiles
+    where id = auth.uid ()
+      and role in ('admin', 'editor')
+  );
+$$;
+
+grant execute on function public.is_elite_editor () to authenticated;
 
 alter table public.elite_monthly_reports enable row level security;
 alter table public.elite_operations enable row level security;

@@ -1,13 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1324" height="150" viewBox="0 0 1324 150" role="img" aria-label="Canal Formiga">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1324" height="150" viewBox="0 0 1324 150" role="img" aria-label="Canal Formiga">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f8f56"/>
-      <stop offset="100%" stop-color="#0a3d28"/>
+    <linearGradient id="formigaBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0a3d28"/>
+      <stop offset="55%" stop-color="#0f8f56"/>
+      <stop offset="100%" stop-color="#0a2f1f"/>
     </linearGradient>
+    <clipPath id="formigaChar">
+      <rect x="0" y="0" width="420" height="150" rx="0"/>
+    </clipPath>
+    <pattern id="formigaGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+    </pattern>
   </defs>
-  <rect width="1324" height="150" fill="#0a0a0a"/>
-  <rect x="24" y="20" width="1276" height="110" rx="8" fill="url(#g)"/>
-  <text x="72" y="70" fill="#f5f0e6" font-family="system-ui,sans-serif" font-size="28" font-weight="700">CANAL FORMIGA</text>
-  <text x="72" y="108" fill="#e8dcc8" font-family="system-ui,sans-serif" font-size="18" opacity="0.9">WhatsApp gratuito · Varejo Investidor</text>
-  <text x="1180" y="82" fill="#c6994a" font-family="system-ui,sans-serif" font-size="22" font-weight="700" text-anchor="end">ENTRAR ’</text>
+  <rect width="1324" height="150" fill="#050505"/>
+  <rect x="0" y="0" width="1324" height="150" fill="url(#formigaBg)"/>
+  <rect width="1324" height="150" fill="url(#formigaGrid)"/>
+  <image href="/characters/education-formation-premium.png" x="-30" y="-95" width="520" height="347" clip-path="url(#formigaChar)" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="420" y="0" width="2" height="150" fill="#ffffff" fill-opacity="0.12"/>
+  <text x="448" y="58" fill="#f5f0e6" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700" letter-spacing="0.28em">JORNADA PATRIMONIAL</text>
+  <text x="448" y="92" fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700">Canal Formiga</text>
+  <text x="448" y="118" fill="#e8f5ee" font-family="system-ui, sans-serif" font-size="16" opacity="0.92">Educação financeira e WhatsApp gratuito</text>
+  <text x="1270" y="88" fill="#f5d78e" font-family="system-ui, sans-serif" font-size="20" font-weight="800" text-anchor="end" letter-spacing="0.12em">COMEÇAR ?</text>
 </svg>

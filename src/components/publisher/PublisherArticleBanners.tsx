@@ -25,15 +25,23 @@ export function PublisherArticleBanners({
         {items.map((banner) => {
           const image = (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={banner.image_url} alt={banner.alt} className="w-full rounded-sm object-cover" />
+            <img
+              src={banner.image_url}
+              alt={banner.alt}
+              width={1324}
+              height={150}
+              className="aspect-[1324/150] w-full rounded-sm object-cover"
+            />
           );
           if (banner.href) {
+            const external = /^https?:\/\//i.test(banner.href);
             return (
               <a
                 key={banner.id}
                 href={banner.href}
-                target="_blank"
-                rel="noopener noreferrer sponsored"
+                {...(external
+                  ? { target: "_blank", rel: "noopener noreferrer sponsored" }
+                  : { rel: "noopener" })}
                 className="block overflow-hidden border border-gold/[0.18] transition hover:border-gold/40"
               >
                 {image}

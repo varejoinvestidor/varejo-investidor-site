@@ -3,8 +3,6 @@ import { ELITE_STAFF_FUNCTION_SQL, ELITE_TABLE_GRANTS_SQL } from "./eliteStaffSq
 /** SQL completo para colar no Supabase → SQL Editor (usa `profiles`; não exige `is_publisher_staff`). */
 export const ELITE_SCHEMA_SQL = `-- Relatório Elite (VI Research) — execute uma vez no SQL Editor
 
-${ELITE_STAFF_FUNCTION_SQL}
-
 create table if not exists public.elite_monthly_reports (
   id uuid primary key default gen_random_uuid (),
   year int not null,
@@ -38,6 +36,8 @@ create table if not exists public.elite_operations (
 
 create index if not exists elite_operations_status_idx on public.elite_operations (status);
 create index if not exists elite_operations_report_month_idx on public.elite_operations (report_month);
+
+${ELITE_STAFF_FUNCTION_SQL}
 
 alter table public.elite_monthly_reports enable row level security;
 alter table public.elite_operations enable row level security;

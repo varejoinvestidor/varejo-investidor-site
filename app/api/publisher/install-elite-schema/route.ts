@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import pg from "pg";
 import { ELITE_MIGRATION_FILES, runSqlMigrationFiles } from "../../../../src/publisher/schema/runSqlMigrations";
+import { resolvePostgresConnectionString } from "../../../../src/publisher/schema/postgresConnection";
 import { assertCronBearer } from "../../../../src/publisher/security/cronAuth";
 
 export const dynamic = "force-dynamic";
@@ -17,8 +18,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: migrated.error }, { status: migrated.error.includes("POSTGRES") ? 503 : 500 });
   }
 
-  const conn =
-    process.env.POSTGRES_URL_NON_POOLING ?? process.env.POSTGRES_URL ?? process.env.SUPABASE_DB_URL;
+  const conn = resolvePostgresConnectionString();
   let tables = { elite_operations: null as string | null, elite_monthly_reports: null as string | null };
 
   if (conn) {

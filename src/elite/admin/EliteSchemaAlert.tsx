@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { installEliteSchemaFromAdmin } from "../actions";
 import { ELITE_SCHEMA_SQL } from "../schemaInstallSql";
+import { supabaseSqlEditorUrl } from "../supabaseDashboard";
 
 function needsEliteSchema(message: string) {
   return (
@@ -16,7 +17,8 @@ export function EliteSchemaAlert({ message }: { message: string }) {
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
   const showInstall = needsEliteSchema(message);
-  const showSqlFallback = showInstall || /POSTGRES_URL/i.test(text);
+  const showSqlFallback = showInstall || /POSTGRES|Conexão Postgres/i.test(text);
+  const sqlEditorHref = supabaseSqlEditorUrl();
 
   async function onInstall() {
     setBusy(true);
@@ -64,13 +66,23 @@ export function EliteSchemaAlert({ message }: { message: string }) {
             >
               {copied ? "SQL copiado!" : "Copiar SQL para Supabase"}
             </button>
+            {sqlEditorHref ? (
+              <a
+                href={sqlEditorHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded border border-paper/25 px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-paper/85"
+              >
+                Abrir SQL Editor
+              </a>
+            ) : null}
           </div>
           {showSqlFallback ? (
             <p className="text-paper/45">
             O passo obrigatório até as tabelas existirem: abra{" "}
             <strong className="text-paper/65">Supabase → SQL Editor</strong>, cole o SQL copiado e clique em{" "}
             <strong className="text-paper/65">Run</strong>. Aguarde ~1 minuto e recarregue. (O botão instalar só funciona
-            com <code className="text-gold">POSTGRES_URL</code> na Vercel.)
+            com <code className="text-gold">POSTGRES_URL_NON_POOLING</code> (connection string Direct) na Vercel.)
             </p>
           ) : null}
           <p className="text-paper/45">

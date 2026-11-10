@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1324" height="150" viewBox="0 0 1324 150" role="img" aria-label="Base educacional Formiga Lobo Harpia">
+  <defs>
+    <clipPath id="eduChar">
+      <rect x="0" y="0" width="520" height="150"/>
+    </clipPath>
+  </defs>
+  <rect width="1324" height="150" fill="#050505"/>
+  <image href="/characters/home-structure-horizontal-cutout.png" x="-10" y="-55" width="600" height="400" clip-path="url(#eduChar)" preserveAspectRatio="xMidYMid slice" opacity="0.95"/>
+  <rect x="520" y="0" width="804" height="150" fill="#111111"/>
+  <rect x="520" y="0" width="804" height="150" fill="#c6994a" fill-opacity="0.06"/>
+  <text x="548" y="54" fill="#c6994a" font-family="system-ui, sans-serif" font-size="12" font-weight="800" letter-spacing="0.34em">BASE EDUCACIONAL</text>
+  <text x="548" y="88" fill="#f5f0e6" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700">A metodologia começa na educação</text>
+  <text x="548" y="118" fill="#c8c0b0" font-family="system-ui, sans-serif" font-size="15">Formiga, Lobo e Harpia · trilha Varejo Investidor</text>
+  <text x="1290" y="88" fill="#c6994a" font-family="system-ui, sans-serif" font-size="18" font-weight="800" text-anchor="end">FORMAÇÃO ’</text>
+</svg>

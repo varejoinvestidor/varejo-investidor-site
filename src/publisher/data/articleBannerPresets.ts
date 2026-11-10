@@ -1,4 +1,6 @@
 import { fxproLinks } from "../../data/fxproLinks";
+import { isSupportedLocale, type SupportedLocale } from "../../i18n/locales";
+import { localizedPath } from "../../i18n/routing";
 import type { ArticleBanner, ArticleBannerPreset } from "../types/banner";
 import { getFormigaChannelUrl, getLoboChannelUrl } from "../../data/whatsappChannels";
 
@@ -11,16 +13,56 @@ const FXPRO_BANNER_EN =
 const FXPRO_BANNER_ES =
   "https://fxpro-cdn.cloud/repo/marketing-portal-direct/banners/mclaren-orange-es-fscm-1324x150.png";
 
+/** Faixas 1324×150 alinhadas às seções da home (personagens em `/characters`). */
+export const PRODUCT_STRIP_BANNER_ASSETS: Record<
+  Exclude<ArticleBannerPreset, "fxpro" | "binance">,
+  { image: string; alt: string }
+> = {
+  formiga: {
+    image: "/banners/canal-formiga.svg",
+    alt: "Canal Formiga · início da jornada · Varejo Investidor",
+  },
+  lobo: {
+    image: "/banners/canal-lobo.svg",
+    alt: "Canal Lobo · sinais e análises · Varejo Investidor",
+  },
+  elite: {
+    image: "/banners/canal-elite.svg",
+    alt: "Canal Elite · análises e sinais no WhatsApp",
+  },
+  educacao: {
+    image: "/banners/base-educacional.svg",
+    alt: "Base educacional Formiga, Lobo e Harpia",
+  },
+  select: {
+    image: "/banners/faixa-select.svg",
+    alt: "Select · estratégia patrimonial Varejo Investidor",
+  },
+  private: {
+    image: "/banners/faixa-private.svg",
+    alt: "Private · estrutura patrimonial internacional",
+  },
+};
+
 export const ARTICLE_BANNER_PRESETS: {
   id: ArticleBannerPreset;
   label: string;
   description: string;
 }[] = [
-  { id: "formiga", label: "Canal Formiga", description: "WhatsApp gratuito · nível inicial" },
-  { id: "lobo", label: "Canal Lobo", description: "WhatsApp · nível intermediário" },
+  { id: "formiga", label: "Canal Formiga", description: "Faixa home · WhatsApp gratuito" },
+  { id: "lobo", label: "Canal Lobo", description: "Faixa home · WhatsApp Lobo" },
+  { id: "elite", label: "Canal Elite", description: "Faixa home · página Sinais" },
+  { id: "educacao", label: "Base educacional", description: "Faixa home · Formação / educação" },
+  { id: "select", label: "Select", description: "Faixa home · patrimônio US$ 50k+" },
+  { id: "private", label: "Private", description: "Faixa home · patrimônio US$ 1M+" },
   { id: "fxpro", label: "FxPro", description: "Banner corretora Forex (site)" },
   { id: "binance", label: "Binance", description: "Conta cripto · afiliado" },
 ];
+
+function bannerLocale(language: string): SupportedLocale {
+  const base = language.split("-")[0]?.toLowerCase() ?? "pt";
+  return isSupportedLocale(base) ? base : "pt";
+}
 
 function fxproBannerImage(language: string): string {
   if (language === "pt") return FXPRO_BANNER_PT;
@@ -34,23 +76,52 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
   if (!banner.preset) return banner;
 
   const lang = language.startsWith("pt") ? "pt" : language.startsWith("es") ? "es" : language;
+  const locale = bannerLocale(language);
   switch (banner.preset) {
     case "formiga":
       return {
         ...banner,
-        image_url: "/banners/canal-formiga.svg",
-        alt: "Canal Formiga · Varejo Investidor",
+        image_url: PRODUCT_STRIP_BANNER_ASSETS.formiga.image,
+        alt: PRODUCT_STRIP_BANNER_ASSETS.formiga.alt,
         href: getFormigaChannelUrl(lang, FORMIGA_FALLBACK),
       };
     case "lobo": {
       const lobo = getLoboChannelUrl(lang) ?? getLoboChannelUrl("pt") ?? getFormigaChannelUrl(lang, FORMIGA_FALLBACK);
       return {
         ...banner,
-        image_url: "/banners/canal-lobo.svg",
-        alt: "Canal Lobo · Varejo Investidor",
+        image_url: PRODUCT_STRIP_BANNER_ASSETS.lobo.image,
+        alt: PRODUCT_STRIP_BANNER_ASSETS.lobo.alt,
         href: lobo,
       };
     }
+    case "elite":
+      return {
+        ...banner,
+        image_url: PRODUCT_STRIP_BANNER_ASSETS.elite.image,
+        alt: PRODUCT_STRIP_BANNER_ASSETS.elite.alt,
+        href: localizedPath("/sinais", locale),
+      };
+    case "educacao":
+      return {
+        ...banner,
+        image_url: PRODUCT_STRIP_BANNER_ASSETS.educacao.image,
+        alt: PRODUCT_STRIP_BANNER_ASSETS.educacao.alt,
+        href: localizedPath("/educacao", locale),
+      };
+    case "select":
+      return {
+        ...banner,
+        image_url: PRODUCT_STRIP_BANNER_ASSETS.select.image,
+        alt: PRODUCT_STRIP_BANNER_ASSETS.select.alt,
+        href: localizedPath("/select", locale),
+      };
+    case "private":
+      return {
+        ...banner,
+        image_url: PRODUCT_STRIP_BANNER_ASSETS.private.image,
+        alt: PRODUCT_STRIP_BANNER_ASSETS.private.alt,
+        href: localizedPath("/private", locale),
+      };
     case "fxpro":
       return {
         ...banner,

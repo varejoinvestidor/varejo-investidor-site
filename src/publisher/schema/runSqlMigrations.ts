@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import pg from "pg";
+import { postgresConnectionHint, resolvePostgresConnectionString } from "./postgresConnection";
 
 export const ARTICLE_BANNERS_MIGRATION_FILES = ["20260310120000_article_banners.sql"] as const;
 
@@ -20,10 +21,9 @@ export const FULL_PUBLISHER_MIGRATION_FILES = [
 export async function runSqlMigrationFiles(
   files: readonly string[],
 ): Promise<{ ok: true } | { ok: false; error: string }> {
-  const conn =
-    process.env.POSTGRES_URL_NON_POOLING ?? process.env.POSTGRES_URL ?? process.env.SUPABASE_DB_URL;
+  const conn = resolvePostgresConnectionString();
   if (!conn) {
-    return { ok: false, error: "POSTGRES_URL não configurada no servidor (Vercel)." };
+    return { ok: false, error: `Conexão Postgres indisponível no servidor. ${postgresConnectionHint()}` };
   }
 
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";

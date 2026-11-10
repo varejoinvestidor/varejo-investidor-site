@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1324" height="150" viewBox="0 0 1324 150" role="img" aria-label="Canal Elite">
+  <defs>
+    <clipPath id="eliteChar">
+      <rect x="0" y="0" width="400" height="150"/>
+    </clipPath>
+    <pattern id="eliteGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#c6994a" stroke-opacity="0.14"/>
+    </pattern>
+  </defs>
+  <rect width="1324" height="150" fill="#f3efe6"/>
+  <rect width="1324" height="150" fill="url(#eliteGrid)"/>
+  <image href="/characters/services-hero-institutional.png" x="-40" y="-85" width="500" height="333" clip-path="url(#eliteChar)" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="400" y="0" width="924" height="150" fill="#0a0a0a" fill-opacity="0.04"/>
+  <text x="428" y="56" fill="#9a7128" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700" letter-spacing="0.3em">CANAL ELITE</text>
+  <text x="428" y="90" fill="#1a1a1a" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700">Análises e sinais direto no WhatsApp</text>
+  <text x="428" y="118" fill="#444444" font-family="system-ui, sans-serif" font-size="15">Entrada, alvo, stop e leitura de mercado global</text>
+  <rect x="1040" y="48" width="248" height="54" rx="2" fill="#c6994a"/>
+  <text x="1164" y="83" fill="#1a1a1a" font-family="system-ui, sans-serif" font-size="13" font-weight="800" text-anchor="middle" letter-spacing="0.14em">CONHECER ELITE</text>
+</svg>

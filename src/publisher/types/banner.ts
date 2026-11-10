@@ -1,4 +1,23 @@
-export type ArticleBannerPreset = "formiga" | "lobo" | "fxpro" | "binance";
+export type ArticleBannerPreset =
+  | "formiga"
+  | "lobo"
+  | "elite"
+  | "educacao"
+  | "select"
+  | "private"
+  | "fxpro"
+  | "binance";
+
+const ARTICLE_BANNER_PRESET_IDS: ArticleBannerPreset[] = [
+  "formiga",
+  "lobo",
+  "elite",
+  "educacao",
+  "select",
+  "private",
+  "fxpro",
+  "binance",
+];
 
 export type ArticleBanner = {
   id: string;
@@ -25,7 +44,7 @@ export function parseArticleBanners(raw: unknown): ArticleBanner[] {
   for (const item of raw) {
     const row = item as Record<string, unknown>;
     const presetRaw = String(row.preset ?? "").trim();
-    const preset = ["formiga", "lobo", "fxpro", "binance"].includes(presetRaw)
+    const preset = ARTICLE_BANNER_PRESET_IDS.includes(presetRaw as ArticleBannerPreset)
       ? (presetRaw as ArticleBannerPreset)
       : undefined;
     const image_url = String(row.image_url ?? "").trim();

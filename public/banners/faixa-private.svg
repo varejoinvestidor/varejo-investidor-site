@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1324" height="150" viewBox="0 0 1324 150" role="img" aria-label="Private patrimonial">
+  <defs>
+    <clipPath id="privateChar"><rect x="0" y="0" width="440" height="150"/></clipPath>
+    <pattern id="privateGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#c6994a" stroke-opacity="0.1"/>
+    </pattern>
+  </defs>
+  <rect width="1324" height="150" fill="#050505"/>
+  <rect width="1324" height="150" fill="url(#privateGrid)"/>
+  <image href="/characters/about-hero-official-20260527.png" x="-30" y="-90" width="520" height="347" clip-path="url(#privateChar)" preserveAspectRatio="xMidYMid slice" opacity="0.92"/>
+  <rect x="440" y="0" width="884" height="150" fill="#0a0a0a"/>
+  <text x="468" y="56" fill="#c6994a" font-family="system-ui,sans-serif" font-size="12" font-weight="800" letter-spacing="0.34em">ESTRUTURA INTERNACIONAL</text>
+  <text x="468" y="90" fill="#f5f0e6" font-family="Georgia, serif" font-size="30" font-weight="700">Private</text>
+  <text x="468" y="118" fill="#c8c0b0" font-family="system-ui,sans-serif" font-size="16">US$ 1.000.000+ · proteção, continuidade e patrimônio global</text>
+  <text x="1290" y="88" fill="#c6994a" font-family="system-ui,sans-serif" font-size="18" font-weight="800" text-anchor="end">PRIVATE ’</text>
+</svg>

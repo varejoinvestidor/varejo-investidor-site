@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import pg from "pg";
 import { assertCronBearer } from "../../../../src/publisher/security/cronAuth";
 import { FULL_PUBLISHER_MIGRATION_FILES, runSqlMigrationFiles } from "../../../../src/publisher/schema/runSqlMigrations";
+import { resolvePostgresConnectionString } from "../../../../src/publisher/schema/postgresConnection";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
@@ -17,8 +18,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: migrated.error }, { status: migrated.error.includes("POSTGRES") ? 503 : 500 });
   }
 
-  const conn =
-    process.env.POSTGRES_URL_NON_POOLING ?? process.env.POSTGRES_URL ?? process.env.SUPABASE_DB_URL;
+  const conn = resolvePostgresConnectionString();
   if (!conn) {
     return NextResponse.json({ ok: true, categories: null });
   }
