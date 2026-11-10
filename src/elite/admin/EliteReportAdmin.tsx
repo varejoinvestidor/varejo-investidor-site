@@ -106,8 +106,14 @@ function WhatsappPreview({
   );
 }
 
+function eliteSchemaMissing(error: string | null | undefined): boolean {
+  if (!error) return false;
+  return /elite_operations|elite_monthly|schema cache|PGRST205|could not find the table/i.test(error);
+}
+
 export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
   const [message, setMessage] = useState<string | null>(loadError ?? null);
+  const schemaBlocked = eliteSchemaMissing(loadError) || eliteSchemaMissing(message);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [pasteText, setPasteText] = useState("");
@@ -439,7 +445,16 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
             />
             Exibir no relatório público
           </label>
-          <button type="submit" className="sm:col-span-2 rounded bg-gold px-4 py-2 text-xs font-bold uppercase tracking-wider text-ink">
+          <button
+            type="submit"
+            disabled={schemaBlocked}
+            title={
+              schemaBlocked
+                ? "Instale as tabelas Elite no Supabase (alerta acima) antes de salvar."
+                : undefined
+            }
+            className="sm:col-span-2 rounded bg-gold px-4 py-2 text-xs font-bold uppercase tracking-wider text-ink disabled:cursor-not-allowed disabled:opacity-45"
+          >
             {editingId ? "Salvar alterações" : "Salvar operação"}
           </button>
         </form>

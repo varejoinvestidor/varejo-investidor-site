@@ -67,9 +67,10 @@ export function EliteSchemaAlert({ message }: { message: string }) {
           </div>
           {showSqlFallback ? (
             <p className="text-paper/45">
-              Se o botão de instalar falhar por falta de <code className="text-gold">POSTGRES_URL</code> na Vercel: abra{" "}
-              <strong className="text-paper/65">Supabase → SQL Editor</strong>, cole o SQL copiado e execute. Depois aguarde
-              ~1 minuto e recarregue esta página.
+            O passo obrigatório até as tabelas existirem: abra{" "}
+            <strong className="text-paper/65">Supabase → SQL Editor</strong>, cole o SQL copiado e clique em{" "}
+            <strong className="text-paper/65">Run</strong>. Aguarde ~1 minuto e recarregue. (O botão instalar só funciona
+            com <code className="text-gold">POSTGRES_URL</code> na Vercel.)
             </p>
           ) : null}
           <p className="text-paper/45">

@@ -1,6 +1,9 @@
-/** SQL para colar no Supabase → SQL Editor (requer Publisher já instalado — função `is_publisher_staff`). */
-export const ELITE_SCHEMA_SQL = `-- Relatório Elite (VI Research)
--- Cole no SQL Editor do projeto e execute uma vez.
+import { ELITE_STAFF_FUNCTION_SQL, ELITE_TABLE_GRANTS_SQL } from "./eliteStaffSql";
+
+/** SQL completo para colar no Supabase → SQL Editor (usa `profiles`; não exige `is_publisher_staff`). */
+export const ELITE_SCHEMA_SQL = `-- Relatório Elite (VI Research) — execute uma vez no SQL Editor
+
+${ELITE_STAFF_FUNCTION_SQL}
 
 create table if not exists public.elite_monthly_reports (
   id uuid primary key default gen_random_uuid (),
@@ -49,8 +52,8 @@ drop policy if exists "Staff manage elite monthly reports" on public.elite_month
 create policy "Staff manage elite monthly reports"
 on public.elite_monthly_reports for all
 to authenticated
-using (public.is_publisher_staff ())
-with check (public.is_publisher_staff ());
+using (public.is_elite_editor ())
+with check (public.is_elite_editor ());
 
 drop policy if exists "Public read elite operations" on public.elite_operations;
 create policy "Public read elite operations"
@@ -62,8 +65,8 @@ drop policy if exists "Staff manage elite operations" on public.elite_operations
 create policy "Staff manage elite operations"
 on public.elite_operations for all
 to authenticated
-using (public.is_publisher_staff ())
-with check (public.is_publisher_staff ());
+using (public.is_elite_editor ())
+with check (public.is_elite_editor ());
 
 alter table public.elite_operations
 add column if not exists signal_number int,
@@ -73,6 +76,8 @@ add column if not exists stop_price numeric(18, 6),
 add column if not exists close_outcome text check (close_outcome in ('take', 'stop', 'manual'));
 
 create index if not exists elite_operations_signal_number_idx on public.elite_operations (signal_number);
+
+${ELITE_TABLE_GRANTS_SQL}
 
 notify pgrst, 'reload schema';
 `;

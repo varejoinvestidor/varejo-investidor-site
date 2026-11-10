@@ -1,5 +1,22 @@
 -- Relatório Elite: operações e consolidados mensais (admin VI Publisher)
 
+create or replace function public.is_elite_editor ()
+returns boolean
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select exists (
+    select 1
+    from public.profiles
+    where id = auth.uid ()
+      and role in ('admin', 'editor')
+  );
+$$;
+
+grant execute on function public.is_elite_editor () to authenticated;
+
 create table if not exists public.elite_monthly_reports (
   id uuid primary key default gen_random_uuid (),
   year int not null,
@@ -47,8 +64,8 @@ drop policy if exists "Staff manage elite monthly reports" on public.elite_month
 create policy "Staff manage elite monthly reports"
 on public.elite_monthly_reports for all
 to authenticated
-using (public.is_publisher_staff ())
-with check (public.is_publisher_staff ());
+using (public.is_elite_editor ())
+with check (public.is_elite_editor ());
 
 drop policy if exists "Public read elite operations" on public.elite_operations;
 create policy "Public read elite operations"
@@ -60,5 +77,10 @@ drop policy if exists "Staff manage elite operations" on public.elite_operations
 create policy "Staff manage elite operations"
 on public.elite_operations for all
 to authenticated
-using (public.is_publisher_staff ())
-with check (public.is_publisher_staff ());
+using (public.is_elite_editor ())
+with check (public.is_elite_editor ());
+
+grant select on public.elite_monthly_reports to anon, authenticated;
+grant select on public.elite_operations to anon, authenticated;
+grant insert, update, delete on table public.elite_monthly_reports to authenticated;
+grant insert, update, delete on table public.elite_operations to authenticated;

@@ -121,14 +121,42 @@ export async function upsertEliteOperation(input: EliteOperationInput) {
 
   if (input.id) {
     const { error } = await ctx.supabase.from("elite_operations").update(row).eq("id", input.id);
-    if (error) return { ok: false as const, error: error.message };
+    if (error) {
+      return {
+        ok: false as const,
+        error: eliteSaveErrorMessage(error.message),
+      };
+    }
   } else {
     const { error } = await ctx.supabase.from("elite_operations").insert(row);
-    if (error) return { ok: false as const, error: error.message };
+    if (error) {
+      return {
+        ok: false as const,
+        error: eliteSaveErrorMessage(error.message),
+      };
+    }
   }
 
-  await afterOperationMutation(ctx.supabase, row.report_month);
+  const sync = await syncEliteMonthlyForReportMonth(ctx.supabase, row.report_month);
+  if (!sync.ok) {
+    return { ok: false as const, error: eliteSaveErrorMessage(sync.error ?? "Falha ao consolidar mês.") };
+  }
+
+  revalidatePath("/relatorio-elite");
+  revalidatePath("/elite-report");
+  revalidatePath("/admin/relatorio-elite");
+  revalidatePath("/admin/relatorio-elite/desempenho");
   return { ok: true as const };
+}
+
+function eliteSaveErrorMessage(message: string): string {
+  if (/elite_operations|elite_monthly|schema cache|PGRST205|could not find the table/i.test(message)) {
+    return `${message} — instale as tabelas Elite (Copiar SQL no alerta ou Instalar tabelas).`;
+  }
+  if (/permission denied|row-level security|42501/i.test(message)) {
+    return `${message} — confira se seu usuário tem role admin/editor em profiles e se o SQL Elite foi executado.`;
+  }
+  return message;
 }
 
 export async function deleteEliteOperation(id: string) {
