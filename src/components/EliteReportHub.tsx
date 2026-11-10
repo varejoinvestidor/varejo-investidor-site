@@ -25,6 +25,7 @@ import { EliteOperationCard, EliteOperationsPager, paginateList } from "./elite/
 import { sortOperationsByRecency } from "./elite/eliteOperationSort";
 import { useOperationsPageSize } from "./elite/useOperationsPageSize";
 import { operationReportHref } from "../elite/operationReportLink";
+import { eliteSeptember2022HubOperations, eliteSeptember2022Monthly } from "../data/eliteSeptember2022";
 
 import { eliteReportPaths } from "../data/eliteReportPaths";
 
@@ -391,6 +392,16 @@ const reports: MonthlyReport[] = [
   { year: 2019, month: "Março", monthIndex: 2, signals: 96, result: "+9,8%", pips: 0, status: "Disponível", assets: ["GBP/JPY", "USOIL", "EUR/USD"] },
   { year: 2020, month: "Junho", monthIndex: 5, signals: 112, result: "+14,6%", pips: 0, status: "Disponível", assets: ["XAU/USD", "NASDAQ", "BTC/USD"] },
   { year: 2021, month: "Janeiro", monthIndex: 0, signals: 98, result: "+11,2%", pips: 0, status: "Disponível", assets: ["XAU/USD", "GBP/JPY"] },
+  {
+    year: eliteSeptember2022Monthly.year,
+    month: eliteSeptember2022Monthly.month,
+    monthIndex: eliteSeptember2022Monthly.monthIndex,
+    signals: eliteSeptember2022Monthly.signals,
+    result: eliteSeptember2022Monthly.result,
+    pips: eliteSeptember2022Monthly.pips,
+    status: eliteSeptember2022Monthly.status,
+    assets: eliteSeptember2022Monthly.assets,
+  },
   { year: 2022, month: "Outubro", monthIndex: 9, signals: 118, result: "+15,9%", pips: 0, status: "Disponível", assets: ["EUR/USD", "USOIL", "S&P 500"] },
   { year: 2023, month: "Julho", monthIndex: 6, signals: 126, result: "+17,3%", pips: 0, status: "Disponível", assets: ["XAU/USD", "NASDAQ", "GBP/JPY"] },
   { year: 2024, month: "Março", monthIndex: 2, signals: 137, result: "+22,7%", pips: 0, status: "Disponível", assets: ["XAU/USD", "BTC/USD", "NASDAQ"] },
@@ -445,6 +456,7 @@ const activeOperations: Operation[] = [
 ];
 
 const completedOperations: Operation[] = [
+  ...(eliteSeptember2022HubOperations as Operation[]),
   { asset: "XAU/USD", direction: "Compra", status: "closed", result: "+187 pips", pips: 187, date: "Fevereiro/2026", updatedAt: "Finalizado", reportMonth: "Fevereiro/2026" },
   { asset: "USOIL", direction: "Compra", status: "closed", result: "+713 pips", pips: 713, date: "Maio/2026", updatedAt: "Finalizado", reportMonth: "Maio/2026" },
   { asset: "GBP/JPY", direction: "Venda", status: "closed", result: "+92 pips", pips: 92, date: "Maio/2026", updatedAt: "Finalizado", reportMonth: "Maio/2026" },
@@ -620,13 +632,31 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
   const [closedOpsPage, setClosedOpsPage] = useState(1);
   const operationsPageSize = useOperationsPageSize();
 
-  const reportsData: MonthlyReport[] = hubData?.monthly?.length ? (hubData.monthly as MonthlyReport[]) : reports;
+  const baseReportsData: MonthlyReport[] = hubData?.monthly?.length ? (hubData.monthly as MonthlyReport[]) : reports;
   const activeOperationsData: Operation[] = hubData?.activeOperations?.length
     ? (hubData.activeOperations as Operation[])
     : activeOperations;
-  const completedOperationsData: Operation[] = hubData?.completedOperations?.length
+  const baseCompletedOperations: Operation[] = hubData?.completedOperations?.length
     ? (hubData.completedOperations as Operation[])
     : completedOperations;
+
+  const reportsData = useMemo(() => {
+    if (baseReportsData.some((r) => r.year === 2022 && r.monthIndex === 8)) {
+      return baseReportsData.map((r) =>
+        r.year === 2022 && r.monthIndex === 8
+          ? ({ ...r, ...eliteSeptember2022Monthly } as MonthlyReport)
+          : r,
+      );
+    }
+    return [...baseReportsData, { ...eliteSeptember2022Monthly } as MonthlyReport].sort(
+      (a, b) => a.year - b.year || a.monthIndex - b.monthIndex,
+    );
+  }, [baseReportsData]);
+
+  const completedOperationsData = useMemo(() => {
+    if (baseCompletedOperations.some((op) => op.reportMonth === "Setembro/2022")) return baseCompletedOperations;
+    return [...(eliteSeptember2022HubOperations as Operation[]), ...baseCompletedOperations];
+  }, [baseCompletedOperations]);
 
   const t = translations[locale] ?? translations.en;
   const copy = copyByLocale[locale] ?? copyByLocale.en;
@@ -867,7 +897,13 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                             type="button"
                             title={report ? `${month}/${year}: ${report.signals} sinais | ${report.result}` : `${month}/${year}`}
                             onClick={() => report && setSelectedMonthKey(`${report.year}-${report.monthIndex}`)}
-                            className={`h-9 border text-[10px] font-black transition ${report ? "border-gold/25 bg-gold/20 text-gold hover:bg-gold hover:text-ink" : "border-white/5 bg-white/[0.025] text-paper/16"}`}
+                            className={`h-9 border text-[10px] font-black transition ${
+                              report
+                                ? report.pips > 0 || report.result.startsWith("+")
+                                  ? "border-rise/35 bg-rise/20 text-rise hover:bg-rise hover:text-ink"
+                                  : "border-gold/25 bg-gold/20 text-gold hover:bg-gold hover:text-ink"
+                                : "border-white/5 bg-white/[0.025] text-paper/16"
+                            }`}
                           >
                             {report ? report.signals : ""}
                           </button>

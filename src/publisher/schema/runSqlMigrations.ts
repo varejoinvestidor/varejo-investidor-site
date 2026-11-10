@@ -17,6 +17,7 @@ export const ELITE_MIGRATION_FILES = [
   "20260311120000_elite_operations_levels.sql",
   "20260317120000_elite_signal_tier.sql",
   "20260316120000_supabase_api_grants.sql",
+  "20260320170000_elite_september_2022.sql",
 ] as const;
 
 export const VI_ANALYTICS_MIGRATION_FILES = [
