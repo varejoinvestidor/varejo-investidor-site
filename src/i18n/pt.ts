@@ -126,12 +126,13 @@
     title: "O sinal chega estruturado para leitura rápida.",
     text: "Cada envio organiza ativo, direção, entrada, take profit, stop loss e uma análise curta do cenário.",
     cta: "TESTE OS SINAIS GRATUITAMENTE",
-    signal: "Sinal: 4.169",
-    asset: "GBP/USD COMPRA 1.34497",
-    takeProfit: "Take Profit: 1.34766",
-    stopLoss: "Stop Loss: 1.34123",
+    signal: "4.417",
+    asset: "USPX500 VENDA 7558.23",
+    takeProfit: "7533.69",
+    stopLoss: "7596.69",
     analysisTitle: "Análise",
-    analysis: "GBP/USD, gráfico de 4 horas. O ativo encontra-se dentro da nuvem, com alvo no limite da nuvem.",
+    analysis:
+      "Gráfico diário: média vermelha apontando para baixo, usando a média azul como resistência. Ideia de descida próximo da Tenkan (vermelha), com alvo na região do take profit.",
   },
   brokers: {
     eyebrow: "Estrutura operacional",

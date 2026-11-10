@@ -14,6 +14,7 @@ import { languageMeta, persistLanguageChoice } from "../i18n/languageCatalog";
 import { getYoutubeChannelUrl } from "../config/youtubeChannels";
 import { LocaleFlagIcon } from "./LocaleFlagIcon";
 import { WhatsAppPhoneSignal3D } from "./signals/WhatsAppPhoneSignal3D";
+import { WhatsAppSignalDemo } from "./signals/WhatsAppSignalDemo";
 
 export const ticker = [
   ["XAU/USD", "+0.74%", "up"],
@@ -800,9 +801,9 @@ export function WhatsAppSignalExample({
           transition={{ duration: 0.55 }}
           className="flex flex-col items-center justify-center"
         >
-          <WhatsAppPhoneSignal3D
-            signalId={t.signalExample.signal.replace(/^[^:]+:\s*/, "").trim() || "4.169"}
-            asset={t.signalExample.asset.split(" ")[0] ?? "GBP/USD"}
+          <WhatsAppSignalDemo
+            signalId={t.signalExample.signal.replace(/^[^:]+:\s*/, "").trim() || "4.417"}
+            asset={t.signalExample.asset.split(" ")[0] ?? "USPX500"}
             direction={
               t.signalExample.asset.toUpperCase().includes("COMPRA") || t.signalExample.asset.toUpperCase().includes("BUY")
                 ? isPortuguese
@@ -812,19 +813,12 @@ export function WhatsAppSignalExample({
                   ? "Venda"
                   : "Sell"
             }
-            entry={t.signalExample.asset.match(/[\d.]+$/)?.[0] ?? "1.34497"}
+            entry={t.signalExample.asset.match(/[\d.]+$/)?.[0] ?? "7558.23"}
             takeProfit={t.signalExample.takeProfit.replace(/^[^:]+:\s*/, "").trim()}
             stopLoss={t.signalExample.stopLoss.replace(/^[^:]+:\s*/, "").trim()}
+            analysisTitle={t.signalExample.analysisTitle}
+            analysis={t.signalExample.analysis}
           />
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mt-6 w-full max-w-md border-l-2 border-rise bg-rise/[0.08] p-4"
-          >
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">{t.signalExample.analysisTitle}</p>
-            <p className="mt-2 leading-7 text-ink/[0.7]">{t.signalExample.analysis}</p>
-          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
 import {
   FreeChannelCTA,
@@ -451,15 +452,31 @@ const localizedEducationCopy = {
 };
 
 function ProgressMarks({ value }: { value: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+
   return (
-    <div className="education-progress-bars flex gap-1" aria-label={`Evolution ${value} of 5`}>
-      {Array.from({ length: 5 }).map((_, index) => (
-        <span
-          key={index}
-          className={`h-2 w-5 border border-gold/[0.22] ${index < value ? "is-filled bg-gold" : "bg-ink/[0.55]"}`}
-          style={{ transitionDelay: `${index * 45}ms` }}
-        />
-      ))}
+    <div ref={ref} className="education-progress-bars flex gap-1" aria-label={`Evolution ${value} of 5`}>
+      {Array.from({ length: 5 }).map((_, index) => {
+        const filled = index < value;
+        return (
+          <motion.span
+            key={index}
+            initial={{ scaleX: 0, opacity: 0.35 }}
+            animate={
+              inView && filled
+                ? { scaleX: 1, opacity: 1 }
+                : { scaleX: filled ? 1 : 0, opacity: filled ? 1 : 0.35 }
+            }
+            transition={{
+              delay: inView ? index * 0.11 : 0,
+              duration: 0.42,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className={`h-2 w-5 origin-left border border-gold/[0.22] ${filled ? "is-filled bg-gold education-progress-segment" : "bg-ink/[0.55]"}`}
+          />
+        );
+      })}
     </div>
   );
 }

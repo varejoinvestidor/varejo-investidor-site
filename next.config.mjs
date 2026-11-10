@@ -49,6 +49,11 @@ const nextConfig = {
         hostname: "fxpro-cdn.cloud",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "logo.clearbit.com",
+        pathname: "/**",
+      },
       ...(supabasePattern ? [supabasePattern] : []),
     ],
     formats: ["image/avif", "image/webp"],

@@ -1154,6 +1154,20 @@ main {
   box-shadow: 0 0 18px rgba(184, 137, 45, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
+.education-progress-segment.is-filled {
+  animation: education-bar-shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes education-bar-shimmer {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.12);
+  }
+}
+
 .education-level-row {
   position: relative;
   transition:

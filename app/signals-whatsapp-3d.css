@@ -144,9 +144,131 @@
   font-size: 0.65rem;
 }
 
+.wa-bubble-chart--index {
+  padding-bottom: 0.55rem;
+}
+
+.wa-chart-delta {
+  margin-top: 0.25rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #f04438;
+}
+
+.wa-chart-levels {
+  margin-top: 0.35rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.58rem;
+}
+
+.wa-mini-chart {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 2.6rem;
+  margin-top: 0.45rem;
+  padding: 0.25rem 0.15rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.wa-mini-chart-bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  opacity: 0.88;
+}
+
+.wa-mini-chart-bar--teal {
+  background: linear-gradient(180deg, #2dd4bf, #0d9488);
+}
+
+.wa-mini-chart-bar--red {
+  background: linear-gradient(180deg, #f87171, #dc2626);
+}
+
+.wa-mini-chart-line {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0.85;
+}
+
+.wa-mini-chart-line--red {
+  top: 38%;
+  background: #ef4444;
+}
+
+.wa-mini-chart-line--blue {
+  top: 52%;
+  background: #38bdf8;
+}
+
+.wa-chat-placeholder {
+  margin: 2rem 0.5rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(233, 237, 239, 0.35);
+}
+
+.wa-bubble-wrap--in {
+  animation: wa-bubble-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes wa-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.wa-notif-toast--pop {
+  animation: wa-notif-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes wa-notif-pop {
+  0% {
+    opacity: 0;
+    transform: translateZ(48px) rotateY(-6deg) translateY(-18px) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translateZ(56px) rotateY(-4deg) translateY(4px) scale(1.02);
+  }
+  100% {
+    transform: translateZ(48px) rotateY(-6deg) translateY(0) scale(1);
+  }
+}
+
 .wa-chart-title {
   font-weight: 700;
   color: #f04438;
+}
+
+.wa-chart-sell {
+  color: #f87171;
+}
+
+.wa-chart-buy {
+  color: #34d399;
+}
+
+.wa-chart-sl {
+  color: #f87171;
+}
+
+.wa-chart-tp {
+  color: #7dd3fc;
+}
+
+.wa-chart-dot {
+  color: rgba(233, 237, 239, 0.45);
 }
 
 .wa-chart-sub {
@@ -255,15 +377,51 @@
 }
 
 @media (max-width: 640px) {
+  .wa-phone-scene {
+    padding: 0.25rem 0 1.25rem;
+    overflow: visible;
+  }
+
+  .wa-phone-tilt {
+    perspective: 900px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
   .wa-phone-device {
-    transform: rotateY(-6deg) rotateX(4deg);
-    min-height: 480px;
+    transform: rotateY(-4deg) rotateX(2deg);
+    min-height: 460px;
+    width: min(100%, 290px);
+    margin: 0 auto;
+  }
+
+  .wa-phone-scene:hover .wa-phone-device {
+    transform: rotateY(-3deg) rotateX(2deg) translateY(-4px);
   }
 
   .wa-notif-toast {
-    right: 0;
-    top: 4%;
-    transform: translateZ(24px);
+    right: 2%;
+    left: 2%;
+    top: 2%;
+    width: auto;
+    max-width: none;
+    transform: translateZ(20px);
+  }
+
+  .wa-notif-toast--pop,
+  .wa-notif-toast {
+    animation: wa-notif-float-mobile 4.5s ease-in-out infinite;
+  }
+}
+
+@keyframes wa-notif-float-mobile {
+  0%,
+  100% {
+    transform: translateZ(20px) translateY(0);
+  }
+  50% {
+    transform: translateZ(28px) translateY(-5px);
   }
 }
 

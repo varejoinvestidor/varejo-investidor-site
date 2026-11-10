@@ -11,6 +11,8 @@ import {
 import { hePrivateCopy } from "../../src/data/copy/privateCopyHe";
 import { jaPrivateCopy } from "../../src/data/copy/privateCopyJa";
 import { hiPrivateCopy } from "../../src/data/copy/privateCopyHi";
+import { InstitutionLogoCard } from "../../src/components/private/InstitutionLogoCard";
+import { brazilInstitutionBrands, globalInstitutionBrands } from "../../src/data/institutionBrands";
 import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 
 const PRIVATE_CONTACT_URL =
@@ -483,29 +485,6 @@ const labelsByLocale: Record<string, PrivateLabels> = {
   },
 };
 
-const brazilInstitutions = [
-  "Itaú Private",
-  "BTG Pactual",
-  "XP Private",
-  "Bradesco",
-  "Santander",
-  "Safra",
-  "Banco do Brasil",
-];
-
-const globalInstitutions = [
-  "Morgan Stanley",
-  "J.P. Morgan",
-  "Goldman Sachs",
-  "UBS",
-  "Credit Suisse",
-  "Interactive Brokers",
-  "Charles Schwab",
-  "Binance",
-  "Nomad",
-  "Avenue",
-];
-
 function usePrivateCopy(locale: string) {
   return copyByLocale[locale] ?? enCopy;
 }
@@ -521,20 +500,6 @@ function AccentCard({ title, text }: { title: string; text: string }) {
       <h3 className="mt-5 font-serif text-2xl leading-[1.05] tracking-[-0.035em] text-paper">{title}</h3>
       <p className="mt-4 text-sm leading-7 text-paper/[0.68]">{text}</p>
     </article>
-  );
-}
-
-function InstitutionLogoCard({ name }: { name: string }) {
-  return (
-    <div
-      role="img"
-      aria-label={name}
-      className="group flex min-h-[76px] items-center justify-center border border-gold/[0.12] bg-paper/[0.025] px-4 py-5 text-center shadow-fine transition duration-300 hover:-translate-y-0.5 hover:border-gold/[0.45] hover:bg-gold/[0.06]"
-    >
-      <span className="text-sm font-black uppercase tracking-[0.18em] text-paper/[0.58] transition group-hover:text-gold">
-        {name}
-      </span>
-    </div>
   );
 }
 
@@ -643,16 +608,16 @@ export default function PrivatePage() {
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.26em] text-paper/[0.5]">{copy.institutions.brazil}</p>
               <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-5">
-                {brazilInstitutions.map((name) => (
-                  <InstitutionLogoCard key={name} name={name} />
+                {brazilInstitutionBrands.map((brand) => (
+                  <InstitutionLogoCard key={brand.name} brand={brand} />
                 ))}
               </div>
             </div>
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.26em] text-paper/[0.5]">{copy.institutions.global}</p>
               <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-6">
-                {globalInstitutions.map((name) => (
-                  <InstitutionLogoCard key={name} name={name} />
+                {globalInstitutionBrands.map((brand) => (
+                  <InstitutionLogoCard key={brand.name} brand={brand} />
                 ))}
               </div>
             </div>
