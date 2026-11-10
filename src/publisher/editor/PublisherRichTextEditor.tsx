@@ -131,7 +131,9 @@ export function PublisherRichTextEditor({ content, onChange, editable = true }: 
           <ToolbarButton
             label="Vídeo"
             onClick={() => {
-              const url = window.prompt("URL ou ID do YouTube");
+              const url = window.prompt(
+                "URL ou ID do YouTube\nFormato sugerido: https://www.youtube.com/watch?v=…",
+              );
               if (!url?.trim()) return;
               const id = parseYouTubeVideoId(url);
               if (!id) {

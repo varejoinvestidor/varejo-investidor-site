@@ -62,12 +62,25 @@ export function AnalyticsAccessChart({
   );
 }
 
-export function AnalyticsShareBar({ label, value, max }: { label: string; value: number; max: number }) {
+export function AnalyticsShareBar({
+  label,
+  value,
+  max,
+  hint,
+}: {
+  label: string;
+  value: number;
+  max: number;
+  hint?: string;
+}) {
   const pct = max > 0 ? (value / max) * 100 : 0;
   return (
     <div className="grid gap-2">
       <div className="flex items-center justify-between gap-3 text-sm">
-        <span className="truncate text-paper/78">{label}</span>
+        <div className="min-w-0">
+          <span className="truncate text-paper/78">{label}</span>
+          {hint ? <p className="truncate text-[11px] text-paper/40">{hint}</p> : null}
+        </div>
         <span className="shrink-0 font-mono text-xs font-bold tabular-nums text-gold">{value.toLocaleString("pt-BR")}</span>
       </div>
       <div className="h-2 overflow-hidden rounded-full bg-white/8">

@@ -1,5 +1,14 @@
 import { createPublisherServiceClient } from "../../publisher/supabase/service";
-import type { AnalyticsPeriodKey, AnalyticsSummary, AnalyticsTimeseriesRow, AnalyticsTopClick, AnalyticsTopPath } from "../types";
+import type {
+  AnalyticsCountryRow,
+  AnalyticsLocaleRow,
+  AnalyticsPeriodKey,
+  AnalyticsRegionRow,
+  AnalyticsSummary,
+  AnalyticsTimeseriesRow,
+  AnalyticsTopClick,
+  AnalyticsTopPath,
+} from "../types";
 import { resolveAnalyticsRange } from "../periods";
 
 export type AnalyticsSchemaState = "ok" | "missing" | "unconfigured";
@@ -87,13 +96,78 @@ export async function fetchAnalyticsTimeseries(
   }));
 }
 
+export async function fetchAnalyticsByRegion(from: Date, to: Date, limit = 12): Promise<AnalyticsRegionRow[]> {
+  const admin = createPublisherServiceClient();
+  if (!admin) return [];
+  const { data, error } = await admin.rpc("analytics_by_region", {
+    p_from: toIso(from),
+    p_to: toIso(to),
+    p_limit: limit,
+  });
+  if (error || !data) return [];
+  return (data as AnalyticsRegionRow[]).map((row) => ({
+    region_id: row.region_id,
+    region_label: row.region_label,
+    page_views: Number(row.page_views),
+    clicks: Number(row.clicks),
+    unique_sessions: Number(row.unique_sessions),
+  }));
+}
+
+export async function fetchAnalyticsByCountry(from: Date, to: Date, limit = 25): Promise<AnalyticsCountryRow[]> {
+  const admin = createPublisherServiceClient();
+  if (!admin) return [];
+  const { data, error } = await admin.rpc("analytics_by_country", {
+    p_from: toIso(from),
+    p_to: toIso(to),
+    p_limit: limit,
+  });
+  if (error || !data) return [];
+  return (data as AnalyticsCountryRow[]).map((row) => ({
+    country_code: String(row.country_code ?? "").trim(),
+    region_id: row.region_id,
+    page_views: Number(row.page_views),
+    clicks: Number(row.clicks),
+    unique_sessions: Number(row.unique_sessions),
+  }));
+}
+
+export async function fetchAnalyticsByLocale(from: Date, to: Date, limit = 25): Promise<AnalyticsLocaleRow[]> {
+  const admin = createPublisherServiceClient();
+  if (!admin) return [];
+  const { data, error } = await admin.rpc("analytics_by_locale", {
+    p_from: toIso(from),
+    p_to: toIso(to),
+    p_limit: limit,
+  });
+  if (error || !data) return [];
+  return (data as AnalyticsLocaleRow[]).map((row) => ({
+    locale: row.locale,
+    page_views: Number(row.page_views),
+    clicks: Number(row.clicks),
+    unique_sessions: Number(row.unique_sessions),
+  }));
+}
+
 export async function loadAnalyticsDashboard(periodKey: AnalyticsPeriodKey | string | undefined) {
   const range = resolveAnalyticsRange(periodKey);
-  const [summary, topPaths, topClicks, series] = await Promise.all([
+  const [summary, topPaths, topClicks, series, byRegion] = await Promise.all([
     fetchAnalyticsSummary(range.from, range.to),
     fetchTopPaths(range.from, range.to, 12),
     fetchTopClicks(range.from, range.to, 12),
     fetchAnalyticsTimeseries(range.from, range.to, range.grain),
+    fetchAnalyticsByRegion(range.from, range.to, 9),
   ]);
-  return { range, summary, topPaths, topClicks, series };
+  return { range, summary, topPaths, topClicks, series, byRegion };
+}
+
+export async function loadAnalyticsGeoReport(periodKey: AnalyticsPeriodKey | string | undefined) {
+  const range = resolveAnalyticsRange(periodKey);
+  const [byRegion, byCountry, byLocale, summary] = await Promise.all([
+    fetchAnalyticsByRegion(range.from, range.to, 20),
+    fetchAnalyticsByCountry(range.from, range.to, 40),
+    fetchAnalyticsByLocale(range.from, range.to, 25),
+    fetchAnalyticsSummary(range.from, range.to),
+  ]);
+  return { range, summary, byRegion, byCountry, byLocale };
 }

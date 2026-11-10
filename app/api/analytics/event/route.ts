@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { countryCodeFromRequestHeaders, resolveAnalyticsGeo } from "../../../../src/analytics/regions";
 import { parseAnalyticsPayload } from "../../../../src/analytics/validateCollect";
 import { createPublisherServiceClient } from "../../../../src/publisher/supabase/service";
 
@@ -48,7 +49,13 @@ export async function POST(request: Request) {
     return new NextResponse(null, { status: 204 });
   }
 
-  const { error } = await admin.rpc("record_site_analytics_event", {
+  const geo = resolveAnalyticsGeo({
+    countryHeader: countryCodeFromRequestHeaders(request.headers),
+    locale: payload.locale,
+    timezone: payload.timezone,
+  });
+
+  const legacyArgs = {
     p_kind: payload.kind,
     p_path: payload.path,
     p_page_title: payload.pageTitle,
@@ -57,7 +64,21 @@ export async function POST(request: Request) {
     p_locale: payload.locale,
     p_referrer: payload.referrer,
     p_session_id: payload.sessionId,
-  });
+  };
+
+  let error = (
+    await admin.rpc("record_site_analytics_event", {
+      ...legacyArgs,
+      p_timezone: payload.timezone,
+      p_country_code: geo.countryCode,
+      p_region_id: geo.regionId,
+      p_region_label: geo.regionLabel,
+    })
+  ).error;
+
+  if (error && /Could not find the function|PGRST202|schema cache/i.test(error.message)) {
+    ({ error } = await admin.rpc("record_site_analytics_event", legacyArgs));
+  }
 
   if (error) {
     if (/record_site_analytics_event|site_analytics_events|PGRST202|PGRST205/i.test(error.message)) {

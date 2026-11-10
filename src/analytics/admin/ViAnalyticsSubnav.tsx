@@ -7,6 +7,7 @@ const LINKS = [
   { href: "/admin/vi-administrador", label: "Visão geral", exact: true },
   { href: "/admin/vi-administrador/paginas", label: "Páginas" },
   { href: "/admin/vi-administrador/cliques", label: "Cliques & CTAs" },
+  { href: "/admin/vi-administrador/regioes", label: "Regiões" },
   { href: "/admin/vi-administrador/relatorios", label: "Relatórios" },
 ];
 

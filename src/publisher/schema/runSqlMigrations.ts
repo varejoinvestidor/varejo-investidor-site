@@ -12,7 +12,10 @@ export const ELITE_MIGRATION_FILES = [
   "20260316120000_supabase_api_grants.sql",
 ] as const;
 
-export const VI_ANALYTICS_MIGRATION_FILES = ["20260318120000_vi_analytics.sql"] as const;
+export const VI_ANALYTICS_MIGRATION_FILES = [
+  "20260318120000_vi_analytics.sql",
+  "20260319120000_vi_analytics_regions.sql",
+] as const;
 
 export const SUPABASE_INCREMENTAL_MIGRATION_FILES = [
   "20260310120000_article_banners.sql",

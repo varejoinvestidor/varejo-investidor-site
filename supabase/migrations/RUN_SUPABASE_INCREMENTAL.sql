@@ -114,5 +114,14 @@ create index if not exists elite_operations_signal_number_idx on public.elite_op
 
 grant usage on schema public to anon, authenticated;
 
+-- VI Analytics — regiões (requer 20260318120000_vi_analytics.sql base)
+-- Arquivo completo: supabase/migrations/20260319120000_vi_analytics_regions.sql
+
+alter table public.site_analytics_events
+  add column if not exists country_code char(2),
+  add column if not exists region_id text,
+  add column if not exists region_label text,
+  add column if not exists timezone text;
+
 notify pgrst, 'reload schema';
 

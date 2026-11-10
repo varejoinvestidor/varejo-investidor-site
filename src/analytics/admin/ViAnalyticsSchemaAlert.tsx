@@ -34,7 +34,9 @@ export function ViAnalyticsSchemaAlert({ state }: { state: "missing" | "unconfig
             {busy ? "Instalando…" : "Instalar VI Analytics (admin)"}
           </button>
           <p className="text-xs text-paper/55">
-            Ou execute <code className="text-gold">supabase/migrations/20260318120000_vi_analytics.sql</code> no SQL Editor.
+            Ou execute{" "}
+            <code className="text-gold">20260318120000_vi_analytics.sql</code> e{" "}
+            <code className="text-gold">20260319120000_vi_analytics_regions.sql</code> no SQL Editor.
           </p>
         </div>
       ) : null}

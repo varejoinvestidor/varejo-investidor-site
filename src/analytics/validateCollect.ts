@@ -33,6 +33,7 @@ export function parseAnalyticsPayload(body: unknown): AnalyticsCollectPayload | 
     locale: optionalString(raw.locale, 12),
     referrer: optionalString(raw.referrer, 500),
     sessionId: optionalString(raw.sessionId, 64),
+    timezone: optionalString(raw.timezone, 64),
   };
 }
 

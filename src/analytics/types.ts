@@ -9,6 +9,7 @@ export type AnalyticsCollectPayload = {
   locale?: string | null;
   referrer?: string | null;
   sessionId?: string | null;
+  timezone?: string | null;
 };
 
 export type AnalyticsSummary = {
@@ -33,3 +34,26 @@ export type AnalyticsTimeseriesRow = {
 };
 
 export type AnalyticsPeriodKey = "today" | "7d" | "30d" | "90d";
+
+export type AnalyticsRegionRow = {
+  region_id: string;
+  region_label: string;
+  page_views: number;
+  clicks: number;
+  unique_sessions: number;
+};
+
+export type AnalyticsCountryRow = {
+  country_code: string;
+  region_id: string;
+  page_views: number;
+  clicks: number;
+  unique_sessions: number;
+};
+
+export type AnalyticsLocaleRow = {
+  locale: string;
+  page_views: number;
+  clicks: number;
+  unique_sessions: number;
+};

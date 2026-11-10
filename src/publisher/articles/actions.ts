@@ -36,6 +36,8 @@ export type ArticleListItem = {
   category_name: string | null;
   author_name: string | null;
   view_count: number;
+  has_video_horizontal: boolean;
+  has_video_vertical: boolean;
 };
 
 export type ArticleRecord = {
@@ -267,7 +269,7 @@ export async function listArticles(filters?: {
   let query = supabase
     .from("articles")
     .select(
-      "id, title, slug, language, status, updated_at, published_at, scheduled_at, category_id, author_id, view_count",
+      "id, title, slug, language, status, updated_at, published_at, scheduled_at, category_id, author_id, view_count, youtube_horizontal, youtube_vertical",
     );
 
   if (sort === "views") query = query.order("view_count", { ascending: false });
@@ -321,6 +323,10 @@ export async function listArticles(filters?: {
     category_name: row.category_id ? (categoryMap.get(row.category_id) ?? null) : null,
     author_name: row.author_id ? (authorMap.get(row.author_id) ?? null) : null,
     view_count: row.view_count ?? 0,
+    has_video_horizontal: Boolean(
+      (row as { youtube_horizontal?: string | null }).youtube_horizontal?.trim(),
+    ),
+    has_video_vertical: Boolean((row as { youtube_vertical?: string | null }).youtube_vertical?.trim()),
   }));
 
   return { ok: true, data: items };

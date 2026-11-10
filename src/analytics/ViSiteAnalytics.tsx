@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { localeFromPublicPath } from "../i18n/routing";
+import { analyticsLocaleFromContext } from "./pathLocale";
 import type { AnalyticsCollectPayload } from "./types";
 
 const SESSION_KEY = "vi_analytics_sid";
@@ -41,11 +43,17 @@ function sendEvent(payload: AnalyticsCollectPayload) {
   }
 }
 
-function pageLocaleFromPath(pathname: string): string | null {
-  const seg = pathname.split("/").filter(Boolean)[0];
-  if (!seg) return "pt";
-  if (seg.length === 2 || seg.length === 5) return seg;
-  return null;
+function visitorTimezone(): string | null {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function pageLocale(pathname: string): string | null {
+  const htmlLang = typeof document !== "undefined" ? document.documentElement.lang : null;
+  return analyticsLocaleFromContext(pathname, htmlLang) ?? localeFromPublicPath(pathname) ?? "pt";
 }
 
 function shouldTrackPath(pathname: string | null): pathname is string {
@@ -67,9 +75,10 @@ export function ViSiteAnalytics() {
       kind: "page_view",
       path: pathname,
       pageTitle: typeof document !== "undefined" ? document.title : null,
-      locale: pageLocaleFromPath(pathname),
+      locale: pageLocale(pathname),
       referrer: typeof document !== "undefined" ? document.referrer || null : null,
       sessionId: analyticsSessionId(),
+      timezone: visitorTimezone(),
     });
   }, [pathname]);
 
@@ -110,8 +119,9 @@ export function ViSiteAnalytics() {
         path: pathname ?? "/",
         elementKey,
         elementLabel,
-        locale: pageLocaleFromPath(pathname ?? "/"),
+        locale: pageLocale(pathname ?? "/"),
         sessionId: analyticsSessionId(),
+        timezone: visitorTimezone(),
       });
     }
 
@@ -131,8 +141,9 @@ export function ViSiteAnalytics() {
         path: pathname ?? "/",
         elementKey: key,
         elementLabel: key,
-        locale: detail.locale ?? pageLocaleFromPath(pathname ?? "/"),
+        locale: detail.locale ?? pageLocale(pathname ?? "/"),
         sessionId: analyticsSessionId(),
+        timezone: visitorTimezone(),
       });
     }
 

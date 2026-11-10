@@ -59,6 +59,29 @@ export default async function ViAdministradorOverviewPage({ searchParams }: Prop
         )}
       </section>
 
+      <section className="rounded-xl border border-line/12 bg-paper/[0.02] p-6">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-paper/70">Acessos por região</h3>
+          <a href="/admin/vi-administrador/regioes" className="text-xs font-bold uppercase tracking-wider text-gold hover:underline">
+            Ver completo →
+          </a>
+        </div>
+        <div className="mt-5 grid gap-4">
+          {dashboard?.byRegion.length ? (
+            dashboard.byRegion.map((row) => (
+              <AnalyticsShareBar
+                key={row.region_id}
+                label={row.region_label || row.region_id}
+                value={row.page_views}
+                max={dashboard.byRegion[0]?.page_views ?? 1}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-paper/50">Sem dados regionais ainda.</p>
+          )}
+        </div>
+      </section>
+
       <section className="grid gap-4 lg:grid-cols-2">
         <div className="rounded-xl border border-line/12 bg-paper/[0.02] p-6">
           <h3 className="text-sm font-bold uppercase tracking-wider text-paper/70">Top páginas</h3>

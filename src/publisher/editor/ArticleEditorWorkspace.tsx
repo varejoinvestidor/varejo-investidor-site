@@ -516,6 +516,13 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
             className="w-full border-b border-line/10 bg-transparent py-2 text-lg text-paper/70 outline-none"
           />
 
+          <ArticleVideoFields
+            videos={article.videos ?? emptyArticleVideos()}
+            disabled={preview}
+            variant="editor"
+            onChange={(videos) => patchArticle({ videos })}
+          />
+
           <ArticleBannerPreviewStrip
             banners={article.banners}
             placement="top"
@@ -622,12 +629,6 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
               className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
             />
           </section>
-
-          <ArticleVideoFields
-            videos={article.videos ?? emptyArticleVideos()}
-            disabled={preview}
-            onChange={(videos) => patchArticle({ videos })}
-          />
 
           <section className="rounded-lg border border-line/12 p-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Tradução</h3>

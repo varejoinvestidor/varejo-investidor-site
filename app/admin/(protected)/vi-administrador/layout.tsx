@@ -19,8 +19,8 @@ export default async function ViAdministradorLayout({ children }: { children: Re
         <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-gold">VI Administrador</p>
         <h2 className="font-serif text-3xl tracking-tight text-paper">Dados do site</h2>
         <p className="max-w-2xl text-sm leading-relaxed text-paper/60">
-          Páginas mais vistas, CTAs mais clicados e relatórios de acesso (diário, semanal e mensal). Telemetria respeita
-          rotas públicas — o painel admin não é contabilizado.
+          Páginas mais vistas, CTAs mais clicados, regiões e países, e relatórios de acesso (diário, semanal e mensal).
+          Telemetria respeita rotas públicas — o painel admin não é contabilizado.
         </p>
       </header>
 

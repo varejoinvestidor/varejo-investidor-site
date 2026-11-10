@@ -1,9 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import type { ArticleVideoPrimary, ArticleVideos } from "../../publisher/types/video";
-import { hasArticleVideo, primaryVideoId, youtubePosterUrl } from "../../publisher/types/video";
+import { hasArticleVideo, youtubePosterUrl } from "../../publisher/types/video";
 import { YouTubeEmbedPlayer } from "./YouTubeEmbedPlayer";
+
+type VideoLayer = {
+  key: ArticleVideoPrimary;
+  videoId: string;
+  zIndex: number;
+};
 
 export function ArticleHeroVideo({
   videos,
@@ -12,115 +18,76 @@ export function ArticleHeroVideo({
   videos: ArticleVideos;
   labels: { horizontal: string; vertical: string; watch: string; unmute: string };
 }) {
-  const hasH = Boolean(videos.horizontal);
-  const hasV = Boolean(videos.vertical);
-  const [active, setActive] = useState<ArticleVideoPrimary>(
-    videos.primary === "vertical" && hasV ? "vertical" : hasH ? "horizontal" : "vertical",
-  );
+  const layers = useMemo((): VideoLayer[] => {
+    const items: VideoLayer[] = [];
+    if (videos.horizontal) items.push({ key: "horizontal", videoId: videos.horizontal, zIndex: 0 });
+    if (videos.vertical) items.push({ key: "vertical", videoId: videos.vertical, zIndex: 0 });
+    if (items.length < 2) return items.map((item, i) => ({ ...item, zIndex: 2 }));
 
-  const activeId = useMemo(() => {
-    if (active === "vertical" && videos.vertical) return videos.vertical;
-    if (videos.horizontal) return videos.horizontal;
-    return videos.vertical;
-  }, [active, videos.horizontal, videos.vertical]);
+    const primaryFirst = [...items].sort((a, b) => {
+      if (a.key === videos.primary) return -1;
+      if (b.key === videos.primary) return 1;
+      return a.key === "horizontal" ? -1 : 1;
+    });
+    return primaryFirst.map((item, index) => ({
+      ...item,
+      zIndex: primaryFirst.length - index,
+    }));
+  }, [videos.horizontal, videos.vertical, videos.primary]);
 
-  if (!hasArticleVideo(videos) || !activeId) return null;
-
-  const poster = youtubePosterUrl(activeId);
+  if (!hasArticleVideo(videos) || !layers.length) return null;
 
   return (
-    <section className="vi-article-video px-5 py-8 md:px-8 md:py-10">
-      <div className="mx-auto max-w-5xl">
-        {hasH && hasV ? (
-          <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label={labels.watch}>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={active === "horizontal"}
-              onClick={() => setActive("horizontal")}
-              className={`min-h-[44px] rounded border px-4 py-2 text-[11px] font-bold uppercase tracking-wider transition ${
-                active === "horizontal"
-                  ? "border-gold bg-gold/15 text-gold"
-                  : "border-gold/25 text-paper/55 hover:border-gold/45"
-              }`}
-            >
-              {labels.horizontal}
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={active === "vertical"}
-              onClick={() => setActive("vertical")}
-              className={`min-h-[44px] rounded border px-4 py-2 text-[11px] font-bold uppercase tracking-wider transition ${
-                active === "vertical"
-                  ? "border-gold bg-gold/15 text-gold"
-                  : "border-gold/25 text-paper/55 hover:border-gold/45"
-              }`}
-            >
-              {labels.vertical}
-            </button>
-          </div>
-        ) : null}
-
-        <div
-          className={`vi-article-video-stage overflow-hidden border border-gold/[0.22] bg-black shadow-[0_24px_80px_rgba(0,0,0,0.55)] ${
-            active === "vertical" && hasV ? "vi-article-video-stage--vertical" : "vi-article-video-stage--horizontal"
-          }`}
-        >
-          <div className="vi-article-video-frame">
-            <YouTubeEmbedPlayer videoId={activeId} unmuteLabel={labels.unmute} />
-          </div>
-          {!hasH || !hasV ? (
-            <p className="border-t border-white/10 bg-black/80 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-gold/80">
-              {active === "vertical" ? labels.vertical : labels.horizontal}
-            </p>
-          ) : null}
-        </div>
-
-        {hasH && hasV ? (
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {videos.horizontal ? (
-              <button
-                type="button"
-                onClick={() => setActive("horizontal")}
-                className={`group overflow-hidden border text-left transition ${
-                  active === "horizontal" ? "border-gold" : "border-white/10 hover:border-gold/40"
-                }`}
-              >
-                <div className="relative aspect-video bg-black">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={youtubePosterUrl(videos.horizontal)} alt="" className="h-full w-full object-cover opacity-90" />
-                  <span className="absolute inset-0 grid place-items-center bg-black/35 text-xs font-bold uppercase tracking-wider text-paper group-hover:bg-black/20">
-                    {labels.horizontal}
-                  </span>
-                </div>
-              </button>
-            ) : null}
-            {videos.vertical ? (
-              <button
-                type="button"
-                onClick={() => setActive("vertical")}
-                className={`group overflow-hidden border text-left transition ${
-                  active === "vertical" ? "border-gold" : "border-white/10 hover:border-gold/40"
-                }`}
-              >
-                <div className="relative mx-auto aspect-[9/16] max-h-[280px] max-w-[180px] bg-black">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={youtubePosterUrl(videos.vertical)} alt="" className="h-full w-full object-cover opacity-90" />
-                  <span className="absolute inset-0 grid place-items-center bg-black/35 text-[10px] font-bold uppercase tracking-wider text-paper">
-                    {labels.vertical}
-                  </span>
-                </div>
-              </button>
-            ) : null}
-          </div>
-        ) : (
-          poster ? (
-            <p className="mt-3 text-center text-[10px] uppercase tracking-wider text-paper/40">{labels.watch}</p>
-          ) : null
-        )}
+    <section className="vi-article-videos px-5 py-8 md:px-8 md:py-10" aria-label={labels.watch}>
+      <div className="mx-auto flex max-w-5xl flex-col gap-10">
+        {layers.map((layer) => (
+          <ArticleVideoLayer key={layer.key} layer={layer} videos={videos} labels={labels} />
+        ))}
       </div>
     </section>
+  );
+}
+
+function ArticleVideoLayer({
+  layer,
+  videos,
+  labels,
+}: {
+  layer: VideoLayer;
+  videos: ArticleVideos;
+  labels: { horizontal: string; vertical: string; watch: string; unmute: string };
+}) {
+  const isVertical = layer.key === "vertical";
+  const isPrimary = videos.primary === layer.key;
+  const title = isVertical ? labels.vertical : labels.horizontal;
+
+  return (
+    <article
+      className={`vi-article-video-layer vi-article-video-layer--${layer.key} relative`}
+      style={{ zIndex: layer.zIndex }}
+    >
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold/85">{title}</p>
+        {isPrimary && videos.horizontal && videos.vertical ? (
+          <span className="text-[10px] font-bold uppercase tracking-wider text-paper/45">{labels.watch}</span>
+        ) : null}
+      </div>
+
+      <div
+        className={`vi-article-video-stage overflow-hidden border border-gold/[0.22] bg-black shadow-[0_24px_80px_rgba(0,0,0,0.55)] ${
+          isVertical ? "vi-article-video-stage--vertical" : "vi-article-video-stage--horizontal"
+        }`}
+      >
+        <div className="vi-article-video-frame">
+          <YouTubeEmbedPlayer videoId={layer.videoId} unmuteLabel={labels.unmute} />
+        </div>
+      </div>
+
+      {/* Poster secundário apenas quando há um único formato */}
+      {!(videos.horizontal && videos.vertical) ? (
+        <p className="mt-3 text-center text-[10px] uppercase tracking-wider text-paper/40">{labels.watch}</p>
+      ) : null}
+    </article>
   );
 }
 
@@ -135,7 +102,12 @@ export function ArticleVideoThumb({
   className?: string;
   variant?: "card" | "featured";
 }) {
-  const id = variant === "featured" ? videos.horizontal ?? videos.vertical : primaryVideoId(videos);
+  const id =
+    variant === "featured"
+      ? videos.horizontal ?? videos.vertical
+      : videos.primary === "vertical" && videos.vertical
+        ? videos.vertical
+        : videos.horizontal ?? videos.vertical;
   if (!id) return null;
   const vertical = variant === "card" && videos.primary === "vertical" && videos.vertical;
   return (

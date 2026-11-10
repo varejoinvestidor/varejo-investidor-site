@@ -1,4 +1,6 @@
 import { parseYouTubeVideoId, youtubeEmbedSrc, youtubePosterUrl } from "../editor/youtubeEmbed";
+export type { ArticleVideoSlot } from "../editor/youtubePaths";
+export { articleVideoCanonicalUrl, articleVideoDisplayValue, articleVideoEmbedUrl } from "../editor/youtubePaths";
 
 export type ArticleVideoPrimary = "horizontal" | "vertical";
 
