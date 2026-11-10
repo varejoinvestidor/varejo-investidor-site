@@ -23,6 +23,44 @@ function sortClosedForTimeline(a: EliteOperationRow, b: EliteOperationRow): numb
   return (a.signal_number ?? 0) - (b.signal_number ?? 0);
 }
 
+export function listOperationYears(ops: EliteOperationRow[]): number[] {
+  const years = new Set<number>();
+  for (const o of ops) {
+    if (!o.show_public) continue;
+    const parsed = parseReportMonth(o.report_month);
+    if (parsed) years.add(parsed.year);
+    const y = o.traded_on?.slice(0, 4);
+    if (y && /^\d{4}$/.test(y)) years.add(Number(y));
+  }
+  return Array.from(years).sort((a, b) => b - a);
+}
+
+export function filterOperationsByYear(ops: EliteOperationRow[], year: number | "all"): EliteOperationRow[] {
+  if (year === "all") return ops;
+  return ops.filter((o) => {
+    const parsed = parseReportMonth(o.report_month);
+    if (parsed?.year === year) return true;
+    const y = o.traded_on?.slice(0, 4);
+    return y === String(year);
+  });
+}
+
+export function filterMonthlyByYear(monthly: EliteMonthlyReportRow[], year: number | "all"): EliteMonthlyReportRow[] {
+  if (year === "all") return monthly;
+  return monthly.filter((m) => m.year === year);
+}
+
+export function downsampleLinePoints(data: LinePoint[], maxPoints = 40): LinePoint[] {
+  if (data.length <= maxPoints) return data;
+  const out: LinePoint[] = [];
+  const step = (data.length - 1) / (maxPoints - 1);
+  for (let i = 0; i < maxPoints; i++) {
+    const idx = Math.round(i * step);
+    out.push(data[idx]);
+  }
+  return out;
+}
+
 export function buildCumulativePipsLine(ops: EliteOperationRow[]): LinePoint[] {
   const closed = ops
     .filter((o) => o.show_public && o.status === "closed")
@@ -67,8 +105,29 @@ export function aggregateMonthlyPipsFromOperations(ops: EliteOperationRow[]): Ba
     }));
 }
 
-export function buildMonthlyPipsBars(_monthly: EliteMonthlyReportRow[], ops: EliteOperationRow[]): BarPoint[] {
-  return aggregateMonthlyPipsFromOperations(ops);
+export function buildMonthlyPipsBarsFromReports(monthly: EliteMonthlyReportRow[]): BarPoint[] {
+  return monthly
+    .slice()
+    .sort((a, b) => a.year - b.year || a.month_index - b.month_index)
+    .slice(-24)
+    .map((m) => ({
+      label: `${m.month_label}/${String(m.year).slice(-2)}`,
+      pips: m.pips,
+      signals: m.signals,
+    }));
+}
+
+export function buildMonthlyPipsBars(
+  monthly: EliteMonthlyReportRow[],
+  ops: EliteOperationRow[],
+  options?: { limitMonths?: number },
+): BarPoint[] {
+  const limit = options?.limitMonths ?? 24;
+  if (monthly.length) {
+    return buildMonthlyPipsBarsFromReports(monthly).slice(-limit);
+  }
+  const fromOps = aggregateMonthlyPipsFromOperations(ops);
+  return fromOps.slice(-limit);
 }
 
 export function buildTradeOutcomePie(ops: EliteOperationRow[]): PieSlice[] {

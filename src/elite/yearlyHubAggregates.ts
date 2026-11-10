@@ -46,7 +46,9 @@ export function aggregatePipsByYear(completed: OpLike[], monthly: MonthLike[]): 
     }
   }
 
-  const years = new Set([...fromOps.keys(), ...fromMonthly.keys()]);
+  const years = Array.from(
+    new Set([...Array.from(fromOps.keys()), ...Array.from(fromMonthly.keys())]),
+  );
   const out = new Map<number, number>();
   for (const y of years) {
     const opSum = fromOps.get(y) ?? 0;

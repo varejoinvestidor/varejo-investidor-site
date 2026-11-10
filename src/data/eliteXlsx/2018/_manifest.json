@@ -1,0 +1,36 @@
+{
+  "file": "C:\\Users\\PC\\Dropbox\\viniiip's shared workspace\\Cópia de viniiip relatorio sinais.xlsx",
+  "summary": [
+    {
+      "month": "Agosto/2018",
+      "trades": 127,
+      "pips": 4012,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201808_elite_2018_agosto.sql"
+    },
+    {
+      "month": "Setembro/2018",
+      "trades": 100,
+      "pips": 3551,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201809_elite_2018_setembro.sql"
+    },
+    {
+      "month": "Outubro/2018",
+      "trades": 126,
+      "pips": 4435,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201810_elite_2018_outubro.sql"
+    },
+    {
+      "month": "Novembro/2018",
+      "trades": 146,
+      "pips": 3509,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201811_elite_2018_novembro.sql"
+    },
+    {
+      "month": "Dezembro/2018",
+      "trades": 46,
+      "pips": 2370,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201812_elite_2018_dezembro.sql"
+    }
+  ],
+  "totalTrades": 545
+}

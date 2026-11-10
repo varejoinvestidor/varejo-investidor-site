@@ -1575,7 +1575,7 @@ export default function SignalsPage() {
                             ]
     : prices;
   return (
-    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="min-h-screen overflow-hidden bg-paper text-ink">
+    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="signals-page min-h-screen overflow-hidden bg-paper text-ink">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="signals-hero premium-stage relative px-5 pb-16 pt-8 md:px-8 md:pb-24 md:pt-44">
@@ -1855,23 +1855,34 @@ export default function SignalsPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: cardIndex * 0.06 }}
                   variants={fadeUp}
-                  className={`relative overflow-hidden border p-6 shadow-fine ${
+                  className={`signals-compare-card relative overflow-hidden rounded-lg border p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)] ${
                     cardIndex === 1
-                      ? "border-gold/[0.5] bg-gold/[0.10]"
-                      : "border-sky-300/[0.18] bg-paper/[0.04]"
+                      ? "border-gold/25 bg-gradient-to-b from-gold/[0.08] to-black/80"
+                      : "border-white/[0.08] bg-gradient-to-b from-paper/[0.05] to-black/85"
                   }`}
                 >
-                  <div className="absolute inset-0 terminal-grid opacity-20" />
                   <div className="relative">
-                    <h3 className="font-serif text-4xl tracking-[-0.05em] text-paper">{block.title}</h3>
-                    <div className="mt-7 grid gap-2">
+                    <h3 className="font-serif text-3xl tracking-[-0.05em] text-paper md:text-4xl">{block.title}</h3>
+                    <ol className="signals-compare-flow mt-7 flex flex-col gap-0">
                       {block.steps.map((step, index) => (
-                        <div key={step} className="border border-gold/[0.16] bg-ink/[0.36] p-3 text-center">
-                          <p className="text-xs font-black uppercase tracking-[0.14em] text-paper/[0.78]">{step}</p>
-                          {index < block.steps.length - 1 ? <p className="mt-2 text-gold">↓</p> : null}
-                        </div>
+                        <li key={step} className="signals-compare-step">
+                          <p className="text-xs font-black uppercase tracking-[0.14em] text-paper/[0.82]">{step}</p>
+                          {index < block.steps.length - 1 ? (
+                            <span className="signals-compare-arrow text-gold/70" aria-hidden="true">
+                              ↓
+                            </span>
+                          ) : null}
+                        </li>
                       ))}
-                    </div>
+                    </ol>
+                    {cardIndex === 0 ? (
+                      <a
+                        {...eliteCta}
+                        className="premium-button-gold mt-8 flex w-full items-center justify-center border border-gold bg-gold px-5 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5"
+                      >
+                        {signalPageCopy?.eliteButton ?? "Entrar no Elite"}
+                      </a>
+                    ) : null}
                   </div>
                 </motion.article>
               ))}

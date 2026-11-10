@@ -5,7 +5,7 @@ import { canonicalEliteAsset } from "../../elite/pipAsset";
 import { formatPipsLabel, pipsBetween } from "../../elite/pips";
 import type { EliteOperationCardModel } from "./EliteOperationCard";
 
-const POLL_MS = 30_000;
+const POLL_MS = 20_000;
 
 export function useEliteLiveQuotes(assets: string[], enabled: boolean) {
   const [prices, setPrices] = useState<Record<string, number>>({});
@@ -53,13 +53,17 @@ export function applyLivePipsToActiveOperations<T extends EliteOperationCardMode
   return operations.map((op) => {
     const entry = op.entryPrice;
     if (entry == null || !Number.isFinite(entry)) return op;
-    const mid = prices[canonicalEliteAsset(op.asset)];
+    const assetKey = canonicalEliteAsset(op.asset);
+    const mid = prices[assetKey];
     if (mid == null || !Number.isFinite(mid)) return op;
     const pips = pipsBetween(op.asset, op.direction, entry, mid);
+    const priceMove = op.direction === "Compra" ? mid - entry : entry - mid;
     return {
       ...op,
       pips,
       result: formatPipsLabel(pips),
+      liveMidPrice: mid,
+      livePriceMove: priceMove,
     };
   });
 }

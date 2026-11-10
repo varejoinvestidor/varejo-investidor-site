@@ -36,7 +36,7 @@ function closeOutcome(pips: number): "take" | "stop" {
   return pips >= 0 ? "take" : "stop";
 }
 
-export const september2022Trades: September2022Trade[] = [
+export const september2022Trades = [
   { day: 1, asset: "EUR/JPY", direction: "Venda", entry: 139.412, stop: 140.187, take: 138.336, pips: -10 },
   { day: 2, asset: "GBP/USD", direction: "Compra", entry: 1.1512, stop: 1.1482, take: 1.1542, pips: -30 },
   { day: 2, asset: "XAU/USD", direction: "Compra", entry: 1707.55, stop: 1703.45, take: 1713.74, pips: 62 },
@@ -80,7 +80,7 @@ export const september2022Trades: September2022Trade[] = [
   entry: normalizeEntryPrice(row.asset, row.entry),
   stop: normalizeStopTake(row.asset, row.stop),
   take: normalizeStopTake(row.asset, row.take),
-}));
+})) as September2022Trade[];
 
 const totalPips = september2022Trades.reduce((sum, t) => sum + t.pips, 0);
 

@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "sheetName": "Dezembro21",
+    "year": 2021,
+    "monthIndex": 11,
+    "monthLabel": "Dezembro",
+    "reportMonth": "Dezembro/2021"
+  },
+  "trades": [
+    {
+      "signal": 1,
+      "tradedOn": "2021-12-01",
+      "asset": "GBP/CAD",
+      "direction": "Compra",
+      "entry": 1.70292,
+      "stop": 1.69254,
+      "take": 1.71484,
+      "pips": 50,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 2,
+      "tradedOn": "2021-12-02",
+      "asset": "WTI",
+      "direction": "Venda",
+      "entry": 0.65671,
+      "stop": 0.66461,
+      "take": 0.64898,
+      "pips": -79,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 3,
+      "tradedOn": "2021-12-03",
+      "asset": "XAU/USD",
+      "direction": "Compra",
+      "entry": 1780,
+      "stop": 1795,
+      "take": 1788,
+      "pips": 39,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 4,
+      "tradedOn": "2021-12-05",
+      "asset": "XAU/USD",
+      "direction": "Venda",
+      "entry": 1782.64,
+      "stop": 1786.14,
+      "take": 1777.28,
+      "pips": -54,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 5,
+      "tradedOn": "2021-12-05",
+      "asset": "EUR/USD",
+      "direction": "Venda",
+      "entry": 1.13021,
+      "stop": 1.13172,
+      "take": 1.12813,
+      "pips": 11,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 6,
+      "tradedOn": "2021-12-06",
+      "asset": "EUR/CAD",
+      "direction": "Venda",
+      "entry": 1.43891,
+      "stop": 1.44111,
+      "take": 1.43616,
+      "pips": 12,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 7,
+      "tradedOn": "2021-12-06",
+      "asset": "WTI",
+      "direction": "Venda",
+      "entry": 0.69929,
+      "stop": 0.70662,
+      "take": 0.68979,
+      "pips": -73,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 8,
+      "tradedOn": "2021-12-07",
+      "asset": "WTI",
+      "direction": "Venda",
+      "entry": 0.71652,
+      "stop": 0.72083,
+      "take": 0.7072,
+      "pips": -43,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 9,
+      "tradedOn": "2021-12-09",
+      "asset": "GBP/USD",
+      "direction": "Venda",
+      "entry": 1.31968,
+      "stop": 1.32183,
+      "take": 1.31661,
+      "pips": -22,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 10,
+      "tradedOn": "2021-12-10",
+      "asset": "WTI",
+      "direction": "Compra",
+      "entry": 0.70963,
+      "stop": 0.70393,
+      "take": 0.71574,
+      "pips": 61,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 11,
+      "tradedOn": "2021-12-10",
+      "asset": "XAU/USD",
+      "direction": "Compra",
+      "entry": 1783.07,
+      "stop": 1778.1,
+      "take": 1788.74,
+      "pips": 20,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 12,
+      "tradedOn": "2021-12-12",
+      "asset": "GBP/CHF",
+      "direction": "Compra",
+      "entry": 1.22232,
+      "stop": 1.21915,
+      "take": 1.2264,
+      "pips": 20,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 13,
+      "tradedOn": "2021-12-12",
+      "asset": "GBP/CAD",
+      "direction": "Venda",
+      "entry": 1.68492,
+      "stop": 1.69004,
+      "take": 1.67929,
+      "pips": -51,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 14,
+      "tradedOn": "2021-12-13",
+      "asset": "XAU/USD",
+      "direction": "Compra",
+      "entry": null,
+      "stop": null,
+      "take": null,
+      "pips": -40,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 15,
+      "tradedOn": "2021-12-14",
+      "asset": "EUR/NZD",
+      "direction": "Compra",
+      "entry": 1.67234,
+      "stop": 1.65081,
+      "take": 1.69975,
+      "pips": 30,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 16,
+      "tradedOn": "2021-12-15",
+      "asset": "USD/CAD",
+      "direction": "Compra",
+      "entry": 1.28565,
+      "stop": 1.2828,
+      "take": 1.28776,
+      "pips": -29,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    }
+  ]
+}

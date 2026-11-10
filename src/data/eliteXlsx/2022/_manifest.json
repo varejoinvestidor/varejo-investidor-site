@@ -1,0 +1,78 @@
+{
+  "file": "C:\\Users\\PC\\Dropbox\\viniiip's shared workspace\\Sinais 2024.xlsx",
+  "summary": [
+    {
+      "month": "Janeiro/2022",
+      "trades": 42,
+      "pips": 463,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202201_elite_2022_janeiro.sql"
+    },
+    {
+      "month": "Fevereiro/2022",
+      "trades": 41,
+      "pips": 357,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202202_elite_2022_fevereiro.sql"
+    },
+    {
+      "month": "Março/2022",
+      "trades": 128,
+      "pips": 1972,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202203_elite_2022_março.sql"
+    },
+    {
+      "month": "Abril/2022",
+      "trades": 65,
+      "pips": -62,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202204_elite_2022_abril.sql"
+    },
+    {
+      "month": "Maio/2022",
+      "trades": 71,
+      "pips": 514,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202205_elite_2022_maio.sql"
+    },
+    {
+      "month": "Junho/2022",
+      "trades": 67,
+      "pips": 1035,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202206_elite_2022_junho.sql"
+    },
+    {
+      "month": "Julho/2022",
+      "trades": 54,
+      "pips": 750,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202207_elite_2022_julho.sql"
+    },
+    {
+      "month": "Agosto/2022",
+      "trades": 36,
+      "pips": 162,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202208_elite_2022_agosto.sql"
+    },
+    {
+      "month": "Setembro/2022",
+      "trades": 43,
+      "pips": 278,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202209_elite_2022_setembro.sql"
+    },
+    {
+      "month": "Outubro/2022",
+      "trades": 68,
+      "pips": 441,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202210_elite_2022_outubro.sql"
+    },
+    {
+      "month": "Novembro/2022",
+      "trades": 64,
+      "pips": -559,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202211_elite_2022_novembro.sql"
+    },
+    {
+      "month": "Dezembro/2022",
+      "trades": 37,
+      "pips": 269,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202212_elite_2022_dezembro.sql"
+    }
+  ],
+  "totalTrades": 716
+}

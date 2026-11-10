@@ -1,4 +1,11 @@
-import { canonicalEliteAsset, isCryptoAsset, isIndexCfdAsset } from "./pipAsset";
+import {
+  canonicalEliteAsset,
+  isCryptoAsset,
+  isIndexCfdAsset,
+  isOilAsset,
+  isStockOrEtfAsset,
+  liveQuoteAssetClass,
+} from "./pipAsset";
 import { normalizeEliteAsset } from "./assets";
 
 export function parseForexLegs(asset: string): { base: string; quote: string } | null {
@@ -18,22 +25,24 @@ export function crossFromUsdRates(base: string, quote: string, usdPerUnit: Recor
 }
 
 export function normalizeAssetsParam(raw: string): string[] {
-  return [
-    ...new Set(
+  return Array.from(
+    new Set(
       raw
         .split(",")
         .map((s) => normalizeEliteAsset(s.trim()))
         .filter(Boolean),
     ),
-  ].slice(0, 32);
+  ).slice(0, 32);
 }
 
 export function canFetchLiveQuote(asset: string): boolean {
+  return liveQuoteAssetClass(asset) !== null;
+}
+
+export function isNonForexLiveAsset(asset: string): boolean {
   const a = canonicalEliteAsset(asset);
-  if (a.includes("XAU") || a.includes("GOLD")) return true;
-  if (isCryptoAsset(a) || isIndexCfdAsset(a)) return false;
-  if (a.includes("USOIL") || a.includes("OIL")) return false;
-  return parseForexLegs(a) !== null;
+  if (isCryptoAsset(a) || isIndexCfdAsset(a) || isOilAsset(a) || isStockOrEtfAsset(a)) return true;
+  return false;
 }
 
 export type LiveQuoteFetcher = (assets: string[]) => Promise<Record<string, number>>;

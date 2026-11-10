@@ -1,0 +1,78 @@
+{
+  "file": "C:\\Users\\PC\\Dropbox\\viniiip's shared workspace\\Cópia de viniiip relatorio sinais.xlsx",
+  "summary": [
+    {
+      "month": "Janeiro/2019",
+      "trades": 75,
+      "pips": 4803,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201901_elite_2019_janeiro.sql"
+    },
+    {
+      "month": "Fevereiro/2019",
+      "trades": 83,
+      "pips": 3005,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201902_elite_2019_fevereiro.sql"
+    },
+    {
+      "month": "Março/2019",
+      "trades": 99,
+      "pips": 2024,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201903_elite_2019_março.sql"
+    },
+    {
+      "month": "Abril/2019",
+      "trades": 91,
+      "pips": 2808,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201904_elite_2019_abril.sql"
+    },
+    {
+      "month": "Maio/2019",
+      "trades": 88,
+      "pips": 3472,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201905_elite_2019_maio.sql"
+    },
+    {
+      "month": "Junho/2019",
+      "trades": 65,
+      "pips": 2625,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201906_elite_2019_junho.sql"
+    },
+    {
+      "month": "Julho/2019",
+      "trades": 85,
+      "pips": 1478,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201907_elite_2019_julho.sql"
+    },
+    {
+      "month": "Agosto/2019",
+      "trades": 83,
+      "pips": 2575,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201908_elite_2019_agosto.sql"
+    },
+    {
+      "month": "Setembro/2019",
+      "trades": 77,
+      "pips": 1805,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201909_elite_2019_setembro.sql"
+    },
+    {
+      "month": "Outubro/2019",
+      "trades": 76,
+      "pips": 1863,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201910_elite_2019_outubro.sql"
+    },
+    {
+      "month": "Novembro/2019",
+      "trades": 75,
+      "pips": 1412,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201911_elite_2019_novembro.sql"
+    },
+    {
+      "month": "Dezembro/2019",
+      "trades": 28,
+      "pips": 621,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401201912_elite_2019_dezembro.sql"
+    }
+  ],
+  "totalTrades": 925
+}

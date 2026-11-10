@@ -1,5 +1,4 @@
 import { EliteReportAdmin } from "../../../../src/elite/admin/EliteReportAdmin";
-import { reconcileMonthlyFromOperations } from "../../../../src/elite/reconcileMonthly";
 import { fetchStaffEliteData } from "../../../../src/elite/queries";
 import { getPublisherSession } from "../../../../src/publisher/supabase/server";
 
@@ -16,7 +15,8 @@ export default async function AdminEliteReportPage() {
       <h2 className="font-serif text-3xl text-paper">Relatório Elite</h2>
       <EliteReportAdmin
         operations={data.operations}
-        monthly={reconcileMonthlyFromOperations(data.monthly, data.operations)}
+        monthly={data.monthly}
+        totalOperations={data.totalOperations}
         loadError={data.error}
       />
     </div>

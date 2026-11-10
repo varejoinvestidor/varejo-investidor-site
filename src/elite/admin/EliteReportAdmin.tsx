@@ -1,6 +1,11 @@
 "use client";
 
-import { FormEvent, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import {
+  ELITE_ADMIN_OPS_INITIAL,
+  ELITE_ADMIN_OPS_LOAD_MORE,
+} from "../constants";
+import { EliteMonthlyConsolidatedPanel } from "./EliteMonthlyConsolidatedPanel";
 import { deleteEliteOperation, upsertEliteMonthly, upsertEliteOperation } from "../actions";
 import { computeSignalPips, formatPipsLabel } from "../pips";
 import { ElitePipsQuickEdit } from "./ElitePipsQuickEdit";
@@ -11,6 +16,7 @@ import { EliteOperationsMobileList } from "./EliteOperationsMobileList";
 import { EliteSchemaAlert } from "./EliteSchemaAlert";
 import { EliteAdminSubnav } from "./EliteAdminSubnav";
 import { draftFromRow, emptyOperationDraft, type OperationDraft } from "./operationFormState";
+import { sortAdminOperations } from "./sortOperations";
 import {
   rowFromTradeResult,
   tradeResultFromRow,
@@ -22,6 +28,7 @@ import {
 type Props = {
   operations: EliteOperationRow[];
   monthly: EliteMonthlyReportRow[];
+  totalOperations?: number;
   loadError?: string | null;
 };
 
@@ -90,25 +97,37 @@ function eliteSchemaMissing(error: string | null | undefined): boolean {
   return /elite_operations|elite_monthly|schema cache|PGRST205|could not find the table/i.test(error);
 }
 
-export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
+export function EliteReportAdmin({ operations, monthly, totalOperations, loadError }: Props) {
   const [message, setMessage] = useState<string | null>(loadError ?? null);
   const schemaBlocked = eliteSchemaMissing(loadError) || eliteSchemaMissing(message);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [opsVisibleCount, setOpsVisibleCount] = useState(ELITE_ADMIN_OPS_INITIAL);
   const [pasteText, setPasteText] = useState("");
   const formSectionRef = useRef<HTMLElement>(null);
   const [draft, setDraft] = useState<OperationDraft>(emptyOperationDraft());
 
   const filteredOps = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return operations;
-    return operations.filter((row) => {
-      const num = row.signal_number != null ? String(row.signal_number) : "";
-      const asset = row.asset.toLowerCase();
-      if (num && (num.includes(q) || num === q.replace(/\./g, ""))) return true;
-      return asset.includes(q) || q.split("/").every((p) => asset.includes(p));
-    });
+    const base = !q
+      ? operations
+      : operations.filter((row) => {
+          const num = row.signal_number != null ? String(row.signal_number) : "";
+          const asset = row.asset.toLowerCase();
+          if (num && (num.includes(q) || num === q.replace(/\./g, ""))) return true;
+          return asset.includes(q) || q.split("/").every((p) => asset.includes(p));
+        });
+    return sortAdminOperations(base);
   }, [operations, search]);
+
+  const visibleOps = useMemo(() => filteredOps.slice(0, opsVisibleCount), [filteredOps, opsVisibleCount]);
+  const hasMoreOps = opsVisibleCount < filteredOps.length;
+
+  useEffect(() => {
+    setOpsVisibleCount(ELITE_ADMIN_OPS_INITIAL);
+  }, [search]);
+
+  const totalInDb = totalOperations ?? operations.length;
 
   function applyPaste() {
     const parsed = parseWhatsAppSignal(pasteText);
@@ -483,7 +502,14 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
       <section className="space-y-3 rounded-xl border border-line/12 p-4 sm:p-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <h3 className="text-sm font-bold uppercase tracking-wider text-paper/55">Sinais salvos</h3>
-          <p className="text-xs text-paper/45">{filteredOps.length} de {operations.length}</p>
+          <p className="text-xs text-paper/45">
+            {visibleOps.length} de {filteredOps.length} exibidos · {operations.length} carregados
+            {totalInDb > operations.length ? (
+              <span className="text-fall"> · banco: {totalInDb} (atualize o deploy)</span>
+            ) : (
+              <span> · banco: {totalInDb}</span>
+            )}
+          </p>
         </div>
         <input
           type="search"
@@ -493,7 +519,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
           className={fieldClass}
         />
         <EliteOperationsMobileList
-          rows={filteredOps}
+          rows={visibleOps}
           editingId={editingId}
           onEdit={startEdit}
           onDelete={(row) => {
@@ -529,10 +555,12 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
                   </td>
                 </tr>
               ) : (
-                filteredOps.map((row) => (
+                visibleOps.map((row) => (
                   <tr
                     key={row.id}
-                    className={`border-t border-line/5 ${editingId === row.id ? "bg-gold/10" : ""}`}
+                    className={`border-t border-line/5 ${
+                      editingId === row.id ? "bg-gold/10" : row.status === "active" ? "bg-rise/10" : ""
+                    }`}
                   >
                     <td className="px-3 py-2 font-mono tabular-nums text-gold">{row.signal_number ?? "—"}</td>
                     <td className="px-3 py-2 font-mono font-semibold">{row.asset}</td>
@@ -570,6 +598,18 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
             </tbody>
           </table>
         </div>
+        {hasMoreOps ? (
+          <button
+            type="button"
+            onClick={() => setOpsVisibleCount((n) => n + ELITE_ADMIN_OPS_LOAD_MORE)}
+            className="w-full rounded-lg border border-gold/25 px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10"
+          >
+            Ver mais sinais (+{Math.min(ELITE_ADMIN_OPS_LOAD_MORE, filteredOps.length - opsVisibleCount)} ·{" "}
+            {filteredOps.length - opsVisibleCount} restantes)
+          </button>
+        ) : filteredOps.length > ELITE_ADMIN_OPS_INITIAL ? (
+          <p className="text-center text-[11px] text-paper/40">Todos os {filteredOps.length} sinais listados.</p>
+        ) : null}
       </section>
 
       <section className="space-y-4 rounded-xl border border-line/12 p-4 sm:p-6">
@@ -588,13 +628,11 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
             Salvar mês
           </button>
         </form>
-        <ul className="space-y-2 text-xs text-paper/55">
-          {monthly.map((m) => (
-            <li key={m.id}>
-              {m.month_label}/{m.year}: {m.signals} sinais · {m.result_label}
-            </li>
-          ))}
-        </ul>
+        <EliteMonthlyConsolidatedPanel
+          monthly={monthly}
+          title="Meses cadastrados"
+          subtitle="Visão agrupada por ano. Use o formulário acima só para correções pontuais."
+        />
       </section>
     </div>
   );

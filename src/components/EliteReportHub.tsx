@@ -17,6 +17,11 @@ import { ForexBrokerBannerWide } from "./ForexBrokerBannerWide";
 import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { eliteReportCopyJa } from "../data/eliteReportCopyJa";
 import { eliteReportCopyHi } from "../data/eliteReportCopyHi";
+import {
+  ELITE_HISTORIC_SIGNALS_SENT,
+  ELITE_MONTHLY_INITIAL_VISIBLE,
+  ELITE_MONTHLY_LOAD_MORE,
+} from "../elite/constants";
 import type { HubMonthlyReport, HubOperation } from "../elite/mapToHub";
 import type { EliteSignalTier } from "../elite/signalTier";
 import type { PeriodPerformance } from "../elite/traderPerformance";
@@ -117,6 +122,13 @@ type Copy = {
   stop: string;
   buy: string;
   sell: string;
+  liveMovement: string;
+  liveQuote: string;
+  liveEntry: string;
+  liveVariation: string;
+  livePipsResult: string;
+  liveUpdating: string;
+  liveUnavailable: string;
   live: string;
   finished: string;
   available: string;
@@ -163,11 +175,11 @@ const copyByLocale: Record<Locale, Copy> = {
   pt: {
     label: "Histórico Elite",
     heroTitle: "8 anos de sinais ao vivo no WhatsApp",
-    heroSubtitle: "Acompanhe a evolução histórica do Canal Elite desde agosto de 2018, com mais de 4.500 sinais enviados, relatórios mensais e resultados consolidados.",
+    heroSubtitle: "Acompanhe a evolução histórica do Canal Elite desde agosto de 2018, com 4.419 sinais enviados, relatórios mensais e resultados consolidados.",
     centralMessage: "Desde agosto de 2018, o Varejo Investidor acompanha mercados globais e envia sinais ao vivo diretamente no WhatsApp. Esta página organiza o histórico público, os relatórios mensais e a evolução dos resultados ao longo dos anos.",
     primaryButton: "VER HISTÓRICO DE RESULTADOS",
     secondaryButton: "ENTRAR NO CANAL ELITE",
-    heroStats: ["Desde agosto de 2018", "+4.500 sinais enviados", "Forex, ouro, petróleo, índices, cripto e moedas globais", "Relatórios mensais consolidados"],
+    heroStats: ["Desde agosto de 2018", "4.419 sinais enviados", "Forex, ouro, petróleo, índices, cripto e moedas globais", "Relatórios mensais consolidados"],
     authorityTitle: "O diferencial está no histórico",
     authorityText: "Poucas estruturas educacionais mantêm um histórico público tão longo de acompanhamento operacional. O Canal Elite nasceu em 2018 e evoluiu com sinais, análises, leitura de mercado e relatórios mensais. Esta central foi criada para organizar o passado e preparar o acompanhamento futuro com mais transparência, contexto e leitura visual.",
     dashboardTitle: "Painel histórico do Canal Elite",
@@ -199,6 +211,13 @@ const copyByLocale: Record<Locale, Copy> = {
     stop: "Stop",
     buy: "Compra",
     sell: "Venda",
+    liveMovement: "Movimentação ao vivo",
+    liveQuote: "Cotação atual",
+    liveEntry: "Preço de entrada",
+    liveVariation: "Variação vs entrada",
+    livePipsResult: "Resultado em pips",
+    liveUpdating: "Atualizando…",
+    liveUnavailable: "Cotação indisponível para este ativo no momento. O painel atualiza a cada 30 segundos quando houver feed.",
     live: "Ao vivo",
     finished: "Finalizado",
     available: "Disponível",
@@ -269,6 +288,13 @@ const copyByLocale: Record<Locale, Copy> = {
     stop: "Stop",
     buy: "Buy",
     sell: "Sell",
+    liveMovement: "Live price movement",
+    liveQuote: "Current quote",
+    liveEntry: "Entry price",
+    liveVariation: "Move vs entry",
+    livePipsResult: "Result in pips",
+    liveUpdating: "Updating…",
+    liveUnavailable: "Live quote unavailable for this symbol. This panel polls every 30 seconds when a feed exists.",
     live: "Live",
     finished: "Finished",
     available: "Available",
@@ -339,6 +365,13 @@ const copyByLocale: Record<Locale, Copy> = {
     stop: "Stop",
     buy: "Compra",
     sell: "Venta",
+    liveMovement: "Movimiento en vivo",
+    liveQuote: "Cotización actual",
+    liveEntry: "Precio de entrada",
+    liveVariation: "Variación vs entrada",
+    livePipsResult: "Resultado en pips",
+    liveUpdating: "Actualizando…",
+    liveUnavailable: "Cotización no disponible para este activo. El panel se actualiza cada 30 segundos cuando hay feed.",
     live: "En vivo",
     finished: "Finalizado",
     available: "Disponible",
@@ -597,6 +630,16 @@ const timelineEvents: TimelineEvent[] = [
   },
 ];
 
+function formatMonthlyAssetsPreview(assets: string[], locale: Locale): string {
+  if (!assets.length) return "—";
+  const max = 4;
+  if (assets.length <= max) return assets.join(" · ");
+  const rest = assets.length - max;
+  if (locale === "en") return `${assets.slice(0, max).join(" · ")} +${rest} more`;
+  if (locale === "es") return `${assets.slice(0, max).join(" · ")} +${rest} más`;
+  return `${assets.slice(0, max).join(" · ")} +${rest} ativos`;
+}
+
 function formatNumber(value: number, locale: Locale) {
   return new Intl.NumberFormat(locale === "pt" ? "pt-BR" : locale).format(value);
 }
@@ -661,6 +704,7 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
   const [filters, setFilters] = useState({ year: "Todos", month: "Todos", asset: "Todos", direction: "Todos", status: "Todos" });
   const [activeOpsPage, setActiveOpsPage] = useState(1);
   const [closedOpsPage, setClosedOpsPage] = useState(1);
+  const [monthlyReportsVisible, setMonthlyReportsVisible] = useState(ELITE_MONTHLY_INITIAL_VISIBLE);
   const operationsPageSize = useOperationsPageSize();
 
   const baseReportsData: MonthlyReport[] = hubData?.monthly?.length ? (hubData.monthly as MonthlyReport[]) : reports;
@@ -718,15 +762,24 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
   const selectedYearSummary = getYearSummary(selectedYear, reportsData, completedOperationsData);
   const selectedMonth =
     reportsData.find((report) => `${report.year}-${report.monthIndex}` === selectedMonthKey) ?? reportsData[reportsData.length - 1];
+  const publicSignalsHighlight = useMemo(() => {
+    const fromDb = hubData?.stats?.totalSignals ?? 0;
+    return Math.max(ELITE_HISTORIC_SIGNALS_SENT, fromDb);
+  }, [hubData?.stats?.totalSignals]);
+
   const heroStats =
     hubData?.stats && hubData.stats.closedCount > 0
       ? [
           "Desde agosto de 2018",
-          `${hubData.stats.totalSignals.toLocaleString("pt-BR")} sinais no consolidado`,
+          `${publicSignalsHighlight.toLocaleString(locale === "pt" ? "pt-BR" : "en-US")} ${
+            locale === "es" ? "señales enviadas" : locale === "en" ? "signals sent" : "sinais enviados"
+          }`,
           `${hubData.stats.totalPips >= 0 ? "+" : ""}${hubData.stats.totalPips.toLocaleString("pt-BR")} pips públicos`,
           `Taxa de acerto (amostra): ${hubData.stats.winRate}`,
         ]
       : copy.heroStats;
+
+  const monthlyReportsNewestFirst = useMemo(() => reportsData.slice().reverse(), [reportsData]);
   const selectedTimelineEvent = timelineEvents.find((event) => event.year === selectedTimelineYear) ?? timelineEvents[timelineEvents.length - 1];
 
   const yearlyPerformance = useMemo(
@@ -778,11 +831,15 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
   );
 
   const activeQuoteAssets = useMemo(
-    () => [...new Set(sortedActiveOperations.map((op) => op.asset))],
+    () => Array.from(new Set(sortedActiveOperations.map((op) => op.asset))),
     [sortedActiveOperations],
   );
 
-  const { prices: livePrices } = useEliteLiveQuotes(activeQuoteAssets, sortedActiveOperations.length > 0);
+  const {
+    prices: livePrices,
+    updatedAt: liveQuotesUpdatedAt,
+    loading: liveQuotesLoading,
+  } = useEliteLiveQuotes(activeQuoteAssets, sortedActiveOperations.length > 0);
 
   const activeOperationsWithLivePips = useMemo(
     () => applyLivePipsToActiveOperations(sortedActiveOperations, livePrices),
@@ -862,7 +919,6 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="page-hero premium-stage relative border-b border-gold/[0.14] px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">
-        <div className="absolute inset-0 terminal-grid opacity-35" />
         <div className="finance-particles" />
         <div className="absolute right-0 top-24 h-96 w-96 rounded-full bg-rise/[0.12] blur-3xl" />
         <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-gold/[0.1] blur-3xl" />
@@ -1034,6 +1090,8 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                 locale={locale}
                 mode="active"
                 index={index}
+                quoteUpdatedAt={liveQuotesUpdatedAt}
+                quoteLoading={liveQuotesLoading}
               />
             ))}
           </div>
@@ -1114,20 +1172,65 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       <section className="px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Elite" title={copy.monthlyTitle} text={copy.monthlyText} />
+          <div className="mt-6 rounded-lg border border-gold/20 bg-gradient-to-r from-gold/[0.08] to-transparent px-4 py-4 md:flex md:items-center md:justify-between md:gap-6">
+            <p className="font-serif text-2xl tracking-tight text-paper md:text-3xl">
+              {formatNumber(publicSignalsHighlight, locale)}{" "}
+              <span className="text-lg text-paper/70">
+                {locale === "en" ? "signals sent" : locale === "es" ? "señales enviadas" : "sinais enviados"}
+              </span>
+            </p>
+            <p className="mt-2 max-w-md text-sm leading-6 text-paper/55 md:mt-0">
+              {locale === "en"
+                ? `Historic WhatsApp track record. Showing ${Math.min(monthlyReportsVisible, monthlyReportsNewestFirst.length)} of ${monthlyReportsNewestFirst.length} monthly reports.`
+                : locale === "es"
+                  ? `Historial en WhatsApp. Mostrando ${Math.min(monthlyReportsVisible, monthlyReportsNewestFirst.length)} de ${monthlyReportsNewestFirst.length} reportes mensuales.`
+                  : `Histórico no WhatsApp desde 2018. Exibindo ${Math.min(monthlyReportsVisible, monthlyReportsNewestFirst.length)} de ${monthlyReportsNewestFirst.length} relatórios mensais.`}
+            </p>
+          </div>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {reportsData.slice().reverse().map((report) => (
-              <article key={`${report.year}-${report.month}`} className="terminal-module border border-gold/18 bg-white/[0.03] p-6 shadow-[0_0_50px_rgba(198,153,74,0.05)]">
+            {monthlyReportsNewestFirst.slice(0, monthlyReportsVisible).map((report) => (
+              <article
+                key={`${report.year}-${report.month}`}
+                className="elite-monthly-card rounded-lg border border-gold/18 bg-white/[0.03] p-5 shadow-[0_12px_40px_rgba(0,0,0,0.28)] md:p-6"
+              >
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{report.status}</p>
-                <h3 className="mt-3 font-serif text-3xl tracking-[-0.04em] text-paper">{report.month}/{report.year}</h3>
-                <div className="mt-6 grid gap-3">
+                <h3 className="mt-3 font-serif text-2xl tracking-[-0.04em] text-paper md:text-3xl">
+                  {report.month}/{report.year}
+                </h3>
+                <div className="mt-5 grid gap-2.5">
                   <Info label={copy.monthlyCardSignals} value={formatNumber(report.signals, locale)} />
                   <Info label={copy.monthlyCardPips} value={report.result} />
-                  <Info label={copy.monthlyCardAssets} value={report.assets.join(", ")} />
+                  <Info
+                    label={copy.monthlyCardAssets}
+                    value={formatMonthlyAssetsPreview(report.assets, locale)}
+                  />
                 </div>
-                <button type="button" onClick={() => setSelectedMonthKey(`${report.year}-${report.monthIndex}`)} className="mt-6 w-full border border-gold/28 px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink">{copy.viewReport}</button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedMonthKey(`${report.year}-${report.monthIndex}`)}
+                  className="mt-5 w-full min-h-[var(--vi-touch-min,3rem)] border border-gold/28 px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink"
+                >
+                  {copy.viewReport}
+                </button>
               </article>
             ))}
           </div>
+          {monthlyReportsVisible < monthlyReportsNewestFirst.length ? (
+            <button
+              type="button"
+              onClick={() => setMonthlyReportsVisible((n) => n + ELITE_MONTHLY_LOAD_MORE)}
+              className="mt-6 w-full rounded-lg border border-dashed border-gold/35 bg-black/30 px-5 py-4 text-center transition hover:border-gold hover:bg-gold/[0.08]"
+            >
+              <span className="block text-xs font-black uppercase tracking-[0.18em] text-gold">
+                {locale === "en" ? "View more months" : locale === "es" ? "Ver más meses" : "Ver mais relatórios mensais"}
+              </span>
+              <span className="mt-1 block text-[11px] text-paper/45">
+                +{Math.min(ELITE_MONTHLY_LOAD_MORE, monthlyReportsNewestFirst.length - monthlyReportsVisible)}{" "}
+                {locale === "en" ? "at a time" : "por vez"} · {monthlyReportsNewestFirst.length - monthlyReportsVisible}{" "}
+                {locale === "en" ? "remaining" : "restantes"}
+              </span>
+            </button>
+          ) : null}
         </div>
       </section>
 
@@ -1181,7 +1284,6 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
               transition={{ duration: 0.28 }}
               className="terminal-module sticky top-28 min-h-[520px] overflow-hidden border border-gold/22 bg-black/55 p-7 shadow-[0_0_80px_rgba(201,155,62,0.08)] md:p-10"
             >
-              <div className="absolute inset-0 terminal-grid opacity-25" />
               <div className="absolute -right-24 -top-28 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
               <div className="absolute -bottom-28 left-8 h-64 w-64 rounded-full bg-rise/8 blur-3xl" />
               <div className="relative flex min-h-[460px] flex-col justify-between">
@@ -1261,7 +1363,6 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
 
       <section className="px-5 py-14 md:px-8 md:py-18">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="relative mx-auto max-w-7xl overflow-hidden border border-gold/26 bg-ink px-6 py-14 text-center text-paper shadow-premium md:px-10 md:py-18">
-          <div className="absolute inset-0 terminal-grid opacity-25" />
           <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-gold/12 blur-3xl" />
           <div className="relative">
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Elite</p>

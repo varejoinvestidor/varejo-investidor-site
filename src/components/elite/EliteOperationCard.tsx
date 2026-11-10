@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import type { Locale } from "../../i18n";
 import type { EliteSignalTier } from "../../elite/signalTier";
-import { fadeUp } from "../SiteSections";
+import { fadeUp, getEliteHref } from "../SiteSections";
 import { SignalLevelRows, signalCardShellClass } from "./SignalLevelRows";
 
 export type EliteOperationCardModel = {
@@ -21,6 +21,8 @@ export type EliteOperationCardModel = {
   takePips?: number;
   stopPips?: number;
   signalTier?: EliteSignalTier;
+  liveMidPrice?: number | null;
+  livePriceMove?: number | null;
 };
 
 type CardCopy = {
@@ -41,6 +43,13 @@ type CardCopy = {
   viewReport: string;
   buy: string;
   sell: string;
+  liveMovement: string;
+  liveQuote: string;
+  liveEntry: string;
+  liveVariation: string;
+  livePipsResult: string;
+  liveUpdating: string;
+  liveUnavailable: string;
 };
 
 function formatNumber(value: number, locale: Locale) {
@@ -68,9 +77,75 @@ function localizeDirection(direction: "Compra" | "Venda", copy: CardCopy) {
   return direction === "Compra" ? copy.buy : copy.sell;
 }
 
+function formatQuoteTime(iso: string | null | undefined, locale: Locale) {
+  if (!iso) return "—";
+  try {
+    return new Intl.DateTimeFormat(locale === "pt" ? "pt-BR" : locale, {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    }).format(new Date(iso));
+  } catch {
+    return "—";
+  }
+}
+
+function ActiveLiveMovementPanel({
+  operation,
+  copy,
+  locale,
+  quoteUpdatedAt,
+  quoteLoading,
+}: {
+  operation: EliteOperationCardModel;
+  copy: CardCopy;
+  locale: Locale;
+  quoteUpdatedAt?: string | null;
+  quoteLoading?: boolean;
+}) {
+  const entry = operation.entryPrice;
+  const mid = operation.liveMidPrice;
+  const hasQuote = mid != null && entry != null && Number.isFinite(mid) && Number.isFinite(entry);
+  const move = operation.livePriceMove ?? (hasQuote ? mid! - entry! : null);
+  const pips = operation.pips ?? 0;
+  const movePositive = (move ?? 0) > 0;
+  const moveNegative = (move ?? 0) < 0;
+
+  return (
+    <div className="elite-live-panel mt-4 rounded-md border border-rise/18 bg-rise/[0.05] p-4">
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-rise">{copy.liveMovement}</p>
+        <span className="text-[9px] font-bold uppercase tracking-wider text-paper/45">
+          {quoteLoading ? copy.liveUpdating : formatQuoteTime(quoteUpdatedAt, locale)}
+        </span>
+      </div>
+      {hasQuote ? (
+        <div className="mt-3 grid gap-0">
+          <InfoRow label={copy.liveQuote} value={formatLevel(mid, locale) ?? "—"} />
+          <InfoRow label={copy.liveEntry} value={formatLevel(entry, locale) ?? "—"} />
+          <InfoRow
+            label={copy.liveVariation}
+            value={`${(move ?? 0) >= 0 ? "+" : "-"}${formatLevel(Math.abs(move ?? 0), locale) ?? "0"}`}
+            positive={movePositive}
+            negative={moveNegative}
+          />
+          <InfoRow
+            label={copy.livePipsResult}
+            value={formatPips(pips, locale)}
+            positive={pips > 0}
+            negative={pips < 0}
+          />
+        </div>
+      ) : (
+        <p className="mt-3 text-xs leading-relaxed text-paper/55">{copy.liveUnavailable}</p>
+      )}
+    </div>
+  );
+}
+
 function InfoRow({ label, value, positive, negative }: { label: string; value: string; positive?: boolean; negative?: boolean }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-t border-white/[0.06] py-2.5 first:border-t-0 first:pt-0">
+    <div className="elite-info-row flex items-center justify-between gap-4 border-t border-white/[0.04] py-2.5 first:border-t-0 first:pt-0">
       <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-paper/42">{label}</span>
       <span className={`text-sm font-semibold tabular-nums ${positive ? "text-rise" : negative ? "text-fall" : "text-paper/88"}`}>
         {value}
@@ -86,6 +161,8 @@ export function EliteOperationCard({
   mode,
   reportHref,
   index,
+  quoteUpdatedAt,
+  quoteLoading,
 }: {
   operation: EliteOperationCardModel;
   copy: CardCopy;
@@ -93,13 +170,19 @@ export function EliteOperationCard({
   mode: "active" | "closed";
   reportHref?: string;
   index: number;
+  quoteUpdatedAt?: string | null;
+  quoteLoading?: boolean;
 }) {
   const tier = operation.signalTier ?? "elite";
   const isElite = tier === "elite";
+  const eliteCheckoutHref = isElite ? getEliteHref(locale) : undefined;
   const statusLabel = mode === "active" ? copy.live : copy.finished;
-  const isLivePips = mode === "active" && /pips/i.test(operation.result);
-  const resultPositive = operation.result.startsWith("+") || (operation.pips ?? 0) > 0;
-  const resultNegative = operation.result.startsWith("-") || (operation.pips ?? 0) < 0;
+  const hasLiveQuote = mode === "active" && operation.liveMidPrice != null;
+  const partialValue = hasLiveQuote
+    ? `${formatPips(operation.pips ?? 0, locale)} · ${copy.live}`
+    : operation.result;
+  const resultPositive = (operation.pips ?? 0) > 0 || operation.result.startsWith("+");
+  const resultNegative = (operation.pips ?? 0) < 0 || operation.result.startsWith("-");
 
   return (
     <motion.article
@@ -108,7 +191,7 @@ export function EliteOperationCard({
       viewport={{ once: true, margin: "-40px" }}
       variants={fadeUp}
       transition={{ delay: Math.min(index * 0.04, 0.2) }}
-      className={`relative overflow-hidden rounded-sm p-5 md:p-6 ${signalCardShellClass(tier)}`}
+      className={`elite-operation-card relative overflow-hidden rounded-md p-5 md:p-6 ${signalCardShellClass(tier)}`}
     >
       {isElite ? <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gold/[0.12] blur-2xl" /> : null}
       <div className="relative flex items-start justify-between gap-4">
@@ -135,16 +218,7 @@ export function EliteOperationCard({
           operation.signalNumber ? [copy.table.signal, `#${formatNumber(operation.signalNumber, locale)}`] : null,
           [copy.direction, localizeDirection(operation.direction, copy)],
           [copy.status, statusLabel],
-          [
-            copy.partialResult,
-            isLivePips
-              ? locale === "en"
-                ? `${operation.result} · live`
-                : locale === "es"
-                  ? `${operation.result} · en vivo`
-                  : `${operation.result} · ao vivo`
-              : operation.result,
-          ],
+          [copy.partialResult, partialValue],
           [copy.date, operation.date],
           [copy.update, operation.updatedAt],
         ]
@@ -179,7 +253,17 @@ export function EliteOperationCard({
           takePrice={operation.takePrice}
           stopPrice={operation.stopPrice}
           formatLevel={(value) => formatLevel(value, locale)}
+          checkoutHref={eliteCheckoutHref}
         />
+        {mode === "active" ? (
+          <ActiveLiveMovementPanel
+            operation={operation}
+            copy={copy}
+            locale={locale}
+            quoteUpdatedAt={quoteUpdatedAt}
+            quoteLoading={quoteLoading}
+          />
+        ) : null}
         {mode === "closed" && reportHref ? (
           <a
             href={reportHref}

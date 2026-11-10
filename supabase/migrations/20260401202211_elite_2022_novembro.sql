@@ -1,0 +1,78 @@
+-- Elite: Novembro/2022 (64 sinais, -559 pips)
+-- Gerado por scripts/import-elite-xlsx.mjs
+
+insert into public.elite_monthly_reports (year, month_index, month_label, signals, pips, result_label, status_label, assets)
+values (2022, 10, 'Novembro', 64, -559, '-559 pips', 'Finalizado', array['GBP/USD', 'AUD/CAD', 'AUD/USD', 'WTI', 'EUR/GBP', 'EUR/JPY', 'USD/CAD', 'GBP/CHF']::text[])
+on conflict (year, month_index) do update set signals = excluded.signals, pips = excluded.pips, result_label = excluded.result_label, status_label = excluded.status_label, assets = excluded.assets, updated_at = now();
+
+delete from public.elite_operations where report_month = 'Novembro/2022';
+
+insert into public.elite_operations (
+  asset, direction, status, result_pips, result_label, report_month, traded_on, updated_label,
+  sort_order, show_public, close_outcome, signal_tier, signal_number, entry_price, take_price, stop_price
+)
+values
+  ('GBP/USD', 'Venda', 'closed', -72, '-72 pips', 'Novembro/2022', '2022-11-01', 'Finalizado', 1, true, 'stop', 'elite', 1, 1.14513, 1.13807, 1.15235),
+  ('AUD/CAD', 'Venda', 'closed', -33, '-33 pips', 'Novembro/2022', '2022-11-01', 'Finalizado', 2, true, 'stop', 'elite', 2, 0.87098, 0.86546, 0.87425),
+  ('AUD/USD', 'Compra', 'closed', 11, '+11 pips', 'Novembro/2022', '2022-11-01', 'Finalizado', 3, true, 'take', 'elite', 3, 0.64008, 0.64121, 0.63764),
+  ('GBP/USD', 'Venda', 'closed', 15, '+15 pips', 'Novembro/2022', '2022-11-02', 'Finalizado', 4, true, 'take', 'elite', 4, 1.14073, 1.1325, 1.1475),
+  ('AUD/CAD', 'Venda', 'closed', 40, '+40 pips', 'Novembro/2022', '2022-11-02', 'Finalizado', 5, true, 'take', 'elite', 5, 0.86945, 0.86547, 0.87265),
+  ('WTI', 'Compra', 'closed', 220, '+220 pips', 'Novembro/2022', '2022-11-03', 'Finalizado', 6, true, 'take', 'elite', 6, 0.88029, 0.91735, 0.86145),
+  ('EUR/GBP', 'Venda', 'closed', 11, '+11 pips', 'Novembro/2022', '2022-11-03', 'Finalizado', 7, true, 'take', 'elite', 7, 0.873, 0.87036, 0.8755),
+  ('EUR/JPY', 'Compra', 'closed', -9, '-9 pips', 'Novembro/2022', '2022-11-03', 'Finalizado', 8, true, 'stop', 'elite', 8, 144.566, 145.268, 143.911),
+  ('GBP/USD', 'Compra', 'closed', 24, '+24 pips', 'Novembro/2022', '2022-11-03', 'Finalizado', 9, true, 'take', 'elite', 9, 1.11677, 1.12026, 1.1143),
+  ('USD/CAD', 'Compra', 'closed', 25, '+25 pips', 'Novembro/2022', '2022-11-04', 'Finalizado', 10, true, 'take', 'elite', 10, 1.34901, 1.35155, 1.34519),
+  ('GBP/CHF', 'Venda', 'closed', -74, '-74 pips', 'Novembro/2022', '2022-11-06', 'Finalizado', 11, true, 'stop', 'elite', 11, 1.12859, 1.10278, 1.13599),
+  ('XAU/USD', 'Venda', 'closed', -56, '-56 pips', 'Novembro/2022', '2022-11-06', 'Finalizado', 12, true, 'stop', 'elite', 12, 1672.97, 1664.57, 1678.59),
+  ('GBP/JPY', 'Venda', 'closed', -48, '-48 pips', 'Novembro/2022', '2022-11-07', 'Finalizado', 13, true, 'stop', 'elite', 13, 167.79, 166.868, 168.27),
+  ('EUR/NZD', 'Compra', 'closed', -59, '-59 pips', 'Novembro/2022', '2022-11-07', 'Finalizado', 14, true, 'stop', 'elite', 14, 1.68731, 1.69741, 1.68138),
+  ('XAU/USD', 'Venda', 'closed', -58, '-58 pips', 'Novembro/2022', '2022-11-07', 'Finalizado', 15, true, 'stop', 'elite', 15, 1672.97, 1664.24, 1678.73),
+  ('CHF/JPY', 'Venda', 'closed', -56, '-56 pips', 'Novembro/2022', '2022-11-08', 'Finalizado', 16, true, 'stop', 'elite', 16, 147.497, 147.16, 148.056),
+  ('EUR/CHF', 'Venda', 'closed', 12, '+12 pips', 'Novembro/2022', '2022-11-09', 'Finalizado', 17, true, 'take', 'elite', 17, 0.98681, 0.98048, 0.99129),
+  ('GBP/USD', 'Compra', 'closed', 15, '+15 pips', 'Novembro/2022', '2022-11-09', 'Finalizado', 18, true, 'take', 'elite', 18, 1.13796, 1.1395, 1.136),
+  ('GBP/JPY', 'Compra', 'closed', -22, '-22 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 19, true, 'stop', 'elite', 19, 166.943, 167.135, 166.722),
+  ('GBP/JPY', 'Venda', 'closed', 87, '+87 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 20, true, 'take', 'elite', 20, 166.374, 165.5, 166.991),
+  ('XAU/USD', 'Venda', 'closed', 10, '+10 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 21, true, 'take', 'elite', 21, 1748.25, 1740, 1749.2),
+  ('XAU/USD', 'Venda', 'closed', -25, '-25 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 22, true, 'stop', 'elite', 22, 1750.73, 1744.28, 1753.2),
+  ('AUD/NZD', 'Compra', 'closed', 28, '+28 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 23, true, 'take', 'elite', 23, 1.09827, 1.1011, 1.095),
+  ('EUR/GBP', 'Compra', 'closed', 13, '+13 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 24, true, 'take', 'elite', 24, 0.87148, 0.87281, 0.87),
+  ('GBP/CHF', 'Venda', 'closed', 34, '+34 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 25, true, 'take', 'elite', 25, 1.12788, 1.12444, 1.13255),
+  ('EUR/NZD', 'Compra', 'closed', 32, '+32 pips', 'Novembro/2022', '2022-11-10', 'Finalizado', 26, true, 'take', 'elite', 26, 1.69521, 1.69844, 1.69214),
+  ('GBP/AUD', 'Venda', 'closed', 74, '+74 pips', 'Novembro/2022', '2022-11-11', 'Finalizado', 27, true, 'take', 'elite', 27, 1.76809, 1.76073, 1.774),
+  ('USD/JPY', 'Compra', 'closed', -37, '-37 pips', 'Novembro/2022', '2022-11-11', 'Finalizado', 28, true, 'stop', 'elite', 28, 139.643, 139.964, 139.271),
+  ('USD/JPY', 'Compra', 'closed', -23, '-23 pips', 'Novembro/2022', '2022-11-14', 'Finalizado', 29, true, 'stop', 'elite', 29, 139.501, 139.964, 139.271),
+  ('AUD/USD', 'Venda', 'closed', 12, '+12 pips', 'Novembro/2022', '2022-11-13', 'Finalizado', 30, true, 'take', 'elite', 30, 0.66884, 0.66285, 0.6741),
+  ('GBP/JPY', 'Venda', 'closed', -60, '-60 pips', 'Novembro/2022', '2022-11-13', 'Finalizado', 31, true, 'stop', 'elite', 31, 163.847, 163.328, 164.447),
+  ('USD/JPY', 'Venda', 'closed', -42, '-42 pips', 'Novembro/2022', '2022-11-13', 'Finalizado', 32, true, 'stop', 'elite', 32, 138.942, 138.632, 139.364),
+  ('GBP/CAD', 'Venda', 'closed', -50, '-50 pips', 'Novembro/2022', '2022-11-13', 'Finalizado', 33, true, 'stop', 'elite', 33, 1.56205, 1.553, 1.567),
+  ('EUR/GBP', 'Compra', 'closed', -24, '-24 pips', 'Novembro/2022', '2022-11-14', 'Finalizado', 34, true, 'stop', 'elite', 34, 0.87671, 0.8805, 0.87432),
+  ('GBP/CHF', 'Compra', 'closed', 5, '+5 pips', 'Novembro/2022', '2022-11-14', 'Finalizado', 35, true, 'take', 'elite', 35, 1.11386, 1.117, 1.111),
+  ('CHF/JPY', 'Venda', 'closed', -33, '-33 pips', 'Novembro/2022', '2022-11-14', 'Finalizado', 36, true, 'stop', 'elite', 36, 147.092, 146.764, 147.42),
+  ('USD/JPY', 'Compra', 'closed', -57, '-57 pips', 'Novembro/2022', '2022-11-15', 'Finalizado', 37, true, 'stop', 'elite', 37, 140.399, 141.947, 139.828),
+  ('EUR/AUD', 'Compra', 'closed', -52, '-52 pips', 'Novembro/2022', '2022-11-15', 'Finalizado', 38, true, 'stop', 'elite', 38, 1.54589, 1.54995, 1.54072),
+  ('XAU/USD', 'Compra', 'closed', -20, '-20 pips', 'Novembro/2022', '2022-11-15', 'Finalizado', 39, true, 'stop', 'elite', 39, 1780.66, 1792.93, 1778.68),
+  ('WTI', 'Venda', 'closed', 89, '+89 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 40, true, 'take', 'elite', 40, 0.85889, 0.85, 0.8655),
+  ('USD/JPY', 'Compra', 'closed', -26, '-26 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 41, true, 'stop', 'elite', 41, 139.74, 140, 139.4),
+  ('EUR/AUD', 'Venda', 'closed', -16, '-16 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 42, true, 'stop', 'elite', 42, 1.53674, 1.533, 1.53829),
+  ('GBP/NZD', 'Venda', 'closed', -55, '-55 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 43, true, 'stop', 'elite', 43, 1.92431, 1.9053, 1.92976),
+  ('USD/CAD', 'Compra', 'closed', 26, '+26 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 44, true, 'take', 'elite', 44, 1.33018, 1.339, 1.3276),
+  ('NZD/CHF', 'Venda', 'closed', -24, '-24 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 45, true, 'stop', 'elite', 45, 0.57958, 0.5773, 0.582),
+  ('USD/CHF', 'Compra', 'closed', 27, '+27 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 46, true, 'take', 'elite', 46, 0.94476, 0.9475, 0.941),
+  ('USD/JPY', 'Compra', 'closed', -49, '-49 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 47, true, 'stop', 'elite', 47, 139.567, 139.98, 139.073),
+  ('GBP/CHF', 'Venda', 'closed', -38, '-38 pips', 'Novembro/2022', '2022-11-16', 'Finalizado', 48, true, 'stop', 'elite', 48, 1.12324, 1.11972, 1.127),
+  ('NZD/CHF', 'Compra', 'closed', -43, '-43 pips', 'Novembro/2022', '2022-11-17', 'Finalizado', 49, true, 'stop', 'elite', 49, 0.5843, 0.588, 0.58),
+  ('USD/CHF', 'Compra', 'closed', 11, '+11 pips', 'Novembro/2022', '2022-11-18', 'Finalizado', 50, true, 'take', 'elite', 50, 0.95283, 0.9548, 0.95),
+  ('XAU/USD', 'Venda', 'closed', 71, '+71 pips', 'Novembro/2022', '2022-11-18', 'Finalizado', 51, true, 'take', 'elite', 51, 1758.43, 1751.3, 1764.62),
+  ('AUD/JPY', 'Compra', 'closed', 12, '+12 pips', 'Novembro/2022', '2022-11-18', 'Finalizado', 52, true, 'take', 'elite', 52, 94.042, 94.26, 93.82),
+  ('GBP/NZD', 'Venda', 'closed', -37, '-37 pips', 'Novembro/2022', '2022-11-20', 'Finalizado', 53, true, 'stop', 'elite', 53, 1.92861, 1.92223, 1.93234),
+  ('EUR/AUD', 'Compra', 'closed', -57, '-57 pips', 'Novembro/2022', '2022-11-21', 'Finalizado', 54, true, 'stop', 'elite', 54, 1.55074, 1.556, 1.545),
+  ('XAU/USD', 'Venda', 'closed', 10, '+10 pips', 'Novembro/2022', '2022-11-22', 'Finalizado', 55, true, 'take', 'elite', 55, 1744.66, 1741.3, 1748),
+  ('NZD/JPY', 'Venda', 'closed', -20, '-20 pips', 'Novembro/2022', '2022-11-22', 'Finalizado', 56, true, 'stop', 'elite', 56, 86.7, 86.4, 86.9),
+  ('GBP/NZD', 'Compra', 'closed', -30, '-30 pips', 'Novembro/2022', '2022-11-22', 'Finalizado', 57, true, 'stop', 'elite', 57, null, null, null),
+  ('EUR/NZD', 'Compra', 'closed', -30, '-30 pips', 'Novembro/2022', '2022-11-22', 'Finalizado', 58, true, 'stop', 'elite', 58, null, null, null),
+  ('XAU/USD', 'Venda', 'closed', -30, '-30 pips', 'Novembro/2022', '2022-11-23', 'Finalizado', 59, true, 'stop', 'elite', 59, 1736.07, 1739.12, 1733.07),
+  ('AUD/JPY', 'Venda', 'closed', -49, '-49 pips', 'Novembro/2022', '2022-11-24', 'Finalizado', 60, true, 'stop', 'elite', 60, 93.29, 92.295, 93.782),
+  ('USD/CAD', 'Compra', 'closed', 20, '+20 pips', 'Novembro/2022', '2022-11-25', 'Finalizado', 61, true, 'take', 'elite', 61, 1.3375, 1.3395, 1.3344),
+  ('AUD/USD', 'Venda', 'closed', 23, '+23 pips', 'Novembro/2022', '2022-11-28', 'Finalizado', 62, true, 'take', 'elite', 62, 0.66791, 0.659, 0.67227),
+  ('AUD/CHF', 'Venda', 'closed', -46, '-46 pips', 'Novembro/2022', '2022-11-28', 'Finalizado', 63, true, 'stop', 'elite', 63, 0.63088, 0.625, 0.63548),
+  ('GBP/CHF', 'Compra', 'closed', -56, '-56 pips', 'Novembro/2022', '2022-11-29', 'Finalizado', 64, true, 'stop', 'elite', 64, 1.14215, 1.15485, 1.13655);

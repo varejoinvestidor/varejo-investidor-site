@@ -9,16 +9,33 @@ import { computeTraderPerformance } from "../traderPerformance";
 import { tradeResultFromRow, tradeResultLabel } from "./tradeResult";
 import { EliteSchemaAlert } from "./EliteSchemaAlert";
 import { ElitePerformanceCharts } from "./ElitePerformanceCharts";
+import { EliteMonthlyConsolidatedPanel } from "./EliteMonthlyConsolidatedPanel";
+import {
+  ELITE_ADMIN_OPS_INITIAL,
+  ELITE_ADMIN_OPS_LOAD_MORE,
+} from "../constants";
+import { EliteAdminAssetChart } from "./EliteAdminAssetChart";
+import { EliteAdminMonthlyHeatmap } from "./EliteAdminMonthlyHeatmap";
+import { buildAssetCounts } from "./buildAssetCounts";
+import { sortAdminOperations } from "./sortOperations";
 
 type Props = {
   operations: EliteOperationRow[];
   monthly: EliteMonthlyReportRow[];
+  totalOperations?: number;
   loadError?: string | null;
 };
 
-export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props) {
+export function ElitePerformanceAdmin({ operations, monthly, totalOperations, loadError }: Props) {
   const publicOps = useMemo(() => operations.filter((o) => o.show_public), [operations]);
   const performance = useMemo(() => computeTraderPerformance(operations), [operations]);
+  const assetSlices = useMemo(() => buildAssetCounts(operations, true), [operations]);
+  const sortedOps = useMemo(() => sortAdminOperations(operations), [operations]);
+  const [opsVisible, setOpsVisible] = useState(ELITE_ADMIN_OPS_INITIAL);
+  const opsSlice = useMemo(() => sortedOps.slice(0, opsVisible), [sortedOps, opsVisible]);
+  const hasMoreOps = opsVisible < sortedOps.length;
+  const totalInDb = totalOperations ?? operations.length;
+  const loadIncomplete = operations.length < totalInDb;
 
   const activeCount = publicOps.filter((o) => o.status === "active").length;
   const recentClosed = useMemo(
@@ -38,6 +55,18 @@ export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props)
   return (
     <div className="mx-auto max-w-6xl space-y-10">
       {loadError ? <EliteSchemaAlert message={loadError} /> : null}
+
+      {loadIncomplete ? (
+        <div className="rounded-lg border border-fall/35 bg-fall/10 px-4 py-3 text-sm text-fall">
+          Carregadas <strong className="font-mono">{operations.length}</strong> de{" "}
+          <strong className="font-mono">{totalInDb}</strong> operações no banco. Faça deploy recente (paginação Supabase) ou
+          recarregue; totais do heatmap usam <code className="text-paper/80">elite_monthly_reports</code>.
+        </div>
+      ) : (
+        <p className="text-xs text-paper/50">
+          <span className="font-mono text-gold">{operations.length}</span> operações carregadas do Supabase (todas as páginas).
+        </p>
+      )}
 
       <section className="space-y-4">
         <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Desempenho (espelho do site)</h3>
@@ -81,11 +110,78 @@ export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props)
         </p>
       </section>
 
+      <section className="grid gap-6 rounded-xl border border-gold/20 bg-black/25 p-6 lg:grid-cols-2">
+        <article className="space-y-3">
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold">Distribuição por ativo</h3>
+          <EliteAdminAssetChart data={assetSlices} />
+        </article>
+        <article className="space-y-3">
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold">Histórico mensal</h3>
+          <EliteAdminMonthlyHeatmap monthly={monthly} />
+        </article>
+      </section>
+
       <ElitePerformanceCharts
         operations={operations}
         monthly={monthly}
         schemaMissing={Boolean(loadError && /elite_operations|schema cache/i.test(loadError))}
       />
+
+      <section className="space-y-3 rounded-xl border border-line/12 p-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-paper/55">Sinais salvos</h3>
+          <p className="text-xs text-paper/45">
+            {sortedOps.filter((o) => o.status === "active").length} em andamento · exibindo {opsSlice.length} de{" "}
+            {sortedOps.length}
+            {loadIncomplete ? ` (banco: ${totalInDb})` : null}
+          </p>
+        </div>
+        <p className="text-[11px] text-paper/40">Em andamento ficam sempre no topo. Nº do sinal conforme cadastro/planilha.</p>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[900px] text-sm">
+            <thead className="text-xs uppercase tracking-wider text-paper/45">
+              <tr>
+                <th className="px-2 py-2 text-left">Sinal</th>
+                <th className="px-2 py-2 text-left">Ativo</th>
+                <th className="px-2 py-2">Dir.</th>
+                <th className="px-2 py-2 text-right">Pips</th>
+                <th className="px-2 py-2">Mês</th>
+                <th className="px-2 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {opsSlice.map((row) => {
+                const pips = resolveOperationPips(row).pips;
+                const pipClass = row.status === "active" ? "text-gold" : pips > 0 ? "text-rise" : pips < 0 ? "text-fall" : "text-paper/60";
+                return (
+                  <tr
+                    key={row.id}
+                    className={`border-t border-line/5 ${row.status === "active" ? "bg-rise/8" : ""}`}
+                  >
+                    <td className="px-2 py-2 font-mono font-bold text-gold">{row.signal_number ?? "—"}</td>
+                    <td className="px-2 py-2 font-mono">{row.asset}</td>
+                    <td className="px-2 py-2">{row.direction}</td>
+                    <td className={`px-2 py-2 text-right font-mono tabular-nums ${pipClass}`}>
+                      {row.status === "active" ? "—" : formatPipsDisplay(pips)}
+                    </td>
+                    <td className="px-2 py-2 text-paper/55">{row.report_month}</td>
+                    <td className="px-2 py-2 text-xs">{tradeResultLabel(tradeResultFromRow(row))}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {hasMoreOps ? (
+          <button
+            type="button"
+            onClick={() => setOpsVisible((n) => n + ELITE_ADMIN_OPS_LOAD_MORE)}
+            className="w-full rounded-lg border border-gold/25 px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10"
+          >
+            Ver mais (+{Math.min(ELITE_ADMIN_OPS_LOAD_MORE, sortedOps.length - opsVisible)})
+          </button>
+        ) : null}
+      </section>
 
       <section className="space-y-3 rounded-xl border border-line/12 p-4">
         <h3 className="text-sm font-bold uppercase tracking-wider text-paper/55">Últimos trades fechados (público)</h3>
@@ -125,28 +221,11 @@ export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props)
         </div>
       </section>
 
-      <section className="space-y-4 rounded-xl border border-line/12 p-6">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Consolidado mensal (banco)</h3>
-        {monthly.length === 0 ? (
-          <p className="text-sm text-paper/45">Sem meses consolidados — salve operações para recalcular automaticamente.</p>
-        ) : (
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {monthly
-              .slice()
-              .sort((a, b) => b.year - a.year || b.month_index - a.month_index)
-              .map((m) => (
-                <li key={m.id} className="rounded border border-line/12 bg-black/30 px-4 py-3 text-sm">
-                  <span className="font-semibold text-paper">
-                    {m.month_label}/{m.year}
-                  </span>
-                  <span className="text-paper/50"> · {m.signals} sinais · </span>
-                  <span className="font-mono text-rise/90">{m.result_label}</span>
-                  <span className="ml-2 text-xs text-paper/40">({m.status_label})</span>
-                </li>
-              ))}
-          </ul>
-        )}
-      </section>
+      <EliteMonthlyConsolidatedPanel
+        monthly={monthly}
+        title="Consolidado mensal (banco)"
+        subtitle="Recalculado ao salvar sinais. Cards por ano com ativos resumidos."
+      />
 
       <section className="space-y-4 rounded-xl border border-gold/15 p-6">
         <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Tabela lote × pips (USD aprox.)</h3>

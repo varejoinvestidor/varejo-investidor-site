@@ -39,7 +39,7 @@ function pipsForStorage(pips: number): number {
 
 const totalPips = Math.round(august2018Trades.reduce((sum, t) => sum + t.pips, 0));
 
-const topAssets = [...new Set(august2018Trades.map((t) => t.asset))].slice(0, 5);
+const topAssets = Array.from(new Set(august2018Trades.map((t) => t.asset))).slice(0, 5);
 
 export const eliteAugust2018Monthly: HubMonthlyReport = {
   year: YEAR,

@@ -1,0 +1,18 @@
+{
+  "file": "C:\\Users\\PC\\Dropbox\\viniiip's shared workspace\\Cópia de viniiip relatorio sinais.xlsx",
+  "summary": [
+    {
+      "month": "Março/2020",
+      "trades": 19,
+      "pips": 1222,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202003_elite_2020_março.sql"
+    },
+    {
+      "month": "Dezembro/2020",
+      "trades": 12,
+      "pips": 423,
+      "sql": "C:\\Users\\PC\\OneDrive\\Documentos\\varejo-investidor-site\\supabase\\migrations\\20260401202012_elite_2020_dezembro.sql"
+    }
+  ],
+  "totalTrades": 31
+}

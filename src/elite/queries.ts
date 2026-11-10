@@ -1,6 +1,52 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { createPublisherPublicClient } from "../publisher/supabase/public";
 import { getPublisherSession } from "../publisher/supabase/server";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "./types";
+
+const ELITE_OPS_PAGE = 1000;
+
+async function fetchAllPublicEliteOperations(
+  supabase: SupabaseClient,
+): Promise<{ rows: EliteOperationRow[]; error: { code?: string; message?: string } | null }> {
+  const rows: EliteOperationRow[] = [];
+  for (let from = 0; ; from += ELITE_OPS_PAGE) {
+    const to = from + ELITE_OPS_PAGE - 1;
+    const { data, error } = await supabase
+      .from("elite_operations")
+      .select("*")
+      .eq("show_public", true)
+      .order("sort_order", { ascending: true })
+      .order("updated_at", { ascending: false })
+      .range(from, to);
+
+    if (error) return { rows, error };
+    const page = (data ?? []) as EliteOperationRow[];
+    rows.push(...page);
+    if (page.length < ELITE_OPS_PAGE) break;
+  }
+  return { rows, error: null };
+}
+
+async function fetchAllEliteOperationsStaff(
+  supabase: SupabaseClient,
+): Promise<{ rows: EliteOperationRow[]; error: { code?: string; message?: string } | null }> {
+  const rows: EliteOperationRow[] = [];
+  for (let from = 0; ; from += ELITE_OPS_PAGE) {
+    const to = from + ELITE_OPS_PAGE - 1;
+    const { data, error } = await supabase
+      .from("elite_operations")
+      .select("*")
+      .order("sort_order", { ascending: true })
+      .order("updated_at", { ascending: false })
+      .range(from, to);
+
+    if (error) return { rows, error };
+    const page = (data ?? []) as EliteOperationRow[];
+    rows.push(...page);
+    if (page.length < ELITE_OPS_PAGE) break;
+  }
+  return { rows, error: null };
+}
 
 export async function fetchPublicEliteData(): Promise<{
   operations: EliteOperationRow[];
@@ -9,13 +55,8 @@ export async function fetchPublicEliteData(): Promise<{
   const supabase = createPublisherPublicClient();
   if (!supabase) return null;
 
-  const [{ data: operations, error: opError }, { data: monthly, error: monthError }] = await Promise.all([
-    supabase
-      .from("elite_operations")
-      .select("*")
-      .eq("show_public", true)
-      .order("sort_order", { ascending: true })
-      .order("updated_at", { ascending: false }),
+  const [{ rows: operations, error: opError }, { data: monthly, error: monthError }] = await Promise.all([
+    fetchAllPublicEliteOperations(supabase),
     supabase.from("elite_monthly_reports").select("*").order("year").order("month_index"),
   ]);
 
@@ -23,7 +64,7 @@ export async function fetchPublicEliteData(): Promise<{
   if (opError || monthError) return null;
 
   return {
-    operations: (operations ?? []) as EliteOperationRow[],
+    operations,
     monthly: (monthly ?? []) as EliteMonthlyReportRow[],
   };
 }
@@ -38,10 +79,12 @@ export async function fetchStaffEliteData() {
     };
   }
 
-  const [{ data: operations, error: opError }, { data: monthly, error: monthError }] = await Promise.all([
-    supabase.from("elite_operations").select("*").order("sort_order").order("updated_at", { ascending: false }),
-    supabase.from("elite_monthly_reports").select("*").order("year").order("month_index"),
-  ]);
+  const [{ rows: operations, error: opError }, { data: monthly, error: monthError }, { count: totalOperations }] =
+    await Promise.all([
+      fetchAllEliteOperationsStaff(supabase),
+      supabase.from("elite_monthly_reports").select("*").order("year").order("month_index"),
+      supabase.from("elite_operations").select("*", { count: "exact", head: true }),
+    ]);
 
   const raw = opError?.message ?? monthError?.message ?? null;
   const error =
@@ -50,8 +93,9 @@ export async function fetchStaffEliteData() {
       : raw;
 
   return {
-    operations: (operations ?? []) as EliteOperationRow[],
+    operations,
     monthly: (monthly ?? []) as EliteMonthlyReportRow[],
+    totalOperations: totalOperations ?? operations.length,
     error,
   };
 }

@@ -28,9 +28,13 @@ export function reconcileMonthlyFromOperations(
     const status_label =
       closed.length === ops.length && ops.length > 0 ? "Finalizado" : hasActive ? "Em andamento" : row.status_label;
 
+    const closedCount = closed.length;
+    const signals =
+      closedCount > 0 && closedCount >= row.signals ? closedCount : Math.max(row.signals, closedCount, ops.length);
+
     return {
       ...row,
-      signals: ops.length,
+      signals,
       pips,
       result_label: formatPipsLabel(pips),
       status_label,

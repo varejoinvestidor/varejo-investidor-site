@@ -5,12 +5,13 @@ import {
   normalizeAssetsParam,
   parseForexLegs,
 } from "../../../../src/elite/liveQuotes";
-import { canonicalEliteAsset } from "../../../../src/elite/pipAsset";
+import { fetchMultiMarketQuotes } from "../../../../src/elite/liveQuoteProviders";
+import { canonicalEliteAsset, liveQuoteAssetClass } from "../../../../src/elite/pipAsset";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-type ErApiPayload = { result?: string; conversion_rates?: Record<string, number> };
+type ErApiPayload = { result?: string; conversion_rates?: Record<string, number>; rates?: Record<string, number> };
 type GoldPayload = { items?: { xauPrice?: number }[] };
 
 async function fetchUsdRates(): Promise<Record<string, number> | null> {
@@ -18,8 +19,9 @@ async function fetchUsdRates(): Promise<Record<string, number> | null> {
     const res = await fetch("https://open.er-api.com/v6/latest/USD", { next: { revalidate: 0 } });
     if (!res.ok) return null;
     const data = (await res.json()) as ErApiPayload;
-    if (data.result !== "success" || !data.conversion_rates) return null;
-    return data.conversion_rates;
+    const rates = data.conversion_rates ?? data.rates;
+    if (data.result !== "success" || !rates) return null;
+    return rates;
   } catch {
     return null;
   }
@@ -44,11 +46,29 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const assets = normalizeAssetsParam(searchParams.get("assets") ?? "");
   const prices: Record<string, number> = {};
+  const classes: Record<string, string> = {};
 
-  const [usdRates, xau] = await Promise.all([fetchUsdRates(), fetchXauUsd()]);
+  const forexAssets: string[] = [];
+  const multiMarketAssets: string[] = [];
 
   for (const asset of assets) {
     if (!canFetchLiveQuote(asset)) continue;
+    const key = canonicalEliteAsset(asset);
+    const cls = liveQuoteAssetClass(asset);
+    if (cls) classes[key] = cls;
+    if (cls === "forex" || cls === "gold") forexAssets.push(asset);
+    else multiMarketAssets.push(asset);
+  }
+
+  const [usdRates, xau, multiQuotes] = await Promise.all([
+    forexAssets.length ? fetchUsdRates() : Promise.resolve(null),
+    forexAssets.some((a) => canonicalEliteAsset(a).includes("XAU")) ? fetchXauUsd() : Promise.resolve(null),
+    multiMarketAssets.length ? fetchMultiMarketQuotes(multiMarketAssets) : Promise.resolve({}),
+  ]);
+
+  Object.assign(prices, multiQuotes);
+
+  for (const asset of forexAssets) {
     const key = canonicalEliteAsset(asset);
 
     if (key.includes("XAU")) {
@@ -76,6 +96,8 @@ export async function GET(request: Request) {
 
   return NextResponse.json({
     prices,
+    classes,
     updatedAt: new Date().toISOString(),
+    supported: ["forex", "gold", "crypto", "index", "oil", "equity"],
   });
 }

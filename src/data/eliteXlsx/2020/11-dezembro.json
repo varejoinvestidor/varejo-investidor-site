@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "sheetName": "Dezembro20",
+    "year": 2020,
+    "monthIndex": 11,
+    "monthLabel": "Dezembro",
+    "reportMonth": "Dezembro/2020"
+  },
+  "trades": [
+    {
+      "signal": 1,
+      "tradedOn": "2020-12-09",
+      "asset": "EUR/CAD",
+      "direction": "Venda",
+      "entry": 1.54811,
+      "stop": 1.55482,
+      "take": 1.53942,
+      "pips": 87,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 2,
+      "tradedOn": "2020-12-14",
+      "asset": "GBP/CHF",
+      "direction": "Venda",
+      "entry": 1.18458,
+      "stop": 1.20069,
+      "take": 1.16315,
+      "pips": 50,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 3,
+      "tradedOn": "2020-12-15",
+      "asset": "AUD/NZD",
+      "direction": "Compra",
+      "entry": 1.06552,
+      "stop": 1.05552,
+      "take": 1.07229,
+      "pips": 68,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 4,
+      "tradedOn": "2020-12-16",
+      "asset": "USD/CAD",
+      "direction": "Compra",
+      "entry": 1.27497,
+      "stop": 1.27176,
+      "take": 1.27833,
+      "pips": 34,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 5,
+      "tradedOn": "2020-12-16",
+      "asset": "EUR/NZD",
+      "direction": "Compra",
+      "entry": 1.71835,
+      "stop": 1.71123,
+      "take": 1.72713,
+      "pips": 30,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 6,
+      "tradedOn": "2020-12-16",
+      "asset": "EUR/AUD",
+      "direction": "Compra",
+      "entry": 1.61185,
+      "stop": 1.60817,
+      "take": 1.61592,
+      "pips": 25,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 7,
+      "tradedOn": "2020-12-17",
+      "asset": "EUR/JPY",
+      "direction": "Venda",
+      "entry": 126.346,
+      "stop": 126.346,
+      "take": 125.757,
+      "pips": -30,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Derrota"
+    },
+    {
+      "signal": 8,
+      "tradedOn": "2020-12-17",
+      "asset": "GBP/AUD",
+      "direction": "Venda",
+      "entry": 1.78087,
+      "stop": 1.78527,
+      "take": 1.77704,
+      "pips": 38,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 9,
+      "tradedOn": "2020-12-18",
+      "asset": "GBP/AUD",
+      "direction": "Venda",
+      "entry": 1.78687,
+      "stop": 1.78687,
+      "take": 1.76746,
+      "pips": 57,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 10,
+      "tradedOn": "2020-12-18",
+      "asset": "EUR/GBP",
+      "direction": "Venda",
+      "entry": 0.90582,
+      "stop": 0.90728,
+      "take": 0.90374,
+      "pips": 21,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 11,
+      "tradedOn": "2020-12-07",
+      "asset": "EUR/CAD",
+      "direction": "Compra",
+      "entry": 1.55137,
+      "stop": 1.54892,
+      "take": 1.55507,
+      "pips": 23,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    },
+    {
+      "signal": 12,
+      "tradedOn": "2020-12-08",
+      "asset": "USD/CAD",
+      "direction": "Compra",
+      "entry": 1.28033,
+      "stop": 1.27793,
+      "take": 1.28497,
+      "pips": 20,
+      "statusLabel": "Finalizado",
+      "outcomeLabel": "Vitória"
+    }
+  ]
+}

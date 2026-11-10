@@ -1,6 +1,5 @@
 import { EliteAdminSubnav } from "../../../../../src/elite/admin/EliteAdminSubnav";
 import { ElitePerformanceAdmin } from "../../../../../src/elite/admin/ElitePerformanceAdmin";
-import { reconcileMonthlyFromOperations } from "../../../../../src/elite/reconcileMonthly";
 import { fetchStaffEliteData } from "../../../../../src/elite/queries";
 import { getPublisherSession } from "../../../../../src/publisher/supabase/server";
 
@@ -18,7 +17,8 @@ export default async function AdminEliteDesempenhoPage() {
       <EliteAdminSubnav />
       <ElitePerformanceAdmin
         operations={data.operations}
-        monthly={reconcileMonthlyFromOperations(data.monthly, data.operations)}
+        monthly={data.monthly}
+        totalOperations={data.totalOperations}
         loadError={data.error}
       />
     </div>
