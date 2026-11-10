@@ -45,9 +45,14 @@ export function AdminLoginForm() {
       <div className="rounded-lg border border-gold/30 bg-paper/[0.03] p-6 text-sm leading-relaxed text-paper/80">
         <p className="font-medium text-paper">Configuração pendente</p>
         <p className="mt-2">
-          Copie <code className="text-gold">.env.example</code> para <code className="text-gold">.env.local</code>,
-          crie o projeto Supabase, execute a migration em <code className="text-gold">supabase/migrations/</code> e
-          reinicie o servidor de desenvolvimento.
+          Em produção: na Vercel (projeto <code className="text-gold">varejo-investidor-site-m9uy</code>), defina{" "}
+          <code className="text-gold">NEXT_PUBLIC_SUPABASE_URL</code> e{" "}
+          <code className="text-gold">NEXT_PUBLIC_SUPABASE_ANON_KEY</code> e faça redeploy — ou use Integrations →
+          Supabase no dashboard Vercel.
+        </p>
+        <p className="mt-2 text-paper/60">
+          Em dev: copie <code className="text-gold">.env.example</code> → <code className="text-gold">.env.local</code>,
+          migrations em <code className="text-gold">supabase/migrations/</code>, reinicie o servidor.
         </p>
       </div>
     );
