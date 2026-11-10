@@ -1,7 +1,13 @@
 import { Suspense } from "react";
-import { AdminLoginForm } from "../../../src/publisher/admin/AdminLoginForm";
+import { AdminLoginClient } from "../../../src/publisher/admin/AdminLoginClient";
 
-export default function AdminLoginPage() {
+export default function AdminLoginPage({
+  searchParams,
+}: {
+  searchParams?: { returnTo?: string };
+}) {
+  const returnTo = searchParams?.returnTo?.startsWith("/admin") ? searchParams.returnTo : "/admin";
+
   return (
     <div className="admin-login-backdrop flex min-h-screen items-center justify-center px-4 py-16">
       <div className="w-full max-w-md">
@@ -12,7 +18,7 @@ export default function AdminLoginPage() {
         </div>
         <div className="rounded-xl border border-line/15 bg-ink/80 p-8 shadow-premium backdrop-blur-sm">
           <Suspense fallback={<p className="text-sm text-paper/60">Carregando…</p>}>
-            <AdminLoginForm />
+            <AdminLoginClient returnTo={returnTo} />
           </Suspense>
         </div>
       </div>

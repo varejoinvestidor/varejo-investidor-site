@@ -10,8 +10,12 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
 
   const { user, profile } = await getPublisherSession();
 
-  if (!user || !profile) {
+  if (!user) {
     redirect("/admin/login?returnTo=/admin");
+  }
+
+  if (!profile) {
+    redirect("/admin/login?returnTo=/admin&error=profile");
   }
 
   return <AdminShell profile={profile}>{children}</AdminShell>;
