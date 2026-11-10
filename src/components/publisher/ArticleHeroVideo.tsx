@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArticleVideoPrimary, ArticleVideos } from "../../publisher/types/video";
-import { hasArticleVideo, youtubePosterUrl } from "../../publisher/types/video";
+import { articleUsesVerticalLayout, hasArticleVideo, youtubePosterUrl } from "../../publisher/types/video";
 import { YouTubeEmbedPlayer } from "./YouTubeEmbedPlayer";
 
 type VideoLayer = {
@@ -39,7 +39,13 @@ export function ArticleHeroVideo({
 
   return (
     <section className="vi-article-videos px-5 py-8 md:px-8 md:py-10" aria-label={labels.watch}>
-      <div className="mx-auto flex max-w-5xl flex-col gap-10">
+      <div
+        className={`mx-auto flex max-w-7xl flex-col gap-12 ${
+          layers.length === 1 && layers[0]?.key === "vertical"
+            ? "items-center lg:max-w-lg"
+            : "lg:grid lg:grid-cols-2 lg:items-start lg:gap-10"
+        }`}
+      >
         {layers.map((layer) => (
           <ArticleVideoLayer key={layer.key} layer={layer} videos={videos} labels={labels} />
         ))}
@@ -107,11 +113,16 @@ export function ArticleVideoThumb({
 }) {
   const id =
     variant === "featured"
-      ? videos.horizontal ?? videos.vertical
+      ? videos.primary === "vertical" && videos.vertical
+        ? videos.vertical
+        : videos.horizontal ?? videos.vertical
       : videos.primary === "vertical" && videos.vertical
         ? videos.vertical
         : videos.horizontal ?? videos.vertical;
-  const vertical = variant === "card" && videos.primary === "vertical" && videos.vertical;
+  const vertical =
+    variant === "featured"
+      ? articleUsesVerticalLayout(videos)
+      : variant === "card" && videos.primary === "vertical" && Boolean(videos.vertical);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
   const [hover, setHover] = useState(false);
@@ -135,7 +146,13 @@ export function ArticleVideoThumb({
   return (
     <div
       ref={wrapRef}
-      className={`relative overflow-hidden bg-black ${vertical ? "aspect-[9/16] max-h-[320px]" : "aspect-video w-full"} ${className}`}
+      className={`relative overflow-hidden bg-black ${
+        vertical
+          ? variant === "featured"
+            ? "vi-thumb-vertical--featured aspect-[9/16] w-full max-w-[400px] min-h-[min(72vh,680px)] lg:min-h-[520px]"
+            : "vi-thumb-vertical--card aspect-[9/16] max-h-[min(420px,55vh)] w-full max-w-[280px] mx-auto"
+          : "aspect-video w-full"
+      } ${className}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onFocus={() => setHover(true)}

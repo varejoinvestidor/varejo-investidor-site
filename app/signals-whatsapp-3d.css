@@ -1,0 +1,279 @@
+.wa-phone-scene {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 0 2rem;
+}
+
+.wa-phone-tilt {
+  position: relative;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.wa-phone-device {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 300px);
+  min-height: 520px;
+  border-radius: 2.35rem;
+  border: 3px solid #1c1c1e;
+  background: linear-gradient(165deg, #0c0c0e 0%, #050505 55%, #111 100%);
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(201, 155, 62, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: rotateY(-14deg) rotateX(8deg) translateZ(0);
+  transition: transform 0.45s ease;
+  overflow: hidden;
+}
+
+.wa-phone-scene:hover .wa-phone-device {
+  transform: rotateY(-8deg) rotateX(4deg) translateY(-6px);
+}
+
+.wa-phone-notch {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  z-index: 5;
+  height: 1.35rem;
+  width: 6.5rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #000;
+}
+
+.wa-phone-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.85rem 1.35rem 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(244, 240, 232, 0.88);
+}
+
+.wa-phone-status-icons {
+  letter-spacing: 0.2em;
+  opacity: 0.85;
+}
+
+.wa-phone-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.85rem 0.65rem;
+  background: #0b3d2e;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.wa-phone-back {
+  border: none;
+  background: transparent;
+  color: #e9edef;
+  font-size: 1.35rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.wa-phone-avatar {
+  display: grid;
+  height: 2.25rem;
+  width: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #c99b3e, #8a6a28);
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #0a0a0a;
+}
+
+.wa-phone-contact-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e9edef;
+}
+
+.wa-phone-contact-sub {
+  font-size: 0.65rem;
+  color: rgba(233, 237, 239, 0.65);
+}
+
+.wa-phone-chat {
+  min-height: 320px;
+  padding: 0.85rem 0.65rem 1rem;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(15, 143, 86, 0.08), transparent 45%),
+    #0b141a;
+}
+
+.wa-bubble-wrap {
+  position: relative;
+  margin-left: auto;
+  max-width: 92%;
+}
+
+.wa-bubble-tail {
+  position: absolute;
+  right: -5px;
+  bottom: 10px;
+  width: 12px;
+  height: 16px;
+  background: #005c4b;
+  clip-path: polygon(0 0, 100% 40%, 100% 100%);
+}
+
+.wa-bubble {
+  border-radius: 10px 10px 2px 10px;
+  background: #005c4b;
+  padding: 0.5rem 0.6rem 0.45rem;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  color: #e9edef;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.wa-bubble-chart {
+  margin-bottom: 0.45rem;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: #0d1117;
+  padding: 0.45rem 0.5rem;
+  font-size: 0.65rem;
+}
+
+.wa-chart-title {
+  font-weight: 700;
+  color: #f04438;
+}
+
+.wa-chart-sub {
+  margin-top: 0.15rem;
+  color: rgba(233, 237, 239, 0.55);
+}
+
+.wa-chart-prices {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+  color: #53bdeb;
+}
+
+.wa-chart-arrow {
+  opacity: 0.65;
+}
+
+.wa-bubble-text p + p {
+  margin-top: 0.12rem;
+}
+
+.wa-bubble-meta {
+  margin-top: 0.35rem;
+  text-align: right;
+  font-size: 0.62rem;
+  color: rgba(233, 237, 239, 0.55);
+}
+
+.wa-ticks {
+  margin-left: 0.25rem;
+  color: #53bdeb;
+}
+
+.wa-phone-input {
+  padding: 0.55rem 0.75rem 1.1rem;
+  background: #0b141a;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.wa-input-pill {
+  display: block;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1f2c34;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.72rem;
+  color: rgba(233, 237, 239, 0.45);
+}
+
+.wa-notif-toast {
+  position: absolute;
+  top: 12%;
+  right: -6%;
+  z-index: 3;
+  display: flex;
+  gap: 0.55rem;
+  width: min(220px, 72vw);
+  padding: 0.55rem 0.65rem;
+  border-radius: 14px;
+  background: rgba(28, 28, 30, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+  transform: translateZ(48px) rotateY(-6deg);
+  animation: wa-notif-float 4s ease-in-out infinite;
+}
+
+.wa-notif-icon {
+  display: grid;
+  height: 2rem;
+  width: 2rem;
+  place-items: center;
+  border-radius: 8px;
+  background: #25d366;
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.wa-notif-title {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: rgba(244, 240, 232, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.wa-notif-body {
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
+  color: #e9edef;
+}
+
+@keyframes wa-notif-float {
+  0%,
+  100% {
+    transform: translateZ(48px) rotateY(-6deg) translateY(0);
+  }
+  50% {
+    transform: translateZ(56px) rotateY(-4deg) translateY(-6px);
+  }
+}
+
+@media (max-width: 640px) {
+  .wa-phone-device {
+    transform: rotateY(-6deg) rotateX(4deg);
+    min-height: 480px;
+  }
+
+  .wa-notif-toast {
+    right: 0;
+    top: 4%;
+    transform: translateZ(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-notif-toast {
+    animation: none;
+  }
+
+  .wa-phone-device,
+  .wa-phone-scene:hover .wa-phone-device {
+    transform: none;
+  }
+}

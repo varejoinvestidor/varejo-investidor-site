@@ -22,6 +22,7 @@ import { ElitePaymentCards } from "../../src/components/ElitePaymentCards";
 import { getLoboChannelUrlWithFallback } from "../../src/data/whatsappChannels";
 import { getSignalSelectCopy } from "../../src/data/signalsResearchCopy";
 import { localizedPath } from "../../src/i18n/routing";
+import "../signals-whatsapp-3d.css";
 
 const howItWorks = [
   "2 a 5 sinais por dia",

@@ -78,6 +78,12 @@ export function hasArticleVideo(videos: ArticleVideos): boolean {
   return Boolean(videos.horizontal || videos.vertical);
 }
 
+export function articleUsesVerticalLayout(videos: ArticleVideos): boolean {
+  if (!videos.vertical) return false;
+  if (!videos.horizontal) return true;
+  return videos.primary === "vertical";
+}
+
 export function primaryVideoId(videos: ArticleVideos): string | null {
   if (videos.primary === "vertical" && videos.vertical) return videos.vertical;
   if (videos.horizontal) return videos.horizontal;

@@ -13,6 +13,7 @@ import { getPlatformPath, platformSlugs } from "../data/platformContent";
 import { languageMeta, persistLanguageChoice } from "../i18n/languageCatalog";
 import { getYoutubeChannelUrl } from "../config/youtubeChannels";
 import { LocaleFlagIcon } from "./LocaleFlagIcon";
+import { WhatsAppPhoneSignal3D } from "./signals/WhatsAppPhoneSignal3D";
 
 export const ticker = [
   ["XAU/USD", "+0.74%", "up"],
@@ -609,9 +610,8 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
           : isTurkish
             ? { timeframe: "ZAMAN DİLİMİ", risk: "RİSK", riskValue: "ORTA", signal: "SİNYAL", time: "SAAT", live: "CANLI", copy: "DOĞRUDAN ELITE KANALINDA GÖNDERİLDİ" }
             : { timeframe: "TIMEFRAME", risk: isPortuguese ? "RISCO" : "RISK", riskValue: isPortuguese ? "MODERADO" : "MODERATE", signal: isPortuguese ? "SINAL" : "SIGNAL", time: isPortuguese ? "HOR\u00C1RIO" : "TIME", live: isPortuguese ? "AO VIVO" : "LIVE", copy: isPortuguese ? "ENVIADO DIRETAMENTE NO WHATSAPP" : "SENT DIRECTLY ON WHATSAPP" };
-  const rows = [
-    [t.signalBlock.example.asset, t.signalBlock.example.values.asset], [t.signalBlock.example.direction, t.signalBlock.example.values.direction], [t.signalBlock.example.entry, t.signalBlock.example.values.entry], [t.signalBlock.example.target, t.signalBlock.example.values.target], [t.signalBlock.example.stop, t.signalBlock.example.values.stop], [extraLabels.timeframe, "4H"], [extraLabels.risk, extraLabels.riskValue], [extraLabels.signal, "#4169"], [extraLabels.time, "09:42 UTC"], [t.signalBlock.example.status, t.signalBlock.example.values.status],
-  ];
+  const ex = t.signalBlock.example;
+  const vals = ex.values;
   const exampleEyebrow = isPortuguese
     ? "EXEMPLO NO WHATSAPP"
     : isSpanish
@@ -644,24 +644,30 @@ export function SignalTicket({ t }: { t: (typeof translations)[Locale] }) {
                 : "SENT DIRECTLY ON WHATSAPP";
 
   return (
-    <div className="signal-terminal terminal-shell relative overflow-hidden border border-rise/[0.28] bg-ink p-4 text-paper shadow-premium">
-      <div className="absolute inset-0 terminal-grid opacity-25" />
-      <div className="flex items-center justify-between gap-3 border-b border-paper/[0.12] pb-4">
-        <div className="relative">
+    <div className="signal-phone-hero relative">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-paper/[0.12] pb-4">
+        <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-gold">{exampleEyebrow}</p>
-          <h3 className="mt-1 font-serif text-2xl tracking-[-0.04em] sm:text-3xl">{t.signalBlock.example.title}</h3>
+          <h3 className="mt-1 font-serif text-2xl tracking-[-0.04em] sm:text-3xl text-paper">{ex.title}</h3>
         </div>
-        <div className="relative flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise"><span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />{extraLabels.live}</div>
+        <div className="flex items-center gap-2 border border-rise/[0.26] bg-rise/[0.08] px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-rise">
+          <span className="live-dot h-2.5 w-2.5 rounded-full bg-rise" />
+          {extraLabels.live}
+        </div>
       </div>
-      <div className="relative mt-5 grid gap-2 sm:grid-cols-2">
-        {rows.map(([label, value]) => (
-          <div key={label} className="grid grid-cols-[96px_1fr] border border-paper/[0.09] bg-paper/[0.035] sm:grid-cols-[110px_1fr]">
-            <p className="border-r border-paper/[0.09] px-3 py-3 text-[10px] uppercase tracking-[0.16em] text-paper/[0.42] sm:tracking-[0.2em]">{label}</p>
-            <p className={`px-3 py-3 font-mono text-sm font-bold ${value === t.signalBlock.example.values.direction || value === t.signalBlock.example.values.status ?"text-rise" : "text-paper"}`}>{value}</p>
-          </div>
-        ))}
-      </div>
-      <div className="signal-delivery-badge relative mt-5 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-rise sm:tracking-[0.2em]">{deliveryCopy}</div>
+      <WhatsAppPhoneSignal3D
+        className="mt-2"
+        signalId="#4169"
+        asset={vals.asset}
+        direction={vals.direction}
+        entry={vals.entry}
+        takeProfit={vals.target}
+        stopLoss={vals.stop}
+        time="09:42"
+      />
+      <p className="signal-delivery-badge mt-2 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-rise sm:tracking-[0.2em]">
+        {deliveryCopy}
+      </p>
     </div>
   );
 }
@@ -753,14 +759,7 @@ export function WhatsAppSignalExample({
   /** Quando definido, o CTA de exemplo leva ao canal WhatsApp (ex.: Lobo gratuito). */
   whatsappHref?: string;
 }) {
-  const chartLabel = locale === "es" ? "Gr\u00E1fico 4H" : locale === "pt" ? "Gr\u00E1fico 4H" : "4H chart";
-  const liveLabel = locale === "es" ? "En vivo" : locale === "pt" ? "Ao vivo" : "Live";
-  const fields = [
-    t.signalExample.signal,
-    t.signalExample.asset,
-    t.signalExample.takeProfit,
-    t.signalExample.stopLoss,
-  ];
+  const isPortuguese = locale === "pt";
 
   return (
     <section className="signal-example-box border-y border-ink/[0.08] bg-white px-5 py-20 md:px-8 md:py-24">
@@ -799,47 +798,33 @@ export function WhatsAppSignalExample({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
-          className="glass-panel p-3"
+          className="flex flex-col items-center justify-center"
         >
-          <div className="overflow-hidden border border-ink bg-paper p-4 shadow-premium">
-            <div className="border border-ink/[0.08] bg-white">
-              <div className="flex items-center gap-3 border-b border-ink/[0.08] bg-[#0f8f56] px-4 py-3 text-white">
-                <span className="grid h-9 w-9 place-items-center rounded-full bg-white/18 font-bold">VI</span>
-                <div>
-                  <p className="font-semibold">Varejo Investidor</p>
-                  <p className="text-xs text-white/70">Canal Elite | WhatsApp</p>
-                </div>
-              </div>
-
-              <div className="p-4 md:p-6">
-                <div className="ml-auto max-w-xl rounded-sm border border-ink/[0.08] bg-paper p-4 shadow-fine">
-                  <div className="space-y-2 font-mono text-sm">
-                    {fields.map((field) => (
-                      <p key={field} className="border-b border-ink/[0.06] pb-2 last:border-b-0">
-                        {field}
-                      </p>
-                    ))}
-                  </div>
-                  <div className="mt-5 border border-ink/[0.08] bg-ink p-4 text-paper">
-                    <div className="flex items-center justify-between">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/[0.48]">{chartLabel}</p>
-                      <p className="text-xs text-rise">{liveLabel}</p>
-                    </div>
-                    <div className="mt-5">
-                      <Sparkline />
-                    </div>
-                  </div>
-                  <div className="mt-5 border-l-2 border-rise bg-rise/[0.08] p-4">
-                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">
-                      {t.signalExample.analysisTitle}
-                    </p>
-                    <p className="mt-2 leading-7 text-ink/[0.7]">{t.signalExample.analysis}</p>
-                  </div>
-                  <p className="mt-4 text-right text-[11px] text-ink/[0.45]">09:42</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WhatsAppPhoneSignal3D
+            signalId={t.signalExample.signal.replace(/^[^:]+:\s*/, "").trim() || "4.169"}
+            asset={t.signalExample.asset.split(" ")[0] ?? "GBP/USD"}
+            direction={
+              t.signalExample.asset.toUpperCase().includes("COMPRA") || t.signalExample.asset.toUpperCase().includes("BUY")
+                ? isPortuguese
+                  ? "Compra"
+                  : "Buy"
+                : isPortuguese
+                  ? "Venda"
+                  : "Sell"
+            }
+            entry={t.signalExample.asset.match(/[\d.]+$/)?.[0] ?? "1.34497"}
+            takeProfit={t.signalExample.takeProfit.replace(/^[^:]+:\s*/, "").trim()}
+            stopLoss={t.signalExample.stopLoss.replace(/^[^:]+:\s*/, "").trim()}
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mt-6 w-full max-w-md border-l-2 border-rise bg-rise/[0.08] p-4"
+          >
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">{t.signalExample.analysisTitle}</p>
+            <p className="mt-2 leading-7 text-ink/[0.7]">{t.signalExample.analysis}</p>
+          </motion.div>
         </motion.div>
       </div>
     </section>
