@@ -23,10 +23,11 @@ import {
   createTranslationDraft,
   listLinkedTranslations,
 } from "../translation/actions";
-import { ARTICLE_BANNER_PRESETS, bannerFromPreset } from "../data/articleBannerPresets";
+import { ARTICLE_BANNER_PRESETS, bannerFromPreset, resolveArticleBanner } from "../data/articleBannerPresets";
 import { PUBLISHER_LANGUAGE_OPTIONS } from "../locales";
 import type { ArticleBanner, ArticleBannerPreset } from "../types/banner";
 import { PublisherRichTextEditor } from "./PublisherRichTextEditor";
+import { ArticleBannerPreviewStrip } from "./ArticleBannerPreview";
 
 type PendingAction =
   | { type: "status"; status: ArticleRecord["status"] }
@@ -66,6 +67,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   );
   const [translating, setTranslating] = useState(false);
   const [linkedVersions, setLinkedVersions] = useState<{ id: string; language: string; slug: string }[]>([]);
+  const [selectedBannerId, setSelectedBannerId] = useState<string | null>(null);
 
   const payload: SaveArticleInput = useMemo(
     () => ({
@@ -294,8 +296,30 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   }
 
   function addBannerPreset(preset: ArticleBannerPreset) {
-    const banner = bannerFromPreset(preset, "bottom");
+    const banner = bannerFromPreset(preset, "inline");
     patchArticle((prev) => ({ ...prev, banners: [...prev.banners, banner] }));
+    window.setTimeout(() => {
+      setSelectedBannerId(banner.id);
+      document.getElementById(`banner-editor-${banner.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 80);
+  }
+
+  function moveBanner(id: string, direction: -1 | 1) {
+    patchArticle((prev) => {
+      const idx = prev.banners.findIndex((b) => b.id === id);
+      if (idx < 0) return prev;
+      const target = idx + direction;
+      if (target < 0 || target >= prev.banners.length) return prev;
+      const banners = [...prev.banners];
+      [banners[idx], banners[target]] = [banners[target], banners[idx]];
+      return { ...prev, banners };
+    });
+  }
+
+  function focusBanner(id: string) {
+    setSelectedBannerId(id);
+    document.getElementById(`banner-editor-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    document.getElementById(`banner-settings-${id}`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function updateBanner(id: string, patch: Partial<ArticleBanner>) {
@@ -467,10 +491,35 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
             disabled={preview}
             className="w-full border-b border-line/10 bg-transparent py-2 text-lg text-paper/70 outline-none"
           />
+
+          <ArticleBannerPreviewStrip
+            banners={article.banners}
+            placement="top"
+            language={article.language}
+            activeBannerId={selectedBannerId}
+            onSelectBanner={focusBanner}
+          />
+
+          <ArticleBannerPreviewStrip
+            banners={article.banners}
+            placement="inline"
+            language={article.language}
+            activeBannerId={selectedBannerId}
+            onSelectBanner={focusBanner}
+          />
+
           <PublisherRichTextEditor
             content={article.content}
             editable={!preview}
             onChange={(json) => patchArticle({ content: json })}
+          />
+
+          <ArticleBannerPreviewStrip
+            banners={article.banners}
+            placement="bottom"
+            language={article.language}
+            activeBannerId={selectedBannerId}
+            onSelectBanner={focusBanner}
           />
         </div>
 
@@ -635,35 +684,90 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
               ))}
             </div>
             <ul className="mt-3 space-y-3">
-              {article.banners.map((banner) => (
-                <li key={banner.id} className="rounded border border-line/12 p-2">
-                  <p className="text-xs font-semibold text-paper/70">
-                    {banner.preset
-                      ? ARTICLE_BANNER_PRESETS.find((p) => p.id === banner.preset)?.label ?? banner.preset
-                      : banner.alt || "Banner personalizado"}
-                  </p>
-                  <select
-                    value={banner.placement}
-                    disabled={preview}
-                    onChange={(e) =>
-                      updateBanner(banner.id, { placement: e.target.value as ArticleBanner["placement"] })
-                    }
-                    className="mt-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
+              {article.banners.map((banner, index) => {
+                const resolved = resolveArticleBanner(banner, article.language);
+                const label = banner.preset
+                  ? ARTICLE_BANNER_PRESETS.find((p) => p.id === banner.preset)?.label ?? banner.preset
+                  : banner.alt || "Banner personalizado";
+                return (
+                  <li
+                    key={banner.id}
+                    id={`banner-settings-${banner.id}`}
+                    className={`rounded border p-2 ${
+                      selectedBannerId === banner.id ? "border-gold/50 bg-gold/5" : "border-line/12"
+                    }`}
                   >
-                    <option value="top">Topo</option>
-                    <option value="inline">Meio do artigo</option>
-                    <option value="bottom">Rodapé</option>
-                  </select>
-                  <button
-                    type="button"
-                    onClick={() => removeBanner(banner.id)}
-                    disabled={preview}
-                    className="mt-2 text-xs text-fall hover:underline"
-                  >
-                    Remover
-                  </button>
-                </li>
-              ))}
+                    <button
+                      type="button"
+                      className="w-full text-left"
+                      onClick={() => focusBanner(banner.id)}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={resolved.image_url}
+                        alt=""
+                        className="mb-2 aspect-[1324/150] w-full rounded border border-line/10 object-cover"
+                      />
+                      <p className="text-xs font-semibold text-paper/70">{label}</p>
+                    </button>
+                    <p className="mt-1 text-[10px] text-paper/40">Posição no artigo (como no site público)</p>
+                    <div className="mt-2 grid grid-cols-3 gap-1">
+                      {(
+                        [
+                          { v: "top" as const, l: "Topo" },
+                          { v: "inline" as const, l: "Meio" },
+                          { v: "bottom" as const, l: "Rodapé" },
+                        ] as const
+                      ).map((opt) => (
+                        <button
+                          key={opt.v}
+                          type="button"
+                          disabled={preview}
+                          onClick={() => {
+                            updateBanner(banner.id, { placement: opt.v });
+                            focusBanner(banner.id);
+                          }}
+                          className={`rounded px-1 py-1.5 text-[10px] font-semibold uppercase tracking-wide ${
+                            banner.placement === opt.v
+                              ? "bg-gold/25 text-gold"
+                              : "border border-line/15 text-paper/50 hover:border-gold/30"
+                          }`}
+                        >
+                          {opt.l}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        disabled={preview || index === 0}
+                        onClick={() => moveBanner(banner.id, -1)}
+                        className="text-[10px] text-paper/55 hover:text-gold disabled:opacity-30"
+                        title="Subir na ordem"
+                      >
+                        ↑ Mover
+                      </button>
+                      <button
+                        type="button"
+                        disabled={preview || index === article.banners.length - 1}
+                        onClick={() => moveBanner(banner.id, 1)}
+                        className="text-[10px] text-paper/55 hover:text-gold disabled:opacity-30"
+                        title="Descer na ordem"
+                      >
+                        ↓ Mover
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeBanner(banner.id)}
+                        disabled={preview}
+                        className="ml-auto text-[10px] text-fall hover:underline"
+                      >
+                        Remover
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
               {!article.banners.length ? <li className="text-xs text-paper/40">Nenhum banner.</li> : null}
             </ul>
           </section>

@@ -33,7 +33,7 @@ const FORMIGA_FALLBACK = "https://whatsapp.com/channel/0029Va9J7SAAO7R8cN76Ib13"
 export function resolveArticleBanner(banner: ArticleBanner, language: string): ArticleBanner {
   if (!banner.preset) return banner;
 
-  const lang = language === "pt" ? "pt" : language;
+  const lang = language.startsWith("pt") ? "pt" : language.startsWith("es") ? "es" : language;
   switch (banner.preset) {
     case "formiga":
       return {
