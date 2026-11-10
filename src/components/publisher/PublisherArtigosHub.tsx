@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../SiteSections";
 import type { Locale } from "../../i18n";
@@ -28,6 +28,9 @@ export function PublisherArtigosHub({
   const { locale, t, changeLocale } = useSiteLocale();
   const [query, setQuery] = useState("");
   const [visible, setVisible] = useState(PAGE_SIZE);
+  const [featuredHover, setFeaturedHover] = useState(false);
+  const onFeaturedEnter = useCallback(() => setFeaturedHover(true), []);
+  const onFeaturedLeave = useCallback(() => setFeaturedHover(false), []);
 
   const featured = articles.find((a) => a.featured) ?? articles[0];
 
@@ -61,12 +64,17 @@ export function PublisherArtigosHub({
               <Link
                 href={getPublisherArticlePath(language, featured.slug)}
                 className="group block overflow-hidden border border-gold/[0.18] bg-paper/[0.02]"
+                onMouseEnter={onFeaturedEnter}
+                onMouseLeave={onFeaturedLeave}
+                onFocus={onFeaturedEnter}
+                onBlur={onFeaturedLeave}
               >
                 {hasArticleVideo(featured.videos) ? (
                   <ArticleVideoThumb
                     videos={featured.videos}
                     title={featured.title}
                     variant="featured"
+                    boostPlay={featuredHover}
                     className="transition duration-500 group-hover:scale-[1.01]"
                   />
                 ) : featured.cover_image ? (

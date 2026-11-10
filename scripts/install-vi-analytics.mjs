@@ -6,7 +6,12 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import pg from "pg";
 
-const files = ["20260318120000_vi_analytics.sql", "20260319120000_vi_analytics_regions.sql"];
+const files = [
+  "20260318120000_vi_analytics.sql",
+  "20260319120000_vi_analytics_regions.sql",
+  "20260320120000_vi_analytics_top_clicks_fix.sql",
+  "20260320140000_vi_analytics_backfill_geo.sql",
+];
 
 function resolveConn() {
   const ordered = [

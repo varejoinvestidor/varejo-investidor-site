@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArticleVideoPrimary, ArticleVideos } from "../../publisher/types/video";
 import { hasArticleVideo, youtubePosterUrl } from "../../publisher/types/video";
 import { YouTubeEmbedPlayer } from "./YouTubeEmbedPlayer";
@@ -96,11 +96,14 @@ export function ArticleVideoThumb({
   title,
   className = "",
   variant = "card",
+  boostPlay = false,
 }: {
   videos: ArticleVideos;
   title: string;
   className?: string;
   variant?: "card" | "featured";
+  /** Pai (ex.: card em destaque) pediu reprodução — ex. hover na área do link. */
+  boostPlay?: boolean;
 }) {
   const id =
     variant === "featured"
@@ -108,19 +111,49 @@ export function ArticleVideoThumb({
       : videos.primary === "vertical" && videos.vertical
         ? videos.vertical
         : videos.horizontal ?? videos.vertical;
-  if (!id) return null;
   const vertical = variant === "card" && videos.primary === "vertical" && videos.vertical;
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  const [hover, setHover] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    const el = wrapRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: [0.08, 0.22], rootMargin: "10% 0px 6% 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [id]);
+
+  if (!id) return null;
+
+  const shouldPlay = inView || hover || boostPlay;
+
   return (
     <div
+      ref={wrapRef}
       className={`relative overflow-hidden bg-black ${vertical ? "aspect-[9/16] max-h-[320px]" : "aspect-video w-full"} ${className}`}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={youtubePosterUrl(id)} alt="" className="h-full w-full object-cover" />
-      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-      <span className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-gold">
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-gold/50 bg-black/60">▶</span>
-        {vertical ? "Shorts" : "Vídeo"}
-      </span>
+      {shouldPlay ? (
+        <YouTubeEmbedPlayer videoId={id} autoplayInView={false} play className="h-full w-full" />
+      ) : (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={youtubePosterUrl(id)} alt="" className="h-full w-full object-cover" />
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          <span className="pointer-events-none absolute bottom-3 left-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-gold">
+            <span className="grid h-9 w-9 place-items-center rounded-full border border-gold/50 bg-black/60">▶</span>
+            {vertical ? "Shorts" : "Vídeo"}
+          </span>
+        </>
+      )}
       <span className="sr-only">{title}</span>
     </div>
   );

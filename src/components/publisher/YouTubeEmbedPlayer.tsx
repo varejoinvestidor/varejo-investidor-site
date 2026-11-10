@@ -7,16 +7,19 @@ export function YouTubeEmbedPlayer({
   videoId,
   unmuteLabel = "Ativar som",
   autoplayInView = true,
+  play: playControlled,
   className = "h-full w-full",
 }: {
   videoId: string;
   unmuteLabel?: string;
+  /** Quando definido, ignora o observer interno (cards / hover). */
+  play?: boolean;
   autoplayInView?: boolean;
   className?: string;
 }) {
   const id = parseYouTubeVideoId(videoId);
   const wrapRef = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(!autoplayInView);
+  const [inView, setInView] = useState(false);
   const [withSound, setWithSound] = useState(false);
 
   useEffect(() => {
@@ -24,22 +27,20 @@ export function YouTubeEmbedPlayer({
   }, [id]);
 
   useEffect(() => {
-    if (!autoplayInView) return;
+    if (playControlled !== undefined || !autoplayInView) return;
     const el = wrapRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setInView(true);
-      },
-      { threshold: 0.25, rootMargin: "0px 0px -5% 0px" },
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: [0.12, 0.28], rootMargin: "6% 0px 4% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [autoplayInView, id]);
+  }, [autoplayInView, playControlled, id]);
 
   if (!id) return null;
 
-  const shouldPlay = inView;
+  const shouldPlay = playControlled !== undefined ? playControlled : inView;
   const src = shouldPlay
     ? youtubeEmbedSrc(id, { autoplay: true, mute: !withSound })
     : undefined;
