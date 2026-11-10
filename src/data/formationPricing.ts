@@ -85,7 +85,7 @@ export const FORMATION_COMPLETE_OFFER: FormationCompleteOffer = {
   name: "Formação Completa Varejo Investidor",
   detail: "15 níveis · 5 Formiga + 5 Lobo + 5 Harpia",
   referencePriceCents: brl(10848, 21),
-  promoPriceCents: brl(6997),
+  promoPriceCents: brl(7997),
   levelCount: 15,
   checkoutUrl: null,
 };
