@@ -96,6 +96,7 @@ const listColumns =
   "id, slug, language, title, subtitle, excerpt, cover_image, published_at, updated_at, featured, seo_title, seo_description, author_id, category_id";
 
 const detailColumns = `${listColumns}, content, references_text, sources, banners`;
+const detailColumnsLegacy = `${listColumns}, content, references_text, sources`;
 
 export async function getPublishedArticles(language = "pt", limit = 48): Promise<PublicArticleSummary[]> {
   const supabase = createPublisherPublicClient();
@@ -106,7 +107,7 @@ export async function getPublishedArticles(language = "pt", limit = 48): Promise
     .select(listColumns)
     .eq("language", language)
     .eq("status", "published")
-    .lte("published_at", new Date().toISOString())
+    .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
     .order("published_at", { ascending: false })
     .limit(limit);
 
@@ -118,18 +119,30 @@ export async function getPublishedArticleBySlug(slug: string, language = "pt"): 
   const supabase = createPublisherPublicClient();
   if (!supabase) return null;
 
-  const { data, error } = await supabase
-    .from("articles")
-    .select(detailColumns)
-    .eq("language", language)
-    .eq("slug", slug)
-    .eq("status", "published")
-    .lte("published_at", new Date().toISOString())
-    .maybeSingle();
+  const client = supabase;
+  const now = new Date().toISOString();
 
-  if (error || !data) return null;
-  const [summary] = await hydrateSummaries([data as ArticleRow]);
-  return mapDetail(data as ArticleRow, summary);
+  async function fetchRow(columns: string) {
+    return client
+      .from("articles")
+      .select(columns)
+      .eq("language", language)
+      .eq("slug", slug)
+      .eq("status", "published")
+      .or(`published_at.is.null,published_at.lte.${now}`)
+      .maybeSingle();
+  }
+
+  let { data, error } = await fetchRow(detailColumns);
+  const rowInvalid = !data || typeof data !== "object" || !("id" in data);
+  if (error || rowInvalid) {
+    ({ data, error } = await fetchRow(detailColumnsLegacy));
+  }
+
+  if (error || !data || typeof data !== "object" || !("id" in data)) return null;
+  const row = data as ArticleRow;
+  const [summary] = await hydrateSummaries([row]);
+  return mapDetail(row, summary);
 }
 
 export async function getRelatedPublishedArticles(article: PublicArticleDetail, limit = 3): Promise<PublicArticleSummary[]> {
@@ -142,7 +155,7 @@ export async function getRelatedPublishedArticles(article: PublicArticleDetail, 
     .eq("language", article.language)
     .eq("status", "published")
     .neq("id", article.id)
-    .lte("published_at", new Date().toISOString())
+    .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
     .order("published_at", { ascending: false })
     .limit(limit);
 

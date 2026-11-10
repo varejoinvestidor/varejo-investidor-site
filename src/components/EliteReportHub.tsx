@@ -18,6 +18,7 @@ import { fxproButtonLabels, fxproLinks } from "../data/fxproLinks";
 import { eliteReportCopyJa } from "../data/eliteReportCopyJa";
 import { eliteReportCopyHi } from "../data/eliteReportCopyHi";
 import type { HubMonthlyReport, HubOperation } from "../elite/mapToHub";
+import type { PeriodPerformance } from "../elite/traderPerformance";
 
 export const eliteReportPaths: Record<Locale, string> = {
   pt: "/relatorio-elite",
@@ -711,6 +712,7 @@ type EliteHubData = {
   activeOperations: HubOperation[];
   completedOperations: HubOperation[];
   stats?: { totalSignals: number; totalPips: number; winRate: string; closedCount: number };
+  traderPerformance?: PeriodPerformance[];
 };
 
 export default function EliteReportHub({ initialLocale, hubData }: { initialLocale: Locale; hubData?: EliteHubData }) {
@@ -836,6 +838,55 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
           <SectionHeader eyebrow={copy.label} title={copy.authorityTitle} text={copy.authorityText} />
         </div>
       </section>
+
+      {hubData?.traderPerformance?.length ? (
+        <section className="border-y border-white/8 bg-white/[0.02] px-5 py-14 md:px-8 md:py-16">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              eyebrow="Performance"
+              title={locale === "en" ? "Trader performance" : locale === "es" ? "Rendimiento del trader" : "Desempenho do trader"}
+              text={
+                locale === "en"
+                  ? "Public operations from the Elite desk: signals, win rate and pip results by day, week and month."
+                  : "Operações públicas do desk Elite: sinais, taxa de acerto e resultado em pips por dia, semana e mês."
+              }
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {hubData.traderPerformance.map((period) => (
+                <article
+                  key={period.key}
+                  className="terminal-module border border-gold/20 bg-black/50 p-5 shadow-[0_0_40px_rgba(198,153,74,0.06)]"
+                >
+                  <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{period.label}</p>
+                  <dl className="mt-4 grid gap-3 text-sm">
+                    <div className="flex items-baseline justify-between gap-3 border-b border-white/8 pb-2">
+                      <dt className="text-paper/50">{locale === "en" ? "Operations" : "Operações"}</dt>
+                      <dd className="font-mono text-lg font-bold tabular-nums text-paper">{period.operations}</dd>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-3 border-b border-white/8 pb-2">
+                      <dt className="text-paper/50">{locale === "en" ? "Closed" : "Finalizadas"}</dt>
+                      <dd className="font-mono tabular-nums text-paper/85">{period.closed}</dd>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-3 border-b border-white/8 pb-2">
+                      <dt className="text-paper/50">{locale === "en" ? "Win rate" : "Taxa de acerto"}</dt>
+                      <dd className="font-mono font-bold text-rise">{period.winRate}</dd>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-3">
+                      <dt className="text-paper/50">{locale === "en" ? "Pips" : "Resultado (pips)"}</dt>
+                      <dd
+                        className={`font-mono text-lg font-black tabular-nums ${period.pips >= 0 ? "text-rise" : "text-fall"}`}
+                      >
+                        {period.pips >= 0 ? "+" : ""}
+                        {formatNumber(period.pips, locale)}
+                      </dd>
+                    </div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section id="historico-resultados" className="px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">

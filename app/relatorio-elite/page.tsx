@@ -1,6 +1,7 @@
 import EliteReportHub from "../../src/components/EliteReportHub";
 import { aggregateStats, mapMonthly, mapOperations } from "../../src/elite/mapToHub";
 import { fetchPublicEliteData } from "../../src/elite/queries";
+import { computeTraderPerformance } from "../../src/elite/traderPerformance";
 
 export const metadata = {
   title: "Relatórios Elite desde 2018 | Varejo Investidor",
@@ -21,6 +22,7 @@ export default async function RelatorioElitePage() {
           activeOperations: active,
           completedOperations: closed,
           stats: aggregateStats(closed, monthly),
+          traderPerformance: computeTraderPerformance(remote.operations),
         };
       })()
     : undefined;
