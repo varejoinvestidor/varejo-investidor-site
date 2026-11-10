@@ -10,6 +10,8 @@ import { getPublisherArticlePath, getPublisherHubPath } from "../../publisher/pu
 import { publisherArticleUrl } from "../../publisher/public/queries";
 import { getSiteSocialLinksForLanguage, socialFollowLabel } from "../../config/siteSocialLinks";
 import { PublisherArticleBanners } from "./PublisherArticleBanners";
+import { ArticleHeroVideo } from "./ArticleHeroVideo";
+import { hasArticleVideo } from "../../publisher/types/video";
 
 export function PublisherArticleView({
   article,
@@ -26,6 +28,12 @@ export function PublisherArticleView({
   const hubPath = getPublisherHubPath(lang);
   const articlePath = (slug: string) => getPublisherArticlePath(lang, slug);
   const hubLabel = pageLang === "en" ? "Articles" : pageLang === "es" ? "Artículos" : "Artigos";
+  const videoLabels =
+    pageLang === "en"
+      ? { horizontal: "Widescreen", vertical: "Vertical", watch: "Watch on this page", unmute: "Turn on sound" }
+      : pageLang === "es"
+        ? { horizontal: "Horizontal", vertical: "Vertical", watch: "Ver en esta página", unmute: "Activar sonido" }
+        : { horizontal: "Horizontal", vertical: "Vertical", watch: "Assistir nesta página", unmute: "Ativar som" };
   const shareLabel = pageLang === "en" ? "Share" : pageLang === "es" ? "Compartir" : "Compartilhar";
   const siteSocials = getSiteSocialLinksForLanguage(lang);
 
@@ -57,7 +65,9 @@ export function PublisherArticleView({
             </motion.div>
           </section>
 
-          {article.cover_image ? (
+          {hasArticleVideo(article.videos) ? (
+            <ArticleHeroVideo videos={article.videos} labels={videoLabels} />
+          ) : article.cover_image ? (
             <section className="px-5 py-10 md:px-8">
               <figure className="mx-auto max-w-5xl overflow-hidden border border-gold/[0.18]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}

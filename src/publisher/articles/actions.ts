@@ -6,6 +6,13 @@ import { requireAdminPassword } from "../admin/adminAuth";
 import { canEditArticle, canPublish } from "../permissions";
 import { sanitizeTipTapForSave } from "../editor/youtubeEmbed";
 import {
+  emptyArticleVideos,
+  mergeVideosIntoContent,
+  resolveArticleVideos,
+  videosForDatabasePatch,
+  type ArticleVideos,
+} from "../types/video";
+import {
   embedBannersInContent,
   resolveArticleBannersList,
   serializeArticleBannersForSave,
@@ -54,6 +61,7 @@ export type ArticleRecord = {
   view_count: number;
   tag_ids: string[];
   banners: ArticleBanner[];
+  videos: ArticleVideos;
 };
 
 export type SaveArticleInput = {
@@ -72,6 +80,7 @@ export type SaveArticleInput = {
   sources: { label: string; url: string }[];
   tag_ids: string[];
   banners: ArticleBanner[];
+  videos: ArticleVideos;
 };
 
 export type ActionResult<T = void> =
@@ -104,6 +113,12 @@ function isArticleBannersSchemaError(message: string | undefined): boolean {
   return m.includes("banners") || (m.includes("column") && m.includes("articles"));
 }
 
+function isArticleVideoSchemaError(message: string | undefined): boolean {
+  if (!message) return false;
+  const m = message.toLowerCase();
+  return m.includes("youtube_") || m.includes("video_primary");
+}
+
 async function updateArticlePersistingBanners(
   supabase: NonNullable<Awaited<ReturnType<typeof requireStaff>>["supabase"]>,
   articleId: string,
@@ -116,6 +131,20 @@ async function updateArticlePersistingBanners(
   let result = await supabase.from("articles").update(withBanners).eq("id", articleId).select("updated_at, slug").single();
 
   if (!result.error) return result;
+
+  if (isArticleVideoSchemaError(result.error.message)) {
+    const patch = withBanners as Record<string, unknown>;
+    const { youtube_horizontal: _yh, youtube_vertical: _yv, video_primary: _vp, ...rest } = patch;
+    const withoutVideos = rest as typeof withBanners;
+    const retry = await supabase
+      .from("articles")
+      .update(withoutVideos)
+      .eq("id", articleId)
+      .select("updated_at, slug")
+      .single();
+    if (!retry.error) return retry;
+    result = retry;
+  }
 
   if (!isArticleBannersSchemaError(result.error.message)) return result;
 
@@ -339,6 +368,12 @@ export async function getArticle(id: string): Promise<ActionResult<ArticleRecord
       updated_at: data.updated_at,
       view_count: data.view_count ?? 0,
       banners: resolveArticleBannersList(data.banners, data.content),
+      videos: resolveArticleVideos({
+        youtube_horizontal: data.youtube_horizontal,
+        youtube_vertical: data.youtube_vertical,
+        video_primary: data.video_primary,
+        content: (data.content as Record<string, unknown>) ?? {},
+      }),
       tag_ids: (tagRows ?? []).map((t) => t.tag_id),
     },
   };
@@ -424,7 +459,9 @@ export async function saveArticle(
     slug = await uniqueSlugForArticle(supabase, input.language, slug, input.id);
   }
 
-  const safeContent = embedBannersInContent(sanitizeTipTapForSave(input.content), input.banners);
+  const sanitized = sanitizeTipTapForSave(input.content);
+  const withBanners = embedBannersInContent(sanitized, input.banners);
+  const safeContent = mergeVideosIntoContent(withBanners, input.videos ?? emptyArticleVideos());
   const basePatch = {
     title,
     slug,
@@ -438,6 +475,7 @@ export async function saveArticle(
     seo_description: input.seo_description,
     references_text: input.references_text,
     sources: input.sources,
+    ...videosForDatabasePatch(input.videos ?? emptyArticleVideos()),
   };
 
   const { data, error } = await updateArticlePersistingBanners(supabase, input.id, basePatch, input.banners);
@@ -510,7 +548,9 @@ export async function saveAndPublishArticle(
   const validation = validatePublishableTitleSlug(title, slug);
   if (validation) return { ok: false, error: validation };
 
-  const safeContent = embedBannersInContent(sanitizeTipTapForSave(input.content), input.banners);
+  const sanitizedPub = sanitizeTipTapForSave(input.content);
+  const withBannersPub = embedBannersInContent(sanitizedPub, input.banners);
+  const safeContent = mergeVideosIntoContent(withBannersPub, input.videos ?? emptyArticleVideos());
   const basePatch = {
     title,
     slug,
@@ -524,6 +564,7 @@ export async function saveAndPublishArticle(
     seo_description: input.seo_description,
     references_text: input.references_text,
     sources: input.sources,
+    ...videosForDatabasePatch(input.videos ?? emptyArticleVideos()),
     status: "published" as const,
     published_at: new Date().toISOString(),
     scheduled_at: null,
@@ -663,6 +704,7 @@ export async function restoreRevision(
       sources: article.data.sources,
       tag_ids: article.data.tag_ids,
       banners: article.data.banners,
+      videos: article.data.videos,
     },
     { snapshot: true },
   );

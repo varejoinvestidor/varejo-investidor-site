@@ -2,6 +2,7 @@ import { absoluteSiteUrl } from "../../config/site";
 import { getPublisherArticlePath } from "./paths";
 import { createPublisherPublicClient } from "../supabase/public";
 import { resolveArticleBannersList } from "../types/banner";
+import { emptyArticleVideos, resolveArticleVideos } from "../types/video";
 import type { PublicArticleDetail, PublicArticleSummary } from "./types";
 
 const PUBLIC_ARTICLE_PATH = "/artigos";
@@ -25,6 +26,9 @@ type ArticleRow = {
   banners?: unknown;
   author_id: string | null;
   category_id: string | null;
+  youtube_horizontal?: string | null;
+  youtube_vertical?: string | null;
+  video_primary?: string | null;
 };
 
 async function hydrateSummaries(rows: ArticleRow[]): Promise<PublicArticleSummary[]> {
@@ -75,6 +79,12 @@ function mapSummary(
     author_name: authorName ?? "Varejo Investidor",
     seo_title: row.seo_title,
     seo_description: row.seo_description,
+    videos: resolveArticleVideos({
+      youtube_horizontal: row.youtube_horizontal,
+      youtube_vertical: row.youtube_vertical,
+      video_primary: row.video_primary,
+      content: row.content ?? {},
+    }),
   };
 }
 
@@ -93,10 +103,13 @@ function mapDetail(row: ArticleRow, summary: PublicArticleSummary): PublicArticl
 }
 
 const listColumns =
-  "id, slug, language, title, subtitle, excerpt, cover_image, published_at, updated_at, featured, seo_title, seo_description, author_id, category_id";
+  "id, slug, language, title, subtitle, excerpt, cover_image, published_at, updated_at, featured, seo_title, seo_description, author_id, category_id, youtube_horizontal, youtube_vertical, video_primary, content";
 
-const detailColumns = `${listColumns}, content, references_text, sources, banners`;
-const detailColumnsLegacy = `${listColumns}, content, references_text, sources`;
+const listColumnsLegacy =
+  "id, slug, language, title, subtitle, excerpt, cover_image, published_at, updated_at, featured, seo_title, seo_description, author_id, category_id, content";
+
+const detailColumns = `${listColumns}, references_text, sources, banners`;
+const detailColumnsLegacy = `${listColumnsLegacy}, references_text, sources`;
 
 export async function getPublishedArticles(language = "pt", limit = 48): Promise<PublicArticleSummary[]> {
   const supabase = createPublisherPublicClient();
@@ -110,6 +123,18 @@ export async function getPublishedArticles(language = "pt", limit = 48): Promise
     .lte("published_at", new Date().toISOString())
     .order("published_at", { ascending: false })
     .limit(limit);
+
+  if (error && /youtube_|video_primary|column/i.test(error.message)) {
+    const fallback = await supabase
+      .from("articles")
+      .select(listColumnsLegacy)
+      .eq("language", language)
+      .eq("status", "published")
+      .lte("published_at", new Date().toISOString())
+      .order("published_at", { ascending: false })
+      .limit(limit);
+    if (!fallback.error && fallback.data) return hydrateSummaries(fallback.data as ArticleRow[]);
+  }
 
   if (error || !data) return [];
   return hydrateSummaries(data as ArticleRow[]);

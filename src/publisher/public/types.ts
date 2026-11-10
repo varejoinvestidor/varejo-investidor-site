@@ -1,4 +1,5 @@
 import type { ArticleBanner } from "../types/banner";
+import type { ArticleVideos } from "../types/video";
 
 export type PublicArticleSummary = {
   id: string;
@@ -17,6 +18,7 @@ export type PublicArticleSummary = {
   author_name: string | null;
   seo_title: string | null;
   seo_description: string | null;
+  videos: ArticleVideos;
 };
 
 export type PublicArticleDetail = PublicArticleSummary & {

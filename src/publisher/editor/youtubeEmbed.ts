@@ -31,10 +31,33 @@ export function parseYouTubeVideoId(raw: string): string | null {
   return null;
 }
 
-export function youtubeEmbedSrc(videoId: string): string {
+export type YoutubeEmbedOptions = {
+  autoplay?: boolean;
+  /** Com autoplay, navegadores exigem mute=1 até gesto do usuário. */
+  mute?: boolean;
+};
+
+export function youtubeEmbedSrc(videoId: string, options?: YoutubeEmbedOptions): string {
   const id = parseYouTubeVideoId(videoId);
   if (!id) return "";
-  return `https://www.youtube-nocookie.com/embed/${id}`;
+  const params = new URLSearchParams({
+    rel: "0",
+    modestbranding: "1",
+    playsinline: "1",
+  });
+  if (options?.autoplay) {
+    params.set("autoplay", "1");
+    params.set("mute", options.mute === false ? "0" : "1");
+  }
+  return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+}
+
+export function youtubePosterUrl(videoId: string, quality: "hq" | "max" = "hq"): string {
+  const id = parseYouTubeVideoId(videoId);
+  if (!id) return "";
+  return quality === "max"
+    ? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`
+    : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
 
 type TipTapNode = {
@@ -47,6 +70,7 @@ type TipTapNode = {
 /** Reduz attrs de vídeo e evita URLs inválidas que quebram save/publicação. */
 export function sanitizeTipTapForSave(doc: Record<string, unknown>): Record<string, unknown> {
   const publisherBanners = doc.publisher_banners;
+  const publisherVideos = doc.publisher_videos;
   const clone = JSON.parse(JSON.stringify(doc)) as TipTapNode;
 
   function walk(node: TipTapNode) {
@@ -67,5 +91,6 @@ export function sanitizeTipTapForSave(doc: Record<string, unknown>): Record<stri
   walk(clone);
   const out = clone as Record<string, unknown>;
   if (publisherBanners !== undefined) out.publisher_banners = publisherBanners;
+  if (publisherVideos !== undefined) out.publisher_videos = publisherVideos;
   return out;
 }

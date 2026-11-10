@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { YouTubeEmbedPlayer } from "../../components/publisher/YouTubeEmbedPlayer";
+import { parseYouTubeVideoId } from "../editor/youtubeEmbed";
 
 type TipTapMark = { type: string; attrs?: Record<string, unknown> };
 type TipTapNode = {
@@ -186,19 +188,12 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
         </td>
       );
     case "youtube": {
-      const src = safeUrl(node.attrs?.src as string | undefined);
-      if (!src) return null;
+      const raw = String(node.attrs?.src ?? "");
+      const videoId = parseYouTubeVideoId(raw) ?? raw;
+      if (!videoId) return null;
       return (
         <div key={key} className="aspect-video overflow-hidden border border-gold/[0.18]">
-          <iframe
-            title="Vídeo incorporado"
-            src={src}
-            className="h-full w-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
+          <YouTubeEmbedPlayer videoId={videoId} unmuteLabel="Ativar som" />
         </div>
       );
     }

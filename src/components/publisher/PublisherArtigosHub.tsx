@@ -9,6 +9,8 @@ import type { PublisherHubCopy } from "../../publisher/public/hubCopy";
 import { dateLocaleForArticles } from "../../publisher/public/hubCopy";
 import type { PublicArticleSummary } from "../../publisher/public/types";
 import { getPublisherArticlePath } from "../../publisher/public/paths";
+import { ArticleVideoThumb } from "./ArticleHeroVideo";
+import { hasArticleVideo } from "../../publisher/types/video";
 
 const PAGE_SIZE = 9;
 
@@ -44,7 +46,7 @@ export function PublisherArtigosHub({
   return (
     <>
       <SiteChrome t={t} locale={locale} onLocaleChange={changeLocale} />
-      <main lang={pageLocale} className="min-h-screen bg-ink text-paper">
+      <main lang={pageLocale} className="insights-portal min-h-screen bg-ink text-paper">
         <section className="border-b border-gold/[0.14] px-5 pb-14 pt-28 md:px-8 md:pt-36">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" className="mx-auto max-w-5xl">
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Varejo Investidor</p>
@@ -60,7 +62,14 @@ export function PublisherArtigosHub({
                 href={getPublisherArticlePath(language, featured.slug)}
                 className="group block overflow-hidden border border-gold/[0.18] bg-paper/[0.02]"
               >
-                {featured.cover_image ? (
+                {hasArticleVideo(featured.videos) ? (
+                  <ArticleVideoThumb
+                    videos={featured.videos}
+                    title={featured.title}
+                    variant="featured"
+                    className="transition duration-500 group-hover:scale-[1.01]"
+                  />
+                ) : featured.cover_image ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={featured.cover_image} alt="" className="aspect-[21/9] w-full object-cover transition duration-500 group-hover:scale-[1.02]" />
                 ) : (
@@ -82,7 +91,7 @@ export function PublisherArtigosHub({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={copy.searchPlaceholder}
-              className="w-full max-w-md rounded border border-gold/[0.2] bg-paper/[0.03] px-4 py-3 text-sm outline-none focus:border-gold/50"
+              className="insight-search-input w-full max-w-md rounded border border-gold/[0.2] px-4 py-3 text-sm outline-none focus:border-gold/50"
             />
 
             {!articles.length ? <p className="text-paper/55">{copy.empty}</p> : null}
@@ -92,9 +101,11 @@ export function PublisherArtigosHub({
                 <Link
                   key={post.id}
                   href={getPublisherArticlePath(language, post.slug)}
-                  className="group flex flex-col overflow-hidden border border-gold/[0.14] bg-paper/[0.02] transition hover:border-gold/35"
+                  className="insight-editorial-card group flex flex-col overflow-hidden border border-gold/[0.14] bg-paper/[0.02] transition hover:border-gold/35"
                 >
-                  {post.cover_image ? (
+                  {hasArticleVideo(post.videos) ? (
+                    <ArticleVideoThumb videos={post.videos} title={post.title} />
+                  ) : post.cover_image ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={post.cover_image} alt="" className="aspect-[16/10] w-full object-cover" />
                   ) : null}
