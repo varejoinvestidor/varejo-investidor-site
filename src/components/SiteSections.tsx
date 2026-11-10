@@ -1151,8 +1151,10 @@ export function SupportFooter({
         ]
       : []),
   ];
+  const insightNavLabel = insightLabels[locale]?.nav ?? insightLabels.en.nav;
   const mainFooterLinks = [
     { href: localizedFooterHref("home"), label: t.nav.home },
+    { href: getPublisherHubPath(locale), label: insightNavLabel },
     { href: localizedFooterHref("signals"), label: t.nav.signals },
     { href: localizedFooterHref("education"), label: t.nav.education },
     { href: localizedFooterPage("/select"), label: "Select" },

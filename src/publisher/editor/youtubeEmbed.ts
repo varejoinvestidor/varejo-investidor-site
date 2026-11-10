@@ -46,6 +46,7 @@ type TipTapNode = {
 
 /** Reduz attrs de vídeo e evita URLs inválidas que quebram save/publicação. */
 export function sanitizeTipTapForSave(doc: Record<string, unknown>): Record<string, unknown> {
+  const publisherBanners = doc.publisher_banners;
   const clone = JSON.parse(JSON.stringify(doc)) as TipTapNode;
 
   function walk(node: TipTapNode) {
@@ -64,5 +65,7 @@ export function sanitizeTipTapForSave(doc: Record<string, unknown>): Record<stri
   }
 
   walk(clone);
-  return clone as Record<string, unknown>;
+  const out = clone as Record<string, unknown>;
+  if (publisherBanners !== undefined) out.publisher_banners = publisherBanners;
+  return out;
 }

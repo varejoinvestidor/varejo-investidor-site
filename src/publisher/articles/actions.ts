@@ -667,3 +667,54 @@ export async function restoreRevision(
     { snapshot: true },
   );
 }
+
+/** Recoloca banners na coluna e em `content.publisher_banners` (admin, em massa). */
+export async function backfillAllArticleBannerEmbeds(): Promise<
+  ActionResult<{ updated: number; skipped: number }>
+> {
+  const ctx = await requireStaff();
+  if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
+  const { supabase, user, profile } = ctx;
+  if (profile.role !== "admin") {
+    return { ok: false, error: "Somente administradores podem executar o backfill de banners." };
+  }
+
+  const { data: rows, error: listError } = await supabase
+    .from("articles")
+    .select("id, slug, language, content, banners, status");
+
+  if (listError) return { ok: false, error: listError.message };
+
+  let updated = 0;
+  let skipped = 0;
+
+  for (const row of rows ?? []) {
+    const banners = resolveArticleBannersList(row.banners, row.content);
+    if (!banners.length) {
+      skipped += 1;
+      continue;
+    }
+
+    const base = (row.content as Record<string, unknown>) ?? emptyTipTapDocument();
+    const content = embedBannersInContent(base, banners);
+    const { error: patchError } = await updateArticlePersistingBanners(supabase, row.id, { content }, banners);
+
+    if (patchError) {
+      const { error: contentOnlyError } = await supabase.from("articles").update({ content }).eq("id", row.id);
+      if (contentOnlyError) {
+        return { ok: false, error: `${row.slug}: ${contentOnlyError.message}` };
+      }
+    }
+
+    updated += 1;
+    if (row.status === "published") {
+      revalidateArticlePaths(row.slug, row.language);
+    }
+  }
+
+  void logActivity(supabase, user.id, "article.banners_backfill", "bulk", { updated, skipped });
+  revalidatePath("/admin/artigos");
+  revalidatePath("/artigos");
+
+  return { ok: true, data: { updated, skipped } };
+}

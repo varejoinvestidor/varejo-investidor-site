@@ -26,7 +26,12 @@ import {
 } from "../translation/actions";
 import { ARTICLE_BANNER_PRESETS, bannerFromPreset, resolveArticleBanner } from "../data/articleBannerPresets";
 import { PUBLISHER_LANGUAGE_OPTIONS } from "../locales";
-import type { ArticleBanner, ArticleBannerPreset } from "../types/banner";
+import {
+  bannersFromArticleContent,
+  embedBannersInContent,
+  type ArticleBanner,
+  type ArticleBannerPreset,
+} from "../types/banner";
 import { PublisherRichTextEditor } from "./PublisherRichTextEditor";
 import { ArticleBannerPreviewStrip } from "./ArticleBannerPreview";
 
@@ -157,6 +162,18 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   useEffect(() => {
     payloadRef.current = payload;
   }, [payload]);
+
+  /** Artigos publicados antes do embed no conteúdo: sincroniza uma vez ao abrir o editor. */
+  useEffect(() => {
+    if (!article.banners.length) return;
+    if (bannersFromArticleContent(article.content).length) return;
+    setArticle((prev) => ({
+      ...prev,
+      content: embedBannersInContent(prev.content, prev.banners),
+    }));
+    setIsDirty(true);
+    isDirtyRef.current = true;
+  }, [article.id]);
 
   useEffect(() => {
     isDirtyRef.current = isDirty;
@@ -298,7 +315,11 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
 
   function addBannerPreset(preset: ArticleBannerPreset) {
     const banner = bannerFromPreset(preset, "inline");
-    patchArticle((prev) => ({ ...prev, banners: [...prev.banners, banner] }));
+    patchArticle((prev) => ({
+      ...prev,
+      banners: [...prev.banners, banner],
+      content: embedBannersInContent(prev.content, [...prev.banners, banner]),
+    }));
     window.setTimeout(() => {
       setSelectedBannerId(banner.id);
       document.getElementById(`banner-editor-${banner.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -313,7 +334,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       if (target < 0 || target >= prev.banners.length) return prev;
       const banners = [...prev.banners];
       [banners[idx], banners[target]] = [banners[target], banners[idx]];
-      return { ...prev, banners };
+      return { ...prev, banners, content: embedBannersInContent(prev.content, banners) };
     });
   }
 
@@ -324,14 +345,17 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   }
 
   function updateBanner(id: string, patch: Partial<ArticleBanner>) {
-    patchArticle((prev) => ({
-      ...prev,
-      banners: prev.banners.map((b) => (b.id === id ? { ...b, ...patch } : b)),
-    }));
+    patchArticle((prev) => {
+      const banners = prev.banners.map((b) => (b.id === id ? { ...b, ...patch } : b));
+      return { ...prev, banners, content: embedBannersInContent(prev.content, banners) };
+    });
   }
 
   function removeBanner(id: string) {
-    patchArticle((prev) => ({ ...prev, banners: prev.banners.filter((b) => b.id !== id) }));
+    patchArticle((prev) => {
+      const banners = prev.banners.filter((b) => b.id !== id);
+      return { ...prev, banners, content: embedBannersInContent(prev.content, banners) };
+    });
   }
 
   async function onAutoTranslate() {
@@ -508,7 +532,12 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           <PublisherRichTextEditor
             content={article.content}
             editable={!preview}
-            onChange={(json) => patchArticle({ content: json })}
+            onChange={(json) =>
+              patchArticle((prev) => ({
+                ...prev,
+                content: embedBannersInContent(json, prev.banners),
+              }))
+            }
           />
 
           <ArticleBannerPreviewStrip

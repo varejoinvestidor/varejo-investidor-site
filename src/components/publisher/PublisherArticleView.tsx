@@ -107,7 +107,8 @@ export function PublisherArticleView({
 
               <PublisherArticleBanners banners={article.banners} placement="bottom" language={lang} />
 
-              <div className="insight-share mt-12 space-y-8">
+              <div className="insight-share mt-12">
+                <div className="grid gap-8 md:grid-cols-2">
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">{shareLabel}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -152,6 +153,7 @@ export function PublisherArticleView({
                       </a>
                     ))}
                   </div>
+                </div>
                 </div>
               </div>
             </div>

@@ -5,6 +5,7 @@ import { listArticles } from "../../../../src/publisher/articles/actions";
 import type { ArticleStatus } from "../../../../src/publisher/types";
 import { getPublisherSession } from "../../../../src/publisher/supabase/server";
 import { listCategories } from "../../../../src/publisher/taxonomy/actions";
+import { ArticleBannersBackfillButton } from "../../../../src/publisher/admin/ArticleBannersBackfillButton";
 
 type Props = {
   searchParams?: {
@@ -52,6 +53,8 @@ export default async function AdminArtigosPage({ searchParams }: Props) {
       <Suspense fallback={null}>
         <ArticleListFilters categories={categories} />
       </Suspense>
+
+      {profile?.role === "admin" ? <ArticleBannersBackfillButton /> : null}
 
       <div className="overflow-x-auto rounded-xl border border-line/12">
         <ArticleListTable items={items} isAdmin={profile?.role === "admin"} />
