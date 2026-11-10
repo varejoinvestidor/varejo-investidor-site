@@ -1,3 +1,5 @@
+import { formatPipsDisplay } from "./pips";
+import { parseReportMonth } from "./reportMonth";
 import { resolveOperationPips } from "./resolveOperationPips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "./types";
 
@@ -12,11 +14,20 @@ const PIE_COLORS = {
   active: "#6b8cce",
 };
 
+function sortClosedForTimeline(a: EliteOperationRow, b: EliteOperationRow): number {
+  const da = a.traded_on ?? "";
+  const db = b.traded_on ?? "";
+  if (da && db && da !== db) return da.localeCompare(db);
+  if (da && !db) return -1;
+  if (!da && db) return 1;
+  return (a.signal_number ?? 0) - (b.signal_number ?? 0);
+}
+
 export function buildCumulativePipsLine(ops: EliteOperationRow[]): LinePoint[] {
   const closed = ops
     .filter((o) => o.show_public && o.status === "closed")
     .slice()
-    .sort((a, b) => (a.traded_on ?? "").localeCompare(b.traded_on ?? ""));
+    .sort(sortClosedForTimeline);
 
   let cumulative = 0;
   return closed.map((o, index) => {
@@ -29,31 +40,35 @@ export function buildCumulativePipsLine(ops: EliteOperationRow[]): LinePoint[] {
   });
 }
 
-export function buildMonthlyPipsBars(monthly: EliteMonthlyReportRow[], ops: EliteOperationRow[]): BarPoint[] {
-  if (monthly.length) {
-    return monthly
-      .slice()
-      .sort((a, b) => a.year - b.year || a.month_index - b.month_index)
-      .slice(-12)
-      .map((m) => ({
-        label: `${m.month_label}/${String(m.year).slice(-2)}`,
-        pips: m.pips,
-        signals: m.signals,
-      }));
-  }
+/** Barras por mês do relatório (`report_month`), mesma base dos cards de desempenho. */
+export function aggregateMonthlyPipsFromOperations(ops: EliteOperationRow[]): BarPoint[] {
+  const publicOps = ops.filter((r) => r.show_public);
+  const map = new Map<string, BarPoint & { sortKey: number }>();
 
-  const byMonth = new Map<string, { pips: number; signals: number }>();
-  for (const o of ops.filter((r) => r.show_public)) {
-    const key = o.report_month || "—";
-    const bucket = byMonth.get(key) ?? { pips: 0, signals: 0 };
+  for (const o of publicOps) {
+    const parsed = parseReportMonth(o.report_month);
+    if (!parsed) continue;
+    const key = `${parsed.year}-${parsed.month_index}`;
+    const label = `${parsed.month_label}/${String(parsed.year).slice(-2)}`;
+    const sortKey = parsed.year * 12 + parsed.month_index;
+    const bucket = map.get(key) ?? { label, pips: 0, signals: 0, sortKey };
     bucket.signals += 1;
     if (o.status === "closed") bucket.pips += resolveOperationPips(o).pips;
-    byMonth.set(key, bucket);
+    map.set(key, bucket);
   }
 
-  return Array.from(byMonth.entries())
+  return Array.from(map.values())
+    .sort((a, b) => a.sortKey - b.sortKey)
     .slice(-12)
-    .map(([label, v]) => ({ label, pips: v.pips, signals: v.signals }));
+    .map(({ label, pips, signals }) => ({
+      label,
+      pips: Math.round(pips * 10) / 10,
+      signals,
+    }));
+}
+
+export function buildMonthlyPipsBars(_monthly: EliteMonthlyReportRow[], ops: EliteOperationRow[]): BarPoint[] {
+  return aggregateMonthlyPipsFromOperations(ops);
 }
 
 export function buildTradeOutcomePie(ops: EliteOperationRow[]): PieSlice[] {
@@ -68,11 +83,12 @@ export function buildTradeOutcomePie(ops: EliteOperationRow[]): PieSlice[] {
       active += 1;
       continue;
     }
+    const pip = resolveOperationPips(o).pips;
     if (o.close_outcome === "take") take += 1;
     else if (o.close_outcome === "stop") stop += 1;
     else if (o.close_outcome === "manual") manual += 1;
-    else if (o.result_pips > 0) take += 1;
-    else if (o.result_pips < 0) stop += 1;
+    else if (pip > 0) take += 1;
+    else if (pip < 0) stop += 1;
     else manual += 1;
   }
 
@@ -83,3 +99,5 @@ export function buildTradeOutcomePie(ops: EliteOperationRow[]): PieSlice[] {
   if (active) slices.push({ label: "Em andamento", value: active, color: PIE_COLORS.active });
   return slices;
 }
+
+export { formatPipsDisplay };

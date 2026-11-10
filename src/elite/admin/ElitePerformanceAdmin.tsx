@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { ELITE_LOT_SIZES, formatUsd, lotTableRows } from "../lotPips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
+import { formatPipsDisplay } from "../pips";
+import { resolveOperationPips } from "../resolveOperationPips";
 import { computeTraderPerformance } from "../traderPerformance";
 import { tradeResultFromRow, tradeResultLabel } from "./tradeResult";
 import { EliteSchemaAlert } from "./EliteSchemaAlert";
@@ -67,8 +69,7 @@ export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props)
                 <div className="flex justify-between gap-2">
                   <dt className="text-paper/50">Pips</dt>
                   <dd className={`font-mono font-bold tabular-nums ${p.pips >= 0 ? "text-rise" : "text-fall"}`}>
-                    {p.pips >= 0 ? "+" : ""}
-                    {p.pips}
+                    {formatPipsDisplay(p.pips)}
                   </dd>
                 </div>
               </dl>
@@ -113,7 +114,9 @@ export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props)
                     <td className="px-2 py-2 font-mono">{row.asset}</td>
                     <td className="px-2 py-2 text-paper/55">{row.traded_on ?? "—"}</td>
                     <td className="px-2 py-2 text-xs">{tradeResultLabel(tradeResultFromRow(row))}</td>
-                    <td className="px-2 py-2 text-right font-mono tabular-nums">{row.result_label}</td>
+                    <td className="px-2 py-2 text-right font-mono tabular-nums">
+                      {resolveOperationPips(row).label}
+                    </td>
                   </tr>
                 ))
               )}

@@ -1,5 +1,6 @@
 import { EliteAdminSubnav } from "../../../../../src/elite/admin/EliteAdminSubnav";
 import { ElitePerformanceAdmin } from "../../../../../src/elite/admin/ElitePerformanceAdmin";
+import { reconcileMonthlyFromOperations } from "../../../../../src/elite/reconcileMonthly";
 import { fetchStaffEliteData } from "../../../../../src/elite/queries";
 import { getPublisherSession } from "../../../../../src/publisher/supabase/server";
 
@@ -15,7 +16,11 @@ export default async function AdminEliteDesempenhoPage() {
     <div className="space-y-6">
       <h2 className="font-serif text-3xl text-paper">Relatório Elite — Desempenho</h2>
       <EliteAdminSubnav />
-      <ElitePerformanceAdmin operations={data.operations} monthly={data.monthly} loadError={data.error} />
+      <ElitePerformanceAdmin
+        operations={data.operations}
+        monthly={reconcileMonthlyFromOperations(data.monthly, data.operations)}
+        loadError={data.error}
+      />
     </div>
   );
 }

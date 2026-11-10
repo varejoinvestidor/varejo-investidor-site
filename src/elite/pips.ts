@@ -31,10 +31,15 @@ export function pipsBetween(asset: string, direction: EliteDirection, from: numb
 }
 
 export function formatPipsLabel(pips: number): string {
+  return `${formatPipsDisplay(pips)} pips`;
+}
+
+/** Exibição numérica sem sufixo (cards e gráficos). */
+export function formatPipsDisplay(pips: number): string {
   const sign = pips >= 0 ? "+" : "-";
   const abs = Math.abs(pips);
   const body = Number.isInteger(abs) ? String(abs) : abs.toFixed(1).replace(".", ",");
-  return `${sign}${body} pips`;
+  return `${sign}${body}`;
 }
 
 export function computeSignalPips(input: {

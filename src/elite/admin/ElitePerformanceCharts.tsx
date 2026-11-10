@@ -6,6 +6,7 @@ import {
   buildCumulativePipsLine,
   buildMonthlyPipsBars,
   buildTradeOutcomePie,
+  formatPipsDisplay,
   type BarPoint,
   type LinePoint,
   type PieSlice,
@@ -55,7 +56,7 @@ function PerformanceLineChart({ data }: { data: LinePoint[] }) {
         />
         {points.map((p) => (
           <circle key={p.label} cx={p.x} cy={p.y} r="1.8" fill="#0f8f56" stroke="#c6994a" strokeWidth="0.6">
-            <title>{`${p.label}: ${p.cumulative >= 0 ? "+" : ""}${p.cumulative} pips (trade ${p.delta >= 0 ? "+" : ""}${p.delta})`}</title>
+            <title>{`${p.label}: ${formatPipsDisplay(p.cumulative)} pips (trade ${formatPipsDisplay(p.delta)})`}</title>
           </circle>
         ))}
       </svg>
@@ -79,8 +80,7 @@ function PerformanceBarChart({ data }: { data: BarPoint[] }) {
         return (
           <div key={item.label} className="flex min-w-[44px] flex-1 flex-col items-center gap-2" title={`${item.signals} sinais`}>
             <span className={`font-mono text-[10px] font-bold tabular-nums ${positive ? "text-rise" : "text-fall"}`}>
-              {item.pips >= 0 ? "+" : ""}
-              {item.pips}
+              {formatPipsDisplay(item.pips)}
             </span>
             <div
               className={`w-full max-w-[52px] rounded-t-sm ${positive ? "bg-rise/75" : "bg-fall/75"}`}
@@ -177,8 +177,8 @@ export function ElitePerformanceCharts({
       <div>
         <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Gráficos de desempenho</h3>
         <p className="mt-1 text-xs text-paper/50">
-          Linha = pips acumulados (trades públicos fechados). Barras = consolidado mensal. Pizza = take, stop, manual e
-          operações em andamento.
+          Linha = pips acumulados (trades públicos fechados). Barras = soma por mês do relatório (mesmos pips dos cards).
+          Pizza = take, stop, manual e em andamento.
         </p>
       </div>
       <div className="grid gap-8 lg:grid-cols-2">
