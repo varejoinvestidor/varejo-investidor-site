@@ -28,6 +28,8 @@ Na Vercel, replique as mesmas variáveis no projeto do site.
 
 ## 3. Primeiro administrador
 
+> Produção: após migrations (`RUN_ALL_PUBLISHER.sql` no SQL Editor, ou `POST /api/publisher/bootstrap-schema` com `Authorization: Bearer CRON_SECRET`), use o dashboard Supabase ou `POST /api/publisher/bootstrap-admin` (mesmo token) uma vez, depois prefira criar usuários pelo Auth.
+
 1. **Authentication → Users → Add user** (e-mail + senha).
 2. No SQL Editor:
 
