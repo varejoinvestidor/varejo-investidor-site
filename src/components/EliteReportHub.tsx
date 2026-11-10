@@ -703,7 +703,11 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
   const setFilter = (key: keyof typeof filters, value: string) => setFilters((current) => ({ ...current, [key]: value }));
 
   return (
-    <main lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} className="page-content min-h-screen overflow-hidden bg-ink text-paper">
+    <main
+      lang={localeToHtmlLang(locale)}
+      dir={isRtlLocale(locale) ? "rtl" : "ltr"}
+      className="elite-report-page page-content min-h-screen overflow-x-clip bg-ink text-paper"
+    >
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
       <section className="page-hero premium-stage relative border-b border-gold/[0.14] px-5 pb-16 pt-36 md:px-8 md:pb-24 md:pt-48">

@@ -52,3 +52,19 @@
   color: #b8892d;
   text-decoration: underline;
 }
+
+@media (max-width: 767px) {
+  .admin-elite-report textarea,
+  .admin-elite-report input,
+  .admin-elite-report select {
+    font-size: 16px;
+  }
+
+  .admin-elite-report fieldset {
+    padding: 0.85rem !important;
+  }
+
+  .admin-elite-report h3 {
+    font-size: 0.72rem;
+  }
+}

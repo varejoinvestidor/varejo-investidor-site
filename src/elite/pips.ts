@@ -5,11 +5,28 @@ export type CloseOutcome = "take" | "stop" | "manual";
 export function pipSizeForAsset(asset: string): number {
   const a = asset.toUpperCase().replace(/\s/g, "");
   if (a.includes("JPY")) return 0.01;
-  if (a.includes("XAU") || a.includes("GOLD")) return 0.1;
+  if (a.includes("XAU") || a.includes("GOLD") || a.includes("XAG")) return 0.1;
   if (a.includes("USOIL") || a.includes("WTI") || a.includes("BRENT") || a.includes("OIL")) return 0.01;
   if (a.includes("BTC")) return 1;
-  if (a.includes("NAS") || a.includes("US30") || a.includes("US500") || a.includes("SPX")) return 1;
-  return 0.0001;
+  if (a.includes("ETH") || a.includes("SOL") || a.includes("BNB")) return 0.01;
+  if (
+    a.includes("USP") ||
+    a.includes("US500") ||
+    a.includes("SPX") ||
+    a.includes("SP500") ||
+    a.includes("NAS") ||
+    a.includes("US100") ||
+    a.includes("USTEC") ||
+    a.includes("US30") ||
+    a.includes("DJ30") ||
+    a.includes("GER") ||
+    a.includes("UK100") ||
+    a.includes("EU50")
+  ) {
+    return 0.1;
+  }
+  if (a.includes("/")) return 0.0001;
+  return 0.01;
 }
 
 export function pipsBetween(asset: string, direction: EliteDirection, from: number, to: number): number {

@@ -3,6 +3,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { getPublisherSession } from "../publisher/supabase/server";
+import { normalizeEliteAsset } from "./assets";
 import { computeSignalPips } from "./pips";
 import {
   installEliteSchemaFromAdmin as installEliteSchemaCore,
@@ -51,7 +52,7 @@ function buildOperationRow(input: EliteOperationInput) {
   const activeLabel = input.status === "active";
 
   return {
-    asset: input.asset.trim(),
+    asset: normalizeEliteAsset(input.asset),
     direction: input.direction,
     status: input.status,
     signal_number: input.signal_number ?? null,

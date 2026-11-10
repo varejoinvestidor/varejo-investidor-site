@@ -6,6 +6,7 @@ import { ADMIN_ANALYTICS_NAV, ADMIN_FOOTER_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEA
 import { ROLE_LABELS } from "../permissions";
 import type { PublisherProfile } from "../types";
 import { createPublisherBrowserClient } from "../supabase/browser";
+import { AdminMobileNav } from "./AdminMobileNav";
 
 type Props = {
   profile: PublisherProfile;
@@ -146,18 +147,9 @@ export function AdminShell({ profile, children }: Props) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex items-center justify-between border-b border-line/10 px-4 py-4 lg:px-8">
-            <div className="flex items-center gap-3 lg:hidden">
-              <p className="text-xs uppercase tracking-widest text-gold">VI Publisher</p>
-              <Link
-                href="/admin/configuracoes"
-                className="rounded p-1.5 text-paper/50 hover:text-gold"
-                aria-label="Configurações"
-              >
-                <SettingsIcon />
-              </Link>
-            </div>
-            <div className="ml-auto flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-paper/70">
+          <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line/10 px-4 py-4 lg:px-8">
+            <AdminMobileNav isAdmin={isAdmin} />
+            <div className="flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-paper/70">
               <a href="/artigos" className="transition hover:text-gold" target="_blank" rel="noreferrer">
                 /artigos
               </a>
@@ -173,7 +165,7 @@ export function AdminShell({ profile, children }: Props) {
               </button>
             </div>
           </header>
-          <main className="flex-1 px-4 py-8 lg:px-8">{children}</main>
+          <main className="flex-1 px-3 py-6 pb-24 sm:px-4 sm:py-8 lg:px-8 lg:pb-8">{children}</main>
         </div>
       </div>
     </div>

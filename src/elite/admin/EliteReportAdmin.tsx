@@ -4,7 +4,9 @@ import { FormEvent, useMemo, useRef, useState } from "react";
 import { deleteEliteOperation, upsertEliteMonthly, upsertEliteOperation } from "../actions";
 import { computeSignalPips, formatPipsLabel } from "../pips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
+import { ELITE_ASSET_SUGGESTIONS } from "../assets";
 import { parseWhatsAppSignal } from "../whatsappParse";
+import { EliteOperationsMobileList } from "./EliteOperationsMobileList";
 import { EliteSchemaAlert } from "./EliteSchemaAlert";
 import { EliteAdminSubnav } from "./EliteAdminSubnav";
 import { draftFromRow, emptyOperationDraft, type OperationDraft } from "./operationFormState";
@@ -211,10 +213,11 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
     else window.location.reload();
   }
 
-  const fieldClass = "w-full rounded border border-line/15 bg-[#0a0a0a] px-3 py-2 text-sm";
+  const fieldClass =
+    "w-full min-h-[44px] rounded border border-line/15 bg-[#0a0a0a] px-3 py-2.5 text-base sm:text-sm";
 
   return (
-    <div className="mx-auto max-w-6xl space-y-10">
+    <div className="admin-elite-report mx-auto max-w-6xl space-y-8 md:space-y-10">
       <EliteAdminSubnav />
       <p className="text-sm text-paper/60">
         Cadastre no mesmo formato do WhatsApp. Ao salvar, o consolidado do mês e{" "}
@@ -225,13 +228,13 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
       </p>
       {message ? <EliteSchemaAlert message={message} /> : null}
 
-      <section className="space-y-4 rounded-xl border border-line/12 p-6">
+      <section className="space-y-4 rounded-xl border border-line/12 p-4 sm:p-6">
         <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Colar do WhatsApp</h3>
         <textarea
           rows={5}
           value={pasteText}
           onChange={(e) => setPasteText(e.target.value)}
-          placeholder={`Sinal: 4.419\n🔔 AUD/JPY COMPRA  109.397\n🎯 Take Profit: 109.761\n🚫 Stop Loss: 108.901`}
+          placeholder={`Sinal: 4.419\n🔔 USPX500 COMPRA 5842.5\n🔔 BTC/USD VENDA 95000\n🎯 Take Profit: …\n🚫 Stop Loss: …`}
           className={`${fieldClass} font-mono text-xs`}
         />
         <button
@@ -255,8 +258,8 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
           ) : null}
         </div>
 
-        <form onSubmit={(e) => void onSubmitOperation(e)} className="grid gap-4 sm:grid-cols-2">
-          <fieldset className="sm:col-span-2 grid gap-3 rounded-lg border border-gold/15 p-4 sm:grid-cols-2 lg:grid-cols-4">
+        <form id="elite-operation-form" onSubmit={(e) => void onSubmitOperation(e)} className="grid gap-4 sm:grid-cols-2">
+          <fieldset className="sm:col-span-2 grid grid-cols-1 gap-3 rounded-lg border border-gold/15 p-4 sm:grid-cols-2 lg:grid-cols-4">
             <legend className="px-1 text-xs font-bold uppercase tracking-wider text-gold">Identificação</legend>
             <label className="block text-xs text-paper/50">
               Nº do sinal
@@ -271,16 +274,25 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
                 className={`${fieldClass} mt-1`}
               />
             </label>
-            <label className="block text-xs text-paper/50">
+            <label className="block text-xs text-paper/50 sm:col-span-2 lg:col-span-1">
               Ativo
               <input
                 name="asset"
+                list="elite-asset-suggestions"
                 required
                 value={draft.asset}
                 onChange={(e) => setDraft((p) => ({ ...p, asset: e.target.value.toUpperCase() }))}
-                placeholder="AUD/JPY"
+                placeholder="USPX500 · BTC/USD · SPY"
                 className={`${fieldClass} mt-1 font-mono`}
               />
+              <datalist id="elite-asset-suggestions">
+                {ELITE_ASSET_SUGGESTIONS.map((symbol) => (
+                  <option key={symbol} value={symbol} />
+                ))}
+              </datalist>
+              <p className="mt-1 text-[10px] leading-4 text-paper/40">
+                Forex, índices, cripto, ações e ETFs (ex.: USPX500, AAPL).
+              </p>
             </label>
             <label className="block text-xs text-paper/50">
               Direção
@@ -310,7 +322,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
             </label>
           </fieldset>
 
-          <fieldset className="sm:col-span-2 grid gap-3 rounded-lg border border-rise/20 p-4 sm:grid-cols-3">
+          <fieldset className="sm:col-span-2 grid grid-cols-1 gap-3 rounded-lg border border-rise/20 p-4 sm:grid-cols-3">
             <legend className="px-1 text-xs font-bold uppercase tracking-wider text-rise">Preços (como no WhatsApp)</legend>
             <label className="block text-xs text-paper/50">
               Entrada
@@ -448,14 +460,26 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
                 ? "Instale as tabelas Elite no Supabase (alerta acima) antes de salvar."
                 : undefined
             }
-            className="sm:col-span-2 rounded bg-gold px-4 py-2 text-xs font-bold uppercase tracking-wider text-ink disabled:cursor-not-allowed disabled:opacity-45"
+            className="max-sm:hidden sm:col-span-2 min-h-[48px] rounded bg-gold px-4 py-3 text-xs font-bold uppercase tracking-wider text-ink disabled:cursor-not-allowed disabled:opacity-45"
           >
             {editingId ? "Salvar alterações" : "Salvar operação"}
           </button>
         </form>
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gold/25 bg-[#070707]/95 p-3 backdrop-blur-md sm:hidden">
+          <button
+            type="button"
+            disabled={schemaBlocked}
+            onClick={() =>
+              (document.getElementById("elite-operation-form") as HTMLFormElement | null)?.requestSubmit()
+            }
+            className="flex w-full min-h-[48px] items-center justify-center rounded bg-gold text-xs font-bold uppercase tracking-wider text-ink disabled:opacity-45"
+          >
+            {editingId ? "Salvar alterações" : "Salvar operação"}
+          </button>
+        </div>
       </section>
 
-      <section className="space-y-3 rounded-xl border border-line/12 p-4">
+      <section className="space-y-3 rounded-xl border border-line/12 p-4 sm:p-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <h3 className="text-sm font-bold uppercase tracking-wider text-paper/55">Sinais salvos</h3>
           <p className="text-xs text-paper/45">{filteredOps.length} de {operations.length}</p>
@@ -467,7 +491,17 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
           placeholder="Buscar por nº do sinal (ex: 4419) ou ativo (ex: AUD/JPY)"
           className={fieldClass}
         />
-        <div className="overflow-x-auto">
+        <EliteOperationsMobileList
+          rows={filteredOps}
+          editingId={editingId}
+          onEdit={startEdit}
+          onDelete={(row) => {
+            if (confirm(`Excluir sinal ${row.signal_number ?? row.asset}?`)) {
+              void deleteEliteOperation(row.id).then(() => window.location.reload());
+            }
+          }}
+        />
+        <div className="hidden overflow-x-auto md:block">
           <table className="w-full min-w-[960px] text-sm">
             <thead className="text-xs uppercase tracking-wider text-paper/45">
               <tr>
@@ -535,7 +569,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
         </div>
       </section>
 
-      <section className="space-y-4 rounded-xl border border-line/12 p-6">
+      <section className="space-y-4 rounded-xl border border-line/12 p-4 sm:p-6">
         <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Consolidado mensal (ajuste manual)</h3>
         <p className="text-xs text-paper/50">Recalculado automaticamente ao salvar sinais. Use só para correções.</p>
         <form onSubmit={(e) => void onNewMonthly(e)} className="grid gap-3 sm:grid-cols-2">
