@@ -82,6 +82,14 @@ export default async function AdminOverviewPage() {
         <QuickLink href="/admin/artigos/novo" title="Novo artigo" description="Abre um rascunho no editor Tiptap." primary />
         <QuickLink href="/admin/artigos" title="Todos os artigos" description="Filtrar por status, idioma ou busca." />
         <QuickLink href="/admin/agendamentos" title="Agendamentos" description="Publicações com data futura." />
+        {profile?.role === "admin" ? (
+          <QuickLink
+            href="/admin/vi-administrador"
+            title="VI Administrador"
+            description="Páginas, cliques e relatórios de acesso."
+            primary
+          />
+        ) : null}
         <QuickLink
           href="/artigos"
           title="Portal público (PT)"

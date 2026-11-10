@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { ViSiteAnalytics } from "../src/analytics/ViSiteAnalytics";
 import { SiteJsonLd } from "../src/components/SiteJsonLd";
 import { buildPageMetadata } from "../src/data/localeMetadata";
 import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, localeToHtmlLang, type Locale } from "../src/i18n";
@@ -40,6 +41,7 @@ export default function RootLayout({
       </head>
       <body>
         <SiteJsonLd />
+        <ViSiteAnalytics />
         {children}
       </body>
     </html>

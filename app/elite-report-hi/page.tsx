@@ -1,5 +1,5 @@
-import EliteReportHub from "../../src/components/EliteReportHub";
+import EliteReportHubEntry from "../../src/components/EliteReportHubEntry";
 
 export default function EliteReportHiPage() {
-  return <EliteReportHub initialLocale="hi" />;
+  return <EliteReportHubEntry initialLocale="hi" />;
 }

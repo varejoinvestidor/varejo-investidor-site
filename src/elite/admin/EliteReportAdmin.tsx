@@ -256,7 +256,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
         </div>
 
         <form onSubmit={(e) => void onSubmitOperation(e)} className="grid gap-4 sm:grid-cols-2">
-          <fieldset className="sm:col-span-2 grid gap-3 rounded-lg border border-gold/15 p-4 sm:grid-cols-2">
+          <fieldset className="sm:col-span-2 grid gap-3 rounded-lg border border-gold/15 p-4 sm:grid-cols-2 lg:grid-cols-4">
             <legend className="px-1 text-xs font-bold uppercase tracking-wider text-gold">Identificação</legend>
             <label className="block text-xs text-paper/50">
               Nº do sinal
@@ -292,6 +292,20 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
               >
                 <option value="Compra">Compra</option>
                 <option value="Venda">Venda</option>
+              </select>
+            </label>
+            <label className="block text-xs text-paper/50">
+              Canal
+              <select
+                name="signal_tier"
+                value={draft.signalTier}
+                onChange={(e) =>
+                  setDraft((p) => ({ ...p, signalTier: e.target.value === "free" ? "free" : "elite" }))
+                }
+                className={`${fieldClass} mt-1`}
+              >
+                <option value="elite">Elite</option>
+                <option value="free">Free</option>
               </select>
             </label>
           </fieldset>
@@ -413,20 +427,10 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
               className={`${fieldClass} mt-1`}
             />
           </label>
-          <label className="block text-xs text-paper/50 sm:col-span-2">
-            Visibilidade no site
-            <select
-              name="signal_tier"
-              value={draft.signalTier}
-              onChange={(e) =>
-                setDraft((p) => ({ ...p, signalTier: e.target.value === "free" ? "free" : "elite" }))
-              }
-              className={`${fieldClass} mt-1`}
-            >
-              <option value="elite">Elite — entrada visível; alvo e stop ocultos (badge ELITE)</option>
-              <option value="free">Free — entrada, alvo e stop visíveis no relatório</option>
-            </select>
-          </label>
+          <p className="text-[11px] leading-5 text-paper/45 sm:col-span-2">
+            <strong className="text-paper/65">Canal Free</strong> libera entrada, alvo e stop no site.{" "}
+            <strong className="text-paper/65">Elite</strong> oculta alvo e stop (badge ELITE).
+          </p>
           <label className="flex items-center gap-2 text-sm text-paper/70 sm:col-span-2">
             <input
               type="checkbox"

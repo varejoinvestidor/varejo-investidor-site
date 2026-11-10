@@ -1,5 +1,5 @@
-import EliteReportHub from "../../../src/components/EliteReportHub";
+import EliteReportHubEntry from "../../../src/components/EliteReportHubEntry";
 
 export default function ArabicEliteReportPage() {
-  return <EliteReportHub initialLocale="ar" />;
+  return <EliteReportHubEntry initialLocale="ar" />;
 }

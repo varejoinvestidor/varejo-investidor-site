@@ -730,6 +730,7 @@ export function FreeChannelCTA({
           href={t.freeChannel.link}
           target="_blank"
           rel="noopener noreferrer"
+          data-vi-track="cta-canal-formiga"
           onClick={() => trackVarejoClick("canal_formiga_click", { locale: t.locale.toLowerCase() })}
           className="shrink-0 border border-rise bg-rise px-6 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper shadow-[0_18px_40px_rgba(15,143,86,0.25)] transition hover:-translate-y-0.5 hover:border-gold hover:bg-gold hover:text-ink sm:min-w-[260px]"
         >
@@ -970,7 +971,7 @@ export function SupportFooter({
               social: "Redes",
               levels: "N\u00EDveis",
               markets: "Mercados",
-              content: "Artigos",
+              content: "Mercados",
               platforms: "Plataformas",
               tools: "Ferramentas",
               language: "Idioma",

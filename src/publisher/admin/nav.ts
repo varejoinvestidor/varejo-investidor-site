@@ -22,6 +22,14 @@ export const ADMIN_RESEARCH_NAV: AdminNavItem[] = [
   { href: "/admin/relatorio-elite/desempenho", label: "Desempenho & lotes", description: "KPIs e consolidado" },
 ];
 
+/** VI Administrador — analytics do site público (somente role admin). */
+export const ADMIN_ANALYTICS_NAV: AdminNavItem[] = [
+  { href: "/admin/vi-administrador", label: "Visão geral", description: "KPIs e tendências" },
+  { href: "/admin/vi-administrador/paginas", label: "Páginas", description: "URLs mais vistas" },
+  { href: "/admin/vi-administrador/cliques", label: "Cliques & CTAs", description: "Botões e campanhas" },
+  { href: "/admin/vi-administrador/relatorios", label: "Relatórios", description: "Diário, semanal, mensal" },
+];
+
 /** @deprecated use ADMIN_PUBLISHER_NAV + ADMIN_RESEARCH_NAV */
 export const ADMIN_NAV: AdminNavItem[] = [...ADMIN_PUBLISHER_NAV, ...ADMIN_RESEARCH_NAV];
 

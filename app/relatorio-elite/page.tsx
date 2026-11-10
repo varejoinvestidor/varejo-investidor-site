@@ -1,4 +1,4 @@
-import EliteReportHub from "../../src/components/EliteReportHub";
+import EliteReportHubEntry from "../../src/components/EliteReportHubEntry";
 import { aggregateStats, mapMonthly, mapOperations } from "../../src/elite/mapToHub";
 import { fetchPublicEliteData } from "../../src/elite/queries";
 import { computeTraderPerformance } from "../../src/elite/traderPerformance";
@@ -27,5 +27,5 @@ export default async function RelatorioElitePage() {
       })()
     : undefined;
 
-  return <EliteReportHub initialLocale="pt" hubData={hubData} />;
+  return <EliteReportHubEntry initialLocale="pt" hubData={hubData} />;
 }

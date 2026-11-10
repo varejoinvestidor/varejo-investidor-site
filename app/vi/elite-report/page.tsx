@@ -1,5 +1,5 @@
-import EliteReportHub from "../../../src/components/EliteReportHub";
+import EliteReportHubEntry from "../../../src/components/EliteReportHubEntry";
 
 export default function VietnameseEliteReportPage() {
-  return <EliteReportHub initialLocale="vi" />;
+  return <EliteReportHubEntry initialLocale="vi" />;
 }

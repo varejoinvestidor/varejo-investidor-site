@@ -30,7 +30,15 @@ const supabasePattern = supabaseStoragePattern();
 const nextConfig = {
   poweredByHeader: false,
   experimental: {
-    optimizePackageImports: ["framer-motion"],
+    optimizePackageImports: [
+      "framer-motion",
+      "@tiptap/react",
+      "@tiptap/starter-kit",
+      "@tiptap/extension-image",
+      "@tiptap/extension-link",
+      "@tiptap/extension-table",
+      "@supabase/supabase-js",
+    ],
   },
   images: {
     remotePatterns: [

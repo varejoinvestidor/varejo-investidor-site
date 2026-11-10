@@ -1,5 +1,10 @@
+import Image from "next/image";
 import { resolveArticleBanner } from "../../publisher/data/articleBannerPresets";
 import type { ArticleBanner } from "../../publisher/types/banner";
+
+function isLocalBanner(url: string) {
+  return url.startsWith("/") && !url.startsWith("//");
+}
 
 export function PublisherArticleBanners({
   banners,
@@ -23,13 +28,25 @@ export function PublisherArticleBanners({
     <section className={outer}>
       <div className={inner}>
         {items.map((banner) => {
-          const image = (
+          const image = isLocalBanner(banner.image_url) ? (
+            <Image
+              src={banner.image_url}
+              alt={banner.alt}
+              width={1324}
+              height={150}
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="aspect-[1324/150] h-auto w-full rounded-sm object-cover"
+              unoptimized={banner.image_url.endsWith(".svg")}
+            />
+          ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={banner.image_url}
               alt={banner.alt}
               width={1324}
               height={150}
+              loading="lazy"
+              decoding="async"
               className="aspect-[1324/150] w-full rounded-sm object-cover"
             />
           );

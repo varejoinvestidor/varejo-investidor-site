@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import {
   FreeChannelCTA,
@@ -9,8 +9,12 @@ import {
   fadeUp,
   useSiteLocale,
 } from "../../../src/components/SiteSections";
+import { InstitutionalChartFrame } from "../../../src/components/elite/EliteHubCharts";
+import { getFormigaChannelUrl } from "../../../src/data/whatsappChannels";
 import type { Locale } from "../../../src/i18n";
 import { portfolioXRayHiPack } from "../../../src/data/portfolioXRayHi";
+
+const PORTFOLIO_STORAGE_KEY = "varejo-raio-x-carteira-v1";
 
 type AssetId =
   | "fixedIncome"
@@ -757,8 +761,103 @@ export default function PortfolioXRayPage() {
 
   const [items, setItems] = useState<AssetInput[]>(initialInputs);
   const [expandedAssets, setExpandedAssets] = useState<AssetId[]>(["fixedIncome"]);
+  const [storageReady, setStorageReady] = useState(false);
+
+  const formigaHref = getFormigaChannelUrl(locale, t.freeChannel.link);
+  const formTools =
+    locale === "pt"
+      ? {
+          expand: "Expandir todas as classes",
+          demo: "Preencher exemplo educativo",
+          clear: "Limpar carteira",
+          progress: "Completude da análise",
+          saved: "Seus valores ficam salvos neste navegador.",
+        }
+      : locale === "es"
+        ? {
+            expand: "Expandir todas las clases",
+            demo: "Rellenar ejemplo educativo",
+            clear: "Vaciar cartera",
+            progress: "Completitud del análisis",
+            saved: "Tus valores se guardan en este navegador.",
+          }
+        : {
+            expand: "Expand all asset classes",
+            demo: "Load educational sample",
+            clear: "Clear portfolio",
+            progress: "Analysis completeness",
+            saved: "Your values are saved in this browser.",
+          };
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(PORTFOLIO_STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as AssetInput[];
+        if (Array.isArray(parsed) && parsed.length === initialInputs.length) {
+          setItems(
+            initialInputs.map((base, index) => {
+              const saved = parsed[index];
+              return saved?.id === base.id ? { ...base, ...saved, id: base.id } : base;
+            }),
+          );
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+    setStorageReady(true);
+  }, [initialInputs]);
+
+  useEffect(() => {
+    if (!storageReady) return;
+    try {
+      localStorage.setItem(PORTFOLIO_STORAGE_KEY, JSON.stringify(items));
+    } catch {
+      /* ignore */
+    }
+  }, [items, storageReady]);
+
+  const applyDemoPortfolio = () => {
+    const brl = locale === "pt";
+    const samples: Partial<Record<AssetId, Pick<AssetInput, "value" | "currency" | "country">>> = {
+      fixedIncome: { value: brl ? 45_000 : 12_000, currency: brl ? "BRL" : "USD", country: brl ? "BR" : "US" },
+      realEstateFunds: { value: brl ? 18_000 : 4_500, currency: brl ? "BRL" : "USD", country: brl ? "BR" : "US" },
+      stocks: { value: brl ? 22_000 : 18_000, currency: "USD", country: "US" },
+      etfs: { value: brl ? 8_000 : 9_500, currency: "USD", country: "US" },
+      crypto: { value: brl ? 6_500 : 3_200, currency: "USDT", country: "GL" },
+      commodities: { value: brl ? 4_000 : 2_800, currency: "USD", country: "GL" },
+      cash: { value: brl ? 12_000 : 5_000, currency: brl ? "BRL" : "USD", country: brl ? "BR" : "US" },
+    };
+    setItems((current) =>
+      current.map((item) => {
+        const sample = samples[item.id];
+        if (!sample) return item;
+        return {
+          ...item,
+          ...sample,
+          valueText: formatMoneyInput(sample.value, sample.currency, locale),
+        };
+      }),
+    );
+    setExpandedAssets(activeAssets.map((asset) => asset.id));
+  };
+
+  const clearPortfolio = () => {
+    setItems(initialInputs);
+    setExpandedAssets(["fixedIncome"]);
+  };
 
   const populatedItems = useMemo(() => items.filter((item) => item.value > 0), [items]);
+  const analysisProgress = useMemo(() => {
+    const filledClasses = populatedItems.length;
+    const classPart = (filledClasses / activeAssets.length) * 55;
+    const detailPart =
+      populatedItems.length > 0
+        ? (populatedItems.filter((item) => item.custody && item.assetType).length / populatedItems.length) * 45
+        : 0;
+    return Math.round(clamp(classPart + detailPart, 0, 100));
+  }, [activeAssets.length, populatedItems]);
   const total = useMemo(() => populatedItems.reduce((sum, item) => sum + item.value, 0), [populatedItems]);
   const assetGroups = useMemo(() => sumGroups(populatedItems, (item) => item.id), [populatedItems]);
   const countryGroups = useMemo(() => sumGroups(populatedItems, (item) => item.country), [populatedItems]);
@@ -916,12 +1015,41 @@ export default function PortfolioXRayPage() {
     setItems((current) => current.map((item) => (item.id === id ? { ...item, [key]: value } : item)));
   };
 
+  const levelHighlight =
+    levelKey === "harpia"
+      ? "ring-rise/50"
+      : levelKey === "lobo"
+        ? "ring-gold/55"
+        : "ring-fall/45";
+
   return (
-    <main className="page-content min-h-screen bg-black text-ink">
+    <main className="page-content min-h-screen bg-ink text-paper">
       <SiteChrome locale={locale} t={t} onLocaleChange={changeLocale} />
 
-      <section className="page-hero px-5 pb-12 pt-16 md:px-8 md:pb-16 md:pt-24">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      {total > 0 ? (
+        <div className="sticky top-0 z-30 border-b border-gold/20 bg-ink/94 backdrop-blur-md">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-4 px-5 py-3 md:px-8">
+            <span className="text-[10px] font-black uppercase tracking-[0.22em] text-paper/55">{copy.varejoClassification}</span>
+            <span className="text-sm font-black text-gold">
+              {copy.levelNames[levelKey]} · {diversificationScore}/100
+            </span>
+            <motion.div layout className="h-2 min-w-[140px] flex-1 overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-fall via-gold to-rise transition-[width] duration-500"
+                style={{ width: `${diversificationScore}%` }}
+              />
+            </motion.div>
+            <span className="text-xs font-semibold text-paper/62">
+              {formatCurrency(total, topCurrency?.[0] ?? (locale === "pt" ? "BRL" : "USD"), locale)}
+            </span>
+          </div>
+        </div>
+      ) : null}
+
+      <section className="page-hero relative overflow-hidden px-5 pb-12 pt-16 md:px-8 md:pb-16 md:pt-24">
+        <div className="pointer-events-none absolute inset-0 terminal-grid opacity-30" />
+        <div className="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-gold/[0.07] blur-3xl" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.55 }}>
             <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">{copy.eyebrow}</p>
             <h1 className="mt-5 max-w-4xl font-serif text-5xl leading-[0.94] tracking-[-0.06em] text-paper md:text-7xl">
@@ -983,6 +1111,44 @@ export default function PortfolioXRayPage() {
           <div className="max-w-4xl">
             <p className="text-xs font-black uppercase tracking-[0.28em] text-gold">{copy.formTitle}</p>
             <p className="mt-4 text-base leading-8 text-paper/68">{copy.formText}</p>
+            <p className="mt-3 text-xs leading-6 text-paper/48">{formTools.saved}</p>
+          </div>
+          <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setExpandedAssets(activeAssets.map((asset) => asset.id))}
+                className="border border-gold/25 px-4 py-2 text-[11px] font-black uppercase tracking-[0.16em] text-paper/80 transition hover:border-gold hover:text-gold"
+              >
+                {formTools.expand}
+              </button>
+              <button
+                type="button"
+                onClick={applyDemoPortfolio}
+                className="border border-rise/30 bg-rise/[0.08] px-4 py-2 text-[11px] font-black uppercase tracking-[0.16em] text-paper/85 transition hover:border-rise hover:bg-rise/[0.14]"
+              >
+                {formTools.demo}
+              </button>
+              <button
+                type="button"
+                onClick={clearPortfolio}
+                className="border border-white/12 px-4 py-2 text-[11px] font-black uppercase tracking-[0.16em] text-paper/55 transition hover:border-white/25 hover:text-paper"
+              >
+                {formTools.clear}
+              </button>
+            </div>
+            <div className="min-w-[min(100%,280px)]">
+              <div className="flex items-center justify-between gap-3 text-[10px] font-black uppercase tracking-[0.18em] text-paper/50">
+                <span>{formTools.progress}</span>
+                <span className="text-gold">{analysisProgress}%</span>
+              </div>
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/8">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-gold/80 to-rise/80 transition-[width] duration-500"
+                  style={{ width: `${analysisProgress}%` }}
+                />
+              </div>
+            </div>
           </div>
           <div className="mt-8 grid gap-3 md:grid-cols-5">
             {[
@@ -1069,7 +1235,7 @@ export default function PortfolioXRayPage() {
                             onChange={(event) => updateItem(asset.id, "country", event.target.value as CountryCode)}
                             className="w-full border border-gold/22 bg-ink px-4 py-3 text-sm font-semibold text-paper outline-none transition focus:border-gold"
                           >
-                            {countries.map((country) => (
+                            {activeCountries.map((country) => (
                               <option key={country.code} value={country.code}>
                                 {country.name}
                               </option>
@@ -1128,7 +1294,7 @@ export default function PortfolioXRayPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <ResultCard label={copy.totalCapital} value={formatCurrency(total, topCurrency?.[0] ?? (locale === "pt" ? "BRL" : "USD"), locale)} />
             <ResultCard label={copy.topAsset} value={topAsset ? `${activeAssets.find((asset) => asset.id === topAsset[0])?.label} · ${formatPercent((topAsset[1] / total) * 100, locale)}` : copy.noData} />
-            <ResultCard label={copy.topCountry} value={topCountry ? `${countries.find((country) => country.code === topCountry[0])?.name} · ${formatPercent((topCountry[1] / total) * 100, locale)}` : copy.noData} />
+            <ResultCard label={copy.topCountry} value={topCountry ? `${activeCountries.find((country) => country.code === topCountry[0])?.name} · ${formatPercent((topCountry[1] / total) * 100, locale)}` : copy.noData} />
             <ResultCard label={copy.topCurrency} value={topCurrency ? `${topCurrency[0]} · ${formatPercent((topCurrency[1] / total) * 100, locale)}` : copy.noData} />
             <ResultCard label={copy.topSector} value={topAssetType ? `${topAssetType[0]} · ${formatPercent((topAssetType[1] / total) * 100, locale)}` : copy.noData} />
             <ResultCard label={locale === "pt" ? "Maior concentração por instituição" : "Largest concentration by institution"} value={topCustody ? `${topCustody[0]} · ${formatPercent((topCustody[1] / total) * 100, locale)}` : copy.noData} />
@@ -1156,40 +1322,29 @@ export default function PortfolioXRayPage() {
           <p className="text-xs font-black uppercase tracking-[0.28em] text-gold">{copy.chartsTitle}</p>
           <p className="mt-4 max-w-4xl text-base leading-8 text-paper/68">{copy.chartsText}</p>
           <div className="mt-8 grid gap-4 xl:grid-cols-2">
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.byAsset}</p>
-              <div className="mt-5">
-                <DonutChart data={assetChartData} total={total} locale={locale} />
-              </div>
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.byCountry}</p>
-              <div className="mt-5">
-                <Bars data={countryChartData} total={total} locale={locale} currency={topCurrency?.[0] ?? (locale === "pt" ? "BRL" : "USD")} />
-              </div>
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.byCurrency}</p>
-              <div className="mt-5">
-                <Bars data={currencyChartData} total={total} locale={locale} />
-              </div>
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.bySector}</p>
-              <div className="mt-5">
-                <Bars data={assetTypeChartData} total={total} locale={locale} />
-              </div>
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-6 xl:col-span-2">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{locale === "pt" ? "Distribuição por local de custódia" : "Allocation by custody location"}</p>
-              <p className="mt-4 text-sm leading-7 text-paper/62">
-                {locale === "pt"
-                  ? "Este gráfico mostra onde sua carteira está guardada. Uma carteira pode estar diversificada em ativos, mas concentrada em poucas instituições."
-                  : "This chart shows where your portfolio is held. A portfolio can be diversified by assets while still being concentrated in only a few institutions."}
-              </p>
-              <div className="mt-5">
+            <InstitutionalChartFrame title={copy.byAsset}>
+              <DonutChart data={assetChartData} total={total} locale={locale} />
+            </InstitutionalChartFrame>
+            <InstitutionalChartFrame title={copy.byCountry}>
+              <Bars data={countryChartData} total={total} locale={locale} currency={topCurrency?.[0] ?? (locale === "pt" ? "BRL" : "USD")} />
+            </InstitutionalChartFrame>
+            <InstitutionalChartFrame title={copy.byCurrency}>
+              <Bars data={currencyChartData} total={total} locale={locale} />
+            </InstitutionalChartFrame>
+            <InstitutionalChartFrame title={copy.bySector}>
+              <Bars data={assetTypeChartData} total={total} locale={locale} />
+            </InstitutionalChartFrame>
+            <div className="xl:col-span-2">
+              <InstitutionalChartFrame
+                title={locale === "pt" ? "Distribuição por local de custódia" : "Allocation by custody location"}
+                footer={
+                  locale === "pt"
+                    ? "Mostra onde a carteira está guardada — diversificação em ativos não elimina concentração institucional."
+                    : "Shows where holdings are kept — asset diversification does not remove institutional concentration."
+                }
+              >
                 <Bars data={custodyChartData} total={total} locale={locale} />
-              </div>
+              </InstitutionalChartFrame>
             </div>
           </div>
         </div>
@@ -1234,18 +1389,24 @@ export default function PortfolioXRayPage() {
 
       <section className="px-5 py-12 md:px-8">
         <div className="mx-auto grid max-w-7xl gap-4 xl:grid-cols-3">
-          <div className="border border-fall/24 bg-fall/[0.06] p-6">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-fall">{copy.levelNames.formiga}</p>
-            <p className="mt-4 text-base leading-8 text-paper/72">{copy.levelDescriptions.formiga}</p>
-          </div>
-          <div className="border border-gold/24 bg-gold/[0.06] p-6">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.levelNames.lobo}</p>
-            <p className="mt-4 text-base leading-8 text-paper/72">{copy.levelDescriptions.lobo}</p>
-          </div>
-          <div className="border border-rise/24 bg-rise/[0.06] p-6">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-rise">{copy.levelNames.harpia}</p>
-            <p className="mt-4 text-base leading-8 text-paper/72">{copy.levelDescriptions.harpia}</p>
-          </div>
+          {(["formiga", "lobo", "harpia"] as const).map((key) => {
+            const active = levelKey === key;
+            const border =
+              key === "formiga" ? "border-fall/24 bg-fall/[0.06]" : key === "lobo" ? "border-gold/24 bg-gold/[0.06]" : "border-rise/24 bg-rise/[0.06]";
+            const titleColor = key === "formiga" ? "text-fall" : key === "lobo" ? "text-gold" : "text-rise";
+            return (
+              <div
+                key={key}
+                className={`border p-6 transition ${border} ${active ? `ring-2 ring-offset-2 ring-offset-ink ${levelHighlight}` : "opacity-80"}`}
+              >
+                <p className={`text-xs font-black uppercase tracking-[0.24em] ${titleColor}`}>
+                  {copy.levelNames[key]}
+                  {active ? (locale === "pt" ? " · sua classificação" : " · your level") : null}
+                </p>
+                <p className="mt-4 text-base leading-8 text-paper/72">{copy.levelDescriptions[key]}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -1312,7 +1473,7 @@ export default function PortfolioXRayPage() {
           <p className="mt-4 max-w-4xl text-base leading-8 text-paper/68">{copy.ctaText}</p>
           <div className="mt-7 flex flex-col gap-3 md:flex-row">
             <a
-              href="https://whatsapp.com/channel/0029VaAO8Nb1iUxYdf4P6Y3j"
+              href={formigaHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center bg-rise px-6 py-4 text-sm font-black uppercase tracking-[0.18em] text-ink transition hover:-translate-y-0.5 hover:bg-[#14aa6c]"

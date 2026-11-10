@@ -32,7 +32,7 @@ export async function probeSupabaseSchema(): Promise<SupabaseSchemaProbe> {
 
   await Promise.all(
     PROBE_TABLES.map(async (name) => {
-      const { error } = await client.from(name).select("id", { head: true, count: "exact" }).limit(1);
+      const { error } = await client.from(name).select("id", { head: true }).limit(0);
       if (!error) {
         tables[name] = { status: "ok" };
         return;

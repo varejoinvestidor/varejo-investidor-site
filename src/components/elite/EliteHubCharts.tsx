@@ -14,11 +14,11 @@ function formatPips(value: number, locale: Locale) {
 type BarItem = { year: number; signals: number; assets: string[] };
 type AreaItem = { year: number; value: number; signals: number };
 
-function ChartFrame({ title, children, footer }: { title: string; children: ReactNode; footer?: string }) {
+export function InstitutionalChartFrame({ title, children, footer }: { title: string; children: ReactNode; footer?: string }) {
   return (
-    <div className="relative overflow-hidden rounded-sm border border-gold/[0.22] bg-gradient-to-b from-white/[0.06] to-black/40 p-6 shadow-[inset_0_1px_0_rgba(198,153,74,0.12),0_24px_80px_rgba(0,0,0,0.35)]">
-      <div className="pointer-events-none absolute inset-0 opacity-[0.14]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-      <p className="relative text-xs font-black uppercase tracking-[0.28em] text-gold">{title}</p>
+    <div className="relative overflow-hidden rounded-sm border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-black/50 p-6 shadow-[inset_0_1px_0_rgba(198,153,74,0.08)]">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+      <p className="relative text-[10px] font-black uppercase tracking-[0.26em] text-gold/90">{title}</p>
       <div className="relative mt-5">{children}</div>
       {footer ? <p className="relative mt-4 text-xs leading-6 text-paper/50">{footer}</p> : null}
     </div>
@@ -42,7 +42,7 @@ export function PremiumAnnualBarChart({
   const max = Math.max(...data.map((item) => item.signals), 1);
 
   return (
-    <ChartFrame title={title} footer={footer}>
+    <InstitutionalChartFrame title={title} footer={footer}>
       <div className="flex min-h-[280px] items-end gap-2.5 overflow-x-auto pb-1 pt-2">
         {data.map((item) => {
           const h = Math.max(28, (item.signals / max) * 220);
@@ -69,7 +69,7 @@ export function PremiumAnnualBarChart({
           );
         })}
       </div>
-    </ChartFrame>
+    </InstitutionalChartFrame>
   );
 }
 
@@ -116,7 +116,7 @@ export function PremiumCumulativeAreaChart({
   const areaPath = `${linePath} L ${width} ${height} L 0 ${height} Z`;
 
   return (
-    <ChartFrame title={title}>
+    <InstitutionalChartFrame title={title}>
       <svg viewBox={`0 0 ${width} ${height}`} className="h-72 w-full" role="img" aria-label={title}>
         <defs>
           <linearGradient id="eliteHubArea" x1="0" x2="0" y1="0" y2="1">
@@ -164,7 +164,7 @@ export function PremiumCumulativeAreaChart({
           <span key={item.year}>{item.year}</span>
         ))}
       </div>
-    </ChartFrame>
+    </InstitutionalChartFrame>
   );
 }
 
@@ -181,7 +181,7 @@ export function PremiumDonutChart({
   let offset = 0;
 
   return (
-    <ChartFrame title={title}>
+    <InstitutionalChartFrame title={title}>
       <div className="grid gap-6 md:grid-cols-[minmax(150px,200px)_1fr] md:items-center">
         <svg viewBox="0 0 160 160" className="mx-auto h-44 w-44">
           <circle cx="80" cy="80" r={radius} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="16" />
@@ -205,7 +205,7 @@ export function PremiumDonutChart({
             offset += length;
             return node;
           })}
-          <text x="80" y="84" textAnchor="middle" fill="#f5f0e6" fontSize="11" fontWeight="700">
+          <text x="80" y="84" textAnchor="middle" fill="#c6994a" fontSize="10" fontWeight="700" letterSpacing="0.12em">
             ATIVOS
           </text>
         </svg>
@@ -213,7 +213,7 @@ export function PremiumDonutChart({
           {data.map((item) => (
             <div
               key={item.label}
-              className="flex items-center justify-between gap-4 border border-white/10 bg-black/30 px-4 py-2.5"
+              className="flex items-center justify-between gap-4 border-b border-white/[0.06] py-2.5 last:border-0"
             >
               <span className="flex items-center gap-3 text-sm font-semibold text-paper/80">
                 <span className="h-2.5 w-2.5 rounded-full shadow-[0_0_12px_currentColor]" style={{ backgroundColor: item.color }} />
@@ -224,6 +224,6 @@ export function PremiumDonutChart({
           ))}
         </div>
       </div>
-    </ChartFrame>
+    </InstitutionalChartFrame>
   );
 }

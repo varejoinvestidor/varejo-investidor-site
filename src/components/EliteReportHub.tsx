@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
 import {
   ELITE_LASTLINK_URL,
@@ -21,32 +21,11 @@ import type { HubMonthlyReport, HubOperation } from "../elite/mapToHub";
 import type { EliteSignalTier } from "../elite/signalTier";
 import type { PeriodPerformance } from "../elite/traderPerformance";
 import { PremiumAnnualBarChart, PremiumCumulativeAreaChart, PremiumDonutChart } from "./elite/EliteHubCharts";
-import { SignalLevelRows } from "./elite/SignalLevelRows";
+import { SignalLevelRows, signalCardShellClass } from "./elite/SignalLevelRows";
 
-export const eliteReportPaths: Record<Locale, string> = {
-  pt: "/relatorio-elite",
-  en: "/elite-report",
-  es: "/reporte-elite",
-  fr: "/fr/elite-report",
-  it: "/it/elite-report",
-  de: "/de/elite-report",
-  hi: "/elite-report-hi",
-  ar: "/ar/elite-report",
-  tr: "/tr/elite-report",
-  id: "/id/elite-report",
-  vi: "/vi/elite-report",
-  th: "/th/elite-report",
-  ru: "/ru/elite-report",
-  ur: "/ur/elite-report",
-  bn: "/bn/elite-report",
-  ja: "/ja/elite-report",
-  ko: "/ko/elite-report",
-  zh: "/zh/elite-report",
-  pl: "/pl/elite-report",
-  tl: "/tl/elite-report",
-  fa: "/fa/elite-report",
-  he: "/he/elite-report",
-};
+import { eliteReportPaths } from "../data/eliteReportPaths";
+
+export { eliteReportPaths };
 
 type Direction = "Compra" | "Venda";
 
@@ -418,9 +397,48 @@ const reports: MonthlyReport[] = [
 ];
 
 const activeOperations: Operation[] = [
-  { asset: "XAU/USD", direction: "Compra", status: "active", result: "+187 pips", pips: 187, date: "Junho/2026", updatedAt: "Atualizado hoje", reportMonth: "Junho/2026" },
-  { asset: "EUR/USD", direction: "Venda", status: "active", result: "+42 pips", pips: 42, date: "Junho/2026", updatedAt: "Atualizado hoje", reportMonth: "Junho/2026" },
-  { asset: "GBP/JPY", direction: "Venda", status: "active", result: "-18 pips", pips: -18, date: "Junho/2026", updatedAt: "Atualizado hoje", reportMonth: "Junho/2026" },
+  {
+    asset: "XAU/USD",
+    direction: "Compra",
+    status: "active",
+    result: "Em andamento",
+    pips: 0,
+    date: "06/2026",
+    updatedAt: "Atualizado hoje",
+    reportMonth: "06/2026",
+    signalTier: "elite",
+    entryPrice: 3342.5,
+    takePrice: 3368,
+    stopPrice: 3325,
+  },
+  {
+    asset: "EUR/USD",
+    direction: "Venda",
+    status: "active",
+    result: "Em andamento",
+    pips: 0,
+    date: "06/2026",
+    updatedAt: "Atualizado hoje",
+    reportMonth: "06/2026",
+    signalTier: "free",
+    entryPrice: 1.0842,
+    takePrice: 1.0795,
+    stopPrice: 1.0872,
+  },
+  {
+    asset: "GBP/JPY",
+    direction: "Venda",
+    status: "active",
+    result: "Em andamento",
+    pips: 0,
+    date: "06/2026",
+    updatedAt: "Atualizado hoje",
+    reportMonth: "06/2026",
+    signalTier: "elite",
+    entryPrice: 199.45,
+    takePrice: 198.2,
+    stopPrice: 200.1,
+  },
 ];
 
 const completedOperations: Operation[] = [
@@ -597,6 +615,8 @@ type EliteHubData = {
 };
 
 export default function EliteReportHub({ initialLocale, hubData }: { initialLocale: Locale; hubData?: EliteHubData }) {
+  const reduceMotion = useReducedMotion();
+  const revealTransition = reduceMotion ? { duration: 0 } : { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const };
   const [locale, setLocale] = useState<Locale>(initialLocale);
   const [selectedYear, setSelectedYear] = useState(2026);
   const [selectedMonthKey, setSelectedMonthKey] = useState("2026-4");
@@ -693,7 +713,7 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
         <div className="absolute left-0 top-40 h-80 w-80 rounded-full bg-gold/[0.1] blur-3xl" />
         <div className="relative mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-end">
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.55 }}>
+            <motion.div initial={reduceMotion ? false : "hidden"} animate="visible" variants={fadeUp} transition={revealTransition}>
               <p className="text-xs font-black uppercase tracking-[0.32em] text-gold">{copy.label}</p>
               <h1 className="mt-5 max-w-4xl font-serif text-5xl leading-[0.94] tracking-[-0.06em] text-paper md:text-7xl">{copy.heroTitle}</h1>
               <p className="mt-6 max-w-3xl text-lg leading-8 text-paper/72 md:text-xl">{copy.heroSubtitle}</p>
@@ -721,46 +741,44 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       </section>
 
       {hubData?.traderPerformance?.length ? (
-        <section className="border-y border-white/8 bg-white/[0.02] px-5 py-14 md:px-8 md:py-16">
+        <section className="border-y border-white/[0.06] px-5 py-16 md:px-8 md:py-20">
           <div className="mx-auto max-w-7xl">
-            <SectionHeader
-              eyebrow="Performance"
-              title={locale === "en" ? "Trader performance" : locale === "es" ? "Rendimiento del trader" : "Desempenho do trader"}
-              text={
-                locale === "en"
-                  ? "Public operations from the Elite desk: signals, win rate and pip results by day, week and month."
-                  : "Operações públicas do desk Elite: sinais, taxa de acerto e resultado em pips por dia, semana e mês."
-              }
-            />
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="max-w-3xl">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gold/75">
+                {locale === "en" ? "Performance" : locale === "es" ? "Rendimiento" : "Desempenho"}
+              </p>
+              <h2 className="mt-3 font-serif text-4xl tracking-[-0.03em] text-paper md:text-5xl">
+                {locale === "en" ? "Performance" : locale === "es" ? "Rendimiento" : "Desempenho"}
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-paper/55">
+                {locale === "en"
+                  ? "Public desk snapshot: signals, win rate and pips by day, week and month."
+                  : locale === "es"
+                    ? "Resumen público del desk: señales, acierto y pips por día, semana y mes."
+                    : "Resumo público do desk: sinais, taxa de acerto e resultado em pips por dia, semana e mês."}
+              </p>
+            </div>
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {hubData.traderPerformance.map((period) => (
                 <article
                   key={period.key}
-                  className="terminal-module border border-gold/20 bg-black/50 p-5 shadow-[0_0_40px_rgba(198,153,74,0.06)]"
+                  className="rounded-sm border border-white/[0.08] bg-black/40 p-5 backdrop-blur-sm transition hover:border-gold/25"
                 >
-                  <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{period.label}</p>
-                  <dl className="mt-4 grid gap-3 text-sm">
-                    <div className="flex items-baseline justify-between gap-3 border-b border-white/8 pb-2">
-                      <dt className="text-paper/50">{locale === "en" ? "Operations" : "Operações"}</dt>
-                      <dd className="font-mono text-lg font-bold tabular-nums text-paper">{period.operations}</dd>
-                    </div>
-                    <div className="flex items-baseline justify-between gap-3 border-b border-white/8 pb-2">
-                      <dt className="text-paper/50">{locale === "en" ? "Closed" : "Finalizadas"}</dt>
-                      <dd className="font-mono tabular-nums text-paper/85">{period.closed}</dd>
-                    </div>
-                    <div className="flex items-baseline justify-between gap-3 border-b border-white/8 pb-2">
-                      <dt className="text-paper/50">{locale === "en" ? "Win rate" : "Taxa de acerto"}</dt>
-                      <dd className="font-mono font-bold text-rise">{period.winRate}</dd>
-                    </div>
-                    <div className="flex items-baseline justify-between gap-3">
-                      <dt className="text-paper/50">{locale === "en" ? "Pips" : "Resultado (pips)"}</dt>
-                      <dd
-                        className={`font-mono text-lg font-black tabular-nums ${period.pips >= 0 ? "text-rise" : "text-fall"}`}
-                      >
-                        {period.pips >= 0 ? "+" : ""}
-                        {formatNumber(period.pips, locale)}
-                      </dd>
-                    </div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gold">{period.label}</p>
+                  <dl className="mt-5 space-y-3 text-sm">
+                    <MetricRow
+                      label={locale === "en" ? "Operations" : "Operações"}
+                      value={String(period.operations)}
+                      emphasize
+                    />
+                    <MetricRow label={locale === "en" ? "Closed" : "Finalizadas"} value={String(period.closed)} />
+                    <MetricRow label={locale === "en" ? "Win rate" : "Taxa de acerto"} value={period.winRate} accent="rise" />
+                    <MetricRow
+                      label={locale === "en" ? "Pips" : "Pips"}
+                      value={`${period.pips >= 0 ? "+" : ""}${formatNumber(period.pips, locale)}`}
+                      accent={period.pips >= 0 ? "rise" : "fall"}
+                      emphasize
+                    />
                   </dl>
                 </article>
               ))}
@@ -782,8 +800,8 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
             />
             <PremiumCumulativeAreaChart data={performanceData} locale={locale} title={copy.chartPerformance} />
             <PremiumDonutChart data={assetDistribution} title={copy.chartAssets} />
-            <div className="border border-white/10 bg-white/[0.03] p-6">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.chartHeatmap}</p>
+            <div className="rounded-sm border border-white/[0.08] bg-black/35 p-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.26em] text-gold">{copy.chartHeatmap}</p>
               <div className="mt-6 overflow-x-auto">
                 <div className="grid min-w-[660px] grid-cols-[70px_repeat(12,1fr)] gap-2">
                   <span />
@@ -842,17 +860,39 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Elite" title={copy.activeTitle} text={copy.activeText} />
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {activeOperationsData.map((operation, index) => (
-              <motion.article key={`${operation.asset}-${index}`} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="terminal-module relative overflow-hidden border border-rise/20 bg-white/[0.03] p-6">
-                <div className="absolute inset-0 terminal-grid opacity-20" />
+            {activeOperationsData.map((operation, index) => {
+              const tier = operation.signalTier ?? "elite";
+              const isElite = tier === "elite";
+              return (
+              <motion.article
+                key={`${operation.asset}-${index}`}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className={`relative overflow-hidden rounded-sm p-6 ${signalCardShellClass(tier)}`}
+              >
+                {isElite ? (
+                  <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gold/[0.12] blur-2xl" />
+                ) : null}
                 <div className="relative flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-rise">{copy.asset}</p>
-                    <h3 className="mt-3 font-mono text-3xl font-black text-paper">{operation.asset}</h3>
+                    <p
+                      className={`text-[10px] font-black uppercase tracking-[0.22em] ${isElite ? "text-gold" : "text-rise/90"}`}
+                    >
+                      {copy.asset}
+                    </p>
+                    <h3 className={`mt-2 font-mono text-3xl font-black tracking-tight ${isElite ? "text-gold" : "text-paper"}`}>
+                      {operation.asset}
+                    </h3>
                   </div>
-                  <span className="h-3 w-3 rounded-full bg-rise shadow-[0_0_16px_rgba(15,143,86,0.55)]" />
+                  <span
+                    className={`h-2.5 w-2.5 rounded-full ${
+                      isElite ? "bg-gold shadow-[0_0_14px_rgba(198,153,74,0.75)]" : "bg-rise shadow-[0_0_12px_rgba(15,143,86,0.5)]"
+                    }`}
+                  />
                 </div>
-                <div className="relative mt-8 grid gap-3">
+                <div className="relative mt-6 grid gap-0">
                   {[
                     operation.signalNumber
                       ? [copy.table.signal, `#${formatNumber(operation.signalNumber, locale)}`]
@@ -876,14 +916,14 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                         />
                       );
                     })}
-                  {operation.takePips !== undefined && operation.takePips !== 0 ? (
-                    <p className="text-[11px] text-paper/55">
+                  {tier === "free" && operation.takePips !== undefined && operation.takePips !== 0 ? (
+                    <p className="mt-2 text-[11px] text-paper/50">
                       {copy.target}: {formatPips(operation.takePips, locale)} · {copy.stop}:{" "}
                       {formatPips(operation.stopPips ?? 0, locale)}
                     </p>
                   ) : null}
                   <SignalLevelRows
-                    tier={operation.signalTier ?? "elite"}
+                    tier={tier}
                     labels={{
                       sectionTitle: copy.protectedFields,
                       sectionTitleFree: copy.levelsPublic,
@@ -898,7 +938,8 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                   />
                 </div>
               </motion.article>
-            ))}
+            );
+            })}
           </div>
         </div>
       </section>
@@ -1122,9 +1163,29 @@ function Info({ label, value }: { label: string; value: string }) {
 
 function InfoRow({ label, value, positive, negative }: { label: string; value: string; positive?: boolean; negative?: boolean }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-t border-white/8 pt-3">
-      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-paper/48">{label}</span>
-      <span className={`text-sm font-bold ${positive ? "text-rise" : negative ? "text-fall" : "text-paper"}`}>{value}</span>
+    <div className="flex items-center justify-between gap-4 border-t border-white/[0.06] py-2.5 first:border-t-0 first:pt-0">
+      <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-paper/42">{label}</span>
+      <span className={`text-sm font-semibold tabular-nums ${positive ? "text-rise" : negative ? "text-fall" : "text-paper/88"}`}>{value}</span>
+    </div>
+  );
+}
+
+function MetricRow({
+  label,
+  value,
+  emphasize,
+  accent,
+}: {
+  label: string;
+  value: string;
+  emphasize?: boolean;
+  accent?: "rise" | "fall";
+}) {
+  const valueClass = accent === "rise" ? "text-rise" : accent === "fall" ? "text-fall" : "text-paper";
+  return (
+    <div className="flex items-baseline justify-between gap-3 border-b border-white/[0.06] pb-2 last:border-0 last:pb-0">
+      <dt className="text-[11px] uppercase tracking-[0.12em] text-paper/45">{label}</dt>
+      <dd className={`font-mono tabular-nums ${emphasize ? "text-lg font-black" : "text-sm font-bold"} ${valueClass}`}>{value}</dd>
     </div>
   );
 }

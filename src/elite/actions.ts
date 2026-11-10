@@ -4,7 +4,10 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { getPublisherSession } from "../publisher/supabase/server";
 import { computeSignalPips } from "./pips";
-import { installEliteSchemaFromAdmin as installEliteSchemaCore } from "../publisher/schema/installFromAdmin";
+import {
+  installEliteSchemaFromAdmin as installEliteSchemaCore,
+  installFullSupabaseSchemaFromAdmin as installFullSupabaseSchemaCore,
+} from "../publisher/schema/installFromAdmin";
 import { syncEliteMonthlyForReportMonth } from "./syncMonthly";
 import { parseEliteSignalTier } from "./signalTier";
 import type { EliteMonthlyInput, EliteOperationInput } from "./types";
@@ -83,7 +86,9 @@ export async function installEliteSchemaFromAdmin() {
   return installEliteSchemaCore();
 }
 
-export { installFullSupabaseSchemaFromAdmin } from "../publisher/schema/installFromAdmin";
+export async function installFullSupabaseSchemaFromAdmin() {
+  return installFullSupabaseSchemaCore();
+}
 
 export async function upsertEliteOperation(input: EliteOperationInput) {
   const ctx = await requireEditor();

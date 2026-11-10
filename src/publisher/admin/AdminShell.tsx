@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ADMIN_FOOTER_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEARCH_NAV } from "./nav";
+import { ADMIN_ANALYTICS_NAV, ADMIN_FOOTER_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEARCH_NAV } from "./nav";
 import { ROLE_LABELS } from "../permissions";
 import type { PublisherProfile } from "../types";
 import { createPublisherBrowserClient } from "../supabase/browser";
@@ -75,6 +75,27 @@ export function AdminShell({ profile, children }: Props) {
                 );
               })}
             </ul>
+
+            {isAdmin ? (
+              <div className="my-5 border-t border-line/12 pt-4">
+                <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Administrador</p>
+                <ul className="mt-2 space-y-0.5">
+                  {ADMIN_ANALYTICS_NAV.map((item) => {
+                    const active =
+                      item.href === "/admin/vi-administrador"
+                        ? pathname === "/admin/vi-administrador"
+                        : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    return (
+                      <li key={item.href}>
+                        <Link href={item.href} className={navLinkClass(active)}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ) : null}
 
             <div className="my-5 border-t border-line/12 pt-4">
               <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>

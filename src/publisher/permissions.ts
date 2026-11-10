@@ -15,6 +15,11 @@ export function canManageUsers(role: PublisherRole) {
   return role === "admin";
 }
 
+/** VI Administrador — telemetria e relatórios de tráfego. */
+export function canViewSiteAnalytics(role: PublisherRole) {
+  return role === "admin";
+}
+
 export function canManageTaxonomy(role: PublisherRole) {
   return role === "admin" || role === "editor";
 }

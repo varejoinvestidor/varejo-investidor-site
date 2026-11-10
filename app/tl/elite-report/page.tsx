@@ -1,5 +1,5 @@
-import EliteReportHub from "../../../src/components/EliteReportHub";
+import EliteReportHubEntry from "../../../src/components/EliteReportHubEntry";
 
 export default function TLEliteReportPage() {
-  return <EliteReportHub initialLocale="tl" />;
+  return <EliteReportHubEntry initialLocale="tl" />;
 }

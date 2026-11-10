@@ -16,7 +16,7 @@ import {
   useSiteLocale,
 } from "../../src/components/SiteSections";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
-import { eliteReportPaths } from "../../src/components/EliteReportHub";
+import { eliteReportPaths } from "../../src/data/eliteReportPaths";
 import { isRtlLocale, localeToHtmlLang } from "../../src/i18n/locales";
 import { ElitePaymentCards } from "../../src/components/ElitePaymentCards";
 import { getLoboChannelUrlWithFallback } from "../../src/data/whatsappChannels";

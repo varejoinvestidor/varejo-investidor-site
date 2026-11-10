@@ -1,5 +1,5 @@
-import EliteReportHub from "../../../src/components/EliteReportHub";
+import EliteReportHubEntry from "../../../src/components/EliteReportHubEntry";
 
 export default function ThaiEliteReportPage() {
-  return <EliteReportHub initialLocale="th" />;
+  return <EliteReportHubEntry initialLocale="th" />;
 }
