@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import { MarketPage } from "../../../src/components/MarketPage";
 import { createMarketMetadata } from "../../../src/data/marketMetadata";
 import type { Locale } from "../../../src/i18n";
+import { SUPPORTED_LOCALES, type SupportedLocale } from "../../../src/i18n/locales";
+import { CANONICAL_MARKET_SEGMENTS } from "../../../src/i18n/publisherHubPaths";
+import { localeToUrlSegment, normalizeUrlLocaleSegment } from "../../../src/i18n/routing";
 import type { MarketSlug } from "../../../src/data/marketContent";
 
 const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
@@ -200,31 +203,51 @@ const marketAliasMap: Record<Locale, Record<string, MarketSlug>> = {
   },
 };
 
+function resolveLocale(segment: string): SupportedLocale | null {
+  const locale = normalizeUrlLocaleSegment(segment);
+  if (!locale || locale === "pt") return null;
+  return locale;
+}
+
 function isLocale(value: string): value is Locale {
   return value in marketAliasMap;
 }
 
 function getMarketSlug(locale: string, market: string): MarketSlug | null {
+  const normalizedMarket = market.toLowerCase();
+  if ((CANONICAL_MARKET_SEGMENTS as readonly string[]).includes(normalizedMarket)) {
+    if (normalizedMarket === "fundos-imobiliarios" && locale !== "pt") return null;
+    return normalizedMarket as MarketSlug;
+  }
   if (!isLocale(locale)) return null;
   const localeAliases = marketAliasMap[locale] ?? marketAliasMap.en;
-  return localeAliases[market] ?? marketAliasMap.en[market] ?? null;
+  return localeAliases[normalizedMarket] ?? marketAliasMap.en[normalizedMarket] ?? null;
 }
 
 export function generateStaticParams() {
-  return Object.entries(marketAliasMap).flatMap(([locale, markets]) =>
-    Object.keys(markets).map((market) => ({ locale, market })),
-  );
+  return SUPPORTED_LOCALES.filter((l) => l !== "pt").flatMap((locale) => {
+    const urlLocale = localeToUrlSegment(locale) || locale;
+    const localeAliases = marketAliasMap[locale] ?? marketAliasMap.en;
+    const markets = new Set([
+      ...CANONICAL_MARKET_SEGMENTS.filter((m) => m !== "fundos-imobiliarios"),
+      ...Object.keys(localeAliases),
+    ]);
+    return Array.from(markets).map((market) => ({ locale: urlLocale, market }));
+  });
 }
 
 export function generateMetadata({ params }: { params: { locale: string; market: string } }) {
-  const slug = getMarketSlug(params.locale, params.market);
+  const locale = resolveLocale(params.locale);
+  if (!locale) return {};
+  const slug = getMarketSlug(locale, params.market);
   if (!slug) return {};
   return createMarketMetadata(slug);
 }
 
 export default function LocalizedMarketPage({ params }: { params: { locale: string; market: string } }) {
-  const slug = getMarketSlug(params.locale, params.market);
+  const locale = resolveLocale(params.locale);
+  if (!locale) notFound();
+  const slug = getMarketSlug(locale, params.market);
   if (!slug) notFound();
-  if (slug === "fundos-imobiliarios" && params.locale !== "pt") notFound();
   return <MarketPage slug={slug} />;
 }

@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useRef, useState } from "react";
 import { deleteEliteOperation, upsertEliteMonthly, upsertEliteOperation } from "../actions";
 import { computeSignalPips, formatPipsLabel } from "../pips";
+import { ElitePipsQuickEdit } from "./ElitePipsQuickEdit";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
 import { ELITE_ASSET_SUGGESTIONS } from "../assets";
 import { parseWhatsAppSignal } from "../whatsappParse";
@@ -540,7 +541,9 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
                     <td className="px-3 py-2 font-mono text-xs">{row.entry_price ?? "—"}</td>
                     <td className="px-3 py-2 font-mono text-xs text-rise/90">{row.take_price ?? "—"}</td>
                     <td className="px-3 py-2 font-mono text-xs text-fall/90">{row.stop_price ?? "—"}</td>
-                    <td className="px-3 py-2 tabular-nums">{row.result_label}</td>
+                    <td className="px-3 py-2">
+                      <ElitePipsQuickEdit row={row} />
+                    </td>
                     <td className="px-3 py-2 text-paper/55">{row.report_month}</td>
                     <td className="px-3 py-2 text-xs">
                       {tradeResultLabel(tradeResultFromRow(row))}

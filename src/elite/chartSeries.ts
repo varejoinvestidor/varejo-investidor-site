@@ -1,3 +1,4 @@
+import { resolveOperationPips } from "./resolveOperationPips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "./types";
 
 export type LinePoint = { label: string; cumulative: number; delta: number };
@@ -19,11 +20,12 @@ export function buildCumulativePipsLine(ops: EliteOperationRow[]): LinePoint[] {
 
   let cumulative = 0;
   return closed.map((o, index) => {
-    cumulative += o.result_pips;
+    const pip = resolveOperationPips(o).pips;
+    cumulative += pip;
     const label =
       o.traded_on?.slice(5) ??
       (o.signal_number != null ? `S${o.signal_number}` : `${index + 1}`);
-    return { label, cumulative, delta: o.result_pips };
+    return { label, cumulative, delta: pip };
   });
 }
 
@@ -45,7 +47,7 @@ export function buildMonthlyPipsBars(monthly: EliteMonthlyReportRow[], ops: Elit
     const key = o.report_month || "—";
     const bucket = byMonth.get(key) ?? { pips: 0, signals: 0 };
     bucket.signals += 1;
-    if (o.status === "closed") bucket.pips += o.result_pips;
+    if (o.status === "closed") bucket.pips += resolveOperationPips(o).pips;
     byMonth.set(key, bucket);
   }
 

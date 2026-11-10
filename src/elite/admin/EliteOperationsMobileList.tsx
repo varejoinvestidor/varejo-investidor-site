@@ -1,4 +1,5 @@
 import type { EliteOperationRow } from "../types";
+import { ElitePipsQuickEdit } from "./ElitePipsQuickEdit";
 import { tradeResultFromRow, tradeResultLabel } from "./tradeResult";
 
 export function EliteOperationsMobileList({
@@ -42,7 +43,12 @@ export function EliteOperationsMobileList({
           </div>
           <dl className="mt-3 grid grid-cols-2 gap-2 text-xs">
             <DetailItem label="Direção" value={row.direction} />
-            <DetailItem label="Pips" value={row.result_label} />
+            <div>
+              <dt className="text-paper/45">Pips</dt>
+              <dd className="mt-0.5">
+                <ElitePipsQuickEdit row={row} />
+              </dd>
+            </div>
             <DetailItem label="Entrada" value={row.entry_price != null ? String(row.entry_price) : "—"} mono />
             <DetailItem label="Mês" value={row.report_month} />
           </dl>

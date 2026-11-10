@@ -1,6 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { formatPipsLabel } from "./pips";
 import { parseReportMonth } from "./reportMonth";
+import { resolveOperationPips } from "./resolveOperationPips";
+import type { EliteOperationRow } from "./types";
 
 export async function syncEliteMonthlyForReportMonth(
   supabase: SupabaseClient,
@@ -9,21 +11,19 @@ export async function syncEliteMonthlyForReportMonth(
   const parsed = parseReportMonth(reportMonth);
   if (!parsed) return { ok: false, error: "Formato de mês inválido (use Maio/2026 ou 11/2026)." };
 
-  const { data: ops, error: opError } = await supabase
-    .from("elite_operations")
-    .select("asset, status, result_pips, show_public")
-    .eq("report_month", reportMonth)
-    .eq("show_public", true);
+  const { data: ops, error: opError } = await supabase.from("elite_operations").select("*").eq("report_month", reportMonth);
 
   if (opError) return { ok: false, error: opError.message };
 
-  const list = ops ?? [];
-  const signals = list.length;
-  const closed = list.filter((o) => o.status === "closed");
-  const pips = closed.reduce((sum, o) => sum + (o.result_pips ?? 0), 0);
-  const assets = Array.from(new Set(list.map((o) => o.asset).filter(Boolean)));
-  const hasActive = list.some((o) => o.status === "active");
-  const status_label = closed.length === list.length && list.length > 0 ? "Finalizado" : hasActive ? "Em andamento" : "Disponível";
+  const list = (ops ?? []) as EliteOperationRow[];
+  const publicList = list.filter((o) => o.show_public);
+  const signals = publicList.length;
+  const closed = publicList.filter((o) => o.status === "closed");
+  const pips = closed.reduce((sum, o) => sum + resolveOperationPips(o).pips, 0);
+  const assets = Array.from(new Set(publicList.map((o) => o.asset).filter(Boolean)));
+  const hasActive = publicList.some((o) => o.status === "active");
+  const status_label =
+    closed.length === publicList.length && publicList.length > 0 ? "Finalizado" : hasActive ? "Em andamento" : "Disponível";
 
   const row = {
     year: parsed.year,

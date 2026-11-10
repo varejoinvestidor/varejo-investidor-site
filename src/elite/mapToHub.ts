@@ -1,4 +1,5 @@
 import { computeSignalPips } from "./pips";
+import { resolveOperationPips } from "./resolveOperationPips";
 import { parseEliteSignalTier } from "./signalTier";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "./types";
 
@@ -41,15 +42,11 @@ export function mapOperations(rows: EliteOperationRow[]): { active: HubOperation
       take: row.take_price,
       stop: row.stop_price,
       closeOutcome: row.close_outcome,
-      manualPips: row.result_pips,
+      manualPips: row.close_outcome === "manual" ? row.result_pips : undefined,
     });
-    const displayPips = row.status === "active" ? 0 : levels.resultPips;
-    const displayResult =
-      row.status === "active"
-        ? row.result_label || levels.resultLabel
-        : row.close_outcome === "manual" && row.result_label.trim()
-          ? row.result_label
-          : levels.resultLabel || row.result_label;
+    const resolved = resolveOperationPips(row);
+    const displayPips = row.status === "active" ? 0 : resolved.pips;
+    const displayResult = row.status === "active" ? row.result_label || levels.resultLabel : resolved.label;
 
     return {
       asset: row.asset,
@@ -90,8 +87,8 @@ export function mapMonthly(rows: EliteMonthlyReportRow[]): HubMonthlyReport[] {
 }
 
 export function aggregateStats(closed: HubOperation[], monthly: HubMonthlyReport[]) {
-  const totalSignals = monthly.reduce((s, m) => s + m.signals, 0);
-  const totalPips = closed.reduce((s, o) => s + o.pips, 0) + monthly.reduce((s, m) => s + m.pips, 0);
+  const totalSignals = monthly.reduce((s, m) => s + m.signals, 0) || closed.length;
+  const totalPips = closed.reduce((s, o) => s + o.pips, 0);
   const wins = closed.filter((o) => o.pips > 0).length;
   const winRate = closed.length ? `${((wins / closed.length) * 100).toFixed(1)}%` : "—";
 

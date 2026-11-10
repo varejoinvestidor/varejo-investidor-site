@@ -4,7 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { getPublisherSession } from "../publisher/supabase/server";
 import { normalizeEliteAsset } from "./assets";
-import { computeSignalPips } from "./pips";
+import { computeSignalPips, formatPipsLabel } from "./pips";
 import {
   installEliteSchemaFromAdmin as installEliteSchemaCore,
   installFullSupabaseSchemaFromAdmin as installFullSupabaseSchemaCore,
@@ -40,7 +40,7 @@ function buildOperationRow(input: EliteOperationInput) {
     take,
     stop,
     closeOutcome: input.close_outcome ?? (input.status === "closed" ? "take" : null),
-    manualPips: input.result_pips,
+    manualPips: input.close_outcome === "manual" ? input.result_pips : undefined,
   });
 
   const useManual =
@@ -135,6 +135,38 @@ function eliteSaveErrorMessage(message: string): string {
     return `${message} — confira se seu usuário tem role admin/editor em profiles e se o SQL Elite foi executado.`;
   }
   return message;
+}
+
+export async function quickSetEliteOperationPips(id: string, pips: number) {
+  const ctx = await requireEditor();
+  if ("error" in ctx) return { ok: false as const, error: ctx.error };
+
+  if (!Number.isFinite(pips)) return { ok: false as const, error: "Pips inválidos." };
+
+  const { data: existing, error: fetchError } = await ctx.supabase
+    .from("elite_operations")
+    .select("report_month, status")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (fetchError || !existing) return { ok: false as const, error: fetchError?.message ?? "Sinal não encontrado." };
+
+  const label = formatPipsLabel(pips);
+  const { error } = await ctx.supabase
+    .from("elite_operations")
+    .update({
+      status: "closed",
+      close_outcome: "manual",
+      result_pips: pips,
+      result_label: label,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+
+  if (error) return { ok: false as const, error: error.message };
+
+  await afterOperationMutation(ctx.supabase, existing.report_month);
+  return { ok: true as const };
 }
 
 export async function deleteEliteOperation(id: string) {

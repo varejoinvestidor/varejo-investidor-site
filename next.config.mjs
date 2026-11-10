@@ -1,3 +1,5 @@
+import { buildLegacyArticleRedirects } from "./src/i18n/legacyArticleRedirects.mjs";
+
 /** @type {import('next').NextConfig} */
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
@@ -91,6 +93,27 @@ const nextConfig = {
         destination: "/artigos",
         permanent: true,
       },
+      {
+        source: "/articulos-globales",
+        destination: "/es/artigos",
+        permanent: true,
+      },
+      {
+        source: "/articulos-globales/:slug",
+        destination: "/es/artigos/:slug",
+        permanent: true,
+      },
+      {
+        source: "/global-articles",
+        destination: "/en/artigos",
+        permanent: true,
+      },
+      {
+        source: "/global-articles/:slug",
+        destination: "/en/artigos/:slug",
+        permanent: true,
+      },
+      ...buildLegacyArticleRedirects(),
     ];
   },
 };

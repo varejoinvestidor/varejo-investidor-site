@@ -7,6 +7,7 @@ import type { InstitutionalMarketPage } from "../data/institutionalMarketPages/t
 import { PartnerBrokerMarketCard } from "./PartnerBrokerMarketCard";
 import { fadeUp } from "./SiteSections";
 import { localizedPath } from "../i18n/routing";
+import { getPublisherHubPath } from "../publisher/public/paths";
 import { getMarketLabel, type MarketSlug } from "../data/marketContent";
 
 type MarketUiCopy = {
@@ -103,7 +104,7 @@ export function InstitutionalMarketSections({
   const ui = marketUi(locale);
   const signalsHref = locale === "pt" ? "/sinais" : localizedPath("/sinais", locale);
   const educationHref = locale === "pt" ? "/educacao" : localizedPath("/educacao", locale);
-  const insightsHref = locale === "pt" ? "/global-insights" : localizedPath("/global-insights", locale);
+  const insightsHref = getPublisherHubPath(locale);
 
   return (
     <>

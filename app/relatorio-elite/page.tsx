@@ -1,6 +1,7 @@
 import EliteReportHubEntry from "../../src/components/EliteReportHubEntry";
 import { aggregateStats, mapMonthly, mapOperations } from "../../src/elite/mapToHub";
 import { fetchPublicEliteData } from "../../src/elite/queries";
+import { reconcileMonthlyFromOperations } from "../../src/elite/reconcileMonthly";
 import { computeTraderPerformance } from "../../src/elite/traderPerformance";
 
 export const metadata = {
@@ -16,7 +17,7 @@ export default async function RelatorioElitePage() {
   const hubData = remote
     ? (() => {
         const { active, closed } = mapOperations(remote.operations);
-        const monthly = mapMonthly(remote.monthly);
+        const monthly = mapMonthly(reconcileMonthlyFromOperations(remote.monthly, remote.operations));
         return {
           monthly,
           activeOperations: active,

@@ -1,4 +1,6 @@
 import type { Locale } from "../i18n";
+import { SUPPORTED_LOCALES } from "../i18n/locales";
+import { publisherHubPathForLocale } from "../i18n/publisherHubPaths";
 import { getMarketLabel, publicMarketSlugs, type MarketSlug } from "./marketContent";
 import { getCategoryLabel, migrateLegacyCategory } from "./insights/categories";
 import { editorialPosts } from "./insights/registry";
@@ -7,30 +9,15 @@ import type { InsightCategoryKey, InsightPost } from "./insights/types";
 export type { InsightCategoryKey, InsightPost, InsightContentBlock } from "./insights/types";
 export { getCategoryLabel, insightCategories, insightCategoryKeys } from "./insights/categories";
 
-export const insightsBasePath: Record<Locale, string> = {
-  pt: "/artigos",
-  en: "/global-articles",
-  es: "/articulos-globales",
-  fr: "/fr/articles",
-  it: "/it/articles",
-  de: "/de/articles",
-  fa: "/fa/articles",
-  hi: "/global-articles-hi",
-  ar: "/ar/global-articles",
-  tr: "/tr/global-articles",
-  id: "/id/articles",
-  vi: "/vi/articles",
-  th: "/th/articles",
-  ru: "/ru/articles",
-  ur: "/ur/articles",
-  bn: "/bn/articles",
-  ja: "/ja/articles",
-  ko: "/ko/articles",
-  zh: "/zh/articles",
-  pl: "/pl/articles",
-  tl: "/tl/articles",
-  he: "/he/global-articles",
-};
+const insightsBasePathEntries = SUPPORTED_LOCALES.map((locale) => [
+  locale,
+  publisherHubPathForLocale(locale),
+] as const);
+
+export const insightsBasePath: Record<Locale, string> = Object.fromEntries(insightsBasePathEntries) as Record<
+  Locale,
+  string
+>;
 
 export const insightLocales: Locale[] = ["pt", "en", "es", "fr", "it", "de", "fa", "hi", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ja", "ko", "zh", "pl", "tl", "he"];
 
@@ -1104,7 +1091,8 @@ function sortByPublishedDesc(posts: InsightPost[]) {
 export const insightPosts: InsightPost[] = sortByPublishedDesc([...editorialPosts, ...generatedPosts]);
 
 export function getInsightsPath(locale: Locale, slug?: string) {
-  return `${insightsBasePath[locale] ?? insightsBasePath.en}${slug ? `/${slug}` : ""}`;
+  const base = publisherHubPathForLocale(locale);
+  return `${base}${slug ? `/${slug}` : ""}`;
 }
 
 export function getPostsByLocale(locale: Locale) {
@@ -1134,8 +1122,23 @@ export function getPost(locale: Locale, slug: string) {
   return insightPosts.find((post) => post.locale === locale && post.slug === slug) ?? insightPosts.find((post) => post.locale === "en" && post.slug === slug);
 }
 
+function localeFromCanonicalArticlesPath(pathname: string | null): Locale | null {
+  if (!pathname) return null;
+  if (pathname === "/artigos" || pathname.startsWith("/artigos/")) return "pt";
+  const parts = pathname.split("/").filter(Boolean);
+  if (parts.length >= 2 && parts[1] === "artigos") {
+    const seg = parts[0].toLowerCase();
+    if (seg === "fil") return "tl";
+    const match = SUPPORTED_LOCALES.find((l) => (l === "tl" ? "fil" : l) === seg);
+    return match ?? null;
+  }
+  return null;
+}
+
 export function localeFromInsightsPath(pathname: string | null): Locale | null {
   if (!pathname) return null;
+  const canonical = localeFromCanonicalArticlesPath(pathname);
+  if (canonical) return canonical;
   if (pathname === "/artigos" || (pathname.startsWith("/artigos/") && !pathname.startsWith("/artigos-globais"))) {
     return "pt";
   }

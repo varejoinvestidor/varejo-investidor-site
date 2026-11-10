@@ -1,3 +1,4 @@
+import { resolveOperationPips } from "./resolveOperationPips";
 import type { EliteOperationRow } from "./types";
 
 export type PeriodKey = "day" | "week" | "month" | "all";
@@ -49,8 +50,8 @@ function summarize(rows: EliteOperationRow[], key: PeriodKey, label: string): Pe
 
   const scoped = rows.filter((row) => key === "all" || inWindow(parseOpDate(row), start, now, row, key));
   const closed = scoped.filter((r) => r.status === "closed");
-  const wins = closed.filter((r) => r.result_pips > 0).length;
-  const pips = closed.reduce((s, r) => s + r.result_pips, 0);
+  const wins = closed.filter((r) => resolveOperationPips(r).pips > 0).length;
+  const pips = closed.reduce((s, r) => s + resolveOperationPips(r).pips, 0);
 
   return {
     key,

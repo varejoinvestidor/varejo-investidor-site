@@ -125,13 +125,11 @@ export async function middleware(request: NextRequest) {
     const targetUrl = request.nextUrl.clone();
     let targetPath: string | null = null;
 
-    const localeSegment = urlLocale === "tl" ? "tl" : urlLocale;
     const localizedPageAliases: Record<string, string> = {
       sinais: "signals",
       educacao: "education",
       servicos: "services",
       sobre: "about",
-      artigos: "articles",
     };
 
     const rootHandledPages = new Set([
@@ -146,16 +144,27 @@ export async function middleware(request: NextRequest) {
       "relatorio-elite",
       "elite-report",
       "reporte-elite",
+      "elite-report-hi",
       "idioma",
       "admin",
       "auth",
     ]);
 
+    const articleAliasSegments = new Set(["articles", "insights"]);
+    const routeLocaleFolder =
+      urlLocale === "tl"
+        ? firstPageSegment && (firstPageSegment === "artigos" || articleAliasSegments.has(firstPageSegment))
+          ? "fil"
+          : "tl"
+        : urlLocale;
+
     if (firstPageSegment && localizedPageAliases[firstPageSegment]) {
-      targetPath = `/${[localeSegment, localizedPageAliases[firstPageSegment], ...rest.slice(1)].join("/")}`;
+      targetPath = `/${[routeLocaleFolder, localizedPageAliases[firstPageSegment], ...rest.slice(1)].join("/")}`;
+    } else if (firstPageSegment && articleAliasSegments.has(firstPageSegment)) {
+      targetPath = `/${[routeLocaleFolder === "tl" && firstSegment === "fil" ? "fil" : routeLocaleFolder, "artigos", ...rest.slice(1)].join("/")}`;
     } else if (firstPageSegment && rootHandledPages.has(firstPageSegment)) {
       targetPath = `/${rest.join("/")}`;
-    } else if (firstSegment === "fil") {
+    } else if (firstSegment === "fil" && rest[0] !== "artigos" && !articleAliasSegments.has(rest[0] ?? "")) {
       targetPath = `/${["tl", ...rest].join("/")}`;
     }
 
