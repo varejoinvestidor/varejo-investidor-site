@@ -4,6 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
 import { getPublisherSession } from "../publisher/supabase/server";
 import { computeSignalPips } from "./pips";
+import { ELITE_MIGRATION_FILES, runSqlMigrationFiles } from "../publisher/schema/runSqlMigrations";
 import { syncEliteMonthlyForReportMonth } from "./syncMonthly";
 import type { EliteMonthlyInput, EliteOperationInput } from "./types";
 
@@ -73,6 +74,31 @@ async function afterOperationMutation(supabase: SupabaseClient, reportMonth: str
   revalidatePath("/elite-report");
   revalidatePath("/admin/relatorio-elite");
   revalidatePath("/admin/relatorio-elite/desempenho");
+}
+
+/** Cria/atualiza tabelas Elite no Supabase (admin). */
+export async function installEliteSchemaFromAdmin() {
+  const { supabase, profile } = await getPublisherSession();
+  if (!supabase || !profile) return { ok: false as const, error: "Sessão inválida." };
+  if (profile.role !== "admin") {
+    return { ok: false as const, error: "Somente administradores podem instalar o schema Elite." };
+  }
+
+  const migrated = await runSqlMigrationFiles(ELITE_MIGRATION_FILES);
+  if (!migrated.ok) return { ok: false as const, error: migrated.error };
+
+  const check = await supabase.from("elite_operations").select("id").limit(1);
+  if (check.error) {
+    return {
+      ok: false as const,
+      error: `Migrations aplicadas, mas a API ainda retorna: ${check.error.message}. Aguarde ~1 min e recarregue.`,
+    };
+  }
+
+  revalidatePath("/admin/relatorio-elite");
+  revalidatePath("/admin/relatorio-elite/desempenho");
+  revalidatePath("/relatorio-elite");
+  return { ok: true as const };
 }
 
 export async function upsertEliteOperation(input: EliteOperationInput) {

@@ -6,6 +6,7 @@ import { formatUsd, lotTableRows } from "../lotPips";
 import { computeSignalPips, formatPipsLabel } from "../pips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
 import { parseWhatsAppSignal } from "../whatsappParse";
+import { EliteSchemaAlert } from "./EliteSchemaAlert";
 import { EliteAdminSubnav } from "./EliteAdminSubnav";
 import { draftFromRow, emptyOperationDraft, type OperationDraft } from "./operationFormState";
 import {
@@ -239,7 +240,7 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
         </a>{" "}
         são atualizados.
       </p>
-      {message ? <DraftBanner message={message} /> : null}
+      {message ? <EliteSchemaAlert message={message} /> : null}
 
       <section className="space-y-4 rounded-xl border border-line/12 p-6">
         <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Colar do WhatsApp</h3>
@@ -550,25 +551,3 @@ export function EliteReportAdmin({ operations, monthly, loadError }: Props) {
   );
 }
 
-function DraftBanner({ message }: { message: string }) {
-  const needsSchema =
-    /elite_operations|elite_monthly|schema cache|PGRST205/i.test(message) ||
-    message.toLowerCase().includes("could not find the table");
-  return (
-    <div className="rounded-lg border border-fall/40 bg-fall/10 p-4 text-sm text-fall">
-      <p>{message}</p>
-      {needsSchema ? (
-        <p className="mt-2 text-xs text-paper/70">
-          As tabelas <code className="text-gold">elite_operations</code> e{" "}
-          <code className="text-gold">elite_monthly_reports</code> ainda não existem neste projeto Supabase. Rode{" "}
-          <code className="text-gold">POST /api/publisher/bootstrap-schema</code> com Bearer <code>CRON_SECRET</code>{" "}
-          (migrations Elite inclusas). Depois recarregue o admin — ao salvar,{" "}
-          <a href="/relatorio-elite" className="text-gold underline" target="_blank" rel="noreferrer">
-            /relatorio-elite
-          </a>{" "}
-          é revalidado automaticamente.
-        </p>
-      ) : null}
-    </div>
-  );
-}

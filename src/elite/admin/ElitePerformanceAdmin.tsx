@@ -5,6 +5,7 @@ import { ELITE_LOT_SIZES, formatUsd, lotTableRows } from "../lotPips";
 import type { EliteMonthlyReportRow, EliteOperationRow } from "../types";
 import { computeTraderPerformance } from "../traderPerformance";
 import { tradeResultFromRow, tradeResultLabel } from "./tradeResult";
+import { EliteSchemaAlert } from "./EliteSchemaAlert";
 
 type Props = {
   operations: EliteOperationRow[];
@@ -33,9 +34,7 @@ export function ElitePerformanceAdmin({ operations, monthly, loadError }: Props)
 
   return (
     <div className="mx-auto max-w-6xl space-y-10">
-      {loadError ? (
-        <div className="rounded-lg border border-fall/40 bg-fall/10 p-4 text-sm text-fall">{loadError}</div>
-      ) : null}
+      {loadError ? <EliteSchemaAlert message={loadError} /> : null}
 
       <section className="space-y-4">
         <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Desempenho (espelho do site)</h3>

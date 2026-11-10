@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ADMIN_FOOTER_NAV, ADMIN_NAV } from "./nav";
+import { ADMIN_FOOTER_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEARCH_NAV } from "./nav";
 import { ROLE_LABELS } from "../permissions";
 import type { PublisherProfile } from "../types";
 import { createPublisherBrowserClient } from "../supabase/browser";
@@ -60,15 +60,40 @@ export function AdminShell({ profile, children }: Props) {
             <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-gold">Varejo Investidor</p>
             <h1 className="mt-2 font-serif text-xl tracking-tight text-paper">VI Publisher</h1>
           </div>
-          <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
-            {ADMIN_NAV.map((item) => {
-              const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
-              return (
-                <Link key={item.href} href={item.href} className={navLinkClass(active)}>
-                  {item.label}
-                </Link>
-              );
-            })}
+          <nav className="flex-1 overflow-y-auto px-3 py-4">
+            <ul className="space-y-0.5">
+              {ADMIN_PUBLISHER_NAV.map((item) => {
+                const active =
+                  pathname === item.href ||
+                  (item.href !== "/admin" && pathname.startsWith(item.href));
+                return (
+                  <li key={item.href}>
+                    <Link href={item.href} className={navLinkClass(active)}>
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="my-5 border-t border-line/12 pt-4">
+              <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>
+              <ul className="mt-2 space-y-0.5">
+                {ADMIN_RESEARCH_NAV.map((item) => {
+                  const active =
+                    item.href === "/admin/relatorio-elite"
+                      ? pathname === "/admin/relatorio-elite"
+                      : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  return (
+                    <li key={item.href}>
+                      <Link href={item.href} className={navLinkClass(active)}>
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </nav>
 
           <div className="relative border-t border-line/10 px-4 py-4">
