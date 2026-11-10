@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { AnalyticsAccessChart, AnalyticsShareBar } from "../../../../src/analytics/admin/ViAnalyticsCharts";
 import { ViAnalyticsPeriodNav } from "../../../../src/analytics/admin/ViAnalyticsPeriodNav";
+import { analyticsSchemaHasEvents, analyticsSchemaHasRegions } from "../../../../src/analytics/admin/schemaState";
 import { loadAnalyticsDashboard, probeAnalyticsSchema } from "../../../../src/analytics/admin/queries";
 import { getDashboardCounts } from "../../../../src/publisher/supabase/server";
 import type { AnalyticsPeriodKey } from "../../../../src/analytics/types";
@@ -21,7 +22,7 @@ export default async function ViAdministradorOverviewPage({ searchParams }: Prop
   const period = (searchParams?.period ?? "30d") as AnalyticsPeriodKey;
   const schema = await probeAnalyticsSchema();
   const publisherCounts = await getDashboardCounts();
-  const dashboard = schema === "ok" ? await loadAnalyticsDashboard(period) : null;
+  const dashboard = analyticsSchemaHasEvents(schema) ? await loadAnalyticsDashboard(period) : null;
 
   const summary = dashboard?.summary;
   const maxPath = dashboard?.topPaths[0]?.views ?? 1;
@@ -67,7 +68,7 @@ export default async function ViAdministradorOverviewPage({ searchParams }: Prop
           </a>
         </div>
         <div className="mt-5 grid gap-4">
-          {dashboard?.byRegion.length ? (
+          {analyticsSchemaHasRegions(schema) && dashboard?.byRegion.length ? (
             dashboard.byRegion.map((row) => (
               <AnalyticsShareBar
                 key={row.region_id}
@@ -77,7 +78,11 @@ export default async function ViAdministradorOverviewPage({ searchParams }: Prop
               />
             ))
           ) : (
-            <p className="text-sm text-paper/50">Sem dados regionais ainda.</p>
+            <p className="text-sm text-paper/50">
+              {schema === "partial"
+                ? "Instale a migration de regiões para ver o mapa de acessos."
+                : "Sem dados regionais ainda."}
+            </p>
           )}
         </div>
       </section>

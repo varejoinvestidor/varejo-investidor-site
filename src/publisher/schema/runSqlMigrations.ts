@@ -5,6 +5,13 @@ import { postgresConnectionHint, resolvePostgresConnectionString } from "./postg
 
 export const ARTICLE_BANNERS_MIGRATION_FILES = ["20260310120000_article_banners.sql"] as const;
 
+export const ARTICLE_VIDEO_MIGRATION_FILES = ["20260318150000_article_youtube_videos.sql"] as const;
+
+export const ARTICLE_PUBLISHER_EXTRA_MIGRATION_FILES = [
+  ...ARTICLE_BANNERS_MIGRATION_FILES,
+  ...ARTICLE_VIDEO_MIGRATION_FILES,
+] as const;
+
 export const ELITE_MIGRATION_FILES = [
   "20260310130000_elite_report.sql",
   "20260311120000_elite_operations_levels.sql",
@@ -18,7 +25,7 @@ export const VI_ANALYTICS_MIGRATION_FILES = [
 ] as const;
 
 export const SUPABASE_INCREMENTAL_MIGRATION_FILES = [
-  "20260310120000_article_banners.sql",
+  ...ARTICLE_PUBLISHER_EXTRA_MIGRATION_FILES,
   ...ELITE_MIGRATION_FILES,
   "20260316120000_supabase_api_grants.sql",
   ...VI_ANALYTICS_MIGRATION_FILES,

@@ -24,7 +24,9 @@ export default async function ViAdministradorLayout({ children }: { children: Re
         </p>
       </header>
 
-      {schema !== "ok" ? <ViAnalyticsSchemaAlert state={schema} /> : null}
+      {schema !== "ok" ? (
+        <ViAnalyticsSchemaAlert state={schema === "partial" ? "partial" : schema === "unconfigured" ? "unconfigured" : "missing"} />
+      ) : null}
 
       <ViAnalyticsSubnav />
       {children}

@@ -17,7 +17,7 @@ import { slugifyTitle } from "../articles/slug";
 import type { CategoryRow, TagRow } from "../taxonomy/actions";
 import type { PublisherProfile } from "../types";
 import { AdminPasswordDialog } from "../admin/AdminPasswordDialog";
-import { ArticleBannersSchemaAlert } from "../admin/ArticleBannersSchemaAlert";
+import { ArticlePublisherSchemaAlert } from "../admin/ArticlePublisherSchemaAlert";
 import { canPublish } from "../permissions";
 import {
   applyAutoTranslateToArticle,
@@ -497,7 +497,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
         </p>
       ) : null}
 
-      {saveError ? <ArticleBannersSchemaAlert message={saveError} /> : null}
+      {saveError ? <ArticlePublisherSchemaAlert message={saveError} /> : null}
 
       <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
         <div className="space-y-6">

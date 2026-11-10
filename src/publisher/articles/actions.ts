@@ -18,7 +18,12 @@ import {
   serializeArticleBannersForSave,
   type ArticleBanner,
 } from "../types/banner";
-import { ARTICLE_BANNERS_MIGRATION_FILES, runSqlMigrationFiles } from "../schema/runSqlMigrations";
+import {
+  ARTICLE_BANNERS_MIGRATION_FILES,
+  ARTICLE_PUBLISHER_EXTRA_MIGRATION_FILES,
+  ARTICLE_VIDEO_MIGRATION_FILES,
+  runSqlMigrationFiles,
+} from "../schema/runSqlMigrations";
 import { getPublisherSession } from "../supabase/server";
 import { getPublisherArticlePath, getPublisherHubPath } from "../public/paths";
 import type { ArticleStatus } from "../types";
@@ -189,6 +194,49 @@ export async function installArticleBannersSchemaFromAdmin() {
   return { ok: true as const };
 }
 
+const ARTICLE_VIDEO_SCHEMA_ERROR =
+  "Colunas `youtube_horizontal`, `youtube_vertical` ou `video_primary` ausentes. Instale a migration de vídeos (botão abaixo, admin).";
+
+/** Cria colunas de vídeo YouTube no artigo (admin). */
+export async function installArticleVideoSchemaFromAdmin() {
+  const { supabase, profile } = await getPublisherSession();
+  if (!supabase || !profile) return { ok: false as const, error: "Sessão inválida." };
+  if (profile.role !== "admin") {
+    return { ok: false as const, error: "Somente administradores podem instalar colunas de vídeo." };
+  }
+
+  const migrated = await runSqlMigrationFiles(ARTICLE_VIDEO_MIGRATION_FILES);
+  if (!migrated.ok) return { ok: false as const, error: migrated.error };
+
+  const check = await supabase.from("articles").select("youtube_horizontal, youtube_vertical, video_primary").limit(1);
+  if (check.error) {
+    return {
+      ok: false as const,
+      error: `Migration aplicada, mas a API ainda retorna: ${check.error.message}. Aguarde ~1 min e salve de novo.`,
+    };
+  }
+
+  revalidatePath("/admin/artigos");
+  return { ok: true as const };
+}
+
+/** Banners + vídeos (idempotente). */
+export async function installArticlePublisherExtrasFromAdmin() {
+  const { supabase, profile } = await getPublisherSession();
+  if (!supabase || !profile) return { ok: false as const, error: "Sessão inválida." };
+  if (profile.role !== "admin") {
+    return { ok: false as const, error: "Somente administradores podem instalar extras do Publisher." };
+  }
+
+  const migrated = await runSqlMigrationFiles(ARTICLE_PUBLISHER_EXTRA_MIGRATION_FILES);
+  if (!migrated.ok) return { ok: false as const, error: migrated.error };
+
+  revalidatePath("/admin/artigos");
+  return { ok: true as const };
+}
+
+export { ARTICLE_VIDEO_SCHEMA_ERROR };
+
 async function requireStaff() {
   const { supabase, user, profile } = await getPublisherSession();
   if (!supabase || !user || !profile) {
@@ -266,38 +314,58 @@ export async function listArticles(filters?: {
 
   const { supabase } = ctx;
   const sort = filters?.sort ?? "updated";
-  let query = supabase
-    .from("articles")
-    .select(
-      "id, title, slug, language, status, updated_at, published_at, scheduled_at, category_id, author_id, view_count, youtube_horizontal, youtube_vertical",
-    );
+  const selectBase =
+    "id, title, slug, language, status, updated_at, published_at, scheduled_at, category_id, author_id, view_count";
+  const selectWithVideo = `${selectBase}, youtube_horizontal, youtube_vertical`;
 
-  if (sort === "views") query = query.order("view_count", { ascending: false });
-  else if (sort === "published") query = query.order("published_at", { ascending: false, nullsFirst: false });
-  else query = query.order("updated_at", { ascending: false });
-
-  if (filters?.status) query = query.eq("status", filters.status);
-  if (filters?.language) query = query.eq("language", filters.language);
-  if (filters?.category_id) query = query.eq("category_id", filters.category_id);
-  if (filters?.author_id) query = query.eq("author_id", filters.author_id);
-  if (filters?.q?.trim()) {
-    const safe = filters.q.trim().replace(/[%,()]/g, " ").slice(0, 80);
-    if (safe) {
-      const term = `%${safe}%`;
-      query = query.or(`title.ilike.${term},slug.ilike.${term}`);
+  function applyListFilters(select: string) {
+    let query = supabase.from("articles").select(select);
+    if (sort === "views") query = query.order("view_count", { ascending: false });
+    else if (sort === "published") query = query.order("published_at", { ascending: false, nullsFirst: false });
+    else query = query.order("updated_at", { ascending: false });
+    if (filters?.status) query = query.eq("status", filters.status);
+    if (filters?.language) query = query.eq("language", filters.language);
+    if (filters?.category_id) query = query.eq("category_id", filters.category_id);
+    if (filters?.author_id) query = query.eq("author_id", filters.author_id);
+    if (filters?.q?.trim()) {
+      const safe = filters.q.trim().replace(/[%,()]/g, " ").slice(0, 80);
+      if (safe) {
+        const term = `%${safe}%`;
+        query = query.or(`title.ilike.${term},slug.ilike.${term}`);
+      }
     }
+    return query;
   }
 
-  const { data, error } = await query;
+  let includeVideoColumns = true;
+  let { data, error } = await applyListFilters(selectWithVideo);
+  if (error && isArticleVideoSchemaError(error.message)) {
+    includeVideoColumns = false;
+    ({ data, error } = await applyListFilters(selectBase));
+  }
 
   if (error) return { ok: false, error: error.message };
 
-  const categoryIds = Array.from(
-    new Set((data ?? []).map((r) => r.category_id).filter((id): id is string => Boolean(id))),
-  );
-  const authorIds = Array.from(
-    new Set((data ?? []).map((r) => r.author_id).filter((id): id is string => Boolean(id))),
-  );
+  type ArticleListRow = {
+    id: string;
+    title: string;
+    slug: string;
+    language: string;
+    status: string;
+    updated_at: string;
+    published_at: string | null;
+    scheduled_at: string | null;
+    category_id: string | null;
+    author_id: string | null;
+    view_count: number | null;
+    youtube_horizontal?: string | null;
+    youtube_vertical?: string | null;
+  };
+
+  const rows = (data ?? []) as unknown as ArticleListRow[];
+
+  const categoryIds = Array.from(new Set(rows.map((r) => r.category_id).filter((id): id is string => Boolean(id))));
+  const authorIds = Array.from(new Set(rows.map((r) => r.author_id).filter((id): id is string => Boolean(id))));
 
   const [{ data: categories }, { data: authors }] = await Promise.all([
     categoryIds.length
@@ -311,7 +379,7 @@ export async function listArticles(filters?: {
   const categoryMap = new Map((categories ?? []).map((c) => [c.id, c.name_pt]));
   const authorMap = new Map((authors ?? []).map((a) => [a.id, a.full_name]));
 
-  const items: ArticleListItem[] = (data ?? []).map((row) => ({
+  const items: ArticleListItem[] = rows.map((row) => ({
     id: row.id,
     title: row.title,
     slug: row.slug,
@@ -323,10 +391,8 @@ export async function listArticles(filters?: {
     category_name: row.category_id ? (categoryMap.get(row.category_id) ?? null) : null,
     author_name: row.author_id ? (authorMap.get(row.author_id) ?? null) : null,
     view_count: row.view_count ?? 0,
-    has_video_horizontal: Boolean(
-      (row as { youtube_horizontal?: string | null }).youtube_horizontal?.trim(),
-    ),
-    has_video_vertical: Boolean((row as { youtube_vertical?: string | null }).youtube_vertical?.trim()),
+    has_video_horizontal: includeVideoColumns && Boolean(row.youtube_horizontal?.trim()),
+    has_video_vertical: includeVideoColumns && Boolean(row.youtube_vertical?.trim()),
   }));
 
   return { ok: true, data: items };

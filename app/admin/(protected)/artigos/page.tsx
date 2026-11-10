@@ -47,7 +47,9 @@ export default async function AdminArtigosPage({ searchParams }: Props) {
     <div className="mx-auto max-w-6xl space-y-8">
       <div>
         <h2 className="font-serif text-3xl tracking-tight text-paper">Artigos</h2>
-        <p className="mt-2 text-sm text-paper/55">{items.length} registro(s)</p>
+        <p className="mt-2 text-sm text-paper/55">
+          {items.length} registro(s). Vídeos de capa: camadas 16:9 e 9:16 no editor de cada artigo.
+        </p>
       </div>
 
       <Suspense fallback={null}>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { AnalyticsShareBar } from "../../../../../src/analytics/admin/ViAnalyticsCharts";
 import { ViAnalyticsPeriodNav } from "../../../../../src/analytics/admin/ViAnalyticsPeriodNav";
+import { analyticsSchemaHasRegions } from "../../../../../src/analytics/admin/schemaState";
 import { loadAnalyticsGeoReport, probeAnalyticsSchema } from "../../../../../src/analytics/admin/queries";
 import { countryDisplayName, regionLabel } from "../../../../../src/analytics/regions";
 import type { AnalyticsPeriodKey } from "../../../../../src/analytics/types";
@@ -11,7 +12,7 @@ type Props = { searchParams?: { period?: string } };
 export default async function ViAdministradorRegioesPage({ searchParams }: Props) {
   const period = (searchParams?.period ?? "30d") as AnalyticsPeriodKey;
   const schema = await probeAnalyticsSchema();
-  const report = schema === "ok" ? await loadAnalyticsGeoReport(period) : null;
+  const report = analyticsSchemaHasRegions(schema) ? await loadAnalyticsGeoReport(period) : null;
 
   const maxRegion = report?.byRegion[0]?.page_views ?? 1;
   const maxCountry = report?.byCountry[0]?.page_views ?? 1;

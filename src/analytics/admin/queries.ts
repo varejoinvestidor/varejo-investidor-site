@@ -11,16 +11,26 @@ import type {
 } from "../types";
 import { resolveAnalyticsRange } from "../periods";
 
-export type AnalyticsSchemaState = "ok" | "missing" | "unconfigured";
+export type AnalyticsSchemaState = "ok" | "missing" | "unconfigured" | "partial";
 
 export async function probeAnalyticsSchema(): Promise<AnalyticsSchemaState> {
   const admin = createPublisherServiceClient();
   if (!admin) return "unconfigured";
   const { error } = await admin.from("site_analytics_events").select("id", { head: true }).limit(0);
-  if (!error) return "ok";
-  const msg = error.message ?? "";
-  if (error.code === "PGRST205" || /could not find the table/i.test(msg)) return "missing";
-  return "missing";
+  if (error) {
+    const msg = error.message ?? "";
+    if (error.code === "PGRST205" || /could not find the table/i.test(msg)) return "missing";
+    return "missing";
+  }
+  const { error: regionRpcError } = await admin.rpc("analytics_by_region", {
+    p_from: new Date(0).toISOString(),
+    p_to: new Date().toISOString(),
+    p_limit: 1,
+  });
+  if (regionRpcError && /analytics_by_region|Could not find the function|PGRST202/i.test(regionRpcError.message)) {
+    return "partial";
+  }
+  return "ok";
 }
 
 function toIso(d: Date) {

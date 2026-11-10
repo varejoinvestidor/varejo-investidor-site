@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { installViAnalyticsSchemaFromAdmin } from "../actions";
 
-export function ViAnalyticsSchemaAlert({ state }: { state: "missing" | "unconfigured" }) {
+export function ViAnalyticsSchemaAlert({ state }: { state: "missing" | "unconfigured" | "partial" }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -18,12 +18,18 @@ export function ViAnalyticsSchemaAlert({ state }: { state: "missing" | "unconfig
   const text =
     state === "unconfigured"
       ? "Supabase não configurado neste ambiente — métricas locais desativadas."
-      : "Tabela site_analytics_events não encontrada. Instale a migration VI Analytics.";
+      : state === "partial"
+        ? "Telemetria base ativa, mas a migration de regiões (país/macro-região) ainda não foi aplicada. Views e cliques funcionam; aba Regiões fica incompleta."
+        : "Tabela site_analytics_events não encontrada. Instale a migration VI Analytics.";
 
   return (
-    <div className="rounded-lg border border-fall/35 bg-fall/10 p-4 text-sm text-paper/85">
+    <div
+      className={`rounded-lg border p-4 text-sm text-paper/85 ${
+        state === "partial" ? "border-gold/35 bg-gold/10" : "border-fall/35 bg-fall/10"
+      }`}
+    >
       <p>{message ?? text}</p>
-      {state === "missing" ? (
+      {state === "missing" || state === "partial" ? (
         <div className="mt-3 flex flex-wrap gap-2">
           <button
             type="button"

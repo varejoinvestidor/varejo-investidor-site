@@ -114,14 +114,10 @@ create index if not exists elite_operations_signal_number_idx on public.elite_op
 
 grant usage on schema public to anon, authenticated;
 
--- VI Analytics — regiões (requer 20260318120000_vi_analytics.sql base)
--- Arquivo completo: supabase/migrations/20260319120000_vi_analytics_regions.sql
-
-alter table public.site_analytics_events
-  add column if not exists country_code char(2),
-  add column if not exists region_id text,
-  add column if not exists region_label text,
-  add column if not exists timezone text;
+-- VI Analytics: rode no SQL Editor (ou botão Instalar VI Analytics no admin):
+-- 1) supabase/migrations/20260318120000_vi_analytics.sql
+-- 2) supabase/migrations/20260319120000_vi_analytics_regions.sql (inteiro — RPCs + regiões)
+-- O incremental do Publisher (installFullSupabaseSchemaFromAdmin) já inclui ambos via runSqlMigrations.ts.
 
 notify pgrst, 'reload schema';
 

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { ViAnalyticsPeriodNav } from "../../../../../src/analytics/admin/ViAnalyticsPeriodNav";
+import { analyticsSchemaHasEvents } from "../../../../../src/analytics/admin/schemaState";
 import { fetchTopClicks, probeAnalyticsSchema } from "../../../../../src/analytics/admin/queries";
 import { resolveAnalyticsRange } from "../../../../../src/analytics/periods";
 import type { AnalyticsPeriodKey } from "../../../../../src/analytics/types";
@@ -10,7 +11,7 @@ export default async function ViAdministradorCliquesPage({ searchParams }: Props
   const period = (searchParams?.period ?? "30d") as AnalyticsPeriodKey;
   const range = resolveAnalyticsRange(period);
   const schema = await probeAnalyticsSchema();
-  const rows = schema === "ok" ? await fetchTopClicks(range.from, range.to, 50) : [];
+  const rows = analyticsSchemaHasEvents(schema) ? await fetchTopClicks(range.from, range.to, 50) : [];
 
   return (
     <div className="space-y-6">

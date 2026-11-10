@@ -2,11 +2,15 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { AnalyticsAccessChart } from "../../../../../src/analytics/admin/ViAnalyticsCharts";
 import { ViAnalyticsPeriodNav } from "../../../../../src/analytics/admin/ViAnalyticsPeriodNav";
+import { AnalyticsShareBar } from "../../../../../src/analytics/admin/ViAnalyticsCharts";
 import {
   fetchAnalyticsTimeseries,
   fetchAnalyticsSummary,
+  loadAnalyticsGeoReport,
   probeAnalyticsSchema,
 } from "../../../../../src/analytics/admin/queries";
+import { analyticsSchemaHasEvents, analyticsSchemaHasRegions } from "../../../../../src/analytics/admin/schemaState";
+import { regionLabel } from "../../../../../src/analytics/regions";
 import { resolveAnalyticsRange } from "../../../../../src/analytics/periods";
 import type { AnalyticsPeriodKey } from "../../../../../src/analytics/types";
 
@@ -17,8 +21,10 @@ export default async function ViAdministradorRelatoriosPage({ searchParams }: Pr
   const range = resolveAnalyticsRange(period);
   const schema = await probeAnalyticsSchema();
 
+  const geo = analyticsSchemaHasRegions(schema) ? await loadAnalyticsGeoReport(period) : null;
+
   const [daily, weekly, monthly] =
-    schema === "ok"
+    analyticsSchemaHasEvents(schema)
       ? await Promise.all([
           fetchAnalyticsTimeseries(range.from, range.to, "day"),
           fetchAnalyticsTimeseries(range.from, range.to, "week"),
@@ -27,7 +33,7 @@ export default async function ViAdministradorRelatoriosPage({ searchParams }: Pr
       : [[], [], []];
 
   const [summaryToday, summary7, summary30] =
-    schema === "ok"
+    analyticsSchemaHasEvents(schema)
       ? await Promise.all([
           fetchAnalyticsSummary(resolveAnalyticsRange("today").from, resolveAnalyticsRange("today").to),
           fetchAnalyticsSummary(resolveAnalyticsRange("7d").from, resolveAnalyticsRange("7d").to),
@@ -46,6 +52,30 @@ export default async function ViAdministradorRelatoriosPage({ searchParams }: Pr
         <SummaryCard title="Relatório semanal (7d)" summary={summary7} />
         <SummaryCard title="Relatório mensal (30d)" summary={summary30} />
       </section>
+
+      {geo?.byRegion.length ? (
+        <section className="rounded-xl border border-line/12 bg-paper/[0.02] p-6">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-paper/70">Regiões no período</h3>
+          <p className="mt-1 text-xs text-paper/45">{range.label}</p>
+          <div className="mt-5 grid gap-4">
+            {geo.byRegion.slice(0, 8).map((row) => (
+              <AnalyticsShareBar
+                key={row.region_id}
+                label={row.region_label || regionLabel(row.region_id)}
+                value={row.page_views}
+                max={geo.byRegion[0]?.page_views ?? 1}
+              />
+            ))}
+          </div>
+          <p className="mt-4 text-xs text-paper/50">
+            Detalhe completo em{" "}
+            <Link href="/admin/vi-administrador/regioes" className="text-gold hover:underline">
+              Regiões
+            </Link>
+            .
+          </p>
+        </section>
+      ) : null}
 
       <ReportBlock title="Acesso diário" subtitle={`Granularidade dia — ${range.label}`} data={daily} grain="day" />
       <ReportBlock title="Acesso semanal" subtitle="Soma por semana (início na segunda, fuso São Paulo)" data={weekly} grain="week" />
