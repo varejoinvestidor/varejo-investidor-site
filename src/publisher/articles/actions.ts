@@ -235,8 +235,6 @@ export async function installArticlePublisherExtrasFromAdmin() {
   return { ok: true as const };
 }
 
-export { ARTICLE_VIDEO_SCHEMA_ERROR };
-
 async function requireStaff() {
   const { supabase, user, profile } = await getPublisherSession();
   if (!supabase || !user || !profile) {
