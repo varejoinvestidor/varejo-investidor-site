@@ -1,44 +1,40 @@
+import { canonicalEliteAsset, isCryptoAsset, isIndexCfdAsset } from "./pipAsset";
+
 export type EliteDirection = "Compra" | "Venda";
 export type CloseOutcome = "take" | "stop" | "manual";
 
 /** Tamanho de 1 pip em unidades de preço do par. */
 export function pipSizeForAsset(asset: string): number {
-  const a = asset.toUpperCase().replace(/\s/g, "");
+  const a = canonicalEliteAsset(asset);
   if (a.includes("JPY")) return 0.01;
   if (a.includes("XAU") || a.includes("GOLD") || a.includes("XAG")) return 0.1;
   if (a.includes("USOIL") || a.includes("WTI") || a.includes("BRENT") || a.includes("OIL")) return 0.01;
-  if (a.includes("BTC")) return 1;
-  if (a.includes("ETH") || a.includes("SOL") || a.includes("BNB")) return 0.01;
-  if (
-    a.includes("USP") ||
-    a.includes("US500") ||
-    a.includes("SPX") ||
-    a.includes("SP500") ||
-    a.includes("NAS") ||
-    a.includes("US100") ||
-    a.includes("USTEC") ||
-    a.includes("US30") ||
-    a.includes("DJ30") ||
-    a.includes("GER") ||
-    a.includes("UK100") ||
-    a.includes("EU50")
-  ) {
-    return 0.1;
-  }
+  if (isIndexCfdAsset(a)) return 1;
+  if (isCryptoAsset(a)) return 1;
   if (a.includes("/")) return 0.0001;
   return 0.01;
+}
+
+/** Arredonda pips: índices/cripto com 0,1; forex costuma inteiro. */
+export function quantizePips(rawPips: number, asset: string): number {
+  const a = canonicalEliteAsset(asset);
+  const allowFraction = isIndexCfdAsset(a) || isCryptoAsset(a);
+  if (allowFraction) return Math.round(rawPips * 10) / 10;
+  return Math.round(rawPips);
 }
 
 export function pipsBetween(asset: string, direction: EliteDirection, from: number, to: number): number {
   if (!Number.isFinite(from) || !Number.isFinite(to)) return 0;
   const size = pipSizeForAsset(asset);
   const delta = direction === "Compra" ? to - from : from - to;
-  return Math.round(delta / size);
+  return quantizePips(delta / size, asset);
 }
 
 export function formatPipsLabel(pips: number): string {
-  const sign = pips >= 0 ? "+" : "";
-  return `${sign}${pips} pips`;
+  const sign = pips >= 0 ? "+" : "-";
+  const abs = Math.abs(pips);
+  const body = Number.isInteger(abs) ? String(abs) : abs.toFixed(1).replace(".", ",");
+  return `${sign}${body} pips`;
 }
 
 export function computeSignalPips(input: {
@@ -64,8 +60,9 @@ export function computeSignalPips(input: {
 
   if (input.status === "closed") {
     if (input.closeOutcome === "stop") resultPips = stopPips;
-    else if (input.closeOutcome === "manual" && input.manualPips !== undefined) resultPips = input.manualPips;
-    else if (input.closeOutcome === "take" || (Number.isFinite(take) && takePips !== 0)) resultPips = takePips;
+    else if (input.closeOutcome === "manual" && input.manualPips !== undefined) {
+      resultPips = quantizePips(input.manualPips, input.asset);
+    } else if (input.closeOutcome === "take" || (Number.isFinite(take) && takePips !== 0)) resultPips = takePips;
     else if (Number.isFinite(stop)) resultPips = stopPips;
     resultLabel = formatPipsLabel(resultPips);
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ELITE_LASTLINK_URL,
   ELITE_STRIPE_LINKS,
@@ -21,7 +21,10 @@ import type { HubMonthlyReport, HubOperation } from "../elite/mapToHub";
 import type { EliteSignalTier } from "../elite/signalTier";
 import type { PeriodPerformance } from "../elite/traderPerformance";
 import { PremiumAnnualBarChart, PremiumCumulativeAreaChart, PremiumDonutChart } from "./elite/EliteHubCharts";
-import { SignalLevelRows, signalCardShellClass } from "./elite/SignalLevelRows";
+import { EliteOperationCard, EliteOperationsPager, paginateList } from "./elite/EliteOperationCard";
+import { sortOperationsByRecency } from "./elite/eliteOperationSort";
+import { useOperationsPageSize } from "./elite/useOperationsPageSize";
+import { operationReportHref } from "../elite/operationReportLink";
 
 import { eliteReportPaths } from "../data/eliteReportPaths";
 
@@ -566,11 +569,6 @@ function formatPips(value: number, locale: Locale) {
   return `${value >= 0 ? "+" : ""}${formatNumber(value, locale)} pips`;
 }
 
-function formatLevel(value: number | null | undefined, locale: Locale) {
-  if (value === null || value === undefined || Number.isNaN(value)) return null;
-  return new Intl.NumberFormat(locale === "pt" ? "pt-BR" : locale, { maximumFractionDigits: 5 }).format(value);
-}
-
 function getYearSummary(year: number, reportSource: MonthlyReport[]) {
   const yearReports = reportSource.filter((report) => report.year === year);
   const signals = yearReports.reduce((sum, report) => sum + report.signals, 0);
@@ -584,10 +582,6 @@ function getYearSummary(year: number, reportSource: MonthlyReport[]) {
     result: pips ? formatPips(pips, "pt") : percentReports.map((report) => report.result).join(" / "),
     assets,
   };
-}
-
-function localizeDirection(direction: Direction, copy: Copy) {
-  return direction === "Compra" ? copy.buy : copy.sell;
 }
 
 function reportHref(year: number | string) {
@@ -622,6 +616,9 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
   const [selectedMonthKey, setSelectedMonthKey] = useState("2026-4");
   const [selectedTimelineYear, setSelectedTimelineYear] = useState("2026");
   const [filters, setFilters] = useState({ year: "Todos", month: "Todos", asset: "Todos", direction: "Todos", status: "Todos" });
+  const [activeOpsPage, setActiveOpsPage] = useState(1);
+  const [closedOpsPage, setClosedOpsPage] = useState(1);
+  const operationsPageSize = useOperationsPageSize();
 
   const reportsData: MonthlyReport[] = hubData?.monthly?.length ? (hubData.monthly as MonthlyReport[]) : reports;
   const activeOperationsData: Operation[] = hubData?.activeOperations?.length
@@ -682,16 +679,65 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       .map(([label, value], index) => ({ label, value, color: colors[index % colors.length] }));
   }, [reportsData]);
 
-  const filteredOperations = completedOperationsData.filter((operation) => {
-    const [monthName, yearText] = operation.reportMonth.split("/");
-    return (
-      (filters.year === "Todos" || filters.year === yearText) &&
-      (filters.month === "Todos" || filters.month === monthName) &&
-      (filters.asset === "Todos" || filters.asset === operation.asset) &&
-      (filters.direction === "Todos" || filters.direction === operation.direction) &&
-      (filters.status === "Todos" || filters.status === copy.finished)
-    );
-  });
+  const sortedActiveOperations = useMemo(
+    () => sortOperationsByRecency(activeOperationsData),
+    [activeOperationsData],
+  );
+
+  const filteredOperations = useMemo(() => {
+    const list = completedOperationsData.filter((operation) => {
+      const [monthName, yearText] = operation.reportMonth.split("/");
+      return (
+        (filters.year === "Todos" || filters.year === yearText) &&
+        (filters.month === "Todos" || filters.month === monthName) &&
+        (filters.asset === "Todos" || filters.asset === operation.asset) &&
+        (filters.direction === "Todos" || filters.direction === operation.direction) &&
+        (filters.status === "Todos" || filters.status === copy.finished)
+      );
+    });
+    return sortOperationsByRecency(list);
+  }, [completedOperationsData, copy.finished, filters]);
+
+  useEffect(() => {
+    setClosedOpsPage(1);
+  }, [filters]);
+
+  useEffect(() => {
+    setActiveOpsPage(1);
+    setClosedOpsPage(1);
+  }, [operationsPageSize]);
+
+  const activePagination = useMemo(
+    () => paginateList(sortedActiveOperations, activeOpsPage, operationsPageSize),
+    [sortedActiveOperations, activeOpsPage, operationsPageSize],
+  );
+
+  const closedPagination = useMemo(
+    () => paginateList(filteredOperations, closedOpsPage, operationsPageSize),
+    [filteredOperations, closedOpsPage, operationsPageSize],
+  );
+
+  const operationsStats =
+    locale === "en"
+      ? {
+          live: "Live",
+          finished: "Closed",
+          filtered: "In this filter",
+          totalPublic: "Public history",
+        }
+      : locale === "es"
+        ? {
+            live: "Activas",
+            finished: "Finalizadas",
+            filtered: "En este filtro",
+            totalPublic: "Histórico público",
+          }
+        : {
+            live: "Ao vivo",
+            finished: "Finalizadas",
+            filtered: "Neste filtro",
+            totalPublic: "Histórico público",
+          };
 
   function changeLocale(nextLocale: Locale) {
     setLocale(nextLocale);
@@ -863,122 +909,93 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       <section className="px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Elite" title={copy.activeTitle} text={copy.activeText} />
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {activeOperationsData.map((operation, index) => {
-              const tier = operation.signalTier ?? "elite";
-              const isElite = tier === "elite";
-              return (
-              <motion.article
-                key={`${operation.asset}-${index}`}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                className={`relative overflow-hidden rounded-sm p-6 ${signalCardShellClass(tier)}`}
-              >
-                {isElite ? (
-                  <div className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-gold/[0.12] blur-2xl" />
-                ) : null}
-                <div className="relative flex items-start justify-between gap-4">
-                  <div>
-                    <p
-                      className={`text-[10px] font-black uppercase tracking-[0.22em] ${isElite ? "text-gold" : "text-rise/90"}`}
-                    >
-                      {copy.asset}
-                    </p>
-                    <h3 className={`mt-2 font-mono text-3xl font-black tracking-tight ${isElite ? "text-gold" : "text-paper"}`}>
-                      {operation.asset}
-                    </h3>
-                  </div>
-                  <span
-                    className={`h-2.5 w-2.5 rounded-full ${
-                      isElite ? "bg-gold shadow-[0_0_14px_rgba(198,153,74,0.75)]" : "bg-rise shadow-[0_0_12px_rgba(15,143,86,0.5)]"
-                    }`}
-                  />
-                </div>
-                <div className="relative mt-6 grid gap-0">
-                  {[
-                    operation.signalNumber
-                      ? [copy.table.signal, `#${formatNumber(operation.signalNumber, locale)}`]
-                      : null,
-                    [copy.direction, localizeDirection(operation.direction, copy)],
-                    [copy.status, copy.live],
-                    [copy.partialResult, operation.result],
-                    [copy.date, operation.date],
-                    [copy.update, operation.updatedAt],
-                  ]
-                    .filter(Boolean)
-                    .map((row) => {
-                      const [label, value] = row as [string, string];
-                      return (
-                        <InfoRow
-                          key={label}
-                          label={label}
-                          value={value}
-                          positive={String(value).startsWith("+")}
-                          negative={String(value).startsWith("-")}
-                        />
-                      );
-                    })}
-                  {tier === "free" && operation.takePips !== undefined && operation.takePips !== 0 ? (
-                    <p className="mt-2 text-[11px] text-paper/50">
-                      {copy.target}: {formatPips(operation.takePips, locale)} · {copy.stop}:{" "}
-                      {formatPips(operation.stopPips ?? 0, locale)}
-                    </p>
-                  ) : null}
-                  <SignalLevelRows
-                    tier={tier}
-                    labels={{
-                      sectionTitle: copy.protectedFields,
-                      sectionTitleFree: copy.levelsPublic,
-                      entry: copy.entry,
-                      target: copy.target,
-                      stop: copy.stop,
-                    }}
-                    entryPrice={operation.entryPrice}
-                    takePrice={operation.takePrice}
-                    stopPrice={operation.stopPrice}
-                    formatLevel={(value) => formatLevel(value, locale)}
-                  />
-                </div>
-              </motion.article>
-            );
-            })}
+          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <OperationsStat label={operationsStats.live} value={String(sortedActiveOperations.length)} tone="rise" />
+            <OperationsStat label={operationsStats.finished} value={String(completedOperationsData.length)} tone="gold" />
+            <OperationsStat label={operationsStats.totalPublic} value={String(sortedActiveOperations.length + completedOperationsData.length)} />
+          </div>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            {activePagination.slice.map((operation, index) => (
+              <EliteOperationCard
+                key={`active-${operation.signalNumber ?? "x"}-${operation.asset}-${operation.date}-${index}`}
+                operation={operation}
+                copy={copy}
+                locale={locale}
+                mode="active"
+                index={index}
+              />
+            ))}
+          </div>
+          {sortedActiveOperations.length === 0 ? (
+            <p className="mt-8 rounded border border-dashed border-white/12 px-4 py-10 text-center text-sm text-paper/50">
+              {locale === "en" ? "No live operations at the moment." : locale === "es" ? "Sin operaciones activas." : "Nenhuma operação ao vivo no momento."}
+            </p>
+          ) : null}
+          <div className="mt-6">
+            <EliteOperationsPager
+              page={activePagination.page}
+              totalPages={activePagination.totalPages}
+              totalItems={activePagination.total}
+              pageSize={operationsPageSize}
+              onPage={setActiveOpsPage}
+              locale={locale}
+            />
           </div>
         </div>
       </section>
 
-      <section className="border-y border-white/8 bg-white/[0.025] px-5 py-14 md:px-8 md:py-18">
+      <section id="historico-operacoes" className="border-y border-white/8 bg-white/[0.025] px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Pips" title={copy.resultsTitle} text={copy.resultsText} />
-          <div className="mt-8 grid gap-4 md:grid-cols-5">
+          <p className="mt-4 text-sm text-paper/55">
+            {locale === "en"
+              ? "Browse finished signals as cards — paginate to see the full public history and operation volume."
+              : locale === "es"
+                ? "Recorra las operaciones finalizadas en tarjetas — use páginas para ver el volumen del histórico."
+                : "Navegue pelas operações finalizadas em cards — as páginas mostram o volume e a profundidade do histórico público."}
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <span className="rounded border border-gold/25 bg-gold/10 px-3 py-1.5 text-xs font-bold text-gold">
+              {operationsStats.filtered}: {filteredOperations.length}
+            </span>
+            <span className="text-xs text-paper/45">
+              {operationsStats.finished}: {completedOperationsData.length}
+            </span>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             <SelectField label={copy.filters.year} value={filters.year} options={[copy.filters.all, ...Array.from(new Set(completedOperationsData.map((operation) => operation.reportMonth.split("/")[1])))]} onChange={(value) => setFilter("year", value === copy.filters.all ? "Todos" : value)} />
             <SelectField label={copy.filters.month} value={filters.month} options={[copy.filters.all, ...Array.from(new Set(completedOperationsData.map((operation) => operation.reportMonth.split("/")[0])))]} onChange={(value) => setFilter("month", value === copy.filters.all ? "Todos" : value)} />
             <SelectField label={copy.filters.asset} value={filters.asset} options={[copy.filters.all, ...Array.from(new Set(completedOperationsData.map((operation) => operation.asset)))]} onChange={(value) => setFilter("asset", value === copy.filters.all ? "Todos" : value)} />
             <SelectField label={copy.filters.direction} value={filters.direction} options={[copy.filters.all, "Compra", "Venda"]} onChange={(value) => setFilter("direction", value === copy.filters.all ? "Todos" : value)} />
             <SelectField label={copy.filters.status} value={filters.status} options={[copy.filters.all, copy.finished]} onChange={(value) => setFilter("status", value === copy.filters.all ? "Todos" : value)} />
           </div>
-          <div className="mt-8 overflow-x-auto border border-white/10 bg-black/35">
-            <table className="w-full min-w-[760px] border-collapse text-left">
-              <thead className="border-b border-white/10 text-xs uppercase tracking-[0.18em] text-gold">
-                <tr>{[copy.table.signal, copy.table.date, copy.table.asset, copy.table.direction, copy.table.result, copy.table.status, copy.table.report].map((heading) => <th key={heading} className="px-5 py-4 font-bold">{heading}</th>)}</tr>
-              </thead>
-              <tbody>
-                {filteredOperations.map((row) => (
-                  <tr key={`${row.date}-${row.asset}-${row.result}`} className="border-b border-white/8 transition hover:bg-rise/[0.05]">
-                    <td className="px-5 py-5 font-mono text-sm text-paper/68">
-                      {row.signalNumber ? `#${formatNumber(row.signalNumber, locale)}` : "—"}
-                    </td>
-                    <td className="px-5 py-5 text-sm text-paper/68">{row.date}</td>
-                    <td className="px-5 py-5 font-mono text-sm font-bold text-paper">{row.asset}</td>
-                    <td className={`px-5 py-5 text-sm font-bold ${row.direction === "Compra" ? "text-rise" : "text-fall"}`}>{localizeDirection(row.direction, copy)}</td>
-                    <td className={`px-5 py-5 font-mono text-sm font-bold ${row.pips >= 0 ? "text-rise" : "text-fall"}`}>{row.result}</td>
-                    <td className="px-5 py-5 text-sm uppercase tracking-[0.14em] text-paper/58">{copy.finished}</td>
-                    <td className="px-5 py-5"><a href={reportHref(row.reportMonth.split("/")[1])} className="inline-block border border-white/18 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-paper transition hover:border-gold hover:text-gold">{copy.viewReport}</a></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            {closedPagination.slice.map((operation, index) => (
+              <EliteOperationCard
+                key={`closed-${operation.signalNumber ?? "x"}-${operation.asset}-${operation.date}-${index}`}
+                operation={operation}
+                copy={copy}
+                locale={locale}
+                mode="closed"
+                index={index}
+                reportHref={operationReportHref(operation.reportMonth, locale)}
+              />
+            ))}
+          </div>
+          {filteredOperations.length === 0 ? (
+            <p className="mt-8 rounded border border-dashed border-white/12 px-4 py-10 text-center text-sm text-paper/50">
+              {locale === "en" ? "No operations match these filters." : locale === "es" ? "Ninguna operación con estos filtros." : "Nenhuma operação com estes filtros."}
+            </p>
+          ) : null}
+          <div className="mt-6">
+            <EliteOperationsPager
+              page={closedPagination.page}
+              totalPages={closedPagination.totalPages}
+              totalItems={closedPagination.total}
+              pageSize={operationsPageSize}
+              onPage={setClosedOpsPage}
+              locale={locale}
+            />
           </div>
         </div>
       </section>
@@ -1165,11 +1182,12 @@ function Info({ label, value }: { label: string; value: string }) {
   );
 }
 
-function InfoRow({ label, value, positive, negative }: { label: string; value: string; positive?: boolean; negative?: boolean }) {
+function OperationsStat({ label, value, tone = "default" }: { label: string; value: string; tone?: "default" | "gold" | "rise" }) {
+  const border = tone === "gold" ? "border-gold/25" : tone === "rise" ? "border-rise/25" : "border-white/10";
   return (
-    <div className="flex items-center justify-between gap-4 border-t border-white/[0.06] py-2.5 first:border-t-0 first:pt-0">
-      <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-paper/42">{label}</span>
-      <span className={`text-sm font-semibold tabular-nums ${positive ? "text-rise" : negative ? "text-fall" : "text-paper/88"}`}>{value}</span>
+    <div className={`rounded border ${border} bg-black/35 px-4 py-3`}>
+      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-paper/45">{label}</p>
+      <p className="mt-1 font-mono text-2xl font-black text-paper">{value}</p>
     </div>
   );
 }

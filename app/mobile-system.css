@@ -365,7 +365,8 @@
     grid-template-columns: 1fr !important;
   }
 
-  .elite-report-page .grid.md\:grid-cols-3 {
+  .elite-report-page .grid.md\:grid-cols-3,
+  .elite-report-page .grid.sm\:grid-cols-2.lg\:grid-cols-3 {
     grid-template-columns: 1fr !important;
     gap: 1rem !important;
   }

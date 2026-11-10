@@ -4,16 +4,17 @@ export function normalizeEliteAsset(raw: string): string {
   if (!t) return "";
   if (t.includes("/")) return t;
   if (t.includes("-")) return t.replace(/-/g, "/");
-  const knownPairs = ["XAUUSD", "XAGUSD", "BTCUSD", "ETHUSD", "USOIL", "UKOIL"];
+  const knownPairs = ["XAUUSD", "XAGUSD", "BTCUSD", "XBTUSD", "ETHUSD", "USOIL", "UKOIL"];
   for (const pair of knownPairs) {
     if (t === pair || t.startsWith(pair)) {
       if (pair === "XAUUSD") return "XAU/USD";
       if (pair === "XAGUSD") return "XAG/USD";
-      if (pair === "BTCUSD") return "BTC/USD";
+      if (pair === "BTCUSD" || pair === "XBTUSD") return "BTC/USD";
       if (pair === "ETHUSD") return "ETH/USD";
       return pair;
     }
   }
+  if (t === "XBT" || t === "BTC") return "BTC/USD";
   return t;
 }
 

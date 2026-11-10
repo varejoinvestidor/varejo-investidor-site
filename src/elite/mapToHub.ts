@@ -43,12 +43,20 @@ export function mapOperations(rows: EliteOperationRow[]): { active: HubOperation
       closeOutcome: row.close_outcome,
       manualPips: row.result_pips,
     });
+    const displayPips = row.status === "active" ? 0 : levels.resultPips;
+    const displayResult =
+      row.status === "active"
+        ? row.result_label || levels.resultLabel
+        : row.close_outcome === "manual" && row.result_label.trim()
+          ? row.result_label
+          : levels.resultLabel || row.result_label;
+
     return {
       asset: row.asset,
       direction: row.direction,
       status: row.status,
-      result: row.result_label,
-      pips: row.result_pips,
+      result: displayResult,
+      pips: displayPips,
       date: row.report_month,
       updatedAt: row.updated_label,
       reportMonth: row.report_month,
