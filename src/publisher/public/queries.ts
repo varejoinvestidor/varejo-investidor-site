@@ -107,7 +107,7 @@ export async function getPublishedArticles(language = "pt", limit = 48): Promise
     .select(listColumns)
     .eq("language", language)
     .eq("status", "published")
-    .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
+    .lte("published_at", new Date().toISOString())
     .order("published_at", { ascending: false })
     .limit(limit);
 
@@ -122,25 +122,30 @@ export async function getPublishedArticleBySlug(slug: string, language = "pt"): 
   const client = supabase;
   const now = new Date().toISOString();
 
-  async function fetchRow(columns: string) {
-    return client
+  async function fetchRow(columns: string, publishedFilter: "lte" | "null") {
+    let query = client
       .from("articles")
       .select(columns)
       .eq("language", language)
       .eq("slug", slug)
-      .eq("status", "published")
-      .or(`published_at.is.null,published_at.lte.${now}`)
-      .maybeSingle();
+      .eq("status", "published");
+    query = publishedFilter === "lte" ? query.lte("published_at", now) : query.is("published_at", null);
+    return query.maybeSingle();
   }
 
-  let { data, error } = await fetchRow(detailColumns);
-  const rowInvalid = !data || typeof data !== "object" || !("id" in data);
-  if (error || rowInvalid) {
-    ({ data, error } = await fetchRow(detailColumnsLegacy));
+  let row: ArticleRow | null = null;
+  for (const columns of [detailColumns, detailColumnsLegacy]) {
+    for (const publishedFilter of ["lte", "null"] as const) {
+      const { data, error } = await fetchRow(columns, publishedFilter);
+      if (!error && data && typeof data === "object" && "id" in data) {
+        row = data as ArticleRow;
+        break;
+      }
+    }
+    if (row) break;
   }
 
-  if (error || !data || typeof data !== "object" || !("id" in data)) return null;
-  const row = data as ArticleRow;
+  if (!row) return null;
   const [summary] = await hydrateSummaries([row]);
   return mapDetail(row, summary);
 }
@@ -155,7 +160,7 @@ export async function getRelatedPublishedArticles(article: PublicArticleDetail, 
     .eq("language", article.language)
     .eq("status", "published")
     .neq("id", article.id)
-    .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
+    .lte("published_at", new Date().toISOString())
     .order("published_at", { ascending: false })
     .limit(limit);
 
