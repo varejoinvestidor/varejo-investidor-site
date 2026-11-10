@@ -8,7 +8,7 @@ export default async function AdminUsuariosPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <h2 className="font-serif text-3xl text-paper">Usuários</h2>
-      <p className="text-sm text-paper/55">Convites: crie usuários no painel Supabase e ajuste o perfil aqui.</p>
+      <p className="text-sm text-paper/55">Convide por e-mail ou crie usuário com senha provisória. Alterações exigem senha de administrador.</p>
       <UsersManager rows={result.data as Parameters<typeof UsersManager>[0]["rows"]} />
     </div>
   );

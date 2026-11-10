@@ -15,8 +15,13 @@ import { STATUS_BADGE, STATUS_LABELS } from "../articles/labels";
 import { slugifyTitle } from "../articles/slug";
 import type { CategoryRow, TagRow } from "../taxonomy/actions";
 import type { PublisherProfile } from "../types";
+import { AdminPasswordDialog } from "../admin/AdminPasswordDialog";
 import { canPublish } from "../permissions";
 import { PublisherRichTextEditor } from "./PublisherRichTextEditor";
+
+type PendingAction =
+  | { type: "status"; status: ArticleRecord["status"] }
+  | { type: "delete" };
 
 type Props = {
   initial: ArticleRecord;
@@ -35,7 +40,14 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   const [scheduledLocal, setScheduledLocal] = useState("");
   const [revisions, setRevisions] = useState<{ id: string; revision_number: number; created_at: string }[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const savingRef = useRef(false);
+  const slugRef = useRef(initial.slug);
+  const payloadRef = useRef<SaveArticleInput | null>(null);
+  const isDirtyRef = useRef(false);
   const [isDirty, setIsDirty] = useState(false);
+  const [passwordOpen, setPasswordOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState<PendingAction | null>(null);
+  const [actionBusy, setActionBusy] = useState(false);
 
   const payload: SaveArticleInput = useMemo(
     () => ({
@@ -73,24 +85,50 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     patchArticle({ sources });
   }
 
-  const persist = useCallback(
-    async (input: SaveArticleInput, snapshot = true) => {
-      setSaveState("saving");
-      setSaveError(null);
-      const result = await saveArticle(input, { snapshot });
-      if (!result.ok) {
-        setSaveState("error");
-        setSaveError(result.error);
-        return;
-      }
-      setIsDirty(false);
-      setSaveState("saved");
-      if (result.data?.updated_at) {
-        setArticle((prev) => ({ ...prev, updated_at: result.data!.updated_at }));
-      }
-    },
-    [],
-  );
+  const persist = useCallback(async (input: SaveArticleInput, snapshot = true) => {
+    if (savingRef.current) return false;
+    savingRef.current = true;
+    setSaveState("saving");
+    setSaveError(null);
+    const result = await saveArticle(input, { snapshot });
+    savingRef.current = false;
+    if (!result.ok) {
+      setSaveState("error");
+      setSaveError(result.error);
+      return false;
+    }
+    setIsDirty(false);
+    isDirtyRef.current = false;
+    setSaveState("saved");
+    const nextSlug = result.data!.slug;
+    slugRef.current = nextSlug;
+    setArticle((prev) => ({
+      ...prev,
+      updated_at: result.data!.updated_at,
+      slug: nextSlug,
+    }));
+    return true;
+  }, []);
+
+  const flushSave = useCallback(async () => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    while (savingRef.current) {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    if (!isDirtyRef.current || !payloadRef.current) return true;
+    return persist(payloadRef.current, true);
+  }, [persist]);
+
+  useEffect(() => {
+    payloadRef.current = payload;
+  }, [payload]);
+
+  useEffect(() => {
+    isDirtyRef.current = isDirty;
+  }, [isDirty]);
 
   useEffect(() => {
     if (!isDirty) return;
@@ -119,14 +157,28 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
 
   function patchArticle(update: Partial<ArticleRecord> | ((prev: ArticleRecord) => ArticleRecord)) {
     setIsDirty(true);
+    isDirtyRef.current = true;
     setSaveState("idle");
     setArticle((prev) => (typeof update === "function" ? update(prev) : { ...prev, ...update }));
   }
 
-  async function onStatus(status: ArticleRecord["status"]) {
+  function requestSensitiveAction(action: PendingAction) {
+    if (profile.role === "admin") {
+      setPendingAction(action);
+      setPasswordOpen(true);
+      return;
+    }
+    if (action.type === "status") void runStatus(action.status);
+  }
+
+  async function runStatus(status: ArticleRecord["status"] | null, adminPassword?: string) {
+    if (!status) return;
+    const saved = await flushSave();
+    if (!saved) return;
+
     const scheduledAt =
       status === "scheduled" && scheduledLocal ? new Date(scheduledLocal).toISOString() : undefined;
-    const result = await changeArticleStatus(article.id, status, scheduledAt ?? null);
+    const result = await changeArticleStatus(article.id, status, scheduledAt ?? null, adminPassword);
     if (!result.ok) {
       setSaveError(result.error);
       return;
@@ -137,16 +189,32 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       scheduled_at: scheduledAt ?? prev.scheduled_at,
       published_at: status === "published" ? new Date().toISOString() : prev.published_at,
     }));
+    if (status === "published") {
+      const path = article.language === "en" ? `/en/artigos/${slugRef.current}` : `/artigos/${slugRef.current}`;
+      window.open(path, "_blank", "noopener,noreferrer");
+    }
   }
 
-  async function onDelete() {
-    if (!window.confirm("Excluir este artigo permanentemente?")) return;
-    const result = await deleteArticle(article.id);
+  async function runDelete(adminPassword?: string) {
+    const result = await deleteArticle(article.id, adminPassword);
     if (!result.ok) {
       setSaveError(result.error);
       return;
     }
     window.location.href = "/admin/artigos";
+  }
+
+  async function onPasswordConfirm(password: string) {
+    if (!pendingAction) return;
+    setActionBusy(true);
+    if (pendingAction.type === "delete") {
+      await runDelete(password);
+    } else {
+      await runStatus(pendingAction.status, password);
+    }
+    setActionBusy(false);
+    setPasswordOpen(false);
+    setPendingAction(null);
   }
 
   function toggleTag(tagId: string) {
@@ -178,7 +246,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => void persist(payload, true)}
+            onClick={() => void flushSave()}
             className="rounded border border-line/25 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-paper/80"
           >
             Salvar agora
@@ -193,7 +261,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           {article.status === "draft" || article.status === "review" ? (
             <button
               type="button"
-              onClick={() => void onStatus("review")}
+              onClick={() => void runStatus("review")}
               className="rounded border border-gold/40 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-gold"
             >
               Enviar revisão
@@ -203,25 +271,33 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
             <>
               <button
                 type="button"
-                onClick={() => void onStatus("published")}
+                onClick={() => requestSensitiveAction({ type: "status", status: "published" })}
                 className="rounded bg-gold px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-ink"
               >
                 Publicar
               </button>
               <button
                 type="button"
-                onClick={() => void onStatus("scheduled")}
+                onClick={() => requestSensitiveAction({ type: "status", status: "scheduled" })}
                 className="rounded border border-line/25 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider"
               >
                 Agendar
               </button>
-              <button type="button" onClick={() => void onStatus("archived")} className="text-xs text-paper/50 hover:text-paper">
+              <button
+                type="button"
+                onClick={() => requestSensitiveAction({ type: "status", status: "archived" })}
+                className="text-xs text-paper/50 hover:text-paper"
+              >
                 Arquivar
               </button>
             </>
           ) : null}
           {profile.role === "admin" ? (
-            <button type="button" onClick={() => void onDelete()} className="text-xs text-fall hover:underline">
+            <button
+              type="button"
+              onClick={() => requestSensitiveAction({ type: "delete" })}
+              className="text-xs text-fall hover:underline"
+            >
               Excluir
             </button>
           ) : null}
@@ -289,6 +365,9 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
 
           <section className="rounded-lg border border-line/12 p-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Metadados</h3>
+            <p className="mt-2 text-xs tabular-nums text-paper/45">
+              Visualizações: {initial.view_count.toLocaleString("pt-BR")}
+            </p>
             <label className="mt-3 block text-xs text-paper/45">Idioma</label>
             <select
               value={article.language}
@@ -413,6 +492,19 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           </section>
         </aside>
       </div>
+
+      <AdminPasswordDialog
+        open={passwordOpen}
+        busy={actionBusy}
+        title={pendingAction?.type === "delete" ? "Excluir artigo" : "Confirmar alteração"}
+        description="Digite sua senha de administrador para publicar, agendar, arquivar ou excluir."
+        confirmLabel={pendingAction?.type === "delete" ? "Excluir" : "Continuar"}
+        onClose={() => {
+          setPasswordOpen(false);
+          setPendingAction(null);
+        }}
+        onConfirm={onPasswordConfirm}
+      />
     </div>
   );
 }

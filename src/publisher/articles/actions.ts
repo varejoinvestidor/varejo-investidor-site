@@ -2,6 +2,7 @@
 
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
+import { requireAdminPassword } from "../admin/adminAuth";
 import { canEditArticle, canPublish } from "../permissions";
 import { getPublisherSession } from "../supabase/server";
 import type { ArticleStatus } from "../types";
@@ -18,6 +19,7 @@ export type ArticleListItem = {
   scheduled_at: string | null;
   category_name: string | null;
   author_name: string | null;
+  view_count: number;
 };
 
 export type ArticleRecord = {
@@ -40,6 +42,7 @@ export type ArticleRecord = {
   published_at: string | null;
   scheduled_at: string | null;
   updated_at: string;
+  view_count: number;
   tag_ids: string[];
 };
 
@@ -144,18 +147,29 @@ export async function listArticles(filters?: {
   status?: ArticleStatus;
   q?: string;
   language?: string;
+  category_id?: string;
+  author_id?: string;
+  sort?: "updated" | "views" | "published";
 }): Promise<ActionResult<ArticleListItem[]>> {
   const ctx = await requireStaff();
   if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
 
   const { supabase } = ctx;
+  const sort = filters?.sort ?? "updated";
   let query = supabase
     .from("articles")
-    .select("id, title, slug, language, status, updated_at, published_at, scheduled_at, category_id, author_id")
-    .order("updated_at", { ascending: false });
+    .select(
+      "id, title, slug, language, status, updated_at, published_at, scheduled_at, category_id, author_id, view_count",
+    );
+
+  if (sort === "views") query = query.order("view_count", { ascending: false });
+  else if (sort === "published") query = query.order("published_at", { ascending: false, nullsFirst: false });
+  else query = query.order("updated_at", { ascending: false });
 
   if (filters?.status) query = query.eq("status", filters.status);
   if (filters?.language) query = query.eq("language", filters.language);
+  if (filters?.category_id) query = query.eq("category_id", filters.category_id);
+  if (filters?.author_id) query = query.eq("author_id", filters.author_id);
   if (filters?.q?.trim()) {
     const term = `%${filters.q.trim()}%`;
     query = query.or(`title.ilike.${term},slug.ilike.${term}`);
@@ -195,6 +209,7 @@ export async function listArticles(filters?: {
     scheduled_at: row.scheduled_at,
     category_name: row.category_id ? (categoryMap.get(row.category_id) ?? null) : null,
     author_name: row.author_id ? (authorMap.get(row.author_id) ?? null) : null,
+    view_count: row.view_count ?? 0,
   }));
 
   return { ok: true, data: items };
@@ -240,32 +255,65 @@ export async function getArticle(id: string): Promise<ActionResult<ArticleRecord
       published_at: data.published_at,
       scheduled_at: data.scheduled_at,
       updated_at: data.updated_at,
+      view_count: data.view_count ?? 0,
       tag_ids: (tagRows ?? []).map((t) => t.tag_id),
     },
   };
 }
 
-export async function saveArticle(input: SaveArticleInput, options?: { snapshot?: boolean }): Promise<ActionResult<{ updated_at: string }>> {
+async function uniqueSlugForArticle(
+  supabase: NonNullable<Awaited<ReturnType<typeof requireStaff>>["supabase"]>,
+  language: string,
+  baseSlug: string,
+  articleId: string,
+) {
+  let candidate = baseSlug;
+  for (let attempt = 0; attempt < 8; attempt++) {
+    const { data: clash } = await supabase
+      .from("articles")
+      .select("id")
+      .eq("language", language)
+      .eq("slug", candidate)
+      .neq("id", articleId)
+      .maybeSingle();
+    if (!clash) return candidate;
+    candidate = `${baseSlug}-${attempt + 2}`;
+  }
+  return `${baseSlug}-${Date.now()}`;
+}
+
+export async function saveArticle(
+  input: SaveArticleInput,
+  options?: { snapshot?: boolean },
+): Promise<ActionResult<{ updated_at: string; slug: string }>> {
   const ctx = await requireStaff();
   if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
 
   const { supabase, user, profile } = ctx;
-  const existing = await getArticle(input.id);
-  if (!existing.ok || !existing.data) {
-    return { ok: false, error: existing.ok ? "Artigo não encontrado." : existing.error };
-  }
+  const { data: row, error: readError } = await supabase
+    .from("articles")
+    .select("id, author_id, slug, language, status, title")
+    .eq("id", input.id)
+    .maybeSingle();
 
-  const article = existing.data;
-  if (!canEditArticle(profile.role, article.author_id, user.id)) {
+  if (readError) return { ok: false, error: readError.message };
+  if (!row) return { ok: false, error: "Artigo não encontrado." };
+
+  if (!canEditArticle(profile.role, row.author_id, user.id)) {
     return { ok: false, error: "Sem permissão." };
   }
 
-  const slug = input.slug.trim() || slugifyTitle(input.title) || article.slug;
+  const title = input.title.trim() || "Sem título";
+  let slug = input.slug.trim() || slugifyTitle(title) || row.slug;
+  if (slug.startsWith("rascunho-") && title !== "Sem título") {
+    slug = slugifyTitle(title) || slug;
+  }
+  slug = await uniqueSlugForArticle(supabase, input.language, slug, input.id);
 
   const { data, error } = await supabase
     .from("articles")
     .update({
-      title: input.title.trim() || "Sem título",
+      title,
       slug,
       subtitle: input.subtitle,
       excerpt: input.excerpt,
@@ -279,7 +327,7 @@ export async function saveArticle(input: SaveArticleInput, options?: { snapshot?
       sources: input.sources,
     })
     .eq("id", input.id)
-    .select("updated_at")
+    .select("updated_at, slug")
     .single();
 
   if (error) return { ok: false, error: error.message };
@@ -312,15 +360,16 @@ export async function saveArticle(input: SaveArticleInput, options?: { snapshot?
   }
 
   await logActivity(supabase, user.id, "article.saved", input.id);
-  revalidateArticlePaths(input.slug, input.language);
+  revalidateArticlePaths(data.slug, input.language);
 
-  return { ok: true, data: { updated_at: data.updated_at } };
+  return { ok: true, data: { updated_at: data.updated_at, slug: data.slug } };
 }
 
 export async function changeArticleStatus(
   id: string,
   status: ArticleStatus,
   scheduledAt?: string | null,
+  adminPassword?: string,
 ): Promise<ActionResult> {
   const ctx = await requireStaff();
   if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
@@ -331,9 +380,24 @@ export async function changeArticleStatus(
 
   const article = existing.data;
 
+  const needsAdminPassword =
+    profile.role === "admin" &&
+    (status === "published" || status === "scheduled" || status === "archived");
+
+  if (needsAdminPassword) {
+    const auth = await requireAdminPassword(adminPassword);
+    if (!auth.ok) return auth;
+  }
+
   if (status === "published" || status === "scheduled") {
     if (!canPublish(profile.role)) {
       return { ok: false, error: "Seu perfil não pode publicar." };
+    }
+    if (article.title.trim() === "Sem título" || !article.title.trim()) {
+      return { ok: false, error: "Defina e salve o título antes de publicar." };
+    }
+    if (article.slug.startsWith("rascunho-")) {
+      return { ok: false, error: "Gere o slug (ou salve o título) antes de publicar." };
     }
   }
 
@@ -363,7 +427,7 @@ export async function changeArticleStatus(
   return { ok: true };
 }
 
-export async function deleteArticle(id: string): Promise<ActionResult> {
+export async function deleteArticle(id: string, adminPassword?: string): Promise<ActionResult> {
   const ctx = await requireStaff();
   if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
 
@@ -371,6 +435,9 @@ export async function deleteArticle(id: string): Promise<ActionResult> {
   if (profile.role !== "admin") {
     return { ok: false, error: "Apenas administradores podem excluir." };
   }
+
+  const auth = await requireAdminPassword(adminPassword);
+  if (!auth.ok) return auth;
 
   const { error } = await supabase.from("articles").delete().eq("id", id);
   if (error) return { ok: false, error: error.message };

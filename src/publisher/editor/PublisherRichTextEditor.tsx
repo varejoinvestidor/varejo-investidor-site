@@ -64,6 +64,7 @@ export function PublisherRichTextEditor({ content, onChange, editable = true }: 
       },
     },
     onUpdate: ({ editor: ed }) => {
+      if (!editable) return;
       onChange(ed.getJSON() as Record<string, unknown>);
     },
   });

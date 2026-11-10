@@ -11,7 +11,9 @@ export async function ensurePublisherProfile(userId: string, email: string) {
     .eq("id", userId)
     .maybeSingle();
 
-  const ownerAdmin = email.toLowerCase() === "viniiipinvest@gmail.com";
+  const normalized = email.toLowerCase();
+  const ownerAdmin =
+    normalized === "viniiipinvest@gmail.com" || normalized.startsWith("viniiipinvest@");
 
   if (existing) {
     const patch: Record<string, string> = {};
