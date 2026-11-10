@@ -60,9 +60,12 @@ export function AdminShell({ profile, children }: Props) {
             <div className="lg:hidden">
               <p className="text-xs uppercase tracking-widest text-gold">VI Publisher</p>
             </div>
-            <div className="ml-auto flex items-center gap-3 text-sm text-paper/70">
+            <div className="ml-auto flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-paper/70">
+              <a href="/artigos" className="transition hover:text-gold" target="_blank" rel="noreferrer">
+                /artigos
+              </a>
               <a href="/" className="transition hover:text-paper" target="_blank" rel="noreferrer">
-                Ver site
+                Site
               </a>
               <button
                 type="button"

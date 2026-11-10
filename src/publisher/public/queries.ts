@@ -1,6 +1,7 @@
 import { absoluteSiteUrl } from "../../config/site";
 import { getPublisherArticlePath } from "./paths";
 import { createPublisherPublicClient } from "../supabase/public";
+import { parseArticleBanners } from "../types/banner";
 import type { PublicArticleDetail, PublicArticleSummary } from "./types";
 
 const PUBLIC_ARTICLE_PATH = "/artigos";
@@ -21,6 +22,7 @@ type ArticleRow = {
   content?: Record<string, unknown>;
   references_text: string | null;
   sources: unknown;
+  banners?: unknown;
   author_id: string | null;
   category_id: string | null;
 };
@@ -86,13 +88,14 @@ function mapDetail(row: ArticleRow, summary: PublicArticleSummary): PublicArticl
     content: (row.content as Record<string, unknown>) ?? { type: "doc", content: [] },
     references_text: row.references_text,
     sources,
+    banners: parseArticleBanners(row.banners),
   };
 }
 
 const listColumns =
   "id, slug, language, title, subtitle, excerpt, cover_image, published_at, updated_at, featured, seo_title, seo_description, author_id, category_id";
 
-const detailColumns = `${listColumns}, content, references_text, sources`;
+const detailColumns = `${listColumns}, content, references_text, sources, banners`;
 
 export async function getPublishedArticles(language = "pt", limit = 48): Promise<PublicArticleSummary[]> {
   const supabase = createPublisherPublicClient();

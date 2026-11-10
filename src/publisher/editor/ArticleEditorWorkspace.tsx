@@ -17,6 +17,12 @@ import type { CategoryRow, TagRow } from "../taxonomy/actions";
 import type { PublisherProfile } from "../types";
 import { AdminPasswordDialog } from "../admin/AdminPasswordDialog";
 import { canPublish } from "../permissions";
+import {
+  applyAutoTranslateToArticle,
+  createTranslationDraft,
+  listLinkedTranslations,
+} from "../translation/actions";
+import type { ArticleBanner } from "../types/banner";
 import { PublisherRichTextEditor } from "./PublisherRichTextEditor";
 
 type PendingAction =
@@ -51,6 +57,9 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   const [publishFlow, setPublishFlow] = useState<{ percent: number; label: string } | null>(null);
   const [publishSuccess, setPublishSuccess] = useState<string | null>(null);
   const [publishing, setPublishing] = useState(false);
+  const [translateSource, setTranslateSource] = useState(initial.language === "en" ? "pt" : "en");
+  const [translating, setTranslating] = useState(false);
+  const [linkedVersions, setLinkedVersions] = useState<{ id: string; language: string; slug: string }[]>([]);
 
   const payload: SaveArticleInput = useMemo(
     () => ({
@@ -68,6 +77,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       references_text: article.references_text,
       sources: article.sources,
       tag_ids: article.tag_ids,
+      banners: article.banners,
     }),
     [article],
   );
@@ -88,12 +98,12 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     patchArticle({ sources });
   }
 
-  const persist = useCallback(async (input: SaveArticleInput, snapshot = true) => {
+  const persist = useCallback(async (input: SaveArticleInput, snapshot = false, revalidate = true) => {
     if (savingRef.current) return false;
     savingRef.current = true;
     setSaveState("saving");
     setSaveError(null);
-    const result = await saveArticle(input, { snapshot });
+    const result = await saveArticle(input, { snapshot, revalidate });
     savingRef.current = false;
     if (!result.ok) {
       setSaveState("error");
@@ -122,7 +132,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
     if (!isDirtyRef.current || !payloadRef.current) return true;
-    return persist(payloadRef.current, true);
+    return persist(payloadRef.current, false, true);
   }, [persist]);
 
   useEffect(() => {
@@ -137,8 +147,8 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     if (!isDirty) return;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      void persist(payload);
-    }, 2000);
+      void persist(payload, false, false);
+    }, 700);
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
@@ -158,6 +168,14 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     });
   }, [article.id, article.updated_at]);
 
+  useEffect(() => {
+    void listLinkedTranslations(article.id).then((res) => {
+      if (res.ok) {
+        setLinkedVersions(res.data.map((r) => ({ id: r.id, language: r.language, slug: r.slug })));
+      }
+    });
+  }, [article.id, article.updated_at]);
+
   function patchArticle(update: Partial<ArticleRecord> | ((prev: ArticleRecord) => ArticleRecord)) {
     setIsDirty(true);
     isDirtyRef.current = true;
@@ -166,7 +184,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   }
 
   function requestSensitiveAction(action: PendingAction) {
-    if (profile.role === "admin") {
+    if (action.type === "delete" && profile.role === "admin") {
       setPendingAction(action);
       setPasswordOpen(true);
       return;
@@ -174,22 +192,21 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     if (action.type === "status") void runStatus(action.status);
   }
 
-  async function setPublishStep(percent: number, label: string) {
+  function setPublishStep(percent: number, label: string) {
     setPublishFlow({ percent, label });
-    await new Promise((resolve) => setTimeout(resolve, 120));
   }
 
-  async function runStatus(status: ArticleRecord["status"] | null, adminPassword?: string) {
+  async function runStatus(status: ArticleRecord["status"] | null) {
     if (!status) return;
 
     const isPublish = status === "published";
     if (isPublish) {
       setPublishing(true);
       setPublishSuccess(null);
-      await setPublishStep(8, "Preparando publicação…");
+      setPublishStep(12, "Preparando publicação…");
     }
 
-    if (isPublish) await setPublishStep(22, "Salvando alterações…");
+    if (isPublish) setPublishStep(35, "Salvando alterações…");
     const saved = await flushSave();
     if (!saved) {
       if (isPublish) {
@@ -199,11 +216,11 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       return;
     }
 
-    if (isPublish) await setPublishStep(48, "Validando conteúdo e slug…");
+    if (isPublish) setPublishStep(58, "Validando conteúdo…");
     const scheduledAt =
       status === "scheduled" && scheduledLocal ? new Date(scheduledLocal).toISOString() : undefined;
-    if (isPublish) await setPublishStep(62, "Registrando como publicado…");
-    const result = await changeArticleStatus(article.id, status, scheduledAt ?? null, adminPassword);
+    if (isPublish) setPublishStep(75, "Publicando…");
+    const result = await changeArticleStatus(article.id, status, scheduledAt ?? null);
     if (!result.ok) {
       setSaveError(result.error);
       if (isPublish) {
@@ -213,7 +230,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
       return;
     }
 
-    if (isPublish) await setPublishStep(82, "Atualizando /artigos no site…");
+    if (isPublish) setPublishStep(92, "Atualizando /artigos…");
 
     setArticle((prev) => ({
       ...prev,
@@ -224,7 +241,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
 
     if (status === "published") {
       const path = article.language === "en" ? `/en/artigos/${slugRef.current}` : `/artigos/${slugRef.current}`;
-      await setPublishStep(100, "Publicação concluída");
+      setPublishStep(100, "Publicação concluída");
       setPublishSuccess(`Artigo publicado com sucesso! Disponível em ${path}`);
       setPublishing(false);
       window.setTimeout(() => setPublishFlow(null), 1200);
@@ -245,12 +262,65 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
     setActionBusy(true);
     if (pendingAction.type === "delete") {
       await runDelete(password);
-    } else {
-      await runStatus(pendingAction.status, password);
+    } else if (pendingAction.type === "status") {
+      await runStatus(pendingAction.status);
     }
     setActionBusy(false);
     setPasswordOpen(false);
     setPendingAction(null);
+  }
+
+  function newBannerId() {
+    return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `banner-${Date.now()}`;
+  }
+
+  function addBanner() {
+    const banner: ArticleBanner = {
+      id: newBannerId(),
+      image_url: "",
+      alt: "Banner",
+      href: "",
+      placement: "inline",
+    };
+    patchArticle((prev) => ({ ...prev, banners: [...prev.banners, banner] }));
+  }
+
+  function updateBanner(id: string, patch: Partial<ArticleBanner>) {
+    patchArticle((prev) => ({
+      ...prev,
+      banners: prev.banners.map((b) => (b.id === id ? { ...b, ...patch } : b)),
+    }));
+  }
+
+  function removeBanner(id: string) {
+    patchArticle((prev) => ({ ...prev, banners: prev.banners.filter((b) => b.id !== id) }));
+  }
+
+  async function onAutoTranslate() {
+    const target = article.language;
+  const source = translateSource;
+    if (source === target) {
+      setSaveError("Escolha um idioma de origem diferente do idioma do artigo.");
+      return;
+    }
+    setTranslating(true);
+    setSaveError(null);
+    const result = await applyAutoTranslateToArticle(article.id, source, target);
+    setTranslating(false);
+    if (!result.ok) {
+      setSaveError(result.error);
+      return;
+    }
+    window.location.reload();
+  }
+
+  async function openTranslation(targetLang: string) {
+    const result = await createTranslationDraft(article.id, targetLang);
+    if (!result.ok) {
+      setSaveError(result.error);
+      return;
+    }
+    window.location.href = `/admin/artigos/${result.data!.id}`;
   }
 
   function toggleTag(tagId: string) {
@@ -282,7 +352,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => void flushSave()}
+            onClick={() => void persist(payload, true, true)}
             className="rounded border border-line/25 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-paper/80"
           >
             Salvar agora
@@ -460,6 +530,119 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           </section>
 
           <section className="rounded-lg border border-line/12 p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Tradução</h3>
+            <p className="mt-1 text-xs text-paper/40">
+              Defina o idioma do artigo acima. Traduz automaticamente ou crie uma versão vinculada.
+            </p>
+            <label className="mt-3 block text-xs text-paper/45">Traduzir a partir de</label>
+            <select
+              value={translateSource}
+              disabled={preview || translating}
+              onChange={(e) => setTranslateSource(e.target.value)}
+              className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1.5 text-sm"
+            >
+              <option value="pt">Português</option>
+              <option value="en">English</option>
+            </select>
+            <button
+              type="button"
+              disabled={preview || translating}
+              onClick={() => void onAutoTranslate()}
+              className="mt-3 w-full rounded border border-gold/35 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gold disabled:opacity-50"
+            >
+              {translating ? "Traduzindo…" : `Traduzir para ${article.language.toUpperCase()}`}
+            </button>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {linkedVersions
+                .filter((v) => v.id !== article.id)
+                .map((v) => (
+                  <Link
+                    key={v.id}
+                    href={`/admin/artigos/${v.id}`}
+                    className="text-xs text-paper/60 hover:text-gold"
+                  >
+                    Versão {v.language.toUpperCase()}
+                  </Link>
+                ))}
+              {article.language === "pt" ? (
+                <button
+                  type="button"
+                  onClick={() => void openTranslation("en")}
+                  className="text-xs text-gold hover:underline"
+                >
+                  + Versão EN
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => void openTranslation("pt")}
+                  className="text-xs text-gold hover:underline"
+                >
+                  + Versão PT
+                </button>
+              )}
+            </div>
+          </section>
+
+          <section className="rounded-lg border border-line/12 p-4">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Banners</h3>
+              <button type="button" onClick={addBanner} disabled={preview} className="text-xs text-gold">
+                + Banner
+              </button>
+            </div>
+            <p className="mt-1 text-xs text-paper/40">Inclua antes de publicar (topo, meio ou rodapé).</p>
+            <ul className="mt-3 space-y-3">
+              {article.banners.map((banner) => (
+                <li key={banner.id} className="rounded border border-line/12 p-2">
+                  <input
+                    placeholder="URL da imagem"
+                    value={banner.image_url}
+                    disabled={preview}
+                    onChange={(e) => updateBanner(banner.id, { image_url: e.target.value })}
+                    className="mb-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
+                  />
+                  <input
+                    placeholder="Texto alternativo"
+                    value={banner.alt}
+                    disabled={preview}
+                    onChange={(e) => updateBanner(banner.id, { alt: e.target.value })}
+                    className="mb-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
+                  />
+                  <input
+                    placeholder="Link (opcional)"
+                    value={banner.href ?? ""}
+                    disabled={preview}
+                    onChange={(e) => updateBanner(banner.id, { href: e.target.value || undefined })}
+                    className="mb-2 w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
+                  />
+                  <select
+                    value={banner.placement}
+                    disabled={preview}
+                    onChange={(e) =>
+                      updateBanner(banner.id, { placement: e.target.value as ArticleBanner["placement"] })
+                    }
+                    className="w-full rounded border border-line/15 bg-[#0a0a0a] px-2 py-1 text-xs"
+                  >
+                    <option value="top">Topo</option>
+                    <option value="inline">Antes do texto</option>
+                    <option value="bottom">Rodapé</option>
+                  </select>
+                  <button
+                    type="button"
+                    onClick={() => removeBanner(banner.id)}
+                    disabled={preview}
+                    className="mt-2 text-xs text-fall hover:underline"
+                  >
+                    Remover
+                  </button>
+                </li>
+              ))}
+              {!article.banners.length ? <li className="text-xs text-paper/40">Nenhum banner.</li> : null}
+            </ul>
+          </section>
+
+          <section className="rounded-lg border border-line/12 p-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Fontes</h3>
             <p className="mt-1 text-xs text-paper/40">Um por linha: Rótulo | https://…</p>
             <textarea
@@ -555,8 +738,8 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
         open={passwordOpen}
         busy={actionBusy}
         title={pendingAction?.type === "delete" ? "Excluir artigo" : "Confirmar alteração"}
-        description="Digite sua senha de administrador para publicar, agendar, arquivar ou excluir."
-        confirmLabel={pendingAction?.type === "delete" ? "Excluir" : "Continuar"}
+        description="Digite sua senha de administrador para excluir este artigo."
+        confirmLabel="Excluir"
         onClose={() => {
           setPasswordOpen(false);
           setPendingAction(null);

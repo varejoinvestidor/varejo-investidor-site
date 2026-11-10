@@ -8,6 +8,7 @@ import { estimateReadingTimeMinutes } from "../../publisher/public/tiptapPlainTe
 import type { PublicArticleDetail, PublicArticleSummary } from "../../publisher/public/types";
 import { getPublisherArticlePath, getPublisherHubPath } from "../../publisher/public/paths";
 import { publisherArticleUrl } from "../../publisher/public/queries";
+import { PublisherArticleBanners } from "./PublisherArticleBanners";
 
 export function PublisherArticleView({
   article,
@@ -58,9 +59,12 @@ export function PublisherArticleView({
             </section>
           ) : null}
 
+          <PublisherArticleBanners banners={article.banners} placement="top" />
+
           <section className="px-5 pb-12 md:px-8 md:pb-16">
             <div className="mx-auto max-w-3xl">
               {article.excerpt ? <p className="text-xl leading-[1.85] text-paper/[0.82]">{article.excerpt}</p> : null}
+              <PublisherArticleBanners banners={article.banners} placement="inline" />
               <div className="mt-10">
                 <TipTapArticleBody document={article.content} />
               </div>
@@ -85,6 +89,8 @@ export function PublisherArticleView({
                   {article.references_text}
                 </div>
               ) : null}
+
+              <PublisherArticleBanners banners={article.banners} placement="bottom" />
 
               <div className="insight-share mt-12">
                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">

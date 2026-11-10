@@ -1,3 +1,5 @@
+import type { ArticleBanner } from "../types/banner";
+
 export type PublicArticleSummary = {
   id: string;
   language: string;
@@ -21,4 +23,5 @@ export type PublicArticleDetail = PublicArticleSummary & {
   content: Record<string, unknown>;
   references_text: string | null;
   sources: { label: string; url: string }[];
+  banners: ArticleBanner[];
 };

@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
 import { requireAdminPassword } from "../admin/adminAuth";
 import { canEditArticle, canPublish } from "../permissions";
+import { parseArticleBanners, type ArticleBanner } from "../types/banner";
 import { getPublisherSession } from "../supabase/server";
 import type { ArticleStatus } from "../types";
 import { emptyTipTapDocument, slugifyTitle } from "./slug";
@@ -44,6 +45,7 @@ export type ArticleRecord = {
   updated_at: string;
   view_count: number;
   tag_ids: string[];
+  banners: ArticleBanner[];
 };
 
 export type SaveArticleInput = {
@@ -61,6 +63,7 @@ export type SaveArticleInput = {
   references_text: string | null;
   sources: { label: string; url: string }[];
   tag_ids: string[];
+  banners: ArticleBanner[];
 };
 
 export type ActionResult<T = void> =
@@ -256,6 +259,7 @@ export async function getArticle(id: string): Promise<ActionResult<ArticleRecord
       scheduled_at: data.scheduled_at,
       updated_at: data.updated_at,
       view_count: data.view_count ?? 0,
+      banners: parseArticleBanners(data.banners),
       tag_ids: (tagRows ?? []).map((t) => t.tag_id),
     },
   };
@@ -284,7 +288,7 @@ async function uniqueSlugForArticle(
 
 export async function saveArticle(
   input: SaveArticleInput,
-  options?: { snapshot?: boolean },
+  options?: { snapshot?: boolean; revalidate?: boolean },
 ): Promise<ActionResult<{ updated_at: string; slug: string }>> {
   const ctx = await requireStaff();
   if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
@@ -308,29 +312,34 @@ export async function saveArticle(
   if (slug.startsWith("rascunho-") && title !== "Sem título") {
     slug = slugifyTitle(title) || slug;
   }
-  slug = await uniqueSlugForArticle(supabase, input.language, slug, input.id);
+  if (slug !== row.slug) {
+    slug = await uniqueSlugForArticle(supabase, input.language, slug, input.id);
+  }
 
-  const { data, error } = await supabase
-    .from("articles")
-    .update({
-      title,
-      slug,
-      subtitle: input.subtitle,
-      excerpt: input.excerpt,
-      content: input.content,
-      cover_image: input.cover_image,
-      category_id: input.category_id,
-      language: input.language,
-      seo_title: input.seo_title,
-      seo_description: input.seo_description,
-      references_text: input.references_text,
-      sources: input.sources,
-    })
-    .eq("id", input.id)
-    .select("updated_at, slug")
-    .single();
+  const basePatch = {
+    title,
+    slug,
+    subtitle: input.subtitle,
+    excerpt: input.excerpt,
+    content: input.content,
+    cover_image: input.cover_image,
+    category_id: input.category_id,
+    language: input.language,
+    seo_title: input.seo_title,
+    seo_description: input.seo_description,
+    references_text: input.references_text,
+    sources: input.sources,
+    banners: input.banners,
+  };
 
-  if (error) return { ok: false, error: error.message };
+  let { data, error } = await supabase.from("articles").update(basePatch).eq("id", input.id).select("updated_at, slug").single();
+
+  if (error?.message?.includes("banners")) {
+    const { banners: _b, ...withoutBanners } = basePatch;
+    ({ data, error } = await supabase.from("articles").update(withoutBanners).eq("id", input.id).select("updated_at, slug").single());
+  }
+
+  if (error || !data) return { ok: false, error: error?.message ?? "Falha ao salvar." };
 
   await supabase.from("article_tags").delete().eq("article_id", input.id);
   if (input.tag_ids.length) {
@@ -339,7 +348,7 @@ export async function saveArticle(
     );
   }
 
-  if (options?.snapshot !== false) {
+  if (options?.snapshot === true) {
     const { data: revRows } = await supabase
       .from("article_revisions")
       .select("revision_number")
@@ -359,8 +368,10 @@ export async function saveArticle(
     });
   }
 
-  await logActivity(supabase, user.id, "article.saved", input.id);
-  revalidateArticlePaths(data.slug, input.language);
+  void logActivity(supabase, user.id, "article.saved", input.id);
+  if (options?.revalidate !== false) {
+    revalidateArticlePaths(data.slug, input.language);
+  }
 
   return { ok: true, data: { updated_at: data.updated_at, slug: data.slug } };
 }
@@ -369,24 +380,22 @@ export async function changeArticleStatus(
   id: string,
   status: ArticleStatus,
   scheduledAt?: string | null,
-  adminPassword?: string,
 ): Promise<ActionResult> {
   const ctx = await requireStaff();
   if ("error" in ctx) return { ok: false, error: ctx.error ?? "Sessão inválida." };
 
   const { supabase, user, profile } = ctx;
-  const existing = await getArticle(id);
-  if (!existing.ok || !existing.data) return { ok: false, error: "Artigo não encontrado." };
+  const { data: article, error: readError } = await supabase
+    .from("articles")
+    .select("id, title, slug, language, status, author_id")
+    .eq("id", id)
+    .maybeSingle();
 
-  const article = existing.data;
+  if (readError) return { ok: false, error: readError.message };
+  if (!article) return { ok: false, error: "Artigo não encontrado." };
 
-  const needsAdminPassword =
-    profile.role === "admin" &&
-    (status === "published" || status === "scheduled" || status === "archived");
-
-  if (needsAdminPassword) {
-    const auth = await requireAdminPassword(adminPassword);
-    if (!auth.ok) return auth;
+  if (!canEditArticle(profile.role, article.author_id, user.id)) {
+    return { ok: false, error: "Sem permissão." };
   }
 
   if (status === "published" || status === "scheduled") {
@@ -399,10 +408,6 @@ export async function changeArticleStatus(
     if (article.slug.startsWith("rascunho-")) {
       return { ok: false, error: "Gere o slug (ou salve o título) antes de publicar." };
     }
-  }
-
-  if (status === "review" && profile.role === "author" && article.author_id !== user.id) {
-    return { ok: false, error: "Sem permissão." };
   }
 
   const patch: Record<string, unknown> = { status };
@@ -421,7 +426,7 @@ export async function changeArticleStatus(
   const { error } = await supabase.from("articles").update(patch).eq("id", id);
   if (error) return { ok: false, error: error.message };
 
-  await logActivity(supabase, user.id, "article.status", id, { status, scheduledAt });
+  void logActivity(supabase, user.id, "article.status", id, { status, scheduledAt });
   revalidateArticlePaths(article.slug, article.language);
 
   return { ok: true };
@@ -497,6 +502,7 @@ export async function restoreRevision(
       references_text: article.data.references_text,
       sources: article.data.sources,
       tag_ids: article.data.tag_ids,
+      banners: article.data.banners,
     },
     { snapshot: true },
   );

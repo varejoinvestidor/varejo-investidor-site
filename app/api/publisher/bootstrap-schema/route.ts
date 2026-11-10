@@ -34,6 +34,7 @@ export async function POST(request: Request) {
     "20260308120000_publisher_foundation.sql",
     "20260308120001_storage_publisher_media.sql",
     "20260308130000_publisher_public_views.sql",
+    "20260310120000_article_banners.sql",
   ];
 
   const client = new pg.Client({ connectionString: conn, ssl: { rejectUnauthorized: false } });
