@@ -9,6 +9,38 @@ type TipTapNode = {
   content?: TipTapNode[];
 };
 
+const PARAGRAPH_CLASS = "text-lg leading-[1.85] text-paper/[0.76]";
+const PROSE_STACK_CLASS = "insight-prose flex flex-col gap-7 md:gap-8";
+
+/** Artigos colados como texto único ou com \\n\\n ficam com parágrafos separados na leitura. */
+function normalizeDocForDisplay(root: TipTapNode): TipTapNode {
+  if (!root.content?.length) return root;
+
+  const expanded: TipTapNode[] = [];
+
+  for (const node of root.content) {
+    if (node.type !== "paragraph" || !node.content?.length) {
+      expanded.push(node);
+      continue;
+    }
+
+    const onlyText = node.content.every((c) => c.type === "text" && !c.marks?.length);
+    if (onlyText && node.content.length === 1) {
+      const text = node.content[0].text ?? "";
+      if (text.includes("\n\n")) {
+        for (const part of text.split(/\n\s*\n/).map((t) => t.trim()).filter(Boolean)) {
+          expanded.push({ type: "paragraph", content: [{ type: "text", text: part }] });
+        }
+        continue;
+      }
+    }
+
+    expanded.push(node);
+  }
+
+  return { ...root, content: expanded };
+}
+
 function safeUrl(raw: string | undefined) {
   if (!raw) return null;
   try {
@@ -25,6 +57,14 @@ function renderText(node: TipTapNode, key: string): ReactNode {
   for (const mark of node.marks ?? []) {
     if (mark.type === "bold") el = <strong key={`${key}-b`}>{el}</strong>;
     if (mark.type === "italic") el = <em key={`${key}-i`}>{el}</em>;
+    if (mark.type === "strike") el = <s key={`${key}-s`}>{el}</s>;
+    if (mark.type === "code") {
+      el = (
+        <code key={`${key}-c`} className="rounded bg-paper/[0.06] px-1.5 py-0.5 font-mono text-[0.92em] text-paper/90">
+          {el}
+        </code>
+      );
+    }
     if (mark.type === "link") {
       const href = safeUrl(mark.attrs?.href as string | undefined);
       if (href) {
@@ -55,10 +95,12 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
       );
     case "paragraph":
       return (
-        <p key={key} className="text-lg leading-[1.85] text-paper/[0.76]">
+        <p key={key} className={PARAGRAPH_CLASS}>
           {children}
         </p>
       );
+    case "hardBreak":
+      return <br key={key} />;
     case "heading": {
       const level = Number(node.attrs?.level ?? 2);
       if (level === 1) {
@@ -94,7 +136,11 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
         </ol>
       );
     case "listItem":
-      return <li key={key}>{children}</li>;
+      return (
+        <li key={key} className="leading-[1.85] [&>p]:m-0">
+          {children}
+        </li>
+      );
     case "blockquote":
       return (
         <blockquote key={key} className="border-l-2 border-gold/50 pl-5 text-lg italic text-paper/[0.65]">
@@ -162,7 +208,11 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
 }
 
 export function TipTapArticleBody({ document }: { document: Record<string, unknown> }) {
-  const root = document as TipTapNode;
+  const root = normalizeDocForDisplay(document as TipTapNode);
   if (!root.content?.length) return null;
-  return <div className="insight-prose">{root.content.map((node, index) => renderNode(node, index))}</div>;
+  return (
+    <div className={PROSE_STACK_CLASS}>
+      {root.content.map((node, index) => renderNode(node, index))}
+    </div>
+  );
 }

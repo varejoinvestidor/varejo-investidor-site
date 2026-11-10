@@ -63,9 +63,11 @@ export function PublisherArticleView({
 
           <section className="px-5 pb-12 md:px-8 md:pb-16">
             <div className="mx-auto max-w-3xl">
-              {article.excerpt ? <p className="text-xl leading-[1.85] text-paper/[0.82]">{article.excerpt}</p> : null}
+              {article.excerpt ? (
+                <p className="border-b border-gold/[0.12] pb-8 text-xl leading-[1.85] text-paper/[0.82]">{article.excerpt}</p>
+              ) : null}
               <PublisherArticleBanners banners={article.banners} placement="inline" language={article.language} />
-              <div className="mt-10">
+              <div className={article.excerpt ? "mt-8" : "mt-10"}>
                 <TipTapArticleBody document={article.content} />
               </div>
 

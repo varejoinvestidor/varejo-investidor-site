@@ -27,6 +27,15 @@
   scroll-snap-align: start;
 }
 
+.insight-article .insight-prose > .aspect-video,
+.insight-article .insight-prose > figure {
+  margin-top: 0.25rem;
+}
+
+.insight-article .insight-prose p + p {
+  margin-top: 0;
+}
+
 .insight-article .insight-toc a {
   transition: color 0.2s ease, border-color 0.2s ease;
 }
