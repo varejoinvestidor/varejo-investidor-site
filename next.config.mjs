@@ -68,6 +68,21 @@ const nextConfig = {
         destination: "/ferramentas/calculadora-forex",
         permanent: true,
       },
+      {
+        source: "/artigos-globais",
+        destination: "/artigos",
+        permanent: true,
+      },
+      {
+        source: "/artigos-globais/:slug",
+        destination: "/artigos/:slug",
+        permanent: true,
+      },
+      {
+        source: "/artigos-globais/feed.xml",
+        destination: "/artigos",
+        permanent: true,
+      },
     ];
   },
 };

@@ -48,7 +48,7 @@ Variáveis opcionais:
 
 - [ ] Canonical e Open Graph no view-source
 - [ ] JSON-LD `Article` válido (Rich Results Test)
-- [ ] `/artigos-globais` continua servindo arquivo estático
+- [ ] `/artigos-globais` redireciona para `/artigos` (301)
 - [ ] Import opcional: `npm run import:legacy-insights`
 
 ### Mobile

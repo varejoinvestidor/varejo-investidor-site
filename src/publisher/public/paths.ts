@@ -16,7 +16,7 @@ export function getPublisherArticlePath(locale: string, slug: string) {
 
 export function publisherHubActivePaths(locale: Locale | string) {
   const paths = [getPublisherHubPath(locale), getInsightsPath(locale as Locale)];
-  if (locale === "pt") paths.push("/artigos", "/artigos-globais");
+  if (locale === "pt") paths.push("/artigos");
   if (locale === "en") paths.push("/en/artigos", "/global-articles");
   return paths;
 }

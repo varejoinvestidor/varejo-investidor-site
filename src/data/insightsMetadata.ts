@@ -37,7 +37,6 @@ export function createInsightsMetadata(locale: Locale): Metadata {
     alternates: {
       canonical: path,
       languages: hubLanguageAlternates(),
-      ...(locale === "pt" ? { types: { "application/rss+xml": "/artigos-globais/feed.xml" } } : {}),
     },
     openGraph: {
       title: `${hero.title} | Varejo Investidor`,

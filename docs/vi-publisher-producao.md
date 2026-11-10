@@ -79,7 +79,7 @@ Resposta esperada: `{"ok":true,"published":0}` ou número de artigos publicados.
 |-----|----------|
 | `https://www.varejoinvestidor.com/` | Home normal + language gate |
 | `https://www.varejoinvestidor.com/artigos` | Hub (vazio ou com posts) |
-| `https://www.varejoinvestidor.com/artigos-globais` | Arquivo legado intacto |
+| `https://www.varejoinvestidor.com/artigos-globais` | Redirect 301 → `/artigos` |
 | `https://www.varejoinvestidor.com/sinais` | Sem regressão |
 | `https://www.varejoinvestidor.com/robots.txt` | Contém `Disallow: /admin` |
 | `https://www.varejoinvestidor.com/sitemap.xml` | Contém `/artigos` |

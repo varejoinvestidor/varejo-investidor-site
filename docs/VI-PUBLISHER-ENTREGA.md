@@ -14,7 +14,7 @@ Código publicado em: `https://github.com/varejoinvestidor/varejo-investidor-sit
 | **Dashboard** | https://www.varejoinvestidor.com/admin |
 | **Portal artigos (PT)** | https://www.varejoinvestidor.com/artigos |
 | **Portal artigos (EN)** | https://www.varejoinvestidor.com/en/artigos |
-| **Arquivo legado (PT)** | https://www.varejoinvestidor.com/artigos-globais |
+| **Redirect legado** | `/artigos-globais` → `/artigos` (301) |
 | **Saúde Publisher** | https://www.varejoinvestidor.com/api/publisher/health |
 
 ## Ativar editorial (obrigatório após deploy)
@@ -32,6 +32,6 @@ Sem Supabase na Vercel o painel mostra “Configuração pendente” e `/artigos
 - Admin completo (`/admin/*`) com Tiptap, autosave, revisões, mídia, roles
 - Público `/artigos` + ISR + SEO + sitemap
 - Cron de agendamento (`vercel.json`)
-- Legado do site preservado (`/artigos-globais`, locales, sinais, etc.)
+- Portal único PT em `/artigos` (legado redirecionado); demais locales de insights preservados
 
 Documentação: `vi-publisher-setup.md`, `vi-publisher-testes.md`, `vi-publisher-producao.md`.

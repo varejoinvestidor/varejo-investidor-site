@@ -8,7 +8,7 @@ export type { InsightCategoryKey, InsightPost, InsightContentBlock } from "./ins
 export { getCategoryLabel, insightCategories, insightCategoryKeys } from "./insights/categories";
 
 export const insightsBasePath: Record<Locale, string> = {
-  pt: "/artigos-globais",
+  pt: "/artigos",
   en: "/global-articles",
   es: "/articulos-globales",
   fr: "/fr/articles",
@@ -1136,6 +1136,9 @@ export function getPost(locale: Locale, slug: string) {
 
 export function localeFromInsightsPath(pathname: string | null): Locale | null {
   if (!pathname) return null;
+  if (pathname === "/artigos" || (pathname.startsWith("/artigos/") && !pathname.startsWith("/artigos-globais"))) {
+    return "pt";
+  }
   if (pathname.startsWith("/artigos-globais")) return "pt";
   if (pathname.startsWith("/global-articles-hi")) return "hi";
   if (pathname.startsWith("/global-articles")) return "en";

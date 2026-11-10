@@ -13,8 +13,6 @@ const PAGE_SIZE = 9;
 type HubCopy = {
   title: string;
   subtitle: string;
-  legacyLabel: string;
-  legacyHref: string;
   searchPlaceholder: string;
   empty: string;
   featured: string;
@@ -26,20 +24,16 @@ const COPY: Record<"pt" | "en", HubCopy> = {
     title: "Artigos",
     subtitle:
       "Análises editoriais sobre economia global, mercados financeiros, geopolítica e estratégias de investimento.",
-    legacyLabel: "Artigos Globais",
-    legacyHref: "/artigos-globais",
     searchPlaceholder: "Buscar artigos…",
-    empty: "Nenhum artigo publicado ainda. O arquivo legado continua em Artigos Globais.",
+    empty: "Nenhum artigo publicado ainda. Volte em breve ou acompanhe pelo WhatsApp.",
     featured: "Destaque",
     loadMore: "Carregar mais",
   },
   en: {
     title: "Articles",
     subtitle: "Editorial analysis on global economy, financial markets, geopolitics and investment strategy.",
-    legacyLabel: "Global Articles",
-    legacyHref: "/global-articles",
     searchPlaceholder: "Search articles…",
-    empty: "No published articles yet. The legacy archive remains at Global Articles.",
+    empty: "No published articles yet. Check back soon.",
     featured: "Featured",
     loadMore: "Load more",
   },
@@ -82,12 +76,6 @@ export function PublisherArtigosHub({
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Varejo Investidor</p>
             <h1 className="mt-4 font-serif text-5xl tracking-[-0.05em] md:text-6xl">{copy.title}</h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-paper/[0.68]">{copy.subtitle}</p>
-            <p className="mt-4 text-sm text-paper/45">
-              {language === "pt" ? "Arquivo anterior:" : "Legacy archive:"}{" "}
-              <Link href={copy.legacyHref} className="text-gold hover:underline">
-                {copy.legacyLabel}
-              </Link>
-            </p>
           </motion.div>
         </section>
 
