@@ -14,7 +14,7 @@ export function ArticleBannersBackfillButton() {
     setBusy(false);
     if (result.ok && result.data) {
       setMessage(`Atualizados: ${result.data.updated}. Ignorados (sem banner): ${result.data.skipped}.`);
-    } else {
+    } else if (!result.ok) {
       setMessage(result.error ?? "Falha no backfill.");
     }
   }
