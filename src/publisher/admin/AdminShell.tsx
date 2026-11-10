@@ -6,6 +6,7 @@ import { ADMIN_ANALYTICS_NAV, ADMIN_FOOTER_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEA
 import { ROLE_LABELS } from "../permissions";
 import type { PublisherProfile } from "../types";
 import { createPublisherBrowserClient } from "../supabase/browser";
+import { AdminBrand } from "./AdminBrand";
 import { AdminMobileNav } from "./AdminMobileNav";
 
 type Props = {
@@ -58,8 +59,7 @@ export function AdminShell({ profile, children }: Props) {
       <div className="flex min-h-screen">
         <aside className="hidden w-64 shrink-0 border-r border-line/10 bg-[#070707] lg:flex lg:flex-col">
           <div className="border-b border-line/10 px-6 py-6">
-            <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-gold">Varejo Investidor</p>
-            <h1 className="mt-2 font-serif text-xl tracking-tight text-paper">VI Publisher</h1>
+            <AdminBrand />
           </div>
           <nav className="flex-1 overflow-y-auto px-3 py-4">
             <ul className="space-y-0.5">

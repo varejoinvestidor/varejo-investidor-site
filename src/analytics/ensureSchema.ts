@@ -16,12 +16,22 @@ async function probeState(): Promise<AnalyticsSchemaState> {
     if (error.code === "PGRST205" || /could not find the table/i.test(msg)) return "missing";
     return "missing";
   }
+  const from = new Date(0).toISOString();
+  const to = new Date().toISOString();
   const { error: regionRpcError } = await admin.rpc("analytics_by_region", {
-    p_from: new Date(0).toISOString(),
-    p_to: new Date().toISOString(),
+    p_from: from,
+    p_to: to,
     p_limit: 1,
   });
   if (regionRpcError && /analytics_by_region|Could not find the function|PGRST202/i.test(regionRpcError.message)) {
+    return "partial";
+  }
+  const { error: clicksRpcError } = await admin.rpc("analytics_top_clicks", {
+    p_from: from,
+    p_to: to,
+    p_limit: 1,
+  });
+  if (clicksRpcError && /ungrouped column|analytics_top_clicks/i.test(clicksRpcError.message)) {
     return "partial";
   }
   return "ok";

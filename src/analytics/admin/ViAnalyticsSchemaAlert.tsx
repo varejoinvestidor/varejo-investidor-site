@@ -42,7 +42,8 @@ export function ViAnalyticsSchemaAlert({ state }: { state: "missing" | "unconfig
           <p className="text-xs text-paper/55">
             Ou execute{" "}
             <code className="text-gold">20260318120000_vi_analytics.sql</code> e{" "}
-            <code className="text-gold">20260319120000_vi_analytics_regions.sql</code> no SQL Editor.
+            <code className="text-gold">20260319120000_vi_analytics_regions.sql</code> e{" "}
+            <code className="text-gold">20260320120000_vi_analytics_top_clicks_fix.sql</code> no SQL Editor.
           </p>
           <p className="w-full text-xs text-paper/45">
             Instalação automática: ao abrir este painel como admin (com POSTGRES na Vercel) e via cron{" "}
