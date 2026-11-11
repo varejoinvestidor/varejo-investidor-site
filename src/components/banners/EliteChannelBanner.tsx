@@ -5,11 +5,13 @@ import { isSupportedLocale, type SupportedLocale } from "../../i18n/locales";
 import { CHANNEL_SPLIT_BANNER_MEDIA } from "../../data/institutionalLevelPages/types";
 import { eliteChannelBannerCopy } from "./eliteChannelBannerCopy";
 import { ChannelSplitBannerA } from "./ChannelSplitBannerA";
+import type { ChannelBannerImageDisplay } from "./channelBannerDisplay";
 
 type Props = {
   language?: string;
   href?: string;
   className?: string;
+  display?: ChannelBannerImageDisplay;
 };
 
 function bannerLocale(language: string): SupportedLocale {
@@ -18,7 +20,7 @@ function bannerLocale(language: string): SupportedLocale {
 }
 
 /** Modelo A · Canal Elite (Research) → página de sinais. */
-export function EliteChannelBanner({ language = "pt", href: hrefProp, className = "" }: Props) {
+export function EliteChannelBanner({ language = "pt", href: hrefProp, className = "", display }: Props) {
   const copy = eliteChannelBannerCopy(language);
   const locale = bannerLocale(language);
   const href = hrefProp?.trim() || localizedPath("/sinais", locale);
@@ -38,6 +40,7 @@ export function EliteChannelBanner({ language = "pt", href: hrefProp, className 
       accent="gold"
       imagePanelClass="bg-[#0c1424]"
       className={className}
+      {...display}
     />
   );
 }

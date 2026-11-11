@@ -5,11 +5,13 @@ import { isSupportedLocale, type SupportedLocale } from "../../i18n/locales";
 import { CHANNEL_SPLIT_BANNER_MEDIA } from "../../data/institutionalLevelPages/types";
 import { educacaoChannelBannerCopy } from "./productChannelBannerCopy";
 import { ChannelSplitBannerA } from "./ChannelSplitBannerA";
+import type { ChannelBannerImageDisplay } from "./channelBannerDisplay";
 
 type Props = {
   language?: string;
   href?: string;
   className?: string;
+  display?: ChannelBannerImageDisplay;
 };
 
 function bannerLocale(language: string): SupportedLocale {
@@ -18,7 +20,7 @@ function bannerLocale(language: string): SupportedLocale {
 }
 
 /** Modelo A · Base educacional → /educacao */
-export function EducacaoChannelBanner({ language = "pt", href: hrefProp, className = "" }: Props) {
+export function EducacaoChannelBanner({ language = "pt", href: hrefProp, className = "", display }: Props) {
   const copy = educacaoChannelBannerCopy(language);
   const locale = bannerLocale(language);
   const href = hrefProp?.trim() || localizedPath("/educacao", locale);
@@ -36,8 +38,9 @@ export function EducacaoChannelBanner({ language = "pt", href: hrefProp, classNa
       language={language}
       trackEvent="base_educacional_banner_click"
       accent="rise"
-      imagePanelClass="bg-[#0a3d28]"
+      imagePanelClass="bg-ink"
       className={className}
+      {...display}
     />
   );
 }

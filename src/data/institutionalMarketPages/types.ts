@@ -35,7 +35,7 @@ export type InstitutionalMarketPage = {
 };
 
 export const marketHeroImages: Record<
-  Exclude<MarketSlug, "commodities" | "fundos-imobiliarios">,
+  Exclude<MarketSlug, "fundos-imobiliarios">,
   { src: string; altPt: string; altEn: string }
 > = {
   acoes: {
@@ -67,5 +67,10 @@ export const marketHeroImages: Record<
     src: "/characters/services-hero-team.png",
     altPt: "Economia digital, blockchain e mercado global de criptoativos",
     altEn: "Digital economy, blockchain and global crypto market",
+  },
+  commodities: {
+    src: "/characters/about-hero-institutional-cutout.png",
+    altPt: "Cadeia global de commodities, energia e matérias-primas",
+    altEn: "Global commodities chain, energy and raw materials",
   },
 };

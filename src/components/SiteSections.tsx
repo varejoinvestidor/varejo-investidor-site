@@ -14,6 +14,7 @@ import { languageMeta, persistLanguageChoice } from "../i18n/languageCatalog";
 import { detectLocaleFromNavigator } from "../i18n/suggestLocale";
 import { getYoutubeChannelUrl } from "../config/youtubeChannels";
 import { LocaleFlagIcon } from "./LocaleFlagIcon";
+import { FormigaChannelBanner } from "./banners/FormigaChannelBanner";
 import { WhatsAppPhoneSignal3D } from "./signals/WhatsAppPhoneSignal3D";
 import { WhatsAppSignalDemo } from "./signals/WhatsAppSignalDemo";
 import { GlobalMarketTicker } from "./GlobalMarketTicker";
@@ -653,16 +654,20 @@ export function WhatsAppIcon({ dark = false }: { dark?: boolean }) {
   );
 }
 
+/** @deprecated Use FormigaChannelBanner directly — mantém compatibilidade em páginas antigas. */
 export function FreeChannelCTA({
   t,
-  variant = "dark",
-  compact = false,
+  locale,
+  href,
 }: {
   t: (typeof translations)[Locale];
   variant?: "light" | "dark";
   compact?: boolean;
+  locale?: Locale;
+  href?: string;
 }) {
-  const dark = variant === "dark";
+  const lang = (locale ?? t.locale.toLowerCase().split("-")[0] ?? "pt") as Locale;
+  const langCode = isSupportedLocale(lang) ? lang : "en";
 
   return (
     <motion.div
@@ -670,36 +675,8 @@ export function FreeChannelCTA({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative overflow-hidden border shadow-fine ${
-        dark ?"border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]" : "border-rise/[0.28] bg-ink text-paper shadow-[0_26px_80px_rgba(15,143,86,0.13)]"
-      } ${compact ?"p-4" : "p-5 md:p-7"}`}
     >
-      <div className="absolute inset-0 terminal-grid opacity-35" />
-      <div className="absolute -right-24 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-rise/[0.18] blur-3xl" />
-      <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex gap-4">
-          <WhatsAppIcon dark />
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-rise">
-              {t.freeChannel.eyebrow}
-            </p>
-            <h3 className="mt-2 font-serif text-3xl uppercase tracking-[-0.03em]">{t.freeChannel.title}</h3>
-            <p className="mt-2 max-w-2xl leading-7 text-paper/[0.72]">
-              {t.freeChannel.text}
-            </p>
-          </div>
-        </div>
-        <a
-          href={t.freeChannel.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-vi-track="cta-canal-formiga"
-          onClick={() => trackVarejoClick("canal_formiga_click", { locale: t.locale.toLowerCase() })}
-          className="shrink-0 border border-rise bg-rise px-6 py-4 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper shadow-[0_18px_40px_rgba(15,143,86,0.25)] transition hover:-translate-y-0.5 hover:border-gold hover:bg-gold hover:text-ink sm:min-w-[260px]"
-        >
-          {t.freeChannel.button}
-        </a>
-      </div>
+      <FormigaChannelBanner language={langCode} href={href ?? t.freeChannel.link} className="w-full" />
     </motion.div>
   );
 }
@@ -868,7 +845,7 @@ export function SupportFooter({
     tools: string;
     language: string;
     marketLine: string;
-    levelLinks: [string, string, string, string];
+    levelLinks: [string, string, string];
     forexCalculator: string;
     compoundInterestTool: string;
     portfolioXrayTool?: string;
@@ -883,7 +860,7 @@ export function SupportFooter({
           tools: "\u091F\u0942\u0932\u094D\u0938",
           language: "\u092D\u093E\u0937\u093E",
           marketLine: "Forex | क्रिप्टो | कमोडिटी | वैश्विक बाजार",
-          levelLinks: ["\u091A\u0940\u0902\u091F\u0940 \u0938\u094D\u0924\u0930", "\u092D\u0947\u0921\u093C\u093F\u092F\u093E \u0938\u094D\u0924\u0930", "\u0917\u0930\u0941\u0921\u093C \u0938\u094D\u0924\u0930", "Select"],
+          levelLinks: ["\u091A\u0940\u0902\u091F\u0940 \u0938\u094D\u0924\u0930", "\u092D\u0947\u0921\u093C\u093F\u092F\u093E \u0938\u094D\u0924\u0930", "\u0917\u0930\u0941\u0921\u093C \u0938\u094D\u0924\u0930"],
           forexCalculator: "Forex कैलकुलेटर",
           compoundInterestTool: "\u0915\u0902\u092A\u093E\u0909\u0902\u0921 \u0907\u0902\u091F\u0930\u0947\u0938\u094D\u091F \u0915\u0948\u0932\u0915\u0941\u0932\u0947\u091F\u0930",
         }
@@ -897,7 +874,7 @@ export function SupportFooter({
             tools: "Herramientas",
             language: "Idioma",
             marketLine: "Forex | Cripto | Commodities | Mercados Globales",
-            levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia", "Select"],
+            levelLinks: ["Nivel Formiga", "Nivel Lobo", "Nivel Harpia"],
             forexCalculator: "Calculadora Forex",
             compoundInterestTool: "Calculadora de inter\u00E9s compuesto",
           }
@@ -911,7 +888,7 @@ export function SupportFooter({
               tools: "Ferramentas",
               language: "Idioma",
               marketLine: "Forex | Cripto | Commodities | Mercados Globais",
-              levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia", "Select"],
+              levelLinks: ["N\u00EDvel Formiga", "N\u00EDvel Lobo", "N\u00EDvel Harpia"],
               forexCalculator: "Calculadora Forex",
               compoundInterestTool: "Calculadora de Juros Compostos",
               portfolioXrayTool: "Raio-X da Carteira Global",
@@ -926,7 +903,7 @@ export function SupportFooter({
                 tools: "\u0627\u0644\u0623\u062F\u0648\u0627\u062A",
                 language: "\u0627\u0644\u0644\u063A\u0629",
                 marketLine: "Forex | Crypto | Commodities | Global Markets",
-                levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia", "Select"],
+                levelLinks: ["\u0645\u0633\u062A\u0648\u0649 Formiga", "\u0645\u0633\u062A\u0648\u0649 Lobo", "\u0645\u0633\u062A\u0648\u0649 Harpia"],
                 forexCalculator: "\u062D\u0627\u0633\u0628\u0629 Forex",
                 compoundInterestTool: "\u062D\u0627\u0633\u0628\u0629 \u0627\u0644\u0641\u0627\u0626\u062F\u0629 \u0627\u0644\u0645\u0631\u0643\u0628\u0629",
               }
@@ -940,7 +917,7 @@ export function SupportFooter({
                   tools: "כלים",
                   language: "שפה",
                   marketLine: "Forex | Crypto | Commodities | Global Markets",
-                  levelLinks: ["רמת Formiga", "רמת Lobo", "רמת Harpia", "Select"],
+                  levelLinks: ["רמת Formiga", "רמת Lobo", "רמת Harpia"],
                   forexCalculator: "מחשבון Forex",
                   compoundInterestTool: "מחשבון ריבית דריבית",
                 }
@@ -954,7 +931,7 @@ export function SupportFooter({
                   tools: "Ara\u00E7lar",
                   language: "Dil",
                   marketLine: "Forex | Kripto | Emtialar | K\u00FCresel Piyasalar",
-                  levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi", "Select"],
+                  levelLinks: ["Formiga Seviyesi", "Lobo Seviyesi", "Harpia Seviyesi"],
                   forexCalculator: "Forex Hesaplay\u0131c\u0131",
                   compoundInterestTool: "Bile\u015Fik Faiz Hesaplay\u0131c\u0131",
                 }
@@ -967,7 +944,7 @@ export function SupportFooter({
                   tools: locale === "id" ? "Alat" : locale === "vi" ? "C\u00F4ng c\u1EE5" : "Tools",
                   language: "Language",
                   marketLine: "Forex | Crypto | Commodities | Global Markets",
-                  levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level", "Select"],
+                  levelLinks: ["Formiga Level", "Lobo Level", "Harpia Level"],
                   forexCalculator: locale === "id" ? "Kalkulator Forex" : locale === "vi" ? "M\u00E1y T\u00EDnh Forex" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13 Forex" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 Forex" : locale === "ja" ? "Forex\u8A08\u7B97\u6A5F" : locale === "ko" ? "Forex \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur Forex" : "Forex Calculator",
                   compoundInterestTool: locale === "id" ? "Kalkulator Bunga Majemuk" : locale === "vi" ? "M\u00E1y T\u00EDnh L\u00E3i K\u00E9p" : locale === "th" ? "\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13\u0E14\u0E2D\u0E01\u0E40\u0E1A\u0E35\u0E49\u0E22\u0E17\u0E1A\u0E15\u0E49\u0E19" : locale === "ru" ? "\u041A\u0430\u043B\u044C\u043A\u0443\u043B\u044F\u0442\u043E\u0440 \u0441\u043B\u043E\u0436\u043D\u044B\u0445 \u043F\u0440\u043E\u0446\u0435\u043D\u0442\u043E\u0432" : locale === "ur" ? "\u06A9\u0645\u067E\u0627\u0624\u0646\u0688 \u0627\u0646\u0679\u0631\u0633\u0679 \u06A9\u06CC\u0644\u06A9\u0648\u0644\u06CC\u0679\u0631" : locale === "bn" ? "\u099A\u0995\u09CD\u09B0\u09AC\u09C3\u09A6\u09CD\u09A7\u09BF \u09B8\u09C1\u09A6 \u0995\u09CD\u09AF\u09BE\u09B2\u0995\u09C1\u09B2\u09C7\u099F\u09B0" : locale === "ja" ? "\u8907\u5229\u8A08\u7B97\u6A5F" : locale === "ko" ? "\uBCF5\uB9AC \uACC4\uC0B0\uAE30" : locale === "fr" ? "Calculateur d'int\u00E9r\u00EAts compos\u00E9s" : "Compound Interest Calculator",
                 };
@@ -976,11 +953,9 @@ export function SupportFooter({
   const footerLocalePrefix = localeToUrlSegment(locale);
   const localizedFooterPage = (path: string) => localizedPath(path, locale);
   const levelFooterLinks = [
-    { href: localizedFooterPage("/formiga"), label: footerLabels.levelLinks[0] },
-    { href: localizedFooterPage("/lobo"), label: footerLabels.levelLinks[1] },
-    { href: localizedFooterPage("/harpia"), label: footerLabels.levelLinks[2] },
-    { href: localizedFooterPage("/select"), label: footerLabels.levelLinks[3] },
-    { href: localizedFooterPage("/private"), label: "Private" },
+    { href: localizedFooterPage("/nivel-formiga"), label: footerLabels.levelLinks[0] },
+    { href: localizedFooterPage("/nivel-lobo"), label: footerLabels.levelLinks[1] },
+    { href: localizedFooterPage("/nivel-harpia"), label: footerLabels.levelLinks[2] },
   ];
   const localizedFooterHref = (page: "home" | "signals" | "education" | "services" | "about") => {
     if (page === "home") return footerLocalePrefix ? `/${footerLocalePrefix}` : "/#home";

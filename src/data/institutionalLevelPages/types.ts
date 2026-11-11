@@ -94,15 +94,15 @@ export const CHANNEL_SPLIT_BANNER_MEDIA: Record<
     heroAlt: "Harpia, Research Elite Varejo Investidor",
   },
   educacao: {
-    hero: "/characters/education-levels-team.png",
+    hero: "/characters/education-formation-premium.png",
     heroAlt: "Formiga, Lobo e Harpia, base educacional Varejo Investidor",
   },
   select: {
-    hero: "/characters/about-hero-institutional-cutout.png",
+    hero: "/characters/services-hero-team.png",
     heroAlt: "Select, estratégia patrimonial e exposição global",
   },
   private: {
-    hero: "/characters/about-hero-institutional.png",
+    hero: "/characters/services-hero-institutional.png",
     heroAlt: "Private, estrutura patrimonial internacional",
   },
 };

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FormigaChannelBanner } from "../src/components/banners/FormigaChannelBanner";
+import { InstitutionPartnersSection } from "../src/components/institutions/InstitutionPartnersSection";
 import { SiteChrome, SupportFooter, fadeUp, trackVarejoClick, useSiteLocale } from "../src/components/SiteSections";
 import { getInsightsPath } from "../src/data/insightsContent";
 import {
@@ -1388,36 +1389,44 @@ const homeEducationBaseCopy: Record<string, { eyebrow: string; title: string; te
   },
 };
 
-const homeInstitutionsCopy: Record<string, { eyebrow: string; title: string; text: string; institutions: string[] }> = {
+const homeInstitutionsCopy: Record<
+  string,
+  { eyebrow: string; title: string; text: string; brazil: string; global: string }
+> = {
   pt: {
     eyebrow: "Instituições compatíveis",
     title: "Compatível com as maiores instituições financeiras.",
     text: "O cliente mantém o patrimônio na instituição que já utiliza.",
-    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+    brazil: "Brasil",
+    global: "Mundo",
   },
   en: {
     eyebrow: "Compatible institutions",
     title: "Compatible with major financial institutions.",
     text: "The client keeps wealth in the institution they already use.",
-    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+    brazil: "Brazil",
+    global: "World",
   },
   es: {
     eyebrow: "Instituciones compatibles",
     title: "Compatible con grandes instituciones financieras.",
     text: "El cliente mantiene su patrimonio en la institución que ya utiliza.",
-    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+    brazil: "Brasil",
+    global: "Mundo",
   },
   hi: {
     eyebrow: "संगत संस्थाएँ",
     title: "प्रमुख वित्तीय संस्थाओं के साथ संगत।",
     text: "ग्राहक अपनी मौजूदा संस्था में ही संपत्ति रख सकता है।",
-    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+    brazil: "Brazil",
+    global: "World",
   },
   ja: {
     eyebrow: "対応金融機関",
     title: "主要金融機関と両立します。",
     text: "お客様はこれまで利用している機関に資産を置いたままにできます。",
-    institutions: ["Itaú", "BTG", "XP", "Safra", "Santander", "Morgan Stanley", "JP Morgan", "UBS", "Goldman Sachs", "Interactive Brokers", "Charles Schwab", "Nomad", "Avenue", "Binance"],
+    brazil: "Brazil",
+    global: "World",
   },
 };
 
@@ -2030,22 +2039,13 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section className="relative overflow-hidden border-b border-gold/[0.12] bg-ink px-5 py-16 text-paper md:px-8 md:py-20 lg:px-12 xl:px-16">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="mx-auto max-w-[1280px]">
-          <div className="mx-auto max-w-4xl text-center">
-            <p className="text-xs font-black uppercase tracking-[0.34em] text-gold">{institutions.eyebrow}</p>
-            <h2 className="mt-4 font-serif text-4xl leading-[1.04] tracking-[-0.04em] md:text-6xl">{institutions.title}</h2>
-            <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-paper/[0.68] md:text-lg">{institutions.text}</p>
-          </div>
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
-            {institutions.institutions.map((name) => (
-              <div key={name} className="group border border-paper/[0.12] bg-paper/[0.035] px-4 py-5 text-center shadow-fine transition duration-300 hover:-translate-y-0.5 hover:border-gold/[0.45]">
-                <span className="text-xs font-black uppercase tracking-[0.14em] text-paper/[0.64] transition group-hover:text-gold">{name}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
+      <InstitutionPartnersSection
+        eyebrow={institutions.eyebrow}
+        title={institutions.title}
+        text={institutions.text}
+        brazilLabel={institutions.brazil}
+        globalLabel={institutions.global}
+      />
 
       <section className="home-global-account px-5 py-16 md:px-8 md:py-20 lg:px-12 xl:px-16">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} variants={fadeUp} className="mx-auto max-w-[1280px]">

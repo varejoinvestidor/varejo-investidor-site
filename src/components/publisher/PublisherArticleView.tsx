@@ -11,7 +11,7 @@ import type { PublicArticleDetail, PublicArticleSummary } from "../../publisher/
 import { getPublisherArticlePath, getPublisherHubPath } from "../../publisher/public/paths";
 import { publisherArticleUrl } from "../../publisher/public/queries";
 import { getSiteSocialLinksForLanguage, socialFollowLabel } from "../../config/siteSocialLinks";
-import { PublisherArticleBanners } from "./PublisherArticleBanners";
+import { ArticleBannerBlock, PublisherArticleBanners } from "./PublisherArticleBanners";
 import { ArticleHeroVideo } from "./ArticleHeroVideo";
 import { hasArticleVideo } from "../../publisher/types/video";
 
@@ -49,7 +49,12 @@ export function PublisherArticleView({
       <div className={article.excerpt ? "mt-8" : "mt-10"}>
         <TipTapArticleBody
           document={article.content}
-          inlineSlot={<PublisherArticleBanners banners={article.banners} placement="inline" language={lang} compact />}
+          inlineSlots={article.banners
+            .filter((b) => b.placement === "inline")
+            .map((b) => ({
+              position: b.inline_position ?? 50,
+              node: <ArticleBannerBlock key={b.id} banner={b} language={lang} compact />,
+            }))}
         />
       </div>
       {article.sources.length ? (

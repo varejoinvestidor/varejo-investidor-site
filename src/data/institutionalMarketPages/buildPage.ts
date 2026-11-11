@@ -19,14 +19,21 @@ function withIds(sections: Omit<InstitutionalSection, "id">[]): InstitutionalSec
   }));
 }
 
-export function buildInstitutionalPage(slug: Exclude<MarketSlug, "commodities" | "fundos-imobiliarios">, copy: MarketCopy, locale: Locale): InstitutionalMarketPage {
+export function buildInstitutionalPage(slug: Exclude<MarketSlug, "fundos-imobiliarios">, copy: MarketCopy, locale: Locale): InstitutionalMarketPage {
   const heroAsset = marketHeroImages[slug];
   const imageAlt = locale === "pt" ? heroAsset.altPt : heroAsset.altEn;
 
-  const heroFit =
-    slug === "forex" || slug === "cripto" ? ("contain" as const) : ("cover" as const);
-  const heroPanel =
-    slug === "forex" ? "bg-[#070d0a]" : slug === "cripto" ? "bg-[#0c1220]" : "bg-ink";
+  const heroFit = "contain" as const;
+  const heroPanelBySlug: Partial<Record<typeof slug, string>> = {
+    forex: "bg-[#070d0a]",
+    cripto: "bg-[#0c1220]",
+    acoes: "bg-[#0a0e14]",
+    etfs: "bg-[#080c10]",
+    ouro: "bg-[#12100a]",
+    petroleo: "bg-[#0a0c08]",
+    commodities: "bg-[#0e0c08]",
+  };
+  const heroPanel = heroPanelBySlug[slug] ?? "bg-ink";
 
   return {
     slug,

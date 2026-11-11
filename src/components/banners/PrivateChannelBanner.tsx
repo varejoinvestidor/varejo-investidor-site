@@ -5,11 +5,13 @@ import { isSupportedLocale, type SupportedLocale } from "../../i18n/locales";
 import { CHANNEL_SPLIT_BANNER_MEDIA } from "../../data/institutionalLevelPages/types";
 import { privateChannelBannerCopy } from "./productChannelBannerCopy";
 import { ChannelSplitBannerA } from "./ChannelSplitBannerA";
+import type { ChannelBannerImageDisplay } from "./channelBannerDisplay";
 
 type Props = {
   language?: string;
   href?: string;
   className?: string;
+  display?: ChannelBannerImageDisplay;
 };
 
 function bannerLocale(language: string): SupportedLocale {
@@ -18,7 +20,7 @@ function bannerLocale(language: string): SupportedLocale {
 }
 
 /** Modelo A · Private → /private */
-export function PrivateChannelBanner({ language = "pt", href: hrefProp, className = "" }: Props) {
+export function PrivateChannelBanner({ language = "pt", href: hrefProp, className = "", display }: Props) {
   const copy = privateChannelBannerCopy(language);
   const locale = bannerLocale(language);
   const href = hrefProp?.trim() || localizedPath("/private", locale);
@@ -36,8 +38,12 @@ export function PrivateChannelBanner({ language = "pt", href: hrefProp, classNam
       language={language}
       trackEvent="private_banner_click"
       accent="gold"
-      imagePanelClass="bg-[#0c1424]"
+      imagePanelClass="bg-[#080f1c]"
+      imageStyle="scene"
+      imageObjectPosition="center 74%"
+      sceneGlow="rgba(96,140,220,0.18)"
       className={className}
+      {...display}
     />
   );
 }

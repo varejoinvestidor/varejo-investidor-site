@@ -10,7 +10,7 @@ export type MarketCopy = {
   sections: Omit<InstitutionalSection, "id">[];
 };
 
-type InstitutionalMarketSlug = "acoes" | "forex" | "etfs" | "ouro" | "petroleo" | "cripto";
+type InstitutionalMarketSlug = "acoes" | "forex" | "etfs" | "ouro" | "petroleo" | "cripto" | "commodities";
 
 export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCopy> = {
   acoes: {
@@ -524,7 +524,7 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
     metaTitle: "Criptomoedas | economia digital global | Varejo Investidor",
     metaDescription:
       "Blockchain, Bitcoin, Ethereum, stablecoins, DeFi, custódia, regulação e riscos do ecossistema de ativos digitais.",
-    showCryptoBroker: true,
+    showCryptoBroker: false,
     sections: [
       {
         eyebrow: "Panorama",
@@ -612,11 +612,94 @@ export const institutionalMarketCopyPt: Record<InstitutionalMarketSlug, MarketCo
           { label: "Fiat ramps", detail: "On-ramps, off-ramps e stablecoins." },
         ],
       },
+    ],
+  },
+
+  commodities: {
+    heroTitle: "COMMODITIES | A BASE DA ECONOMIA REAL",
+    heroSubtitle:
+      "Matérias-primas, energia, metais e agricultura conectam produção mundial, inflação e comércio internacional.",
+    metaTitle: "Commodities | economia real e ciclos globais | Varejo Investidor",
+    metaDescription:
+      "Commodities agrícolas, energéticas e industriais: oferta, demanda, clima, dólar, logística e gestão de risco.",
+    sections: [
       {
-        title: "Exchanges parceiras e Research",
+        eyebrow: "Panorama",
+        title: "Matérias-primas que sustentam a economia",
         paragraphs: [
-          "Cards de abertura de conta seguem parceiros já cadastrados, com avisos de risco visíveis. Continue a formação em segurança digital e macro no Research Varejo Investidor.",
+          "Commodities são insumos negociados globalmente antes de virarem produto final. Petróleo, gás, cobre, soja, milho e minério de ferro alimentam energia, alimentação, construção, tecnologia e transporte.",
+          "Seu preço conversa diretamente com inflação, PIB e moedas de países exportadores. Para o investidor, commodities são janela para ciclos reais, não apenas narrativas de bolsa.",
         ],
+      },
+      {
+        title: "Como funciona o mercado de commodities",
+        paragraphs: [
+          "Oferta depende de clima, capacidade de extração, custo marginal e política. Demanda reage a crescimento, industrialização e estoques. Contratos futuros descobrem preço hoje para entregas futuras; o mercado spot reflete disponibilidade imediata.",
+          "Correlação com o dólar é estrutural: muitas matérias-primas são cotadas em USD. Forte dólar tende a pressionar preços; fraqueza tende a aliviar países importadores.",
+        ],
+        bullets: [
+          "Mercado spot: entrega física ou liquidação imediata.",
+          "Futuros e opções: hedge, especulação e formação de expectativa.",
+          "Curvas de contango e backwardation afetam ETFs de commodities.",
+          "Estoques reportados (API, USDA, LME) orientam sessões.",
+        ],
+      },
+      {
+        title: "Agrícolas: clima, safra e segurança alimentar",
+        paragraphs: [
+          "Soja, milho, trigo e café combinam sazonalidade e geopolítica. Seguim safra no Hemisfério Sul e Norte; eventos climáticos extremos podem remover milhões de toneladas da oferta em semanas.",
+        ],
+        visualGrid: [
+          { label: "Soja", detail: "Proteína e óleo; China como demanda estrutural." },
+          { label: "Milho", detail: "Ração animal e biocombustível." },
+          { label: "Trigo", detail: "Pão e exportações da Europa/Leste." },
+          { label: "Café", detail: "Clima em Brasil e Vietnã define cotações." },
+        ],
+      },
+      {
+        title: "Energia e petróleo na matriz",
+        paragraphs: [
+          "Petróleo e gás permanecem a espinha dorsal da matriz energética, mesmo com transição verde. Brent e WTI servem de referência para contratos físicos e financeiros; spreads refletem logística e qualidade do crude.",
+        ],
+      },
+      {
+        title: "Metais industriais e reservas",
+        paragraphs: [
+          "Cobre, alumínio e níquel conectam construção, veículos elétricos e infraestrutura. Minério de ferro antecipa atividade industrial, especialmente na China. Ouro aparece também como reserva e proteção, com dinâmica própria.",
+        ],
+      },
+      {
+        eyebrow: "Logística",
+        title: "Cadeia: mina ou porto até o fabricante",
+        paragraphs: [
+          "Frete marítimo, rotas estratégicas e geopolítica podem adicionar prêmio rápido. Gargalos em portos ou estreitos mudam preço antes de qualquer ajuste de demanda.",
+        ],
+        visualGrid: [
+          { label: "Extração", detail: "Minas, talhões agrícolas e poços." },
+          { label: "Transporte", detail: "Navios, dutos, ferrovias." },
+          { label: "Armazenagem", detail: "Silo, tanque, pátio de contêiner." },
+          { label: "Indústria", detail: "Refino, moagem e fundição." },
+        ],
+      },
+      {
+        title: "O que move os preços",
+        paragraphs: [
+          "Crescimento global, estímulos na China, dólar, clima e inventários explicam boa parte dos ciclos. Surpresas de oferta — greves, sanções, desastres — produzem gaps em gráficos intradiários.",
+        ],
+      },
+      {
+        title: "Indicadores e dados públicos",
+        paragraphs: [
+          "Relatórios USDA, estoques de petróleo nos EUA, estatísticas da OMI/LME e PMIs industriais contextualizam tendência, sem substituir análise de risco individual.",
+        ],
+      },
+      {
+        title: "Riscos de volatilidade e roll de futuros",
+        paragraphs: [
+          "Commodities podem dobrar ou cair pela metade em um ciclo. ETFs que rolam futuros perdem performance em contango persistente. Concentração em um metal ou cultura amplifica risco.",
+        ],
+        disclaimer:
+          "Commodities e derivativos acarretam volatilidade e podem não ser adequados a todos os perfis. Avalie custos, tributação e liquidez.",
       },
     ],
   },

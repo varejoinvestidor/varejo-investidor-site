@@ -9,6 +9,8 @@ import { fadeUp } from "./SiteSections";
 import { localizedPath } from "../i18n/routing";
 import { getPublisherHubPath } from "../publisher/public/paths";
 import { getMarketLabel, type MarketSlug } from "../data/marketContent";
+import { InstitutionalSectionArchitecture3D } from "./markets/InstitutionalSectionArchitecture3D";
+import { sectionPhase } from "./markets/institutionalSectionPhase";
 
 type MarketUiCopy = {
   brokerSection: string;
@@ -56,7 +58,11 @@ function marketUi(locale: Locale): MarketUiCopy {
   return uiEn;
 }
 
-const relatedSlugs: MarketSlug[] = ["forex", "acoes", "etfs", "ouro", "petroleo", "cripto"];
+function relatedMarketSlugs(locale: Locale, current: MarketSlug): MarketSlug[] {
+  const base: MarketSlug[] = ["forex", "acoes", "etfs", "ouro", "petroleo", "cripto", "commodities"];
+  if (locale === "pt") base.push("fundos-imobiliarios");
+  return base.filter((s) => s !== current);
+}
 
 export function MarketInstitutionalHero({ page, locale }: { page: InstitutionalMarketPage; locale: Locale }) {
   return (
@@ -89,7 +95,14 @@ export function MarketInstitutionalHero({ page, locale }: { page: InstitutionalM
                 : "h-full max-h-[420px] w-full object-cover object-center"
             }
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" aria-hidden="true" />
+          <div
+            className={
+              page.hero.imageFit === "contain"
+                ? "absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"
+                : "absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent"
+            }
+            aria-hidden="true"
+          />
         </motion.div>
       </div>
     </section>
@@ -112,8 +125,17 @@ export function InstitutionalMarketSections({
 
   return (
     <>
-      {page.sections.map((section, index) => (
-        <section key={section.id} className="px-5 py-12 md:px-8 md:py-16">
+      {page.sections.map((section, index) => {
+        const phase = sectionPhase(index, section.title, locale);
+        const [leigo, ...restParagraphs] = section.paragraphs;
+        const bridge = phase.depth === "intro" || phase.depth === "core" ? restParagraphs.slice(0, 1) : [];
+        const after3d =
+          phase.depth === "intro" || phase.depth === "core"
+            ? restParagraphs.slice(bridge.length)
+            : restParagraphs;
+
+        return (
+        <section key={section.id} id={section.id} className="scroll-mt-28 px-5 py-12 md:px-8 md:py-16">
           <div className="mx-auto max-w-7xl">
             <motion.article
               variants={fadeUp}
@@ -125,15 +147,40 @@ export function InstitutionalMarketSections({
             >
               <div className="absolute inset-0 terminal-grid opacity-[0.22]" aria-hidden="true" />
               <div className="relative">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-rise">{phase.badge}</p>
                 {section.eyebrow ? (
-                  <p className="text-xs font-black uppercase tracking-[0.28em] text-gold">{section.eyebrow}</p>
+                  <p className="mt-2 text-xs font-black uppercase tracking-[0.28em] text-gold">{section.eyebrow}</p>
                 ) : null}
                 <h2 className="mt-3 font-serif text-3xl leading-[1.05] tracking-[-0.04em] md:text-5xl">{section.title}</h2>
-                <div className="mt-5 space-y-4 text-base leading-8 text-paper/[0.68]">
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
+                {leigo ? (
+                  <div className="mt-5 rounded-sm border border-rise/35 bg-rise/[0.06] p-5">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-rise">{phase.leigoHint}</p>
+                    <p className="mt-3 text-base leading-8 text-paper/[0.82]">{leigo}</p>
+                  </div>
+                ) : null}
+                {bridge.length ? (
+                  <div className="mt-4 space-y-4 text-base leading-8 text-paper/[0.68]">
+                    {bridge.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                ) : null}
+                <InstitutionalSectionArchitecture3D
+                  slug={currentSlug}
+                  sectionIndex={index}
+                  title={section.title}
+                  locale={locale}
+                />
+                {after3d.length ? (
+                  <div className="mt-5 space-y-4 border-t border-gold/[0.12] pt-5 text-base leading-8 text-paper/[0.68]">
+                    <p className="text-[10px] font-black uppercase tracking-[0.18em] text-gold/80">
+                      {locale === "pt" ? "Aprofundamento" : locale === "es" ? "Profundización" : "Deeper detail"}
+                    </p>
+                    {after3d.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                ) : null}
                 {section.bullets?.length ? (
                   <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                     {section.bullets.map((item) => (
@@ -155,12 +202,21 @@ export function InstitutionalMarketSections({
                   </div>
                 ) : null}
                 {section.visualGrid?.length ? (
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                    {section.visualGrid.map((item) => (
-                      <div key={item.label} className="border border-gold/[0.22] bg-ink p-4 text-paper">
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 [perspective:900px]">
+                    {section.visualGrid.map((item, vIndex) => (
+                      <motion.div
+                        key={item.label}
+                        initial={{ opacity: 0, rotateX: 14, y: 12 }}
+                        whileInView={{ opacity: 1, rotateX: 6, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: vIndex * 0.04 }}
+                        whileHover={{ rotateY: -5, z: 12 }}
+                        style={{ transformStyle: "preserve-3d" }}
+                        className="border border-gold/[0.22] bg-ink p-4 text-paper shadow-fine"
+                      >
                         <p className="text-xs font-black uppercase tracking-[0.16em] text-gold">{item.label}</p>
                         {item.detail ? <p className="mt-2 text-sm leading-6 text-paper/[0.68]">{item.detail}</p> : null}
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 ) : null}
@@ -171,7 +227,8 @@ export function InstitutionalMarketSections({
             </motion.article>
           </div>
         </section>
-      ))}
+      );
+      })}
 
       {page.showForexBroker || page.showCryptoBroker ? (
         <section className="px-5 py-12 md:px-8 md:py-16">
@@ -207,9 +264,7 @@ export function InstitutionalMarketSections({
           </div>
           <p className="mt-10 text-xs font-black uppercase tracking-[0.22em] text-gold/80">{ui.relatedMarkets}</p>
           <div className="mt-4 flex flex-wrap gap-2">
-            {relatedSlugs
-              .filter((slug) => slug !== currentSlug)
-              .map((slug) => (
+            {relatedMarketSlugs(locale, currentSlug).map((slug) => (
                 <a
                   key={slug}
                   href={locale === "pt" ? `/${slug}` : localizedPath(`/${slug}`, locale)}

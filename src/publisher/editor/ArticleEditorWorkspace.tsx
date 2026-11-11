@@ -24,7 +24,9 @@ import {
   createTranslationDraft,
   listLinkedTranslations,
 } from "../translation/actions";
+import { ChannelBannerByPreset } from "../../components/banners/ChannelBannerByPreset";
 import { ARTICLE_BANNER_PRESETS, bannerFromPreset, resolveArticleBanner } from "../data/articleBannerPresets";
+import { isChannelBannerPreset } from "../types/banner";
 import { PUBLISHER_LANGUAGE_OPTIONS } from "../locales";
 import {
   bannersFromArticleContent,
@@ -541,13 +543,6 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
             className="w-full border-b border-line/10 bg-transparent py-2 text-lg text-paper/70 outline-none"
           />
 
-          <ArticleVideoFields
-            videos={article.videos ?? emptyArticleVideos()}
-            disabled={preview}
-            variant="editor"
-            onChange={(videos) => patchArticle({ videos })}
-          />
-
           <ArticleBannerPreviewStrip
             banners={article.banners}
             placement="top"
@@ -585,6 +580,13 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
         </div>
 
         <aside className="space-y-6">
+          <ArticleVideoFields
+            videos={article.videos ?? emptyArticleVideos()}
+            disabled={preview}
+            variant="sidebar"
+            onChange={(videos) => patchArticle({ videos })}
+          />
+
           <section className="rounded-lg border border-line/12 p-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">URL e resumo</h3>
             <label className="mt-3 block text-xs text-paper/45">Slug</label>
@@ -728,7 +730,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           <section className="rounded-lg border border-line/12 p-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">Banners do site</h3>
             <p className="mt-1 text-xs text-paper/40">
-              Escolha Formiga, Lobo, FxPro ou Binance. Links e imagens seguem o idioma do artigo.
+              Escolha Formiga, Lobo, Select, Private, FxPro ou Binance. Ajuste largura, zoom, enquadramento e altura da arte. No meio, defina a profundidade no texto.
             </p>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {ARTICLE_BANNER_PRESETS.map((preset) => (
@@ -763,12 +765,23 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
                       className="w-full text-left"
                       onClick={() => focusBanner(banner.id)}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={resolved.image_url}
-                        alt=""
-                        className="mb-2 aspect-[1324/150] w-full rounded border border-line/10 object-cover"
-                      />
+                      <div className="mb-2 overflow-hidden rounded border border-line/10">
+                        {isChannelBannerPreset(resolved.preset) ? (
+                          <ChannelBannerByPreset
+                            preset={resolved.preset}
+                            language={article.language.split("-")[0] || "pt"}
+                            href={resolved.href}
+                            className="w-full"
+                          />
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={resolved.image_url}
+                            alt=""
+                            className="aspect-[1324/150] w-full object-cover"
+                          />
+                        )}
+                      </div>
                       <p className="text-xs font-semibold text-paper/70">{label}</p>
                     </button>
                     <p className="mt-1 text-[10px] text-paper/40">Posição no artigo (como no site público)</p>
@@ -798,6 +811,114 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
                         </button>
                       ))}
                     </div>
+                    <div className="mt-3 space-y-3 border-t border-line/10 pt-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-paper/45">Arte do banner</p>
+                      <label className="block text-[10px] text-paper/40">
+                        Largura no artigo ({banner.display_scale ?? 100}%)
+                        <input
+                          type="range"
+                          min={55}
+                          max={100}
+                          step={5}
+                          disabled={preview}
+                          value={banner.display_scale ?? 100}
+                          onChange={(e) => updateBanner(banner.id, { display_scale: Number(e.target.value) })}
+                          className="mt-1 w-full accent-gold"
+                        />
+                      </label>
+                      <label className="block text-[10px] text-paper/40">
+                        Zoom da imagem ({banner.image_scale ?? 103}%)
+                        <input
+                          type="range"
+                          min={70}
+                          max={120}
+                          step={1}
+                          disabled={preview}
+                          value={banner.image_scale ?? 103}
+                          onChange={(e) => updateBanner(banner.id, { image_scale: Number(e.target.value) })}
+                          className="mt-1 w-full accent-gold"
+                        />
+                      </label>
+                      <div>
+                        <p className="text-[10px] text-paper/40">Reposicionar enquadramento</p>
+                        <div className="mt-2 grid w-24 grid-cols-3 gap-1">
+                          {[
+                            [15, 20],
+                            [50, 20],
+                            [85, 20],
+                            [15, 50],
+                            [50, 50],
+                            [85, 50],
+                            [15, 85],
+                            [50, 85],
+                            [85, 85],
+                          ].map(([x, y]) => {
+                            const active =
+                              (banner.image_focus_x ?? 50) === x && (banner.image_focus_y ?? 82) === y;
+                            return (
+                              <button
+                                key={`${x}-${y}`}
+                                type="button"
+                                disabled={preview}
+                                onClick={() => updateBanner(banner.id, { image_focus_x: x, image_focus_y: y })}
+                                className={`h-6 rounded-sm border ${
+                                  active ? "border-gold bg-gold/30" : "border-line/20 hover:border-gold/40"
+                                }`}
+                                title={`${x}% · ${y}%`}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {(
+                          [
+                            { v: "full" as const, l: "Alto" },
+                            { v: "medium" as const, l: "Médio" },
+                            { v: "compact" as const, l: "Baixo" },
+                          ] as const
+                        ).map((opt) => (
+                          <button
+                            key={opt.v}
+                            type="button"
+                            disabled={preview}
+                            onClick={() => updateBanner(banner.id, { panel_height: opt.v })}
+                            className={`rounded px-2 py-1 text-[10px] font-semibold ${
+                              (banner.panel_height ?? "full") === opt.v
+                                ? "bg-gold/25 text-gold"
+                                : "border border-line/15 text-paper/50"
+                            }`}
+                          >
+                            {opt.l}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    {banner.placement === "inline" ? (
+                      <div className="mt-3">
+                        <p className="text-[10px] text-paper/40">Profundidade no texto (meio do artigo)</p>
+                        <div className="mt-2 grid grid-cols-5 gap-1">
+                          {[20, 35, 50, 65, 80].map((pct) => (
+                            <button
+                              key={pct}
+                              type="button"
+                              disabled={preview}
+                              onClick={() => {
+                                updateBanner(banner.id, { inline_position: pct });
+                                focusBanner(banner.id);
+                              }}
+                              className={`rounded px-1 py-1.5 text-[10px] font-semibold ${
+                                (banner.inline_position ?? 50) === pct
+                                  ? "bg-rise/20 text-rise"
+                                  : "border border-line/15 text-paper/50 hover:border-gold/30"
+                              }`}
+                            >
+                              {pct}%
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
                     <div className="mt-2 flex flex-wrap gap-2">
                       <button
                         type="button"

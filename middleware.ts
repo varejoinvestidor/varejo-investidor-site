@@ -35,20 +35,10 @@ function getSavedLocaleFromCookies(request: NextRequest): SupportedLocale | null
   return isSupportedLocale(saved) ? saved : null;
 }
 
-function isLocalizedHomePath(pathname: string) {
-  const parts = pathname.split("/").filter(Boolean);
-  if (parts.length === 0) return true;
-
-  if (parts.length === 1) {
-    const locale = normalizeUrlLocaleSegment(parts[0]);
-    if (locale) return true;
-    if (parts[0] === "home") return true;
-  }
-
-  if (parts.length === 2 && parts[1] === "home" && normalizeUrlLocaleSegment(parts[0])) {
-    return true;
-  }
-
+function isLanguageGateExempt(pathname: string) {
+  if (pathname === LANGUAGE_GATE_PATH || pathname.startsWith(`${LANGUAGE_GATE_PATH}/`)) return true;
+  if (isPublisherPath(pathname)) return true;
+  if (pathname === "/auth/callback" || pathname.startsWith("/auth/")) return true;
   return false;
 }
 
@@ -73,16 +63,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (
-    pathname !== LANGUAGE_GATE_PATH &&
-    !isPublisherPath(pathname) &&
-    !isSearchBot(request.headers.get("user-agent"))
-  ) {
-    if (!hasCompletedLanguageGate(request) && isLocalizedHomePath(pathname)) {
+  if (!isSearchBot(request.headers.get("user-agent"))) {
+    if (!isLanguageGateExempt(pathname) && !hasCompletedLanguageGate(request)) {
       const gateUrl = request.nextUrl.clone();
       gateUrl.pathname = LANGUAGE_GATE_PATH;
-      if (pathname !== "/") {
-        gateUrl.searchParams.set("returnTo", pathname);
+      const returnTo = `${pathname}${request.nextUrl.search}`;
+      if (returnTo && returnTo !== "/") {
+        gateUrl.searchParams.set("returnTo", returnTo);
       }
       const redirect = NextResponse.redirect(gateUrl);
       const country = countryCodeFromRequestHeaders(request.headers);

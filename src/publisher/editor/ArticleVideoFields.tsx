@@ -1,12 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { ArticleVideos } from "../types/video";
 import {
-  articleVideoCanonicalUrl,
   articleVideoDisplayValue,
-  articleVideoEmbedUrl,
   normalizeVideoId,
-  youtubeEmbedSrc,
 } from "../types/video";
 
 type Props = {
@@ -16,170 +14,148 @@ type Props = {
   variant?: "editor" | "sidebar";
 };
 
-/** Editor: blocos de vídeo horizontal e vertical separados (sem sobreposição de camadas). */
-export function ArticleVideoFields({ videos, disabled, onChange, variant = "editor" }: Props) {
+type VideoTab = "horizontal" | "vertical";
+
+/** Painel compacto: interruptor inserir ou não + abas 16:9 / 9:16. */
+export function ArticleVideoFields({ videos, disabled, onChange, variant = "sidebar" }: Props) {
+  const initialOpen = videos.top_enabled === true || Boolean(videos.horizontal || videos.vertical);
+  const [open, setOpen] = useState(initialOpen);
+  const [tab, setTab] = useState<VideoTab>("horizontal");
+
+  useEffect(() => {
+    setOpen(videos.top_enabled === true || Boolean(videos.horizontal || videos.vertical));
+  }, [videos.top_enabled, videos.horizontal, videos.vertical]);
   const hId = normalizeVideoId(videos.horizontal);
   const vId = normalizeVideoId(videos.vertical);
 
-  return (
-    <section
-      className={
-        variant === "editor"
-          ? "space-y-0 overflow-hidden rounded-xl border border-line/12 bg-paper/[0.02]"
-          : "overflow-hidden rounded-lg border border-gold/20 bg-gold/[0.04]"
-      }
-    >
-      <header className="border-b border-line/12 px-5 py-4">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-gold">Vídeos do artigo</h3>
-        <p className="mt-1 text-xs leading-relaxed text-paper/50">
-          Dois blocos independentes: horizontal (16:9) e vertical (Shorts 9:16). No site público aparecem
-          empilhados, na ordem escolhida abaixo — não misturam com o vídeo do corpo (botão Vídeo do editor).
-        </p>
-      </header>
+  function setEnabled(next: boolean) {
+    setOpen(next);
+    onChange({ ...videos, top_enabled: next });
+    if (!next) return;
+  }
 
-      <div className="divide-y divide-line/15">
-        <HorizontalVideoField
-          value={videos.horizontal}
-          disabled={disabled}
-          isPrimary={videos.primary === "horizontal" && Boolean(hId)}
-          onChange={(horizontal) => onChange({ ...videos, horizontal })}
-        />
-        <VerticalVideoField
-          value={videos.vertical}
-          disabled={disabled}
-          isPrimary={videos.primary === "vertical" && Boolean(vId)}
-          onChange={(vertical) => onChange({ ...videos, vertical })}
-        />
+  const shell =
+    variant === "sidebar"
+      ? "rounded-lg border border-line/12 bg-paper/[0.02] p-4"
+      : "overflow-hidden rounded-xl border border-line/12 bg-paper/[0.02] p-4";
+
+  return (
+    <section className={shell}>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="text-xs font-bold uppercase tracking-wider text-gold">Vídeos no topo</h3>
+          <p className="mt-1 text-[11px] leading-relaxed text-paper/45">Opcional · YouTube 16:9 ou Shorts 9:16</p>
+        </div>
+        <label className="flex shrink-0 cursor-pointer items-center gap-2 text-[11px] font-semibold text-paper/70">
+          <input
+            type="checkbox"
+            checked={open}
+            disabled={disabled}
+            onChange={(e) => setEnabled(e.target.checked)}
+            className="accent-gold"
+          />
+          Inserir
+        </label>
       </div>
 
-      <fieldset className="border-t border-line/15 bg-[#0a0a0a]/80 px-5 py-4">
-        <legend className="px-1 text-xs font-bold uppercase tracking-wider text-paper/45">
-          Ordem no site (qual vídeo vem primeiro)
-        </legend>
-        <div className="mt-2 flex flex-wrap gap-4 text-sm text-paper/70">
-          <PrimaryChoice
-            label="Horizontal primeiro"
-            name="video_primary_order"
-            checked={videos.primary === "horizontal"}
-            disabled={disabled || !hId}
-            onSelect={() => onChange({ ...videos, primary: "horizontal" })}
-          />
-          <PrimaryChoice
-            label="Vertical primeiro"
-            name="video_primary_order"
-            checked={videos.primary === "vertical"}
-            disabled={disabled || !vId}
-            onSelect={() => onChange({ ...videos, primary: "vertical" })}
-          />
-        </div>
-      </fieldset>
+      {!open ? (
+        <p className="mt-3 text-xs text-paper/40">Sem vídeo no topo do artigo.</p>
+      ) : (
+        <div className="mt-4 space-y-3 border-t border-line/12 pt-3">
+          <div className="flex gap-1">
+            <TabButton active={tab === "horizontal"} onClick={() => setTab("horizontal")} label="16:9" hasValue={Boolean(hId)} />
+            <TabButton active={tab === "vertical"} onClick={() => setTab("vertical")} label="9:16" hasValue={Boolean(vId)} />
+          </div>
 
-      {(hId || vId) && variant === "editor" ? (
-        <p className="border-t border-line/12 px-5 py-3 text-[11px] text-paper/40">
-          IDs: {hId ? <code className="text-gold/80">horizontal={hId}</code> : null}
-          {hId && vId ? " · " : null}
-          {vId ? <code className="text-gold/80">vertical={vId}</code> : null}
-        </p>
-      ) : null}
+          {tab === "horizontal" ? (
+            <VideoInput
+              label="Horizontal"
+              placeholder="https://youtube.com/watch?v=…"
+              value={videos.horizontal}
+              disabled={disabled}
+              onChange={(horizontal) => onChange({ ...videos, top_enabled: true, horizontal })}
+            />
+          ) : (
+            <VideoInput
+              label="Vertical (Shorts)"
+              placeholder="https://youtube.com/shorts/…"
+              value={videos.vertical}
+              disabled={disabled}
+              onChange={(vertical) => onChange({ ...videos, top_enabled: true, vertical })}
+            />
+          )}
+
+          {hId && vId ? (
+            <fieldset className="text-[11px] text-paper/55">
+              <legend className="sr-only">Ordem</legend>
+              <span className="text-paper/40">Mostrar primeiro: </span>
+              <label className="ml-2">
+                <input
+                  type="radio"
+                  name="video_primary_compact"
+                  checked={videos.primary === "horizontal"}
+                  disabled={disabled}
+                  onChange={() => onChange({ ...videos, primary: "horizontal" })}
+                />{" "}
+                16:9
+              </label>
+              <label className="ml-2">
+                <input
+                  type="radio"
+                  name="video_primary_compact"
+                  checked={videos.primary === "vertical"}
+                  disabled={disabled}
+                  onChange={() => onChange({ ...videos, primary: "vertical" })}
+                />{" "}
+                9:16
+              </label>
+            </fieldset>
+          ) : null}
+        </div>
+      )}
     </section>
   );
 }
 
-function HorizontalVideoField({
-  value,
-  disabled,
-  isPrimary,
-  onChange,
-}: {
-  value: string | null;
-  disabled?: boolean;
-  isPrimary: boolean;
-  onChange: (next: string | null) => void;
-}) {
-  return (
-    <VideoFieldBlock
-      kind="horizontal"
-      title="Vídeo horizontal"
-      subtitle="YouTube 16:9 · topo do artigo"
-      value={value}
-      disabled={disabled}
-      isPrimary={isPrimary}
-      onChange={onChange}
-    />
-  );
-}
-
-function VerticalVideoField({
-  value,
-  disabled,
-  isPrimary,
-  onChange,
-}: {
-  value: string | null;
-  disabled?: boolean;
-  isPrimary: boolean;
-  onChange: (next: string | null) => void;
-}) {
-  return (
-    <VideoFieldBlock
-      kind="vertical"
-      title="Vídeo vertical"
-      subtitle="YouTube Shorts 9:16 · topo do artigo"
-      value={value}
-      disabled={disabled}
-      isPrimary={isPrimary}
-      onChange={onChange}
-    />
-  );
-}
-
-function PrimaryChoice({
+function TabButton({
+  active,
+  onClick,
   label,
-  name,
-  checked,
+  hasValue,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+  hasValue: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide ${
+        active ? "bg-gold/25 text-gold" : "border border-line/15 text-paper/50 hover:border-gold/30"
+      }`}
+    >
+      {label}
+      {hasValue ? <span className="ml-1 text-rise">●</span> : null}
+    </button>
+  );
+}
+
+function VideoInput({
+  label,
+  placeholder,
+  value,
   disabled,
-  onSelect,
+  onChange,
 }: {
   label: string;
-  name: string;
-  checked: boolean;
-  disabled?: boolean;
-  onSelect: () => void;
-}) {
-  return (
-    <label className="flex cursor-pointer items-center gap-2">
-      <input type="radio" name={name} disabled={disabled} checked={checked} onChange={onSelect} />
-      {label}
-    </label>
-  );
-}
-
-function VideoFieldBlock({
-  kind,
-  title,
-  subtitle,
-  value,
-  disabled,
-  isPrimary,
-  onChange,
-}: {
-  kind: "horizontal" | "vertical";
-  title: string;
-  subtitle: string;
+  placeholder: string;
   value: string | null;
   disabled?: boolean;
-  isPrimary: boolean;
   onChange: (next: string | null) => void;
 }) {
-  const id = normalizeVideoId(value);
-  const isHorizontal = kind === "horizontal";
-  const placeholder = isHorizontal
-    ? "https://www.youtube.com/watch?v=…"
-    : "https://www.youtube.com/shorts/…";
-
-  function commitRaw(next: string) {
-    onChange(next.trim() ? next.trim() : null);
-  }
+  const display = articleVideoDisplayValue(value, label.includes("Vertical") ? "vertical" : "horizontal");
 
   function onBlurInput(raw: string) {
     const normalized = normalizeVideoId(raw);
@@ -187,86 +163,17 @@ function VideoFieldBlock({
     else if (!raw.trim()) onChange(null);
   }
 
-  const display = articleVideoDisplayValue(value, kind);
-  const canonical = id ? articleVideoCanonicalUrl(id, kind) : null;
-  const embed = id ? articleVideoEmbedUrl(id) : null;
-
   return (
-    <article
-      className={`flex flex-col gap-3 px-5 py-5 ${isPrimary ? "bg-gold/[0.05]" : "bg-transparent"}`}
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <h4 className="text-sm font-bold uppercase tracking-wider text-paper/85">{title}</h4>
-          <p className="mt-0.5 text-[11px] text-paper/45">{subtitle}</p>
-        </div>
-        {isPrimary && id ? (
-          <span className="rounded border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold">
-            1º no site
-          </span>
-        ) : null}
-      </div>
-
-      <label className="block text-xs text-paper/45">
-        Link ou ID YouTube
-        <input
-          value={display}
-          disabled={disabled}
-          placeholder={placeholder}
-          onChange={(e) => commitRaw(e.target.value)}
-          onBlur={(e) => onBlurInput(e.target.value)}
-          className="mt-1 w-full rounded border border-line/15 bg-ink px-2 py-2 font-mono text-sm text-paper"
-        />
-      </label>
-
-      <div className={`flex flex-col gap-3 ${isHorizontal ? "" : "items-center"}`}>
-        {id ? (
-          <VideoPreview embed={youtubeEmbedSrc(id)} kind={kind} />
-        ) : (
-          <div
-            className={`flex items-center justify-center border border-dashed border-line/20 text-xs text-paper/35 ${
-              isHorizontal ? "aspect-video w-full max-w-2xl" : "aspect-[9/16] w-full max-w-[200px]"
-            }`}
-          >
-            Prévia {isHorizontal ? "16:9" : "9:16"}
-          </div>
-        )}
-
-        {canonical ? (
-          <div className="w-full space-y-1 text-[11px]">
-            <p className="text-paper/40">
-              URL canônica:{" "}
-              <a href={canonical} target="_blank" rel="noreferrer" className="break-all text-gold hover:underline">
-                {canonical}
-              </a>
-            </p>
-            {embed ? (
-              <p className="break-all font-mono text-paper/35">
-                Embed: <span className="text-paper/50">{embed}</span>
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-      </div>
-    </article>
-  );
-}
-
-function VideoPreview({ embed, kind }: { embed: string; kind: "horizontal" | "vertical" }) {
-  const isHorizontal = kind === "horizontal";
-  return (
-    <div
-      className={`overflow-hidden border border-line/15 bg-black ${
-        isHorizontal ? "aspect-video w-full max-w-2xl" : "aspect-[9/16] w-full max-w-[220px]"
-      }`}
-    >
-      <iframe
-        title={isHorizontal ? "Prévia horizontal" : "Prévia vertical"}
-        src={embed}
-        className="h-full w-full"
-        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-        loading="lazy"
+    <label className="block text-[11px] text-paper/45">
+      {label}
+      <input
+        value={display}
+        disabled={disabled}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value.trim() ? e.target.value : null)}
+        onBlur={(e) => onBlurInput(e.target.value)}
+        className="mt-1 w-full rounded border border-line/15 bg-ink px-2 py-2 font-mono text-xs text-paper"
       />
-    </div>
+    </label>
   );
 }

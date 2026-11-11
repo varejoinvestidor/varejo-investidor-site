@@ -4,6 +4,7 @@ import { ChannelBannerByPreset } from "../../components/banners/ChannelBannerByP
 import { resolveArticleBanner } from "../data/articleBannerPresets";
 import type { ArticleBanner } from "../types/banner";
 import { inferChannelBannerPreset, isChannelBannerPreset } from "../types/banner";
+import { bannerOuterMaxWidth } from "../articleBannerDisplay";
 
 const PLACEMENT_LABELS: Record<ArticleBanner["placement"], string> = {
   top: "Topo do artigo",
@@ -23,17 +24,27 @@ function BannerFigure({
   onSelect?: () => void;
 }) {
   const channelPreset = banner.preset ?? inferChannelBannerPreset(banner);
+  const wrapStyle = bannerOuterMaxWidth(banner.display_scale)
+    ? { width: bannerOuterMaxWidth(banner.display_scale), marginInline: "auto" as const }
+    : undefined;
   if (isChannelBannerPreset(channelPreset)) {
     const frameClass = `overflow-hidden ${interactive ? "cursor-pointer ring-offset-2 ring-offset-ink" : ""}`;
     return (
       <div
+        style={wrapStyle}
         className={frameClass}
         onClick={interactive ? onSelect : undefined}
         role={interactive ? "button" : undefined}
         tabIndex={interactive ? 0 : undefined}
         onKeyDown={interactive ? (e) => e.key === "Enter" && onSelect?.() : undefined}
       >
-        <ChannelBannerByPreset preset={channelPreset} language={language} href={banner.href} className="w-full" />
+        <ChannelBannerByPreset
+          preset={channelPreset}
+          language={language}
+          href={banner.href}
+          className="w-full"
+          display={banner}
+        />
       </div>
     );
   }

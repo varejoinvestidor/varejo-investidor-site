@@ -24,6 +24,7 @@ import {
 import { localizedPath } from "../i18n/routing";
 import type { Locale } from "../i18n";
 import { isRtlLocale } from "../i18n";
+import { LevelJourneyExperience } from "./levels/LevelJourneyExperience";
 
 function levelPagePath(levelId: LevelId, locale: Locale) {
   const canonical =
@@ -121,6 +122,8 @@ export function InstitutionalLevelPage({ level }: { level: LevelId }) {
           </motion.div>
         </div>
       </section>
+
+      <LevelJourneyExperience level={level} locale={locale} />
 
       <section className="px-5 py-12 md:px-8 md:py-16">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_1fr] lg:items-start">

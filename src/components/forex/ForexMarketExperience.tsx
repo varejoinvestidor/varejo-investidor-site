@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { Locale } from "../../i18n";
+import { MarketArchitecturePulse } from "../markets/MarketArchitecturePulse";
 import { fadeUp } from "../SiteSections";
 
 type Copy = {
@@ -142,6 +143,7 @@ export function ForexMarketExperience({ locale }: { locale: Locale }) {
   const c = ui(locale);
 
   return (
+    <>
     <section className="px-5 py-12 md:px-8 md:py-16">
       <div className="mx-auto max-w-7xl">
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -233,5 +235,7 @@ export function ForexMarketExperience({ locale }: { locale: Locale }) {
         </div>
       </div>
     </section>
+    <MarketArchitecturePulse slug="forex" locale={locale} />
+    </>
   );
 }

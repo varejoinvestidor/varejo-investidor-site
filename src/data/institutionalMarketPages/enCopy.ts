@@ -1,6 +1,6 @@
 import type { MarketCopy } from "./ptCopy";
 
-type InstitutionalMarketSlug = "acoes" | "forex" | "etfs" | "ouro" | "petroleo" | "cripto";
+type InstitutionalMarketSlug = "acoes" | "forex" | "etfs" | "ouro" | "petroleo" | "cripto" | "commodities";
 
 export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCopy> = {
   acoes: {
@@ -506,7 +506,7 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
     metaTitle: "Cryptocurrencies | global digital economy | Varejo Investidor",
     metaDescription:
       "Blockchain, Bitcoin, Ethereum, stablecoins, DeFi, custody, regulation, and digital-asset risks.",
-    showCryptoBroker: true,
+    showCryptoBroker: false,
     sections: [
       {
         eyebrow: "Overview",
@@ -594,11 +594,94 @@ export const institutionalMarketCopyEn: Record<InstitutionalMarketSlug, MarketCo
           { label: "Fiat ramps", detail: "On-ramps, off-ramps, stablecoins." },
         ],
       },
+    ],
+  },
+
+  commodities: {
+    heroTitle: "COMMODITIES | THE REAL ECONOMY BASE",
+    heroSubtitle:
+      "Energy, metals, and agriculture link global production, inflation, and international trade.",
+    metaTitle: "Commodities | real economy cycles | Varejo Investidor",
+    metaDescription:
+      "Agricultural, energy, and industrial commodities: supply, demand, climate, USD, logistics, and risk.",
+    sections: [
       {
-        title: "Partner exchanges and Research",
+        eyebrow: "Overview",
+        title: "Raw materials that power the economy",
         paragraphs: [
-          "Onboarding cards rely on existing partner integrations with visible risk disclosures. Extend digital-security and macro education via Varejo Investidor Research.",
+          "Commodities trade globally before becoming finished goods. Oil, gas, copper, soybeans, corn, and iron ore drive energy, food, construction, technology, and transport.",
+          "Their prices tie directly to inflation, GDP, and exporter currencies. For investors, commodities mirror real cycles, not only equity narratives.",
         ],
+      },
+      {
+        title: "How commodity markets work",
+        paragraphs: [
+          "Supply hinges on weather, extraction capacity, marginal cost, and policy. Demand reacts to growth, industrialization, and inventories. Futures discover today’s price for future delivery; spot reflects immediate availability.",
+          "USD correlation is structural: weakness often lifts dollar-denominated quotes and eases pressure on importers.",
+        ],
+        bullets: [
+          "Spot: physical delivery or immediate settlement.",
+          "Futures and options: hedge, speculation, and expectations.",
+          "Contango and backwardation shape commodity ETF performance.",
+          "API, USDA, and LME inventory reports move sessions.",
+        ],
+      },
+      {
+        title: "Agriculture: weather, harvest, food security",
+        paragraphs: [
+          "Soybeans, corn, wheat, and coffee blend seasonality with geopolitics. Southern and Northern harvests matter; extreme weather can remove millions of tonnes from supply in weeks.",
+        ],
+        visualGrid: [
+          { label: "Soybeans", detail: "Protein and oil; China as structural demand." },
+          { label: "Corn", detail: "Animal feed and biofuels." },
+          { label: "Wheat", detail: "Staple crops and Black Sea exports." },
+          { label: "Coffee", detail: "Brazil and Vietnam weather drives quotes." },
+        ],
+      },
+      {
+        title: "Energy and oil in the mix",
+        paragraphs: [
+          "Oil and gas remain core to the energy stack amid green transition. Brent and WTI anchor physical and financial contracts; spreads reflect logistics and crude quality.",
+        ],
+      },
+      {
+        title: "Industrial metals and reserves",
+        paragraphs: [
+          "Copper, aluminum, and nickel link construction, EVs, and infrastructure. Iron ore anticipates industrial activity, especially in China. Gold also serves as reserve and hedge with its own dynamics.",
+        ],
+      },
+      {
+        eyebrow: "Logistics",
+        title: "Chain: mine or port to manufacturer",
+        paragraphs: [
+          "Shipping lanes, chokepoints, and geopolitics can add fast premiums. Port or strait bottlenecks move price before demand adjusts.",
+        ],
+        visualGrid: [
+          { label: "Extraction", detail: "Mines, farms, and wells." },
+          { label: "Transport", detail: "Tankers, pipelines, rail." },
+          { label: "Storage", detail: "Silos, tanks, yards." },
+          { label: "Industry", detail: "Refining, milling, smelting." },
+        ],
+      },
+      {
+        title: "What moves prices",
+        paragraphs: [
+          "Global growth, China stimulus, USD, weather, and stocks explain much of the cycle. Supply shocks—strikes, sanctions, disasters—create sharp intraday gaps.",
+        ],
+      },
+      {
+        title: "Public data and indicators",
+        paragraphs: [
+          "USDA reports, US oil inventories, IMO/LME stats, and industrial PMIs frame trends without replacing individual risk assessment.",
+        ],
+      },
+      {
+        title: "Volatility and futures roll risk",
+        paragraphs: [
+          "Commodities can double or halve in a cycle. ETFs that roll futures may lag in persistent contango. Single-crop or single-metal concentration amplifies risk.",
+        ],
+        disclaimer:
+          "Commodities and derivatives carry volatility and may not suit every profile. Review costs, taxes, and liquidity.",
       },
     ],
   },

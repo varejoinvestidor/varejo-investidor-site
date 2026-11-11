@@ -12,6 +12,7 @@ export const ADMIN_PUBLISHER_NAV: AdminNavItem[] = [
   { href: "/admin/videos", label: "Vídeo", description: "YouTube vertical ou horizontal" },
   { href: "/admin/midia", label: "Biblioteca de mídia" },
   { href: "/admin/agendamentos", label: "Agendamentos" },
+  { href: "/admin/eventos", label: "Eventos", description: "Lista prioritária /eventos" },
 ];
 
 /** Taxonomia e perfis — agrupados em /admin/configuracoes. */

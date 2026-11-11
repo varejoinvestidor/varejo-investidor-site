@@ -5,11 +5,13 @@ import { isSupportedLocale, type SupportedLocale } from "../../i18n/locales";
 import { CHANNEL_SPLIT_BANNER_MEDIA } from "../../data/institutionalLevelPages/types";
 import { selectChannelBannerCopy } from "./productChannelBannerCopy";
 import { ChannelSplitBannerA } from "./ChannelSplitBannerA";
+import type { ChannelBannerImageDisplay } from "./channelBannerDisplay";
 
 type Props = {
   language?: string;
   href?: string;
   className?: string;
+  display?: ChannelBannerImageDisplay;
 };
 
 function bannerLocale(language: string): SupportedLocale {
@@ -18,7 +20,7 @@ function bannerLocale(language: string): SupportedLocale {
 }
 
 /** Modelo A · Select → /select */
-export function SelectChannelBanner({ language = "pt", href: hrefProp, className = "" }: Props) {
+export function SelectChannelBanner({ language = "pt", href: hrefProp, className = "", display }: Props) {
   const copy = selectChannelBannerCopy(language);
   const locale = bannerLocale(language);
   const href = hrefProp?.trim() || localizedPath("/select", locale);
@@ -36,8 +38,12 @@ export function SelectChannelBanner({ language = "pt", href: hrefProp, className
       language={language}
       trackEvent="select_banner_click"
       accent="gold"
-      imagePanelClass="bg-[#15100a]"
+      imagePanelClass="bg-[#12100c]"
+      imageStyle="scene"
+      imageObjectPosition="center 78%"
+      sceneGlow="rgba(198,153,74,0.2)"
       className={className}
+      {...display}
     />
   );
 }

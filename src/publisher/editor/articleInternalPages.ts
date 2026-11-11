@@ -1,0 +1,22 @@
+/** Páginas do site para inserir como link no corpo do artigo. */
+export const ARTICLE_INTERNAL_PAGES: { label: string; href: string }[] = [
+  { label: "Home", href: "/" },
+  { label: "Educação / Formação", href: "/educacao" },
+  { label: "Artigos", href: "/artigos" },
+  { label: "Research / Sinais", href: "/sinais" },
+  { label: "Serviços", href: "/servicos" },
+  { label: "Select", href: "/select" },
+  { label: "Private", href: "/private" },
+  { label: "Sobre", href: "/sobre" },
+  { label: "Nível Formiga", href: "/nivel-formiga" },
+  { label: "Nível Lobo", href: "/nivel-lobo" },
+  { label: "Nível Harpia", href: "/nivel-harpia" },
+  { label: "Forex", href: "/forex" },
+  { label: "Ações", href: "/acoes" },
+  { label: "Cripto", href: "/cripto" },
+  { label: "Ouro", href: "/ouro" },
+  { label: "Petróleo", href: "/petroleo" },
+  { label: "ETFs", href: "/etfs" },
+  { label: "Commodities", href: "/commodities" },
+  { label: "Fundos imobiliários", href: "/fundos-imobiliarios" },
+];

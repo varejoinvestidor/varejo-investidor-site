@@ -25,7 +25,19 @@ export type ArticleBanner = {
   alt: string;
   href?: string;
   placement: "top" | "inline" | "bottom";
+  /** 0–100: onde inserir no corpo quando `placement` = inline (padrão 50). */
+  inline_position?: number;
   preset?: ArticleBannerPreset;
+  /** Largura total do bloco no artigo (55–100). */
+  display_scale?: number;
+  /** Enquadramento horizontal da arte (0–100). */
+  image_focus_x?: number;
+  /** Enquadramento vertical da arte (0–100). */
+  image_focus_y?: number;
+  /** Zoom da imagem no banner de canal (70–120, padrão 103). */
+  image_scale?: number;
+  /** Altura do painel visual do banner. */
+  panel_height?: "full" | "medium" | "compact";
 };
 
 export const PUBLISHER_BANNERS_CONTENT_KEY = "publisher_banners";
@@ -50,6 +62,17 @@ export function parseArticleBanners(raw: unknown): ArticleBanner[] {
     const image_url = String(row.image_url ?? "").trim();
     if (!image_url && !preset) continue;
     const id = String(row.id ?? "").trim() || `banner-${image_url.slice(-8)}`;
+    const posRaw = Number(row.inline_position);
+    const inline_position =
+      Number.isFinite(posRaw) && posRaw >= 0 && posRaw <= 100 ? Math.round(posRaw) : undefined;
+    const display_scale = clampOptionalInt(row.display_scale, 55, 100);
+    const image_focus_x = clampOptionalInt(row.image_focus_x, 0, 100);
+    const image_focus_y = clampOptionalInt(row.image_focus_y, 0, 100);
+    const image_scale = clampOptionalInt(row.image_scale, 70, 120);
+    const panelRaw = String(row.panel_height ?? "").trim();
+    const panel_height = (["full", "medium", "compact"] as const).includes(panelRaw as "full")
+      ? (panelRaw as ArticleBanner["panel_height"])
+      : undefined;
     result.push({
       id,
       image_url,
@@ -59,6 +82,12 @@ export function parseArticleBanners(raw: unknown): ArticleBanner[] {
       placement: (["top", "inline", "bottom"].includes(String(row.placement))
         ? row.placement
         : "inline") as ArticleBanner["placement"],
+      ...(inline_position !== undefined ? { inline_position } : {}),
+      ...(display_scale !== undefined ? { display_scale } : {}),
+      ...(image_focus_x !== undefined ? { image_focus_x } : {}),
+      ...(image_focus_y !== undefined ? { image_focus_y } : {}),
+      ...(image_scale !== undefined ? { image_scale } : {}),
+      ...(panel_height ? { panel_height } : {}),
     });
   }
   return result;
@@ -73,7 +102,21 @@ export function serializeArticleBannersForSave(banners: ArticleBanner[]): Record
     placement: b.placement,
     ...(b.href?.trim() ? { href: b.href.trim() } : {}),
     ...(b.preset ? { preset: b.preset } : {}),
+    ...(b.placement === "inline" && b.inline_position !== undefined ? { inline_position: b.inline_position } : {}),
+    ...(b.display_scale !== undefined ? { display_scale: b.display_scale } : {}),
+    ...(b.image_focus_x !== undefined ? { image_focus_x: b.image_focus_x } : {}),
+    ...(b.image_focus_y !== undefined ? { image_focus_y: b.image_focus_y } : {}),
+    ...(b.image_scale !== undefined ? { image_scale: b.image_scale } : {}),
+    ...(b.panel_height ? { panel_height: b.panel_height } : {}),
   }));
+}
+
+function clampOptionalInt(raw: unknown, min: number, max: number): number | undefined {
+  const n = Number(raw);
+  if (!Number.isFinite(n)) return undefined;
+  const v = Math.round(n);
+  if (v < min || v > max) return undefined;
+  return v;
 }
 
 export function embedBannersInContent(content: Record<string, unknown>, banners: ArticleBanner[]): Record<string, unknown> {
@@ -97,11 +140,19 @@ export function resolveArticleBannersList(columnRaw: unknown, content: unknown):
 }
 
 /** Banners antigos (SVG/faixa) salvos sem `preset`. */
-const CHANNEL_BANNER_PRESETS: ArticleBannerPreset[] = ["formiga", "lobo", "elite", "educacao", "select", "private"];
+const CHANNEL_BANNER_PRESETS: ArticleBannerPreset[] = [
+  "formiga",
+  "lobo",
+  "elite",
+  "educacao",
+  "select",
+  "private",
+  "binance",
+];
 
 export function isChannelBannerPreset(preset: ArticleBannerPreset | undefined): preset is Extract<
   ArticleBannerPreset,
-  "formiga" | "lobo" | "elite" | "educacao" | "select" | "private"
+  "formiga" | "lobo" | "elite" | "educacao" | "select" | "private" | "binance"
 > {
   return !!preset && CHANNEL_BANNER_PRESETS.includes(preset);
 }
@@ -146,6 +197,9 @@ export function inferChannelBannerPreset(banner: ArticleBanner): ArticleBannerPr
   }
   if (hay.includes("faixa-private") || (hay.includes("private") && hay.includes("patrimonial"))) {
     return "private";
+  }
+  if (hay.includes("binance")) {
+    return "binance";
   }
   return undefined;
 }

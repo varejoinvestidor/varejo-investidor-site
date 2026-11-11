@@ -5,7 +5,7 @@ import { institutionalMarketCopyEn } from "./enCopy";
 import { institutionalMarketCopyPt } from "./ptCopy";
 import type { InstitutionalMarketPage } from "./types";
 
-const INSTITUTIONAL_SLUGS = new Set<MarketSlug>(["acoes", "forex", "etfs", "ouro", "petroleo", "cripto"]);
+const INSTITUTIONAL_SLUGS = new Set<MarketSlug>(["acoes", "forex", "etfs", "ouro", "petroleo", "cripto", "commodities"]);
 
 export function getInstitutionalMarketPage(slug: MarketSlug, locale: Locale): InstitutionalMarketPage | null {
   if (!INSTITUTIONAL_SLUGS.has(slug)) return null;

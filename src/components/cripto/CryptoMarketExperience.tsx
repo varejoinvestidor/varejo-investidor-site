@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { Locale } from "../../i18n";
+import { CryptoEcosystemHero3D } from "./CryptoEcosystemHero3D";
 import { fadeUp } from "../SiteSections";
 
 type Copy = {
@@ -301,6 +302,8 @@ export function CryptoMarketExperience({ locale }: { locale: Locale }) {
   const c = ui(locale);
 
   return (
+    <>
+    <CryptoEcosystemHero3D locale={locale} />
     <section className="border-t border-gold/[0.14] px-5 py-12 md:px-8 md:py-16">
       <div className="mx-auto max-w-7xl">
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -432,5 +435,6 @@ export function CryptoMarketExperience({ locale }: { locale: Locale }) {
         </div>
       </div>
     </section>
+    </>
   );
 }

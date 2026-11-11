@@ -720,6 +720,8 @@ export default function EventsClient() {
   const { locale, t, changeLocale } = useSiteLocale();
   const copy = copyByLocale[locale] ?? copyByLocale.en;
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [utmParams, setUtmParams] = useState({ source: "", campaign: "", medium: "" });
   const signupDate = useMemo(() => new Date().toISOString(), []);
@@ -824,9 +826,54 @@ export default function EventsClient() {
             <SectionTitle eyebrow={copy.formEyebrow} title={copy.formTitle} />
             <p className="mt-5 max-w-2xl text-sm leading-7 text-paper/64">{copy.formText}</p>
             {submitted ? <div className="mt-6 border border-rise/35 bg-rise/[0.08] p-4 text-sm font-bold leading-6 text-paper">{copy.success}</div> : null}
+            {submitError ? <div className="mt-4 border border-bear/40 bg-bear/10 p-4 text-sm text-paper">{submitError}</div> : null}
           </div>
 
-          <form className="border border-gold/18 bg-ink/70 p-5 shadow-premium md:p-6" data-lead-list="EVENTOS PRESENCIAIS VAREJO INVESTIDOR" onSubmit={(event) => { event.preventDefault(); setSubmitted(true); }}>
+          <form
+            className="border border-gold/18 bg-ink/70 p-5 shadow-premium md:p-6"
+            data-lead-list="EVENTOS PRESENCIAIS VAREJO INVESTIDOR"
+            onSubmit={async (event) => {
+              event.preventDefault();
+              if (submitting) return;
+              setSubmitError(null);
+              setSubmitting(true);
+              const form = event.currentTarget;
+              const data = new FormData(form);
+              const payload = {
+                name: String(data.get("name") ?? ""),
+                email: String(data.get("email") ?? ""),
+                whatsapp: String(data.get("whatsapp") ?? ""),
+                country: String(data.get("country") ?? ""),
+                country_code: String(data.get("countryCode") ?? ""),
+                city: String(data.get("city") ?? ""),
+                continent: String(data.get("continent") ?? ""),
+                language: String(data.get("language") ?? locale),
+                lead_list: String(data.get("leadList") ?? ""),
+                origin: String(data.get("origin") ?? "eventos"),
+                utm_source: String(data.get("utm_source") ?? ""),
+                utm_medium: String(data.get("utm_medium") ?? ""),
+                utm_campaign: String(data.get("utm_campaign") ?? ""),
+              };
+              try {
+                const res = await fetch("/api/eventos/waitlist", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(payload),
+                });
+                const json = (await res.json().catch(() => ({}))) as { error?: string };
+                if (!res.ok) {
+                  setSubmitError(json.error ?? "Não foi possível enviar. Tente novamente.");
+                  return;
+                }
+                setSubmitted(true);
+                form.reset();
+              } catch {
+                setSubmitError("Falha de conexão. Verifique a internet e tente de novo.");
+              } finally {
+                setSubmitting(false);
+              }
+            }}
+          >
             <input type="hidden" name="language" value={locale} />
             <input type="hidden" name="leadList" value="EVENTOS PRESENCIAIS VAREJO INVESTIDOR" />
             <input type="hidden" name="signupDate" value={signupDate} />
@@ -859,7 +906,13 @@ export default function EventsClient() {
                 </select>
               </label>
             </div>
-            <button type="submit" className="mt-5 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d4a858]">{copy.formButton}</button>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="mt-5 w-full border border-gold bg-gold px-6 py-4 text-center text-xs font-black uppercase tracking-[0.16em] text-ink transition hover:-translate-y-0.5 hover:bg-[#d4a858] disabled:opacity-60"
+            >
+              {submitting ? "Enviando…" : copy.formButton}
+            </button>
           </form>
         </div>
       </section>

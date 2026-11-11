@@ -7,14 +7,17 @@ import { ChannelSplitBannerA } from "./ChannelSplitBannerA";
 
 const FORMIGA_FALLBACK = "https://whatsapp.com/channel/0029Va9J7SAAO7R8cN76Ib13";
 
+import type { ChannelBannerImageDisplay } from "./channelBannerDisplay";
+
 type Props = {
   language?: string;
   href?: string;
   className?: string;
+  display?: ChannelBannerImageDisplay;
 };
 
 /** Modelo A · Canal Formiga. */
-export function FormigaChannelBanner({ language = "pt", href: hrefProp, className = "" }: Props) {
+export function FormigaChannelBanner({ language = "pt", href: hrefProp, className = "", display }: Props) {
   const copy = formigaChannelBannerCopy(language);
   const href = hrefProp?.trim() || getFormigaChannelUrl(language, FORMIGA_FALLBACK);
   const media = CHANNEL_SPLIT_BANNER_MEDIA.formiga;
@@ -32,6 +35,7 @@ export function FormigaChannelBanner({ language = "pt", href: hrefProp, classNam
       trackEvent="canal_formiga_banner_click"
       accent="rise"
       className={className}
+      {...display}
     />
   );
 }

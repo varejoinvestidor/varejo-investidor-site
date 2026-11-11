@@ -32,15 +32,15 @@ export const PRODUCT_STRIP_BANNER_ASSETS: Record<
     alt: "Canal Elite Harpia · Research · Varejo Investidor",
   },
   educacao: {
-    image: "/characters/education-levels-team.png",
+    image: "/characters/education-formation-premium.png",
     alt: "Base educacional Formiga, Lobo e Harpia",
   },
   select: {
-    image: "/characters/about-hero-institutional-cutout.png",
+    image: "/characters/services-hero-team.png",
     alt: "Select · estratégia patrimonial Varejo Investidor",
   },
   private: {
-    image: "/characters/about-hero-institutional.png",
+    image: "/characters/services-hero-institutional.png",
     alt: "Private · estrutura patrimonial internacional",
   },
 };
@@ -57,7 +57,7 @@ export const ARTICLE_BANNER_PRESETS: {
   { id: "select", label: "Select", description: "Banner modelo A → /select" },
   { id: "private", label: "Private", description: "Banner modelo A → /private" },
   { id: "fxpro", label: "FxPro", description: "Banner corretora Forex (site)" },
-  { id: "binance", label: "Binance", description: "Conta cripto · afiliado" },
+  { id: "binance", label: "Binance", description: "Banner modelo A · conta cripto (afiliado)" },
 ];
 
 function bannerLocale(language: string): SupportedLocale {
@@ -138,8 +138,9 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
     case "binance":
       return {
         ...banner,
-        image_url: "/banners/binance.svg",
-        alt: "Binance",
+        preset: "binance",
+        image_url: "/characters/hero-main.png",
+        alt: "Binance · conta cripto",
         href: BINANCE_URL,
       };
     default:

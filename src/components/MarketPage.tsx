@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "./SiteSections";
+import { SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "./SiteSections";
 import type { Locale } from "../i18n";
 import { isRtlLocale, localeToHtmlLang } from "../i18n/locales";
 import { getForexLibraryContent, type ForexLibraryContent } from "../data/forexLibraryContent";
@@ -9,8 +9,11 @@ import { absoluteSiteUrl } from "../config/site";
 import { getMarketContent, getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 import { getInstitutionalMarketPage } from "../data/institutionalMarketPages";
 import { InstitutionalMarketSections, MarketInstitutionalHero } from "./InstitutionalMarketSections";
-import { CryptoMarketExperience } from "./cripto/CryptoMarketExperience";
-import { ForexMarketExperience } from "./forex/ForexMarketExperience";
+import { MarketExperience } from "./markets/MarketExperience";
+import { MarketLearningPath } from "./markets/MarketLearningPath";
+import { MarketPageClosing } from "./markets/MarketPageClosing";
+import { type MarketLevelId } from "./markets/MarketLevelCharacterCard";
+import { MarketLevelsUtilizationSection } from "./markets/MarketLevelsUtilizationSection";
 
 const pageLabels: Record<Locale, {
   eyebrow: string;
@@ -491,12 +494,17 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
   const direction = isRtlLocale(pageLocale) ? "rtl" : "ltr";
   const relatedMarkets = content.related.filter((market) => market !== "fundos-imobiliarios" || pageLocale === "pt");
 
-  const levelCards = [
-    { title: labels.formigaTitle, items: content.formiga, href: "/formiga", tone: "rise" },
-    { title: labels.loboTitle, items: content.lobo, href: "/lobo", tone: "gold" },
-    { title: labels.harpiaTitle, items: content.harpia, href: "/harpia", tone: "gold" },
+  const levelCards: {
+    id: MarketLevelId;
+    title: string;
+    items: string[];
+    href: string;
+    tone: "rise" | "gold";
+  }[] = [
+    { id: "formiga", title: labels.formigaTitle, items: content.formiga, href: "/nivel-formiga", tone: "rise" },
+    { id: "lobo", title: labels.loboTitle, items: content.lobo, href: "/nivel-lobo", tone: "gold" },
+    { id: "harpia", title: labels.harpiaTitle, items: content.harpia, href: "/nivel-harpia", tone: "gold" },
   ];
-
   return (
     <>
       <SiteChrome t={t} locale={locale} onLocaleChange={changeLocale} />
@@ -505,9 +513,9 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
         {institutionalPage ? (
           <>
             <MarketInstitutionalHero page={institutionalPage} locale={pageLocale} />
-            {slug === "forex" ? <ForexMarketExperience locale={pageLocale} /> : null}
-            {slug === "cripto" ? <CryptoMarketExperience locale={pageLocale} /> : null}
+            <MarketLearningPath sections={institutionalPage.sections} locale={pageLocale} />
             <InstitutionalMarketSections page={institutionalPage} locale={pageLocale} currentSlug={slug} />
+            <MarketLevelsUtilizationSection locale={pageLocale} levelsTitle={labels.levelsTitle} levelCards={levelCards} />
             {forexContent ? (
               <div className="border-t border-gold/[0.16]">
                 <ForexLibrarySections content={forexContent} locale={pageLocale} freeChannelLink={t.freeChannel.link} />
@@ -531,6 +539,8 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
             <p className="mt-6 max-w-3xl text-lg leading-8 text-paper/[0.68] md:text-xl">{content.subtitle}</p>
           </motion.div>
         </section>
+
+        <MarketExperience slug={slug} locale={pageLocale} />
 
         {forexContent ? (
           <ForexLibrarySections content={forexContent} locale={pageLocale} freeChannelLink={t.freeChannel.link} />
@@ -557,37 +567,7 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
           </div>
         </section>
 
-        <section className="px-5 py-14 md:px-8 md:py-20">
-          <div className="mx-auto max-w-7xl">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">{labels.levelsTitle}</p>
-            <div className="mt-8 grid gap-5 lg:grid-cols-3">
-              {levelCards.map((level) => (
-                <motion.a
-                  key={level.title}
-                  href={level.href}
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  className="group terminal-module relative overflow-hidden border border-gold/[0.2] bg-white p-7 transition hover:-translate-y-1 hover:border-gold/[0.55] md:p-8"
-                >
-                  <div className="absolute inset-0 terminal-grid opacity-40" />
-                  <div className="relative">
-                    <h3 className="font-serif text-3xl tracking-[-0.04em]">{level.title}</h3>
-                    <ul className="mt-6 space-y-3">
-                      {level.items.map((item) => (
-                        <li key={item} className="flex gap-3 text-sm leading-6 text-paper/[0.7]">
-                          <span className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${level.tone === "rise" ? "bg-rise" : "bg-gold"}`} />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </div>
-        </section>
+        <MarketLevelsUtilizationSection locale={pageLocale} levelsTitle={labels.levelsTitle} levelCards={levelCards} />
 
         <section className="px-5 py-14 md:px-8 md:py-20">
           <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
@@ -616,12 +596,6 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
             >
               {labels.educationButton}
             </a>
-          </div>
-        </section>
-
-        <section className="px-5 py-14 md:px-8 md:py-20">
-          <div className="mx-auto max-w-7xl">
-            <FreeChannelCTA t={t} />
           </div>
         </section>
 
@@ -660,6 +634,8 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
         )}
           </>
         )}
+
+        <MarketPageClosing locale={pageLocale} slug={slug} />
 
         <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
       </main>

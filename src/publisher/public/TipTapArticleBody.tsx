@@ -95,12 +95,16 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
           {children}
         </div>
       );
-    case "paragraph":
+    case "paragraph": {
+      const align = String(node.attrs?.textAlign ?? "");
+      const alignClass =
+        align === "center" ? "text-center" : align === "right" ? "text-right" : align === "justify" ? "text-justify" : "";
       return (
-        <p key={key} className={PARAGRAPH_CLASS}>
+        <p key={key} className={`${PARAGRAPH_CLASS} ${alignClass}`.trim()}>
           {children}
         </p>
       );
+    }
     case "hardBreak":
       return <br key={key} />;
     case "heading": {
@@ -155,10 +159,14 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
       const src = safeUrl(node.attrs?.src as string | undefined);
       if (!src) return null;
       const alt = String(node.attrs?.alt ?? "");
+      const width = String(node.attrs?.width ?? "100%");
+      const align = String(node.attrs?.align ?? "center");
+      const alignClass =
+        align === "left" ? "mr-auto" : align === "right" ? "ml-auto" : "mx-auto";
       return (
-        <figure key={key} className="overflow-hidden border border-gold/[0.18]">
+        <figure key={key} className={`overflow-hidden border border-gold/[0.18] ${alignClass}`} style={{ width, maxWidth: "100%" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} alt={alt} className="w-full object-cover" loading="lazy" />
+          <img src={src} alt={alt} className="h-auto w-full object-cover" loading="lazy" style={{ width: "100%" }} />
           {node.attrs?.title ? (
             <figcaption className="border-t border-gold/[0.14] px-4 py-2 text-sm text-paper/[0.55]">{String(node.attrs.title)}</figcaption>
           ) : null}
@@ -202,19 +210,63 @@ function renderNode(node: TipTapNode, index: number): ReactNode {
   }
 }
 
+type InlineSlot = { position: number; node: ReactNode };
+
+function insertInlineSlots(nodes: TipTapNode[], slots: InlineSlot[]): ReactNode[] {
+  if (!slots.length) return nodes.map((node, index) => renderNode(node, index));
+
+  const sorted = [...slots].sort((a, b) => a.position - b.position);
+  const output: ReactNode[] = [];
+  let slotIndex = 0;
+
+  for (let i = 0; i < nodes.length; i++) {
+    output.push(renderNode(nodes[i], i));
+    const progress = ((i + 1) / nodes.length) * 100;
+    while (slotIndex < sorted.length && progress >= sorted[slotIndex].position) {
+      output.push(
+        <div key={`inline-slot-${slotIndex}`} className="my-4">
+          {sorted[slotIndex].node}
+        </div>,
+      );
+      slotIndex++;
+    }
+  }
+
+  while (slotIndex < sorted.length) {
+    output.push(
+      <div key={`inline-slot-tail-${slotIndex}`} className="my-4">
+        {sorted[slotIndex].node}
+      </div>,
+    );
+    slotIndex++;
+  }
+
+  return output;
+}
+
 export function TipTapArticleBody({
   document,
   inlineSlot,
+  inlineSlots,
 }: {
   document: Record<string, unknown>;
-  /** Renderizado no meio do fluxo (metade dos blocos), ex.: banners “inline”. */
+  /** @deprecated Use `inlineSlots` com posição 0–100. */
   inlineSlot?: ReactNode;
+  /** Banners no meio do texto; `position` = % do corpo (ex.: 35, 50, 72). */
+  inlineSlots?: InlineSlot[];
 }) {
   const root = normalizeDocForDisplay(document as TipTapNode);
   if (!root.content?.length) return null;
 
   const nodes = root.content;
-  if (!inlineSlot) {
+  const slots: InlineSlot[] =
+    inlineSlots?.length
+      ? inlineSlots
+      : inlineSlot
+        ? [{ position: 50, node: inlineSlot }]
+        : [];
+
+  if (!slots.length) {
     return (
       <div className={PROSE_STACK_CLASS}>
         {nodes.map((node, index) => renderNode(node, index))}
@@ -222,13 +274,5 @@ export function TipTapArticleBody({
     );
   }
 
-  const splitAt = Math.max(1, Math.ceil(nodes.length / 2));
-
-  return (
-    <div className={PROSE_STACK_CLASS}>
-      {nodes.slice(0, splitAt).map((node, index) => renderNode(node, index))}
-      <div className="my-4">{inlineSlot}</div>
-      {nodes.slice(splitAt).map((node, index) => renderNode(node, splitAt + index))}
-    </div>
-  );
+  return <div className={PROSE_STACK_CLASS}>{insertInlineSlots(nodes, slots)}</div>;
 }
