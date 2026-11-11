@@ -9,6 +9,8 @@ import { absoluteSiteUrl } from "../config/site";
 import { getMarketContent, getMarketLabel, publicMarketSlugs, type MarketSlug } from "../data/marketContent";
 import { getInstitutionalMarketPage } from "../data/institutionalMarketPages";
 import { InstitutionalMarketSections, MarketInstitutionalHero } from "./InstitutionalMarketSections";
+import { CryptoMarketExperience } from "./cripto/CryptoMarketExperience";
+import { ForexMarketExperience } from "./forex/ForexMarketExperience";
 
 const pageLabels: Record<Locale, {
   eyebrow: string;
@@ -503,6 +505,8 @@ export function MarketPage({ slug }: { slug: MarketSlug }) {
         {institutionalPage ? (
           <>
             <MarketInstitutionalHero page={institutionalPage} locale={pageLocale} />
+            {slug === "forex" ? <ForexMarketExperience locale={pageLocale} /> : null}
+            {slug === "cripto" ? <CryptoMarketExperience locale={pageLocale} /> : null}
             <InstitutionalMarketSections page={institutionalPage} locale={pageLocale} currentSlug={slug} />
             {forexContent ? (
               <div className="border-t border-gold/[0.16]">

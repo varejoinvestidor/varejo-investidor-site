@@ -23,6 +23,9 @@ export type InstitutionalMarketPage = {
     subtitle: string;
     image: string;
     imageAlt: string;
+    /** Recortes PNG: evita cortar personagens no hero. */
+    imageFit?: "cover" | "contain";
+    imagePanelClass?: string;
   };
   metaTitle: string;
   metaDescription: string;
@@ -41,9 +44,9 @@ export const marketHeroImages: Record<
     altEn: "Institutional trading floor and global finance infrastructure",
   },
   forex: {
-    src: "/characters/home-hero-institutional.png",
-    altPt: "Centros financeiros globais e mercado de câmbio",
-    altEn: "Global financial centers and foreign exchange",
+    src: "/characters/services-hero-team.png",
+    altPt: "Equipe Varejo Investidor e fluxo global do mercado de câmbio",
+    altEn: "Varejo Investidor team and global foreign exchange flows",
   },
   etfs: {
     src: "/characters/home-structure-horizontal-cutout.png",
@@ -61,8 +64,8 @@ export const marketHeroImages: Record<
     altEn: "Global energy chain and oil infrastructure",
   },
   cripto: {
-    src: "/characters/education-formation-premium.png",
-    altPt: "Economia digital e infraestrutura blockchain",
-    altEn: "Digital economy and blockchain infrastructure",
+    src: "/characters/services-hero-team.png",
+    altPt: "Economia digital, blockchain e mercado global de criptoativos",
+    altEn: "Digital economy, blockchain and global crypto market",
   },
 };

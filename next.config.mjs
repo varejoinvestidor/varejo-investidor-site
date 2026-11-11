@@ -64,6 +64,21 @@ const nextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
+      {
+        source: "/admin/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+      {
+        source: "/api/publisher/:path*",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
+      {
+        source: "/api/cron/:path*",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
     ];
   },
   async redirects() {

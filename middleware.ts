@@ -69,6 +69,10 @@ function getLocaleFromRequest(request: NextRequest) {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith("/api/") && !pathname.startsWith("/api/publisher/") && !pathname.startsWith("/api/cron/")) {
+    return NextResponse.next();
+  }
+
   if (
     pathname !== LANGUAGE_GATE_PATH &&
     !isPublisherPath(pathname) &&
@@ -185,5 +189,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)",
+    "/api/publisher/:path*",
+    "/api/cron/:path*",
+  ],
 };

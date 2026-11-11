@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { autoEnsureViAnalyticsForSession } from "../../../../src/analytics/actions";
 import { ViAnalyticsAutoInstall } from "../../../../src/analytics/admin/ViAnalyticsAutoInstall";
 import { ViAnalyticsLiveRefresh } from "../../../../src/analytics/admin/ViAnalyticsLiveRefresh";
@@ -6,16 +5,12 @@ import { ViAnalyticsSchemaAlert } from "../../../../src/analytics/admin/ViAnalyt
 import { AdminBrand } from "../../../../src/publisher/admin/AdminBrand";
 import { ViAnalyticsSubnav } from "../../../../src/analytics/admin/ViAnalyticsSubnav";
 import { probeAnalyticsSchema } from "../../../../src/analytics/admin/queries";
-import { canViewSiteAnalytics } from "../../../../src/publisher/permissions";
-import { getPublisherSession } from "../../../../src/publisher/supabase/server";
+import { requireSiteAnalyticsPage } from "../../../../src/publisher/admin/requireAdminPage";
 
 export const revalidate = 60;
 
 export default async function ViAdministradorLayout({ children }: { children: React.ReactNode }) {
-  const { profile } = await getPublisherSession();
-  if (!profile || !canViewSiteAnalytics(profile.role)) {
-    redirect("/admin");
-  }
+  const profile = await requireSiteAnalyticsPage();
 
   if (profile.role === "admin") {
     await autoEnsureViAnalyticsForSession();

@@ -29,6 +29,8 @@ Na Vercel, replique as mesmas variáveis no projeto do site.
 ## 3. Primeiro administrador
 
 > Produção: após migrations (`RUN_ALL_PUBLISHER.sql` no SQL Editor, ou `POST /api/publisher/bootstrap-schema` com `Authorization: Bearer CRON_SECRET`), use o dashboard Supabase ou `POST /api/publisher/bootstrap-admin` (mesmo token) uma vez, depois prefira criar usuários pelo Auth.
+>
+> **Segurança (2026-03-22):** rode também `supabase/migrations/20260322120000_security_hardening.sql` (ou `node --env-file=.env.vercel.production scripts/install-vi-analytics.mjs`). Em produção, `bootstrap-admin` fica desativado até definir `ALLOW_PUBLISHER_BOOTSTRAP_ADMIN=true` na Vercel.
 
 **Relatório Elite** — guia completo em [`docs/supabase-elite.md`](./supabase-elite.md). Resumo: **Copiar SQL** no admin, ou `RUN_ELITE.sql` / `RUN_SUPABASE_INCREMENTAL.sql` no SQL Editor; na Vercel use `POSTGRES_URL_NON_POOLING` + botão **Instalar tabelas Elite**.
 

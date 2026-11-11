@@ -1,5 +1,9 @@
 import { AdminAuthorsPanel } from "../../../../src/publisher/admin/AdminAuthorsPanel";
 import { CategoriesManager } from "../../../../src/publisher/admin/CategoriesManager";
+import {
+  requireTaxonomyAdminPage,
+  roleMayEditSiteSettings,
+} from "../../../../src/publisher/admin/requireAdminPage";
 import { SettingsForm } from "../../../../src/publisher/admin/SettingsForm";
 import { TagsManager } from "../../../../src/publisher/admin/TagsManager";
 import { getSiteSettings } from "../../../../src/publisher/settings/actions";
@@ -9,6 +13,7 @@ import Link from "next/link";
 import { ADMIN_CONFIG_TAXONOMY_NAV } from "../../../../src/publisher/admin/nav";
 
 export default async function AdminConfiguracoesPage() {
+  const profile = await requireTaxonomyAdminPage();
   const [settingsResult, categoriesRes, tagsRes, session] = await Promise.all([
     getSiteSettings(),
     listCategories(),
@@ -48,10 +53,12 @@ export default async function AdminConfiguracoesPage() {
         </nav>
       </header>
 
-      <section className="space-y-4">
-        <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">Geral</h3>
-        <SettingsForm settings={settingsResult.data} />
-      </section>
+      {roleMayEditSiteSettings(profile.role) ? (
+        <section className="space-y-4">
+          <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">Geral</h3>
+          <SettingsForm settings={settingsResult.data} />
+        </section>
+      ) : null}
 
       <section id="categorias" className="scroll-mt-28 space-y-4">
         <h3 className="font-serif text-2xl text-paper">Categorias</h3>

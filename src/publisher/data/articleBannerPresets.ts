@@ -32,15 +32,15 @@ export const PRODUCT_STRIP_BANNER_ASSETS: Record<
     alt: "Canal Elite Harpia · Research · Varejo Investidor",
   },
   educacao: {
-    image: "/banners/base-educacional.svg",
+    image: "/characters/education-levels-team.png",
     alt: "Base educacional Formiga, Lobo e Harpia",
   },
   select: {
-    image: "/banners/faixa-select.svg",
+    image: "/characters/about-hero-institutional-cutout.png",
     alt: "Select · estratégia patrimonial Varejo Investidor",
   },
   private: {
-    image: "/banners/faixa-private.svg",
+    image: "/characters/about-hero-institutional.png",
     alt: "Private · estrutura patrimonial internacional",
   },
 };
@@ -53,9 +53,9 @@ export const ARTICLE_BANNER_PRESETS: {
   { id: "formiga", label: "Canal Formiga", description: "Banner alto + botão WhatsApp (componente React)" },
   { id: "lobo", label: "Canal Lobo", description: "Banner alto + botão WhatsApp (modelo A)" },
   { id: "elite", label: "Canal Elite", description: "Banner alto → página Research (/sinais)" },
-  { id: "educacao", label: "Base educacional", description: "Faixa home · Formação / educação" },
-  { id: "select", label: "Select", description: "Faixa home · patrimônio US$ 50k+" },
-  { id: "private", label: "Private", description: "Faixa home · patrimônio US$ 1M+" },
+  { id: "educacao", label: "Base educacional", description: "Banner modelo A → /educacao" },
+  { id: "select", label: "Select", description: "Banner modelo A → /select" },
+  { id: "private", label: "Private", description: "Banner modelo A → /private" },
   { id: "fxpro", label: "FxPro", description: "Banner corretora Forex (site)" },
   { id: "binance", label: "Binance", description: "Conta cripto · afiliado" },
 ];
@@ -107,6 +107,7 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
     case "educacao":
       return {
         ...banner,
+        preset: "educacao",
         image_url: PRODUCT_STRIP_BANNER_ASSETS.educacao.image,
         alt: PRODUCT_STRIP_BANNER_ASSETS.educacao.alt,
         href: localizedPath("/educacao", locale),
@@ -114,6 +115,7 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
     case "select":
       return {
         ...banner,
+        preset: "select",
         image_url: PRODUCT_STRIP_BANNER_ASSETS.select.image,
         alt: PRODUCT_STRIP_BANNER_ASSETS.select.alt,
         href: localizedPath("/select", locale),
@@ -121,6 +123,7 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
     case "private":
       return {
         ...banner,
+        preset: "private",
         image_url: PRODUCT_STRIP_BANNER_ASSETS.private.image,
         alt: PRODUCT_STRIP_BANNER_ASSETS.private.alt,
         href: localizedPath("/private", locale),

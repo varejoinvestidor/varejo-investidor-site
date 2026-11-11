@@ -2,11 +2,12 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 import { isSupabaseConfigured, requireSupabaseAnonKey, requireSupabaseUrl } from "../../../src/publisher/env";
+import { safePublisherRedirectPath } from "../../../src/publisher/security/publisherApiAuth";
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = requestUrl.searchParams.get("next") ?? "/admin";
+  const next = safePublisherRedirectPath(requestUrl.searchParams.get("next"));
 
   if (!isSupabaseConfigured() || !code) {
     return NextResponse.redirect(new URL("/admin/login", request.url));

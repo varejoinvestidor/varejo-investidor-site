@@ -97,8 +97,17 @@ export function resolveArticleBannersList(columnRaw: unknown, content: unknown):
 }
 
 /** Banners antigos (SVG/faixa) salvos sem `preset`. */
+const CHANNEL_BANNER_PRESETS: ArticleBannerPreset[] = ["formiga", "lobo", "elite", "educacao", "select", "private"];
+
+export function isChannelBannerPreset(preset: ArticleBannerPreset | undefined): preset is Extract<
+  ArticleBannerPreset,
+  "formiga" | "lobo" | "elite" | "educacao" | "select" | "private"
+> {
+  return !!preset && CHANNEL_BANNER_PRESETS.includes(preset);
+}
+
 export function inferChannelBannerPreset(banner: ArticleBanner): ArticleBannerPreset | undefined {
-  if (banner.preset === "formiga" || banner.preset === "lobo" || banner.preset === "elite") return banner.preset;
+  if (isChannelBannerPreset(banner.preset)) return banner.preset;
   const hay = `${banner.image_url} ${banner.alt}`.toLowerCase();
   if (
     hay.includes("canal-lobo") ||
@@ -123,6 +132,20 @@ export function inferChannelBannerPreset(banner: ArticleBanner): ArticleBannerPr
     hay.includes("services-hero-institutional")
   ) {
     return "elite";
+  }
+  if (
+    hay.includes("base-educacional") ||
+    hay.includes("base educacional") ||
+    hay.includes("educational base") ||
+    (hay.includes("educacao") && hay.includes("formiga"))
+  ) {
+    return "educacao";
+  }
+  if (hay.includes("faixa-select") || (hay.includes("select") && hay.includes("patrimonial"))) {
+    return "select";
+  }
+  if (hay.includes("faixa-private") || (hay.includes("private") && hay.includes("patrimonial"))) {
+    return "private";
   }
   return undefined;
 }

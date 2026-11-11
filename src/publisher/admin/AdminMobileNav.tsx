@@ -16,7 +16,7 @@ function navLinkClass(active: boolean) {
   }`;
 }
 
-export function AdminMobileNav({ isAdmin }: { isAdmin: boolean }) {
+export function AdminMobileNav({ isAdmin, canConfig }: { isAdmin: boolean; canConfig: boolean }) {
   const pathname = usePathname() ?? "";
   const [open, setOpen] = useState(false);
 
@@ -120,7 +120,11 @@ export function AdminMobileNav({ isAdmin }: { isAdmin: boolean }) {
                 </div>
               ) : null}
               <ul className="mt-4 space-y-0.5 border-t border-line/12 pt-4">
-                {ADMIN_FOOTER_NAV.filter((i) => isAdmin || i.href !== "/admin/usuarios").map((item) => {
+                {ADMIN_FOOTER_NAV.filter((item) => {
+                  if (item.href === "/admin/usuarios") return isAdmin;
+                  if (item.href === "/admin/configuracoes") return canConfig;
+                  return true;
+                }).map((item) => {
                   const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
                   return (
                     <li key={item.href}>

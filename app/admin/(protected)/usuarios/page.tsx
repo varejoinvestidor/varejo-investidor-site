@@ -1,7 +1,9 @@
 import { UsersManager } from "../../../../src/publisher/admin/UsersManager";
+import { requireUsersAdminPage } from "../../../../src/publisher/admin/requireAdminPage";
 import { listProfiles } from "../../../../src/publisher/settings/actions";
 
 export default async function AdminUsuariosPage() {
+  await requireUsersAdminPage();
   const result = await listProfiles();
   if (!result.ok) return <p className="text-fall">{result.error}</p>;
 

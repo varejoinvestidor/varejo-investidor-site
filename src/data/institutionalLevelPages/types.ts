@@ -78,7 +78,7 @@ export const LEVEL_HERO_MEDIA: Record<LevelId, LevelHeroMedia> = {
 
 /** Personagem nos banners modelo A (Canal Formiga / Lobo). Lobo usa recorte vertical, não o hero da home. */
 export const CHANNEL_SPLIT_BANNER_MEDIA: Record<
-  "formiga" | "lobo" | "elite",
+  "formiga" | "lobo" | "elite" | "educacao" | "select" | "private",
   { hero: string; heroAlt: string }
 > = {
   formiga: {
@@ -92,6 +92,18 @@ export const CHANNEL_SPLIT_BANNER_MEDIA: Record<
   elite: {
     hero: "/characters/services-hero-institutional.png",
     heroAlt: "Harpia, Research Elite Varejo Investidor",
+  },
+  educacao: {
+    hero: "/characters/education-levels-team.png",
+    heroAlt: "Formiga, Lobo e Harpia, base educacional Varejo Investidor",
+  },
+  select: {
+    hero: "/characters/about-hero-institutional-cutout.png",
+    heroAlt: "Select, estratégia patrimonial e exposição global",
+  },
+  private: {
+    hero: "/characters/about-hero-institutional.png",
+    heroAlt: "Private, estrutura patrimonial internacional",
   },
 };
 

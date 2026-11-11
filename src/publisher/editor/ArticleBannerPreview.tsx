@@ -3,7 +3,7 @@
 import { ChannelBannerByPreset } from "../../components/banners/ChannelBannerByPreset";
 import { resolveArticleBanner } from "../data/articleBannerPresets";
 import type { ArticleBanner } from "../types/banner";
-import { inferChannelBannerPreset } from "../types/banner";
+import { inferChannelBannerPreset, isChannelBannerPreset } from "../types/banner";
 
 const PLACEMENT_LABELS: Record<ArticleBanner["placement"], string> = {
   top: "Topo do artigo",
@@ -23,7 +23,7 @@ function BannerFigure({
   onSelect?: () => void;
 }) {
   const channelPreset = banner.preset ?? inferChannelBannerPreset(banner);
-  if (channelPreset === "formiga" || channelPreset === "lobo" || channelPreset === "elite") {
+  if (isChannelBannerPreset(channelPreset)) {
     const frameClass = `overflow-hidden ${interactive ? "cursor-pointer ring-offset-2 ring-offset-ink" : ""}`;
     return (
       <div

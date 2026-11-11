@@ -11,6 +11,21 @@ import { canonicalEliteAsset, liveQuoteAssetClass } from "../../../../src/elite/
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+const MAX_REQUESTS_PER_MINUTE = 90;
+const quoteBuckets = new Map<string, { count: number; reset: number }>();
+
+function rateLimitQuotes(ip: string): boolean {
+  const now = Date.now();
+  const row = quoteBuckets.get(ip);
+  if (!row || now > row.reset) {
+    quoteBuckets.set(ip, { count: 1, reset: now + 60_000 });
+    return true;
+  }
+  if (row.count >= MAX_REQUESTS_PER_MINUTE) return false;
+  row.count += 1;
+  return true;
+}
+
 type ErApiPayload = { result?: string; conversion_rates?: Record<string, number>; rates?: Record<string, number> };
 type GoldPayload = { items?: { xauPrice?: number }[] };
 
@@ -43,6 +58,11 @@ async function fetchXauUsd(): Promise<number | null> {
 }
 
 export async function GET(request: Request) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (!rateLimitQuotes(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const { searchParams } = new URL(request.url);
   const assets = normalizeAssetsParam(searchParams.get("assets") ?? "");
   const prices: Record<string, number> = {};

@@ -2,11 +2,24 @@ import { NextResponse } from "next/server";
 import { isSupabaseConfigured } from "../../../../src/publisher/env";
 import { eliteSchemaReady, probeSupabaseSchema } from "../../../../src/publisher/schema/supabaseTableProbe";
 import { resolvePostgresConnectionString } from "../../../../src/publisher/schema/postgresConnection";
+import { assertCronBearer } from "../../../../src/publisher/security/cronAuth";
+import { requirePublisherStaffSession } from "../../../../src/publisher/security/publisherApiAuth";
 
 export const dynamic = "force-dynamic";
 
-/** Diagnóstico leve pós-deploy (sem expor segredos). */
-export async function GET() {
+/** Público: apenas disponibilidade. Detalhes: staff autenticado ou CRON_SECRET. */
+export async function GET(request: Request) {
+  const isCron = assertCronBearer(request);
+  const staff = await requirePublisherStaffSession();
+  const isStaff = staff.ok;
+
+  if (!isCron && !isStaff) {
+    return NextResponse.json(
+      { ok: isSupabaseConfigured() },
+      { status: isSupabaseConfigured() ? 200 : 503 },
+    );
+  }
+
   const supabase = isSupabaseConfigured();
   const serviceRole = Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY?.trim());
   const cron = Boolean(process.env.CRON_SECRET?.trim());

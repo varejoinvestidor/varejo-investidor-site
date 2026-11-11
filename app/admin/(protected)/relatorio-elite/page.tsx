@@ -1,12 +1,9 @@
 import { EliteReportAdmin } from "../../../../src/elite/admin/EliteReportAdmin";
 import { fetchStaffEliteData } from "../../../../src/elite/queries";
-import { getPublisherSession } from "../../../../src/publisher/supabase/server";
+import { requirePublisherManagerPage } from "../../../../src/publisher/admin/requireAdminPage";
 
 export default async function AdminEliteReportPage() {
-  const { profile } = await getPublisherSession();
-  if (!profile || (profile.role !== "admin" && profile.role !== "editor")) {
-    return <p className="text-fall">Sem permissão.</p>;
-  }
+  await requirePublisherManagerPage();
 
   const data = await fetchStaffEliteData();
 

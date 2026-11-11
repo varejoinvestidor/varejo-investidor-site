@@ -1,13 +1,10 @@
 import { EliteAdminSubnav } from "../../../../../src/elite/admin/EliteAdminSubnav";
 import { ElitePerformanceAdmin } from "../../../../../src/elite/admin/ElitePerformanceAdmin";
 import { fetchStaffEliteData } from "../../../../../src/elite/queries";
-import { getPublisherSession } from "../../../../../src/publisher/supabase/server";
+import { requirePublisherManagerPage } from "../../../../../src/publisher/admin/requireAdminPage";
 
 export default async function AdminEliteDesempenhoPage() {
-  const { profile } = await getPublisherSession();
-  if (!profile || (profile.role !== "admin" && profile.role !== "editor")) {
-    return <p className="text-fall">Sem permissão.</p>;
-  }
+  await requirePublisherManagerPage();
 
   const data = await fetchStaffEliteData();
 

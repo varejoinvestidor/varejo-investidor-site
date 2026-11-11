@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ADMIN_ANALYTICS_NAV, ADMIN_FOOTER_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEARCH_NAV } from "./nav";
-import { ROLE_LABELS } from "../permissions";
+import { ROLE_LABELS, canManageTaxonomy } from "../permissions";
 import type { PublisherProfile } from "../types";
 import { createPublisherBrowserClient } from "../supabase/browser";
 import { AdminBrand } from "./AdminBrand";
@@ -44,7 +44,12 @@ export function AdminShell({ profile, children }: Props) {
   const pathname = usePathname() ?? "";
   const router = useRouter();
   const isAdmin = profile.role === "admin";
-  const footerNav = isAdmin ? ADMIN_FOOTER_NAV : ADMIN_FOOTER_NAV.filter((i) => i.href !== "/admin/usuarios");
+  const canConfig = canManageTaxonomy(profile.role);
+  const footerNav = ADMIN_FOOTER_NAV.filter((item) => {
+    if (item.href === "/admin/usuarios") return isAdmin;
+    if (item.href === "/admin/configuracoes") return canConfig;
+    return true;
+  });
   const settingsActive = pathname.startsWith("/admin/configuracoes");
 
   async function signOut() {
@@ -119,16 +124,18 @@ export function AdminShell({ profile, children }: Props) {
           </nav>
 
           <div className="relative border-t border-line/10 px-4 py-4">
-            <Link
-              href="/admin/configuracoes"
-              title="Configurações"
-              className={`absolute right-3 top-3 rounded-md p-1.5 transition ${
-                settingsActive ? "bg-gold/15 text-gold" : "text-paper/45 hover:bg-paper/[0.06] hover:text-gold"
-              }`}
-              aria-label="Configurações"
-            >
-              <SettingsIcon />
-            </Link>
+            {canConfig ? (
+              <Link
+                href="/admin/configuracoes"
+                title="Configurações"
+                className={`absolute right-3 top-3 rounded-md p-1.5 transition ${
+                  settingsActive ? "bg-gold/15 text-gold" : "text-paper/45 hover:bg-paper/[0.06] hover:text-gold"
+                }`}
+                aria-label="Configurações"
+              >
+                <SettingsIcon />
+              </Link>
+            ) : null}
             <p className="pr-10 truncate text-sm font-medium text-paper/90">{profile.full_name ?? profile.email}</p>
             <p className="mt-0.5 text-xs text-paper/50">{ROLE_LABELS[profile.role]}</p>
             <ul className="mt-3 space-y-0.5">
@@ -148,7 +155,7 @@ export function AdminShell({ profile, children }: Props) {
 
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line/10 px-4 py-4 lg:px-8">
-            <AdminMobileNav isAdmin={isAdmin} />
+            <AdminMobileNav isAdmin={isAdmin} canConfig={canConfig} />
             <div className="flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-paper/70">
               <a href="/artigos" className="transition hover:text-gold" target="_blank" rel="noreferrer">
                 /artigos

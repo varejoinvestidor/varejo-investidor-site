@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { EducacaoChannelBanner } from "../../../src/components/banners/EducacaoChannelBanner";
 import { EliteChannelBanner } from "../../../src/components/banners/EliteChannelBanner";
 import { FormigaChannelBanner } from "../../../src/components/banners/FormigaChannelBanner";
 import { LoboChannelBanner } from "../../../src/components/banners/LoboChannelBanner";
+import { PrivateChannelBanner } from "../../../src/components/banners/PrivateChannelBanner";
+import { SelectChannelBanner } from "../../../src/components/banners/SelectChannelBanner";
 import { whatsappLandingLocales } from "../../../src/data/whatsappChannels";
 
 export default function CanaisWhatsappBannersPreviewPage() {
@@ -15,9 +18,9 @@ export default function CanaisWhatsappBannersPreviewPage() {
       <div className="mx-auto max-w-5xl space-y-10">
         <header className="border-b border-white/10 pb-8">
           <p className="text-[10px] font-black uppercase tracking-[0.28em] text-rise">Modelo A</p>
-          <h1 className="mt-3 font-serif text-4xl tracking-[-0.03em]">Formiga, Lobo e Elite</h1>
+          <h1 className="mt-3 font-serif text-4xl tracking-[-0.03em]">Banners modelo A</h1>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-paper/60">
-            Prévia por idioma com cópia e links oficiais do WhatsApp.
+            Canais WhatsApp, Elite, base educacional, Select e Private com cópia localizada.
           </p>
           <label className="mt-6 flex flex-col gap-2 text-xs font-bold uppercase tracking-wider text-paper/50">
             Idioma
@@ -41,6 +44,9 @@ export default function CanaisWhatsappBannersPreviewPage() {
         <FormigaChannelBanner language={language} className="w-full" />
         <LoboChannelBanner language={language} className="w-full" />
         <EliteChannelBanner language={language} className="w-full" />
+        <EducacaoChannelBanner language={language} className="w-full" />
+        <SelectChannelBanner language={language} className="w-full" />
+        <PrivateChannelBanner language={language} className="w-full" />
       </div>
     </main>
   );

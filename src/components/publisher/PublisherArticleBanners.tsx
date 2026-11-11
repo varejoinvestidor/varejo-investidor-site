@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ChannelBannerByPreset } from "../banners/ChannelBannerByPreset";
-import { inferChannelBannerPreset } from "../../publisher/types/banner";
+import { inferChannelBannerPreset, isChannelBannerPreset } from "../../publisher/types/banner";
 import { resolveArticleBanner } from "../../publisher/data/articleBannerPresets";
 import type { ArticleBanner } from "../../publisher/types/banner";
 
@@ -33,7 +33,7 @@ export function PublisherArticleBanners({
       <div className={inner}>
         {items.map((banner) => {
           const channelPreset = banner.preset ?? inferChannelBannerPreset(banner);
-          if (channelPreset === "formiga" || channelPreset === "lobo" || channelPreset === "elite") {
+          if (isChannelBannerPreset(channelPreset)) {
             return (
               <ChannelBannerByPreset
                 key={banner.id}

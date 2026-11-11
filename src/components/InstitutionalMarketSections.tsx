@@ -74,7 +74,7 @@ export function MarketInstitutionalHero({ page, locale }: { page: InstitutionalM
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.65, delay: 0.08 }}
-          className="relative min-h-[260px] overflow-hidden border border-gold/[0.22] bg-ink shadow-premium md:min-h-[360px]"
+          className={`relative min-h-[280px] overflow-hidden border border-gold/[0.22] shadow-premium md:min-h-[380px] ${page.hero.imagePanelClass ?? "bg-ink"}`}
         >
           <Image
             src={page.hero.image}
@@ -83,7 +83,11 @@ export function MarketInstitutionalHero({ page, locale }: { page: InstitutionalM
             height={1024}
             priority
             sizes="(min-width: 1024px) 44vw, 92vw"
-            className="h-full max-h-[420px] w-full object-cover object-center"
+            className={
+              page.hero.imageFit === "contain"
+                ? "h-full max-h-[440px] w-full object-contain object-bottom px-2 pb-2 pt-4"
+                : "h-full max-h-[420px] w-full object-cover object-center"
+            }
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" aria-hidden="true" />
         </motion.div>

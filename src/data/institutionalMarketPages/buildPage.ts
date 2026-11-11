@@ -23,6 +23,11 @@ export function buildInstitutionalPage(slug: Exclude<MarketSlug, "commodities" |
   const heroAsset = marketHeroImages[slug];
   const imageAlt = locale === "pt" ? heroAsset.altPt : heroAsset.altEn;
 
+  const heroFit =
+    slug === "forex" || slug === "cripto" ? ("contain" as const) : ("cover" as const);
+  const heroPanel =
+    slug === "forex" ? "bg-[#070d0a]" : slug === "cripto" ? "bg-[#0c1220]" : "bg-ink";
+
   return {
     slug,
     hero: {
@@ -30,6 +35,8 @@ export function buildInstitutionalPage(slug: Exclude<MarketSlug, "commodities" |
       subtitle: copy.heroSubtitle,
       image: heroAsset.src,
       imageAlt,
+      imageFit: heroFit,
+      imagePanelClass: heroPanel,
     },
     metaTitle: copy.metaTitle,
     metaDescription: copy.metaDescription,

@@ -10,6 +10,10 @@ export const dynamic = "force-dynamic";
  * Body: { "email": "...", "password": "...", "fullName"?: "..." }
  */
 export async function POST(request: Request) {
+  const bootstrapAllowed = process.env.ALLOW_PUBLISHER_BOOTSTRAP_ADMIN === "true";
+  if (process.env.VERCEL_ENV === "production" && !bootstrapAllowed) {
+    return NextResponse.json({ error: "Bootstrap disabled in production" }, { status: 404 });
+  }
   if (!process.env.CRON_SECRET?.trim()) {
     return NextResponse.json({ error: "CRON_SECRET not configured" }, { status: 503 });
   }
