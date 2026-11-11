@@ -19,6 +19,8 @@ import { WhatsAppPhoneSignal3D } from "./signals/WhatsAppPhoneSignal3D";
 import { WhatsAppSignalDemo } from "./signals/WhatsAppSignalDemo";
 import { GlobalMarketTicker } from "./GlobalMarketTicker";
 import { STATIC_MARKET_TICKER } from "../market/globalMarketTape";
+import { SiteThemeToggle } from "./SiteThemeToggle";
+import { SiteSearchProvider, SiteSearchTrigger } from "./SiteSearch";
 
 /** @deprecated use API /api/market-tape — mantido para compat. */
 export const ticker = STATIC_MARKET_TICKER.map((item) => [item.label, item.changeLabel, item.tone] as const);
@@ -443,57 +445,72 @@ export function SiteChrome({
     { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
   ];
   return (
+    <SiteSearchProvider locale={locale}>
     <div className="site-chrome fixed left-0 right-0 top-0 z-50">
       <GlobalMarketTicker label={safeT.tickerLabel} />
 
       <header className="site-header border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
-        <nav className="site-header-nav mx-auto grid max-w-7xl items-center gap-4 px-4 py-3 md:px-8 md:py-4 xl:grid-cols-[minmax(260px,25%)_minmax(0,55%)_minmax(220px,20%)]">
-          <a href={localizedHref("home")} className="site-brand group flex min-w-0 items-center gap-3">
-            <span className="grid h-9 w-9 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper sm:h-10 sm:w-10">VI</span>
-            <span className="min-w-0 leading-tight">
-              <span className="block truncate font-serif text-lg sm:text-xl">Varejo Investidor</span>
-              <span className="hidden text-[10px] uppercase tracking-[0.24em] text-ink/[0.45] sm:block">{brandTagline}</span>
-            </span>
-          </a>
+        <nav className="site-header-nav mx-auto max-w-7xl px-4 py-3 md:px-8 md:py-4" aria-label="Main">
+          <div className="site-header-top-row flex items-center justify-between gap-3">
+            <a href={localizedHref("home")} className="site-brand group flex min-w-0 items-center gap-3">
+              <span className="grid h-9 w-9 shrink-0 place-items-center border border-ink bg-ink text-xs font-bold text-paper sm:h-10 sm:w-10">VI</span>
+              <span className="min-w-0 leading-tight">
+                <span className="block truncate font-serif text-lg sm:text-xl">Varejo Investidor</span>
+                <span className="hidden text-[10px] uppercase tracking-[0.24em] text-ink/[0.45] sm:block">{brandTagline}</span>
+              </span>
+            </a>
 
-          <button
-            type="button"
-            className="mobile-menu-button xl:hidden"
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-navigation-drawer"
-            aria-label={mobileMenuOpen ? menuA11y.close : menuA11y.open}
-            onClick={() => setMobileMenuOpen((open) => !open)}
-          >
-            <span className="mobile-menu-icon" aria-hidden="true">
-              <span />
-              <span />
-            </span>
-          </button>
+            <button
+              type="button"
+              className="mobile-menu-button xl:hidden"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation-drawer"
+              aria-label={mobileMenuOpen ? menuA11y.close : menuA11y.open}
+              onClick={() => setMobileMenuOpen((open) => !open)}
+            >
+              <span className="mobile-menu-icon" aria-hidden="true">
+                <span />
+                <span />
+              </span>
+            </button>
 
-          <div className="desktop-main-menu hidden items-center justify-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine xl:flex">
-            {firstNavItems.map((item) => {
-              const isActive = isActivePath(item.activePaths);
-              return <a key={item.label} href={item.href} className={`nav-link px-3 py-2 text-ink ${isActive ? "active" : ""}`}>{item.label}</a>;
-            })}
+            <div className="site-header-toolbar hidden shrink-0 items-center gap-2 xl:flex">
+              <SiteSearchTrigger locale={locale} variant="header" />
+              <div className="desktop-language-area">
+                <DesktopLanguageDropdown locale={locale} onChange={onLocaleChange} />
+              </div>
+            </div>
           </div>
 
-          <div className="desktop-language-area hidden items-center justify-end xl:flex">
-            <DesktopLanguageDropdown locale={locale} onChange={onLocaleChange} />
+          <div className="site-header-menu-row hidden justify-center pt-3 xl:flex">
+            <div className="desktop-main-menu flex max-w-full flex-wrap items-center justify-center gap-1 border border-ink/[0.08] bg-white p-1 text-sm text-ink/[0.66] shadow-fine">
+              {firstNavItems.map((item) => {
+                const isActive = isActivePath(item.activePaths);
+                return (
+                  <a key={item.label} href={item.href} className={`nav-link px-2.5 py-2 text-ink lg:px-3 ${isActive ? "active" : ""}`}>
+                    {item.label}
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </nav>
         <div className="mobile-language-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
-          <button
-            type="button"
-            onClick={() => {
-              setMobileMenuOpen(true);
-              setMobileLanguageOpen(true);
-            }}
-            className="mobile-language-compact"
-            aria-label={`${resolveLanguageMeta(locale).name}. Change language`}
-          >
-            <span className="mobile-language-globe" aria-hidden="true">◎</span>
-            <span>{resolveLanguageMeta(locale).code}</span>
-          </button>
+          <div className="flex w-full items-center justify-between gap-2">
+            <SiteSearchTrigger locale={locale} variant="mobile" />
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(true);
+                setMobileLanguageOpen(true);
+              }}
+              className="mobile-language-compact"
+              aria-label={`${resolveLanguageMeta(locale).name}. Change language`}
+            >
+              <span className="mobile-language-globe" aria-hidden="true">◎</span>
+              <span>{resolveLanguageMeta(locale).code}</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -539,6 +556,8 @@ export function SiteChrome({
             {mobileLanguageOpen ? <LanguageSwitcher locale={locale} onChange={handleMobileLocaleChange} variant="mobile" /> : null}
           </div>
 
+          <SiteThemeToggle locale={locale} variant="mobile" />
+
           <div className="mobile-drawer-actions">
             <a href={safeT.freeChannel.link} target="_blank" rel="noopener noreferrer" className="is-primary">{safeT.freeChannel.button}</a>
             <a href={localizedPage("/select")}>Select</a>
@@ -547,6 +566,7 @@ export function SiteChrome({
         </aside>
       </div>
     </div>
+    </SiteSearchProvider>
   );
 }
 
@@ -1207,6 +1227,9 @@ export function SupportFooter({
               >
                 {locale === "pt" ? "Tela completa de idiomas" : "Full language screen"}
               </a>
+              <div className="mt-8">
+                <SiteThemeToggle locale={locale} variant="footer" />
+              </div>
             </div>
           </div>
 

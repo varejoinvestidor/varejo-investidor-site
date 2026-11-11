@@ -7,6 +7,11 @@ import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, localeToHtmlLang, type 
 import "./globals.css";
 import "./institutional.css";
 import "./mobile-system.css";
+import "./site-theme.css";
+import "./site-search.css";
+import "./site-header-layout.css";
+import { SiteThemeBoot } from "../src/theme/SiteThemeBoot";
+import { SITE_THEME_BOOT_SCRIPT } from "../src/theme/siteTheme";
 
 export const viewport = {
   width: "device-width",
@@ -35,11 +40,13 @@ export default function RootLayout({
   const locale = getRequestLocale();
 
   return (
-    <html lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"}>
+    <html lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
+        <script dangerouslySetInnerHTML={{ __html: SITE_THEME_BOOT_SCRIPT }} />
       </head>
       <body>
+        <SiteThemeBoot />
         <SiteJsonLd />
         <ViSiteAnalytics />
         {children}

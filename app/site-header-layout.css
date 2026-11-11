@@ -1,0 +1,78 @@
+/* Header em duas faixas no desktop — menu não compete com busca/idioma */
+
+.site-header-top-row {
+  min-height: 3.25rem;
+}
+
+.site-header-toolbar {
+  min-width: 0;
+}
+
+.site-header-menu-row {
+  border-top: 1px solid transparent;
+}
+
+html[data-site-theme="light"] .site-header-menu-row {
+  border-top-color: rgba(18, 16, 12, 0.06);
+}
+
+@media (min-width: 1280px) {
+  .desktop-language-area {
+    min-width: 0;
+  }
+
+  .desktop-language-trigger {
+    min-width: 11.5rem;
+    max-width: 14rem;
+  }
+
+  .site-header-nav {
+    padding-bottom: 0.75rem !important;
+  }
+}
+
+/* Tema claro: dropdown de idioma legível */
+html[data-site-theme="light"] .desktop-language-trigger {
+  background: #ffffff !important;
+  color: #12100c !important;
+  border-color: #c9c0b4 !important;
+  box-shadow: 0 1px 2px rgba(18, 16, 12, 0.05) !important;
+}
+
+html[data-site-theme="light"] .desktop-language-trigger:hover,
+html[data-site-theme="light"] .desktop-language-dropdown[open] > .desktop-language-trigger {
+  background: #fff6e6 !important;
+  border-color: rgba(122, 85, 24, 0.45) !important;
+  color: #12100c !important;
+}
+
+html[data-site-theme="light"] .header-dropdown-panel,
+html[data-site-theme="light"] .language-dropdown-panel {
+  background: #ffffff !important;
+  border-color: #d8d0c4 !important;
+  box-shadow: 0 16px 40px rgba(18, 16, 12, 0.12) !important;
+}
+
+html[data-site-theme="light"] .language-dropdown-panel .language-dropdown-option,
+html[data-site-theme="light"] .header-dropdown-panel .header-dropdown-item {
+  color: #2e2a26 !important;
+}
+
+html[data-site-theme="light"] .language-dropdown-panel .language-dropdown-option:hover,
+html[data-site-theme="light"] .language-dropdown-panel .language-dropdown-option.is-active,
+html[data-site-theme="light"] .header-dropdown-panel .header-dropdown-item:hover {
+  background: #fff6e6 !important;
+  color: #12100c !important;
+  border-color: rgba(122, 85, 24, 0.35) !important;
+}
+
+html[data-site-theme="light"] .global-ticker {
+  background: #f0ebe3 !important;
+  color: #2e2a26 !important;
+}
+
+html[data-site-theme="light"] .global-ticker .text-paper,
+html[data-site-theme="light"] .global-ticker .text-paper\/55,
+html[data-site-theme="light"] .global-ticker .text-paper\/60 {
+  color: #3a3530 !important;
+}
