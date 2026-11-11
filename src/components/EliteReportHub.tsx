@@ -27,12 +27,19 @@ import type { EliteSignalTier } from "../elite/signalTier";
 import { ElitePeriodTrendChart } from "../elite/ElitePeriodTrendChart";
 import type { PeriodPerformance } from "../elite/traderPerformance";
 import type { EliteOperationRow } from "../elite/types";
-import { PremiumAnnualBarChart, PremiumCumulativeAreaChart, PremiumDonutChart } from "./elite/EliteHubCharts";
+import {
+  InstitutionalChartFrame,
+  PremiumAnnualBarChart,
+  PremiumCumulativeAreaChart,
+  PremiumDonutChart,
+} from "./elite/EliteHubCharts";
+import { EliteMonthlyHeatmap } from "./elite/EliteMonthlyHeatmap";
 import { EliteOperationCard, EliteOperationsPager, paginateList } from "./elite/EliteOperationCard";
 import { applyLivePipsToActiveOperations, useEliteLiveQuotes } from "./elite/useEliteLiveQuotes";
 import { sortOperationsByRecency } from "./elite/eliteOperationSort";
 import { buildCumulativePerformanceByYear, historicYears } from "../elite/yearlyHubAggregates";
 import { useOperationsPageSize } from "./elite/useOperationsPageSize";
+import { monthlyReportHref } from "../elite/monthlyReportLink";
 import { operationReportHref } from "../elite/operationReportLink";
 import { eliteAugust2018HubOperations, eliteAugust2018Monthly } from "../data/eliteAugust2018";
 import { eliteSeptember2018HubOperations, eliteSeptember2018Monthly } from "../data/eliteSeptember2018";
@@ -423,8 +430,6 @@ for (const locale of ["fr", "ar", "tr", "id", "vi", "th", "ru", "ur", "bn", "ko"
   copyByLocale[locale] = copyByLocale.en;
 }
 
-const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
 const reports: MonthlyReport[] = [
   {
     year: eliteAugust2018Monthly.year,
@@ -672,9 +677,8 @@ function getYearSummary(year: number, reportSource: MonthlyReport[], completed: 
   };
 }
 
-function reportHref(year: number | string) {
-  const available = normalizedEliteReports.some((report) => report.year === String(year));
-  return available ? `/historico/${year}` : "#";
+function monthlyCardHref(report: MonthlyReport) {
+  return monthlyReportHref(report.month, report.year);
 }
 
 function SelectField({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) {
@@ -1007,7 +1011,7 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       <section id="historico-resultados" className="px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Dashboard" title={copy.dashboardTitle} text={copy.dashboardText} />
-          <div className="mt-8 grid gap-5 xl:grid-cols-2">
+          <div className="mt-8 grid gap-4 xl:grid-cols-2">
             <PremiumAnnualBarChart
               data={annualData}
               locale={locale}
@@ -1017,44 +1021,46 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
             />
             <PremiumCumulativeAreaChart data={performanceData} locale={locale} title={copy.chartPerformance} />
             <PremiumDonutChart data={assetDistribution} title={copy.chartAssets} locale={locale} />
-            <div className="rounded-sm border border-white/[0.08] bg-black/35 p-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.26em] text-gold">{copy.chartHeatmap}</p>
-              <div className="mt-6 overflow-x-auto">
-                <div className="grid min-w-[660px] grid-cols-[70px_repeat(12,1fr)] gap-2">
-                  <span />
-                  {monthNames.map((month) => <span key={month} className="text-center text-[10px] font-bold uppercase tracking-[0.12em] text-paper/44">{month.slice(0, 3)}</span>)}
-                  {annualData.map(({ year }) => (
-                    <div key={year} className="contents">
-                      <button type="button" onClick={() => setSelectedYear(year)} className="text-left font-mono text-xs font-black text-gold">{year}</button>
-                      {monthNames.map((month, index) => {
-                        const report = reportsData.find((entry) => entry.year === year && entry.monthIndex === index);
-                        return (
-                          <button
-                            key={`${year}-${month}`}
-                            type="button"
-                            title={report ? `${month}/${year}: ${report.signals} sinais | ${report.result}` : `${month}/${year}`}
-                            onClick={() => report && setSelectedMonthKey(`${report.year}-${report.monthIndex}`)}
-                            className={`h-9 border text-[10px] font-black transition ${
-                              report
-                                ? report.pips > 0 || report.result.startsWith("+")
-                                  ? "border-rise/35 bg-rise/20 text-rise hover:bg-rise hover:text-ink"
-                                  : "border-gold/25 bg-gold/20 text-gold hover:bg-gold hover:text-ink"
-                                : "border-white/5 bg-white/[0.025] text-paper/16"
-                            }`}
-                          >
-                            {report ? report.signals : ""}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <InstitutionalChartFrame
+              title={copy.chartHeatmap}
+              footer={
+                locale === "en"
+                  ? "Cell value = signals in that month. Green = positive pips; red = negative."
+                  : locale === "es"
+                    ? "Valor = señales del mes. Verde = pips positivos; rojo = negativos."
+                    : "Números = sinais do mês. Verde = pips positivos; vermelho = negativos."
+              }
+            >
+              <EliteMonthlyHeatmap
+                years={annualData.map(({ year }) => year)}
+                getCell={(year, monthIndex) => {
+                  const report = reportsData.find((entry) => entry.year === year && entry.monthIndex === monthIndex);
+                  if (!report) return null;
+                  return {
+                    year: report.year,
+                    monthIndex: report.monthIndex,
+                    signals: report.signals,
+                    pips:
+                      report.pips !== 0
+                        ? report.pips
+                        : report.result.trim().startsWith("+")
+                          ? 1
+                          : report.result.trim().startsWith("-")
+                            ? -1
+                            : 0,
+                    monthLabel: report.month,
+                  };
+                }}
+                onSelect={(cell) => {
+                  setSelectedYear(cell.year);
+                  setSelectedMonthKey(`${cell.year}-${cell.monthIndex}`);
+                }}
+              />
+            </InstitutionalChartFrame>
           </div>
 
-          <div className="mt-5 grid gap-5 lg:grid-cols-2">
-            <article className="border border-gold/16 bg-white/[0.03] p-6">
+          <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            <article className="rounded-xl border border-gold/18 bg-black/30 p-4 md:p-5">
               <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">{copy.selectedYear}</p>
               <h3 className="mt-3 font-mono text-4xl font-black text-paper">{selectedYear}</h3>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -1073,7 +1079,7 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                 <Info label={copy.mainAssets} value={selectedMonth.assets.join(", ")} />
                 <Info label={copy.status} value={selectedMonth.status} />
               </div>
-              <a href={reportHref(selectedMonth.year)} className="mt-6 inline-flex w-full items-center justify-center border border-gold/30 px-5 py-3 text-xs font-black uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink sm:w-auto">{copy.viewReport}</a>
+              <a href={monthlyCardHref(selectedMonth)} className="mt-6 inline-flex w-full items-center justify-center border border-gold/30 px-5 py-3 text-xs font-black uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink sm:w-auto">{copy.viewReport}</a>
             </article>
           </div>
         </div>
@@ -1178,7 +1184,7 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
       <section className="px-5 py-14 md:px-8 md:py-18">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Elite" title={copy.monthlyTitle} text={copy.monthlyText} />
-          <div className="mt-6 rounded-lg border border-gold/20 bg-gradient-to-r from-gold/[0.08] to-transparent px-4 py-4 md:flex md:items-center md:justify-between md:gap-6">
+          <div className="mt-6 rounded-xl border border-gold/18 bg-black/30 px-4 py-4 md:flex md:items-center md:justify-between md:gap-6">
             <p className="font-serif text-2xl tracking-tight text-paper md:text-3xl">
               {formatNumber(publicSignalsHighlight, locale)}{" "}
               <span className="text-lg text-paper/70">
@@ -1197,7 +1203,7 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
             {monthlyReportsNewestFirst.slice(0, monthlyReportsVisible).map((report) => (
               <article
                 key={`${report.year}-${report.month}`}
-                className="elite-monthly-card rounded-lg border border-gold/18 bg-white/[0.03] p-5 shadow-[0_12px_40px_rgba(0,0,0,0.28)] md:p-6"
+                className="elite-monthly-card rounded-xl border border-gold/18 bg-black/30 p-4 transition hover:border-gold/30 md:p-5"
               >
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-gold">{report.status}</p>
                 <h3 className="mt-3 font-serif text-2xl tracking-[-0.04em] text-paper md:text-3xl">
@@ -1211,13 +1217,12 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                     value={formatMonthlyAssetsPreview(report.assets, locale)}
                   />
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setSelectedMonthKey(`${report.year}-${report.monthIndex}`)}
-                  className="mt-5 w-full min-h-[var(--vi-touch-min,3rem)] border border-gold/28 px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink"
+                <a
+                  href={monthlyCardHref(report)}
+                  className="mt-5 flex w-full min-h-[var(--vi-touch-min,3rem)] items-center justify-center border border-gold/28 px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-paper transition hover:border-gold hover:bg-gold hover:text-ink"
                 >
                   {copy.viewReport}
-                </button>
+                </a>
               </article>
             ))}
           </div>

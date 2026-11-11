@@ -9,14 +9,24 @@ import {
   ADMIN_PUBLISHER_NAV,
   ADMIN_RESEARCH_NAV,
 } from "./nav";
+import { AdminThemeToggle } from "./AdminThemeToggle";
+import type { AdminTheme } from "./useAdminTheme";
 
 function navLinkClass(active: boolean) {
-  return `block rounded-md px-3 py-3 text-sm transition ${
-    active ? "bg-paper/[0.08] text-paper" : "text-paper/65 hover:bg-paper/[0.04] hover:text-paper"
-  }`;
+  return `admin-nav-link px-3 py-3 ${active ? "admin-nav-link-active" : ""}`;
 }
 
-export function AdminMobileNav({ isAdmin, canConfig }: { isAdmin: boolean; canConfig: boolean }) {
+export function AdminMobileNav({
+  isAdmin,
+  canConfig,
+  theme,
+  onThemeChange,
+}: {
+  isAdmin: boolean;
+  canConfig: boolean;
+  theme: AdminTheme;
+  onThemeChange: (theme: AdminTheme) => void;
+}) {
   const pathname = usePathname() ?? "";
   const [open, setOpen] = useState(false);
 
@@ -53,7 +63,7 @@ export function AdminMobileNav({ isAdmin, canConfig }: { isAdmin: boolean; canCo
       {open ? (
         <div className="fixed inset-0 z-50 lg:hidden" id="admin-mobile-drawer" role="dialog" aria-modal="true">
           <button type="button" className="absolute inset-0 bg-black/70" aria-label="Fechar menu" onClick={() => setOpen(false)} />
-          <div className="absolute inset-y-0 left-0 flex w-[min(100%,20rem)] flex-col border-r border-line/15 bg-[#070707] shadow-2xl">
+          <div className="admin-shell-aside absolute inset-y-0 left-0 flex w-[min(100%,20rem)] flex-col border-r border-line/15 shadow-2xl">
             <div className="flex items-center justify-between border-b border-line/10 px-4 py-4">
               <div>
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.22em] text-gold">VI Publisher</p>
@@ -82,7 +92,7 @@ export function AdminMobileNav({ isAdmin, canConfig }: { isAdmin: boolean; canCo
                 })}
               </ul>
               <div className="my-4 border-t border-line/12 pt-4">
-                <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>
+                <p className="admin-section-label px-3">VI Research</p>
                 <ul className="mt-2 space-y-0.5">
                   {ADMIN_RESEARCH_NAV.map((item) => {
                     const active =
@@ -101,7 +111,7 @@ export function AdminMobileNav({ isAdmin, canConfig }: { isAdmin: boolean; canCo
               </div>
               {isAdmin ? (
                 <div className="my-4 border-t border-line/12 pt-4">
-                  <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Administrador</p>
+                  <p className="admin-section-label px-3">VI Administrador</p>
                   <ul className="mt-2 space-y-0.5">
                     {ADMIN_ANALYTICS_NAV.map((item) => {
                       const active =
@@ -135,6 +145,12 @@ export function AdminMobileNav({ isAdmin, canConfig }: { isAdmin: boolean; canCo
                   );
                 })}
               </ul>
+              <div className="mt-6 border-t border-line/12 pt-4">
+                <p className="mb-2 px-3 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-paper/40">Tema</p>
+                <div className="px-3">
+                  <AdminThemeToggle theme={theme} onChange={onThemeChange} />
+                </div>
+              </div>
             </nav>
           </div>
         </div>

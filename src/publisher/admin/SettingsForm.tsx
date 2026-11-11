@@ -19,13 +19,13 @@ export function SettingsForm({ settings }: { settings: Record<string, unknown> }
   }
 
   return (
-    <form onSubmit={onSubmit} className="max-w-md space-y-4 rounded-xl border border-line/12 p-6">
+    <form onSubmit={onSubmit} className="admin-panel max-w-md space-y-4 p-6">
       <div>
         <label className="text-xs uppercase tracking-wider text-paper/45">Fuso horário</label>
         <input
           value={timezone}
           onChange={(e) => setTimezone(e.target.value)}
-          className="mt-1 w-full rounded border border-line/15 bg-[#0a0a0a] px-3 py-2 text-sm"
+          className="admin-control mt-1 w-full rounded border border-line/15 px-3 py-2 text-sm"
         />
       </div>
       <p className="text-xs text-paper/45">

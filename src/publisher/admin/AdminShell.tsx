@@ -8,6 +8,8 @@ import type { PublisherProfile } from "../types";
 import { createPublisherBrowserClient } from "../supabase/browser";
 import { AdminBrand } from "./AdminBrand";
 import { AdminMobileNav } from "./AdminMobileNav";
+import { AdminThemeProvider, useAdminThemeContext } from "./AdminThemeProvider";
+import { AdminThemeToggle } from "./AdminThemeToggle";
 
 type Props = {
   profile: PublisherProfile;
@@ -35,14 +37,21 @@ function SettingsIcon({ className }: { className?: string }) {
 }
 
 function navLinkClass(active: boolean) {
-  return `block rounded-md px-3 py-2.5 text-sm transition ${
-    active ? "bg-paper/[0.06] text-paper" : "text-paper/60 hover:bg-paper/[0.04] hover:text-paper/90"
-  }`;
+  return `admin-nav-link ${active ? "admin-nav-link-active" : ""}`;
 }
 
 export function AdminShell({ profile, children }: Props) {
+  return (
+    <AdminThemeProvider>
+      <AdminShellInner profile={profile}>{children}</AdminShellInner>
+    </AdminThemeProvider>
+  );
+}
+
+function AdminShellInner({ profile, children }: Props) {
   const pathname = usePathname() ?? "";
   const router = useRouter();
+  const { theme, setTheme } = useAdminThemeContext();
   const isAdmin = profile.role === "admin";
   const canConfig = canManageTaxonomy(profile.role);
   const footerNav = ADMIN_FOOTER_NAV.filter((item) => {
@@ -60,9 +69,9 @@ export function AdminShell({ profile, children }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-ink text-paper">
+    <div className="admin-shell min-h-screen text-paper" data-admin-theme={theme}>
       <div className="flex min-h-screen">
-        <aside className="hidden w-64 shrink-0 border-r border-line/10 bg-[#070707] lg:flex lg:flex-col">
+        <aside className="admin-shell-aside hidden w-64 shrink-0 border-r border-line/10 lg:flex lg:flex-col">
           <div className="border-b border-line/10 px-6 py-6">
             <AdminBrand />
           </div>
@@ -83,7 +92,7 @@ export function AdminShell({ profile, children }: Props) {
             </ul>
 
             <div className="my-5 border-t border-line/12 pt-4">
-              <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>
+              <p className="admin-section-label px-3">VI Research</p>
               <ul className="mt-2 space-y-0.5">
                 {ADMIN_RESEARCH_NAV.map((item) => {
                   const active =
@@ -103,7 +112,7 @@ export function AdminShell({ profile, children }: Props) {
 
             {isAdmin ? (
               <div className="my-5 border-t border-line/12 pt-4">
-                <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Administrador</p>
+                <p className="admin-section-label px-3">VI Administrador</p>
                 <ul className="mt-2 space-y-0.5">
                   {ADMIN_ANALYTICS_NAV.map((item) => {
                     const active =
@@ -154,9 +163,10 @@ export function AdminShell({ profile, children }: Props) {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line/10 px-4 py-4 lg:px-8">
-            <AdminMobileNav isAdmin={isAdmin} canConfig={canConfig} />
+          <header className="admin-shell-header flex flex-wrap items-center justify-between gap-3 border-b border-line/10 px-4 py-4 lg:px-8">
+            <AdminMobileNav isAdmin={isAdmin} canConfig={canConfig} theme={theme} onThemeChange={setTheme} />
             <div className="flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-paper/70">
+              <AdminThemeToggle theme={theme} onChange={setTheme} compact />
               <a href="/artigos" className="transition hover:text-gold" target="_blank" rel="noreferrer">
                 /artigos
               </a>

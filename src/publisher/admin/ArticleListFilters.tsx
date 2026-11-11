@@ -53,7 +53,7 @@ export function ArticleListFilters({ categories = [] }: Props) {
         <select
           name="status"
           defaultValue={status}
-          className="mt-1 block rounded border border-line/20 bg-[#0a0a0a] px-3 py-2 text-sm"
+          className="admin-control mt-1 block min-h-[40px] rounded border border-line/20 px-3 py-2 text-sm"
         >
           {STATUS_OPTIONS.map((opt) => (
             <option key={opt.label} value={opt.value}>
@@ -67,7 +67,7 @@ export function ArticleListFilters({ categories = [] }: Props) {
         <select
           name="language"
           defaultValue={language}
-          className="mt-1 block rounded border border-line/20 bg-[#0a0a0a] px-3 py-2 text-sm"
+          className="admin-control mt-1 block min-h-[40px] rounded border border-line/20 px-3 py-2 text-sm"
         >
           <option value="">Todos</option>
           <option value="pt">PT</option>
@@ -80,7 +80,7 @@ export function ArticleListFilters({ categories = [] }: Props) {
           <select
             name="category"
             defaultValue={category}
-            className="mt-1 block max-w-[180px] rounded border border-line/20 bg-[#0a0a0a] px-3 py-2 text-sm"
+            className="admin-control mt-1 block min-h-[40px] max-w-[180px] rounded border border-line/20 px-3 py-2 text-sm"
           >
             <option value="">Todas</option>
             {categories.map((c) => (
@@ -96,7 +96,7 @@ export function ArticleListFilters({ categories = [] }: Props) {
         <select
           name="sort"
           defaultValue={sort}
-          className="mt-1 block rounded border border-line/20 bg-[#0a0a0a] px-3 py-2 text-sm"
+          className="admin-control mt-1 block min-h-[40px] rounded border border-line/20 px-3 py-2 text-sm"
         >
           <option value="updated">Última edição</option>
           <option value="published">Publicação</option>
@@ -109,13 +109,16 @@ export function ArticleListFilters({ categories = [] }: Props) {
           name="q"
           defaultValue={q}
           placeholder="Título ou slug"
-          className="mt-1 w-full rounded border border-line/20 bg-[#0a0a0a] px-3 py-2 text-sm"
+          className="admin-control mt-1 w-full min-h-[40px] rounded border border-line/20 px-3 py-2 text-sm"
         />
       </div>
-      <button type="submit" className="rounded bg-gold px-4 py-2 text-xs font-bold uppercase tracking-wider text-ink">
+      <button type="submit" className="rounded bg-gold px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-ink">
         Filtrar
       </button>
-      <Link href="/admin/artigos/novo" className="rounded border border-line/25 px-4 py-2 text-xs font-bold uppercase tracking-wider">
+      <Link
+        href="/admin/artigos/novo"
+        className="rounded border border-gold/35 bg-white px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-gold transition hover:border-gold hover:bg-gold/10"
+      >
         Novo artigo
       </Link>
     </form>

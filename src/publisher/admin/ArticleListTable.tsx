@@ -38,7 +38,7 @@ export function ArticleListTable({ items, isAdmin }: Props) {
   return (
     <>
       <table className="w-full min-w-[720px] text-left text-sm">
-        <thead className="border-b border-line/10 text-xs uppercase tracking-wider text-paper/45">
+        <thead className="border-b border-line/10 text-xs font-bold uppercase tracking-wider text-paper/60">
           <tr>
             <th className="px-4 py-3">Título</th>
             <th className="px-4 py-3">Status</th>

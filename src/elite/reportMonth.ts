@@ -33,6 +33,29 @@ export function monthLabelFromIndex(index: number): string {
   return MONTH_LABELS[index] ?? String(index + 1);
 }
 
+export function formatReportMonth(monthLabel: string, year: number): string {
+  return `${monthLabel}/${year}`;
+}
+
+export function monthSlug(monthLabel: string, year: number): string {
+  const key = monthLabel
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  return `${key}-${year}`;
+}
+
+export function parseMonthSlug(slug: string): { year: number; month_index: number; month_label: string } | null {
+  const trimmed = slug.trim().toLowerCase();
+  const match = trimmed.match(/^([a-zç]+)-(\d{4})$/);
+  if (!match) return null;
+  const key = match[1].normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const year = Number(match[2]);
+  const month_index = PT_MONTHS[key];
+  if (month_index === undefined || !Number.isFinite(year)) return null;
+  return { year, month_index, month_label: monthLabelFromIndex(month_index) };
+}
+
 export function parseReportMonth(raw: string): { year: number; month_index: number; month_label: string } | null {
   const parts = raw.trim().split("/");
   if (parts.length !== 2) return null;

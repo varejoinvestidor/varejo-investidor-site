@@ -4,6 +4,7 @@ import {
   requireTaxonomyAdminPage,
   roleMayEditSiteSettings,
 } from "../../../../src/publisher/admin/requireAdminPage";
+import { AdminInterfacePreferences } from "../../../../src/publisher/admin/AdminInterfacePreferences";
 import { SettingsForm } from "../../../../src/publisher/admin/SettingsForm";
 import { TagsManager } from "../../../../src/publisher/admin/TagsManager";
 import { getSiteSettings } from "../../../../src/publisher/settings/actions";
@@ -52,6 +53,11 @@ export default async function AdminConfiguracoesPage() {
           ))}
         </nav>
       </header>
+
+      <section className="space-y-4">
+        <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-paper/45">Interface</h3>
+        <AdminInterfacePreferences />
+      </section>
 
       {roleMayEditSiteSettings(profile.role) ? (
         <section className="space-y-4">

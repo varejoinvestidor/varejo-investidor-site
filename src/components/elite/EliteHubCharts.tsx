@@ -16,16 +16,15 @@ type AreaItem = { year: number; value: number; signals: number };
 
 export function InstitutionalChartFrame({ title, children, footer }: { title: string; children: ReactNode; footer?: string }) {
   return (
-    <div className="relative overflow-hidden rounded-sm border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-black/50 p-6 shadow-[inset_0_1px_0_rgba(198,153,74,0.08)]">
-      <div className="pointer-events-none absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-      <p className="relative text-[10px] font-black uppercase tracking-[0.26em] text-gold/90">{title}</p>
-      <div className="relative mt-5">{children}</div>
-      {footer ? <p className="relative mt-4 text-xs leading-6 text-paper/50">{footer}</p> : null}
-    </div>
+    <article className="rounded-xl border border-gold/18 bg-black/30 p-4 md:p-5">
+      <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold">{title}</h3>
+      <div className="mt-4">{children}</div>
+      {footer ? <p className="mt-3 text-[11px] leading-relaxed text-paper/45">{footer}</p> : null}
+    </article>
   );
 }
 
-/** Barras anuais — padrão institucional. */
+/** Barras anuais — traços finos (espelho admin). */
 export function PremiumAnnualBarChart({
   data,
   locale,
@@ -43,28 +42,25 @@ export function PremiumAnnualBarChart({
 
   return (
     <InstitutionalChartFrame title={title} footer={footer}>
-      <div className="flex min-h-[280px] items-end gap-2.5 overflow-x-auto pb-1 pt-2">
+      <div className="flex min-h-[200px] items-end gap-1.5 overflow-x-auto pb-1 pt-2">
         {data.map((item) => {
-          const h = Math.max(28, (item.signals / max) * 220);
+          const h = Math.max(20, (item.signals / max) * 150);
           return (
             <button
               key={item.year}
               type="button"
               title={`${item.year}: ${item.signals} sinais | ${item.assets.join(", ")}`}
               onClick={() => onSelect(item.year)}
-              className="group flex min-w-[52px] flex-1 flex-col items-center justify-end gap-2.5"
+              className="group flex min-w-[36px] max-w-[40px] flex-1 flex-col items-center justify-end gap-1.5"
             >
-              <span className="font-mono text-[11px] font-bold tabular-nums text-paper/75">
+              <span className="font-mono text-[10px] font-bold tabular-nums text-paper/70">
                 {formatNumber(item.signals, locale)}
               </span>
               <div
-                className="relative w-full max-w-[56px] overflow-hidden rounded-t-md border border-gold/25 shadow-[0_0_28px_rgba(15,143,86,0.15)] transition duration-300 group-hover:border-gold/55 group-hover:shadow-[0_0_36px_rgba(198,153,74,0.25)]"
+                className="w-full rounded-t border border-gold/28 bg-gradient-to-t from-rise/25 via-gold/35 to-gold/50 transition group-hover:border-gold/45 group-hover:from-rise/35"
                 style={{ height: `${h}px` }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a3d28] via-rise/90 to-gold/90" />
-                <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-white/25 to-transparent" />
-              </div>
-              <span className="font-mono text-xs font-black text-gold">{item.year}</span>
+              />
+              <span className="font-mono text-[10px] font-black text-gold/90">{item.year}</span>
             </button>
           );
         })}
@@ -101,14 +97,14 @@ export function PremiumCumulativeAreaChart({
   title: string;
 }) {
   const width = 100;
-  const height = 72;
+  const height = 58;
   const max = Math.max(...data.map((d) => d.value), 1);
   const min = Math.min(...data.map((d) => d.value), 0);
   const span = max - min || 1;
 
   const points = data.map((d, i) => ({
     x: data.length === 1 ? 50 : (i / (data.length - 1)) * width,
-    y: height - ((d.value - min) / span) * (height - 10) - 5,
+    y: height - ((d.value - min) / span) * (height - 8) - 4,
     ...d,
   }));
 
@@ -117,49 +113,33 @@ export function PremiumCumulativeAreaChart({
 
   return (
     <InstitutionalChartFrame title={title}>
-      <svg viewBox={`0 0 ${width} ${height}`} className="h-72 w-full" role="img" aria-label={title}>
+      <svg viewBox={`0 0 ${width} ${height}`} className="h-52 w-full" role="img" aria-label={title}>
         <defs>
-          <linearGradient id="eliteHubArea" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="rgba(198,153,74,0.5)" />
-            <stop offset="55%" stopColor="rgba(15,143,86,0.18)" />
+          <linearGradient id="eliteHubAreaRefined" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="rgba(198,153,74,0.22)" />
             <stop offset="100%" stopColor="rgba(0,0,0,0)" />
           </linearGradient>
-          <filter id="eliteLineGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="0.6" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
-        {[0.25, 0.5, 0.75].map((t) => (
+        {[0.33, 0.66].map((t) => (
           <line
             key={t}
             x1="0"
             x2={width}
             y1={height * t}
             y2={height * t}
-            stroke="rgba(255,255,255,0.06)"
-            strokeWidth="0.15"
+            stroke="rgba(255,255,255,0.05)"
+            strokeWidth="0.12"
           />
         ))}
-        <path d={areaPath} fill="url(#eliteHubArea)" />
-        <path
-          d={linePath}
-          fill="none"
-          stroke="#d4a853"
-          strokeWidth="1.35"
-          strokeLinecap="round"
-          filter="url(#eliteLineGlow)"
-        />
+        <path d={areaPath} fill="url(#eliteHubAreaRefined)" />
+        <path d={linePath} fill="none" stroke="#c6994a" strokeWidth="0.85" strokeLinecap="round" strokeLinejoin="round" />
         {points.map((p) => (
-          <g key={p.year}>
-            <circle cx={p.x} cy={p.y} r="2.2" fill="#0f8f56" stroke="#c6994a" strokeWidth="0.55" />
+          <circle key={p.year} cx={p.x} cy={p.y} r="1.15" fill="#0f8f56" stroke="#c6994a" strokeWidth="0.35">
             <title>{`${p.year}: ${formatPips(p.value, locale)}`}</title>
-          </g>
+          </circle>
         ))}
       </svg>
-      <div className="mt-2 flex flex-wrap justify-between gap-2 font-mono text-[10px] font-bold text-paper/48">
+      <div className="mt-2 flex flex-wrap justify-between gap-2 font-mono text-[9px] font-medium text-paper/42">
         {data.map((item) => (
           <span key={item.year}>{item.year}</span>
         ))}
@@ -178,17 +158,17 @@ export function PremiumDonutChart({
   locale?: Locale;
 }) {
   const total = data.reduce((sum, item) => sum + item.value, 0);
-  const countLabel =
-    locale === "en" ? "signals" : locale === "es" ? "señales" : "sinais";
+  const countLabel = locale === "en" ? "signals" : locale === "es" ? "señales" : "sinais";
   const radius = 58;
+  const stroke = 11;
   const circumference = 2 * Math.PI * radius;
   let offset = 0;
 
   return (
     <InstitutionalChartFrame title={title}>
-      <div className="grid gap-6 md:grid-cols-[minmax(150px,200px)_1fr] md:items-center">
-        <svg viewBox="0 0 160 160" className="mx-auto h-44 w-44">
-          <circle cx="80" cy="80" r={radius} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="16" />
+      <div className="grid gap-5 md:grid-cols-[minmax(140px,180px)_1fr] md:items-center">
+        <svg viewBox="0 0 160 160" className="mx-auto h-40 w-40">
+          <circle cx="80" cy="80" r={radius} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={stroke} />
           {data.map((slice) => {
             const length = total > 0 ? (slice.value / total) * circumference : 0;
             const pct = total ? Math.round((slice.value / total) * 100) : 0;
@@ -200,7 +180,7 @@ export function PremiumDonutChart({
                 r={radius}
                 fill="none"
                 stroke={slice.color}
-                strokeWidth="16"
+                strokeWidth={stroke}
                 strokeDasharray={`${length} ${circumference - length}`}
                 strokeDashoffset={-offset}
                 transform="rotate(-90 80 80)"
@@ -212,28 +192,31 @@ export function PremiumDonutChart({
             offset += length;
             return node;
           })}
-          <text x="80" y="84" textAnchor="middle" fill="#c6994a" fontSize="10" fontWeight="700" letterSpacing="0.12em">
-            ATIVOS
+          <text x="80" y="76" textAnchor="middle" fill="#c6994a" fontSize="18" fontWeight="700">
+            {total}
+          </text>
+          <text x="80" y="94" textAnchor="middle" fill="rgba(255,255,255,0.42)" fontSize="9">
+            {countLabel}
           </text>
         </svg>
-        <div className="grid gap-2">
+        <ul className="grid gap-1.5">
           {data.map((item) => (
-            <div
+            <li
               key={item.label}
-              className="flex items-center justify-between gap-4 border-b border-white/[0.06] py-2.5 last:border-0"
+              className="flex items-center justify-between gap-3 border-b border-white/[0.06] py-2 last:border-0"
             >
-              <span className="flex items-center gap-3 text-sm font-semibold text-paper/80">
-                <span className="h-2.5 w-2.5 rounded-full shadow-[0_0_12px_currentColor]" style={{ backgroundColor: item.color }} />
+              <span className="flex items-center gap-2 text-sm font-semibold text-paper/85">
+                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: item.color }} />
                 {item.label}
               </span>
-              <span className="shrink-0 text-right font-mono text-sm font-black tabular-nums text-paper">
-                <span className="text-paper/92">{formatNumber(item.value, locale)}</span>
+              <span className="font-mono text-sm font-black tabular-nums text-paper">
+                <span>{formatNumber(item.value, locale)}</span>
                 <span className="mx-1.5 text-paper/35">·</span>
                 <span className="text-paper/55">{total ? Math.round((item.value / total) * 100) : 0}%</span>
               </span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </InstitutionalChartFrame>
   );

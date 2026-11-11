@@ -25,7 +25,8 @@
     "install:vi-analytics": "node --env-file=.env.vercel.production scripts/install-vi-analytics.mjs",
     "install:publisher-incremental": "node --env-file=.env.vercel.production scripts/install-publisher-incremental.mjs",
     "bootstrap:vi-analytics-prod": "node --env-file=.env.vercel.production scripts/bootstrap-vi-analytics-production.mjs",
-    "verify:supabase": "node --env-file=.env.local scripts/verify-supabase-schema.mjs"
+    "verify:supabase": "node --env-file=.env.local scripts/verify-supabase-schema.mjs",
+    "fix:character-pngs": "node scripts/fix-character-png-backgrounds.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
@@ -70,6 +71,7 @@
     "node-edge-tts": "^1.2.12",
     "playwright": "^1.65.0",
     "postcss": "^8.5.1",
+    "sharp": "^0.35.5",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.23.15",
     "typescript": "^5.7.3",

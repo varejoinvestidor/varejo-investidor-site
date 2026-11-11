@@ -82,13 +82,13 @@ export function AnalyticsShareBar({
     <div className="grid gap-2">
       <div className="flex items-center justify-between gap-3 text-sm">
         <div className="min-w-0">
-          <span className="truncate text-paper/78">{label}</span>
+          <span className="truncate font-medium text-paper/85">{label}</span>
           {hint ? <p className="truncate text-[11px] text-paper/40">{hint}</p> : null}
         </div>
         <span className="shrink-0 font-mono text-xs font-bold tabular-nums text-gold">{value.toLocaleString("pt-BR")}</span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-white/8">
-        <div className="h-full rounded-full bg-gradient-to-r from-gold/90 to-rise/80" style={{ width: `${pct}%` }} />
+      <div className="h-1.5 overflow-hidden rounded-full border border-line/15 bg-line/10">
+        <div className="h-full rounded-full bg-gradient-to-r from-gold to-rise/90" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );

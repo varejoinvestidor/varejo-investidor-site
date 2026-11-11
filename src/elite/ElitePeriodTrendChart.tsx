@@ -15,7 +15,7 @@ function MultiMetricLineChart({ data, compact }: { data: PeriodTrendPoint[]; com
   }
 
   const width = 100;
-  const height = compact ? 52 : 80;
+  const height = compact ? 48 : 64;
   const maxSignals = Math.max(...data.map((d) => d.signals), 1);
   const maxCum = Math.max(...data.map((d) => Math.abs(d.cumulativePips)), 1);
   const minCum = Math.min(...data.map((d) => d.cumulativePips), 0);
@@ -43,24 +43,24 @@ function MultiMetricLineChart({ data, compact }: { data: PeriodTrendPoint[]; com
 
   return (
     <figure>
-      <svg viewBox={`0 0 ${width} ${height}`} className={compact ? "h-36 w-full" : "h-48 w-full"} role="img" aria-label="Tendência diária">
+      <svg viewBox={`0 0 ${width} ${height}`} className={compact ? "h-32 w-full" : "h-40 w-full"} role="img" aria-label="Tendência diária">
         {signalPoints.map((p) => (
           <rect
             key={`bar-${p.d.label}`}
-            x={p.x - 1.8}
+            x={p.x - 0.9}
             y={p.y}
-            width={3.6}
+            width={1.8}
             height={height - p.y - 2}
-            fill="rgba(198,153,74,0.35)"
-            rx={0.4}
+            fill="rgba(198,153,74,0.32)"
+            rx={0.25}
           >
             <title>{`${p.d.label}: ${p.d.signals} sinal(is)`}</title>
           </rect>
         ))}
-        <polyline points={poly(pipsPoints)} fill="none" stroke="#0f8f56" strokeWidth={1.6} strokeLinecap="round" />
-        <polyline points={poly(winPoints)} fill="none" stroke="#8b5cf6" strokeWidth={1.2} strokeDasharray="2 1.5" strokeLinecap="round" />
+        <polyline points={poly(pipsPoints)} fill="none" stroke="#0f8f56" strokeWidth={0.9} strokeLinecap="round" />
+        <polyline points={poly(winPoints)} fill="none" stroke="#a78bfa" strokeWidth={0.75} strokeDasharray="1.8 1.2" strokeLinecap="round" />
         {pipsPoints.map((p) => (
-          <circle key={`pip-${p.d.label}`} cx={p.x} cy={p.y} r="1.4" fill="#0f8f56">
+          <circle key={`pip-${p.d.label}`} cx={p.x} cy={p.y} r="0.9" fill="#0f8f56">
             <title>{`${p.d.label}: ${formatPipsDisplay(p.d.cumulativePips)} acumulado`}</title>
           </circle>
         ))}
@@ -107,16 +107,17 @@ export function ElitePeriodTrendChart({
   }, [trend]);
 
   return (
-    <section className={`rounded-xl border border-gold/20 bg-black/25 p-4 md:p-6 ${variant === "public" ? "mt-10" : ""}`}>
+    <section
+      className={`rounded-xl border border-gold/18 bg-black/30 p-4 md:p-5 ${variant === "public" ? "mt-8" : ""}`}
+    >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h3 className="text-sm font-bold uppercase tracking-wider text-gold">Tendência no período</h3>
-          <p className="mt-1 max-w-xl text-xs text-paper/50">
-            Sinais enviados por dia, pips acumulados (fechados) e taxa de acerto diária. Mesma base dos cards acima (
-            <code className="text-paper/65">created_at</code> / <code className="text-paper/65">traded_on</code>).
+          <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gold">Tendência no período</h3>
+          <p className="mt-1.5 max-w-xl text-[11px] leading-relaxed text-paper/48">
+            Sinais por dia, pips acumulados (fechados) e taxa de acerto. Base: datas das operações públicas.
           </p>
         </div>
-        <label className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-xs">
+        <label className="flex items-center gap-2 rounded-md border border-white/10 bg-black/20 px-2.5 py-1.5 text-xs">
           <span className="font-bold uppercase tracking-wide text-paper/45">Período</span>
           <select
             value={range}
@@ -142,7 +143,7 @@ export function ElitePeriodTrendChart({
         </span>
       </div>
 
-      <div className="mt-4 rounded-lg border border-line/12 bg-black/20 p-3 md:p-4">
+      <div className="mt-4 rounded-lg border border-white/8 bg-black/15 p-2.5 md:p-3">
         <MultiMetricLineChart data={trend} />
       </div>
     </section>

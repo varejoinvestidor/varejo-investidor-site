@@ -8,10 +8,10 @@ import { getPublisherArticlePath } from "../../../src/publisher/public/paths";
 
 function StatCard({ label, value, hint }: { label: string; value: number | string; hint?: string }) {
   return (
-    <div className="rounded-xl border border-line/12 bg-paper/[0.02] p-5">
-      <p className="text-xs font-semibold uppercase tracking-wider text-paper/50">{label}</p>
-      <p className="mt-2 font-serif text-3xl text-paper">{value}</p>
-      {hint ? <p className="mt-1 text-xs text-paper/40">{hint}</p> : null}
+    <div className="admin-panel admin-panel-elevated p-5">
+      <p className="text-xs font-bold uppercase tracking-wider text-paper/60">{label}</p>
+      <p className="admin-stat-value mt-2">{value}</p>
+      {hint ? <p className="mt-1 text-xs text-paper/55">{hint}</p> : null}
     </div>
   );
 }
@@ -30,14 +30,10 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className={`block rounded-xl border p-5 transition ${
-        primary
-          ? "border-gold/40 bg-gold/10 hover:bg-gold/15"
-          : "border-line/12 bg-paper/[0.02] hover:border-line/25"
-      }`}
+      className={`admin-quick-link ${primary ? "admin-quick-link-primary" : ""}`}
     >
       <p className={`text-sm font-bold ${primary ? "text-gold" : "text-paper"}`}>{title}</p>
-      <p className="mt-1 text-xs leading-relaxed text-paper/55">{description}</p>
+      <p className="mt-1 text-xs leading-relaxed text-paper/60">{description}</p>
     </Link>
   );
 }
@@ -53,7 +49,7 @@ export default async function AdminOverviewPage() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="font-serif text-3xl tracking-tight text-paper">Visão geral</h2>
-          <p className="mt-2 text-sm text-paper/60">
+          <p className="mt-2 text-sm text-paper/65">
             {profile ? (
               <>
                 Olá, {profile.full_name ?? profile.email} — {ROLE_LABELS[profile.role]}
@@ -97,9 +93,9 @@ export default async function AdminOverviewPage() {
         />
       </section>
 
-      <section className="rounded-xl border border-line/12 bg-paper/[0.02] p-6">
+      <section className="admin-panel p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-paper/70">Atividade recente</h3>
+          <h3 className="text-sm font-bold uppercase tracking-wider text-paper/75">Atividade recente</h3>
           <Link href="/admin/artigos" className="text-xs text-gold hover:underline">
             Ver lista completa
           </Link>
@@ -149,7 +145,7 @@ export default async function AdminOverviewPage() {
 
 function PulseBadge({ configured }: { configured: boolean }) {
   return (
-    <div className="flex items-center gap-2 rounded-full border border-line/15 bg-paper/[0.03] px-3 py-1.5 text-xs text-paper/60">
+    <div className="admin-panel flex items-center gap-2 rounded-full px-3 py-1.5 text-xs text-paper/65">
       <span
         className={`h-2 w-2 rounded-full ${configured ? "bg-rise shadow-[0_0_8px_rgba(34,197,94,0.6)]" : "bg-fall"}`}
         aria-hidden

@@ -15,7 +15,13 @@ import { parseWhatsAppSignal } from "../whatsappParse";
 import { EliteOperationsMobileList } from "./EliteOperationsMobileList";
 import { EliteSchemaAlert } from "./EliteSchemaAlert";
 import { EliteAdminSubnav } from "./EliteAdminSubnav";
-import { draftFromRow, emptyOperationDraft, type OperationDraft } from "./operationFormState";
+import {
+  defaultReportMonth,
+  defaultTradedOnIso,
+  draftFromRow,
+  emptyOperationDraft,
+  type OperationDraft,
+} from "./operationFormState";
 import { sortAdminOperations } from "./sortOperations";
 import {
   rowFromTradeResult,
@@ -66,7 +72,7 @@ function WhatsappPreview({
 
   return (
     <div className="sm:col-span-2 space-y-3">
-      <pre className="whitespace-pre-wrap rounded-lg border border-line/15 bg-[#0a0a0a] p-4 font-mono text-xs leading-relaxed text-paper/80">
+      <pre className="admin-control whitespace-pre-wrap rounded-lg border border-line/15 p-4 font-mono text-xs leading-relaxed text-paper/80">
         {`Sinal: ${draft.signalNumber || "—"}\n🔔 ${draft.asset} ${draft.direction.toUpperCase()}  ${draft.entry}\n🎯 Take Profit: ${draft.take || "—"}\n🚫 Stop Loss: ${draft.stop || "—"}`}
       </pre>
       <div className="rounded-lg border border-gold/20 bg-gold/5 p-4 text-sm text-paper/85">
@@ -144,6 +150,8 @@ export function EliteReportAdmin({ operations, monthly, totalOperations, loadErr
       entry: String(parsed.entry),
       take: String(parsed.take),
       stop: String(parsed.stop),
+      reportMonth: prev.reportMonth.trim() || defaultReportMonth(),
+      tradedOn: prev.tradedOn.trim() || defaultTradedOnIso(),
     }));
     formSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -234,7 +242,7 @@ export function EliteReportAdmin({ operations, monthly, totalOperations, loadErr
   }
 
   const fieldClass =
-    "w-full min-h-[44px] rounded border border-line/15 bg-[#0a0a0a] px-3 py-2.5 text-base sm:text-sm";
+    "admin-control w-full min-h-[44px] rounded border border-line/15 px-3 py-2.5 text-base sm:text-sm";
 
   return (
     <div className="admin-elite-report mx-auto max-w-6xl space-y-8 md:space-y-10">

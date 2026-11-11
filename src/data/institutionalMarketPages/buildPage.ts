@@ -24,16 +24,7 @@ export function buildInstitutionalPage(slug: Exclude<MarketSlug, "fundos-imobili
   const imageAlt = locale === "pt" ? heroAsset.altPt : heroAsset.altEn;
 
   const heroFit = "contain" as const;
-  const heroPanelBySlug: Partial<Record<typeof slug, string>> = {
-    forex: "bg-[#070d0a]",
-    cripto: "bg-[#0c1220]",
-    acoes: "bg-[#0a0e14]",
-    etfs: "bg-[#080c10]",
-    ouro: "bg-[#12100a]",
-    petroleo: "bg-[#0a0c08]",
-    commodities: "bg-[#0e0c08]",
-  };
-  const heroPanel = heroPanelBySlug[slug] ?? "bg-ink";
+  const heroPanel = "bg-black";
 
   return {
     slug,

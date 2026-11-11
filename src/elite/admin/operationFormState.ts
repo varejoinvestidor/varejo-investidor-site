@@ -1,6 +1,20 @@
+import { monthLabelFromIndex } from "../reportMonth";
 import { parseEliteSignalTier, type EliteSignalTier } from "../signalTier";
 import type { EliteOperationRow } from "../types";
 import { tradeResultFromRow, type TradeResultKey } from "./tradeResult";
+
+export function defaultReportMonth(): string {
+  const now = new Date();
+  return `${monthLabelFromIndex(now.getMonth())}/${now.getFullYear()}`;
+}
+
+export function defaultTradedOnIso(): string {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
 
 export type OperationDraft = {
   signalNumber: string;
@@ -28,8 +42,8 @@ export const emptyOperationDraft = (): OperationDraft => ({
   entry: "",
   take: "",
   stop: "",
-  reportMonth: "",
-  tradedOn: "",
+  reportMonth: defaultReportMonth(),
+  tradedOn: defaultTradedOnIso(),
   updatedLabel: "Atualizado hoje",
   sortOrder: "0",
   showPublic: true,
