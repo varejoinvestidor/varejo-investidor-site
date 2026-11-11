@@ -3,25 +3,113 @@
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
-import { detectLocale } from "./SiteSections";
+import { useEffect, useMemo, useState } from "react";
 import { LocaleFlagIcon } from "./LocaleFlagIcon";
 import { LANGUAGE_CATALOG, persistLanguageChoice } from "../i18n/languageCatalog";
+import { getLanguageGateBadgeForUi, getLanguageGateCopy } from "../i18n/languageGateCopy";
 import { isRtlLocale, localeToHtmlLang, type SupportedLocale } from "../i18n/locales";
 import { localizedPath } from "../i18n/routing";
-import { getLanguageGateBadge } from "../data/languageCountCopy";
+import {
+  detectLocaleFromNavigator,
+  languageGateUiLocale,
+  type SuggestedLocaleResult,
+  type SuggestSource,
+} from "../i18n/suggestLocale";
 
-const tierHint: Record<string, string> = {
-  primary: "",
-  global: "Global",
-  expanding: "Expanding",
+
+type GeoSuggestPayload = SuggestedLocaleResult & {
+  uiLocale?: SupportedLocale;
+  countryLabel?: string | null;
+  languageName?: string;
 };
 
-export function LanguageGateScreen() {
+type Props = {
+  initial: SuggestedLocaleResult & { uiLocale: SupportedLocale };
+  countryLabel: string | null;
+  languageName: string;
+};
+
+function useCountryDisplayName(countryCode: string | null, uiLocale: SupportedLocale): string | null {
+  return useMemo(() => {
+    if (!countryCode) return null;
+    try {
+      const dn = new Intl.DisplayNames([localeToHtmlLang(uiLocale)], { type: "region" });
+      return dn.of(countryCode) ?? countryCode;
+    } catch {
+      return countryCode;
+    }
+  }, [countryCode, uiLocale]);
+}
+
+export function LanguageGateScreen({ initial, countryLabel, languageName: initialLanguageName }: Props) {
   const reduceMotion = useReducedMotion();
   const searchParams = useSearchParams();
-  const suggested = useMemo(() => detectLocale(), []);
   const [hovered, setHovered] = useState<SupportedLocale | null>(null);
+
+  const [suggested, setSuggested] = useState(initial.locale);
+  const [source, setSource] = useState<SuggestSource>(initial.source);
+  const [countryCode, setCountryCode] = useState<string | null>(initial.countryCode);
+  const [uiLocale, setUiLocale] = useState(initial.uiLocale);
+  const [languageName, setLanguageName] = useState(initialLanguageName);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function refine() {
+      try {
+        const res = await fetch("/api/geo/suggest", { credentials: "same-origin" });
+        if (!res.ok) return;
+        const data = (await res.json()) as GeoSuggestPayload;
+        if (cancelled) return;
+
+        if (data.locale) {
+          setSuggested(data.locale);
+          setSource(data.source);
+          setCountryCode(data.countryCode);
+          setUiLocale(data.uiLocale ?? languageGateUiLocale(data.locale, data.source));
+          if (data.languageName) setLanguageName(data.languageName);
+        }
+      } catch {
+        const nav = detectLocaleFromNavigator();
+        if (cancelled) return;
+        if (!initial.countryCode) {
+          setSuggested(nav);
+          setSource("browser");
+          setUiLocale(languageGateUiLocale(nav, "browser"));
+          const name = LANGUAGE_CATALOG.find((item) => item.locale === nav)?.nativeName;
+          if (name) setLanguageName(name);
+        }
+      }
+    }
+
+    void refine();
+    return () => {
+      cancelled = true;
+    };
+  }, [initial.countryCode]);
+
+  const localizedCountry = useCountryDisplayName(countryCode, uiLocale);
+  const countryForHint = localizedCountry ?? countryLabel;
+
+  const copy = getLanguageGateCopy(uiLocale);
+  const [orderedCatalog, setOrderedCatalog] = useState(LANGUAGE_CATALOG);
+
+  useEffect(() => {
+    setOrderedCatalog(() => {
+      const rest = LANGUAGE_CATALOG.filter((item) => item.locale !== suggested);
+      const pick = LANGUAGE_CATALOG.find((item) => item.locale === suggested);
+      return pick ? [pick, ...rest] : LANGUAGE_CATALOG;
+    });
+    document.documentElement.lang = localeToHtmlLang(uiLocale);
+    document.documentElement.dir = isRtlLocale(uiLocale) ? "rtl" : "ltr";
+  }, [suggested, uiLocale]);
+
+  const hint =
+    source === "geo" && countryForHint
+      ? copy.geoHint(countryForHint, languageName)
+      : source === "browser"
+        ? copy.browserHint(languageName)
+        : copy.defaultHint;
 
   function chooseLocale(locale: SupportedLocale) {
     persistLanguageChoice(locale);
@@ -37,6 +125,8 @@ export function LanguageGateScreen() {
     window.location.assign(destination);
   }
 
+  const suggestedEntry = LANGUAGE_CATALOG.find((item) => item.locale === suggested);
+
   return (
     <main className="language-gate relative flex min-h-screen flex-col overflow-hidden bg-[#030303] text-[#f4f0e8]">
       <div className="language-gate-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
@@ -48,11 +138,11 @@ export function LanguageGateScreen() {
           <span className="grid h-10 w-10 place-items-center border border-gold/30 bg-ink text-xs font-bold text-gold">VI</span>
           <div>
             <p className="font-serif text-xl tracking-[-0.03em]">Varejo Investidor</p>
-            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#f4f0e8]/45">Global financial platform</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#f4f0e8]/45">{copy.platformTagline}</p>
           </div>
         </div>
         <p className="hidden text-[10px] font-bold uppercase tracking-[0.22em] text-gold/80 md:block">
-          {getLanguageGateBadge(suggested)}
+          {getLanguageGateBadgeForUi(uiLocale)}
         </p>
       </header>
 
@@ -63,21 +153,31 @@ export function LanguageGateScreen() {
           transition={{ duration: reduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="order-2 md:order-1"
         >
-          <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold">Varejo Investidor 2.0</p>
-          <h1 className="mt-5 text-balance font-serif text-4xl leading-[1.02] tracking-[-0.04em] md:text-6xl">
-            Choose your language
-          </h1>
-          <p className="mt-5 max-w-md text-base leading-8 text-[#f4f0e8]/68">
-            Select how you want to experience Varejo Investidor. Your choice defines navigation, content and regional
-            formatting for every visit.
+          <p className="text-xs font-bold uppercase tracking-[0.34em] text-gold">{copy.eyebrow}</p>
+          <h1 className="mt-5 text-balance font-serif text-4xl leading-[1.02] tracking-[-0.04em] md:text-6xl">{copy.title}</h1>
+          <p className="mt-5 max-w-md text-base leading-8 text-[#f4f0e8]/68">{copy.subtitle}</p>
+
+          <div className="mt-6 rounded-lg border border-gold/25 bg-gold/[0.06] px-4 py-3 text-sm leading-relaxed text-[#f4f0e8]/78">
+            {hint}
+          </div>
+
+          <p className="mt-4 text-sm text-[#f4f0e8]/52">
+            {copy.suggestedLead}{" "}
+            <span className="font-semibold text-gold">{languageName}</span>
+            <span className="text-[#f4f0e8]/40">. {copy.suggestedPending}</span>
           </p>
-          <p className="mt-6 text-sm text-[#f4f0e8]/52">
-            Suggested for you:{" "}
-            <span className="font-semibold text-gold">
-              {LANGUAGE_CATALOG.find((item) => item.locale === suggested)?.nativeName ?? "English"}
-            </span>
-            <span className="text-[#f4f0e8]/40">. Not selected until you confirm below.</span>
-          </p>
+
+          {suggestedEntry ? (
+            <button
+              type="button"
+              onClick={() => chooseLocale(suggested)}
+              className="mt-6 inline-flex min-h-[44px] items-center gap-2 rounded border border-gold/55 bg-gold px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-ink transition hover:bg-gold/90"
+            >
+              <LocaleFlagIcon locale={suggested} className="h-3.5 w-5 overflow-hidden rounded-[2px]" />
+              {copy.continueIn(suggestedEntry.nativeName)}
+            </button>
+          ) : null}
+
           <div className="mt-10 hidden gap-4 md:flex">
             <Image
               src="/characters/varejo-investidor-personagens.png"
@@ -98,10 +198,7 @@ export function LanguageGateScreen() {
         >
           <div className="language-gate-mobile-mascots mb-5 flex justify-center md:hidden">
             <div className="relative w-full max-w-[17.5rem] sm:max-w-[19.5rem]">
-              <div
-                className="pointer-events-none absolute inset-x-4 bottom-0 h-10 bg-gold/[0.08] blur-2xl"
-                aria-hidden="true"
-              />
+              <div className="pointer-events-none absolute inset-x-4 bottom-0 h-10 bg-gold/[0.08] blur-2xl" aria-hidden="true" />
               <Image
                 src="/characters/varejo-investidor-personagens.png"
                 alt="Formiga, Lobo e Harpia, personagens oficiais Varejo Investidor"
@@ -116,13 +213,14 @@ export function LanguageGateScreen() {
           <div
             className="language-gate-panel border border-gold/[0.22] bg-[#050505]/90 p-4 shadow-premium backdrop-blur-md md:p-6"
             role="list"
-            aria-label="Language selection"
+            aria-label={copy.listAria}
           >
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {LANGUAGE_CATALOG.map((item, index) => {
+              {orderedCatalog.map((item, index) => {
                 const isSuggested = item.locale === suggested;
                 const isRtl = isRtlLocale(item.locale);
-                const tier = tierHint[item.tier];
+                const tier =
+                  item.tier === "global" ? copy.tierGlobal : item.tier === "expanding" ? copy.tierExpanding : "";
                 const isHover = hovered === item.locale;
 
                 return (
@@ -154,7 +252,7 @@ export function LanguageGateScreen() {
                         </span>
                         {isSuggested ? (
                           <span className="language-gate-suggested-badge shrink-0 rounded-full border border-gold/55 bg-gold/18 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] text-gold">
-                            Suggested
+                            {copy.suggestedBadge}
                           </span>
                         ) : null}
                       </span>
@@ -169,17 +267,14 @@ export function LanguageGateScreen() {
                       </span>
                     </span>
                     <span className="language-gate-enter-label text-[10px] font-bold uppercase tracking-[0.18em] text-gold opacity-90 transition md:text-gold/70 md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100">
-                      Enter
+                      {copy.enter}
                     </span>
                   </motion.button>
                 );
               })}
             </div>
           </div>
-          <p className="mt-4 text-center text-[11px] leading-6 text-[#f4f0e8]/42 md:text-left">
-            Content in languages marked &quot;Expanding&quot; may still reference the English structure while localized
-            copy is finalized.
-          </p>
+          <p className="mt-4 text-center text-[11px] leading-6 text-[#f4f0e8]/42 md:text-left">{copy.expandingNote}</p>
         </motion.div>
       </section>
     </main>

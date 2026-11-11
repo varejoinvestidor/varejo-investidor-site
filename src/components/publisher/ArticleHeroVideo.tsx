@@ -14,9 +14,14 @@ type VideoLayer = {
 export function ArticleHeroVideo({
   videos,
   labels,
+  layout = "stack",
+  formats = "all",
 }: {
   videos: ArticleVideos;
   labels: { horizontal: string; vertical: string; watch: string; unmute: string };
+  /** `aside`: vídeo vertical na coluna ao lado do texto do artigo */
+  layout?: "stack" | "aside";
+  formats?: "all" | "vertical" | "horizontal";
 }) {
   const layers = useMemo((): VideoLayer[] => {
     const items: VideoLayer[] = [];
@@ -35,7 +40,32 @@ export function ArticleHeroVideo({
     }));
   }, [videos.horizontal, videos.vertical, videos.primary]);
 
-  if (!hasArticleVideo(videos) || !layers.length) return null;
+  const formatLayers =
+    formats === "vertical"
+      ? layers.filter((l) => l.key === "vertical")
+      : formats === "horizontal"
+        ? layers.filter((l) => l.key === "horizontal")
+        : layers;
+
+  if (!hasArticleVideo(videos) || !formatLayers.length) return null;
+
+  const asideVertical = layout === "aside" && videos.vertical;
+  const stackLayers = asideVertical ? formatLayers.filter((l) => l.key === "vertical") : formatLayers;
+
+  if (asideVertical) {
+    const layer = stackLayers[0];
+    if (!layer) return null;
+    return (
+      <aside className="vi-article-videos-aside sticky top-24" aria-label={labels.watch}>
+        <ArticleVideoLayer layer={layer} videos={videos} labels={labels} compactVertical />
+        {videos.horizontal ? (
+          <p className="mt-4 text-center text-[10px] uppercase tracking-wider text-paper/40">
+            {labels.horizontal}: abaixo no artigo
+          </p>
+        ) : null}
+      </aside>
+    );
+  }
 
   return (
     <section className="vi-article-videos px-5 py-8 md:px-8 md:py-10" aria-label={labels.watch}>
@@ -44,7 +74,7 @@ export function ArticleHeroVideo({
           layers.length === 1 && layers[0]?.key === "vertical" ? "items-center max-w-lg" : ""
         }`}
       >
-        {layers.map((layer) => (
+        {stackLayers.map((layer) => (
           <ArticleVideoLayer key={layer.key} layer={layer} videos={videos} labels={labels} />
         ))}
       </div>
@@ -56,10 +86,12 @@ function ArticleVideoLayer({
   layer,
   videos,
   labels,
+  compactVertical,
 }: {
   layer: VideoLayer;
   videos: ArticleVideos;
   labels: { horizontal: string; vertical: string; watch: string; unmute: string };
+  compactVertical?: boolean;
 }) {
   const isVertical = layer.key === "vertical";
   const isPrimary = videos.primary === layer.key;
@@ -79,7 +111,11 @@ function ArticleVideoLayer({
 
       <div
         className={`vi-article-video-stage overflow-hidden border border-gold/[0.22] bg-black shadow-[0_24px_80px_rgba(0,0,0,0.55)] ${
-          isVertical ? "vi-article-video-stage--vertical" : "vi-article-video-stage--horizontal"
+          isVertical
+            ? compactVertical
+              ? "vi-article-video-stage--vertical vi-article-video-stage--vertical-aside"
+              : "vi-article-video-stage--vertical"
+            : "vi-article-video-stage--horizontal"
         }`}
       >
         <div className="vi-article-video-frame">

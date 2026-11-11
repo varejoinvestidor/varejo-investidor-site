@@ -77,6 +77,25 @@ export function AdminShell({ profile, children }: Props) {
               })}
             </ul>
 
+            <div className="my-5 border-t border-line/12 pt-4">
+              <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>
+              <ul className="mt-2 space-y-0.5">
+                {ADMIN_RESEARCH_NAV.map((item) => {
+                  const active =
+                    item.href === "/admin/relatorio-elite"
+                      ? pathname === "/admin/relatorio-elite"
+                      : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                  return (
+                    <li key={item.href}>
+                      <Link href={item.href} className={navLinkClass(active)}>
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
             {isAdmin ? (
               <div className="my-5 border-t border-line/12 pt-4">
                 <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Administrador</p>
@@ -97,25 +116,6 @@ export function AdminShell({ profile, children }: Props) {
                 </ul>
               </div>
             ) : null}
-
-            <div className="my-5 border-t border-line/12 pt-4">
-              <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>
-              <ul className="mt-2 space-y-0.5">
-                {ADMIN_RESEARCH_NAV.map((item) => {
-                  const active =
-                    item.href === "/admin/relatorio-elite"
-                      ? pathname === "/admin/relatorio-elite"
-                      : pathname === item.href || pathname.startsWith(`${item.href}/`);
-                  return (
-                    <li key={item.href}>
-                      <Link href={item.href} className={navLinkClass(active)}>
-                        {item.label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
           </nav>
 
           <div className="relative border-t border-line/10 px-4 py-4">

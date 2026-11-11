@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { FormigaChannelBanner } from "../banners/FormigaChannelBanner";
+import { LoboChannelBanner } from "../banners/LoboChannelBanner";
 import { resolveArticleBanner } from "../../publisher/data/articleBannerPresets";
 import type { ArticleBanner } from "../../publisher/types/banner";
 
@@ -24,10 +26,23 @@ export function PublisherArticleBanners({
   const outer = compact ? "py-2" : "px-5 py-6 md:px-8";
   const inner = compact ? "flex flex-col gap-6" : "mx-auto flex max-w-5xl flex-col gap-6";
 
+  const langBase = language.split("-")[0] ?? "pt";
+
   return (
     <section className={outer}>
       <div className={inner}>
         {items.map((banner) => {
+          if (banner.preset === "formiga") {
+            return (
+              <FormigaChannelBanner key={banner.id} language={langBase} href={banner.href} className="w-full" />
+            );
+          }
+          if (banner.preset === "lobo") {
+            return (
+              <LoboChannelBanner key={banner.id} language={langBase} href={banner.href} className="w-full" />
+            );
+          }
+
           const image = isLocalBanner(banner.image_url) ? (
             <Image
               src={banner.image_url}

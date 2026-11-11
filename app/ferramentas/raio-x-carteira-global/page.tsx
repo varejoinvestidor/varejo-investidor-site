@@ -1339,8 +1339,8 @@ export default function PortfolioXRayPage() {
                 title={locale === "pt" ? "Distribuição por local de custódia" : "Allocation by custody location"}
                 footer={
                   locale === "pt"
-                    ? "Mostra onde a carteira está guardada — diversificação em ativos não elimina concentração institucional."
-                    : "Shows where holdings are kept — asset diversification does not remove institutional concentration."
+                    ? "Mostra onde a carteira está guardada · diversificação em ativos não elimina concentração institucional."
+                    : "Shows where holdings are kept · asset diversification does not remove institutional concentration."
                 }
               >
                 <Bars data={custodyChartData} total={total} locale={locale} />

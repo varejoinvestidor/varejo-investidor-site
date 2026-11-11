@@ -8,17 +8,19 @@ import { InstitutionalServiceCard } from "../../src/components/InstitutionalServ
 import {
   BrokerBanners,
   ContactSection,
-  FreeChannelCTA,
   SectionHeader,
   SiteChrome,
   SupportFooter,
   fadeUp,
   useSiteLocale,
 } from "../../src/components/SiteSections";
+import { FormigaChannelBanner } from "../../src/components/banners/FormigaChannelBanner";
+import { getFormigaChannelUrl } from "../../src/data/whatsappChannels";
 import { ForexBrokerBannerWide } from "../../src/components/ForexBrokerBannerWide";
 import { isRtlLocale, localeToHtmlLang, type Locale } from "../../src/i18n/locales";
 
 const ICHIMOKU_PRODUCT_URL = "https://lastlink.com/p/C1EE3F8C4/checkout-payment";
+const FORMIGA_CHANNEL_FALLBACK = "https://whatsapp.com/channel/0029Va9J7SAAO7R8cN76Ib13";
 const SELECT_CONTACT_URL =
   "https://wa.me/5519983393147?text=Ol%C3%A1%2C%20quero%20conhecer%20o%20Varejo%20Investidor%20Select.";
 
@@ -692,6 +694,7 @@ export default function ServicesPage() {
     isPt || locale === "he" || locale === "hi"
       ? t.servicesPage.text
       : internationalServicesIntro[locale as keyof typeof internationalServicesIntro] ?? internationalServicesIntro.en;
+  const formigaHref = getFormigaChannelUrl(locale, FORMIGA_CHANNEL_FALLBACK);
   const productLabel =
     locale === "en"
       ? "Product"
@@ -1044,7 +1047,7 @@ export default function ServicesPage() {
 
       <section className="border-y border-ink/[0.08] bg-white px-5 py-14 md:px-8">
         <div className="mx-auto max-w-7xl">
-          <FreeChannelCTA t={t} />
+          <FormigaChannelBanner language={locale} href={formigaHref} className="w-full" />
         </div>
       </section>
 

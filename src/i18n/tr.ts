@@ -89,7 +89,7 @@ export const tr = {
         text: "Strateji, piyasa okuması, işlem, döngüler ve pozisyonlama.",
         lessons: [
           "Seviye 1: Operasyonel strateji, akış okuması ve karar alma.",
-          "Seviye 2: Forex, kripto ve uluslararası piyasalar — uygulamalı bakış.",
+          "Seviye 2: Forex, kripto ve uluslararası piyasalar · uygulamalı bakış.",
           "Seviye 3: Ekonomik döngüler, varlık korelasyonu ve küresel senaryo.",
           "Seviye 4: Portföy yönetimi, ileri risk ve pozisyonlama.",
           "Seviye 5: Varlık vizyonu ve Harpia seviyesine hazırlık.",
@@ -115,10 +115,10 @@ export const tr = {
     text: "Sinyaller ve sürekli eğitime ek olarak Varejo Investidor; stratejik ivme, piyasa vizyonu ve varlık gelişimi için bireysel ürünler sunar.",
     cta: "Stratejik iletişim iste",
     products: [
-      ["Bireysel Mentorluk — 4 saat", "Piyasa vizyonu, operasyonel yapı, risk ve stratejik yön odaklı bireysel oturum."],
-      ["Bireysel Mentorluk — 10 saat", "Yöntem geliştirme, senaryo okuma ve küresel piyasada konumlanma için derinlemesine rehberlik."],
-      ["Gold Danışmanlık — 6 ay — 30 saat", "Stratejik organizasyon, kurumsal okuma, operasyonel gelişim ve finansal yapılandırma için premium danışmanlık."],
-      ["Platinum Danışmanlık — yıllık — 58 saat", "Varlık vizyonu, küresel yapı, uluslararası piyasalar ve stratejik genişleme odaklı elite danışmanlık."],
+      ["Bireysel Mentorluk · 4 saat", "Piyasa vizyonu, operasyonel yapı, risk ve stratejik yön odaklı bireysel oturum."],
+      ["Bireysel Mentorluk · 10 saat", "Yöntem geliştirme, senaryo okuma ve küresel piyasada konumlanma için derinlemesine rehberlik."],
+      ["Gold Danışmanlık · 6 ay · 30 saat", "Stratejik organizasyon, kurumsal okuma, operasyonel gelişim ve finansal yapılandırma için premium danışmanlık."],
+      ["Platinum Danışmanlık · yıllık · 58 saat", "Varlık vizyonu, küresel yapı, uluslararası piyasalar ve stratejik genişleme odaklı elite danışmanlık."],
     ],
   },
   signalExample: {

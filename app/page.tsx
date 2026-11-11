@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, trackVarejoClick, useSiteLocale } from "../src/components/SiteSections";
+import { FormigaChannelBanner } from "../src/components/banners/FormigaChannelBanner";
+import { SiteChrome, SupportFooter, fadeUp, trackVarejoClick, useSiteLocale } from "../src/components/SiteSections";
 import { getInsightsPath } from "../src/data/insightsContent";
 import {
   getFormigaChannelUrl,
@@ -1376,7 +1377,7 @@ const homeEducationBaseCopy: Record<string, { eyebrow: string; title: string; te
   hi: {
     eyebrow: "शैक्षिक आधार",
     title: "पद्धति शिक्षा से शुरू होती है।",
-    text: "चींटी, भेड़िया और गरुड़ शैक्षिक आधार व्यवस्थित करते हैं — जोखिम, वैश्विक बाजार और संपत्ति दृष्टि समझने में मदद करते हैं।",
+    text: "चींटी, भेड़िया और गरुड़ शैक्षिक आधार व्यवस्थित करते हैं · जोखिम, वैश्विक बाजार और संपत्ति दृष्टि समझने में मदद करते हैं।",
     cta: "प्रशिक्षण कार्यक्रम देखें",
   },
   ja: {
@@ -2126,7 +2127,7 @@ export default function Home() {
 
       <section className="px-5 py-12 md:px-8 md:py-14 lg:px-12 xl:px-16">
         <div className="mx-auto max-w-[1280px]">
-          <FreeChannelCTA t={t} />
+          <FormigaChannelBanner language={locale} href={formigaHref} />
         </div>
       </section>
 

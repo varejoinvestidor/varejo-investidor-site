@@ -54,7 +54,7 @@ export const LANGUAGE_CATALOG: LanguageCatalogEntry[] = SUPPORTED_LOCALES.map((l
   return { locale, ...meta, tier };
 });
 
-/** @deprecated Use LANGUAGE_CATALOG — kept for compact header codes. */
+/** @deprecated Use LANGUAGE_CATALOG · kept for compact header codes. */
 export const languageMeta: Record<SupportedLocale, { code: string; name: string }> = Object.fromEntries(
   LANGUAGE_CATALOG.map((item) => [item.locale, { code: item.code, name: item.nativeName }]),
 ) as Record<SupportedLocale, { code: string; name: string }>;

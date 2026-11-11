@@ -115,10 +115,10 @@ export const vi = {
     text: "Bên cạnh tín hiệu và giáo dục liên tục, Varejo Investidor còn có sản phẩm cá nhân để tăng tốc chiến lược, tầm nhìn thị trường và phát triển tài sản.",
     cta: "Yêu cầu liên hệ chiến lược",
     products: [
-      ["Mentoring cá nhân — 4 giờ", "Buổi riêng tập trung vào tầm nhìn thị trường, cấu trúc vận hành, rủi ro và định hướng chiến lược."],
-      ["Mentoring cá nhân — 10 giờ", "Đồng hành sâu hơn để xây phương pháp, đọc kịch bản và định vị trên thị trường toàn cầu."],
-      ["Tư vấn Gold — 6 tháng — 30 giờ", "Tư vấn cao cấp cho tổ chức chiến lược, đọc thị trường theo hướng tổ chức, tiến hóa vận hành và cấu trúc tài chính."],
-      ["Tư vấn Platinum — hàng năm — 58 giờ", "Tư vấn elite tập trung vào tầm nhìn tài sản, cấu trúc toàn cầu, thị trường quốc tế và mở rộng chiến lược."],
+      ["Mentoring cá nhân · 4 giờ", "Buổi riêng tập trung vào tầm nhìn thị trường, cấu trúc vận hành, rủi ro và định hướng chiến lược."],
+      ["Mentoring cá nhân · 10 giờ", "Đồng hành sâu hơn để xây phương pháp, đọc kịch bản và định vị trên thị trường toàn cầu."],
+      ["Tư vấn Gold · 6 tháng · 30 giờ", "Tư vấn cao cấp cho tổ chức chiến lược, đọc thị trường theo hướng tổ chức, tiến hóa vận hành và cấu trúc tài chính."],
+      ["Tư vấn Platinum · hàng năm · 58 giờ", "Tư vấn elite tập trung vào tầm nhìn tài sản, cấu trúc toàn cầu, thị trường quốc tế và mở rộng chiến lược."],
     ],
   },
   signalExample: {

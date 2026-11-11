@@ -9,11 +9,16 @@ export const ADMIN_PUBLISHER_NAV: AdminNavItem[] = [
   { href: "/admin", label: "Visão geral" },
   { href: "/admin/artigos", label: "Artigos" },
   { href: "/admin/artigos/novo", label: "Novo artigo" },
-  { href: "/admin/categorias", label: "Categorias" },
-  { href: "/admin/tags", label: "Tags" },
-  { href: "/admin/autores", label: "Autores" },
+  { href: "/admin/videos", label: "Vídeo", description: "YouTube vertical ou horizontal" },
   { href: "/admin/midia", label: "Biblioteca de mídia" },
   { href: "/admin/agendamentos", label: "Agendamentos" },
+];
+
+/** Taxonomia e perfis — agrupados em /admin/configuracoes. */
+export const ADMIN_CONFIG_TAXONOMY_NAV: AdminNavItem[] = [
+  { href: "/admin/configuracoes#categorias", label: "Categorias" },
+  { href: "/admin/configuracoes#tags", label: "Tags" },
+  { href: "/admin/configuracoes#autores", label: "Autores" },
 ];
 
 /** VI Research — desk Elite e relatórios de performance. */

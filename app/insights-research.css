@@ -138,6 +138,33 @@
 
 .insights-portal .editorial-featured--vertical .vi-thumb-vertical--featured {
   height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.insights-portal .editorial-card--vertical-split .vi-thumb-vertical--card {
+  max-width: 100%;
+  max-height: min(360px, 42vh);
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .insights-portal .editorial-card--vertical-split .vi-thumb-vertical--card {
+    max-height: min(420px, 52vh);
+  }
+
+  .insights-portal .editorial-card--span-2.editorial-card--vertical-split {
+    grid-column: span 2;
+  }
+}
+
+.vi-article-video-stage--vertical-aside .vi-article-video-frame {
+  width: 100%;
+  max-height: min(78vh, 720px);
+}
+
+.article-split-main .vi-article-videos-aside {
+  width: 100%;
 }
 
 .insight-article .insight-toc a:hover {

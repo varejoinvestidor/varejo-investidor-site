@@ -1,5 +1,7 @@
 "use client";
 
+import { FormigaChannelBanner } from "../../components/banners/FormigaChannelBanner";
+import { LoboChannelBanner } from "../../components/banners/LoboChannelBanner";
 import { resolveArticleBanner } from "../data/articleBannerPresets";
 import type { ArticleBanner } from "../types/banner";
 
@@ -11,13 +13,45 @@ const PLACEMENT_LABELS: Record<ArticleBanner["placement"], string> = {
 
 function BannerFigure({
   banner,
+  language,
   interactive,
   onSelect,
 }: {
   banner: ArticleBanner;
+  language: string;
   interactive?: boolean;
   onSelect?: () => void;
 }) {
+  if (banner.preset === "formiga") {
+    const frameClass = `overflow-hidden ${interactive ? "cursor-pointer ring-offset-2 ring-offset-ink" : ""}`;
+    return (
+      <div
+        className={frameClass}
+        onClick={interactive ? onSelect : undefined}
+        role={interactive ? "button" : undefined}
+        tabIndex={interactive ? 0 : undefined}
+        onKeyDown={interactive ? (e) => e.key === "Enter" && onSelect?.() : undefined}
+      >
+        <FormigaChannelBanner language={language} href={banner.href} />
+      </div>
+    );
+  }
+
+  if (banner.preset === "lobo") {
+    const frameClass = `overflow-hidden ${interactive ? "cursor-pointer ring-offset-2 ring-offset-ink" : ""}`;
+    return (
+      <div
+        className={frameClass}
+        onClick={interactive ? onSelect : undefined}
+        role={interactive ? "button" : undefined}
+        tabIndex={interactive ? 0 : undefined}
+        onKeyDown={interactive ? (e) => e.key === "Enter" && onSelect?.() : undefined}
+      >
+        <LoboChannelBanner language={language} href={banner.href} />
+      </div>
+    );
+  }
+
   const image = (
     // eslint-disable-next-line @next/next/no-img-element
     <img src={banner.image_url} alt={banner.alt} className="h-auto w-full object-cover" />
@@ -82,6 +116,7 @@ export function ArticleBannerPreviewStrip({
           >
             <BannerFigure
               banner={resolved}
+              language={language}
               interactive={Boolean(onSelectBanner)}
               onSelect={() => onSelectBanner?.(raw.id)}
             />

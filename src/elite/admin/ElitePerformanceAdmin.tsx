@@ -9,6 +9,7 @@ import { computeTraderPerformance } from "../traderPerformance";
 import { tradeResultFromRow, tradeResultLabel } from "./tradeResult";
 import { EliteSchemaAlert } from "./EliteSchemaAlert";
 import { ElitePerformanceCharts } from "./ElitePerformanceCharts";
+import { ElitePeriodTrendChart } from "../ElitePeriodTrendChart";
 import { EliteMonthlyConsolidatedPanel } from "./EliteMonthlyConsolidatedPanel";
 import {
   ELITE_ADMIN_OPS_INITIAL,
@@ -17,7 +18,7 @@ import {
 import { EliteAdminAssetChart } from "./EliteAdminAssetChart";
 import { EliteAdminMonthlyHeatmap } from "./EliteAdminMonthlyHeatmap";
 import { buildAssetCounts } from "./buildAssetCounts";
-import { sortAdminOperations } from "./sortOperations";
+import { formatOperationTradeDate, selectRecentClosedPublic, sortAdminOperations } from "./sortOperations";
 
 type Props = {
   operations: EliteOperationRow[];
@@ -38,14 +39,7 @@ export function ElitePerformanceAdmin({ operations, monthly, totalOperations, lo
   const loadIncomplete = operations.length < totalInDb;
 
   const activeCount = publicOps.filter((o) => o.status === "active").length;
-  const recentClosed = useMemo(
-    () =>
-      [...publicOps]
-        .filter((o) => o.status === "closed")
-        .sort((a, b) => (b.traded_on ?? "").localeCompare(a.traded_on ?? ""))
-        .slice(0, 12),
-    [publicOps],
-  );
+  const recentClosed = useMemo(() => selectRecentClosedPublic(publicOps, 12), [publicOps]);
 
   const [lotAsset, setLotAsset] = useState(publicOps[0]?.asset ?? "EUR/USD");
   const [lotPips, setLotPips] = useState(publicOps.find((o) => o.status === "closed")?.result_pips ?? 100);
@@ -108,6 +102,7 @@ export function ElitePerformanceAdmin({ operations, monthly, totalOperations, lo
         <p className="text-xs text-paper/45">
           Em andamento agora: <span className="font-mono text-gold">{activeCount}</span> sinal(is) público(s).
         </p>
+        <ElitePeriodTrendChart operations={operations} />
       </section>
 
       <section className="grid gap-6 rounded-xl border border-gold/20 bg-black/25 p-6 lg:grid-cols-2">
@@ -185,6 +180,9 @@ export function ElitePerformanceAdmin({ operations, monthly, totalOperations, lo
 
       <section className="space-y-3 rounded-xl border border-line/12 p-4">
         <h3 className="text-sm font-bold uppercase tracking-wider text-paper/55">Últimos trades fechados (público)</h3>
+        <p className="text-[11px] text-paper/40">
+          Ordenado por nº do sinal (mais recentes primeiro). Datas inválidas no banco usam o mês do relatório.
+        </p>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-sm">
             <thead className="text-xs uppercase tracking-wider text-paper/45">
@@ -208,7 +206,7 @@ export function ElitePerformanceAdmin({ operations, monthly, totalOperations, lo
                   <tr key={row.id} className="border-t border-line/5">
                     <td className="px-2 py-2 font-mono text-gold">{row.signal_number ?? "—"}</td>
                     <td className="px-2 py-2 font-mono">{row.asset}</td>
-                    <td className="px-2 py-2 text-paper/55">{row.traded_on ?? "—"}</td>
+                    <td className="px-2 py-2 text-paper/55">{formatOperationTradeDate(row)}</td>
                     <td className="px-2 py-2 text-xs">{tradeResultLabel(tradeResultFromRow(row))}</td>
                     <td className="px-2 py-2 text-right font-mono tabular-nums">
                       {resolveOperationPips(row).label}

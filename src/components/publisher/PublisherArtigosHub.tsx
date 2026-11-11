@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../SiteSections";
+import { SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../SiteSections";
+import { FormigaChannelBanner } from "../banners/FormigaChannelBanner";
 import type { Locale } from "../../i18n";
 import type { PublisherHubCopy } from "../../publisher/public/hubCopy";
 import { dateLocaleForArticles } from "../../publisher/public/hubCopy";
 import type { PublicArticleSummary } from "../../publisher/public/types";
 import { getPublisherArticlePath } from "../../publisher/public/paths";
 import { ArticleVideoThumb } from "./ArticleHeroVideo";
-import { articleUsesVerticalLayout, hasArticleVideo } from "../../publisher/types/video";
+import { hasArticleVideo } from "../../publisher/types/video";
 
 const PAGE_SIZE = 9;
 
@@ -34,7 +35,7 @@ export function PublisherArtigosHub({
   const onFeaturedLeave = useCallback(() => setFeaturedHover(false), []);
 
   const featured = articles.find((a) => a.featured) ?? articles[0];
-  const featuredVertical = featured && hasArticleVideo(featured.videos) && articleUsesVerticalLayout(featured.videos);
+  const featuredVertical = Boolean(featured?.videos?.vertical);
 
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -102,7 +103,9 @@ export function PublisherArtigosHub({
               <Link
                 href={getPublisherArticlePath(language, featured.slug)}
                 className={`editorial-featured group overflow-hidden border border-gold/[0.2] bg-paper/[0.02] ${
-                  featuredVertical ? "editorial-featured--vertical lg:grid lg:grid-cols-[minmax(280px,400px)_1fr]" : ""
+                  featuredVertical
+                    ? "editorial-featured--vertical md:grid md:grid-cols-[minmax(240px,360px)_1fr] lg:grid-cols-[minmax(280px,400px)_1fr]"
+                    : ""
                 }`}
                 onMouseEnter={onFeaturedEnter}
                 onMouseLeave={onFeaturedLeave}
@@ -110,7 +113,7 @@ export function PublisherArtigosHub({
                 onBlur={onFeaturedLeave}
               >
                 <div
-                  className={`${featuredVertical ? "flex items-stretch justify-center border-b border-gold/[0.14] bg-black p-4 md:p-6 lg:border-b-0 lg:border-r" : ""}`}
+                  className={`${featuredVertical ? "flex items-stretch justify-center border-b border-gold/[0.14] bg-black p-4 md:border-b-0 md:border-r md:p-5 lg:p-6" : ""}`}
                 >
                   {hasArticleVideo(featured.videos) ? (
                     <ArticleVideoThumb
@@ -163,22 +166,37 @@ export function PublisherArtigosHub({
 
             <div className="editorial-magazine-grid">
               {visiblePosts.map((post, index) => {
-                const verticalCard = hasArticleVideo(post.videos) && articleUsesVerticalLayout(post.videos);
+                const verticalCard = Boolean(post.videos?.vertical);
                 return (
                   <Link
                     key={post.id}
                     href={getPublisherArticlePath(language, post.slug)}
-                    className={`insight-editorial-card group flex flex-col overflow-hidden border border-gold/[0.14] bg-paper/[0.02] transition hover:border-gold/35 ${
+                    className={`insight-editorial-card group overflow-hidden border border-gold/[0.14] bg-paper/[0.02] transition hover:border-gold/35 ${
                       index % 7 === 0 ? "editorial-card--span-2" : ""
-                    } ${verticalCard ? "editorial-card--tall" : ""}`}
+                    } ${verticalCard ? "editorial-card--vertical-split flex flex-col md:grid md:grid-cols-[minmax(150px,200px)_1fr] md:items-stretch" : "flex flex-col"}`}
                   >
                     {hasArticleVideo(post.videos) ? (
-                      <ArticleVideoThumb videos={post.videos} title={post.title} />
+                      <div
+                        className={
+                          verticalCard
+                            ? "flex items-center justify-center border-b border-gold/[0.12] bg-black/80 p-3 md:border-b-0 md:border-r"
+                            : ""
+                        }
+                      >
+                        <ArticleVideoThumb
+                          videos={
+                            verticalCard && post.videos.vertical
+                              ? { ...post.videos, primary: "vertical" }
+                              : post.videos
+                          }
+                          title={post.title}
+                        />
+                      </div>
                     ) : post.cover_image ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={post.cover_image} alt="" className="aspect-[16/10] w-full object-cover" />
                     ) : null}
-                    <div className="flex flex-1 flex-col p-6">
+                    <div className="flex flex-1 flex-col p-5 md:p-6">
                       <p className="text-[10px] font-bold uppercase tracking-widest text-gold/80">
                         {post.category_name ?? "Editorial"} · {new Date(post.published_at).toLocaleDateString(dateLocale)}
                       </p>
@@ -202,9 +220,9 @@ export function PublisherArtigosHub({
           </div>
         </section>
 
-        <div className="mx-auto max-w-7xl px-5 pb-16 md:px-8">
-          <FreeChannelCTA t={t} variant="dark" />
-        </div>
+        <section className="mx-auto max-w-7xl border-t border-gold/[0.14] px-5 py-12 md:px-8 md:py-14">
+          <FormigaChannelBanner language={locale.split("-")[0] || "pt"} className="w-full" />
+        </section>
         <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
       </main>
     </>

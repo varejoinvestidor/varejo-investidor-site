@@ -5,28 +5,12 @@ import {
 } from "./src/i18n/languageCatalog";
 import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "./src/i18n/locales";
 import { localeFromPublicPath, localizedPath, normalizeUrlLocaleSegment } from "./src/i18n/routing";
+import { localeFromAcceptLanguage, suggestLocale } from "./src/i18n/suggestLocale";
+import { countryCodeFromRequestHeaders } from "./src/analytics/regions";
 import { refreshPublisherSession } from "./src/publisher/supabase/middleware";
 
 function isPublisherPath(pathname: string) {
   return pathname === "/admin" || pathname.startsWith("/admin/") || pathname.startsWith("/auth/");
-}
-
-function localeFromAcceptLanguage(header: string | null) {
-  if (!header) return DEFAULT_LOCALE;
-
-  const requested = header
-    .split(",")
-    .map((part) => part.trim().split(";")[0]?.toLowerCase())
-    .filter(Boolean);
-
-  for (const language of requested) {
-    const base = language.split("-")[0];
-    if (isSupportedLocale(base)) return base;
-    if (language === "fil") return "tl";
-    if (language === "zh-cn" || language === "zh-sg") return "zh";
-  }
-
-  return DEFAULT_LOCALE;
 }
 
 function isSearchBot(userAgent: string | null) {
@@ -96,7 +80,15 @@ export async function middleware(request: NextRequest) {
       if (pathname !== "/") {
         gateUrl.searchParams.set("returnTo", pathname);
       }
-      return NextResponse.redirect(gateUrl);
+      const redirect = NextResponse.redirect(gateUrl);
+      const country = countryCodeFromRequestHeaders(request.headers);
+      const suggested = suggestLocale({
+        countryCode: country,
+        acceptLanguage: request.headers.get("accept-language"),
+      });
+      redirect.cookies.set("varejo_geo_country", country ?? "", { path: "/", maxAge: 3600, sameSite: "lax" });
+      redirect.cookies.set("varejo_geo_locale", suggested.locale, { path: "/", maxAge: 3600, sameSite: "lax" });
+      return redirect;
     }
 
     if (hasCompletedLanguageGate(request) && pathname === "/") {
@@ -146,6 +138,7 @@ export async function middleware(request: NextRequest) {
       "reporte-elite",
       "elite-report-hi",
       "idioma",
+      "banners-preview",
       "admin",
       "auth",
     ]);

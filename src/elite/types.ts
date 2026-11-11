@@ -30,6 +30,8 @@ export type EliteOperationRow = {
   take_price: number | null;
   stop_price: number | null;
   close_outcome: "take" | "stop" | "manual" | null;
+  created_at?: string | null;
+  updated_at?: string | null;
 };
 
 export type EliteOperationInput = Omit<EliteOperationRow, "id"> & { id?: string };

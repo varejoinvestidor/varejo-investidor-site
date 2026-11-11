@@ -46,7 +46,7 @@ export function InsightArticleBody({ blocks, fallback }: { blocks: InsightConten
               className="border-l-2 border-gold bg-paper/[0.04] px-6 py-5 font-serif text-xl leading-relaxed text-paper/[0.88]"
             >
               <p>{block.text}</p>
-              {block.cite ? <footer className="mt-3 text-sm not-italic text-paper/[0.5]">— {block.cite}</footer> : null}
+              {block.cite ? <footer className="mt-3 text-sm not-italic text-paper/[0.5]">{block.cite}</footer> : null}
             </blockquote>
           );
         }

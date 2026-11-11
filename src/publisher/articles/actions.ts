@@ -8,6 +8,7 @@ import { sanitizeTipTapForSave } from "../editor/youtubeEmbed";
 import {
   emptyArticleVideos,
   mergeVideosIntoContent,
+  normalizeVideoId,
   resolveArticleVideos,
   videosForDatabasePatch,
   type ArticleVideos,
@@ -297,6 +298,67 @@ export async function createDraftArticle(language = "pt"): Promise<ActionResult<
   revalidateArticlePaths();
 
   return { ok: true, data: { id: data.id } };
+}
+
+export type QuickVideoArticleInput = {
+  title: string;
+  subtitle: string;
+  orientation: "horizontal" | "vertical";
+  youtube: string;
+  language?: string;
+  publish?: boolean;
+};
+
+/** Artigo mínimo: título, subtítulo e um vídeo YouTube (16:9 ou 9:16). */
+export async function createQuickVideoArticle(
+  input: QuickVideoArticleInput,
+): Promise<ActionResult<{ id: string; slug: string }>> {
+  const title = input.title.trim();
+  if (!title) return { ok: false, error: "Informe o título." };
+
+  const videoId = normalizeVideoId(input.youtube);
+  if (!videoId) return { ok: false, error: "Link ou ID do YouTube inválido." };
+
+  const language = input.language ?? "pt";
+  const videos: ArticleVideos = {
+    horizontal: input.orientation === "horizontal" ? videoId : null,
+    vertical: input.orientation === "vertical" ? videoId : null,
+    primary: input.orientation,
+  };
+
+  const draft = await createDraftArticle(language);
+  if (!draft.ok) return { ok: false, error: draft.error };
+  if (!draft.data) return { ok: false, error: "Não foi possível criar o rascunho." };
+
+  const subtitle = input.subtitle.trim();
+  const saveInput: SaveArticleInput = {
+    id: draft.data.id,
+    title,
+    slug: "",
+    subtitle,
+    excerpt: subtitle,
+    content: emptyTipTapDocument(),
+    cover_image: null,
+    category_id: null,
+    language,
+    seo_title: null,
+    seo_description: null,
+    references_text: null,
+    sources: [],
+    tag_ids: [],
+    banners: [],
+    videos,
+  };
+
+  if (input.publish) {
+    const published = await saveAndPublishArticle(saveInput);
+    if (!published.ok) return { ok: false, error: published.error };
+    return { ok: true, data: { id: draft.data.id, slug: published.data!.slug } };
+  }
+
+  const saved = await saveArticle(saveInput);
+  if (!saved.ok) return { ok: false, error: saved.error };
+  return { ok: true, data: { id: draft.data.id, slug: saved.data!.slug } };
 }
 
 export async function listArticles(filters?: {

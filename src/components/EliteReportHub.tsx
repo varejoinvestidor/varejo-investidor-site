@@ -24,7 +24,9 @@ import {
 } from "../elite/constants";
 import type { HubMonthlyReport, HubOperation } from "../elite/mapToHub";
 import type { EliteSignalTier } from "../elite/signalTier";
+import { ElitePeriodTrendChart } from "../elite/ElitePeriodTrendChart";
 import type { PeriodPerformance } from "../elite/traderPerformance";
+import type { EliteOperationRow } from "../elite/types";
 import { PremiumAnnualBarChart, PremiumCumulativeAreaChart, PremiumDonutChart } from "./elite/EliteHubCharts";
 import { EliteOperationCard, EliteOperationsPager, paginateList } from "./elite/EliteOperationCard";
 import { applyLivePipsToActiveOperations, useEliteLiveQuotes } from "./elite/useEliteLiveQuotes";
@@ -692,6 +694,7 @@ type EliteHubData = {
   completedOperations: HubOperation[];
   stats?: { totalSignals: number; totalPips: number; winRate: string; closedCount: number };
   traderPerformance?: PeriodPerformance[];
+  operations?: EliteOperationRow[];
 };
 
 export default function EliteReportHub({ initialLocale, hubData }: { initialLocale: Locale; hubData?: EliteHubData }) {
@@ -994,6 +997,9 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
                 </article>
               ))}
             </div>
+            {hubData.operations?.length ? (
+              <ElitePeriodTrendChart operations={hubData.operations} variant="public" />
+            ) : null}
           </div>
         </section>
       ) : null}
@@ -1118,10 +1124,10 @@ export default function EliteReportHub({ initialLocale, hubData }: { initialLoca
           <SectionHeader eyebrow="Pips" title={copy.resultsTitle} text={copy.resultsText} />
           <p className="mt-4 text-sm text-paper/55">
             {locale === "en"
-              ? "Browse finished signals as cards — paginate to see the full public history and operation volume."
+              ? "Browse finished signals as cards. Paginate to see the full public history and operation volume."
               : locale === "es"
-                ? "Recorra las operaciones finalizadas en tarjetas — use páginas para ver el volumen del histórico."
-                : "Navegue pelas operações finalizadas em cards — as páginas mostram o volume e a profundidade do histórico público."}
+                ? "Recorra las operaciones finalizadas en tarjetas. Use páginas para ver el volumen del histórico."
+                : "Navegue pelas operações finalizadas em cards. As páginas mostram o volume e a profundidade do histórico público."}
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <span className="rounded border border-gold/25 bg-gold/10 px-3 py-1.5 text-xs font-bold text-gold">

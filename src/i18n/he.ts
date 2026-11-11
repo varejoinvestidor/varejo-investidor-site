@@ -1,4 +1,4 @@
-/** Hebrew (עברית) — Varejo Investidor */
+/** Hebrew (עברית) · Varejo Investidor */
 export const he = {
   locale: "HE",
   nav: {

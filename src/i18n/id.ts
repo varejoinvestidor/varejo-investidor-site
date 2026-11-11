@@ -115,10 +115,10 @@ export const id = {
     text: "Selain sinyal dan edukasi berkelanjutan, Varejo Investidor menawarkan produk individual untuk akselerasi strategis, visi pasar, dan pengembangan kekayaan.",
     cta: "Minta kontak strategis",
     products: [
-      ["Mentoring Individual — 4 jam", "Sesi individual berfokus pada visi pasar, struktur operasional, risiko, dan arah strategis."],
-      ["Mentoring Individual — 10 jam", "Pendampingan lebih mendalam untuk membangun metode, membaca skenario, dan memposisikan diri di pasar global."],
-      ["Konsultasi Gold — 6 bulan — 30 jam", "Konsultasi premium untuk organisasi strategis, pembacaan institusional, evolusi operasional, dan struktur keuangan."],
-      ["Konsultasi Platinum — tahunan — 58 jam", "Advisory elite berfokus pada visi kekayaan, struktur global, pasar internasional, dan ekspansi strategis."],
+      ["Mentoring Individual · 4 jam", "Sesi individual berfokus pada visi pasar, struktur operasional, risiko, dan arah strategis."],
+      ["Mentoring Individual · 10 jam", "Pendampingan lebih mendalam untuk membangun metode, membaca skenario, dan memposisikan diri di pasar global."],
+      ["Konsultasi Gold · 6 bulan · 30 jam", "Konsultasi premium untuk organisasi strategis, pembacaan institusional, evolusi operasional, dan struktur keuangan."],
+      ["Konsultasi Platinum · tahunan · 58 jam", "Advisory elite berfokus pada visi kekayaan, struktur global, pasar internasional, dan ekspansi strategis."],
     ],
   },
   signalExample: {

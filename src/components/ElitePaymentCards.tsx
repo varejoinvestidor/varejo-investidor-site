@@ -35,6 +35,10 @@ export function ElitePaymentCards({ isPt, internationalSubscribeLabel }: ElitePa
             <p className="mt-4 leading-8 text-paper/[0.68]">
               Assine o Canal Elite em reais, com checkout nacional seguro pela Lastlink.
             </p>
+            <p className="mt-3 border-l-2 border-gold/40 pl-3 text-xs leading-relaxed text-paper/55">
+              Pagamento em reais (BRL) sujeito à variação cambial do dólar (USD) no momento da cobrança. O valor final pode
+              ser ajustado conforme a cotação vigente na Lastlink.
+            </p>
             <p className="mt-6 font-serif text-3xl tracking-[-0.04em] text-gold">A partir de {ELITE_LASTLINK_HERO_MONTHLY_PT}</p>
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-paper/[0.48]">no plano anual</p>
             <div className="mt-6 grid flex-1 gap-3 sm:grid-cols-2">

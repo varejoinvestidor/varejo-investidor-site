@@ -2,7 +2,7 @@ import { fxproLinks } from "../../data/fxproLinks";
 import { isSupportedLocale, type SupportedLocale } from "../../i18n/locales";
 import { localizedPath } from "../../i18n/routing";
 import type { ArticleBanner, ArticleBannerPreset } from "../types/banner";
-import { getFormigaChannelUrl, getLoboChannelUrl } from "../../data/whatsappChannels";
+import { getFormigaChannelUrl, getLoboChannelUrlWithFallback } from "../../data/whatsappChannels";
 
 const BINANCE_URL = "https://accounts.binance.com/register?ref=453580362";
 
@@ -19,12 +19,12 @@ export const PRODUCT_STRIP_BANNER_ASSETS: Record<
   { image: string; alt: string }
 > = {
   formiga: {
-    image: "/banners/canal-formiga.svg",
-    alt: "Canal Formiga · início da jornada · Varejo Investidor",
+    image: "/characters/education-formation-premium.png",
+    alt: "Canal Formiga · banner alto com botão · Varejo Investidor",
   },
   lobo: {
-    image: "/banners/canal-lobo.svg",
-    alt: "Canal Lobo · sinais e análises · Varejo Investidor",
+    image: "/characters/home-hero-vertical-cutout.png",
+    alt: "Canal Lobo · modelo A · Varejo Investidor",
   },
   elite: {
     image: "/banners/canal-elite.svg",
@@ -49,8 +49,8 @@ export const ARTICLE_BANNER_PRESETS: {
   label: string;
   description: string;
 }[] = [
-  { id: "formiga", label: "Canal Formiga", description: "Faixa home · WhatsApp gratuito" },
-  { id: "lobo", label: "Canal Lobo", description: "Faixa home · WhatsApp Lobo" },
+  { id: "formiga", label: "Canal Formiga", description: "Banner alto + botão WhatsApp (componente React)" },
+  { id: "lobo", label: "Canal Lobo", description: "Banner alto + botão WhatsApp (modelo A)" },
   { id: "elite", label: "Canal Elite", description: "Faixa home · página Sinais" },
   { id: "educacao", label: "Base educacional", description: "Faixa home · Formação / educação" },
   { id: "select", label: "Select", description: "Faixa home · patrimônio US$ 50k+" },
@@ -85,15 +85,13 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
         alt: PRODUCT_STRIP_BANNER_ASSETS.formiga.alt,
         href: getFormigaChannelUrl(lang, FORMIGA_FALLBACK),
       };
-    case "lobo": {
-      const lobo = getLoboChannelUrl(lang) ?? getLoboChannelUrl("pt") ?? getFormigaChannelUrl(lang, FORMIGA_FALLBACK);
+    case "lobo":
       return {
         ...banner,
         image_url: PRODUCT_STRIP_BANNER_ASSETS.lobo.image,
         alt: PRODUCT_STRIP_BANNER_ASSETS.lobo.alt,
-        href: lobo,
+        href: getLoboChannelUrlWithFallback(lang),
       };
-    }
     case "elite":
       return {
         ...banner,

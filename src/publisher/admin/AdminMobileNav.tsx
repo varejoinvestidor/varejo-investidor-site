@@ -81,6 +81,24 @@ export function AdminMobileNav({ isAdmin }: { isAdmin: boolean }) {
                   );
                 })}
               </ul>
+              <div className="my-4 border-t border-line/12 pt-4">
+                <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>
+                <ul className="mt-2 space-y-0.5">
+                  {ADMIN_RESEARCH_NAV.map((item) => {
+                    const active =
+                      item.href === "/admin/relatorio-elite"
+                        ? pathname === "/admin/relatorio-elite"
+                        : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    return (
+                      <li key={item.href}>
+                        <Link href={item.href} className={navLinkClass(active)} onClick={() => setOpen(false)}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
               {isAdmin ? (
                 <div className="my-4 border-t border-line/12 pt-4">
                   <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Administrador</p>
@@ -101,24 +119,6 @@ export function AdminMobileNav({ isAdmin }: { isAdmin: boolean }) {
                   </ul>
                 </div>
               ) : null}
-              <div className="my-4 border-t border-line/12 pt-4">
-                <p className="px-3 text-[0.65rem] font-bold uppercase tracking-[0.22em] text-paper/40">VI Research</p>
-                <ul className="mt-2 space-y-0.5">
-                  {ADMIN_RESEARCH_NAV.map((item) => {
-                    const active =
-                      item.href === "/admin/relatorio-elite"
-                        ? pathname === "/admin/relatorio-elite"
-                        : pathname === item.href || pathname.startsWith(`${item.href}/`);
-                    return (
-                      <li key={item.href}>
-                        <Link href={item.href} className={navLinkClass(active)} onClick={() => setOpen(false)}>
-                          {item.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
               <ul className="mt-4 space-y-0.5 border-t border-line/12 pt-4">
                 {ADMIN_FOOTER_NAV.filter((i) => isAdmin || i.href !== "/admin/usuarios").map((item) => {
                   const active = pathname === item.href || pathname.startsWith(`${item.href}/`);

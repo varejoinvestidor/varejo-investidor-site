@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FreeChannelCTA, SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../SiteSections";
+import { SiteChrome, SupportFooter, fadeUp, useSiteLocale } from "../SiteSections";
+import { ArticleChannelFooterBanner } from "./ArticleChannelFooterBanner";
+import { LoboChannelArticleBanner } from "./LoboChannelArticleBanner";
 import { TipTapArticleBody } from "../../publisher/public/TipTapArticleBody";
 import { estimateReadingTimeMinutes } from "../../publisher/public/tiptapPlainText";
 import type { PublicArticleDetail, PublicArticleSummary } from "../../publisher/public/types";
@@ -36,6 +38,88 @@ export function PublisherArticleView({
         : { horizontal: "Horizontal", vertical: "Vertical", watch: "Assistir nesta página", unmute: "Ativar som" };
   const shareLabel = pageLang === "en" ? "Share" : pageLang === "es" ? "Compartir" : "Compartilhar";
   const siteSocials = getSiteSocialLinksForLanguage(lang);
+  const verticalAside = hasArticleVideo(article.videos) && Boolean(article.videos.vertical);
+
+  const articleMain = (
+    <>
+      <PublisherArticleBanners banners={article.banners} placement="top" language={lang} />
+      {article.excerpt ? (
+        <p className="border-b border-gold/[0.12] pb-8 text-xl leading-[1.85] text-paper/[0.82]">{article.excerpt}</p>
+      ) : null}
+      <div className={article.excerpt ? "mt-8" : "mt-10"}>
+        <TipTapArticleBody
+          document={article.content}
+          inlineSlot={<PublisherArticleBanners banners={article.banners} placement="inline" language={lang} compact />}
+        />
+      </div>
+      {article.sources.length ? (
+        <div className="mt-14 border-t border-gold/[0.14] pt-10">
+          <h2 className="font-serif text-3xl tracking-[-0.04em]">
+            {pageLang === "en" ? "Sources" : pageLang === "es" ? "Fuentes" : "Fontes"}
+          </h2>
+          <ul className="mt-5 space-y-3">
+            {article.sources.map((source) => (
+              <li key={source.url}>
+                <a href={source.url} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
+                  {source.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      {article.references_text ? (
+        <div className="mt-10 border-t border-gold/[0.14] pt-8 text-sm leading-relaxed text-paper/60 whitespace-pre-wrap">
+          {article.references_text}
+        </div>
+      ) : null}
+      <PublisherArticleBanners banners={article.banners} placement="bottom" language={lang} />
+      <LoboChannelArticleBanner slug={article.slug} language={lang} banners={article.banners} />
+      <div className="insight-share mt-12">
+        <div className="grid gap-8 md:grid-cols-2">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">{shareLabel}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {[
+                { name: "LinkedIn", href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
+                {
+                  name: "X",
+                  href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(article.title)}`,
+                },
+                { name: "WhatsApp", href: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${url}`)}` },
+              ].map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-paper/[0.72] transition hover:border-gold hover:text-gold"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">{socialFollowLabel(lang)}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {siteSocials.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-paper/[0.72] transition hover:border-gold hover:text-gold"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <>
@@ -65,7 +149,19 @@ export function PublisherArticleView({
             </motion.div>
           </section>
 
-          {hasArticleVideo(article.videos) ? (
+          {verticalAside ? (
+            <section className="px-5 pb-12 md:px-8 md:pb-16">
+              <div className="article-split-main mx-auto grid max-w-7xl gap-8 pt-8 md:grid-cols-[minmax(260px,380px)_1fr] md:items-start">
+                <ArticleHeroVideo videos={article.videos} labels={videoLabels} layout="aside" />
+                <div className="min-w-0 max-w-3xl md:max-w-none">{articleMain}</div>
+              </div>
+              {article.videos.horizontal ? (
+                <div className="mx-auto mt-10 max-w-3xl border-t border-gold/[0.12] pt-10">
+                  <ArticleHeroVideo videos={article.videos} labels={videoLabels} formats="horizontal" />
+                </div>
+              ) : null}
+            </section>
+          ) : hasArticleVideo(article.videos) ? (
             <ArticleHeroVideo videos={article.videos} labels={videoLabels} />
           ) : article.cover_image ? (
             <section className="px-5 py-10 md:px-8">
@@ -76,98 +172,11 @@ export function PublisherArticleView({
             </section>
           ) : null}
 
-          <PublisherArticleBanners banners={article.banners} placement="top" language={lang} />
-
-          <section className="px-5 pb-12 md:px-8 md:pb-16">
-            <div className="mx-auto max-w-3xl">
-              {article.excerpt ? (
-                <p className="border-b border-gold/[0.12] pb-8 text-xl leading-[1.85] text-paper/[0.82]">{article.excerpt}</p>
-              ) : null}
-              <div className={article.excerpt ? "mt-8" : "mt-10"}>
-                <TipTapArticleBody
-                  document={article.content}
-                  inlineSlot={
-                    <PublisherArticleBanners banners={article.banners} placement="inline" language={lang} compact />
-                  }
-                />
-              </div>
-
-              {article.sources.length ? (
-                <div className="mt-14 border-t border-gold/[0.14] pt-10">
-                  <h2 className="font-serif text-3xl tracking-[-0.04em]">
-                    {pageLang === "en" ? "Sources" : pageLang === "es" ? "Fuentes" : "Fontes"}
-                  </h2>
-                  <ul className="mt-5 space-y-3">
-                    {article.sources.map((source) => (
-                      <li key={source.url}>
-                        <a href={source.url} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">
-                          {source.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              {article.references_text ? (
-                <div className="mt-10 border-t border-gold/[0.14] pt-8 text-sm leading-relaxed text-paper/60 whitespace-pre-wrap">
-                  {article.references_text}
-                </div>
-              ) : null}
-
-              <PublisherArticleBanners banners={article.banners} placement="bottom" language={lang} />
-
-              <div className="insight-share mt-12">
-                <div className="grid gap-8 md:grid-cols-2">
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">{shareLabel}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {[
-                      {
-                        name: "LinkedIn",
-                        href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-                      },
-                      {
-                        name: "X",
-                        href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(article.title)}`,
-                      },
-                      {
-                        name: "WhatsApp",
-                        href: `https://wa.me/?text=${encodeURIComponent(`${article.title} ${url}`)}`,
-                      },
-                    ].map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-paper/[0.72] transition hover:border-gold hover:text-gold"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-gold">{socialFollowLabel(lang)}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {siteSocials.map((item) => (
-                      <a
-                        key={item.id}
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="border border-gold/[0.22] bg-paper/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-paper/[0.72] transition hover:border-gold hover:text-gold"
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
-          </section>
+          {!verticalAside ? (
+            <section className="px-5 pb-12 md:px-8 md:pb-16">
+              <div className="mx-auto max-w-3xl">{articleMain}</div>
+            </section>
+          ) : null}
 
           {related.length ? (
             <section className="border-t border-gold/[0.14] px-5 py-14 md:px-8">
@@ -190,7 +199,7 @@ export function PublisherArticleView({
           ) : null}
         </article>
 
-        <FreeChannelCTA t={t} variant="dark" />
+        <ArticleChannelFooterBanner slug={article.slug} language={lang} banners={article.banners} />
         <SupportFooter t={t} locale={locale} onLocaleChange={changeLocale} />
       </main>
     </>

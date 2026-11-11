@@ -8,7 +8,7 @@ export const maxDuration = 120;
 
 /**
  * Mantém schema VI Analytics e devolve contagem de eventos (últimos 7 dias).
- * GET + Authorization: Bearer CRON_SECRET — agenda no GitHub Actions ou Vercel Cron.
+ * GET + Authorization: Bearer CRON_SECRET · agenda no GitHub Actions ou Vercel Cron.
  */
 export async function GET(request: Request) {
   if (!assertCronBearer(request)) {

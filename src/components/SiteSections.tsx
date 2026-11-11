@@ -11,21 +11,16 @@ import { getInsightsPath, insightLabels, localeFromInsightsPath } from "../data/
 import { getPublisherHubPath, publisherHubActivePaths } from "../publisher/public/paths";
 import { getPlatformPath, platformSlugs } from "../data/platformContent";
 import { languageMeta, persistLanguageChoice } from "../i18n/languageCatalog";
+import { detectLocaleFromNavigator } from "../i18n/suggestLocale";
 import { getYoutubeChannelUrl } from "../config/youtubeChannels";
 import { LocaleFlagIcon } from "./LocaleFlagIcon";
 import { WhatsAppPhoneSignal3D } from "./signals/WhatsAppPhoneSignal3D";
 import { WhatsAppSignalDemo } from "./signals/WhatsAppSignalDemo";
+import { GlobalMarketTicker } from "./GlobalMarketTicker";
+import { STATIC_MARKET_TICKER } from "../market/globalMarketTape";
 
-export const ticker = [
-  ["XAU/USD", "+0.74%", "up"],
-  ["EUR/USD", "-0.18%", "down"],
-  ["BTC/USD", "+1.42%", "up"],
-  ["USOIL", "-0.52%", "down"],
-  ["NASDAQ", "+0.91%", "up"],
-  ["DXY", "-0.21%", "down"],
-  ["GBP/JPY", "+0.36%", "up"],
-  ["S&P 500", "+0.82%", "up"],
-];
+/** @deprecated use API /api/market-tape — mantido para compat. */
+export const ticker = STATIC_MARKET_TICKER.map((item) => [item.label, item.changeLabel, item.tone] as const);
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 22 },
@@ -103,34 +98,7 @@ export function trackVarejoClick(event: string, payload: Record<string, string> 
 }
 
 export function detectLocale(): Locale {
-  if (typeof navigator === "undefined") return "en";
-
-  const languages = navigator.languages?.length ?navigator.languages : [navigator.language];
-  const detected = languages.join(" ").toLowerCase();
-
-  if (detected.includes("pt")) return "pt";
-  if (detected.includes("es")) return "es";
-  if (detected.includes("fr")) return "fr";
-  if (detected.includes("it")) return "it";
-  if (detected.includes("de")) return "de";
-  if (detected.includes("fa") || detected.includes("fa-ir")) return "fa";
-  if (detected.includes("hi")) return "hi";
-  if (detected.includes("ar")) return "ar";
-  if (detected.includes("tr")) return "tr";
-  if (detected.includes("id") || detected.includes("id-id")) return "id";
-  if (detected.includes("vi") || detected.includes("vi-vn")) return "vi";
-  if (detected.includes("th") || detected.includes("th-th")) return "th";
-  if (detected.includes("ru") || detected.includes("ru-ru")) return "ru";
-  if (detected.includes("ur") || detected.includes("ur-pk")) return "ur";
-  if (detected.includes("bn") || detected.includes("bn-bd")) return "bn";
-  if (detected.includes("ja") || detected.includes("ja-jp")) return "ja";
-  if (detected.includes("ko") || detected.includes("ko-kr")) return "ko";
-  if (detected.includes("zh") || detected.includes("zh-cn") || detected.includes("zh-sg")) return "zh";
-  if (detected.includes("pl") || detected.includes("pl-pl")) return "pl";
-  if (detected.includes("tl") || detected.includes("fil") || detected.includes("ph")) return "tl";
-  if (detected.includes("en")) return "en";
-
-  return "en";
+  return detectLocaleFromNavigator();
 }
 
 function isLocale(value: string | null): value is Locale {
@@ -475,19 +443,7 @@ export function SiteChrome({
   ];
   return (
     <div className="site-chrome fixed left-0 right-0 top-0 z-50">
-      <div className="global-ticker border-b border-ink/[0.08] bg-ink px-3 text-paper md:px-5">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 overflow-hidden py-1.5 text-[9px] uppercase tracking-[0.16em] sm:gap-7 sm:py-2 sm:text-[11px] sm:tracking-[0.22em]">
-          <span className="shrink-0 text-gold">{safeT.tickerLabel}</span>
-          <div className="ticker-track flex min-w-max gap-6">
-            {[...ticker, ...ticker].map(([asset, move, tone], index) => (
-              <span key={`${asset}-${index}`} className="ticker-item flex items-center gap-2">
-                <span className="text-paper/75">{asset}</span>
-                <span className={`ticker-value ${tone === "up" ?"text-rise" : "text-fall"}`}>{move}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+      <GlobalMarketTicker label={safeT.tickerLabel} />
 
       <header className="site-header border-b border-ink/[0.08] bg-paper/[0.84] shadow-glass backdrop-blur-2xl">
         <nav className="site-header-nav mx-auto grid max-w-7xl items-center gap-4 px-4 py-3 md:px-8 md:py-4 xl:grid-cols-[minmax(260px,25%)_minmax(0,55%)_minmax(220px,20%)]">

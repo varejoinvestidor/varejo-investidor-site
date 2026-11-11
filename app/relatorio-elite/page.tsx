@@ -26,6 +26,7 @@ export default async function RelatorioElitePage() {
           completedOperations: merged.completedOperations,
           stats: aggregateStats(merged.completedOperations, merged.monthly),
           traderPerformance: computeTraderPerformance(remote.operations),
+          operations: remote.operations,
         };
       })()
     : undefined;
