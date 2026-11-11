@@ -1,9 +1,9 @@
 "use client";
 
-import { FormigaChannelBanner } from "../../components/banners/FormigaChannelBanner";
-import { LoboChannelBanner } from "../../components/banners/LoboChannelBanner";
+import { ChannelBannerByPreset } from "../../components/banners/ChannelBannerByPreset";
 import { resolveArticleBanner } from "../data/articleBannerPresets";
 import type { ArticleBanner } from "../types/banner";
+import { inferChannelBannerPreset } from "../types/banner";
 
 const PLACEMENT_LABELS: Record<ArticleBanner["placement"], string> = {
   top: "Topo do artigo",
@@ -22,7 +22,8 @@ function BannerFigure({
   interactive?: boolean;
   onSelect?: () => void;
 }) {
-  if (banner.preset === "formiga") {
+  const channelPreset = banner.preset ?? inferChannelBannerPreset(banner);
+  if (channelPreset === "formiga" || channelPreset === "lobo" || channelPreset === "elite") {
     const frameClass = `overflow-hidden ${interactive ? "cursor-pointer ring-offset-2 ring-offset-ink" : ""}`;
     return (
       <div
@@ -32,22 +33,7 @@ function BannerFigure({
         tabIndex={interactive ? 0 : undefined}
         onKeyDown={interactive ? (e) => e.key === "Enter" && onSelect?.() : undefined}
       >
-        <FormigaChannelBanner language={language} href={banner.href} />
-      </div>
-    );
-  }
-
-  if (banner.preset === "lobo") {
-    const frameClass = `overflow-hidden ${interactive ? "cursor-pointer ring-offset-2 ring-offset-ink" : ""}`;
-    return (
-      <div
-        className={frameClass}
-        onClick={interactive ? onSelect : undefined}
-        role={interactive ? "button" : undefined}
-        tabIndex={interactive ? 0 : undefined}
-        onKeyDown={interactive ? (e) => e.key === "Enter" && onSelect?.() : undefined}
-      >
-        <LoboChannelBanner language={language} href={banner.href} />
+        <ChannelBannerByPreset preset={channelPreset} language={language} href={banner.href} className="w-full" />
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { FormigaChannelBanner } from "../banners/FormigaChannelBanner";
-import { LoboChannelBanner } from "../banners/LoboChannelBanner";
+import { ChannelBannerByPreset } from "../banners/ChannelBannerByPreset";
+import { inferChannelBannerPreset } from "../../publisher/types/banner";
 import { resolveArticleBanner } from "../../publisher/data/articleBannerPresets";
 import type { ArticleBanner } from "../../publisher/types/banner";
 
@@ -32,14 +32,16 @@ export function PublisherArticleBanners({
     <section className={outer}>
       <div className={inner}>
         {items.map((banner) => {
-          if (banner.preset === "formiga") {
+          const channelPreset = banner.preset ?? inferChannelBannerPreset(banner);
+          if (channelPreset === "formiga" || channelPreset === "lobo" || channelPreset === "elite") {
             return (
-              <FormigaChannelBanner key={banner.id} language={langBase} href={banner.href} className="w-full" />
-            );
-          }
-          if (banner.preset === "lobo") {
-            return (
-              <LoboChannelBanner key={banner.id} language={langBase} href={banner.href} className="w-full" />
+              <ChannelBannerByPreset
+                key={banner.id}
+                preset={channelPreset}
+                language={langBase}
+                href={banner.href}
+                className="w-full"
+              />
             );
           }
 

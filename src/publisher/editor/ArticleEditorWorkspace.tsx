@@ -34,6 +34,7 @@ import {
 } from "../types/banner";
 import { PublisherRichTextEditor } from "./PublisherRichTextEditor";
 import { ArticleBannerPreviewStrip } from "./ArticleBannerPreview";
+import { suggestArticleSeo } from "./suggestArticleSeo";
 import { ArticleVideoFields } from "./ArticleVideoFields";
 import { emptyArticleVideos } from "../types/video";
 
@@ -76,6 +77,7 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   const [translating, setTranslating] = useState(false);
   const [linkedVersions, setLinkedVersions] = useState<{ id: string; language: string; slug: string }[]>([]);
   const [selectedBannerId, setSelectedBannerId] = useState<string | null>(null);
+  const seoAutofillDone = useRef(false);
 
   const payload: SaveArticleInput = useMemo(
     () => ({
@@ -100,6 +102,29 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
   );
 
   const sourcesText = article.sources.map((s) => `${s.label} | ${s.url}`).join("\n");
+
+  useEffect(() => {
+    if (seoAutofillDone.current) return;
+    if (article.seo_title?.trim() && article.seo_description?.trim()) {
+      seoAutofillDone.current = true;
+      return;
+    }
+    if (!article.title.trim()) return;
+    seoAutofillDone.current = true;
+    const next = suggestArticleSeo({
+      title: article.title,
+      subtitle: article.subtitle,
+      excerpt: article.excerpt,
+      content: article.content,
+    });
+    setArticle((prev) => ({
+      ...prev,
+      seo_title: prev.seo_title?.trim() ? prev.seo_title : next.seo_title,
+      seo_description: prev.seo_description?.trim() ? prev.seo_description : next.seo_description,
+    }));
+    setIsDirty(true);
+    isDirtyRef.current = true;
+  }, [article.title, article.subtitle, article.excerpt, article.content, article.seo_title, article.seo_description]);
 
   function onSourcesChange(raw: string) {
     const sources = raw
@@ -821,7 +846,25 @@ export function ArticleEditorWorkspace({ initial, categories, tags, profile }: P
           </section>
 
           <section className="rounded-lg border border-line/12 p-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">SEO</h3>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-paper/55">SEO</h3>
+              <button
+                type="button"
+                disabled={preview}
+                onClick={() => {
+                  const next = suggestArticleSeo({
+                    title: article.title,
+                    subtitle: article.subtitle,
+                    excerpt: article.excerpt,
+                    content: article.content,
+                  });
+                  patchArticle({ seo_title: next.seo_title, seo_description: next.seo_description });
+                }}
+                className="text-[10px] font-bold uppercase tracking-wider text-gold hover:underline disabled:opacity-40"
+              >
+                Preencher pelo artigo
+              </button>
+            </div>
             <input
               placeholder="SEO title"
               disabled={preview}

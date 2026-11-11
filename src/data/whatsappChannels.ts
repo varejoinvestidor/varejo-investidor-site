@@ -94,12 +94,69 @@ export const whatsappChannels: Partial<Record<WhatsAppLandingLocale, Partial<Rec
   },
   fr: {
     formiga: "https://whatsapp.com/channel/0029VbDxJEI6BIEmo6T8tD34",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  "pt-pt": {
+    formiga: "https://whatsapp.com/channel/0029Va9J7SAAO7R8cN76Ib13",
+    lobo: "https://whatsapp.com/channel/0029VasGTTE6RGJD46g47c1h",
+  },
+  de: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  it: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  ru: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  id: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  pl: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  tl: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  ko: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  vi: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  th: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  bn: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  zh: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
+  },
+  ur: {
+    formiga: "https://whatsapp.com/channel/0029VbBtwwfCXC3HTPFmzo0q",
+    lobo: "https://whatsapp.com/channel/0029Vb8JDbELo4hcxcQaOG2Z",
   },
 };
 
 export function siteLocaleToWhatsAppLocale(locale: string): WhatsAppLandingLocale | null {
-  if (locale === "pt") return "pt";
-  if (locale in whatsappLandingCopy) return locale as WhatsAppLandingLocale;
+  const norm = locale.trim().toLowerCase();
+  if (norm === "pt-pt") return "pt-pt";
+  if (norm.startsWith("pt")) return "pt";
+  const base = norm.split("-")[0] ?? norm;
+  if (base in whatsappLandingCopy) return base as WhatsAppLandingLocale;
+  if (norm in whatsappLandingCopy) return norm as WhatsAppLandingLocale;
   return null;
 }
 
@@ -107,7 +164,9 @@ export function getWhatsAppChannelUrl(locale: string, level: WhatsAppChannelLeve
   const mapped = siteLocaleToWhatsAppLocale(locale);
   if (!mapped) return null;
   const channels = whatsappChannels[mapped];
-  return channels?.[level] ?? null;
+  const direct = channels?.[level];
+  if (direct) return direct;
+  return whatsappChannels.en?.[level] ?? whatsappChannels.pt?.[level] ?? null;
 }
 
 export function getFormigaChannelUrl(locale: string, fallbackLink: string): string {

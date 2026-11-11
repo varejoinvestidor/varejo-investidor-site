@@ -59,8 +59,9 @@ export function ChannelSplitBannerA({
         <p className="max-w-xl text-sm leading-7 text-paper/70 md:text-base">{subtitle}</p>
         <a
           href={href}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(/^https?:\/\//i.test(href)
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : { rel: "noopener" })}
           data-vi-track={trackEvent}
           onClick={() => trackVarejoClick(trackEvent, { locale: language })}
           className={`inline-flex min-h-[48px] w-fit items-center justify-center border px-6 py-3.5 text-center text-[11px] font-black uppercase tracking-[0.18em] transition hover:-translate-y-0.5 md:px-8 md:text-xs ${btnClass} ${

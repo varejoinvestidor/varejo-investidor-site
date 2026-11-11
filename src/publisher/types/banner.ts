@@ -95,3 +95,34 @@ export function resolveArticleBannersList(columnRaw: unknown, content: unknown):
   if (fromColumn.length) return fromColumn;
   return bannersFromArticleContent(content);
 }
+
+/** Banners antigos (SVG/faixa) salvos sem `preset`. */
+export function inferChannelBannerPreset(banner: ArticleBanner): ArticleBannerPreset | undefined {
+  if (banner.preset === "formiga" || banner.preset === "lobo" || banner.preset === "elite") return banner.preset;
+  const hay = `${banner.image_url} ${banner.alt}`.toLowerCase();
+  if (
+    hay.includes("canal-lobo") ||
+    hay.includes("canal lobo") ||
+    hay.includes("wolf channel") ||
+    (hay.includes("lobo") && (hay.includes("canal") || hay.includes("sinais")))
+  ) {
+    return "lobo";
+  }
+  if (
+    hay.includes("canal-formiga") ||
+    hay.includes("canal formiga") ||
+    hay.includes("education-formation-premium") ||
+    hay.includes("ant channel")
+  ) {
+    return "formiga";
+  }
+  if (
+    hay.includes("canal-elite") ||
+    hay.includes("canal elite") ||
+    hay.includes("elite harpia") ||
+    hay.includes("services-hero-institutional")
+  ) {
+    return "elite";
+  }
+  return undefined;
+}

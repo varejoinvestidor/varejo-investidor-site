@@ -2,6 +2,7 @@ import { fxproLinks } from "../../data/fxproLinks";
 import { isSupportedLocale, type SupportedLocale } from "../../i18n/locales";
 import { localizedPath } from "../../i18n/routing";
 import type { ArticleBanner, ArticleBannerPreset } from "../types/banner";
+import { inferChannelBannerPreset } from "../types/banner";
 import { getFormigaChannelUrl, getLoboChannelUrlWithFallback } from "../../data/whatsappChannels";
 
 const BINANCE_URL = "https://accounts.binance.com/register?ref=453580362";
@@ -23,12 +24,12 @@ export const PRODUCT_STRIP_BANNER_ASSETS: Record<
     alt: "Canal Formiga · banner alto com botão · Varejo Investidor",
   },
   lobo: {
-    image: "/characters/home-hero-vertical-cutout.png",
+    image: "/characters/home-hero-official-20260527.png",
     alt: "Canal Lobo · modelo A · Varejo Investidor",
   },
   elite: {
-    image: "/banners/canal-elite.svg",
-    alt: "Canal Elite · análises e sinais no WhatsApp",
+    image: "/characters/services-hero-institutional.png",
+    alt: "Canal Elite Harpia · Research · Varejo Investidor",
   },
   educacao: {
     image: "/banners/base-educacional.svg",
@@ -51,7 +52,7 @@ export const ARTICLE_BANNER_PRESETS: {
 }[] = [
   { id: "formiga", label: "Canal Formiga", description: "Banner alto + botão WhatsApp (componente React)" },
   { id: "lobo", label: "Canal Lobo", description: "Banner alto + botão WhatsApp (modelo A)" },
-  { id: "elite", label: "Canal Elite", description: "Faixa home · página Sinais" },
+  { id: "elite", label: "Canal Elite", description: "Banner alto → página Research (/sinais)" },
   { id: "educacao", label: "Base educacional", description: "Faixa home · Formação / educação" },
   { id: "select", label: "Select", description: "Faixa home · patrimônio US$ 50k+" },
   { id: "private", label: "Private", description: "Faixa home · patrimônio US$ 1M+" },
@@ -73,14 +74,16 @@ function fxproBannerImage(language: string): string {
 const FORMIGA_FALLBACK = "https://whatsapp.com/channel/0029Va9J7SAAO7R8cN76Ib13";
 
 export function resolveArticleBanner(banner: ArticleBanner, language: string): ArticleBanner {
-  if (!banner.preset) return banner;
+  const preset = banner.preset ?? inferChannelBannerPreset(banner);
+  if (!preset) return banner;
 
   const lang = language.startsWith("pt") ? "pt" : language.startsWith("es") ? "es" : language;
   const locale = bannerLocale(language);
-  switch (banner.preset) {
+  switch (preset) {
     case "formiga":
       return {
         ...banner,
+        preset: "formiga",
         image_url: PRODUCT_STRIP_BANNER_ASSETS.formiga.image,
         alt: PRODUCT_STRIP_BANNER_ASSETS.formiga.alt,
         href: getFormigaChannelUrl(lang, FORMIGA_FALLBACK),
@@ -88,6 +91,7 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
     case "lobo":
       return {
         ...banner,
+        preset: "lobo",
         image_url: PRODUCT_STRIP_BANNER_ASSETS.lobo.image,
         alt: PRODUCT_STRIP_BANNER_ASSETS.lobo.alt,
         href: getLoboChannelUrlWithFallback(lang),
@@ -95,6 +99,7 @@ export function resolveArticleBanner(banner: ArticleBanner, language: string): A
     case "elite":
       return {
         ...banner,
+        preset: "elite",
         image_url: PRODUCT_STRIP_BANNER_ASSETS.elite.image,
         alt: PRODUCT_STRIP_BANNER_ASSETS.elite.alt,
         href: localizedPath("/sinais", locale),
