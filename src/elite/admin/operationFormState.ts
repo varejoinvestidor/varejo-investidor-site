@@ -37,7 +37,7 @@ export const emptyOperationDraft = (): OperationDraft => ({
   signalNumber: "",
   asset: "",
   direction: "Compra",
-  tradeResult: "take",
+  tradeResult: "in_progress",
   manualPips: "",
   entry: "",
   take: "",

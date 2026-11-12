@@ -176,7 +176,7 @@ export function EliteReportAdmin({ operations, monthly, totalOperations, loadErr
     const entry = toNum(form.get("entry_price"));
     const take = toNum(form.get("take_price"));
     const stop = toNum(form.get("stop_price"));
-    const tradeResult = String(form.get("trade_result") ?? "take") as TradeResultKey;
+    const tradeResult = String(form.get("trade_result") ?? "in_progress") as TradeResultKey;
     const { status, closeOutcome } = rowFromTradeResult(tradeResult);
     const manualPips = tradeResult === "manual" ? toNum(form.get("manual_pips")) : null;
 
@@ -645,4 +645,3 @@ export function EliteReportAdmin({ operations, monthly, totalOperations, loadErr
     </div>
   );
 }
-

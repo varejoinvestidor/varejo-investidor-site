@@ -9,8 +9,6 @@ import {
   ADMIN_PUBLISHER_NAV,
   ADMIN_RESEARCH_NAV,
 } from "./nav";
-import { AdminThemeToggle } from "./AdminThemeToggle";
-import type { AdminTheme } from "./useAdminTheme";
 
 function navLinkClass(active: boolean) {
   return `admin-nav-link px-3 py-3 ${active ? "admin-nav-link-active" : ""}`;
@@ -19,13 +17,9 @@ function navLinkClass(active: boolean) {
 export function AdminMobileNav({
   isAdmin,
   canConfig,
-  theme,
-  onThemeChange,
 }: {
   isAdmin: boolean;
   canConfig: boolean;
-  theme: AdminTheme;
-  onThemeChange: (theme: AdminTheme) => void;
 }) {
   const pathname = usePathname() ?? "";
   const [open, setOpen] = useState(false);
@@ -145,12 +139,6 @@ export function AdminMobileNav({
                   );
                 })}
               </ul>
-              <div className="mt-6 border-t border-line/12 pt-4">
-                <p className="mb-2 px-3 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-paper/40">Tema</p>
-                <div className="px-3">
-                  <AdminThemeToggle theme={theme} onChange={onThemeChange} />
-                </div>
-              </div>
             </nav>
           </div>
         </div>

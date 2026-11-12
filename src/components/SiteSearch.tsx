@@ -132,7 +132,6 @@ export function SiteSearchProvider({ locale, children }: { locale: Locale; child
           <button type="button" className="site-search-backdrop" aria-label={locale === "pt" ? "Fechar" : "Close"} onClick={close} />
           <div className="site-search-dialog" id={dialogId} role="dialog" aria-modal="true" aria-label={copy.title}>
             <div className="site-search-dialog-head">
-              <SearchIcon className="text-gold" />
               <span>{copy.title}</span>
               <kbd className="site-search-kbd">Esc</kbd>
             </div>
@@ -178,10 +177,10 @@ export function SiteSearchProvider({ locale, children }: { locale: Locale; child
 
 export function SiteSearchTrigger({
   locale,
-  variant,
+  variant = "footer",
 }: {
   locale: Locale;
-  variant: "header" | "mobile";
+  variant?: "footer";
 }) {
   const ctx = useContext(SearchContext);
   if (!ctx) return null;
@@ -198,12 +197,9 @@ export function SiteSearchTrigger({
       aria-expanded={ctx.openState}
       aria-controls={ctx.dialogId}
       title={`${ariaSearch} (Ctrl+K)`}
-      aria-label={variant === "mobile" ? ariaSearch : undefined}
+      aria-label={ariaSearch}
     >
       <SearchIcon />
-      {variant === "header" ? (
-        <span className="site-search-trigger-label">{locale === "pt" ? "Buscar" : "Search"}</span>
-      ) : null}
     </button>
   );
 }

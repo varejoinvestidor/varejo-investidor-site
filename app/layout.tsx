@@ -2,16 +2,14 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { ViSiteAnalytics } from "../src/analytics/ViSiteAnalytics";
 import { SiteJsonLd } from "../src/components/SiteJsonLd";
+import { SiteSearchProvider } from "../src/components/SiteSearch";
 import { buildPageMetadata } from "../src/data/localeMetadata";
 import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, localeToHtmlLang, type Locale } from "../src/i18n";
 import "./globals.css";
 import "./institutional.css";
 import "./mobile-system.css";
-import "./site-theme.css";
 import "./site-search.css";
 import "./site-header-layout.css";
-import { SiteThemeBoot } from "../src/theme/SiteThemeBoot";
-import { SITE_THEME_BOOT_SCRIPT } from "../src/theme/siteTheme";
 
 export const viewport = {
   width: "device-width",
@@ -43,13 +41,11 @@ export default function RootLayout({
     <html lang={localeToHtmlLang(locale)} dir={isRtlLocale(locale) ? "rtl" : "ltr"} suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
-        <script dangerouslySetInnerHTML={{ __html: SITE_THEME_BOOT_SCRIPT }} />
       </head>
       <body>
-        <SiteThemeBoot />
         <SiteJsonLd />
         <ViSiteAnalytics />
-        {children}
+        <SiteSearchProvider locale={locale}>{children}</SiteSearchProvider>
       </body>
     </html>
   );

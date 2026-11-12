@@ -9,7 +9,6 @@ import { createPublisherBrowserClient } from "../supabase/browser";
 import { AdminBrand } from "./AdminBrand";
 import { AdminMobileNav } from "./AdminMobileNav";
 import { AdminThemeProvider, useAdminThemeContext } from "./AdminThemeProvider";
-import { AdminThemeToggle } from "./AdminThemeToggle";
 
 type Props = {
   profile: PublisherProfile;
@@ -51,7 +50,7 @@ export function AdminShell({ profile, children }: Props) {
 function AdminShellInner({ profile, children }: Props) {
   const pathname = usePathname() ?? "";
   const router = useRouter();
-  const { theme, setTheme } = useAdminThemeContext();
+  const { theme } = useAdminThemeContext();
   const isAdmin = profile.role === "admin";
   const canConfig = canManageTaxonomy(profile.role);
   const footerNav = ADMIN_FOOTER_NAV.filter((item) => {
@@ -164,9 +163,8 @@ function AdminShellInner({ profile, children }: Props) {
 
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="admin-shell-header flex flex-wrap items-center justify-between gap-3 border-b border-line/10 px-4 py-4 lg:px-8">
-            <AdminMobileNav isAdmin={isAdmin} canConfig={canConfig} theme={theme} onThemeChange={setTheme} />
+            <AdminMobileNav isAdmin={isAdmin} canConfig={canConfig} />
             <div className="flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-paper/70">
-              <AdminThemeToggle theme={theme} onChange={setTheme} compact />
               <a href="/artigos" className="transition hover:text-gold" target="_blank" rel="noreferrer">
                 /artigos
               </a>

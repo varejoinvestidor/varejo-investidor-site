@@ -19,8 +19,7 @@ import { WhatsAppPhoneSignal3D } from "./signals/WhatsAppPhoneSignal3D";
 import { WhatsAppSignalDemo } from "./signals/WhatsAppSignalDemo";
 import { GlobalMarketTicker } from "./GlobalMarketTicker";
 import { STATIC_MARKET_TICKER } from "../market/globalMarketTape";
-import { SiteThemeToggle } from "./SiteThemeToggle";
-import { SiteSearchProvider, SiteSearchTrigger } from "./SiteSearch";
+import { SiteSearchTrigger } from "./SiteSearch";
 
 /** @deprecated use API /api/market-tape — mantido para compat. */
 export const ticker = STATIC_MARKET_TICKER.map((item) => [item.label, item.changeLabel, item.tone] as const);
@@ -445,7 +444,6 @@ export function SiteChrome({
     { label: safeT.nav.about, href: localizedHref("about"), activePaths: ["/sobre", "/about", `/${locale}/about`] },
   ];
   return (
-    <SiteSearchProvider locale={locale}>
     <div className="site-chrome fixed left-0 right-0 top-0 z-50">
       <GlobalMarketTicker label={safeT.tickerLabel} />
 
@@ -475,7 +473,6 @@ export function SiteChrome({
             </button>
 
             <div className="site-header-toolbar hidden shrink-0 items-center gap-2 xl:flex">
-              <SiteSearchTrigger locale={locale} variant="header" />
               <div className="desktop-language-area">
                 <DesktopLanguageDropdown locale={locale} onChange={onLocaleChange} />
               </div>
@@ -497,7 +494,6 @@ export function SiteChrome({
         </nav>
         <div className="mobile-language-row border-t border-ink/[0.08] px-4 pb-2 xl:hidden">
           <div className="flex w-full items-center justify-between gap-2">
-            <SiteSearchTrigger locale={locale} variant="mobile" />
             <button
               type="button"
               onClick={() => {
@@ -556,8 +552,6 @@ export function SiteChrome({
             {mobileLanguageOpen ? <LanguageSwitcher locale={locale} onChange={handleMobileLocaleChange} variant="mobile" /> : null}
           </div>
 
-          <SiteThemeToggle locale={locale} variant="mobile" />
-
           <div className="mobile-drawer-actions">
             <a href={safeT.freeChannel.link} target="_blank" rel="noopener noreferrer" className="is-primary">{safeT.freeChannel.button}</a>
             <a href={localizedPage("/select")}>Select</a>
@@ -566,7 +560,6 @@ export function SiteChrome({
         </aside>
       </div>
     </div>
-    </SiteSearchProvider>
   );
 }
 
@@ -1227,8 +1220,8 @@ export function SupportFooter({
               >
                 {locale === "pt" ? "Tela completa de idiomas" : "Full language screen"}
               </a>
-              <div className="mt-8">
-                <SiteThemeToggle locale={locale} variant="footer" />
+              <div className="mt-6">
+                <SiteSearchTrigger locale={locale} variant="footer" />
               </div>
             </div>
           </div>

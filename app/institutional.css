@@ -2,18 +2,6 @@
    Page design remains in globals.css, restored from the premium dark version. */
 
 @media (min-width: 1280px) {
-  html[data-site-theme="light"] .desktop-main-menu .nav-link,
-  html[data-site-theme="light"] .desktop-main-menu .header-dropdown-trigger {
-    color: rgba(18, 16, 12, 0.72) !important;
-  }
-
-  html[data-site-theme="light"] .desktop-main-menu .nav-link:hover,
-  html[data-site-theme="light"] .desktop-main-menu .nav-link.active,
-  html[data-site-theme="light"] .desktop-main-menu .header-dropdown.is-active > .header-dropdown-trigger,
-  html[data-site-theme="light"] .desktop-main-menu .header-dropdown[open] > .header-dropdown-trigger {
-    color: #050505 !important;
-  }
-
   .desktop-main-menu .nav-link,
   .desktop-main-menu .header-dropdown-trigger,
   .desktop-language-trigger {
