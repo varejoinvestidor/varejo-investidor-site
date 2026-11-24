@@ -180,7 +180,7 @@ export function SiteSearchTrigger({
   variant = "footer",
 }: {
   locale: Locale;
-  variant?: "footer";
+  variant?: "header" | "footer" | "mobile";
 }) {
   const ctx = useContext(SearchContext);
   if (!ctx) return null;

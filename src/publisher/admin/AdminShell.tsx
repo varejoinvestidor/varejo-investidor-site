@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ADMIN_ANALYTICS_NAV, ADMIN_FOOTER_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEARCH_NAV } from "./nav";
-import { ROLE_LABELS, canManageTaxonomy } from "../permissions";
+import { ADMIN_ANALYTICS_NAV, ADMIN_FOOTER_NAV, ADMIN_PARTNERSHIP_NAV, ADMIN_PUBLISHER_NAV, ADMIN_RESEARCH_NAV } from "./nav";
+import { ROLE_LABELS, canAccessPartnership, canAccessPartnershipRestricted, canManageTaxonomy } from "../permissions";
 import type { PublisherProfile } from "../types";
 import { createPublisherBrowserClient } from "../supabase/browser";
 import { AdminBrand } from "./AdminBrand";
@@ -53,6 +53,15 @@ function AdminShellInner({ profile, children }: Props) {
   const { theme } = useAdminThemeContext();
   const isAdmin = profile.role === "admin";
   const canConfig = canManageTaxonomy(profile.role);
+  const canPartnership = canAccessPartnership(profile.role);
+  const restrictedHrefs = new Set([
+    "/admin/partnership/governanca",
+    "/admin/partnership/lastlink",
+    "/admin/partnership/corretoras",
+  ]);
+  const partnershipNav = ADMIN_PARTNERSHIP_NAV.filter(
+    (item) => canAccessPartnershipRestricted(profile.role) || !restrictedHrefs.has(item.href),
+  );
   const footerNav = ADMIN_FOOTER_NAV.filter((item) => {
     if (item.href === "/admin/usuarios") return isAdmin;
     if (item.href === "/admin/configuracoes") return canConfig;
@@ -109,6 +118,27 @@ function AdminShellInner({ profile, children }: Props) {
               </ul>
             </div>
 
+            {canPartnership ? (
+              <div className="my-5 border-t border-line/12 pt-4">
+                <p className="admin-section-label px-3">Partnership</p>
+                <ul className="mt-2 space-y-0.5">
+                  {partnershipNav.map((item) => {
+                    const active =
+                      item.href === "/admin/partnership"
+                        ? pathname === "/admin/partnership"
+                        : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    return (
+                      <li key={item.href}>
+                        <Link href={item.href} className={navLinkClass(active)}>
+                          {item.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ) : null}
+
             {isAdmin ? (
               <div className="my-5 border-t border-line/12 pt-4">
                 <p className="admin-section-label px-3">VI Administrador</p>
@@ -163,7 +193,7 @@ function AdminShellInner({ profile, children }: Props) {
 
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="admin-shell-header flex flex-wrap items-center justify-between gap-3 border-b border-line/10 px-4 py-4 lg:px-8">
-            <AdminMobileNav isAdmin={isAdmin} canConfig={canConfig} />
+            <AdminMobileNav isAdmin={isAdmin} canConfig={canConfig} canPartnership={canPartnership} partnershipNav={partnershipNav} />
             <div className="flex flex-1 flex-wrap items-center justify-end gap-3 text-sm text-paper/70">
               <a href="/artigos" className="transition hover:text-gold" target="_blank" rel="noreferrer">
                 /artigos

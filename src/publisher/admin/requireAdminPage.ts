@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import type { PublisherRole } from "../types";
 import {
+  canAccessPartnership,
+  canAccessPartnershipRestricted,
   canManageTaxonomy,
   canManageUsers,
   canPublish,
@@ -35,6 +37,18 @@ export async function requirePublisherManagerPage() {
 export async function requireSiteAnalyticsPage() {
   const profile = await requireStaffPage();
   if (!canViewSiteAnalytics(profile.role)) redirect("/admin");
+  return profile;
+}
+
+export async function requirePartnershipPage() {
+  const profile = await requireStaffPage();
+  if (!canAccessPartnership(profile.role)) redirect("/admin");
+  return profile;
+}
+
+export async function requirePartnershipRestrictedPage() {
+  const profile = await requireStaffPage();
+  if (!canAccessPartnershipRestricted(profile.role)) redirect("/admin/partnership");
   return profile;
 }
 

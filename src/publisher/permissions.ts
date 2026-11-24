@@ -33,3 +33,13 @@ export function canEditArticle(role: PublisherRole, authorId: string | null, use
 export function isPublisherStaffRole(role: PublisherRole) {
   return role === "admin" || role === "editor" || role === "author" || role === "reviewer";
 }
+
+/** Partnership no Varejo Admin. Admin = direção; editor = gestão operacional. */
+export function canAccessPartnership(role: PublisherRole) {
+  return role === "admin" || role === "editor";
+}
+
+/** Financeiro, contratos e governança econômica. */
+export function canAccessPartnershipRestricted(role: PublisherRole) {
+  return role === "admin";
+}

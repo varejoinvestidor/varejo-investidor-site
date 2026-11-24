@@ -1,0 +1,450 @@
+/* Tema claro — vence os !important escuros de globals.css (desktop e mobile). */
+
+html[data-site-theme="light"] {
+  color-scheme: light;
+  background: #f7f4ee;
+  color: #16130f;
+}
+
+html[data-site-theme="light"] body {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(184, 137, 45, 0.06), transparent 28rem),
+    #f7f4ee !important;
+  color: #16130f !important;
+}
+
+html[data-site-theme="light"] body::before {
+  opacity: 0.35 !important;
+  background-image:
+    linear-gradient(rgba(22, 19, 15, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 19, 15, 0.045) 1px, transparent 1px) !important;
+}
+
+html[data-site-theme="light"] .bg-paper,
+html[data-site-theme="light"] .bg-white,
+html[data-site-theme="light"] .bg-white\/80,
+html[data-site-theme="light"] .bg-white\/90,
+html[data-site-theme="light"] .bg-paper\/\[0\.84\] {
+  background-color: #ffffff !important;
+}
+
+html[data-site-theme="light"] .bg-ink,
+html[data-site-theme="light"] .terminal-shell,
+html[data-site-theme="light"] .bg-black,
+html[data-site-theme="light"] .bg-black\/20,
+html[data-site-theme="light"] .bg-black\/25,
+html[data-site-theme="light"] .bg-black\/30,
+html[data-site-theme="light"] .bg-black\/35,
+html[data-site-theme="light"] .bg-black\/40 {
+  background-color: #ffffff !important;
+}
+
+html[data-site-theme="light"] .text-ink,
+html[data-site-theme="light"] .text-paper,
+html[data-site-theme="light"] h1,
+html[data-site-theme="light"] h2,
+html[data-site-theme="light"] h3,
+html[data-site-theme="light"] .hero-headline,
+html[data-site-theme="light"] .font-serif {
+  color: #16130f !important;
+}
+
+html[data-site-theme="light"] p,
+html[data-site-theme="light"] li,
+html[data-site-theme="light"] .text-ink\/\[0\.42\],
+html[data-site-theme="light"] .text-ink\/\[0\.45\],
+html[data-site-theme="light"] .text-ink\/\[0\.48\],
+html[data-site-theme="light"] .text-ink\/\[0\.58\],
+html[data-site-theme="light"] .text-ink\/\[0\.62\],
+html[data-site-theme="light"] .text-ink\/\[0\.64\],
+html[data-site-theme="light"] .text-ink\/\[0\.65\],
+html[data-site-theme="light"] .text-ink\/\[0\.66\],
+html[data-site-theme="light"] .text-ink\/\[0\.68\],
+html[data-site-theme="light"] .text-ink\/\[0\.7\],
+html[data-site-theme="light"] .text-ink\/\[0\.72\],
+html[data-site-theme="light"] .text-paper\/\[0\.42\],
+html[data-site-theme="light"] .text-paper\/\[0\.48\],
+html[data-site-theme="light"] .text-paper\/\[0\.5\],
+html[data-site-theme="light"] .text-paper\/\[0\.55\],
+html[data-site-theme="light"] .text-paper\/\[0\.62\],
+html[data-site-theme="light"] .text-paper\/\[0\.66\],
+html[data-site-theme="light"] .text-paper\/\[0\.68\],
+html[data-site-theme="light"] .text-paper\/\[0\.72\],
+html[data-site-theme="light"] .text-paper\/\[0\.76\],
+html[data-site-theme="light"] .text-paper\/40,
+html[data-site-theme="light"] .text-paper\/45,
+html[data-site-theme="light"] .text-paper\/50,
+html[data-site-theme="light"] .text-paper\/55,
+html[data-site-theme="light"] .text-paper\/60,
+html[data-site-theme="light"] .text-paper\/65,
+html[data-site-theme="light"] .text-paper\/70,
+html[data-site-theme="light"] .text-paper\/75,
+html[data-site-theme="light"] .text-paper\/80 {
+  color: #3d3832 !important;
+}
+
+html[data-site-theme="light"] .text-gold {
+  color: #7a5518 !important;
+}
+
+html[data-site-theme="light"] .border-ink,
+html[data-site-theme="light"] .border-ink\/\[0\.08\],
+html[data-site-theme="light"] .border-ink\/\[0\.1\],
+html[data-site-theme="light"] .border-ink\/\[0\.12\],
+html[data-site-theme="light"] .border-white\/8,
+html[data-site-theme="light"] .border-white\/10,
+html[data-site-theme="light"] .border-line\/12,
+html[data-site-theme="light"] .border-line\/15 {
+  border-color: #d8d0c4 !important;
+}
+
+/* Cards */
+html[data-site-theme="light"] .level-card,
+html[data-site-theme="light"] .terminal-module,
+html[data-site-theme="light"] .broker-card,
+html[data-site-theme="light"] .system-module,
+html[data-site-theme="light"] .strategic-stat,
+html[data-site-theme="light"] .glass-panel,
+html[data-site-theme="light"] .service-channel-card,
+html[data-site-theme="light"] .education-academic-card,
+html[data-site-theme="light"] .stat-card,
+html[data-site-theme="light"] .elite-monthly-card,
+html[data-site-theme="light"] article.rounded-xl,
+html[data-site-theme="light"] article.rounded-lg {
+  background: #ffffff !important;
+  border-color: #d8d0c4 !important;
+  box-shadow: 0 1px 2px rgba(22, 19, 15, 0.05), 0 10px 28px rgba(22, 19, 15, 0.06) !important;
+  color: #16130f !important;
+}
+
+html[data-site-theme="light"] .level-card h2,
+html[data-site-theme="light"] .level-card h3,
+html[data-site-theme="light"] .level-card p,
+html[data-site-theme="light"] .terminal-module h2,
+html[data-site-theme="light"] .terminal-module h3,
+html[data-site-theme="light"] .terminal-module p,
+html[data-site-theme="light"] .broker-card h2,
+html[data-site-theme="light"] .broker-card h3,
+html[data-site-theme="light"] .broker-card p,
+html[data-site-theme="light"] .system-module h2,
+html[data-site-theme="light"] .system-module h3,
+html[data-site-theme="light"] .system-module p,
+html[data-site-theme="light"] .strategic-stat p,
+html[data-site-theme="light"] .strategic-stat span {
+  color: #2a261f !important;
+}
+
+html[data-site-theme="light"] .level-card .text-gold,
+html[data-site-theme="light"] .terminal-module .text-gold,
+html[data-site-theme="light"] .broker-card .text-gold,
+html[data-site-theme="light"] .system-module .text-gold,
+html[data-site-theme="light"] .strategic-stat .text-gold {
+  color: #7a5518 !important;
+}
+
+html[data-site-theme="light"] .level-card:hover,
+html[data-site-theme="light"] .terminal-module:hover,
+html[data-site-theme="light"] .broker-card:hover,
+html[data-site-theme="light"] .system-module:hover,
+html[data-site-theme="light"] .service-channel-card:hover {
+  border-color: rgba(122, 85, 24, 0.45) !important;
+  box-shadow: 0 14px 36px rgba(22, 19, 15, 0.08) !important;
+}
+
+html[data-site-theme="light"] .premium-button-ghost,
+html[data-site-theme="light"] a[class*="border-ink"]:not([class*="bg-gold"]):not([class*="bg-rise"]),
+html[data-site-theme="light"] button[class*="border-ink"]:not([class*="bg-gold"]):not([class*="bg-rise"]) {
+  background: #ffffff !important;
+  color: #16130f !important;
+  border-color: #c9b89a !important;
+}
+
+/* Fundos de página: o shorthand background (gradiente escuro) vence background-color. */
+html[data-site-theme="light"] body,
+html[data-site-theme="light"] main,
+html[data-site-theme="light"] .page-content,
+html[data-site-theme="light"] section,
+html[data-site-theme="light"] .home-hero,
+html[data-site-theme="light"] .home-hero.premium-stage,
+html[data-site-theme="light"] .signals-hero,
+html[data-site-theme="light"] .signals-hero.premium-stage,
+html[data-site-theme="light"] .education-hero,
+html[data-site-theme="light"] .services-hero,
+html[data-site-theme="light"] .about-hero,
+html[data-site-theme="light"] .select-hero,
+html[data-site-theme="light"] .select-hero.premium-stage,
+html[data-site-theme="light"] .private-hero,
+html[data-site-theme="light"] .private-hero.premium-stage,
+html[data-site-theme="light"] .page-hero,
+html[data-site-theme="light"] .premium-stage {
+  background: #f6f3ed !important;
+  background-image: none !important;
+  color: #1a1612 !important;
+}
+
+html[data-site-theme="light"] [class*="text-ink"],
+html[data-site-theme="light"] [class*="text-paper"] {
+  color: #2c2823 !important;
+}
+
+html[data-site-theme="light"] .text-gold,
+html[data-site-theme="light"] [class*="text-gold"] {
+  color: #7a5518 !important;
+}
+
+html[data-site-theme="light"] .text-rise,
+html[data-site-theme="light"] [class*="text-rise"] {
+  color: #0a6b3f !important;
+}
+
+html[data-site-theme="light"] .text-fall,
+html[data-site-theme="light"] [class*="text-fall"] {
+  color: #b42318 !important;
+}
+
+html[data-site-theme="light"] .bg-gold,
+html[data-site-theme="light"] a.bg-gold,
+html[data-site-theme="light"] .premium-button-gold {
+  background: #c9a24a !important;
+  color: #1a1206 !important;
+}
+
+html[data-site-theme="light"] .home-hero::after,
+html[data-site-theme="light"] .signals-hero::after,
+html[data-site-theme="light"] .education-hero::after,
+html[data-site-theme="light"] .services-hero::after,
+html[data-site-theme="light"] .about-hero::after,
+html[data-site-theme="light"] .page-hero::after {
+  background: radial-gradient(circle at 70% 40%, rgba(184, 137, 45, 0.08), transparent 22rem) !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+html[data-site-theme="light"] .cinematic-noise,
+html[data-site-theme="light"] .finance-particles {
+  mix-blend-mode: multiply;
+  opacity: 0.18 !important;
+}
+
+html[data-site-theme="light"] .hero-image-wrapper,
+html[data-site-theme="light"] .hero-image-wrapper img,
+html[data-site-theme="light"] .services-hero-visual,
+html[data-site-theme="light"] .about-hero-visual,
+html[data-site-theme="light"] .education-levels-visual,
+html[data-site-theme="light"] .image-wrapper,
+html[data-site-theme="light"] .hero-mascot-wrap,
+html[data-site-theme="light"] .hero-mascot-stage {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-site-theme="light"] .hero-image-wrapper::before,
+html[data-site-theme="light"] .services-hero-glow,
+html[data-site-theme="light"] .about-hero-glow,
+html[data-site-theme="light"] .about-hero-visual::before,
+html[data-site-theme="light"] .hero-character-glow,
+html[data-site-theme="light"] .education-levels-glow,
+html[data-site-theme="light"] .services-hero-floor,
+html[data-site-theme="light"] .about-hero-floor,
+html[data-site-theme="light"] .hero-mascot-floor,
+html[data-site-theme="light"] .hero-mascot-depth {
+  background: radial-gradient(circle, rgba(184, 137, 45, 0.12), transparent 70%) !important;
+  opacity: 0.7 !important;
+  filter: none !important;
+}
+
+html[data-site-theme="light"] .home-structure-image,
+html[data-site-theme="light"] .services-hero-image,
+html[data-site-theme="light"] .about-hero-image,
+html[data-site-theme="light"] .hero-main-image,
+html[data-site-theme="light"] .hero-mascot-image,
+html[data-site-theme="light"] .education-levels-image,
+html[data-site-theme="light"] .section-team-image {
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+  filter: drop-shadow(0 14px 18px rgba(22, 19, 15, 0.12)) !important;
+}
+
+html[data-site-theme="light"] .luxury-grid,
+html[data-site-theme="light"] .signal-grid,
+html[data-site-theme="light"] .terminal-grid,
+html[data-site-theme="light"] .services-hero-grid {
+  background-image:
+    linear-gradient(rgba(22, 19, 15, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 19, 15, 0.05) 1px, transparent 1px) !important;
+  opacity: 0.55 !important;
+}
+
+html[data-site-theme="light"] .site-header,
+html[data-site-theme="light"] .global-ticker {
+  background: #f3efe7 !important;
+  color: #2a261f !important;
+}
+
+html[data-site-theme="light"] .desktop-main-menu {
+  background: #ffffff !important;
+}
+
+html[data-site-theme="light"] .desktop-language-trigger {
+  background: #ffffff !important;
+  color: #16130f !important;
+  border-color: #c9b89a !important;
+}
+
+html[data-site-theme="light"] .header-dropdown-panel,
+html[data-site-theme="light"] .language-dropdown-panel {
+  background: #ffffff !important;
+  color: #16130f !important;
+}
+
+html[data-site-theme="light"] .institutional-footer {
+  background: #efeae2 !important;
+  color: #16130f !important;
+}
+
+html[data-site-theme="light"] .institutional-footer .footer-heading,
+html[data-site-theme="light"] .institutional-footer .footer-link,
+html[data-site-theme="light"] .institutional-footer p {
+  color: #3d3832 !important;
+}
+
+html[data-site-theme="light"] .shadow-fine,
+html[data-site-theme="light"] .shadow-glass,
+html[data-site-theme="light"] .shadow-premium {
+  box-shadow: 0 10px 28px rgba(22, 19, 15, 0.08) !important;
+}
+
+.site-theme-toggle-inner {
+  display: inline-flex;
+  gap: 2px;
+  border: 1px solid rgba(22, 19, 15, 0.12);
+  border-radius: 0.5rem;
+  padding: 2px;
+  background: #fff;
+}
+
+html[data-site-theme="dark"] .site-theme-toggle-inner,
+html:not([data-site-theme]) .site-theme-toggle-inner {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(8, 8, 8, 0.55);
+}
+
+.site-theme-toggle-btn {
+  border: 0;
+  border-radius: 0.35rem;
+  padding: 0.4rem 0.55rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: transparent;
+  color: #5c554c;
+  cursor: pointer;
+}
+
+html[data-site-theme="dark"] .site-theme-toggle-btn,
+html:not([data-site-theme]) .site-theme-toggle-btn {
+  color: rgba(251, 250, 247, 0.62);
+}
+
+.site-theme-toggle-btn[aria-pressed="true"] {
+  background: #b8892d;
+  color: #16130f;
+}
+
+.site-theme-toggle-mobile {
+  padding: 0.75rem 1.25rem 0.25rem;
+}
+
+.site-theme-toggle-mobile .site-theme-toggle-inner {
+  width: 100%;
+}
+
+html[data-site-theme="light"] .site-search-trigger {
+  background: #ffffff !important;
+  color: #16130f !important;
+  border-color: #c9b89a !important;
+}
+
+html[data-site-theme="light"] .site-search-dialog {
+  background: #ffffff !important;
+  border-color: #d8d0c4 !important;
+  color: #16130f !important;
+}
+
+html[data-site-theme="light"] .site-search-dialog-head,
+html[data-site-theme="light"] .site-search-result-title {
+  color: #16130f !important;
+}
+
+html[data-site-theme="light"] .site-search-input {
+  background: #f7f4ee !important;
+  color: #16130f !important;
+  border-color: #d8d0c4 !important;
+}
+
+html[data-site-theme="light"] .site-search-hint,
+html[data-site-theme="light"] .site-search-result-desc {
+  color: #5c554c !important;
+}
+
+@media (max-width: 768px) {
+  html[data-site-theme="light"],
+  html[data-site-theme="light"] body {
+    background: #f7f4ee !important;
+    color: #16130f !important;
+  }
+
+  html[data-site-theme="light"] main,
+  html[data-site-theme="light"] section,
+  html[data-site-theme="light"] .home-hero,
+  html[data-site-theme="light"] .home-hero.premium-stage,
+  html[data-site-theme="light"] .signals-hero,
+  html[data-site-theme="light"] .signals-hero.premium-stage,
+  html[data-site-theme="light"] .education-hero,
+  html[data-site-theme="light"] .services-hero,
+  html[data-site-theme="light"] .about-hero,
+  html[data-site-theme="light"] .page-hero,
+  html[data-site-theme="light"] .premium-stage {
+    background: #f6f3ed !important;
+    background-image: none !important;
+    color: #1a1612 !important;
+  }
+
+  html[data-site-theme="light"] .level-card,
+  html[data-site-theme="light"] .terminal-module,
+  html[data-site-theme="light"] .broker-card,
+  html[data-site-theme="light"] .service-channel-card,
+  html[data-site-theme="light"] .education-academic-card,
+  html[data-site-theme="light"] .glass-panel,
+  html[data-site-theme="light"] .strategic-stat,
+  html[data-site-theme="light"] .stat-card,
+  html[data-site-theme="light"] article[class*="border"] {
+    background: #ffffff !important;
+    border-color: #d8d0c4 !important;
+    box-shadow: 0 8px 22px rgba(22, 19, 15, 0.06) !important;
+    color: #16130f !important;
+  }
+
+  html[data-site-theme="light"] h1,
+  html[data-site-theme="light"] h2,
+  html[data-site-theme="light"] h3,
+  html[data-site-theme="light"] .hero-headline,
+  html[data-site-theme="light"] .font-serif {
+    color: #16130f !important;
+  }
+
+  html[data-site-theme="light"] p,
+  html[data-site-theme="light"] li {
+    color: #3d3832 !important;
+  }
+
+  html[data-site-theme="light"] .mobile-navigation-drawer {
+    --drawer-paper: #faf8f5;
+    --drawer-ink: #16130f;
+    --drawer-copy: #4a433c;
+    --drawer-rule: #e5ddd2;
+    background: #faf8f5 !important;
+    color: #16130f !important;
+  }
+}

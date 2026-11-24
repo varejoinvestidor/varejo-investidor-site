@@ -28,6 +28,19 @@ export const ADMIN_RESEARCH_NAV: AdminNavItem[] = [
   { href: "/admin/relatorio-elite/desempenho", label: "Desempenho & lotes", description: "KPIs e consolidado" },
 ];
 
+/** Partnership — expansão comercial. Visível para admin e editor. */
+export const ADMIN_PARTNERSHIP_NAV: AdminNavItem[] = [
+  { href: "/admin/partnership", label: "Overview" },
+  { href: "/admin/partnership/parceiros", label: "Partners" },
+  { href: "/admin/partnership/whatsapp", label: "WhatsApp Operations" },
+  { href: "/admin/partnership/lastlink", label: "Lastlink" },
+  { href: "/admin/partnership/rewards", label: "Rewards" },
+  { href: "/admin/partnership/research", label: "Elite Research Desk" },
+  { href: "/admin/partnership/escritorios", label: "Global Offices" },
+  { href: "/admin/partnership/corretoras", label: "Brokerage Network" },
+  { href: "/admin/partnership/governanca", label: "Equity & Governance" },
+];
+
 /** VI Administrador — analytics do site público (somente role admin). */
 export const ADMIN_ANALYTICS_NAV: AdminNavItem[] = [
   { href: "/admin/vi-administrador", label: "Visão geral", description: "KPIs e tendências" },

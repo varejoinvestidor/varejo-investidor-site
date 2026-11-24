@@ -1,28 +1,71 @@
-/* Header em duas faixas no desktop — menu não compete com busca/idioma */
+/* Header numa linha: marca | menu | lupa + idioma */
 
-.site-header-top-row {
-  min-height: 3.25rem;
+.site-header-actions {
+  position: relative;
+  z-index: 2;
 }
 
-.site-header-toolbar {
-  min-width: 0;
-}
-
-.site-header-menu-row {
-  border-top: 1px solid transparent;
+.site-header-menu {
+  flex-wrap: nowrap;
 }
 
 @media (min-width: 1280px) {
+  .site-header-nav {
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center;
+  }
+
   .desktop-language-area {
     min-width: 0;
   }
 
   .desktop-language-trigger {
-    min-width: 11.5rem;
-    max-width: 14rem;
+    min-width: 9.25rem;
+    max-width: 11.5rem;
+    width: auto;
   }
 
+  .site-search-trigger--header {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 1279px) {
   .site-header-nav {
-    padding-bottom: 0.75rem !important;
+    display: flex !important;
+    grid-template-columns: none !important;
+    align-items: center;
+    min-height: 68px;
+    gap: 0.5rem;
+  }
+
+  .mobile-menu-button {
+    position: static !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    flex: 0 0 44px;
+  }
+
+  .site-brand {
+    grid-column: auto !important;
+    justify-self: auto !important;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .site-header-actions {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .mobile-language-row {
+    position: static !important;
+    inset: auto !important;
+    display: none !important;
+  }
+
+  .site-search-trigger--header {
+    display: inline-flex !important;
   }
 }

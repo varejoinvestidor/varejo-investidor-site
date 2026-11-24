@@ -118,6 +118,7 @@ export async function middleware(request: NextRequest) {
     const rootHandledPages = new Set([
       "select",
       "private",
+      "partners",
       "ferramentas",
       "calculadora-de-risco",
       "eventos",

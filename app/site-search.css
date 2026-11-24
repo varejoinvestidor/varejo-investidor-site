@@ -16,10 +16,18 @@
   background: rgba(184, 137, 45, 0.08);
 }
 
-.site-search-trigger--footer {
-  min-width: 2.75rem;
-  min-height: 2.75rem;
-  padding: 0.65rem;
+.site-search-trigger--footer,
+.site-search-trigger--header,
+.site-search-trigger--mobile {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0.45rem;
+}
+
+@media (max-width: 1279px) {
+  .site-search-trigger--header {
+    display: none;
+  }
 }
 
 .site-search-layer {

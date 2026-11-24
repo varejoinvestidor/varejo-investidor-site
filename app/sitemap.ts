@@ -7,6 +7,7 @@ import { getPublisherSitemapEntries } from "../src/publisher/public/queries";
 
 const staticPaths = [
   "/idioma",
+  "/partners",
   "/",
   "/pt",
   "/en",

@@ -8,6 +8,7 @@ import {
   ADMIN_FOOTER_NAV,
   ADMIN_PUBLISHER_NAV,
   ADMIN_RESEARCH_NAV,
+  type AdminNavItem,
 } from "./nav";
 
 function navLinkClass(active: boolean) {
@@ -17,9 +18,13 @@ function navLinkClass(active: boolean) {
 export function AdminMobileNav({
   isAdmin,
   canConfig,
+  canPartnership,
+  partnershipNav,
 }: {
   isAdmin: boolean;
   canConfig: boolean;
+  canPartnership: boolean;
+  partnershipNav: AdminNavItem[];
 }) {
   const pathname = usePathname() ?? "";
   const [open, setOpen] = useState(false);
@@ -103,6 +108,26 @@ export function AdminMobileNav({
                   })}
                 </ul>
               </div>
+              {canPartnership ? (
+                <div className="my-4 border-t border-line/12 pt-4">
+                  <p className="admin-section-label px-3">Partnership</p>
+                  <ul className="mt-2 space-y-0.5">
+                    {partnershipNav.map((item) => {
+                      const active =
+                        item.href === "/admin/partnership"
+                          ? pathname === "/admin/partnership"
+                          : pathname === item.href || pathname.startsWith(`${item.href}/`);
+                      return (
+                        <li key={item.href}>
+                          <Link href={item.href} className={navLinkClass(active)} onClick={() => setOpen(false)}>
+                            {item.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ) : null}
               {isAdmin ? (
                 <div className="my-4 border-t border-line/12 pt-4">
                   <p className="admin-section-label px-3">VI Administrador</p>
